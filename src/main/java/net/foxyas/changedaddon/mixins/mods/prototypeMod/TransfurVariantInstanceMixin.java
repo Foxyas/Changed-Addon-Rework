@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.mixins.mods.prototypeMod;
 
+import net.foxyas.changedaddon.compatibility.painPrototype.LimbStatisticsExtensor;
 import net.foxyas.changedaddon.util.EntityUtils;
 import net.foxyas.changedaddon.util.MathFormulasUtils;
 import net.zaharenko424.casualties_cubed.PlayerHealthProvider;

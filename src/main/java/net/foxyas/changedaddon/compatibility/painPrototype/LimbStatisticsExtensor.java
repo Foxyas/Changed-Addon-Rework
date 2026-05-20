@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins.mods.prototypeMod;
+package net.foxyas.changedaddon.compatibility.painPrototype;
 
 public interface LimbStatisticsExtensor {
 
