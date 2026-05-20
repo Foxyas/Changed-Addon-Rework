@@ -188,7 +188,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     protected boolean shouldDespawnInPeaceful() {
-        return true;
+        return super.shouldDespawnInPeaceful();
+    }
+
+    @Override
+    public Gender getGender() {
+        return Gender.MALE;
     }
 
     @Override

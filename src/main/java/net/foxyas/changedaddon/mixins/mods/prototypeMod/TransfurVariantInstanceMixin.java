@@ -43,7 +43,9 @@ public class TransfurVariantInstanceMixin {
 
             // --- Scaling ---
             // Health/Blood: 0.0 a 1.0 (ex: 5/5 = 1.0)
-            float healthRatio = self.getBloodVolume() / 5f; //EntityUtils.getHealthRatio(player);
+            float maxNormalBloodVolume = 5f;
+
+            float healthRatio = self.getBloodVolume() / maxNormalBloodVolume; //EntityUtils.getHealthRatio(player);
             // Food: 0.0 a 1.0 (ex: 20/20 = 1.0)
             float foodRatio = EntityUtils.getFoodRatio(player, null);
 

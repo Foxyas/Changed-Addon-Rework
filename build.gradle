@@ -67,7 +67,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-	// Mod Location
+    // Mod Location
     flatDir {
         dirs 'libs'
     }
@@ -94,16 +94,16 @@ repositories {
     }
 
 
-  /* maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-    }*/
+    /* maven {
+          // location of the maven that hosts JEI files
+          name = "Progwml6 maven"
+          url = "https://dvs1.progwml6.com/files/maven/"
+      }
+      maven {
+          // location of a maven mirror for JEI files, as a fallback
+          name = "ModMaven"
+          url = "https://modmaven.dev"
+      }*/
 }
 
 mixin {
@@ -168,7 +168,9 @@ dependencies {
     implementation fg.deobf("curse.maven:bookshelf-228525:7612389")
     implementation fg.deobf("curse.maven:botany-pots-353928:7612402")
 
-    runtimeOnly fg.deobf("curse.maven:appleskin-248787:4770828")
+    implementation fg.deobf("curse.maven:create-328085:7178761")
+
+    implementation fg.deobf("curse.maven:appleskin-248787:4770828")
     //implementation files("libs/Changed-m1.18.2-v0.14")
 }
 
