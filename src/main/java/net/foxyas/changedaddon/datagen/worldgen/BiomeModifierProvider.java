@@ -59,9 +59,9 @@ public class BiomeModifierProvider {
                 new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                         biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
                         HolderSet.direct(List.of(
-                                placedFeatures.getOrThrow(ChangedAddonFeatures.Placements.IRIDIUM_ORE_SMALL),
-                                placedFeatures.getOrThrow(ChangedAddonFeatures.Placements.IRIDIUM_ORE_LARGE),
-                                placedFeatures.getOrThrow(ChangedAddonFeatures.Placements.IRIDIUM_ORE_BURIED)
+                                placedFeatures.getOrThrow(ChangedAddonFeatures.PlacedFeatures.IRIDIUM_ORE_SMALL),
+                                placedFeatures.getOrThrow(ChangedAddonFeatures.PlacedFeatures.IRIDIUM_ORE_LARGE),
+                                placedFeatures.getOrThrow(ChangedAddonFeatures.PlacedFeatures.IRIDIUM_ORE_BURIED)
                         )),
                         GenerationStep.Decoration.UNDERGROUND_ORES
                 )
@@ -71,7 +71,7 @@ public class BiomeModifierProvider {
                 ADD_PAINITE_GEN,
                 new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                         biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                        HolderSet.direct(placedFeatures.getOrThrow(ChangedAddonFeatures.Placements.PAINITE_ORE_PLACED)),
+                        HolderSet.direct(placedFeatures.getOrThrow(ChangedAddonFeatures.PlacedFeatures.PAINITE_ORE_BURIED)),
                         GenerationStep.Decoration.UNDERGROUND_ORES
                 )
         );

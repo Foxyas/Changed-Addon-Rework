@@ -36,7 +36,7 @@ public class ChangedAddonFeatures {
                 ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, id));
     }
 
-    public static class Configurations {
+    public static class ConfiguredFeatures {
         public static final ResourceKey<ConfiguredFeature<?, ?>> IRIDIUM_ORE_BURIED =
                 createConfigured("iridium_ore_buried");
 
@@ -46,11 +46,11 @@ public class ChangedAddonFeatures {
         public static final ResourceKey<ConfiguredFeature<?, ?>> IRIDIUM_ORE_SMALL =
                 createConfigured("iridium_ore_small");
 
-        public static final ResourceKey<ConfiguredFeature<?, ?>> PAINITE_ORE_CONFIG =
-                createConfigured("painite_ore");
+        public static final ResourceKey<ConfiguredFeature<?, ?>> PAINITE_ORE_BURIED =
+                createConfigured("painite_ore_buried");
     }
 
-    public static class Placements {
+    public static class PlacedFeatures {
 
         public static final ResourceKey<PlacedFeature> IRIDIUM_ORE_BURIED =
                 createPlaced("iridium_ore_buried");
@@ -61,7 +61,7 @@ public class ChangedAddonFeatures {
         public static final ResourceKey<PlacedFeature> IRIDIUM_ORE_SMALL =
                 createPlaced("iridium_ore_small");
 
-        public static final ResourceKey<PlacedFeature> PAINITE_ORE_PLACED =
-                createPlaced("painite_ore");
+        public static final ResourceKey<PlacedFeature> PAINITE_ORE_BURIED =
+                createPlaced("painite_ore_buried");
     }
 }

@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
   "biomes": "#minecraft:is_overworld",
-  "features": "changed_addon:painite_ore",
+  "features": "changed_addon:painite_ore_buried",
   "step": "underground_ores"
 }
