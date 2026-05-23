@@ -6,22 +6,30 @@ import net.foxyas.changedaddon.block.entity.UnifuserBlockEntity;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
+import java.util.List;
+
+import static net.foxyas.changedaddon.client.gui.util.IconsUtils.DUST_ICON;
+import static net.foxyas.changedaddon.client.gui.util.IconsUtils.SYRINGE_ICON;
 
 public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> {
 
+    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceLocation.parse("changed_addon:textures/screens/containers/unifuser_gui.png");
+    public static final List<ResourceLocation> SYRINGE_ICONS = List.of(SYRINGE_ICON);
+    public static final List<ResourceLocation> EMPTY_ICONS = List.of(SYRINGE_ICON, DUST_ICON);
+    public final CyclingSlotBackground cyclingSlot0BackgroundWidget;
+    public final CyclingSlotBackground cyclingSlot2BackgroundWidget;
     private final UnifuserGuiMenu menu;
     private final Level level;
     private final BlockPos pos;
@@ -33,23 +41,32 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         this.pos = menu.getBlockPos();
         this.imageWidth = 200;
         this.imageHeight = 187;
+        this.cyclingSlot0BackgroundWidget = new CyclingSlotBackground(0);
+        this.cyclingSlot2BackgroundWidget = new CyclingSlotBackground(2);
     }
 
-    public static String getMachineState(Level level, BlockPos pos) {
-        String block = Component.translatable("block." + ForgeRegistries.BLOCKS.getKey((level.getBlockState(pos)).getBlock()).toString().replace(":", ".")).getString();
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        this.cyclingSlot0BackgroundWidget.tick(SYRINGE_ICONS);
+        this.cyclingSlot2BackgroundWidget.tick(EMPTY_ICONS);
+    }
+
+    public static Component getMachineState(Level level, BlockPos pos) {
+        MutableComponent blockName = level.getBlockState(pos).getBlock().getName();
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof UnifuserBlockEntity unifuserBlockEntity) {
-            return !unifuserBlockEntity.startRecipe ? block + " is deactivated" : block + " is activated";
+            return blockName.append(unifuserBlockEntity.startRecipe ? " is activated" : " is deactivated");
         } else if (blockEntity instanceof CatalyzerBlockEntity catalyzerBlockEntity) {
-            return !catalyzerBlockEntity.startRecipe ? block + " is deactivated" : block + " is activated";
+            return blockName.append(catalyzerBlockEntity.startRecipe ? " is activated" : " is deactivated");
         }
-        return "Something ODD Happen..";
+        return Component.empty();
     }
 
-    public static String getRecipeState(LevelAccessor level, BlockPos pos) {
+    public static Component getRecipeState(LevelAccessor level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity == null) return "THIS SHOULD NEVER HAPPEN";
+        if (blockEntity == null) return Component.empty();
         double number = 0;
         if (blockEntity instanceof UnifuserBlockEntity unifuserBlockEntity) {
             number = unifuserBlockEntity.recipeProgress;
@@ -57,7 +74,7 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
             number = catalyzerBlockEntity.recipeProgress;
         }
 
-        return Math.round(number) + "%";
+        return Component.literal(Math.round(number) + "%");
     }
 
     @Override
@@ -80,23 +97,19 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
     }
 
     @Override
-    protected void renderBg(@NotNull GuiGraphics pGuiGraphics, float partialTicks, int gx, int gy) {
-        pGuiGraphics.setColor(1, 1, 1, 1);
+    protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTicks, int gx, int gy) {
+        guiGraphics.setColor(1, 1, 1, 1);
+        guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth + 30, this.imageHeight);
+        cyclingSlot0BackgroundWidget.render(menu, guiGraphics, partialTicks, gx, gy);
+        cyclingSlot2BackgroundWidget.render(menu, guiGraphics, partialTicks, gx, gy);
 
-        pGuiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/unifusergui_new.png"), this.leftPos, this.topPos, 0, 0, 200, 187, 200, 187);
-
-        pGuiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/empty_bar.png"), this.leftPos + 84, this.topPos + 59, 0, 0, 32, 12, 32, 12);
-
-        int progressInt = (int) (menu.getUnifuser().recipeProgress / 3.57);
-
-        pGuiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/bar_full.png"), this.leftPos + 84 + 2, this.topPos + 59 + 2, 0, 0, progressInt, 8, progressInt, 8);
-
-        if (getBlockItem(0).isEmpty()) {
-            pGuiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/dusts.png"), this.leftPos + 15, this.topPos + 46, 0, 0, 16, 16, 16, 16);
-        }
-        if (getBlockItem(2).isEmpty()) {
-            pGuiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/syringe_withlitixcamonia_screen.png"), this.leftPos + 50, this.topPos + 57, 0, 0, 16, 16, 16, 16);
-        }
+//        guiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/unifusergui_new.png"), this.leftPos, this.topPos, 0, 0, 200, 187, 200, 187);
+//
+//        guiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/empty_bar.png"), this.leftPos + 84, this.topPos + 59, 0, 0, 32, 12, 32, 12);
+//
+//        int progressInt = (int) (menu.getUnifuser().recipeProgress / 3.57);
+//
+//        guiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/bar_full.png"), this.leftPos + 84 + 2, this.topPos + 59 + 2, 0, 0, progressInt, 8, progressInt, 8);
 
         RenderSystem.disableBlend();
     }

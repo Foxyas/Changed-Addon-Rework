@@ -1,9 +1,11 @@
 package net.foxyas.changedaddon.client.gui;
 
 import net.foxyas.changedaddon.block.entity.CatalyzerBlockEntity;
+import net.foxyas.changedaddon.client.gui.util.IconsUtils;
 import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -16,11 +18,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import static net.foxyas.changedaddon.client.gui.UnifuserGuiScreen.getMachineState;
+import static net.foxyas.changedaddon.client.gui.util.IconsUtils.*;
 
 public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu> {
 
-    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceLocation.parse("changed_addon:textures/screens/catalyzer_gui_new.png");
+    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceLocation.parse("changed_addon:textures/screens/containers/catalyzer_gui.png");
+    public static final List<ResourceLocation> EMPTY_ICONS = List.of(SYRINGE_ICON, DUST_ICON);
 
+    public final CyclingSlotBackground cyclingSlot0BackgroundWidget;
     private final Level level;
     private final CatalyzerGuiMenu menu;
     private final CatalyzerBlockEntity catalyzer;
@@ -34,6 +39,7 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
         catalyzer = menu.getCatalyzer();
         this.imageWidth = 175;
         this.imageHeight = 166;
+        this.cyclingSlot0BackgroundWidget = new CyclingSlotBackground(0);
     }
 
     @Override
@@ -53,6 +59,12 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
     }
 
     @Override
+    protected void containerTick() {
+        super.containerTick();
+        cyclingSlot0BackgroundWidget.tick(EMPTY_ICONS);
+    }
+
+    @Override
     protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTicks, int gx, int gy) {
         guiGraphics.setColor(1, 1, 1, 1);
         guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth + 30, this.imageHeight);
@@ -67,22 +79,24 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
             guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 79, this.topPos + 35, this.imageWidth + 1, 12, nitrogenProgress, 4, this.imageWidth + 30, this.imageHeight);
         }
 
-        if (catalyzer.getItem(0).isEmpty()) {
-            assert this.minecraft != null;
-            assert this.minecraft.level != null;
-            long gameTime = this.minecraft.level.getGameTime();
-            int animationPeriod = 40; // ticks (2 segundos)
-            boolean showingSyringe = (gameTime % animationPeriod) < (animationPeriod / 2);
+        cyclingSlot0BackgroundWidget.render(menu, guiGraphics, partialTicks, gx, gy);
 
-            ResourceLocation icon = showingSyringe
-                    ? ResourceLocation.parse("changed_addon:textures/screens/syringes.png")
-                    : ResourceLocation.parse("changed_addon:textures/screens/dusts.png");
-
-            int yOffset = showingSyringe ? 0 : 1;
-
-            SlotItemHandler leftSlot = menu.getLeftSlot();
-            guiGraphics.blit(icon, leftPos + leftSlot.x, topPos + leftSlot.y + yOffset, 0, 0, 16, 16, 16, 16);
-        }
+//        if (catalyzer.getItem(0).isEmpty()) {
+//            assert this.minecraft != null;
+//            assert this.minecraft.level != null;
+//            long gameTime = this.minecraft.level.getGameTime();
+//            int animationPeriod = 40; // ticks (2 segundos)
+//            boolean showingSyringe = (gameTime % animationPeriod) < (animationPeriod / 2);
+//
+//            ResourceLocation icon = showingSyringe
+//                    ? SYRINGE_ICON
+//                    : DUST_ICON;
+//
+//            int yOffset = showingSyringe ? 0 : 1;
+//
+//            SlotItemHandler leftSlot = menu.getLeftSlot();
+//            guiGraphics.blit(icon, leftPos + leftSlot.x, topPos + leftSlot.y + yOffset, 0, 0, 16, 16, 16, 16);
+//        }
     }
 
     @Override

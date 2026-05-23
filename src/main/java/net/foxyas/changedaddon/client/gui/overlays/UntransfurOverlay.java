@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 
 @OnlyIn(Dist.CLIENT)
-public class UntransfurOverlayOverlay {
+public class UntransfurOverlay {
 
     public static final ResourceLocation FULL_BAR = ResourceLocation.parse("changed_addon:textures/screens/untransfurprogress_full.png");
     public static final ResourceLocation NORMAL_BAR = ResourceLocation.parse("changed_addon:textures/screens/untransfurprogress.png");
