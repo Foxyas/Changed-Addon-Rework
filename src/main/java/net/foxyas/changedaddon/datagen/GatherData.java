@@ -5,7 +5,8 @@ import net.foxyas.changedaddon.datagen.ability_tree.AbilityTreeProviderImpl;
 import net.foxyas.changedaddon.datagen.compatibility.ModTrimMapsProvider;
 import net.foxyas.changedaddon.datagen.lang.ENLanguageProvider;
 import net.foxyas.changedaddon.datagen.lang.HULanguageProvider;
-import net.foxyas.changedaddon.datagen.worldgen.FacilityPieceProvider;
+import net.foxyas.changedaddon.datagen.worldgen.changed.facility.FacilityPieceProvider;
+import net.foxyas.changedaddon.datagen.worldgen.changed.facility_zone_spawns.FacilityZoneSpawnsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -45,6 +46,7 @@ public class GatherData {
         generator.addProvider(event.includeServer(), new BiomeTagProvider(packOutput, lookup0, helper));
         generator.addProvider(event.includeServer(), new DamageTypeTagProvider(packOutput, lookup0, helper));
 
+        generator.addProvider(event.includeServer(), FacilityZoneSpawnsProvider.getChangedAddonZoneSpawns(packOutput, existingFileHelper));
         generator.addProvider(event.includeServer(), FacilityPieceProvider.getChangedAddonFacilitiesPieces(packOutput, existingFileHelper));
 
         generator.addProvider(true, new RecipeProvider(packOutput));

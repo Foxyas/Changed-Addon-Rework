@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.datagen.worldgen;
+package net.foxyas.changedaddon.datagen.worldgen.changed.facility;
 
 import net.ltxprogrammer.changed.world.features.structures.facility.ConfiguredFacilityPiece;
 import net.minecraft.data.PackOutput;
@@ -6,7 +6,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class FacilityPieceProviderBuilder {
     private PackOutput output;
