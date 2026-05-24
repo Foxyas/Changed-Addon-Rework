@@ -46,7 +46,7 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
         this.imageWidth = 175;
         this.imageHeight = 166;
 
-        this.cyclingSlot0BackgroundWidget = new CyclingSlotBackgroundWidget(menu, menu.getLeftSlot().getSlotIndex(), EMPTY_ICONS);
+        this.cyclingSlot0BackgroundWidget = new CyclingSlotBackgroundWidget(menu, menu.getLeftSlot().index, EMPTY_ICONS);
     }
 
     @Override

@@ -56,9 +56,9 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         this.imageWidth = 175;
         this.imageHeight = 166;
 
-        this.cyclingSlot0BackgroundWidget = new CyclingSlotBackgroundWidget(menu, menu.getTopSlot().getSlotIndex(), EMPTY_ICONS);
-        this.cyclingSlot1BackgroundWidget = new CyclingSlotBackgroundWidget(menu, menu.getBottomSlot().getSlotIndex(), EMPTY_ICONS);
-        this.cyclingSlot2BackgroundWidget = new CyclingSlotBackgroundWidget(menu, menu.getSyringeSlot().getSlotIndex(), EMPTY_ICONS);
+        this.cyclingSlot0BackgroundWidget = new CyclingSlotBackgroundWidget(menu, menu.getTopSlot().index, EMPTY_ICONS);
+        this.cyclingSlot1BackgroundWidget = new CyclingSlotBackgroundWidget(menu, menu.getBottomSlot().index, EMPTY_ICONS);
+        this.cyclingSlot2BackgroundWidget = new CyclingSlotBackgroundWidget(menu, menu.getSyringeSlot().index, EMPTY_ICONS);
         cyclingSlotBackgroundWidgets.addAll(List.of(cyclingSlot0BackgroundWidget, cyclingSlot1BackgroundWidget, cyclingSlot2BackgroundWidget));
     }
 
