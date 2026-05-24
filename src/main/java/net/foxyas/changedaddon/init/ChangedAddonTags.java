@@ -64,6 +64,8 @@ public final class ChangedAddonTags {
         public static final TagKey<Item> SWEET_DIET = key("sweet_tooth_list");
         public static final TagKey<Item> WOLF_DIET = key("wolf_diet_list");
 
+        public static final TagKey<Item> UNIFUSER_RECIPE_CATALYST = key("unifuser_recipe_catalyst");
+
         private static TagKey<Item> key(String path) {
             return TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), ChangedAddonMod.resourceLoc(path));
         }

@@ -10,7 +10,8 @@
     "mods.nean.AvaliElytraAnimationMixin",
     "mods.prototypeMod.LimbStatisticsMixin",
     "mods.prototypeMod.PlayerHealthDataAccessor",
-    "mods.prototypeMod.TransfurVariantInstanceMixin"
+    "mods.prototypeMod.TransfurVariantInstanceMixin",
+    "worldgen.SinglePoolElementAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

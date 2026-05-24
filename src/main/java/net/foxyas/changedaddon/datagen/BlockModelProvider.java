@@ -4,9 +4,16 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BlockModelProvider extends net.minecraftforge.client.model.generators.BlockModelProvider {
+
+    public static final ResourceLocation EMISSIVE_CROSS = ChangedAddonMod.resourceLoc("customs/emissive_cross");
+    public static final ResourceLocation EMISSIVE_CUBE_ALL = ChangedAddonMod.resourceLoc("customs/emissive_cube_all");
+    public static final ResourceLocation EMISSIVE_CUBE_COLUMN = ChangedAddonMod.resourceLoc("customs/emissive_cube_column");
+    public static final ResourceLocation EMISSIVE_CUBE = ChangedAddonMod.resourceLoc("customs/emissive_cube");
+
     public BlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ChangedAddonMod.MODID, existingFileHelper);
     }
@@ -16,19 +23,61 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         generateEmissiveCrop();
         generateEmissiveCube();
         generateEmissiveCubeAll();
+        generateEmissiveCubeColumn();
 
-        withExistingParent(ChangedAddonBlocks.LUMINARA_BLOOM.getId().getPath(), ChangedAddonMod.resourceLoc("customs/emissive_cross"))
+        withExistingParent(ChangedAddonBlocks.LUMINARA_BLOOM.getId().getPath(), EMISSIVE_CROSS)
                 .renderType("minecraft:cutout")
                 .texture("cross", ChangedAddonMod.resourceLoc("block/luminara_bloom"))
                 .texture("glow", ChangedAddonMod.resourceLoc("block/luminara_bloom_emissive"))
         ;
 
-        withExistingParent(ChangedAddonBlocks.GOO_CORE.getId().getPath(), ChangedAddonMod.resourceLoc("customs/emissive_cube_all"))
+        withExistingParent(ChangedAddonBlocks.GOO_CORE.getId().getPath(), EMISSIVE_CUBE_ALL)
                 .renderType("minecraft:cutout")
                 .texture("all", "changed_addon:block/goocore")
                 .texture("all_glow", "changed_addon:block/goocore_emissive")
                 .texture("particle", "changed_addon:block/goocore")
         ;
+
+        withExistingParent(ChangedAddonBlocks.LUMINARA_LOG.getId().getPath(), EMISSIVE_CUBE_COLUMN)
+                .renderType("minecraft:cutout")
+                .texture("end", "changed_addon:block/luminara_tree/luminara_log_top")
+                .texture("end_glow", "changed_addon:block/luminara_tree/luminara_log_top_glow")
+                .texture("side", "changed_addon:block/luminara_tree/luminara_log_side")
+                .texture("side_glow", "changed_addon:block/luminara_tree/luminara_log_side_glow")
+        ;
+
+        withExistingParent(ChangedAddonBlocks.LUMINARA_LEAVES.getId().getPath(), EMISSIVE_CUBE_ALL)
+                .renderType("minecraft:cutout")
+                .texture("all", "changed_addon:block/luminara_tree/luminara_leaves")
+                //.texture("all_glow", "changed_addon:block/luminara_tree/luminara_leaves_glow")
+                .texture("all_glow", "changed_addon:block/luminara_tree/empty")
+        ;
+    }
+
+    private void generateEmissiveCubeColumn() {
+        // Generates the clean utility layout under assets/changed_addon/models/block/customs/emissive_cube_all.json
+        getBuilder("customs/emissive_cube_column")
+                // Inherit directly from your own directional emissive cube!
+                .parent(getExistingFile(EMISSIVE_CUBE))
+
+                // Bind the fallback particle breaking texture variable
+                .texture("particle", "#side")
+
+                // Map all base layer directional faces to match logs.
+                .texture("down", "#end")
+                .texture("up", "#end")
+                .texture("north", "#side")
+                .texture("south", "#side")
+                .texture("west", "#side")
+                .texture("east", "#side")
+
+                // Map all overlay emissive faces to point to the unified "#side_glow" variable
+                .texture("emissive_down", "#end_glow")
+                .texture("emissive_up", "#end_glow")
+                .texture("emissive_north", "#side_glow")
+                .texture("emissive_south", "#side_glow")
+                .texture("emissive_west", "#side_glow")
+                .texture("emissive_east", "#side_glow");
     }
 
     private void generateEmissiveCube() {
@@ -121,7 +170,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         // Generates the clean utility layout under assets/changed_addon/models/block/customs/emissive_cube_all.json
         getBuilder("customs/emissive_cube_all")
                 // Inherit directly from your own directional emissive cube!
-                .parent(getExistingFile(ChangedAddonMod.resourceLoc("customs/emissive_cube")))
+                .parent(getExistingFile(EMISSIVE_CUBE))
 
                 // Bind the fallback particle breaking texture variable
                 .texture("particle", "#all")

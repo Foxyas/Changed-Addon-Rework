@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -68,11 +69,11 @@ public class CatalyzerGuiMenu extends AbstractMenu {
         return AbstractContainerMenu.stillValid(this.access, player, this.catalyzer.getBlockState().getBlock());
     }
 
-    public SlotItemHandler getLeftSlot() {
+    public Slot getLeftSlot() {
         return slot1;
     }
 
-    public SlotItemHandler getOutputSlot() {
+    public Slot getOutputSlot() {
         return slot2;
     }
 

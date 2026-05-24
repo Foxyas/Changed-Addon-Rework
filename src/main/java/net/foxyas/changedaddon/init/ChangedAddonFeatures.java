@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.world.features.StructureTemplatePoolFeature;
 import net.foxyas.changedaddon.world.features.ores.PainiteOreFeature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -21,6 +22,7 @@ public class ChangedAddonFeatures {
     public static final DeferredRegister<Feature<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.FEATURES, ChangedAddonMod.MODID);
 
     public static final RegistryObject<PainiteOreFeature> PAINITE_ORE = register("painite_ore", PainiteOreFeature::new);
+    public static final RegistryObject<StructureTemplatePoolFeature> STRUCTURE_TEMPLATE_POOL_FEATURE = register("structure_template_pool_feature", StructureTemplatePoolFeature::new);
 
     private static <T extends Feature<?>> RegistryObject<T> register(String registryname, Supplier<T> feature) {
         return REGISTRY.register(registryname, feature);
