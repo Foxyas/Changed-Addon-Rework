@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -84,46 +85,37 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
         guiGraphics.setColor(1, 1, 1, 1);
         guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth + 30, this.imageHeight);
 
+        int guiIconsUOffset = this.imageWidth + 1;
         if (catalyzer.recipeProgress > 0) {
-            int recipeProgress = (int) (28 * (catalyzer.recipeProgress / 100));
-            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 76, this.topPos + 46, this.imageWidth + 1, 0, recipeProgress, 11, this.imageWidth + 30, this.imageHeight);
+            int recipeProgress = Mth.clamp((int) (28 * (catalyzer.recipeProgress / 100)), 0, 100);
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 76, this.topPos + 46, guiIconsUOffset, 0, recipeProgress, 11, this.imageWidth + 30, this.imageHeight);
         }
 
         if (catalyzer.nitrogenPower > 0) {
-            int nitrogenProgress = (int) (18 * (catalyzer.nitrogenPower / 200));
-            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 79, this.topPos + 35, this.imageWidth + 1, 12, nitrogenProgress, 4, this.imageWidth + 30, this.imageHeight);
+            int nitrogenProgress = Mth.clamp((int) (18 * (catalyzer.nitrogenPower / 200)), 0, 100);
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 79, this.topPos + 35, guiIconsUOffset, 12, nitrogenProgress, 4, this.imageWidth + 30, this.imageHeight);
         }
 
-        for (Slot slot : menu.slots) {
-            guiGraphics.drawString(font, "" + slot.index, leftPos + slot.x, topPos + slot.y, Color.WHITE.getRGB(), false);
-        }
+        // Slot in: 165x, 5y
+        // Colors in:
+        // (Green) 176x, 17y
+        // (Red) 181x, 17y
+        int machineState = catalyzer.startRecipe ? 0 : 5;
+        guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 165, this.topPos + 5, guiIconsUOffset + machineState, 16, 5, 5, this.imageWidth + 30, this.imageHeight);
 
-//        if (catalyzer.getItem(0).isEmpty()) {
-//            assert this.minecraft != null;
-//            assert this.minecraft.level != null;
-//            long gameTime = this.minecraft.level.getGameTime();
-//            int animationPeriod = 40; // ticks (2 segundos)
-//            boolean showingSyringe = (gameTime % animationPeriod) < (animationPeriod / 2);
-//
-//            ResourceLocation icon = showingSyringe
-//                    ? SYRINGE_ICON
-//                    : DUST_ICON;
-//
-//            int yOffset = showingSyringe ? 0 : 1;
-//
-//            SlotItemHandler leftSlot = menu.getLeftSlot();
-//            guiGraphics.blit(icon, leftPos + leftSlot.x, topPos + leftSlot.y + yOffset, 0, 0, 16, 16, 16, 16);
+//        Slots Index debug Code. is useful
+//        for (Slot slot : menu.slots) {
+//            guiGraphics.drawString(font, "" + slot.index, leftPos + slot.x, topPos + slot.y, Color.WHITE.getRGB(), false);
 //        }
     }
 
     @Override
     protected void renderLabels(@NotNull GuiGraphics pGuiGraphics, int mouseX, int mouseY) {
         super.renderLabels(pGuiGraphics, mouseX, mouseY);
-        pGuiGraphics.drawString(font, getMachineState(level, pos), titleLabelX, titleLabelY + 10, -12829636, false);
+//        pGuiGraphics.drawString(font, getMachineState(level, pos), titleLabelX, titleLabelY + 10, -12829636, false);
         if (catalyzer.isSlotFull(1)) {
             SlotItemHandler rightSlot = (SlotItemHandler) menu.getOutputSlot();
             pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.catalyzer_gui.label_full"), rightSlot.x, rightSlot.y - 10, -12829636, false);
         }
-        //pGuiGraphics.drawString(font, getRecipeState(level, pos), 90, 34, -12829636, false);
     }
 }

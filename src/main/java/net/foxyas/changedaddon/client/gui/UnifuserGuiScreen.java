@@ -18,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec2;
+import net.minecraftforge.items.SlotItemHandler;
 import net.zaharenko424.cmrs.client.gui.widget.CyclingSlotBackgroundWidget;
 import org.jetbrains.annotations.NotNull;
 
@@ -105,7 +106,7 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         super.renderTooltip(pGuiGraphics, pX, pY);
         HashMap<Slot, List<Component>> slotToolTips = getSlotToolTips();
         boolean carriedItemIsEmptyOrIsNotSelected = this.menu.getCarried().isEmpty() || (hoveredSlot != null && !this.menu.getCarried().equals(hoveredSlot.getItem()));
-        if (carriedItemIsEmptyOrIsNotSelected && this.hoveredSlot != null) {
+        if (carriedItemIsEmptyOrIsNotSelected && this.hoveredSlot != null && !this.hoveredSlot.hasItem()) {
             for (List<Component> slotComponents : slotToolTips.entrySet().stream().filter(entry -> hoveredSlot == entry.getKey()).map(Map.Entry::getValue).toList()) {
                 ItemStack itemstack = this.hoveredSlot.getItem();
                 pGuiGraphics.renderTooltip(this.font, slotComponents, itemstack.getTooltipImage(), itemstack, pX, pY);
@@ -133,10 +134,18 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         guiGraphics.setColor(1, 1, 1, 1);
         guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth + 30, this.imageHeight);
 
+        int guiIconsUOffset = this.imageWidth + 1;
         if (unifuser.recipeProgress > 0) {
             int recipeProgress = (int) (28 * (unifuser.recipeProgress / 100));
-            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 75, this.topPos + 40, this.imageWidth + 1, 0, recipeProgress, 11, this.imageWidth + 30, this.imageHeight);
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 75, this.topPos + 40, guiIconsUOffset, 0, recipeProgress, 11, this.imageWidth + 30, this.imageHeight);
         }
+
+        // Slot in: 165x, 5y
+        // Colors in:
+        // (Green) 176x, 17y
+        // (Red) 181x, 17y
+        int machineState = unifuser.startRecipe ? 0 : 5;
+        guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 165, this.topPos + 5, guiIconsUOffset + machineState, 16, 5, 5, this.imageWidth + 30, this.imageHeight);
 
 //        guiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/unifusergui_new.png"), this.leftPos, this.topPos, 0, 0, 200, 187, 200, 187);
 //
@@ -151,10 +160,14 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
 
     @Override
     protected void renderLabels(@NotNull GuiGraphics pGuiGraphics, int mouseX, int mouseY) {
-        pGuiGraphics.drawString(font, getMachineState(level, pos), 9, 10, -12829636, false);
-        if (menu.getUnifuser().isSlotFull(3))
-            pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.unifuser_gui.label_full"), 153, 78, -12829636, false);
-        pGuiGraphics.drawString(font, getRecipeState(level, pos), 89, 47, -12829636, false);
+        super.renderLabels(pGuiGraphics, mouseX, mouseY);
+        pGuiGraphics.drawString(font, getMachineState(level, pos), titleLabelX, titleLabelY + 10, -12829636, false);
+        if (menu.getUnifuser().isSlotFull(3)) {
+            SlotItemHandler outputSlot = (SlotItemHandler) menu.getOutputSlot();
+            pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.unifuser_gui.label_full"), outputSlot.x, outputSlot.y - 10, -12829636, false);
+        }
+
+        //pGuiGraphics.drawString(font, getRecipeState(level, pos), 89, 47, -12829636, false);
     }
 
     private ItemStack getBlockItem(int index) {
