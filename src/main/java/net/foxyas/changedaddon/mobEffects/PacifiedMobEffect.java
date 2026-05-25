@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.potion;
+package net.foxyas.changedaddon.mobEffects;
 
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.ChangedEntity;

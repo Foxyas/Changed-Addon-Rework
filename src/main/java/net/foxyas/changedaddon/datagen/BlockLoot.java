@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -43,6 +44,7 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.*;
 public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
 
     public static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
+    public static final float[] NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
     public BlockLoot() {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags());
@@ -139,6 +141,11 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
         coverBlockDrop(COVER_BLOCK.get());
         coverBlockDropSelfOrOther(DARK_LATEX_COVER_BLOCK.get(), ChangedItems.DARK_LATEX_GOO.get());
         coverBlockDropSelfOrOther(WHITE_LATEX_COVER_BLOCK.get(), ChangedItems.WHITE_LATEX_GOO.get());
+
+        add(LUMINARA_LEAVES.get(), (block) -> {
+            return this.createLeavesDrops(block, LUMINARA_BLOOM.get(), NORMAL_LEAVES_SAPLING_CHANCES);
+        });
+        dropSelf(LUMINARA_LOG.get());
     }
 
     private void coverBlockDrop(MultifaceBlock cover) {

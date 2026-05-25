@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -20,6 +21,8 @@ import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class UnifuserGuiMenu extends AbstractMenu {
+
+    public static final int POWER_BUTTON_ID = 0;
 
     public final Level level;
     public final Player entity;
@@ -100,6 +103,25 @@ public class UnifuserGuiMenu extends AbstractMenu {
     @Override
     public boolean stillValid(@NotNull Player player) {
         return AbstractContainerMenu.stillValid(this.access, player, this.unifuser.getBlockState().getBlock());
+    }
+
+    @Override
+    public boolean clickMenuButton(@NotNull Player player, int pId) {
+        if (pId == POWER_BUTTON_ID) {
+            Component customName = unifuser.getCustomName();
+            if (customName == null) customName = unifuser.getDisplayName();
+            String name = customName.getString();
+            unifuser.startRecipe = !unifuser.startRecipe;
+
+            if (unifuser.startRecipe) {
+                player.displayClientMessage(Component.literal("you start the " + name), true);
+            } else {
+                player.displayClientMessage(Component.literal("you stop the " + name), true);
+            }
+            //unifuser.setChanged();
+            return true;
+        }
+        return super.clickMenuButton(player, pId);
     }
 
     public BlockPos getBlockPos() {

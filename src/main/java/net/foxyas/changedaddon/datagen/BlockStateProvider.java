@@ -43,6 +43,10 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + loc.getPath());
     }
 
+    private static ResourceLocation blockLoc(ResourceLocation loc, String path) {
+        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + path + "/" + loc.getPath());
+    }
+
     private static int getXRotation(Direction dir) {
         return switch (dir) {
             case DOWN -> -90;
@@ -105,6 +109,9 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         createMultiface(COVER_BLOCK, false);
         createMultiface(DARK_LATEX_COVER_BLOCK, false);
         createMultiface(WHITE_LATEX_COVER_BLOCK, false);
+
+        simplePillarBlock(LUMINARA_LOG, "luminara_tree");
+        simpleBlock(LUMINARA_LEAVES);
 
         largeLuminarCrystalAnimatedWithItem();
     }
@@ -203,6 +210,36 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         );
 
         simpleBlockItem(block, models[itemModelIndex]);
+    }
+
+    private void simplePillarBlock(RegistryObject<? extends RotatedPillarBlock> pillar) {
+        simplePillarBlock(pillar, "");
+    }
+
+    private void simplePillarBlock(RegistryObject<? extends RotatedPillarBlock> pillar, String customPath) {
+        RotatedPillarBlock block = pillar.get();
+        ResourceLocation blockId = pillar.getId();
+
+        // Defines the textures paths: "block/your_block_side" and "block/your_block_top"
+        ResourceLocation blockLoc = customPath.isEmpty() ? blockLoc(blockId) : blockLoc(blockId, customPath);
+        ResourceLocation sideTexture = withSuffix(blockLoc, "_side");
+        ResourceLocation topTexture = withSuffix(blockLoc, "_top");
+
+        // Generates the .json model file automatically using forge's cubePillar builder
+        ModelFile model = models().cubeColumn(blockId.getPath(), sideTexture, topTexture);
+
+        // Maps the BlockState AXIS property to the correct model rotations
+        getVariantBuilder(block).forAllStatesExcept(state ->
+                        switch (state.getValue(BlockStateProperties.AXIS)) {
+                            case Y -> new ConfiguredModel[]{new ConfiguredModel(model)};
+                            case Z -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 0, false)};
+                            case X -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 90, false)};
+                        },
+                BlockStateProperties.WATERLOGGED // Ignores waterlogged property if present to avoid duplicating state variants
+        );
+
+        // Automatically generates the item model corresponding to this pillar
+        simpleBlockItem(block, model);
     }
 
     private ConfiguredModel[] configure(ModelFile[] models, Function<ModelFile, ConfiguredModel> config) {

@@ -4,6 +4,8 @@ import net.foxyas.changedaddon.block.entity.CatalyzerBlockEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMenus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -11,13 +13,15 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class CatalyzerGuiMenu extends AbstractMenu {
+import static net.foxyas.changedaddon.menu.UnifuserGuiMenu.POWER_BUTTON_ID;
 
+public class CatalyzerGuiMenu extends AbstractMenu {
     public final Level level;
     public final Player entity;
     private final ContainerLevelAccess access;
@@ -79,5 +83,24 @@ public class CatalyzerGuiMenu extends AbstractMenu {
 
     public BlockPos getBlockPos() {
         return blockPos;
+    }
+
+    @Override
+    public boolean clickMenuButton(@NotNull Player player, int pId) {
+        if (pId == POWER_BUTTON_ID) {
+            Component customName = catalyzer.getCustomName();
+            if (customName == null) customName = catalyzer.getDisplayName();
+            String name = customName.getString();
+            catalyzer.startRecipe = !catalyzer.startRecipe;
+
+            if (catalyzer.startRecipe) {
+                player.displayClientMessage(Component.literal("you start the " + name), true);
+            } else {
+                player.displayClientMessage(Component.literal("you stop the " + name), true);
+            }
+            //catalyzer.setChanged();
+            return true;
+        }
+        return super.clickMenuButton(player, pId);
     }
 }

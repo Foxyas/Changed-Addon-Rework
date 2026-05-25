@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.potion;
+package net.foxyas.changedaddon.mobEffects;
 
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;

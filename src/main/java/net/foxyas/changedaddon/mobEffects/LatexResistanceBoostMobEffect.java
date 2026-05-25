@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.potion;
+package net.foxyas.changedaddon.mobEffects;
 
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.minecraft.world.effect.MobEffect;

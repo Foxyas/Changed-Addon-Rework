@@ -1,0 +1,18 @@
+{
+  "parent": "changed_addon:customs/emissive_cube",
+  "textures": {
+    "down": "#end",
+    "east": "#side",
+    "emissive_down": "#end_glow",
+    "emissive_east": "#side_glow",
+    "emissive_north": "#side_glow",
+    "emissive_south": "#side_glow",
+    "emissive_up": "#end_glow",
+    "emissive_west": "#side_glow",
+    "north": "#side",
+    "particle": "#side",
+    "south": "#side",
+    "up": "#end",
+    "west": "#side"
+  }
+}

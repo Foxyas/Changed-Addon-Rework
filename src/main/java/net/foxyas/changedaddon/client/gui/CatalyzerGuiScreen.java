@@ -2,14 +2,17 @@ package net.foxyas.changedaddon.client.gui;
 
 import net.foxyas.changedaddon.block.entity.CatalyzerBlockEntity;
 import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
+import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
@@ -17,10 +20,8 @@ import net.minecraftforge.items.SlotItemHandler;
 import net.zaharenko424.cmrs.client.gui.widget.CyclingSlotBackgroundWidget;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.List;
 
-import static net.foxyas.changedaddon.client.gui.UnifuserGuiScreen.getMachineState;
 import static net.foxyas.changedaddon.client.gui.util.IconsUtils.DUST_ICON_ITEM;
 import static net.foxyas.changedaddon.client.gui.util.IconsUtils.SYRINGE_ICON_ITEM;
 
@@ -31,6 +32,7 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
 
     // Widgets
     public final CyclingSlotBackgroundWidget cyclingSlot0BackgroundWidget;
+    public ImageButton powerButton;
 
     // Variables
     private final Level level;
@@ -62,6 +64,42 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
         super.init();
         cyclingSlot0BackgroundWidget.setScreenPos(new Vec2(leftPos, topPos));
         addRenderableWidget(cyclingSlot0BackgroundWidget);
+
+        // The position of your button relative to the GUI
+        int buttonX = this.leftPos + 165;
+        int buttonY = this.topPos + 5;
+        int buttonWidth = 5;
+        int buttonHeight = 5;
+
+        // Texture offsets (UV coordinates)
+        int guiIconsUOffset = this.imageWidth + 1;
+        int vOffset = 17; // The Y position of the icon in your texture
+        int yDiffTex = 0; // How many pixels to scroll down for the hovered state texture
+
+        this.powerButton = new ImageButton(
+                buttonX, buttonY,
+                buttonWidth, buttonHeight,
+                guiIconsUOffset, vOffset,
+                yDiffTex, // If hovered, it will shift down by 5 pixels on the V axis
+                BACKGROUND_TEXTURE,
+                this.imageWidth + 30, this.imageHeight, // Total texture width and height
+                (button) -> {
+                    assert this.minecraft != null;
+                    assert this.minecraft.gameMode != null;
+                    this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, UnifuserGuiMenu.POWER_BUTTON_ID);
+                }
+        ) {
+            @Override
+            public void renderWidget(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+                int guiIconsUOffset = CatalyzerGuiScreen.this.imageWidth + 1;
+                // If startRecipe is true, use U offset (Green/On), else shift by 5 pixels (Red/Off)
+                int machineStateU = catalyzer.startRecipe ? guiIconsUOffset : guiIconsUOffset + 5;
+
+                this.renderTexture(pGuiGraphics, this.resourceLocation, this.getX(), this.getY(), machineStateU, this.yTexStart, this.yDiffTex, this.width, this.height, this.textureWidth, this.textureHeight);
+            }
+        };
+
+        this.addRenderableWidget(this.powerButton);
     }
 
     @Override
@@ -100,8 +138,8 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
         // Colors in:
         // (Green) 176x, 17y
         // (Red) 181x, 17y
-        int machineState = catalyzer.startRecipe ? 0 : 5;
-        guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 165, this.topPos + 5, guiIconsUOffset + machineState, 16, 5, 5, this.imageWidth + 30, this.imageHeight);
+        //int machineState = catalyzer.startRecipe ? 0 : 5;
+        //guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 165, this.topPos + 5, guiIconsUOffset + machineState, 17, 5, 5, this.imageWidth + 30, this.imageHeight);
 
 //        Slots Index debug Code. is useful
 //        for (Slot slot : menu.slots) {

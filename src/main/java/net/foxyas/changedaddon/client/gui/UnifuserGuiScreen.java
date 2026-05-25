@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.block.entity.UnifuserBlockEntity;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -41,6 +42,7 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
     public final CyclingSlotBackgroundWidget cyclingSlot1BackgroundWidget;
     public final CyclingSlotBackgroundWidget cyclingSlot2BackgroundWidget;
     public final List<CyclingSlotBackgroundWidget> cyclingSlotBackgroundWidgets = new ArrayList<>();
+    public ImageButton powerButton;
 
     // Variables
     private final UnifuserGuiMenu menu;
@@ -68,6 +70,42 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         super.init();
         cyclingSlotBackgroundWidgets.forEach(widget -> widget.setScreenPos(new Vec2(leftPos, topPos)));
         cyclingSlotBackgroundWidgets.forEach(this::addRenderableWidget);
+
+        // The position of your button relative to the GUI
+        int buttonX = this.leftPos + 165;
+        int buttonY = this.topPos + 5;
+        int buttonWidth = 5;
+        int buttonHeight = 5;
+
+        // Texture offsets (UV coordinates)
+        int guiIconsUOffset = this.imageWidth + 1;
+        int vOffset = 17; // The Y position of the icon in your texture
+        int yDiffTex = 0; // How many pixels to scroll down for the hovered state texture
+
+        this.powerButton = new ImageButton(
+                buttonX, buttonY,
+                buttonWidth, buttonHeight,
+                guiIconsUOffset, vOffset,
+                yDiffTex, // If hovered, it will shift down by 5 pixels on the V axis
+                BACKGROUND_TEXTURE,
+                this.imageWidth + 30, this.imageHeight, // Total texture width and height
+                (button) -> {
+                    assert this.minecraft != null;
+                    assert this.minecraft.gameMode != null;
+                    this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, UnifuserGuiMenu.POWER_BUTTON_ID);
+                }
+        ) {
+            @Override
+            public void renderWidget(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+                int guiIconsUOffset = UnifuserGuiScreen.this.imageWidth + 1;
+                // If startRecipe is true, use U offset (Green/On), else shift by 5 pixels (Red/Off)
+                int machineStateU = unifuser.startRecipe ? guiIconsUOffset : guiIconsUOffset + 5;
+
+                this.renderTexture(pGuiGraphics, this.resourceLocation, this.getX(), this.getY(), machineStateU, this.yTexStart, this.yDiffTex, this.width, this.height, this.textureWidth, this.textureHeight);
+            }
+        };
+
+        this.addRenderableWidget(this.powerButton);
     }
 
     @Override
@@ -144,16 +182,8 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         // Colors in:
         // (Green) 176x, 17y
         // (Red) 181x, 17y
-        int machineState = unifuser.startRecipe ? 0 : 5;
-        guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 165, this.topPos + 5, guiIconsUOffset + machineState, 16, 5, 5, this.imageWidth + 30, this.imageHeight);
-
-//        guiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/unifusergui_new.png"), this.leftPos, this.topPos, 0, 0, 200, 187, 200, 187);
-//
-//        guiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/empty_bar.png"), this.leftPos + 84, this.topPos + 59, 0, 0, 32, 12, 32, 12);
-//
-//        int progressInt = (int) (menu.getUnifuser().recipeProgress / 3.57);
-//
-//        guiGraphics.blit(ResourceLocation.parse("changed_addon:textures/screens/bar_full.png"), this.leftPos + 84 + 2, this.topPos + 59 + 2, 0, 0, progressInt, 8, progressInt, 8);
+        //int machineState = unifuser.startRecipe ? 0 : 5;
+        //guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 165, this.topPos + 5, guiIconsUOffset + machineState, 17, 5, 5, this.imageWidth + 30, this.imageHeight);
 
         RenderSystem.disableBlend();
     }
@@ -161,13 +191,10 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
     @Override
     protected void renderLabels(@NotNull GuiGraphics pGuiGraphics, int mouseX, int mouseY) {
         super.renderLabels(pGuiGraphics, mouseX, mouseY);
-        pGuiGraphics.drawString(font, getMachineState(level, pos), titleLabelX, titleLabelY + 10, -12829636, false);
         if (menu.getUnifuser().isSlotFull(3)) {
             SlotItemHandler outputSlot = (SlotItemHandler) menu.getOutputSlot();
             pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.unifuser_gui.label_full"), outputSlot.x, outputSlot.y - 10, -12829636, false);
         }
-
-        //pGuiGraphics.drawString(font, getRecipeState(level, pos), 89, 47, -12829636, false);
     }
 
     private ItemStack getBlockItem(int index) {
