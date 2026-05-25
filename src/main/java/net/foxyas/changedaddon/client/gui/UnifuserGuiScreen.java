@@ -175,7 +175,7 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         int guiIconsUOffset = this.imageWidth + 1;
         if (unifuser.recipeProgress > 0) {
             int recipeProgress = (int) (28 * (unifuser.recipeProgress / 100));
-            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 75, this.topPos + 40, guiIconsUOffset, 0, recipeProgress, 11, this.imageWidth + 30, this.imageHeight);
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 75, this.topPos + menu.getSyringeSlot().y + 2, guiIconsUOffset, 0, recipeProgress, 11, this.imageWidth + 30, this.imageHeight);
         }
 
         // Slot in: 165x, 5y
@@ -185,7 +185,7 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         //int machineState = unifuser.startRecipe ? 0 : 5;
         //guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 165, this.topPos + 5, guiIconsUOffset + machineState, 17, 5, 5, this.imageWidth + 30, this.imageHeight);
 
-        RenderSystem.disableBlend();
+        //RenderSystem.disableBlend();
     }
 
     @Override

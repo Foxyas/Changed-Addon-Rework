@@ -58,7 +58,7 @@ public class UnifuserGuiMenu extends AbstractMenu {
 
         this.recipeManager = inv.player.level().getRecipeManager();
 
-        SlotItemHandler slot1 = new SlotItemHandler(internal, 0, 26, 20) {
+        SlotItemHandler slot1 = new SlotItemHandler(internal, 0, 26, 16) {
 
             @Override
             public boolean mayPlace(@NotNull ItemStack itemstack) {
@@ -68,10 +68,10 @@ public class UnifuserGuiMenu extends AbstractMenu {
 
         this.topSlot = (SlotItemHandler) addSlot(slot1);
 
-        SlotItemHandler slot2 = new SlotItemHandler(internal, 1, 26, 56);
+        SlotItemHandler slot2 = new SlotItemHandler(internal, 1, 26, 52);
         this.bottomSlot = (SlotItemHandler) addSlot(slot2);
 
-        SlotItemHandler slot3 = new SlotItemHandler(internal, 2, 53, 38) {
+        SlotItemHandler slot3 = new SlotItemHandler(internal, 2, 53, 34) {
 
             @Override
             public boolean mayPlace(@NotNull ItemStack itemstack) {
@@ -81,7 +81,7 @@ public class UnifuserGuiMenu extends AbstractMenu {
         };
         this.syringeSlot = (SlotItemHandler) addSlot(slot3);
 
-        SlotItemHandler slot4 = new SlotItemHandler(internal, 3, 116, 38) {
+        SlotItemHandler slot4 = new SlotItemHandler(internal, 3, 116, 34) {
 
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
