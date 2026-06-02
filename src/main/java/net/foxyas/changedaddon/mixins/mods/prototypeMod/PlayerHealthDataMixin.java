@@ -41,6 +41,6 @@ public abstract class PlayerHealthDataMixin {
     @Unique
     private void changedAddonRework$GrowAllLimbs() {
         PlayerHealthData self = (PlayerHealthData) (Object) this;
-        this.limbStats.keySet().forEach(limb -> self.setlimbAmputated(limb, false));
+        this.limbStats.keySet().forEach(limb -> self.getLimb(limb).setAmputated(false));
     }
 }

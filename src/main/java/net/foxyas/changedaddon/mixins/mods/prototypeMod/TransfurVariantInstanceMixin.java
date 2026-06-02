@@ -1,16 +1,15 @@
 package net.foxyas.changedaddon.mixins.mods.prototypeMod;
 
-import net.foxyas.changedaddon.compatibility.painPrototype.LimbStatisticsExtensor;
+import net.foxyas.changedaddon.extension.RequiredMods;
 import net.foxyas.changedaddon.util.EntityUtils;
 import net.foxyas.changedaddon.util.MathFormulasUtils;
-import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
-import net.zaharenko424.casualties_cubed.limbs.Limb;
-import net.zaharenko424.casualties_cubed.limbs.LimbStatistics;
-import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.player.Player;
+import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
+import net.zaharenko424.casualties_cubed.limbs.Limb;
+import net.zaharenko424.casualties_cubed.limbs.LimbStatistics;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -67,18 +66,7 @@ public class TransfurVariantInstanceMixin {
                 Limb targetLimb = (root == null || !self.isAmputated(root)) ? limb : root;
 
                 LimbStatistics stats = limbStats.get(targetLimb);
-                float currentProgress = stats.getRegrowthProgress();
-
-                if (currentProgress < maxRegrow) {
-                    // Aplica o bônus escalonado, limitando ao máximo de 1200
-                    if (stats instanceof LimbStatisticsExtensor limbStatisticsExtensor) {
-                        limbStatisticsExtensor.setRegrowthProgress(Math.min(maxRegrow, currentProgress + progressBonus));
-                        playedSound = true;
-                        if (stats.getRegrowthProgress() >= maxRegrow) {
-                            self.setlimbAmputated(targetLimb, false);
-                        }
-                    }
-                }
+                stats.progressRegrowth(progressBonus);
             }
 
             if (playedSound) {

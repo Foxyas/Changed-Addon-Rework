@@ -8,7 +8,6 @@
   "mixins": [
     "mods.create.BeltMovementHandlerMixin",
     "mods.nean.AvaliElytraAnimationMixin",
-    "mods.prototypeMod.LimbStatisticsMixin",
     "mods.prototypeMod.PlayerHealthDataAccessor",
     "mods.prototypeMod.TransfurVariantInstanceMixin"
   ],
