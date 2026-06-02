@@ -32,7 +32,6 @@ public class LynxEntity extends AbstractSwimmableEntity implements PowderSnowWal
         super(type, world);
         xpReward = 0;
         setNoAi(false);
-        setPersistenceRequired();
         setAttributes(this.getAttributes());
     }
 

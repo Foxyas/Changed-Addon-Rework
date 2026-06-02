@@ -22,7 +22,7 @@ public class ChangedAddonOverlays {
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
         event.registerBelowAll(HAZARD_HELMET.getPath(), HazardSuitHelmetOverlay::renderHelmetOverlay);
-        event.registerAboveAll(UNTRANSFUR_PROGRESS.getPath(), UntransfurOverlayOverlay::renderUntransfurProgressOverlay);
+        event.registerAboveAll(UNTRANSFUR_PROGRESS.getPath(), UntransfurOverlay::renderUntransfurProgressOverlay);
         event.registerBelowAll(PAT_ICON.getPath(), PatOverlay::renderPatIconOverlay);
         event.registerBelowAll(PACIFIED_OVERLAY.getPath(), PacifiedVignetteOverlay::renderPacifiedVignetteOverlay);
         event.registerAboveAll(StopCuddlingHint.ID, StopCuddlingHint::render);

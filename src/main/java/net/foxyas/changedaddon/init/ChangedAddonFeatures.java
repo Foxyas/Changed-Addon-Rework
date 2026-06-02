@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.world.features.StructureTemplatePoolFeature;
 import net.foxyas.changedaddon.world.features.ores.PainiteOreFeature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -21,6 +22,7 @@ public class ChangedAddonFeatures {
     public static final DeferredRegister<Feature<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.FEATURES, ChangedAddonMod.MODID);
 
     public static final RegistryObject<PainiteOreFeature> PAINITE_ORE = register("painite_ore", PainiteOreFeature::new);
+    public static final RegistryObject<StructureTemplatePoolFeature> STRUCTURE_TEMPLATE_POOL_FEATURE = register("structure_template_pool_feature", StructureTemplatePoolFeature::new);
 
     private static <T extends Feature<?>> RegistryObject<T> register(String registryname, Supplier<T> feature) {
         return REGISTRY.register(registryname, feature);
@@ -36,7 +38,7 @@ public class ChangedAddonFeatures {
                 ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, id));
     }
 
-    public static class Configurations {
+    public static class ConfiguredFeatures {
         public static final ResourceKey<ConfiguredFeature<?, ?>> IRIDIUM_ORE_BURIED =
                 createConfigured("iridium_ore_buried");
 
@@ -46,11 +48,11 @@ public class ChangedAddonFeatures {
         public static final ResourceKey<ConfiguredFeature<?, ?>> IRIDIUM_ORE_SMALL =
                 createConfigured("iridium_ore_small");
 
-        public static final ResourceKey<ConfiguredFeature<?, ?>> PAINITE_ORE_CONFIG =
-                createConfigured("painite_ore");
+        public static final ResourceKey<ConfiguredFeature<?, ?>> PAINITE_ORE_BURIED =
+                createConfigured("painite_ore_buried");
     }
 
-    public static class Placements {
+    public static class PlacedFeatures {
 
         public static final ResourceKey<PlacedFeature> IRIDIUM_ORE_BURIED =
                 createPlaced("iridium_ore_buried");
@@ -61,7 +63,7 @@ public class ChangedAddonFeatures {
         public static final ResourceKey<PlacedFeature> IRIDIUM_ORE_SMALL =
                 createPlaced("iridium_ore_small");
 
-        public static final ResourceKey<PlacedFeature> PAINITE_ORE_PLACED =
-                createPlaced("painite_ore");
+        public static final ResourceKey<PlacedFeature> PAINITE_ORE_BURIED =
+                createPlaced("painite_ore_buried");
     }
 }

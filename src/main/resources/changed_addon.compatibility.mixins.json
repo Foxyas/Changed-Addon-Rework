@@ -6,7 +6,9 @@
   "refmap": "changed_addon.refmap.json",
   "plugin": "net.foxyas.changedaddon.mixins.compatibility.ChangedAddonMixinPlugin",
   "mixins": [
+    "mods.create.BeltMovementHandlerMixin",
     "mods.nean.AvaliElytraAnimationMixin",
+    "mods.prototypeMod.LimbStatisticsMixin",
     "mods.prototypeMod.PlayerHealthDataAccessor",
     "mods.prototypeMod.TransfurVariantInstanceMixin"
   ],

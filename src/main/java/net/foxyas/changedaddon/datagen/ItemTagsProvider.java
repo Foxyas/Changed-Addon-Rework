@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedTags;
 import net.ltxprogrammer.changed.init.ChangedItems;
@@ -46,6 +47,9 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
         tag(ChangedAddonTags.Items.MAKE_TRANSFUR_SAFE).add(Items.ENCHANTED_GOLDEN_APPLE);
         tag(ChangedAddonTags.Items.STABILIZER_TICKS).add(LUMINARA_BLOOM_PETALS.get());
 
+        tag(ChangedAddonTags.Items.UNIFUSER_RECIPE_CATALYST).add(ChangedAddonItems.CATALYZED_DNA.get(),
+                ChangedItems.BLOOD_SYRINGE.get(),
+                ChangedItems.LATEX_SYRINGE.get());
 
         tag(ChangedTags.AccessoryItems.FULL_BODY)
                 .add(HAZARD_BODY_SUIT.get());

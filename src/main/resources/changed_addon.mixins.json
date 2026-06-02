@@ -82,7 +82,8 @@
     "world.DataFixTypesMixin",
     "world.LevelStorageAccessMixin",
     "world.LevelStorageSourceMixin",
-    "world.PrimaryLevelDataMixin"
+    "world.PrimaryLevelDataMixin",
+    "worldgen.SinglePoolElementAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

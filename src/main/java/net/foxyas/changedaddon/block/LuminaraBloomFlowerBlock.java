@@ -36,14 +36,13 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class LuminaraBloomFlowerBlock extends FlowerBlock implements BonemealableBlock {
 
     public LuminaraBloomFlowerBlock() {
         super(ChangedAddonMobEffects.UNTRANSFUR, 60,
                 BlockBehaviour.Properties.copy(Blocks.POPPY)
-                        .emissiveRendering((state, blockGetter, blockPos) -> true)
-                        .hasPostProcess((state, blockGetter, blockPos) -> true)
                         .noCollission().dynamicShape().instabreak().sound(SoundType.GRASS));
     }
 
@@ -85,6 +84,13 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
                     }
                 }
             }
+        }
+    }
+
+    public void tryToGrowIntoATree(@NotNull ServerLevel level, BlockPos pos) {
+        Stream<BlockPos> blockPoses = FoxyasUtils.betweenClosedStreamSphere(pos, 2, 1);
+        for (BlockPos blockPos : blockPoses.toList()) {
+
         }
     }
 

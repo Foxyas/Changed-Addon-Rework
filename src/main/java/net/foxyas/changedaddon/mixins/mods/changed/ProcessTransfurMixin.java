@@ -2,8 +2,6 @@ package net.foxyas.changedaddon.mixins.mods.changed;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.simple.WolfyEntity;
 import net.foxyas.changedaddon.event.ProgressTransfurEvents;
@@ -12,6 +10,7 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -40,6 +39,12 @@ public class ProcessTransfurMixin {
     private static void cancelDamageHook(LivingAttackEvent event, CallbackInfo ci) {
         if (!(event.getSource().getEntity() instanceof LivingEntity sourceEntity))
             return;
+
+        if (EntityUtil.maybeGetOverlaying(event.getEntity()) instanceof WolfyEntity) {
+            if (sourceEntity instanceof Player player) {
+                ci.cancel();
+            }
+        }
 
         if (sourceEntity instanceof Player player) {
             TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);

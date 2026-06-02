@@ -1,11 +1,11 @@
 package net.foxyas.changedaddon.util;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundClearTitlesPacket;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.chat.Component;
 
 public class TitleUtils {
 
@@ -18,7 +18,7 @@ public class TitleUtils {
      * @param stay     Ticks for the text to remain visible.
      * @param fadeOut  Ticks for the fade-out animation.
      */
-    public static void sendTitle(ServerPlayer player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+    public static void sendTitle(ServerPlayer player, Component title, Component subtitle, int fadeIn, int stay, int fadeOut) {
         // Reset previous titles and timings to avoid overlapping or ghosting
         resetTitle(player);
 
@@ -27,12 +27,12 @@ public class TitleUtils {
 
         // Send subtitle first (Minecraft logic: subtitle is bound to the next title packet)
         if (subtitle != null) {
-            player.connection.send(new ClientboundSetSubtitleTextPacket(Component.literal(subtitle)));
+            player.connection.send(new ClientboundSetSubtitleTextPacket(subtitle));
         }
 
         // Send the main title
         if (title != null) {
-            player.connection.send(new ClientboundSetTitleTextPacket(Component.literal(title)));
+            player.connection.send(new ClientboundSetTitleTextPacket(title));
         }
     }
 

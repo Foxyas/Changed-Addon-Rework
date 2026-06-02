@@ -1,9 +1,9 @@
 package net.foxyas.changedaddon.mixins.mods.prototypeMod;
 
+import net.foxyas.changedaddon.compatibility.painPrototype.LimbStatisticsExtensor;
 import net.foxyas.changedaddon.util.EntityUtils;
 import net.foxyas.changedaddon.util.MathFormulasUtils;
 import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
-import net.zaharenko424.casualties_cubed.config.ServerConfig;
 import net.zaharenko424.casualties_cubed.limbs.Limb;
 import net.zaharenko424.casualties_cubed.limbs.LimbStatistics;
 import net.foxyas.changedaddon.extension.RequiredMods;
@@ -25,8 +25,6 @@ public class TransfurVariantInstanceMixin {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tickHook(CallbackInfo ci) {
-        if (!ServerConfig.LIMB_REGROWTH.get()) return;
-
         TransfurVariantInstance<?> self = (TransfurVariantInstance<?>) (Object) this;
         Player player = self.getHost();
         if (ProcessTransfur.isPlayerLatex(player)) {
@@ -45,7 +43,9 @@ public class TransfurVariantInstanceMixin {
 
             // --- Scaling ---
             // Health/Blood: 0.0 a 1.0 (ex: 5/5 = 1.0)
-            float healthRatio = self.getBloodVolume() / 5f; //EntityUtils.getHealthRatio(player);
+            float maxNormalBloodVolume = 5f;
+
+            float healthRatio = self.getBloodVolume() / maxNormalBloodVolume; //EntityUtils.getHealthRatio(player);
             // Food: 0.0 a 1.0 (ex: 20/20 = 1.0)
             float foodRatio = EntityUtils.getFoodRatio(player, null);
 
@@ -58,25 +58,30 @@ public class TransfurVariantInstanceMixin {
             float maxRegrow = 20 * 60;
             // ------------------------
 
-            boolean playSound = false;
+            boolean playedSound = false;
 
-            LimbStatistics stats;
             for (Limb limb : limbStats.keySet()) {
-                if (!self.isAmputated(limb) || self.isAmputated(limb.getConnectedTo())) continue;
+                if (!self.isAmputated(limb)) continue;
 
-                stats = limbStats.get(limb);
+                Limb root = limb.getConnectedTo();
+                Limb targetLimb = (root == null || !self.isAmputated(root)) ? limb : root;
 
-                stats.setRegrowthProgress(stats.getRegrowthProgress() + progressBonus);
-                playSound = true;
+                LimbStatistics stats = limbStats.get(targetLimb);
+                float currentProgress = stats.getRegrowthProgress();
 
-                // Aplica o bônus escalonado, limitando ao máximo de 1200
-                if (stats.getRegrowthProgress() >= maxRegrow) {
-                    stats.setAmputated(false);
-                    stats.setRegrowthProgress(0);
+                if (currentProgress < maxRegrow) {
+                    // Aplica o bônus escalonado, limitando ao máximo de 1200
+                    if (stats instanceof LimbStatisticsExtensor limbStatisticsExtensor) {
+                        limbStatisticsExtensor.setRegrowthProgress(Math.min(maxRegrow, currentProgress + progressBonus));
+                        playedSound = true;
+                        if (stats.getRegrowthProgress() >= maxRegrow) {
+                            self.setlimbAmputated(targetLimb, false);
+                        }
+                    }
                 }
             }
 
-            if (playSound) {
+            if (playedSound) {
                 player.playSound(ChangedSounds.TRANSFUR_BY_LATEX.get(), 1.0f, 1.0f);
             }
         });

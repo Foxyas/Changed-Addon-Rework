@@ -33,7 +33,6 @@ public class FoxtaFoxyEntity extends ChangedEntity implements GenderedEntity, Po
         super(type, world);
         xpReward = 5;
         this.setAttributes(this.getAttributes());
-        setPersistenceRequired();
     }
 
     public static AttributeSupplier.Builder createAttributes() {

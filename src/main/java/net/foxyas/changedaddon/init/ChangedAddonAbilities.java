@@ -2,7 +2,8 @@ package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.*;
-import net.foxyas.changedaddon.ability.handle.CounterDodgeType;
+import net.foxyas.changedaddon.ability.handle.dodgeTypes.TeleportDodgeType;
+import net.foxyas.changedaddon.ability.handle.dodgeTypes.CounterDodgeType;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.client.AbilityColors;
 import net.ltxprogrammer.changed.client.ChangedClient;
@@ -32,7 +33,7 @@ public class ChangedAddonAbilities {
     public static final RegistryObject<PsychicHoldAbility> PSYCHIC_HOLD = REGISTRY.register("psychic_hold", PsychicHoldAbility::new);
     public static final RegistryObject<ShockWaveAbility> SHOCKWAVE = REGISTRY.register("shock_wave", ShockWaveAbility::new);
     public static final RegistryObject<DodgeAbility> DODGE = REGISTRY.register("dodge", DodgeAbility::new);
-    public static final RegistryObject<DodgeAbility> TELEPORT_DODGE = REGISTRY.register("teleport_dodge", () -> new DodgeAbility(DodgeAbilityInstance.DodgeType.TELEPORT));
+    public static final RegistryObject<DodgeAbility> TELEPORT_DODGE = REGISTRY.register("teleport_dodge", () -> new DodgeAbility(TeleportDodgeType.INSTANCE));
     public static final RegistryObject<DodgeAbility> COUNTER_DODGE = REGISTRY.register("counter_dodge", () -> new DodgeAbility(1, CounterDodgeType.COUNTER));
     public static final RegistryObject<CarryAbility> CARRY = REGISTRY.register("carry", CarryAbility::new);
     public static final RegistryObject<DissolveAbility> DISSOLVE = REGISTRY.register("warp", DissolveAbility::new);

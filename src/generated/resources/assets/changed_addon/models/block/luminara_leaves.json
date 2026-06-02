@@ -1,0 +1,8 @@
+{
+  "parent": "changed_addon:customs/emissive_cube_all",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "all": "changed_addon:block/luminara_tree/luminara_leaves",
+    "all_glow": "changed_addon:block/luminara_tree/empty"
+  }
+}

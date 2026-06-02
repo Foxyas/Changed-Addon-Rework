@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.ChangedAdditionsModConflictWarningScreen;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
-import net.foxyas.changedaddon.command.*;
+import net.foxyas.changedaddon.command.ChangedAddonClientCommands;
 import net.foxyas.changedaddon.process.sounds.BossMusicHandler;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
@@ -48,6 +48,29 @@ public class ClientEvent {
             }
         }
     }
+
+//    private static final List<String> FULLBRIGHTS = Util.make(new ArrayList<>(), list -> {
+//      // Add The list of models ids here;
+//      // You can just leave the # in the end to tell "any layer".
+//      // list.add(ChangedAddonMod.layerLocation("example", "main").toString());
+//      // list.add("changed_addon:example#main");
+//      // list.add("changed_addon:example#");
+//    });
+//
+//    @SubscribeEvent
+//    public static void bakeModels(ModifyBakingResult e) {
+//        long time = System.currentTimeMillis();
+//        for (ResourceLocation id : e.getModels().keySet()) {
+//            if (FULLBRIGHTS.stream().anyMatch(str -> id.toString().startsWith(str)) || id.toString().contains("_light_emission")) {
+//                e.getModels().put(id, new BakedModelShadeLayerFullbright(e.getModels().get(id)));
+//            } else if (BlocksLightEmissionRegistry.getLightEmission(id) > 0) {
+//                e.getModels().put(id, new BakedModelShadeLayerDynamicBright(e.getModels().get(id), BlocksLightEmissionRegistry.getLightEmission(id)));
+//            }
+//        }
+//        if (!FULLBRIGHTS.isEmpty()) {
+//            ChangedAddonMod.LOGGER.info("Loaded emissive block models in {} ms", System.currentTimeMillis() - time);
+//        }
+//    }
 
 
     @SubscribeEvent

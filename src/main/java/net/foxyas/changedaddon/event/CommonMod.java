@@ -119,8 +119,8 @@ public class CommonMod {
                 (packet, contextSupplier) -> ClientPacketHandler.handlerVariableSync(packet, contextSupplier),
                 NetworkDirection.PLAY_TO_CLIENT);
 
-        ChangedAddonMod.addNetworkMessage(GeneratorGuiButtonPacket.class, GeneratorGuiButtonPacket::encode,
-                GeneratorGuiButtonPacket::new, GeneratorGuiButtonPacket::handler);
+        ChangedAddonMod.addNetworkMessage(ToggleButtonPacket.class, ToggleButtonPacket::encode,
+                ToggleButtonPacket::new, ToggleButtonPacket::handler);
 
         ChangedAddonMod.addNetworkMessage(PatKeyPacket.class, PatKeyPacket::encode, PatKeyPacket::new, PatKeyPacket::handler);
 

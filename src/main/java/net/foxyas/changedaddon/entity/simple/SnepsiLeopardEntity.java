@@ -29,7 +29,6 @@ public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
         super(type, world);
         xpReward = XP_REWARD_MEDIUM;
         this.setAttributes(getAttributes());
-        setPersistenceRequired();
     }
 
     public static AttributeSupplier.Builder createAttributes() {

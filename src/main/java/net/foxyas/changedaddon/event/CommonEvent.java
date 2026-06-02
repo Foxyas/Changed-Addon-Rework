@@ -11,6 +11,7 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.process.features.ProcessPatFeature;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
@@ -39,10 +40,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
@@ -79,6 +77,7 @@ import java.util.List;
 
 import static net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal.hasValidAlphaSleepGoal;
 import static net.foxyas.changedaddon.event.TransfurEvents.resolveChangedEntity;
+import static net.foxyas.changedaddon.process.features.ProcessPatFeature.*;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
 public class CommonEvent {
@@ -87,6 +86,16 @@ public class CommonEvent {
     //    @SubscribeEvent
     //    public static void addCustomDefaultAnimators(HumanoidAnimator.GatherAnimatorsEvent<ChangedEntity, AdvancedHumanoidModel<ChangedEntity>> event) {
     //    }
+
+    @SubscribeEvent
+    public static void makeAlphaNotDespawnWhenPatted(GlobalPatReactionEvent event) {
+        LivingEntity target = event.target;
+        if (target instanceof IAlphaAbleEntity iAlphaAbleEntity) {
+            if (iAlphaAbleEntity.isAlpha() && target instanceof Mob mob) {
+                mob.setPersistenceRequired();
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void denyBlockSpread(SpreadingLatexType.CoveringBlockEvent event) {
