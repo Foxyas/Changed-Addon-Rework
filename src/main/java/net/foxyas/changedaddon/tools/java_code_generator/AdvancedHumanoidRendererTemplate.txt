@@ -1,0 +1,33 @@
+package ${PackageName}.client.renderer.basic;
+
+import ${ModMainClass};
+import ${PackageName}.client.model.simple.${ModelName};
+import ${PackageName}.entity.simple.${EntityName}Entity;
+import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
+import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
+import net.ltxprogrammer.changed.client.renderer.model.armor.${ArmorModelClass};
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
+
+public class ${EntityName}Renderer extends AdvancedHumanoidRenderer<${EntityName}Entity, ${ModelName}> {
+    private static final ResourceLocation TEXTURE = ${ModMainClassName}.textureLoc("textures/entities/${TexturePath}");
+
+    public ${EntityName}Renderer(EntityRendererProvider.Context context) {
+        super(context, new ${ModelName}(context.bakeLayer(${ModelName}.LAYER_LOCATION)), ${ArmorModelClass}.MODEL_SET, 0.5F);
+
+        // Registering standard latex entity layers
+        this.addLayer(new LatexParticlesLayer<>(this, this.getModel()));
+        this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
+        this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer::glowingIrisColorLeft, CustomEyesLayer::glowingIrisColorRight, CustomEyesLayer::noRender, CustomEyesLayer::noRender));
+        this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
+    }
+
+    @Override
+    public @NotNull ResourceLocation getTextureLocation(@NotNull ${EntityName}Entity entity) {
+        return TEXTURE;
+    }
+}
