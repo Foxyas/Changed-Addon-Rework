@@ -126,7 +126,7 @@ dependencies {
         jarJar.ranged(it, "[0.4.1,)")
     }
 
-    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.20.1-f47.4.0:v0.15.4") {
+    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.20.1-f47.4.0:v0.15.5") {
         changing = true
     }//Changed
 

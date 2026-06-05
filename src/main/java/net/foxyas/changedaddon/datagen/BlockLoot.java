@@ -146,6 +146,7 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
             return this.createLeavesDrops(block, LUMINARA_BLOOM.get(), NORMAL_LEAVES_SAPLING_CHANCES);
         });
         dropSelf(LUMINARA_LOG.get());
+        dropSelf(STRIPPED_LUMINARA_LOG.get());
     }
 
     private void coverBlockDrop(MultifaceBlock cover) {

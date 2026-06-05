@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BlockModelProvider extends net.minecraftforge.client.model.generators.BlockModelProvider {
@@ -44,6 +45,30 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .texture("end_glow", "changed_addon:block/luminara_tree/luminara_log_top_glow")
                 .texture("side", "changed_addon:block/luminara_tree/luminara_log_side")
                 .texture("side_glow", "changed_addon:block/luminara_tree/luminara_log_side_glow")
+        ;
+
+        withExistingParent("active_" + ChangedAddonBlocks.LUMINARA_LOG.getId().getPath(), EMISSIVE_CUBE_COLUMN)
+                .renderType("minecraft:cutout")
+                .texture("end", "changed_addon:block/luminara_tree/active_luminara_log_top")
+                .texture("end_glow", "changed_addon:block/luminara_tree/active_luminara_log_top_glow")
+                .texture("side", "changed_addon:block/luminara_tree/active_luminara_log_side")
+                .texture("side_glow", "changed_addon:block/luminara_tree/active_luminara_log_side_glow")
+        ;
+
+        withExistingParent(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG.getId().getPath(), EMISSIVE_CUBE_COLUMN)
+                .renderType("minecraft:cutout")
+                .texture("end", "changed_addon:block/luminara_tree/stripped_luminara_log_top")
+                .texture("end_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_top_glow")
+                .texture("side", "changed_addon:block/luminara_tree/stripped_luminara_log_side")
+                .texture("side_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_side_glow")
+        ;
+
+        withExistingParent("active_" + ChangedAddonBlocks.STRIPPED_LUMINARA_LOG.getId().getPath(), EMISSIVE_CUBE_COLUMN)
+                .renderType("minecraft:cutout")
+                .texture("end", "changed_addon:block/luminara_tree/stripped_luminara_log_top")
+                .texture("end_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_top_glow")
+                .texture("side", "changed_addon:block/luminara_tree/stripped_luminara_log_side")
+                .texture("side_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_side_glow")
         ;
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_LEAVES.getId().getPath(), EMISSIVE_CUBE_ALL)
@@ -111,56 +136,68 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .shade(false) // Completely bypass directional shading shadows for full emissive layers
 
                 // Down Face Overlay
+                .shade(false)
                 .face(Direction.DOWN)
                 .texture("#emissive_down")
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .cullface(Direction.DOWN)
                 .color(0xFFFFFFFF)
-                .emissivity(15, 0) // Injects 15 Block Light, 0 Sky Light components via ForgeFaceData
+                .emissivity(15, 15) // Injects 15 Block Light, 0 Sky Light components via ForgeFaceData
                 .ao(false) // Ensures shadows from adjacent solid blocks don't darken the emission
                 .end()
 
                 // Up Face Overlay
+                .shade(false)
                 .face(Direction.UP)
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .texture("#emissive_up")
                 .cullface(Direction.UP)
                 .color(0xFFFFFFFF)
-                .emissivity(15, 0)
+                .emissivity(15, 15)
                 .ao(false)
                 .end()
 
                 // North Face Overlay
+                .shade(false)
                 .face(Direction.NORTH)
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .texture("#emissive_north")
                 .cullface(Direction.NORTH)
                 .color(0xFFFFFFFF)
-                .emissivity(15, 0)
+                .emissivity(15, 15)
                 .ao(false)
                 .end()
 
                 // South Face Overlay
+                .shade(false)
                 .face(Direction.SOUTH)
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .texture("#emissive_south")
                 .cullface(Direction.SOUTH)
                 .color(0xFFFFFFFF)
-                .emissivity(15, 0)
+                .emissivity(15, 15)
                 .ao(false)
                 .end()
 
                 // West Face Overlay
+                .shade(false)
                 .face(Direction.WEST)
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .texture("#emissive_west")
                 .cullface(Direction.WEST)
                 .color(0xFFFFFFFF)
-                .emissivity(15, 0)
+                .emissivity(15, 15)
                 .ao(false)
                 .end()
 
                 // East Face Overlay
+                .shade(false)
                 .face(Direction.EAST)
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .texture("#emissive_east")
                 .cullface(Direction.EAST)
                 .color(0xFFFFFFFF)
-                .emissivity(15, 0)
+                .emissivity(15, 15)
                 .ao(false)
                 .end()
                 .end();
@@ -246,12 +283,12 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .rescale(true)
                 .end()
                 .shade(false)
-                .face(net.minecraft.core.Direction.NORTH).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#glow").color(0xFFFFFFFF).emissivity(15, 0).ao(false).end()
+                .face(net.minecraft.core.Direction.NORTH).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#glow").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end()
                 .shade(false)
                 .face(net.minecraft.core.Direction.SOUTH)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .texture("#glow")
-                .color(0xFFFFFFFF).emissivity(15, 0).ao(false) // 15 block light, no ambient occlusion shadows
+                .color(0xFFFFFFFF).emissivity(15, 15).ao(false) // 15 block light, no ambient occlusion shadows
                 .end()
                 .end()
 
@@ -269,13 +306,13 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .face(net.minecraft.core.Direction.WEST)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .texture("#glow")
-                .color(0xFFFFFFFF).emissivity(15, 0).ao(false) // 15 block light, no ambient occlusion shadows
+                .color(0xFFFFFFFF).emissivity(15, 15).ao(false) // 15 block light, no ambient occlusion shadows
                 .end()
                 .shade(false)
                 .face(net.minecraft.core.Direction.EAST)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .texture("#glow")
-                .color(0xFFFFFFFF).emissivity(15, 0).ao(false) // 15 block light, no ambient occlusion shadows
+                .color(0xFFFFFFFF).emissivity(15, 15).ao(false) // 15 block light, no ambient occlusion shadows
                 .end()
                 .end();
     }

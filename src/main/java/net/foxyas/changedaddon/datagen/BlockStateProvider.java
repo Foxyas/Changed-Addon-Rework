@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.LuminarCrystalLarge;
+import net.foxyas.changedaddon.block.LuminaraLogBlock;
 import net.foxyas.changedaddon.block.StackableCanBlock;
 import net.foxyas.changedaddon.block.advanced.TimedKeypadBlock;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
@@ -18,10 +19,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.ModelProvider;
-import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Contract;
@@ -110,7 +108,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         createMultiface(DARK_LATEX_COVER_BLOCK, false);
         createMultiface(WHITE_LATEX_COVER_BLOCK, false);
 
-        simplePillarBlock(LUMINARA_LOG, "luminara_tree");
+        luminaraPillarBlock(LUMINARA_LOG, "");
+        luminaraPillarBlock(STRIPPED_LUMINARA_LOG, "");
         simpleBlock(LUMINARA_LEAVES);
 
         largeLuminarCrystalAnimatedWithItem();
@@ -129,6 +128,44 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
     private ResourceLocation withSuffix(ResourceLocation loc, String suffix) {
         return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), loc.getPath() + suffix);
+    }
+
+    private ResourceLocation withPrefix(ResourceLocation loc, String prefix) {
+        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), prefix + loc.getPath());
+    }
+
+    private ResourceLocation withSuffixOn(ResourceLocation loc, String part, String suffix) {
+        String path = loc.getPath();
+
+        if (!path.contains(part)) {
+            return loc;
+        }
+
+        int index = path.indexOf(part) + part.length();
+
+        String start = path.substring(0, index);
+        String end = path.substring(index);
+
+        String newPath = start + end + suffix;
+
+        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), newPath);
+    }
+
+    private ResourceLocation withPrefixOn(ResourceLocation loc, String part, String prefix) {
+        String path = loc.getPath();
+
+        if (!path.contains(part)) {
+            return loc;
+        }
+
+        int index = path.indexOf(part) + part.length();
+
+        String start = path.substring(0, index);
+        String end = path.substring(index);
+
+        String newPath = start + prefix + end;
+
+        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), newPath);
     }
 
     private void simpleBlock(RegistryObject<? extends Block> block, Property<?>... ignore) {
@@ -242,6 +279,38 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         simpleBlockItem(block, model);
     }
 
+    private void luminaraPillarBlock(RegistryObject<? extends RotatedPillarBlock> pillar, String customPath) {
+        RotatedPillarBlock block = pillar.get();
+        ResourceLocation blockId = pillar.getId();
+
+        ResourceLocation blockLoc = customPath.isEmpty() ? blockLoc(blockId) : blockLoc(blockId, customPath);
+
+        ModelFile defaultModel = models().getExistingFile(blockLoc);
+
+        // Maps the BlockState AXIS property to the correct model rotations
+        getVariantBuilder(block).forAllStatesExcept(state -> {
+                    ModelFile model = defaultModel;
+                    if (state.getValue(LuminaraLogBlock.ACTIVE)) {
+//                        String id = pillar.getId().toString();
+//                        model = models().cubeColumn("active_" + blockId.getPath(),
+//                                withPrefixOn(sideTexture, id, "active_"),
+//                                withPrefixOn(topTexture, id, "active_"));
+                        model = models().getExistingFile(blockLoc(withPrefix(blockId, "active_")));
+                    }
+
+                    return switch (state.getValue(BlockStateProperties.AXIS)) {
+                        case Y -> new ConfiguredModel[]{new ConfiguredModel(model)};
+                        case Z -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 0, false)};
+                        case X -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 90, false)};
+                    };
+                },
+                BlockStateProperties.WATERLOGGED // Ignores waterlogged property if present to avoid duplicating state variants
+        );
+
+        // Automatically generates the item model corresponding to this pillar
+        simpleBlockItem(block, defaultModel);
+    }
+
     private ConfiguredModel[] configure(ModelFile[] models, Function<ModelFile, ConfiguredModel> config) {
         ConfiguredModel[] out = new ConfiguredModel[models.length];
         for (int i = 0; i < models.length; i++) {
@@ -335,4 +404,61 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         if (generatedItem)
             itemModels().getBuilder(BuiltInRegistries.ITEM.getKey(block.get().asItem()).getPath()).parent(model);
     }
+
+
+    public BlockModelBuilder emissiveCube(String name,
+                                          ResourceLocation down,
+                                          ResourceLocation up,
+                                          ResourceLocation north,
+                                          ResourceLocation south,
+                                          ResourceLocation east,
+                                          ResourceLocation west,
+                                          ResourceLocation emissive_down,
+                                          ResourceLocation emissive_up,
+                                          ResourceLocation emissive_north,
+                                          ResourceLocation emissive_south,
+                                          ResourceLocation emissive_east,
+                                          ResourceLocation emissive_west
+
+    ) {
+        return models().withExistingParent(name, BlockModelProvider.EMISSIVE_CUBE)
+                .texture("down", down)
+                .texture("up", up)
+                .texture("north", north)
+                .texture("south", south)
+                .texture("east", east)
+                .texture("west", west)
+                .texture("emissive_down", down)
+                .texture("emissive_up", up)
+                .texture("emissive_north", north)
+                .texture("emissive_south", south)
+                .texture("emissive_east", east)
+                .texture("emissive_west", west);
+    }
+
+
+    public BlockModelBuilder emissiveCubeAll(String name, ResourceLocation sides, ResourceLocation glowSides) {
+        return models().withExistingParent(name, BlockModelProvider.EMISSIVE_CUBE_ALL)
+                .texture("all", sides)
+                .texture("all_glow", glowSides);
+    }
+
+    public BlockModelBuilder emissiveColumn(String name,
+                                            ResourceLocation side,
+                                            ResourceLocation glowSide,
+                                            ResourceLocation end,
+                                            ResourceLocation glowEnd) {
+        return models().withExistingParent(name, BlockModelProvider.EMISSIVE_CUBE_ALL)
+                .texture("end", end)
+                .texture("end_glow", glowEnd)
+                .texture("side", side)
+                .texture("side_glow", glowSide);
+    }
+
+    public BlockModelBuilder emissiveCross(String name, ResourceLocation cross, ResourceLocation glow) {
+        return models().withExistingParent(name, BlockModelProvider.EMISSIVE_CUBE_ALL)
+                .texture("cross", cross)
+                .texture("glow", glow);
+    }
+
 }

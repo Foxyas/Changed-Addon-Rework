@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "changed_addon:luminara_log"
+          "name": "changed_addon:stripped_luminara_log"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "changed_addon:blocks/luminara_log"
+  "random_sequence": "changed_addon:blocks/stripped_luminara_log"
 }

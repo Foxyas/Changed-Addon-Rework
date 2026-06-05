@@ -1,0 +1,10 @@
+{
+  "parent": "changed_addon:customs/emissive_cube_column",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "end": "changed_addon:block/luminara_tree/stripped_luminara_log_top",
+    "end_glow": "changed_addon:block/luminara_tree/stripped_luminara_log_top_glow",
+    "side": "changed_addon:block/luminara_tree/stripped_luminara_log_side",
+    "side_glow": "changed_addon:block/luminara_tree/stripped_luminara_log_side_glow"
+  }
+}

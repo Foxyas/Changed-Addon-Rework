@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "active=false,axis=x": {
+      "model": "changed_addon:block/stripped_luminara_log",
+      "x": 90,
+      "y": 90
+    },
+    "active=false,axis=y": {
+      "model": "changed_addon:block/stripped_luminara_log"
+    },
+    "active=false,axis=z": {
+      "model": "changed_addon:block/stripped_luminara_log",
+      "x": 90
+    },
+    "active=true,axis=x": {
+      "model": "changed_addon:block/active_stripped_luminara_log",
+      "x": 90,
+      "y": 90
+    },
+    "active=true,axis=y": {
+      "model": "changed_addon:block/active_stripped_luminara_log"
+    },
+    "active=true,axis=z": {
+      "model": "changed_addon:block/active_stripped_luminara_log",
+      "x": 90
+    }
+  }
+}

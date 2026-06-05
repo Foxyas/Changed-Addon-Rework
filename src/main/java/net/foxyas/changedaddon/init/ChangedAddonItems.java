@@ -44,6 +44,8 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> CHANGED_BOOK = REGISTRY.register("changedbook", ChangedBookItem::new);
     public static final RegistryObject<Item> LUMINARA_BLOOM = block(ChangedAddonBlocks.LUMINARA_BLOOM, new Item.Properties().rarity(Rarity.RARE));
     public static final RegistryObject<Item> LUMINARA_BLOOM_PETALS = REGISTRY.register("luminara_bloom_petals", LuminaraBloomPetalsItem::new);
+    public static final RegistryObject<Item> LUMINARA_LOG = block(ChangedAddonBlocks.LUMINARA_LOG, new Item.Properties());
+    public static final RegistryObject<Item> STRIPPED_LUMINARA_LOG = block(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG, new Item.Properties());
     public static final RegistryObject<Item> BIOMASS = REGISTRY.register("biomass", BiomassItem::new);
     public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", UnlatexbaseItem::new);
     public static final RegistryObject<Item> IMPURE_AMMONIA = REGISTRY.register("impure_ammonia", ImpureAmmoniaItem::new);

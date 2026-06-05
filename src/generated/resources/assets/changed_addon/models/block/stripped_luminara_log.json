@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "changed_addon:block/luminara_tree/stripped_luminara_log_top",
+    "side": "changed_addon:block/luminara_tree/stripped_luminara_log_side"
+  }
+}

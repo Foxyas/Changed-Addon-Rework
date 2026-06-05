@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -33,6 +32,10 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
+        tag(BlockTags.LOGS).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
+        tag(BlockTags.OVERWORLD_NATURAL_LOGS).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
+        tag(BlockTags.LOGS_THAT_BURN).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
+
         tag(Tags.Blocks.ORES).add(DEEPSLATE_IRIDIUM_ORE.get());
         tag(forgeOresIridium).add(DEEPSLATE_IRIDIUM_ORE.get());
         tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(DEEPSLATE_IRIDIUM_ORE.get());

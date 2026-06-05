@@ -70,6 +70,7 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<LuminaraBloomFlowerBlock> LUMINARA_BLOOM = REGISTRY.register("luminara_bloom", LuminaraBloomFlowerBlock::new);
     public static final RegistryObject<PottedLuminaraBloomFlowerBlock> POTTED_LUMINARA_BLOOM = REGISTRY.register("potted_luminara_bloom", PottedLuminaraBloomFlowerBlock::new);
     public static final RegistryObject<LuminaraLogBlock> LUMINARA_LOG = REGISTRY.register("luminara_log", LuminaraLogBlock::new);
+    public static final RegistryObject<StrippedLuminaraLogBlock> STRIPPED_LUMINARA_LOG = REGISTRY.register("stripped_luminara_log", StrippedLuminaraLogBlock::new);
     public static final RegistryObject<LuminaraLeavesBlock> LUMINARA_LEAVES = REGISTRY.register("luminara_leaves", LuminaraLeavesBlock::new);
     public static final RegistryObject<MultifaceBlock> COVER_BLOCK = REGISTRY.register("cover_block", () -> new MultifaceBlock(BlockBehaviour.Properties.copy(Blocks.VINE).mapColor(MapColor.TERRACOTTA_BLACK)) {
         @Override

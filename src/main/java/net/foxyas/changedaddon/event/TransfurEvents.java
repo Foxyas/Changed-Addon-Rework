@@ -54,6 +54,8 @@ public class TransfurEvents {
     @SubscribeEvent
     public static void WhenTransfurredByAlpha(AssimilationDecisionEvent event) {
         event.appendTransfurListener(newEntity -> {
+            if (newEntity == null) return;
+
             TransfurVariantInstance<?> instance = newEntity.getTransfurVariantInstance();
 
             if (instance == null || instance.transfurContext == null) return;
