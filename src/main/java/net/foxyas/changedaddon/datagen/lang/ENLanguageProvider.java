@@ -177,6 +177,9 @@ public class ENLanguageProvider extends LanguageProvider {
         addBlockFromId(DARK_LATEX_WOLF_PLUSHY);
         addBlockFromId(YELLOW_WOLF_CRYSTAL_BLOCK);
         addBlock(YELLOW_WOLF_CRYSTAL_SMALL, "Small Yellow Wolf Crystal");
+        addBlockFromId(ChangedAddonBlocks.LUMINARA_LOG);
+        addBlockFromId(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG);
+        addBlockFromId(ChangedAddonBlocks.LUMINARA_LEAVES);
 
         addAbility("advanced_hearing", "Advanced Hearing");
         addAbility("carry", "Carry");

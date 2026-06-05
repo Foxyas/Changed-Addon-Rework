@@ -212,21 +212,18 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
             case "fall", "cactus", "drown", "lightningBolt", "anvil", "dragonBreath", "wither", "witherSkull" -> {
                 return false;
             }
-            case "trident" -> {
-                maybeSendReactionToPlayer(source);
-                return super.hurt(source, amount * 0.5f);
-            }
+            case "trident" -> amount *= 0.5f;
         }
 
         if (source.is(DamageTypeTags.IS_FIRE)) {
-            maybeSendReactionToPlayer(source);
-            return super.hurt(source, amount * 0f);
+            amount = 0;
         }
 
         if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-            maybeSendReactionToPlayer(source);
-            return super.hurt(source, amount * 0.5f);
+            amount *= 0.5f;
         }
+
+        maybeSendReactionToPlayer(source);
 
         return super.hurt(source, amount);
     }

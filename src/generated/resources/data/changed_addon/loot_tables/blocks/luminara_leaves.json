@@ -37,7 +37,7 @@
                   ]
                 }
               ],
-              "name": "minecraft:air"
+              "name": "changed_addon:luminara_leaves"
             },
             {
               "type": "minecraft:item",

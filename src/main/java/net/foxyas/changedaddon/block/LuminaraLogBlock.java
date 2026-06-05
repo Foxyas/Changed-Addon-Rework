@@ -46,7 +46,8 @@ public class LuminaraLogBlock extends RotatedPillarBlock implements IStrippableL
     }
 
     @Override
-    public @Nullable Block getStripedVariant(BlockState state) {
-        return ChangedAddonBlocks.STRIPPED_LUMINARA_LOG.get();
+    public @Nullable BlockState getStripedVariant(BlockState originalState) {
+        StrippedLuminaraLogBlock block = ChangedAddonBlocks.STRIPPED_LUMINARA_LOG.get();
+        return block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, originalState.getValue(RotatedPillarBlock.AXIS)).setValue(ACTIVE, originalState.getValue(ACTIVE));
     }
 }

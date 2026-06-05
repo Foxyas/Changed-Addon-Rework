@@ -415,8 +415,8 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
                 ModelPart upperRightArm,
                 ModelPart lowerLeftArm,
                 ModelPart lowerRightArm,
-                //ModelPart tail,
-                //List<ModelPart> tailJoints,
+                ModelPart tail,
+                List<ModelPart> tailJoints,
                 List<ModelPart> upperLeftTentacle,
                 List<ModelPart> upperRightTentacle,
                 List<ModelPart> lowerLeftTentacle,
@@ -441,7 +441,7 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
                         .addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
                         .addAnimator((HumanoidAnimator.Animator<T, M>) new SwimAnim(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
                         .addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle))
-                        //.addPreset(sharkTail(tail, tailJoints))
+                        .addPreset(sharkTail(tail, tailJoints))
                         .addAnimator(new SharkHeadInitAnimator<>(head))
                         .addAnimator(new SharkHeadSwimAnimator<>(head))
                         .addAnimator(new DoubleArmBobAnimator<>(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))

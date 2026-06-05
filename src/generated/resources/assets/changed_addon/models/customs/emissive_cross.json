@@ -1,4 +1,5 @@
 {
+  "parent": "minecraft:block/cross",
   "ambientocclusion": false,
   "elements": [
     {
@@ -92,7 +93,8 @@
         "north": {
           "forge_data": {
             "ambient_occlusion": false,
-            "block_light": 15
+            "block_light": 15,
+            "sky_light": 15
           },
           "texture": "#glow",
           "uv": [
@@ -105,7 +107,8 @@
         "south": {
           "forge_data": {
             "ambient_occlusion": false,
-            "block_light": 15
+            "block_light": 15,
+            "sky_light": 15
           },
           "texture": "#glow",
           "uv": [
@@ -143,7 +146,8 @@
         "east": {
           "forge_data": {
             "ambient_occlusion": false,
-            "block_light": 15
+            "block_light": 15,
+            "sky_light": 15
           },
           "texture": "#glow",
           "uv": [
@@ -156,7 +160,8 @@
         "west": {
           "forge_data": {
             "ambient_occlusion": false,
-            "block_light": 15
+            "block_light": 15,
+            "sky_light": 15
           },
           "texture": "#glow",
           "uv": [

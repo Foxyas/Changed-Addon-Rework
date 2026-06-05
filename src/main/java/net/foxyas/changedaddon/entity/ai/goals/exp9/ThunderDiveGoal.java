@@ -123,7 +123,7 @@ public class ThunderDiveGoal extends Goal {
         LivingEntity t = mob.getTarget();
         LookControl lookControl = mob.getLookControl();
         if (t != null) {
-            lookControl.setLookAt(t, 90f, 90f);
+            lookControl.setLookAt(t, 180f, 180f);
             mob.setYBodyRot(mob.yHeadRot);
         }
 

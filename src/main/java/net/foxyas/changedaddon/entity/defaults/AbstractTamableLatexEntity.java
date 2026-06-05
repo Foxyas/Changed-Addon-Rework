@@ -32,7 +32,6 @@ import net.minecraft.world.scores.Team;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -73,7 +72,15 @@ public abstract class AbstractTamableLatexEntity extends ChangedEntity implement
             uuid = tag.getUUID("Owner");
         } else {
             String s = tag.getString("Owner");
-            uuid = OldUsersConverter.convertMobOwnerIfNecessary(Objects.requireNonNull(this.getServer()), s);
+            if (this.getServer() != null) {
+                uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
+            } else {
+                try {
+                    uuid = UUID.fromString(s);
+                } catch (IllegalArgumentException e) {
+                    uuid = null;
+                }
+            }
         }
 
         if (tag.contains("FollowOwner")) {

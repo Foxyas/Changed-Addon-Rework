@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
+import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
@@ -34,6 +35,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -342,42 +344,72 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
+        if (source.getDirectEntity() instanceof ThrownPotion ||
+                source.getDirectEntity() instanceof AreaEffectCloud ||
+                source.is(DamageTypes.FALL) ||
+                source.is(DamageTypes.CACTUS) ||
+                source.is(DamageTypes.DROWN) ||
+                source.is(DamageTypes.LIGHTNING_BOLT) ||
+                source.is(DamageTypes.FALLING_ANVIL) ||
+                source.is(DamageTypes.DRAGON_BREATH) ||
+                source.is(DamageTypes.WITHER) ||
+                source.getMsgId().equals("witherSkull")) {
+            triggerOnDamageReactiveGoals(source, amount);
             return false;
-
-        if (source.is(DamageTypes.FALL))
-            return false;
-
-        if (source.is(DamageTypes.CACTUS))
-            return false;
-
-        if (source.is(DamageTypes.DROWN))
-            return false;
-
-        if (source.is(DamageTypes.LIGHTNING_BOLT))
-            return false;
-
-        if (source.getMsgId().equals("trident")) {
-            return super.hurt(source, amount * 0.5f);
         }
 
-        if (source.is(DamageTypes.FALLING_ANVIL))
-            return false;
-
-        if (source.is(DamageTypes.DRAGON_BREATH))
-            return false;
-
-        if (source.is(DamageTypes.WITHER))
-            return false;
-
-        if (source.getMsgId().equals("witherSkull"))
-            return false;
-
-        if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-            return super.hurt(source, amount * 0.5f);
+        if (source.is(DamageTypeTags.IS_PROJECTILE) || source.getMsgId().equals("trident")) {
+            amount *= 0.5f;
         }
+
+        triggerOnDamageReactiveGoals(source, amount);
 
         return super.hurt(source, amount);
+    }
+
+    public void triggerOnDamageReactiveGoals(DamageSource source, float finalAmount) {
+        this.goalSelector.getRunningGoals()
+                .map(WrappedGoal::getGoal)
+                .filter(goal -> goal instanceof IReactiveGoal)
+                .forEach(goal -> ((IReactiveGoal) goal).onDamage(this, source, finalAmount));
+        this.targetSelector.getRunningGoals()
+                .map(WrappedGoal::getGoal)
+                .filter(goal -> goal instanceof IReactiveGoal)
+                .forEach(goal -> ((IReactiveGoal) goal).onDamage(this, source, finalAmount));
+    }
+
+    @Override
+    protected void actuallyHurt(@NotNull DamageSource pDamageSource, float pDamageAmount) {
+        super.actuallyHurt(pDamageSource, pDamageAmount);
+        triggerOnHurtReactiveGoals(pDamageSource, pDamageAmount);
+    }
+
+    public void triggerOnHurtReactiveGoals(@NotNull DamageSource pDamageSource, float pDamageAmount) {
+        this.goalSelector.getRunningGoals()
+                .map(WrappedGoal::getGoal)
+                .filter(goal -> goal instanceof IReactiveGoal)
+                .forEach(goal -> ((IReactiveGoal) goal).onHurt(this, pDamageSource, pDamageAmount));
+        this.targetSelector.getRunningGoals()
+                .map(WrappedGoal::getGoal)
+                .filter(goal -> goal instanceof IReactiveGoal)
+                .forEach(goal -> ((IReactiveGoal) goal).onHurt(this, pDamageSource, pDamageAmount));
+    }
+
+    @Override
+    public void heal(float pHealAmount) {
+        super.heal(pHealAmount);
+        triggerOnHealReactiveGoals(pHealAmount);
+    }
+
+    public void triggerOnHealReactiveGoals(float healAmound) {
+        this.goalSelector.getRunningGoals()
+                .map(WrappedGoal::getGoal)
+                .filter(goal -> goal instanceof IReactiveGoal)
+                .forEach(goal -> ((IReactiveGoal) goal).onHeal(this, healAmound));
+        this.targetSelector.getRunningGoals()
+                .map(WrappedGoal::getGoal)
+                .filter(goal -> goal instanceof IReactiveGoal)
+                .forEach(goal -> ((IReactiveGoal) goal).onHeal(this, healAmound));
     }
 
     @Override

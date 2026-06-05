@@ -175,7 +175,15 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
             uuid = tag.getUUID("Owner");
         } else {
             String s = tag.getString("Owner");
-            uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
+            if (this.getServer() != null) {
+                uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
+            } else {
+                try {
+                    uuid = UUID.fromString(s);
+                } catch (IllegalArgumentException e) {
+                    uuid = null;
+                }
+            }
         }
 
         if (tag.contains("FollowOwner"))

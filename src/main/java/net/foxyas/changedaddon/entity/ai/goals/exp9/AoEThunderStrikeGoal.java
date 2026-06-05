@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
+import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
 import net.foxyas.changedaddon.util.DelayedTask;
@@ -14,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySelector;
@@ -29,12 +31,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class AoEThunderStrikeGoal extends Goal {
+public class AoEThunderStrikeGoal extends Goal implements IReactiveGoal.ICancelOnDamageGoal {
     protected final IntProvider cooldownProvider;
     protected final Experiment009Entity experiment009;
     protected final IntProvider damageProvider;
@@ -44,6 +47,7 @@ public class AoEThunderStrikeGoal extends Goal {
     protected int tickCounter;
     protected BlockPos groundPos;
     protected LivingEntity target;
+    protected boolean canceled = false;
 
     public AoEThunderStrikeGoal(Experiment009Entity experiment009, IntProvider cooldownProvider, IntProvider damageProvider, double jumpPower, int duration) {
         this.experiment009 = experiment009;
@@ -97,6 +101,10 @@ public class AoEThunderStrikeGoal extends Goal {
             if (player.isCreative() || player.isSpectator()) {
                 return false;
             }
+        }
+
+        if (this.isCanceled()) {
+            return false;
         }
 
 
@@ -265,11 +273,13 @@ public class AoEThunderStrikeGoal extends Goal {
     public void stop() {
         if (groundPos != null) {
             experiment009.teleportTo(groundPos.getX() + 0.5, groundPos.getY(), groundPos.getZ() + 0.5);
-            LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(experiment009.level());
-            if (lightning != null) {
-                lightning.moveTo(groundPos.getX() + 0.5, groundPos.getY(), groundPos.getZ() + 0.5);
-                lightning.setCause((ServerPlayer) experiment009.getUnderlyingPlayer());
-                experiment009.level().addFreshEntity(lightning);
+            if (!experiment009.level().isClientSide()) {
+                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(experiment009.level());
+                if (lightning != null) {
+                    lightning.moveTo(groundPos.getX() + 0.5, groundPos.getY(), groundPos.getZ() + 0.5);
+                    lightning.setCause((ServerPlayer) experiment009.getUnderlyingPlayer());
+                    experiment009.level().addFreshEntity(lightning);
+                }
             }
         }
 
@@ -282,5 +292,25 @@ public class AoEThunderStrikeGoal extends Goal {
         if (experiment009 instanceof Experiment009BossEntity experiment009BossEntity) {
             experiment009BossEntity.setCastingAttack(false);
         }
+    }
+
+    @Override
+    public void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount) {
+
+    }
+
+    @Override
+    public void onHeal(LivingEntity livingEntity, float amount) {
+
+    }
+
+    @Override
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    @Override
+    public void setCanceled(boolean canceled) {
+        this.canceled = true;
     }
 }

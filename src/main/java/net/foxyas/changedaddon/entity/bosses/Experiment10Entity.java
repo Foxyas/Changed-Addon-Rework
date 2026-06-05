@@ -252,13 +252,11 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
             case "fall", "cactus", "drown", "lightningBolt", "anvil", "dragonBreath", "wither", "witherSkull" -> {
                 return false;
             }
-            case "trident" -> {
-                return super.hurt(source, amount * 0.5f);
-            }
+            case "trident" -> amount *= 0.5f;
         }
 
         if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-            return super.hurt(source, amount * 0.5f);
+            amount *= 0.5f;
         }
 
         return super.hurt(source, amount);

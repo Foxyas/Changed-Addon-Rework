@@ -1,13 +1,17 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.HashMap;
@@ -19,6 +23,14 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
     public ItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ChangedAddonMod.MODID, existingFileHelper);
+    }
+
+    private static ResourceLocation blockLoc(ResourceLocation loc) {
+        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + loc.getPath());
+    }
+
+    private static ResourceLocation blockLoc(ResourceLocation loc, String path) {
+        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + path + "/" + loc.getPath());
     }
 
     @Override
@@ -41,6 +53,24 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         );
 
         basicItem(CRAFTABLE_PROTOTYPE_SPAWN_EGG.get());
+
+        basicBlockItem(ChangedAddonBlocks.LUMINARA_LEAVES);
+    }
+
+    private <T extends Block> ResourceLocation key(RegistryObject<T> block) {
+        return ForgeRegistries.BLOCKS.getKey(block.get());
+    }
+
+    public <T extends Block> void basicBlockItem(RegistryObject<T> block) {
+        ResourceLocation blockLoc = blockLoc(block.getId());
+
+        ModelFile defaultModel = getExistingFile(blockLoc);
+
+        getBuilder(key(block).getPath()).parent(defaultModel);
+    }
+
+    public <T extends Block> void basicBlockItem(RegistryObject<T> block, ModelFile model) {
+        getBuilder(key(block).getPath()).parent(model);
     }
 
     public ItemModelBuilder layeredItem(Item item, HashMap<Integer, ResourceLocation> layerTextures) {

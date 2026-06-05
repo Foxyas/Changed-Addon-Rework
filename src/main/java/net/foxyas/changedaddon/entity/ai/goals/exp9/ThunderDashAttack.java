@@ -84,6 +84,7 @@ public class ThunderDashAttack extends Goal {
         }
         isDashing = false;
         dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
+        this.target = dasher.getTarget();
     }
 
     public boolean isChargingDash() {
@@ -100,14 +101,10 @@ public class ThunderDashAttack extends Goal {
 
         this.dashDirection.scale(this.dashSpeed);
 
-        if (target instanceof Player player) {
-            //player.displayClientMessage(Component.literal("Ticks = " + tickCount), true);
-        }
-
         // Preparando o dash
         if (tickCount < PREPARE_TIME) {
             dasher.getNavigation().stop();
-            if (target.isRemoved() && target.isDeadOrDying()) return;
+            if (target == null || target.isRemoved() || target.isDeadOrDying()) return;
             if (target.distanceTo(dasher) > 0) {
                 dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
             }

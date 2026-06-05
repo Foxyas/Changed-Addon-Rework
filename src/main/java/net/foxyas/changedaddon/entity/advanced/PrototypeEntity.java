@@ -273,11 +273,9 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
     public @NotNull InteractionResult interactAt(@NotNull Player player, @NotNull Vec3 vec, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
 
-        if (itemstack.is(Items.NAME_TAG)) {
-            InteractionResult interactionresult = itemstack.interactLivingEntity(player, this, hand);
-            if (interactionresult.consumesAction()) {
-                return interactionresult;
-            }
+        InteractionResult interactionresult = itemstack.interactLivingEntity(player, this, hand);
+        if (interactionresult.consumesAction()) {
+            return interactionresult;
         }
 
         if (isTame()) {

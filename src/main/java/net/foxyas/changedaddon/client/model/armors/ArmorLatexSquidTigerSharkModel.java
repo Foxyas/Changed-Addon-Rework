@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.LatexSquidTigerSharkModel;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.DoubleArmedModel;
+import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleSquidDogModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModelSet;
 import net.ltxprogrammer.changed.client.renderer.model.armor.LatexHumanoidArmorModel;
@@ -36,6 +37,7 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
     private final ModelPart RightArm;
     private final ModelPart LeftArm2;
     private final ModelPart RightArm2;
+    private final ModelPart Tail;
     private final HumanoidAnimator<T, ArmorLatexSquidTigerSharkModel<T>> animator;
 
     public ArmorLatexSquidTigerSharkModel(ModelPart modelPart, ArmorModel model) {
@@ -48,6 +50,10 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
         this.RightArm = modelPart.getChild("RightArm");
         this.LeftArm2 = modelPart.getChild("LeftArm2");
         this.RightArm2 = modelPart.getChild("RightArm2");
+
+        this.Tail = this.Torso.getChild("Tail");
+        var tailPrimary = this.Tail.getChild("TailPrimary");
+        var tailSecondary = tailPrimary.getChild("TailSecondary");
 
         var leftLowerLeg = LeftLeg.getChild("LeftLowerLeg");
         var leftFoot = leftLowerLeg.getChild("LeftFoot");
@@ -62,7 +68,7 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
         animator = HumanoidAnimator.of(this).hipOffset(-0.75f).legLength(13.0f)
                 .addPreset(LatexSquidTigerSharkModel.CustomHybridAnimation.squidTigerSharkArmorLike(
                         Head, Torso, LeftArm, RightArm, LeftArm2, RightArm2,
-                        //Tail, List.of(tailPrimary, tailSecondary),
+                        Tail, List.of(tailPrimary, tailSecondary),
                         upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle,
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
         animator.torsoWidth = 5.2f;
@@ -72,9 +78,9 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        //addUnifiedLegs(partdefinition, layer);
+        ArmorLatexMaleSquidDogModel.addUnifiedSquogLegs(partdefinition, layer);
 
-        PartDefinition RightLeg = partdefinition.addOrReplaceChild("RightLeg", CubeListBuilder.create(), PartPose.offset(-2.5F, 10.5F, 0.0F));
+        /*PartDefinition RightLeg = partdefinition.addOrReplaceChild("RightLeg", CubeListBuilder.create(), PartPose.offset(-2.5F, 10.5F, 0.0F));
 
         PartDefinition RightThigh_r1 = RightLeg.addOrReplaceChild("RightThigh_r1", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 7.0F, 4.0F, layer.altDeformation.extend(0.505F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
 
@@ -101,11 +107,21 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
         PartDefinition LeftArch_r1 = LeftFoot.addOrReplaceChild("LeftArch_r1", CubeListBuilder.create().texOffs(2, 20).mirror().addBox(-2.0F, -8.45F, -0.725F, 4.0F, 6.0F, 3.0F, layer.altDeformation.extend(0.5F)).mirror(false), PartPose.offsetAndRotation(0.0F, 7.075F, -4.975F, -0.3491F, 0.0F, 0.0F));
 
         PartDefinition LeftPad = LeftFoot.addOrReplaceChild("LeftPad", CubeListBuilder.create().texOffs(21, 21).addBox(-2.0F, 0.0F, -2.5F, 4.0F, 2.0F, 5.0F, layer.altDeformation.extend(0.5F)), PartPose.offset(0.0F, 4.325F, -4.425F));
-
+*/
 
         PartDefinition Head = partdefinition.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, layer.deformation.extend(0.25F)), PartPose.offset(0.0F, -2.2F, 0.0F));
 
         PartDefinition Torso = partdefinition.addOrReplaceChild("Torso", CubeListBuilder.create().texOffs(16, 16).addBox(-4.0F, 0.1F, -2.2F, 8.0F, 12.0F, 4.0F, layer.dualDeformation.extend(0.1f)), PartPose.offset(0.0F, -2.2F, 0.0F));
+
+        PartDefinition Tail = Torso.addOrReplaceChild("Tail", CubeListBuilder.create(), PartPose.offset(0.0F, 8.0F, 1.0F));
+
+        PartDefinition TailPrimary = Tail.addOrReplaceChild("TailPrimary", CubeListBuilder.create(), PartPose.offset(0.0F, 2.75F, -1.25F));
+
+        PartDefinition tailPart_r1 = TailPrimary.addOrReplaceChild("tailPart_r1", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.75F, -0.8F, 4.0F, 8.0F, 4.0F, layer.altDeformation), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 1.1781F, 0.0F, 0.0F));
+
+        PartDefinition TailSecondary = TailPrimary.addOrReplaceChild("TailSecondary", CubeListBuilder.create(), PartPose.offset(0.0F, 3.5F, 9.25F));
+
+        PartDefinition tailSecondaryPart_r1 = TailSecondary.addOrReplaceChild("tailSecondaryPart_r1", CubeListBuilder.create().texOffs(1, 20).addBox(-1.5F, -1.3563F, -0.6088F, 3.0F, 5.0F, 3.0F, layer.altDeformation), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 1.309F, 0.0F, 0.0F));
 
         PartDefinition RightUpperTentacle = Torso.addOrReplaceChild("RightUpperTentacle", CubeListBuilder.create(), PartPose.offset(-2.5F, 2.7F, 1.0F));
 
@@ -138,7 +154,7 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
     public void prepareVisibility(EquipmentSlot armorSlot, ItemStack item) {
         super.prepareVisibility(armorSlot, item);
         if (armorSlot == EquipmentSlot.LEGS) {
-            prepareUnifiedLegsForArmor(item, LeftLeg, RightLeg);
+            prepareUnifiedLegsForArmor(item, LeftLeg, RightLeg, Tail);
         }
     }
 
@@ -146,7 +162,6 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
     public void renderForSlot(T entity, RenderLayerParent<? super T, ?> parent, ItemStack stack, EquipmentSlot slot, PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.pushPose();
         this.scaleForSlot(parent, slot, poseStack);
-
         switch (slot) {
             case HEAD -> Head.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
             case CHEST -> {
@@ -157,11 +172,12 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
                 RightArm2.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
             }
             case LEGS -> {
-                poseStack.pushPose(); // Salva o estado antes de modificar
-                poseStack.scale(0.8F, 0.92F, 0.8F);
+                //poseStack.pushPose(); // Salva o estado antes de modificar
+                //poseStack.scale(0.8F, 0.92F, 0.8F);
+                //Torso.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+                //poseStack.popPose(); // Restaura o estado original
+                //this.scaleForSlot(parent, slot, poseStack); // Aplica a escala padrão para as pernas
                 Torso.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-                poseStack.popPose(); // Restaura o estado original
-                this.scaleForSlot(parent, slot, poseStack); // Aplica a escala padrão para as pernas
                 LeftLeg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
                 RightLeg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
             }

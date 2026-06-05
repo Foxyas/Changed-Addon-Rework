@@ -7,5 +7,5 @@ import org.jetbrains.annotations.Nullable;
 public interface IStrippableLog {
 
     @Nullable
-    Block getStripedVariant(BlockState state); // Blockstate here is 50% of the time useless, but we keep it for dynamic features.
+    BlockState getStripedVariant(BlockState state); // Blockstate here is 50% of the time useless, but we keep it for dynamic features.
 }

@@ -39,6 +39,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -359,83 +360,63 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.OUTSIDE_BORDER) || source.is(DamageTypes.GENERIC_KILL))
+        boolean shouldTeleportAndNegateDamage = false;
+        boolean shouldDodgeAndNegateDamage = false;
+        DodgeAnimationParameters dodgeAnimationParameters = DodgeAnimationParameters.DEFAULT;
+        if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.OUTSIDE_BORDER) || source.is(DamageTypes.GENERIC_KILL)) {
             return super.hurt(source, amount);
-
-        if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
-            return false;
-
-        if (source.is(DamageTypeTags.IS_FALL))
-            return false;
-
-        if (source.is(DamageTypes.CACTUS))
-            return false;
-
-        if (source.is(DamageTypes.DROWN))
-            return false;
-
-        if (source.is(DamageTypes.LIGHTNING_BOLT))
-            return false;
-
-        if (source.getMsgId().equals("trident")) {
-            maybeSendReactionToPlayer(source);
-            return super.hurt(source, amount * 0.5f);
         }
 
-        if (source.is(DamageTypes.FALLING_ANVIL))
-            return false;
-
-        if (source.is(DamageTypes.DRAGON_BREATH))
-            return false;
-
-        if (source.is(DamageTypes.WITHER))
-            return false;
-
-        if (source.getMsgId().equals("witherSkull"))
-            return false;
-
-        if (source.is(DamageTypes.IN_WALL)) {
-            teleportToNearLivingEntity();
+        if (source.getDirectEntity() instanceof ThrownPotion ||
+                source.getDirectEntity() instanceof AreaEffectCloud ||
+                source.is(DamageTypeTags.IS_FALL) ||
+                source.is(DamageTypes.CACTUS) ||
+                source.is(DamageTypes.DROWN) ||
+                source.is(DamageTypes.LIGHTNING_BOLT) ||
+                source.is(DamageTypes.FALLING_ANVIL) ||
+                source.is(DamageTypes.DRAGON_BREATH) ||
+                source.is(DamageTypes.WITHER) ||
+                source.getMsgId().equals("witherSkull")) {
             return false;
         }
 
+        boolean isProjectile = source.is(DamageTypeTags.IS_PROJECTILE) ||
+                source.getMsgId().equals("trident") ||
+                source.getMsgId().contains("bullet") ||
+                source.getMsgId().contains("gun");
+
+        if (isProjectile && !source.getMsgId().equals("trident") && !isVulnerableToProjectiles()) {
+            shouldDodgeAndNegateDamage = true;
+        }
+
+        shouldTeleportAndNegateDamage = source.is(DamageTypes.IN_WALL);
         if (source.getEntity() instanceof Warden) {
-            DodgeAbilityInstance.executeRandomDodgeAnimation(this);
-            this.navigation.stop();
-            return false;
+            shouldDodgeAndNegateDamage = true;
         }
 
-        if (source.getEntity() == null || source.getDirectEntity() == null) {
-            if (this.getTarget() == null) {
-                teleportToNearLivingEntity();
-                return false;
-            }
+        if ((source.getEntity() == null || source.getDirectEntity() == null) && (this.getTarget() == null)) {
+            shouldTeleportAndNegateDamage = true;
         }
 
-        if (source.is(DamageTypeTags.IS_PROJECTILE) || source.getMsgId().contains("bullet") || source.getMsgId().contains("gun")) {
-            maybeSendReactionToPlayer(source);
-            if (isVulnerableToProjectiles()) {
-                return super.hurt(source, amount * 0.5f);
-            } else {
-                DodgeAnimationParameters dodgeAnimationParameters = DodgeAnimationParameters.DEFAULT;
-                if (source.getDirectEntity() != null) {
-                    double length = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2f);
-                    dodgeAnimationParameters = new DodgeAnimationParameters((float) length, 1.1f);
+        if (shouldTeleportAndNegateDamage || shouldDodgeAndNegateDamage) {
+            if (shouldTeleportAndNegateDamage) teleportToNearLivingEntity();
+            if (shouldDodgeAndNegateDamage) {
+                if (source.getDirectEntity() != null && source.getDirectEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
+                    double speed = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2.0f);
+                    dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
                 }
+
                 DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
                 this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
-                return false;
             }
+
+            triggerOnDamageReactiveGoals(source, amount);
+            return false;
         }
 
-        if (source.is(DamageTypeTags.IS_FIRE)) {
-            maybeSendReactionToPlayer(source);
-            return super.hurt(source, amount * 0f);
-        }
 
-        if (source.is(DamageTypes.THORNS)) {
-            return super.hurt(source, 0);
-        }
+        if (source.is(DamageTypes.THORNS) || source.is(DamageTypeTags.IS_FIRE)) amount = 0;
+        maybeSendReactionToPlayer(source);
 
         return super.hurt(source, amount);
     }
@@ -743,9 +724,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 z = (float) getZ() + Mth.sin(anglePhi) * Mth.sin(angleTheta) * 4.0f;
                 ParticlesUtil.sendParticlesWithMotion(
                         this,
+                        0,
                         ParticleTypes.ELECTRIC_SPARK,
                         Vec3.ZERO,
-                        this.position().subtract(x, y, z),
+                        this.getPosition(0).subtract(x, y, z),
                         5, 0.025f
                 );
             }
@@ -785,16 +767,16 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (randomSource.nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
             if (this.isPhase2()) {
                 if (this.shouldBleed) {
-                    ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
-                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
+                    ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
+                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
                 } else {
                     if (randomSource.nextFloat() > 0.95) {
-                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
+                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
                     }
-                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);
+                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);
                 }
             } else {
-                ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 5, 1);
+                ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 5, 1);
             }
         }
 

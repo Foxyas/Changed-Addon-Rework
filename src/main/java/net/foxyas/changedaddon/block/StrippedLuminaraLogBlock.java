@@ -21,4 +21,9 @@ public class StrippedLuminaraLogBlock extends LuminaraLogBlock {
                 .sound(SoundType.CHERRY_WOOD)
                 .ignitedByLava());
     }
+
+    @Override
+    public @Nullable BlockState getStripedVariant(BlockState state) {
+        return null;
+    }
 }

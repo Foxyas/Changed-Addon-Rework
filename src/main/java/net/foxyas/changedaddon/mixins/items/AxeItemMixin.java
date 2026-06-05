@@ -32,8 +32,7 @@ public class AxeItemMixin {
     private static BlockState ChangedAddon$getAxeStrippingState(BlockState newState, @Local(argsOnly = true) BlockState originalState) {
         if (newState == null // Default Fail.
                 && originalState.getBlock() instanceof IStrippableLog strippableLog) {
-            Block block = strippableLog.getStripedVariant(originalState);
-            return block != null ? block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, originalState.getValue(RotatedPillarBlock.AXIS)) : null;
+            return strippableLog.getStripedVariant(originalState);
         }
         return newState;
     }

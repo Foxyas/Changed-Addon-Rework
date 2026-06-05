@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.ai.goals;
+package net.foxyas.changedaddon.entity.ai.goals.simple;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.api.SyncTrackMotion;

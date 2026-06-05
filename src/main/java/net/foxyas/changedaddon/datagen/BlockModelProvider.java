@@ -65,10 +65,10 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
 
         withExistingParent("active_" + ChangedAddonBlocks.STRIPPED_LUMINARA_LOG.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
-                .texture("end", "changed_addon:block/luminara_tree/stripped_luminara_log_top")
-                .texture("end_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_top_glow")
-                .texture("side", "changed_addon:block/luminara_tree/stripped_luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_side_glow")
+                .texture("end", "changed_addon:block/luminara_tree/active_stripped_luminara_log_top")
+                .texture("end_glow", "changed_addon:block/luminara_tree/active_stripped_luminara_log_top_glow")
+                .texture("side", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side")
+                .texture("side_glow", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_glow")
         ;
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_LEAVES.getId().getPath(), EMISSIVE_CUBE_ALL)
@@ -231,6 +231,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
 
     private void generateEmissiveCrop() {
         getBuilder("customs/emissive_cross")
+                .parent(getExistingFile(mcLoc("block/cross"))) // Inherits base settings from minecraft:block/block
                 .ao(false) // Disable ambient occlusion for the entire model layout
                 .texture("particle", "#cross") // Set up the fallback particle link pointing to the base #cross texture
 
