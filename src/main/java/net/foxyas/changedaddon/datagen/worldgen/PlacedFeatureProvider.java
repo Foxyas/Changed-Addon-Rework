@@ -26,4 +26,8 @@ public class PlacedFeatureProvider {
         TreePlacements.bootstrap(context);
     }
 
+    public static ResourceKey<PlacedFeature> createKey(ResourceLocation pKey) {
+        return ResourceKey.create(Registries.PLACED_FEATURE, pKey);
+    }
+
 }
