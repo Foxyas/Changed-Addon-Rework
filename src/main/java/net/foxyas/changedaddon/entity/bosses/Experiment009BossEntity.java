@@ -93,6 +93,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     private boolean shouldBleed;
     protected final WaterBoundPathNavigation waterNavigation;
     protected final GroundPathNavigation groundNavigation;
+    public final TargetDataManager targetDataManager;
 
     public Experiment009BossEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_009_BOSS.get(), world);
@@ -107,6 +108,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         applyDefaultBasicPlayerInfo();
         this.waterNavigation = new WaterBoundPathNavigation(this, world);
         this.groundNavigation = new GroundPathNavigation(this, world);
+        this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -652,6 +654,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         this.entityData.set(PHASE2, set);
     }
 
+    @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("isPhase3"))
@@ -660,6 +663,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             shouldBleed = tag.getBoolean("Bleeding");
         if (tag.contains("casting"))
             this.setCastingAttack(tag.getBoolean("casting"));
+        this.targetDataManager.loadAndResolveTarget(tag);
     }
 
     @Override
@@ -668,6 +672,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         tag.putBoolean("isPhase3", isPhase3());
         tag.putBoolean("Bleeding", shouldBleed);
         tag.putBoolean("casting", this.isCastingAttack());
+        this.targetDataManager.saveTarget(tag);
     }
 
     @Override

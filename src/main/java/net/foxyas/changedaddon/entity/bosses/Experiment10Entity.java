@@ -288,6 +288,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         this.entityData.set(getPhase2DataAccessor(), set);
     }
 
+    @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("isPhase2")) setPhase2(tag.getBoolean("isPhase2"));

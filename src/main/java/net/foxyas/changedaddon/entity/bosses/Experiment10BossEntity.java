@@ -23,6 +23,7 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -72,6 +73,8 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
             SynchedEntityData.defineId(Experiment10BossEntity.class, EntityDataSerializers.BOOLEAN);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 
+    public final TargetDataManager targetDataManager;
+
     public Experiment10BossEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_10_BOSS.get(), world);
     }
@@ -83,6 +86,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         setNoAi(false);
         setPersistenceRequired();
         applyDefaultBasicPlayerInfo();
+        this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -296,6 +300,18 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
             }
             this.bossInfo.setName(this.getDisplayName());
         }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.targetDataManager.loadAndResolveTarget(tag);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        this.targetDataManager.saveTarget(tag);
     }
 
     @Override
