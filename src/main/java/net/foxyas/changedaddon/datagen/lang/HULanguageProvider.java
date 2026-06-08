@@ -176,6 +176,9 @@ public class HULanguageProvider extends LanguageProvider {
         addBlock(DARK_LATEX_WOLF_PLUSHY, "Plüss sötét latex farkas");
         addBlock(YELLOW_WOLF_CRYSTAL_BLOCK, "Sárga farkas kristályblokk");
         addBlock(YELLOW_WOLF_CRYSTAL_SMALL, "Kicsi sárga farkas kristály");
+        addBlock(ChangedAddonBlocks.LUMINARA_LOG, "Luminararönk");
+        addBlock(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG, "Kérgezett luminararönk");
+        addBlock(ChangedAddonBlocks.LUMINARA_LEAVES, "Luminaralevelek");
 
         addAbility("advanced_hearing", "Fejlett hallás");
         addAbility("carry", "Hordozás");
