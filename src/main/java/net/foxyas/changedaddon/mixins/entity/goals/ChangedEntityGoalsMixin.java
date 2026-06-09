@@ -4,8 +4,6 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.entity.ai.goals.simple.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.entity.ai.goals.simple.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractSemiAquaticEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractSwimmableEntity;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
@@ -35,7 +33,7 @@ public class ChangedEntityGoalsMixin {
         }
     }
 
-    @ModifyReturnValue(at = @At(value = "RETURN"), method = "makeFloatGoal", remap = true)
+    @ModifyReturnValue(at = @At(value = "RETURN"), method = "makeFloatGoal", remap = false)
     private Goal floatGoalHook(Goal original) {
         ChangedEntity self = ChangedAddonChangedEntityGoalsMixin$getSelf();
         if (self instanceof ICrawlAndSwimAbleEntity swimAbleEntity) {
