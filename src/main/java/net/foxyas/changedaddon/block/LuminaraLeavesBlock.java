@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.ParticleUtils;
@@ -14,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -34,6 +34,7 @@ public class LuminaraLeavesBlock extends LeavesBlock {
                         "#fa95e9"
                 )
                 .map(Color3::getColor)
+                .sorted(Comparator.comparing(Color3::brightness))
                 .toList();
     }
 
@@ -48,8 +49,22 @@ public class LuminaraLeavesBlock extends LeavesBlock {
             BlockState blockstate = pLevel.getBlockState(below);
             if (!isFaceFull(blockstate.getCollisionShape(pLevel, below), Direction.UP)) {
                 List<Color3> colors = getPossibleColorsForFallingLeaves(pState, pLevel, pPos, pRandom);
-                ParticleUtils.spawnParticleBelow(pLevel, pPos, pRandom, ChangedAddonParticleTypes.fallingLeaf(Util.getRandom(colors, pRandom)));
+
+                if (!colors.isEmpty()) {
+                    int biasedIndex = getRandomIndexBiasedTowardsLight(pRandom, colors.size());
+                    Color3 chosenColor = colors.get(biasedIndex);
+
+                    ParticleUtils.spawnParticleBelow(pLevel, pPos, pRandom, ChangedAddonParticleTypes.fallingLeaf(chosenColor));
+                }
             }
         }
+    }
+
+    private int getRandomIndexBiasedTowardsLight(RandomSource random, int size) {
+        if (size <= 1) return 0;
+
+        int r1 = random.nextInt(size);
+        int r2 = random.nextInt(size);
+        return Math.max(r1, r2);
     }
 }

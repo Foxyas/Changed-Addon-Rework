@@ -52,6 +52,7 @@ public class ChangedAddonMod {
         ChangedAddonItems.REGISTRY.register(bus);
         ChangedAddonMenus.REGISTRY.register(bus);
         ChangedAddonEntityDataSerializers.SERIALIZERS.register(bus);
+        ChangedAddonTreeDecorators.TREE_DECORATORS.register(bus);
 
         ChangedAddonEntities.REGISTRY.register(bus);
         ChangedAddonAbilities.REGISTRY.register(bus);

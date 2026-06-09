@@ -3,11 +3,15 @@ package net.foxyas.changedaddon.init;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.world.features.StructureTemplatePoolFeature;
 import net.foxyas.changedaddon.world.features.ores.PainiteOreFeature;
+import net.foxyas.changedaddon.world.features.tree.TreeWithFlowersFeature;
+import net.foxyas.changedaddon.world.features.tree.TreeWithFlowersFeatureConfiguration;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.RandomPatchFeature;
+import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -23,6 +27,8 @@ public class ChangedAddonFeatures {
 
     public static final RegistryObject<PainiteOreFeature> PAINITE_ORE = register("painite_ore", PainiteOreFeature::new);
     public static final RegistryObject<StructureTemplatePoolFeature> STRUCTURE_TEMPLATE_POOL_FEATURE = register("structure_template_pool_feature", StructureTemplatePoolFeature::new);
+
+    public static final RegistryObject<TreeWithFlowersFeature> TREE_WITH_FLOWERS = register("tree_with_flowers", () -> new TreeWithFlowersFeature(TreeWithFlowersFeatureConfiguration.CODEC, (TreeFeature) Feature.TREE, (RandomPatchFeature) Feature.FLOWER));
 
     private static <T extends Feature<?>> RegistryObject<T> register(String registryname, Supplier<T> feature) {
         return REGISTRY.register(registryname, feature);
