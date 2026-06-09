@@ -26,8 +26,8 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
@@ -112,6 +112,11 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
             }
         });
         //this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.8));
+    }
+
+    @Override
+    protected @Nullable Goal makeFloatGoal() {
+        return null;
     }
 
     /* =========================

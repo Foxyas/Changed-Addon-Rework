@@ -23,8 +23,8 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public abstract class AbstractSwimmableEntity extends ChangedEntity {
@@ -52,6 +52,11 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
         this.goalSelector.addGoal(1, new SinkFromSurfaceGoal(this, 0.3));
         this.goalSelector.addGoal(1, new RiseToSurfaceGoal(this, 0.3));
         this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.4D, 10));
+    }
+
+    @Override
+    protected @Nullable Goal makeFloatGoal() {
+        return null;
     }
 
     public void travel(@NotNull Vec3 p_32394_) {
