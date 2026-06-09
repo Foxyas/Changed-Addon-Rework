@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.particle.*;
 import net.foxyas.changedaddon.effect.particles.*;
-import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -36,7 +35,7 @@ public class ChangedAddonParticleTypes {
     public static final RegistryObject<ParticleType<ThunderSparkOption>> THUNDER_SPARK = register("thunder_spark", ThunderSparkOption.DESERIALIZER, ThunderSparkOption::codec);
     public static final RegistryObject<ParticleType<SignalParticleOption>> SIGNAL_PARTICLE = register("signal_particle", SignalParticleOption.DESERIALIZER, SignalParticleOption::codec);
     public static final RegistryObject<ParticleType<LaserPointParticle.Option>> LASER_POINT = register("laser_point", LaserPointParticle.Option.DESERIALIZER, LaserPointParticle.Option::codec);
-    public static final RegistryObject<ParticleType<ColoredParticleOption>> FALLING_LEAVES = register("falling_leaves", ColoredParticleOption.DESERIALIZER, ColoredParticleOption::codec);
+    public static final RegistryObject<ParticleType<FallingLeafParticleOptions>> FALLING_LEAVES = register("falling_leaves", FallingLeafParticleOptions.DESERIALIZER, FallingLeafParticleOptions::codec);
 
     public static final RegistryObject<ParticleType<EntityModelFadeParticleOptions>> ENTITY_MODEL_FADE = register("entity_model_fade", EntityModelFadeParticleOptions.DESERIALIZER, EntityModelFadeParticleOptions::codec);
 
@@ -56,8 +55,12 @@ public class ChangedAddonParticleTypes {
         return new SignalParticleOption(SIGNAL_PARTICLE.get(), strength, blockingAgeItem);
     }
 
-    public static ColoredParticleOption fallingLeaf(Color3 color3) {
-        return new ColoredParticleOption(FALLING_LEAVES.get(), color3);
+    public static FallingLeafParticleOptions fallingLeaf(Color3 color3) {
+        return new FallingLeafParticleOptions(FALLING_LEAVES.get(), color3, 0.07F, 10.0F, true, false, 2.0F, 0.021F);
+    }
+
+    public static FallingLeafParticleOptions fallingLeaf(Color3 color, float fallAcceleration, float sideAcceleration, boolean swirl, boolean flowAway, float scale, float startVelocity) {
+        return new FallingLeafParticleOptions(FALLING_LEAVES.get(), color, fallAcceleration, sideAcceleration, swirl, flowAway, scale, startVelocity);
     }
 
     public static RibbonParticleOption ribbon(Entity target, int color, int segments, float length, float sizeY, float rotationRad) {
@@ -96,7 +99,7 @@ public class ChangedAddonParticleTypes {
         event.registerSpriteSet(LASER_POINT.get(), LaserPointParticle.Provider::new);
         event.registerSpriteSet(SOLVENT_PARTICLE.get(), SolventParticleParticle::provider);
         event.registerSpriteSet(SIGNAL_PARTICLE.get(), SignalParticle.Provider::new);
-        event.registerSpriteSet(FALLING_LEAVES.get(), LeafParticle.Provider::new);
+        event.registerSpriteSet(FALLING_LEAVES.get(), FallingLeafParticle.Provider::new);
 
         event.registerSpecial(ENTITY_MODEL_FADE.get(), new EntityModelFadeParticle.Provider());
 
