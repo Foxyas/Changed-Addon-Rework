@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.abilities;
 
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
+import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -72,39 +73,59 @@ public class MayGrabTargetGoal extends Goal {
         tryGrabNearbyTarget();
     }
 
+    @Override
+    public void stop() {
+        super.stop();
+        GrabEntityAbilityInstance grabAbilityInstance = grabber.getGrabAbilityInstance();
+        if (grabAbilityInstance != null && grabAbilityInstance.grabbedEntity == null) {
+            grabAbilityInstance.getController().resetHoldTicks();
+        }
+    }
+
     private void tryGrabNearbyTarget() {
         PathfinderMob living = grabber.asMob();
         LivingEntity target = living.getTarget();
         if (!living.level().isClientSide()) {
+            GrabEntityAbilityInstance grabAbilityInstance = grabber.getGrabAbilityInstance();
             EntityDimensions dimensions = living.getDimensions(living.getPose()).scale(1.25f);
             AABB grabReach = dimensions.makeBoundingBox(living.position());
             if (target != null && (grabReach.contains(target.position()) || target.distanceTo(living) <= 2.5f)) {
-                GrabEntityAbilityInstance grabAbilityInstance = grabber.getGrabAbilityInstance();
                 if (grabAbilityInstance != null) {
-                    LivingEntity grabbedEntity = grabAbilityInstance.grabbedEntity;
-                    if (grabbedEntity == null && GrabEntityAbility.getGrabber(target) == null) {
-                        if (grabAbilityInstance.grabEntity(target)) {
-                            Changed.PACKET_HANDLER.send(
-                                    PacketDistributor.TRACKING_ENTITY.with(grabber::asMob),
-                                    new GrabEntityPacket(grabber.asMob(), target, GrabEntityPacket.GrabType.ARMS)
-                            );
-
-                            ProcessTransfur.forceNearbyToRetarget(target.level(), target);
-
-                            grabber.asMob().setTarget(null);
-
-                            // som (opcional, pode mudar)
-                            ChangedSounds.broadcastSound(
-                                    grabber.asMob(),
-                                    ChangedSounds.LATEX_GRAB_ENTITY,
-                                    1.0f,
-                                    1.0f
-                            );
-
-                            grabber.applyGrabCooldown(0);
-                        }
-                    }
+                    if (grabAbilityInstance.getController() instanceof AbilityControllerAccessor accessor)
+                        accessor.setHoldTicks(20);
+                    mayGrabEntity(target, grabAbilityInstance);
                 }
+            } else {
+                if (grabAbilityInstance != null) {
+                    if (grabAbilityInstance.getController() instanceof AbilityControllerAccessor accessor)
+                        accessor.setHoldTicks(20);
+                }
+            }
+        }
+    }
+
+    private void mayGrabEntity(LivingEntity target, GrabEntityAbilityInstance grabAbilityInstance) {
+        LivingEntity grabbedEntity = grabAbilityInstance.grabbedEntity;
+        if (grabbedEntity == null && GrabEntityAbility.getGrabber(target) == null) {
+            if (grabAbilityInstance.grabEntity(target)) {
+                Changed.PACKET_HANDLER.send(
+                        PacketDistributor.TRACKING_ENTITY.with(grabber::asMob),
+                        new GrabEntityPacket(grabber.asMob(), target, GrabEntityPacket.GrabType.ARMS)
+                );
+
+                ProcessTransfur.forceNearbyToRetarget(target.level(), target);
+
+                grabber.asMob().setTarget(null);
+
+                // som (opcional, pode mudar)
+                ChangedSounds.broadcastSound(
+                        grabber.asMob(),
+                        ChangedSounds.LATEX_GRAB_ENTITY,
+                        1.0f,
+                        1.0f
+                );
+
+                grabber.applyGrabCooldown(0);
             }
         }
     }

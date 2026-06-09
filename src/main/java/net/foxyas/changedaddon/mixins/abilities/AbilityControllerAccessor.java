@@ -9,4 +9,7 @@ public interface AbilityControllerAccessor {
 
     @Accessor("coolDownTicksRemaining")
     int getCooldownTicksRemaining();
+
+    @Accessor("holdTicks")
+    void setHoldTicks(int holdTicks);
 }
