@@ -21,8 +21,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -47,7 +49,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer, RecipeHolder, IRecipeRewarder {
+public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer, RecipeHolder, IRecipeRewarder, StackedContentsCompatible {
 
     protected final LazyOptional<? extends IItemHandler>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     public boolean startRecipe = true;
@@ -158,12 +160,14 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
                                 Vec3 vecPos = Vec3.upFromBottomCenterOf(catalyzer.getBlockPos(), 0.5);
                                 Containers.dropItemStack(serverLevel, vecPos.x, vecPos.y, vecPos.z, remaining);
                             }
+
                         }
                     }
 
                     handler.insertItem(1, output.copy(), false);
                     catalyzer.nitrogenPower -= recipe.getNitrogenUsage();
                     catalyzer.recipeProgress = 0;
+                    catalyzer.setRecipeUsed(recipe);
                     serverLevel.playSound(null,
                             pos,
                             SoundEvents.BREWING_STAND_BREW,
@@ -218,7 +222,7 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
         startRecipe = tag.getBoolean("startRecipe");
         CompoundTag compoundtag = tag.getCompound("RecipesUsed");
 
-        for(String s : compoundtag.getAllKeys()) {
+        for (String s : compoundtag.getAllKeys()) {
             this.recipesUsed.put(ResourceLocation.parse(s), compoundtag.getInt(s));
         }
     }
@@ -295,17 +299,26 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
 
     @Override
     public int @NotNull [] getSlotsForFace(@NotNull Direction side) {
+        if (side == Direction.DOWN) {
+            return new int[]{1};
+        }
+        if (side == Direction.UP) {
+            return new int[]{0};
+        }
+
         return IntStream.range(0, this.getContainerSize()).toArray();
     }
 
     @Override
     public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction direction) {
-        return this.canPlaceItem(index, stack) && index <= 0;
+        return true;
+//        return direction != Direction.DOWN && index <= 0;
     }
 
     @Override
     public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
         return true;
+//        return direction == Direction.DOWN && index >= 1;
     }
 
     @Override
@@ -341,9 +354,6 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
 
     @Override
     public boolean canPlaceItem(int pIndex, @NotNull ItemStack pStack) {
-        if (pIndex == 1) {
-            return false;
-        }
         return super.canPlaceItem(pIndex, pStack);
     }
 
@@ -361,6 +371,14 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
     }
 
     @Override
+    public void fillStackedContents(StackedContents stackedContents) {
+        for (ItemStack itemstack : this.stacks) {
+            stackedContents.accountStack(itemstack);
+        }
+
+    }
+
+    @Override
     public void awardUsedRecipes(ServerPlayer player, ItemStack pStack) {
         awardUsedRecipesAndPopExperience(player);
     }
@@ -369,7 +387,7 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
         List<Recipe<?>> list = this.getRecipesToAwardAndPopExperience(pPlayer.serverLevel(), pPlayer.position());
         pPlayer.awardRecipes(list);
 
-        for(Recipe<?> recipe : list) {
+        for (Recipe<?> recipe : list) {
             if (recipe != null) {
                 pPlayer.triggerRecipeCrafted(recipe, this.stacks);
             }
@@ -381,10 +399,10 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
     public List<Recipe<?>> getRecipesToAwardAndPopExperience(ServerLevel pLevel, Vec3 pPopVec) {
         List<Recipe<?>> list = Lists.newArrayList();
 
-        for(Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
+        for (Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
             pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent((p_155023_) -> {
                 list.add(p_155023_);
-                createExperience(pLevel, pPopVec, entry.getIntValue(), ((AbstractCookingRecipe)p_155023_).getExperience());
+                createExperience(pLevel, pPopVec, entry.getIntValue(), ((AbstractCookingRecipe) p_155023_).getExperience());
             });
         }
 
@@ -392,9 +410,9 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
     }
 
     private static void createExperience(ServerLevel pLevel, Vec3 pPopVec, int pRecipeIndex, float pExperience) {
-        int i = Mth.floor((float)pRecipeIndex * pExperience);
-        float f = Mth.frac((float)pRecipeIndex * pExperience);
-        if (f != 0.0F && Math.random() < (double)f) {
+        int i = Mth.floor((float) pRecipeIndex * pExperience);
+        float f = Mth.frac((float) pRecipeIndex * pExperience);
+        if (f != 0.0F && Math.random() < (double) f) {
             ++i;
         }
 

@@ -66,11 +66,21 @@ public class UnifuserGuiMenu extends AbstractMenu {
 
         this.recipeManager = inv.player.level().getRecipeManager();
 
-        SlotItemHandler slot1 = new SlotItemHandler(internal, 0, 26, 17);
+        SlotItemHandler slot1 = new SlotItemHandler(internal, 0, 26, 17) {
+            @Override
+            public boolean mayPickup(Player playerIn) {
+                return true;
+            }
+        };
 
         this.topSlot = (SlotItemHandler) addSlot(slot1);
 
-        SlotItemHandler slot2 = new SlotItemHandler(internal, 1, 26, 53);
+        SlotItemHandler slot2 = new SlotItemHandler(internal, 1, 26, 53) {
+            @Override
+            public boolean mayPickup(Player playerIn) {
+                return true;
+            }
+        };
         this.bottomSlot = (SlotItemHandler) addSlot(slot2);
 
         SlotItemHandler slot3 = new SlotItemHandler(internal, 2, 53, 35) {
@@ -78,6 +88,11 @@ public class UnifuserGuiMenu extends AbstractMenu {
             public boolean mayPlace(@NotNull ItemStack itemstack) {
                 boolean hasRecipe = UnifuserGuiMenu.this.recipeManager.getAllRecipesFor(ChangedAddonRecipeTypes.UNIFUSER_RECIPE_TYPE.get()).stream().anyMatch((recipe) -> recipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(itemstack)));
                 return itemstack.is(ChangedAddonTags.Items.UNIFUSER_RECIPE_CATALYST) || hasRecipe;
+            }
+
+            @Override
+            public boolean mayPickup(Player playerIn) {
+                return true;
             }
         };
         this.syringeSlot = (SlotItemHandler) addSlot(slot3);

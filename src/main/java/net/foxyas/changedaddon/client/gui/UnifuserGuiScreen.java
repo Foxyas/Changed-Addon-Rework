@@ -192,7 +192,7 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         super.renderLabels(pGuiGraphics, mouseX, mouseY);
         if (menu.getUnifuser().isSlotFull(3)) {
             SlotItemHandler outputSlot = (SlotItemHandler) menu.getOutputSlot();
-            pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.unifuser_gui.label_full"), outputSlot.x, outputSlot.y - 10, -12829636, false);
+            pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.unifuser_gui.label_full"), outputSlot.x, outputSlot.y - 16, -12829636, false);
         }
     }
 

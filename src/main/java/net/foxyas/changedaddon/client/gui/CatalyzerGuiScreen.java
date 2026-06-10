@@ -151,7 +151,7 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
 //        pGuiGraphics.drawString(font, getMachineState(level, pos), titleLabelX, titleLabelY + 10, -12829636, false);
         if (catalyzer.isSlotFull(1)) {
             SlotItemHandler rightSlot = (SlotItemHandler) menu.getOutputSlot();
-            pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.catalyzer_gui.label_full"), rightSlot.x, rightSlot.y - 10, -12829636, false);
+            pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.catalyzer_gui.label_full"), rightSlot.x, rightSlot.y - 16, -12829636, false);
         }
     }
 }

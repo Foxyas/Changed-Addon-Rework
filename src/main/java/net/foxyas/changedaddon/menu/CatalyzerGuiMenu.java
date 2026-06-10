@@ -11,7 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
@@ -55,14 +54,13 @@ public class CatalyzerGuiMenu extends AbstractMenu {
         createPlayerHotbar(inv, 0, 0);
         createPlayerInventory(inv, 0, 0);
 
-        slot1 = (SlotItemHandler) addSlot(new SlotItemHandler(internal, 0, 44, 44));
-        slot2 = (SimpleBrewingResultSlot) addSlot(new SimpleBrewingResultSlot(entity, internal, 1, 116, 44) {
-
+        slot1 = (SlotItemHandler) addSlot(new SlotItemHandler(internal, 0, 44, 44) {
             @Override
-            public boolean mayPlace(@NotNull ItemStack stack) {
-                return false;
+            public boolean mayPickup(Player playerIn) {
+                return true;
             }
         });
+        slot2 = (SimpleBrewingResultSlot) addSlot(new SimpleBrewingResultSlot(entity, internal, 1, 116, 44));
 
         menuInvSlots.addAll(List.of(slot1, slot2));
     }
