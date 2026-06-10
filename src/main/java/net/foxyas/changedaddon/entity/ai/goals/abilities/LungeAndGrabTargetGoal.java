@@ -161,5 +161,7 @@ public class LungeAndGrabTargetGoal extends Goal {
                 grabber.applyGrabCooldown(0);
             }
         }
+
+        // TODO: Check this
     }
 }
