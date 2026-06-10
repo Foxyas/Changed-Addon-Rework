@@ -104,6 +104,11 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.dev"
     }
+
+    maven {
+        // EMI
+        url = "https://maven.terraformersmc.com/"
+    }
 }
 
 mixin {
@@ -137,14 +142,18 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common-api:${jeiVersion}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge-api:${jeiVersion}")
 
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common:${jeiVersion}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common:${jeiVersion}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
 
     // REI Mod.
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:${reiVersion}")
     compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothVersion}")
     compileOnly fg.deobf("dev.architectury:architectury-forge:${archVersion}")
+
+    // EMI
+    compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}:api")
+    runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
 
     // Gun Mods.
     implementation fg.deobf("com.mrcrayfish.framework:framework-forge-1.20.1-0.8.0:0.8.0")
