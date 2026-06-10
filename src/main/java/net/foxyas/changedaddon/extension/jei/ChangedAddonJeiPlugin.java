@@ -1,21 +1,23 @@
-package net.foxyas.changedaddon.extension.jeiSuport;
+package net.foxyas.changedaddon.extension.jei;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.vanilla.IJeiBrewingRecipe;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.*;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.FoxyasInventoryMenuScreen;
 import net.foxyas.changedaddon.enchantment.TransfurAspectEnchantment;
-import net.foxyas.changedaddon.extension.jeiSuport.guisHandlers.FoxyasGuiContainerHandler;
-import net.foxyas.changedaddon.init.*;
-import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
-import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
+import net.foxyas.changedaddon.extension.jei.guisHandlers.FoxyasGuiContainerHandler;
+import net.foxyas.changedaddon.extension.jei.itemTransfers.CatalyzerRecipeHandler;
+import net.foxyas.changedaddon.extension.jei.itemTransfers.UnifuserRecipeHandler;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.init.ChangedAddonPotions;
 import net.foxyas.changedaddon.recipe.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipe.UnifuserRecipe;
 import net.foxyas.changedaddon.recipe.special.KeycardColorRecipe;
@@ -41,13 +43,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static net.foxyas.changedaddon.extension.jei.CARecipeTypes.*;
+
 
 @JeiPlugin
 public class ChangedAddonJeiPlugin implements IModPlugin {
-
-    static final RecipeType<CatalyzerRecipe> CATALYZER_RECIPE_TYPE = new RecipeType<>(CatalyzerRecipeCategory.UID, CatalyzerRecipe.class);
-    static final RecipeType<UnifuserRecipe> UNIFUSER_RECIPE_TYPE = new RecipeType<>(UnifuserRecipeCategory.UID, UnifuserRecipe.class);
-    static final RecipeType<KeycardColorRecipe> KEYCARD_COLOR_RECIPE_TYPE = new RecipeType<>(KeycardColorRecipeCategory.ID, KeycardColorRecipe.class);
 
     @Override
     public @NotNull ResourceLocation getPluginUid() {
@@ -89,8 +89,8 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(UnifuserGuiMenu.class, ChangedAddonMenus.UNIFUSER_MENU.get(), UNIFUSER_RECIPE_TYPE, 36, 3, 0, 36);
-        registration.addRecipeTransferHandler(CatalyzerGuiMenu.class, ChangedAddonMenus.CATALYZER_MENU.get(), CATALYZER_RECIPE_TYPE, 36, 1, 0, 36);
+        registration.addRecipeTransferHandler(new UnifuserRecipeHandler());
+        registration.addRecipeTransferHandler(new CatalyzerRecipeHandler());
     }
 
     @Override

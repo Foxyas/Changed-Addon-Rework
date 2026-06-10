@@ -10,6 +10,7 @@ import me.shedaniel.rei.api.client.registry.transfer.simple.SimpleTransferHandle
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.comparison.ItemComparatorRegistry;
 import me.shedaniel.rei.api.common.transfer.info.stack.SlotAccessor;
+import me.shedaniel.rei.api.common.transfer.info.stack.VanillaSlotAccessor;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.forge.REIPluginClient;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -20,14 +21,9 @@ import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
 import net.foxyas.changedaddon.recipe.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipe.UnifuserRecipe;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -73,75 +69,49 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
 
     @Override
     public void registerTransferHandlers(TransferHandlerRegistry registry) {
-        //registry.register(getUnifuserHandle());
-        //registry.register(getCatalyzerHandle());
-        registry.register(SimpleTransferHandler.create(
-                UnifuserGuiMenu.class,
-                UNIFUSER,
-                new SimpleTransferHandler.IntRange(36, 3) // Input: Início no 36, tamanho 3
-        ));
-        registry.register(SimpleTransferHandler.create(
-                CatalyzerGuiMenu.class,
-                CATALYZER,
-                new SimpleTransferHandler.IntRange(36, 1) // Input: Início no 36, tamanho 1
-        ));
+        registry.register(getUnifuserHandle());
+        registry.register(getCatalyzerHandle());
+//        registry.register(SimpleTransferHandler.create(
+//                UnifuserGuiMenu.class,
+//                UNIFUSER,
+//                new SimpleTransferHandler.IntRange(36, 3) // Input: Início no 36, tamanho 3
+//        ));
+//        registry.register(SimpleTransferHandler.create(
+//                CatalyzerGuiMenu.class,
+//                CATALYZER,
+//                new SimpleTransferHandler.IntRange(36, 1) // Input: Início no 36, tamanho 1
+//        ));
     }
 
     private @NotNull SimpleTransferHandler getCatalyzerHandle() {
         return new SimpleTransferHandler() {
             @Override
             public ApplicabilityResult checkApplicable(Context context) {
-                if (!(context.getMenu() instanceof CatalyzerGuiMenu)
-                        || !CATALYZER.equals(context.getDisplay().getCategoryIdentifier())
-                        || context.getContainerScreen() == null) {
-                    return ApplicabilityResult.createNotApplicable();
-                } else {
-                    return new ApplicabilityResultImpl(true, Result.createFailedCustomButtonColor(Component.translatable("warn.rei.not.supported.move.items.but.right.container"), new Color(255, 244, 0, 255).getRGB()));
-                }
+                return context.getMenu() instanceof CatalyzerGuiMenu && context.getDisplay().getCategoryIdentifier().equals(CATALYZER) && context.getContainerScreen() != null ? ApplicabilityResult.createApplicable() : ApplicabilityResult.createNotApplicable();
             }
 
             @Override
             public Iterable<SlotAccessor> getInputSlots(Context context) {
                 if (context.getMenu() instanceof CatalyzerGuiMenu menu) {
-                    return Stream.of(menu.getLeftSlot())
-                            .map(slot -> new SlotAccessor() {
-                                @Override
-                                public ItemStack getItemStack() {
-                                    return slot.getItem();
-                                }
-
-                                @Override
-                                public void setItemStack(ItemStack stack) {
-                                    slot.set(stack);
-                                }
-
-                                @Override
-                                public ItemStack takeStack(int amount) {
-                                    return slot.remove(amount);
-                                }
-
-                                @Override
-                                public boolean allowModification(Player player) {
-                                    return slot.allowModification(player);
-                                }
-
-                                @Override
-                                public boolean canPlace(ItemStack stack) {
-                                    return slot.mayPlace(stack);
-                                }
-                            })
-                            .collect(Collectors.toList());
+                    return List.of(new VanillaSlotAccessor(menu.getLeftSlot()) {
+                        @Override
+                        public boolean allowModification(Player player) {
+                            return true;
+                        }
+                    });
                 }
                 return List.of();
             }
 
             @Override
             public Iterable<SlotAccessor> getInventorySlots(Context context) {
-                LocalPlayer player = context.getMinecraft().player;
-                Inventory inventory = player.getInventory();
-                return IntStream.range(0, inventory.items.size())
-                        .mapToObj(index -> SlotAccessor.fromPlayerInventory(player, index))
-                        .collect(Collectors.toList());
+                if (context.getMenu() instanceof CatalyzerGuiMenu menu) {
+                    int maxInv = menu.getLeftSlot().index - 1;
+                    return IntStream.range(0, maxInv)
+                            .mapToObj(index -> SlotAccessor.fromSlot(menu.getSlot(index)))
+                            .collect(Collectors.toList());
+                }
+                return List.of();
             }
         };
     }
@@ -150,45 +120,14 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
         return new SimpleTransferHandler() {
             @Override
             public ApplicabilityResult checkApplicable(Context context) {
-                if (!(context.getMenu() instanceof UnifuserGuiMenu)
-                        || !UNIFUSER.equals(context.getDisplay().getCategoryIdentifier())
-                        || context.getContainerScreen() == null) {
-                    return ApplicabilityResult.createNotApplicable();
-                } else {
-                    return new ApplicabilityResultImpl(true, Result.createFailedCustomButtonColor(Component.translatable("warn.rei.not.supported.move.items.but.right.container"), new Color(255, 244, 0, 255).getRGB()));
-                }
+                return context.getMenu() instanceof UnifuserGuiMenu && context.getDisplay().getCategoryIdentifier().equals(UNIFUSER) && context.getContainerScreen() != null ? ApplicabilityResult.createApplicable() : ApplicabilityResult.createNotApplicable();
             }
 
             @Override
             public Iterable<SlotAccessor> getInputSlots(Context context) {
                 if (context.getMenu() instanceof UnifuserGuiMenu menu) {
-                    return Stream.of(menu.getSyringeSlot(), menu.getBottomSlot(), menu.getTopSlot())
-                            .map(slot -> new SlotAccessor() {
-                                @Override
-                                public ItemStack getItemStack() {
-                                    return slot.getItem();
-                                }
-
-                                @Override
-                                public void setItemStack(ItemStack stack) {
-                                    slot.set(stack);
-                                }
-
-                                @Override
-                                public ItemStack takeStack(int amount) {
-                                    return slot.remove(amount);
-                                }
-
-                                @Override
-                                public boolean allowModification(Player player) {
-                                    return slot.allowModification(player);
-                                }
-
-                                @Override
-                                public boolean canPlace(ItemStack stack) {
-                                    return slot.mayPlace(stack);
-                                }
-                            })
+                    return Stream.of(menu.getTopSlot(), menu.getBottomSlot(), menu.getSyringeSlot())
+                            .map(SlotAccessor::fromSlot)
                             .collect(Collectors.toList());
                 }
                 return List.of();
@@ -196,11 +135,13 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
 
             @Override
             public Iterable<SlotAccessor> getInventorySlots(Context context) {
-                LocalPlayer player = context.getMinecraft().player;
-                Inventory inventory = player.getInventory();
-                return IntStream.range(0, inventory.items.size())
-                        .mapToObj(index -> SlotAccessor.fromPlayerInventory(player, index))
-                        .collect(Collectors.toList());
+                if (context.getMenu() instanceof UnifuserGuiMenu menu) {
+                    int maxInv = menu.getTopSlot().index - 1;
+                    return IntStream.range(0, maxInv)
+                            .mapToObj(index -> SlotAccessor.fromSlot(menu.getSlot(index)))
+                            .collect(Collectors.toList());
+                }
+                return List.of();
             }
         };
     }

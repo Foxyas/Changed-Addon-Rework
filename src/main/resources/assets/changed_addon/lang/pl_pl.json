@@ -457,7 +457,7 @@
   "gamerule.changed_addon:blocksNeedFullSourceToSpread.description": "Czy bloki pokryte latexem potrzebują bloku źródłowego (np changed:white_latex_block), aby się rozprzestrzeniać?",
 
   "gui.changed_addon.catalyzer_gui.label_full": "Pełny",
-  "gui.changed_addon.catalyzer_gui.tooltip_put_the_powders_or_syringe": "Włóż proszki lub strzykawkę",
+  "gui.changed_addon.catalyzer_gui.tooltip.place_first_ingredient": "Włóż proszki lub strzykawkę",
   "gui.changed_addon.fight_to_keep_consciousness_minigame.button_fight": "           Walcz            ",
   "gui.changed_addon.fight_to_keep_consciousness_minigame.button_give_up": "    Poddaj się    ",
   "gui.changed_addon.fight_to_keep_consciousness_minigame.label_text": "Zostało ci tylko %s ticków, POSPIESZ SIĘ!",
@@ -476,9 +476,9 @@
   "gui.changed_addon.transfur_sounds_gui.button_cooldown": "Reset Cooldownu",
   "gui.changed_addon.transfur_sounds_gui.label_transfur_sounds": "Dzwięki transfurów",
   "gui.changed_addon.unifuser_gui.label_full": "Pełny",
-  "gui.changed_addon.unifuser_gui.tooltip_place_a_syringe_with_dna": "Włóż strzykawkę z DNA",
-  "gui.changed_addon.unifuser_gui.tooltip_place_the_powders": "Włóż proszek lub inny składnik",
-  "gui.changed_addon.unifuser_gui.tooltip_put_the_second_ingredient": "Włóż drugi składnik",
+  "gui.changed_addon.unifuser_gui.tooltip.place_recipe_catalyst": "Włóż strzykawkę z DNA",
+  "gui.changed_addon.unifuser_gui.tooltip.place_first_ingredient": "Włóż proszek lub inny składnik",
+  "gui.changed_addon.unifuser_gui.tooltip.place_second_ingredient": "Włóż drugi składnik",
 
   "item.changed_addon.accessories_chestplate": "Akcesoria na pierś",
   "item.changed_addon.ammonia": "Chlorek Amonu",

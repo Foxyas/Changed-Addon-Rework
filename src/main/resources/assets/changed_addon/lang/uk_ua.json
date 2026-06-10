@@ -446,7 +446,7 @@
   "gamerule.changed_addon:blocksNeedFullSourceToSpread.description": "Латексним блокам потрібне підключення до джерела для поширення",
 
   "gui.changed_addon.catalyzer_gui.label_full": "Повний",
-  "gui.changed_addon.catalyzer_gui.tooltip_put_the_powders_or_syringe": "Покладіть порошок або шприц",
+  "gui.changed_addon.catalyzer_gui.tooltip.place_first_ingredient": "Покладіть порошок або шприц",
   "gui.changed_addon.fight_to_keep_consciousness_minigame.button_fight": "           Боротися            ",
   "gui.changed_addon.fight_to_keep_consciousness_minigame.button_give_up": "     Здатися      ",
   "gui.changed_addon.fight_to_keep_consciousness_minigame.label_text": "У вас залишилося %s тіків, ПОСПІШАЙТЕ!",
@@ -465,9 +465,9 @@
   "gui.changed_addon.transfur_sounds_gui.button_cooldown": "Скидання перезарядки",
   "gui.changed_addon.transfur_sounds_gui.label_transfur_sounds": "Звуки Істот",
   "gui.changed_addon.unifuser_gui.label_full": "Повний",
-  "gui.changed_addon.unifuser_gui.tooltip_place_a_syringe_with_dna": "Покладіть шприц з ДНК",
-  "gui.changed_addon.unifuser_gui.tooltip_place_the_powders": "Покладіть порошок чи інший інгредієнт",
-  "gui.changed_addon.unifuser_gui.tooltip_put_the_second_ingredient": "Покладіть другий інгредієнт",
+  "gui.changed_addon.unifuser_gui.tooltip.place_recipe_catalyst": "Покладіть шприц з ДНК",
+  "gui.changed_addon.unifuser_gui.tooltip.place_first_ingredient": "Покладіть порошок чи інший інгредієнт",
+  "gui.changed_addon.unifuser_gui.tooltip.place_second_ingredient": "Покладіть другий інгредієнт",
 
   "item.changed_addon.avali_spawn_egg": "Яйце виклику Авалі",
   "item.changed_addon.accessories_chestplate": "Грудні аксесуари",

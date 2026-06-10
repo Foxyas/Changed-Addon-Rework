@@ -330,7 +330,7 @@
     "gamerule.changed_addon:painiteGeneration.description": "启用硅硼钙铝石矿的生成",
 
     "gui.changed_addon.catalyzer_gui.label_full": "Full",
-    "gui.changed_addon.catalyzer_gui.tooltip_put_the_powders_or_syringe": "放置粉末或注射器",
+    "gui.changed_addon.catalyzer_gui.tooltip.place_first_ingredient": "放置粉末或注射器",
     "gui.changed_addon.fight_to_keep_consciousness_minigame.button_fight": "           反抗            ",
     "gui.changed_addon.fight_to_keep_consciousness_minigame.button_give_up": "     放弃      ",
     "gui.changed_addon.fight_to_keep_consciousness_minigame.label_text": "你只有4秒钟，快点！",
@@ -349,9 +349,9 @@
     "gui.changed_addon.transfur_sounds_gui.button_cooldown": "冷却重置",
     "gui.changed_addon.transfur_sounds_gui.label_transfur_sounds": "兽化音效",
     "gui.changed_addon.unifuser_gui.label_full": "完成",
-    "gui.changed_addon.unifuser_gui.tooltip_place_a_syringe_with_dna": "放置带有DNA的注射器",
-    "gui.changed_addon.unifuser_gui.tooltip_place_the_powders": "放置粉末",
-    "gui.changed_addon.unifuser_gui.tooltip_put_the_second_ingredient": "放置第二种原料",
+    "gui.changed_addon.unifuser_gui.tooltip.place_recipe_catalyst": "放置带有DNA的注射器",
+    "gui.changed_addon.unifuser_gui.tooltip.place_first_ingredient": "放置粉末",
+    "gui.changed_addon.unifuser_gui.tooltip.place_second_ingredient": "放置第二种原料",
 
     "item.changed_addon.avali_spawn_egg": "Avali刷怪蛋",
     "item.changed_addon.accessories_chestplate": "胸部配件",

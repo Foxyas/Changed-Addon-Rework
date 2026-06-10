@@ -3,9 +3,9 @@ package net.foxyas.changedaddon.menu;
 import net.foxyas.changedaddon.block.entity.CatalyzerBlockEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMenus;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -13,11 +13,12 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import static net.foxyas.changedaddon.menu.UnifuserGuiMenu.POWER_BUTTON_ID;
 
@@ -27,8 +28,12 @@ public class CatalyzerGuiMenu extends AbstractMenu {
     private final ContainerLevelAccess access;
     private final CatalyzerBlockEntity catalyzer;
     private final BlockPos blockPos;
+
+    public final NonNullList<Slot> playerInvSlots = NonNullList.create();
+    public final NonNullList<Slot> menuInvSlots = NonNullList.create();
+
     private final SlotItemHandler slot1;
-    private final SlotItemHandler slot2;
+    private final SimpleBrewingResultSlot slot2;
 
     public CatalyzerGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id, inv, extraData.readBlockPos());
@@ -51,13 +56,15 @@ public class CatalyzerGuiMenu extends AbstractMenu {
         createPlayerInventory(inv, 0, 0);
 
         slot1 = (SlotItemHandler) addSlot(new SlotItemHandler(internal, 0, 44, 44));
-        slot2 = (SlotItemHandler) addSlot(new SlotItemHandler(internal, 1, 116, 44) {
+        slot2 = (SimpleBrewingResultSlot) addSlot(new SimpleBrewingResultSlot(entity, internal, 1, 116, 44) {
 
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return false;
             }
         });
+
+        menuInvSlots.addAll(List.of(slot1, slot2));
     }
 
     public CatalyzerBlockEntity getCatalyzer() {

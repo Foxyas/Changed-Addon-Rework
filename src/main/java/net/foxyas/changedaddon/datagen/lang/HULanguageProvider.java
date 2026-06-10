@@ -433,7 +433,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("catalyzer.nitrogen_usage", "A haladási sebesség tikkenként %1$s, és %2$s nitrogénerőt használ");
         addGui("recipe_progress", "A haladási sebesség %s tikkenként");
         addGui("catalyzer_gui.label_full", "Tele");
-        addGui("catalyzer_gui.tooltip_put_the_powders_or_syringe", "Tedd ide a porokat vagy a fecskendőt");
+        addGui("catalyzer_gui.tooltip.place_first_ingredient", "Tedd ide a porokat vagy a fecskendőt");
         addGui("fight_to_keep_consciousness_minigame.button_fight", "           Küzdj            ");
         addGui("fight_to_keep_consciousness_minigame.button_give_up", "     felad      ");
         addGui("fight_to_keep_consciousness_minigame.label_text", "Már csak %s tikk maradt hátra, SIESS!");
@@ -463,9 +463,9 @@ public class HULanguageProvider extends LanguageProvider {
 
         addGui("transfur_sounds_gui.label_transfur_sounds", "Transzfur hangjai");
         addGui("unifuser_gui.label_full", "Tele");
-        addGui("unifuser_gui.tooltip_place_a_syringe_with_dna", "Helyezz ide egy DNS-sel töltött fecskendőt");
-        addGui("unifuser_gui.tooltip_place_the_powders", "Helyezz ide a porokat vagy más hozzávalókat");
-        addGui("unifuser_gui.tooltip_put_the_second_ingredient", "Tedd ide a második hozzávalót");
+        addGui("unifuser_gui.tooltip.place_recipe_catalyst", "Helyezz ide egy DNS-sel töltött fecskendőt");
+        addGui("unifuser_gui.tooltip.place_first_ingredient", "Helyezz ide a porokat vagy más hozzávalókat");
+        addGui("unifuser_gui.tooltip.place_second_ingredient", "Tedd ide a második hozzávalót");
         addGui("abilities_radial_screen.mouse.right_click", "Nyomd meg a jobb egérgombot a második képesség kiválasztásához");
 
         add("deathScreen.select_tf", "Újraéledés transzfurként?");

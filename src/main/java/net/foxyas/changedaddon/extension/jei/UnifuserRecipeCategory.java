@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.extension.jeiSuport;
+package net.foxyas.changedaddon.extension.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -32,7 +32,7 @@ public class UnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe> {
 
     @Override
     public mezz.jei.api.recipe.@NotNull RecipeType<UnifuserRecipe> getRecipeType() {
-        return ChangedAddonJeiPlugin.UNIFUSER_RECIPE_TYPE;
+        return CARecipeTypes.UNIFUSER_RECIPE_TYPE;
     }
 
     @Override

@@ -3,9 +3,7 @@ package net.foxyas.changedaddon.client.gui;
 import net.foxyas.changedaddon.block.entity.CatalyzerBlockEntity;
 import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.BlockPos;
@@ -108,7 +106,7 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
         boolean carriedItemIsEmptyOrIsNotSelected = this.menu.getCarried().isEmpty() || (hoveredSlot != null && !this.menu.getCarried().equals(hoveredSlot.getItem()));
         if (carriedItemIsEmptyOrIsNotSelected && this.hoveredSlot != null && this.hoveredSlot == menu.getLeftSlot() && !this.hoveredSlot.hasItem()) {
             ItemStack itemstack = this.hoveredSlot.getItem();
-            pGuiGraphics.renderTooltip(this.font, List.of(Component.translatable("gui.changed_addon.catalyzer_gui.tooltip_put_the_powders_or_syringe")), itemstack.getTooltipImage(), itemstack, pX, pY);
+            pGuiGraphics.renderTooltip(this.font, List.of(Component.translatable("gui.changed_addon.catalyzer_gui.tooltip.place_first_ingredient")), itemstack.getTooltipImage(), itemstack, pX, pY);
         }
     }
 

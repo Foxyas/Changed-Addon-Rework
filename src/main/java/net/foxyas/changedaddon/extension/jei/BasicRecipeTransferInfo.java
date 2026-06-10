@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.extension.jeiSuport;
+package net.foxyas.changedaddon.extension.jei;
 
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;

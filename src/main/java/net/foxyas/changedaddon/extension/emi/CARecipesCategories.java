@@ -30,7 +30,7 @@ public class CARecipesCategories {
     public static final EmiRecipeCategory CATALYZER_CATEGORY = new EmiRecipeCategory(
             ChangedAddonMod.resourceLoc("catalyzer"),
             EmiStack.of(ChangedAddonBlocks.CATALYZER.get()),
-            simplifiedRenderer(0, 0)
+            simplifiedRenderer(32, 0)
     );
     public static final EmiRecipeCategory UNIFUSER_CATEGORY = new EmiRecipeCategory(
             ChangedAddonMod.resourceLoc("unifuser"),

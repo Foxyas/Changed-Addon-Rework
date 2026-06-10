@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.foxyas.changedaddon.block.entity.CatalyzerBlockEntity;
 import net.foxyas.changedaddon.block.entity.UnifuserBlockEntity;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
@@ -154,9 +153,9 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
 
     protected @NotNull HashMap<Slot, List<Component>> getSlotToolTips() {
         return Util.make(new HashMap<>(), map -> {
-            map.putIfAbsent(menu.getTopSlot(), List.of(Component.translatable("gui.changed_addon.unifuser_gui.tooltip_place_the_powders")));
-            map.putIfAbsent(menu.getBottomSlot(), List.of(Component.translatable("gui.changed_addon.unifuser_gui.tooltip_put_the_second_ingredient")));
-            map.putIfAbsent(menu.getSyringeSlot(), List.of(Component.translatable("gui.changed_addon.unifuser_gui.tooltip_place_a_syringe_with_dna")));
+            map.putIfAbsent(menu.getTopSlot(), List.of(Component.translatable("gui.changed_addon.unifuser_gui.tooltip.place_first_ingredient")));
+            map.putIfAbsent(menu.getBottomSlot(), List.of(Component.translatable("gui.changed_addon.unifuser_gui.tooltip.place_second_ingredient")));
+            map.putIfAbsent(menu.getSyringeSlot(), List.of(Component.translatable("gui.changed_addon.unifuser_gui.tooltip.place_recipe_catalyst")));
         });
     }
 

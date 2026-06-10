@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.extension.jeiSuport.guisHandlers;
+package net.foxyas.changedaddon.extension.jei.guisHandlers;
 
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import net.foxyas.changedaddon.client.gui.FoxyasInventoryMenuScreen;

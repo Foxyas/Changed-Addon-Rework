@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.extension.jeiSuport;
+package net.foxyas.changedaddon.extension.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -35,7 +35,7 @@ public class CatalyzerRecipeCategory implements IRecipeCategory<CatalyzerRecipe>
 
     @Override
     public mezz.jei.api.recipe.@NotNull RecipeType<CatalyzerRecipe> getRecipeType() {
-        return ChangedAddonJeiPlugin.CATALYZER_RECIPE_TYPE;
+        return CARecipeTypes.CATALYZER_RECIPE_TYPE;
     }
 
     @Override

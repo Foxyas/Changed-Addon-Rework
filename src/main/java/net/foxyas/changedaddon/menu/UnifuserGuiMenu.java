@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.init.ChangedAddonMenus;
 import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,6 +21,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class UnifuserGuiMenu extends AbstractMenu {
 
     public static final int POWER_BUTTON_ID = 0;
@@ -32,10 +35,13 @@ public class UnifuserGuiMenu extends AbstractMenu {
 
     public final RecipeManager recipeManager;
 
+    public final NonNullList<Slot> playerInvSlots = NonNullList.create();
+    public final NonNullList<Slot> menuInvSlots = NonNullList.create();
+
     protected final SlotItemHandler topSlot;
     protected final SlotItemHandler bottomSlot;
     protected final SlotItemHandler syringeSlot;
-    protected final SlotItemHandler outputSLot;
+    protected final SimpleBrewingResultSlot outputSLot;
 
     public UnifuserGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id, inv, extraData.readBlockPos());
@@ -56,15 +62,11 @@ public class UnifuserGuiMenu extends AbstractMenu {
         createPlayerHotbar(inv, 0, 0);
         createPlayerInventory(inv, 0, 0);
 
+        playerInvSlots.addAll(this.slots);
+
         this.recipeManager = inv.player.level().getRecipeManager();
 
-        SlotItemHandler slot1 = new SlotItemHandler(internal, 0, 26, 17) {
-
-            @Override
-            public boolean mayPlace(@NotNull ItemStack itemstack) {
-                return true;
-            }
-        };
+        SlotItemHandler slot1 = new SlotItemHandler(internal, 0, 26, 17);
 
         this.topSlot = (SlotItemHandler) addSlot(slot1);
 
@@ -72,7 +74,6 @@ public class UnifuserGuiMenu extends AbstractMenu {
         this.bottomSlot = (SlotItemHandler) addSlot(slot2);
 
         SlotItemHandler slot3 = new SlotItemHandler(internal, 2, 53, 35) {
-
             @Override
             public boolean mayPlace(@NotNull ItemStack itemstack) {
                 boolean hasRecipe = UnifuserGuiMenu.this.recipeManager.getAllRecipesFor(ChangedAddonRecipeTypes.UNIFUSER_RECIPE_TYPE.get()).stream().anyMatch((recipe) -> recipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(itemstack)));
@@ -81,15 +82,10 @@ public class UnifuserGuiMenu extends AbstractMenu {
         };
         this.syringeSlot = (SlotItemHandler) addSlot(slot3);
 
-        SlotItemHandler slot4 = new SlotItemHandler(internal, 3, 116, syringeSlot.y) { // y35
+        SimpleBrewingResultSlot slot4 = new SimpleBrewingResultSlot(entity, internal, 3, 116, syringeSlot.y); // y35
+        this.outputSLot = (SimpleBrewingResultSlot) addSlot(slot4);
 
-            @Override
-            public boolean mayPlace(@NotNull ItemStack stack) {
-                return false;
-            }
-        };
-        this.outputSLot = (SlotItemHandler) addSlot(slot4);
-
+        menuInvSlots.addAll(List.of(topSlot, bottomSlot, syringeSlot));
     }
 
     public UnifuserBlockEntity getUnifuser() {

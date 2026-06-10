@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.extension.jeiSuport;
+package net.foxyas.changedaddon.extension.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -38,7 +38,7 @@ public class KeycardColorRecipeCategory implements IRecipeCategory<KeycardColorR
 
     @Override
     public @NotNull RecipeType<KeycardColorRecipe> getRecipeType() {
-        return ChangedAddonJeiPlugin.KEYCARD_COLOR_RECIPE_TYPE;
+        return CARecipeTypes.KEYCARD_COLOR_RECIPE_TYPE;
     }
 
     /// --- End of the for removal classes ---

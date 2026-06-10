@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.extension.jeiSuport.brewing;
+package net.foxyas.changedaddon.extension.jei.brewing;
 
 import mezz.jei.api.recipe.vanilla.IJeiBrewingRecipe;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
