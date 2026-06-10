@@ -333,8 +333,8 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
 
     @Override
     public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction direction) {
-        return true;
-//        return this.canPlaceItem(index, stack) && index <= 2;
+//        return true;
+        return this.canPlaceItem(index, stack) && index <= 2;
     }
 
     @Override
@@ -371,9 +371,6 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
 
     @Override
     public boolean canPlaceItem(int pIndex, @NotNull ItemStack pStack) {
-        if (pIndex == 3) {
-            return false;
-        }
         return super.canPlaceItem(pIndex, pStack);
     }
 

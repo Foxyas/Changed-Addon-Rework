@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/generated",
+  "forge_data": {
+    "layers": {
+      "1": {
+        "block_light": 15,
+        "sky_light": 15
+      }
+    }
+  },
+  "loader": "forge:item_layers",
+  "render_types": {},
+  "render_types_fast": {},
+  "textures": {
+    "layer0": "changed_addon:block/luminara_bloom",
+    "layer1": "changed_addon:block/luminara_bloom_emissive"
+  }
+}

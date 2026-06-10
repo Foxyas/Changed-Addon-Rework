@@ -311,8 +311,8 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
 
     @Override
     public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction direction) {
-        return true;
-//        return direction != Direction.DOWN && index <= 0;
+//        return true;
+        return canPlaceItem(index, stack) && direction != Direction.DOWN && index <= 0;
     }
 
     @Override

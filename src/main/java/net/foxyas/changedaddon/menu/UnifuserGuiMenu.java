@@ -135,6 +135,31 @@ public class UnifuserGuiMenu extends AbstractMenu {
         return super.clickMenuButton(player, pId);
     }
 
+    @Override
+    public @NotNull ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = slots.get(pIndex);
+        if (slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
+            itemstack = itemstack1.copy();
+            if (pIndex < 36) {
+                if (!this.moveItemStackTo(itemstack1, 36, this.slots.size() - 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.moveItemStackTo(itemstack1, 0, 36, false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (itemstack1.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+        }
+
+        return itemstack;
+    }
+
     public BlockPos getBlockPos() {
         return blockPos;
     }

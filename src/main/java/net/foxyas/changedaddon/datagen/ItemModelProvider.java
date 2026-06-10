@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraftforge.client.model.generators.loaders.ItemLayerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -54,23 +55,35 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
         basicItem(CRAFTABLE_PROTOTYPE_SPAWN_EGG.get());
 
+        luminaraBloom();
+
+
         basicBlockItem(ChangedAddonBlocks.LUMINARA_LEAVES);
+    }
+
+    public void luminaraBloom() {
+        ResourceLocation item = LUMINARA_BLOOM.getId();
+        getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "block/" + item.getPath()))
+                .texture("layer1", ResourceLocation.fromNamespaceAndPath(LUMINARA_BLOOM.getId().getNamespace(), "block/" + LUMINARA_BLOOM.getId().getPath() + "_emissive"))
+                .customLoader(ItemLayerModelBuilder::begin).emissive(15, 15, 1);
     }
 
     private <T extends Block> ResourceLocation key(RegistryObject<T> block) {
         return ForgeRegistries.BLOCKS.getKey(block.get());
     }
 
-    public <T extends Block> void basicBlockItem(RegistryObject<T> block) {
+    public <T extends Block> ItemModelBuilder basicBlockItem(RegistryObject<T> block) {
         ResourceLocation blockLoc = blockLoc(block.getId());
 
         ModelFile defaultModel = getExistingFile(blockLoc);
 
-        getBuilder(key(block).getPath()).parent(defaultModel);
+        return getBuilder(key(block).getPath()).parent(defaultModel);
     }
 
-    public <T extends Block> void basicBlockItem(RegistryObject<T> block, ModelFile model) {
-        getBuilder(key(block).getPath()).parent(model);
+    public <T extends Block> ItemModelBuilder basicBlockItem(RegistryObject<T> block, ModelFile model) {
+        return getBuilder(key(block).getPath()).parent(model);
     }
 
     public ItemModelBuilder layeredItem(Item item, HashMap<Integer, ResourceLocation> layerTextures) {
