@@ -3,7 +3,10 @@ package net.foxyas.changedaddon.datagen;
 import net.foxyas.changedaddon.datagen.builders.ChangedAddonRecipeBuilder;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicCropRecipeProvider;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicSoilRecipeProvider;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.item.LaethinItem;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.advancements.CriterionTriggerInstance;
@@ -12,11 +15,13 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
@@ -135,6 +140,27 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .requires(DIAMOND).requires(TINTED_GLASS)
                 .unlockedBy(lunarRose, hasLunarRose)
                 .save(recipeConsumer, RecipeBuilder.getDefaultRecipeId(LUNAR_ROSE.get()) + "_secret");
+
+        // Tipo 1: Usando o atalho estático da própria classe builder
+        ItemStack white = LAETHIN.get().getDefaultInstance();
+        StrictNBTIngredient stack = StrictNBTIngredient.of(white);
+        ChangedAddonRecipeBuilder.unifuser(new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get(), 3))
+                .requires(ChangedAddonItems.LITIX_CAMONIA.get())
+                .requires(stack)
+                .requires(ChangedAddonTags.Items.AIR)
+                .withSpeed(0.5f)
+                .unlockedBy("has_litix_camonia", has(ChangedAddonItems.LITIX_CAMONIA.get()))
+                .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "multi_litix_camonia_recipe_white"));
+        ItemStack black = LAETHIN.get().getDefaultInstance();
+        LaethinItem.setLaethinTypeForStack(white, LaethinItem.Type.DARK_LATEX);
+        stack = StrictNBTIngredient.of(black);
+        ChangedAddonRecipeBuilder.unifuser(new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get(), 3))
+                .requires(ChangedAddonItems.LITIX_CAMONIA.get())
+                .requires(stack)
+                .requires(ChangedAddonTags.Items.AIR)
+                .withSpeed(0.5f)
+                .unlockedBy("has_litix_camonia", has(ChangedAddonItems.LITIX_CAMONIA.get()))
+                .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "multi_litix_camonia_recipe_dark"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FLAMETHROWER.get())
                 .pattern(" IB")
