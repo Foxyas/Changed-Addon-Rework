@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.datagen.builders;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;
@@ -55,24 +56,32 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
         this.result = stack;
     }
 
+    public static ChangedAddonRecipeBuilder unifuser(ItemStack result) {
+        return new ChangedAddonRecipeBuilder(ChangedAddonRecipeTypes.UNIFUSER_RECIPE.get(), result);
+    }
+
+    public static ChangedAddonRecipeBuilder catalyzer(ItemStack result) {
+        return new ChangedAddonRecipeBuilder(ChangedAddonRecipeTypes.CATALYZER_RECIPE.get(), result);
+    }
+
     /**
      * Creates a new builder for a shapeless recipe.
      */
-    public static ChangedAddonRecipeBuilder shapeless(ItemLike pResult) {
+    public static ChangedAddonRecipeBuilder generic(ItemLike pResult) {
         return new ChangedAddonRecipeBuilder(pResult, 1);
     }
 
     /**
      * Creates a new builder for a shapeless recipe.
      */
-    public static ChangedAddonRecipeBuilder shapeless(ItemLike pResult, int pCount) {
+    public static ChangedAddonRecipeBuilder generic(ItemLike pResult, int pCount) {
         return new ChangedAddonRecipeBuilder(pResult, pCount);
     }
 
     /**
      * Creates a new builder for a shapeless recipe.
      */
-    public static ChangedAddonRecipeBuilder shapeless(ItemStack stack) {
+    public static ChangedAddonRecipeBuilder generic(ItemStack stack) {
         return new ChangedAddonRecipeBuilder(stack);
     }
 
@@ -231,7 +240,9 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
 
             // ✅ Adiciona propriedades customizadas
             progressSpeed.ifPresent(speed -> pJson.addProperty("ProgressSpeed", speed));
-            nitrogenUsage.ifPresent(nitrogen -> pJson.addProperty("NitrogenUsage", nitrogen));
+            if (type == ChangedAddonRecipeTypes.CATALYZER_RECIPE.get()) {
+                nitrogenUsage.ifPresent(nitrogen -> pJson.addProperty("NitrogenUsage", nitrogen));
+            }
         }
 
         @Override
