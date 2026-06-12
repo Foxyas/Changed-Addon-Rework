@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.item;
 import net.foxyas.changedaddon.entity.ai.goals.simple.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.item.api.ColorHolder;
-import net.foxyas.changedaddon.item.api.DynamicCreativeTab;
+import net.foxyas.changedaddon.item.api.IDynamicCreativeTab;
 import net.foxyas.changedaddon.util.DynamicClipContext;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.util.PlayerUtil;
@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.List;
 
-public class LaserPointerItem extends Item implements SpecializedAnimations, ColorHolder, DynamicCreativeTab {
+public class LaserPointerItem extends Item implements SpecializedAnimations, ColorHolder, IDynamicCreativeTab {
 
     public static final float MAX_LASER_REACH = 32;
     public static final int FOLLOW_LASER_RADIUS = 16;

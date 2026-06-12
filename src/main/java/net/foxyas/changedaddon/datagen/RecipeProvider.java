@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.datagen.builders.ChangedAddonRecipeBuilder;
+import net.foxyas.changedaddon.datagen.builders.UnifuserRecipeBuilder;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicCropRecipeProvider;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicSoilRecipeProvider;
 import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
@@ -150,6 +151,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                         has(Items.BLAZE_ROD)
                 )
                 .save(recipeConsumer);
+
+        UnifuserRecipeBuilder.unifuser(new ItemStack(LUNAR_ROSE.get()))
+                .progressSpeed(5)
+                .requires(DIAMOND).requires(TINTED_GLASS)
+                .unlockedBy(lunarRose, hasLunarRose)
+                .save(recipeConsumer, RecipeBuilder.getDefaultRecipeId(LUNAR_ROSE.get()) + "_2_secret");
 
         BasicCropRecipeProvider.buildRecipes(recipeConsumer);
         BasicSoilRecipeProvider.buildRecipes(recipeConsumer);
