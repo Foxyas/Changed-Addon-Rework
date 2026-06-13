@@ -142,14 +142,14 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common-api:${jeiVersion}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge-api:${jeiVersion}")
 
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common:${jeiVersion}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common:${jeiVersion}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
 
     // REI Mod.
-    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
+    runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:${reiVersion}")
-    compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothVersion}")
-    compileOnly fg.deobf("dev.architectury:architectury-forge:${archVersion}")
+    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothVersion}")
+    implementation fg.deobf("dev.architectury:architectury-forge:${archVersion}")
 
     // EMI
     compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}:api")

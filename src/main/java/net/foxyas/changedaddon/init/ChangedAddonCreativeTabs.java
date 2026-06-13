@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.item.api.DynamicCreativeTab;
+import net.foxyas.changedaddon.item.api.IDynamicCreativeTab;
 import net.ltxprogrammer.changed.init.ChangedTabs;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -24,13 +24,13 @@ public class ChangedAddonCreativeTabs {
             .displayItems((params, items) -> {
                 for (RegistryObject<Item> itemRegistryObject : REGISTRY.getEntries()) {
                     if (ChangedAddonItems.getNoTabItems().contains(itemRegistryObject)) continue;
-                    if (itemRegistryObject.get() instanceof DynamicCreativeTab dynamicCreativeTab) {
-                        dynamicCreativeTab.fillItemCategory(items);
+                    if (itemRegistryObject.get() instanceof IDynamicCreativeTab IDynamicCreativeTab) {
+                        IDynamicCreativeTab.fillItemCategory(items);
                         continue;
                     }
 
                     if (!ChangedAddonCreativeTabs.CHANGED_ADDON_OPTIONAL_COMBAT_TAB.get().contains(new ItemStack(itemRegistryObject.get()))) {
-                        items.accept(itemRegistryObject.get());
+                        items.accept(itemRegistryObject.get().getDefaultInstance());
                     }
                 }
 

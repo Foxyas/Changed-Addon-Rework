@@ -39,6 +39,7 @@ public final class ChangedAddonTags {
     }
 
     public static final class Items {
+        public static final TagKey<Item> AIR = vanillaKey("air");
 
         public static final TagKey<Item> METAL = key("metal");
         public static final TagKey<Item> PARTIAL_METAL = key("partial_metal");
@@ -67,6 +68,10 @@ public final class ChangedAddonTags {
         public static final TagKey<Item> UNIFUSER_RECIPE_CATALYST = key("unifuser_recipe_catalyst");
 
         private static TagKey<Item> key(String path) {
+            return TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), ChangedAddonMod.resourceLoc(path));
+        }
+
+        private static TagKey<Item> vanillaKey(String path) {
             return TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), ChangedAddonMod.resourceLoc(path));
         }
     }

@@ -18,7 +18,6 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -38,9 +37,9 @@ public class UnifuserGuiMenu extends AbstractMenu {
     public final NonNullList<Slot> playerInvSlots = NonNullList.create();
     public final NonNullList<Slot> menuInvSlots = NonNullList.create();
 
-    protected final SlotItemHandler topSlot;
-    protected final SlotItemHandler bottomSlot;
-    protected final SlotItemHandler syringeSlot;
+    protected final SimpleItemHandlerInputSlot topSlot;
+    protected final SimpleItemHandlerInputSlot bottomSlot;
+    protected final SimpleItemHandlerInputSlot syringeSlot;
     protected final SimpleBrewingResultSlot outputSLot;
 
     public UnifuserGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
@@ -66,36 +65,20 @@ public class UnifuserGuiMenu extends AbstractMenu {
 
         this.recipeManager = inv.player.level().getRecipeManager();
 
-        SlotItemHandler slot1 = new SlotItemHandler(internal, 0, 26, 17) {
-            @Override
-            public boolean mayPickup(Player playerIn) {
-                return true;
-            }
-        };
+        SimpleItemHandlerInputSlot slot1 = new SimpleItemHandlerInputSlot(internal, 0, 26, 17);
+        this.topSlot = (SimpleItemHandlerInputSlot) addSlot(slot1);
 
-        this.topSlot = (SlotItemHandler) addSlot(slot1);
+        SimpleItemHandlerInputSlot slot2 = new SimpleItemHandlerInputSlot(internal, 1, 26, 53);
+        this.bottomSlot = (SimpleItemHandlerInputSlot) addSlot(slot2);
 
-        SlotItemHandler slot2 = new SlotItemHandler(internal, 1, 26, 53) {
-            @Override
-            public boolean mayPickup(Player playerIn) {
-                return true;
-            }
-        };
-        this.bottomSlot = (SlotItemHandler) addSlot(slot2);
-
-        SlotItemHandler slot3 = new SlotItemHandler(internal, 2, 53, 35) {
+        SimpleItemHandlerInputSlot slot3 = new SimpleItemHandlerInputSlot(internal, 2, 53, 35) {
             @Override
             public boolean mayPlace(@NotNull ItemStack itemstack) {
                 boolean hasRecipe = UnifuserGuiMenu.this.recipeManager.getAllRecipesFor(ChangedAddonRecipeTypes.UNIFUSER_RECIPE_TYPE.get()).stream().anyMatch((recipe) -> recipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(itemstack)));
                 return itemstack.is(ChangedAddonTags.Items.UNIFUSER_RECIPE_CATALYST) || hasRecipe;
             }
-
-            @Override
-            public boolean mayPickup(Player playerIn) {
-                return true;
-            }
         };
-        this.syringeSlot = (SlotItemHandler) addSlot(slot3);
+        this.syringeSlot = (SimpleItemHandlerInputSlot) addSlot(slot3);
 
         SimpleBrewingResultSlot slot4 = new SimpleBrewingResultSlot(entity, internal, 3, 116, syringeSlot.y); // y35
         this.outputSLot = (SimpleBrewingResultSlot) addSlot(slot4);

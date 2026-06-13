@@ -1,0 +1,23 @@
+{
+  "type": "changed_addon:unifuser",
+  "ProgressSpeed": 0.5,
+  "ingredients": [
+    {
+      "item": "changed_addon:litix_camonia"
+    },
+    {
+      "type": "forge:nbt",
+      "count": 1,
+      "item": "changed_addon:laethin",
+      "nbt": "{type:\"white_latex\"}"
+    },
+    {
+      "tag": "changed_addon:air"
+    }
+  ],
+  "output": {
+    "type": "forge:nbt",
+    "count": 3,
+    "item": "changed_addon:litix_camonia"
+  }
+}

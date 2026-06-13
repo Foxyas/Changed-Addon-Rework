@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.foxyas.changedaddon.item.api.IDynamicCreativeTab;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.procedure.SummonDripParticlesProcedure;
 import net.foxyas.changedaddon.util.PlayerUtil;
@@ -18,19 +19,38 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class LaethinSyringeItem extends AbstractSyringeItem implements SpecializedAnimations {
+import static net.foxyas.changedaddon.item.LaethinItem.setLaethinTypeForStack;
+
+public class LaethinSyringeItem extends AbstractSyringeItem implements SpecializedAnimations, IDynamicCreativeTab {
 
     public LaethinSyringeItem() {
         super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
                 .stacksTo(64)
                 .rarity(Rarity.RARE)
         );
+    }
+
+    @Override
+    public @NotNull ItemStack getDefaultInstance() {
+        ItemStack defaultInstance = super.getDefaultInstance();
+        setLaethinTypeForStack(defaultInstance, LaethinItem.Type.WHITE_LATEX);
+        return defaultInstance;
+    }
+
+    @Override
+    public void fillItemCategory(CreativeModeTab.@NotNull Output tab) {
+        for (LaethinItem.Type type : LaethinItem.Type.values()) {
+            ItemStack stack = new ItemStack(this);
+            setLaethinTypeForStack(stack, type);
+            tab.accept(stack);
+        }
     }
 
     @Override

@@ -10,7 +10,6 @@ import me.shedaniel.rei.api.client.registry.transfer.simple.SimpleTransferHandle
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.comparison.ItemComparatorRegistry;
 import me.shedaniel.rei.api.common.transfer.info.stack.SlotAccessor;
-import me.shedaniel.rei.api.common.transfer.info.stack.VanillaSlotAccessor;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.forge.REIPluginClient;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -21,13 +20,11 @@ import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
 import net.foxyas.changedaddon.recipe.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipe.UnifuserRecipe;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @REIPluginClient
 public class ChangedAddonReiPlugin implements REIClientPlugin {
@@ -93,12 +90,7 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
             @Override
             public Iterable<SlotAccessor> getInputSlots(Context context) {
                 if (context.getMenu() instanceof CatalyzerGuiMenu menu) {
-                    return List.of(new VanillaSlotAccessor(menu.getLeftSlot()) {
-                        @Override
-                        public boolean allowModification(Player player) {
-                            return true;
-                        }
-                    });
+                    return List.of(SlotAccessor.fromSlot(menu.getLeftSlot()));
                 }
                 return List.of();
             }
@@ -126,9 +118,16 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
             @Override
             public Iterable<SlotAccessor> getInputSlots(Context context) {
                 if (context.getMenu() instanceof UnifuserGuiMenu menu) {
-                    return Stream.of(menu.getTopSlot(), menu.getBottomSlot(), menu.getSyringeSlot())
-                            .map(SlotAccessor::fromSlot)
+                    int minInput = menu.getTopSlot().index;
+                    int maxInput = menu.getOutputSlot().index - 1;
+                    return IntStream.range(minInput, maxInput)
+                            .mapToObj(index -> SlotAccessor.fromSlot(menu.getSlot(index)))
                             .collect(Collectors.toList());
+//                    return List.of(
+//                            new VanillaSlotAccessor(menu.getTopSlot()),
+//                            new VanillaSlotAccessor(menu.getBottomSlot()),
+//                            new VanillaSlotAccessor(menu.getSyringeSlot())
+//                    );
                 }
                 return List.of();
             }
