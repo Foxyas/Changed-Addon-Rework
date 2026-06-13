@@ -209,10 +209,6 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
         // Obtém todas as receitas do tipo JeiCatalyzerRecipe
         List<UnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(UnifuserRecipe.Type.INSTANCE);
 
-        // Cria um contêiner simples com o input fornecido
-        SimpleContainer container = new SimpleContainer(1);
-        container.setItem(0, input1);
-
         // Verifica cada receita para ver se ela corresponde ao input fornecido
         for (UnifuserRecipe recipe : unifuserRecipes) {
             NonNullList<Ingredient> ingredients = recipe.getIngredients();

@@ -28,6 +28,6 @@ public class CatalyzerRecipeHandler implements StandardRecipeHandler<CatalyzerGu
 
     @Override
     public boolean supportsRecipe(EmiRecipe recipe) {
-        return recipe.getCategory() == CARecipesCategories.UNIFUSER_CATEGORY && recipe.supportsRecipeTree();
+        return recipe.getCategory() == CARecipesCategories.CATALYZER_CATEGORY && recipe.supportsRecipeTree();
     }
 }

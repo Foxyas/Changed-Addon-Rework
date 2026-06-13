@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
@@ -72,7 +73,7 @@ public final class ChangedAddonTags {
         }
 
         private static TagKey<Item> vanillaKey(String path) {
-            return TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), ChangedAddonMod.resourceLoc(path));
+            return TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), ResourceLocation.withDefaultNamespace(path));
         }
     }
 

@@ -3,7 +3,9 @@ package net.foxyas.changedaddon.extension.emi;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
+import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.stack.EmiStack;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
@@ -17,13 +19,17 @@ import net.ltxprogrammer.changed.item.Syringe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -93,15 +99,16 @@ public class ChangedAddonEmiPlugin implements EmiPlugin {
         addItemDesc(registry, ChangedAddonItems.DIFFUSION_SYRINGE.get(), "jei_descriptions.changed_addon.diffusion_syringe");
         addItemDesc(registry, ChangedAddonItems.IRIDIUM.get(), "jei_descriptions.changed_addon.iridium_use");
         addItemDesc(registry, ChangedAddonItems.INFORMANT_BLOCK.get(), "jei_descriptions.changed_addon.informant_block");
-        
+
         // Lunar Rose substituição de caractere
-        String lunarRoseText = Component.translatable("jei_descriptions.changed_addon.lunar_rose").getString().replace("#", "\n");
-        registry.addAlias(EmiStack.of(ChangedAddonItems.LUNAR_ROSE.get()), Component.literal(lunarRoseText));
+        String rawLunarRoseText = Component.translatable("jei_descriptions.changed_addon.lunar_rose").getString().replace("#", "\n");
+        List<Component> lunarRoseLines = Arrays.stream(rawLunarRoseText.split("\n")).map(Component::literal).map(Component.class::cast).toList();
+        registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(ChangedAddonItems.LUNAR_ROSE.get())), lunarRoseLines, getInfoSyntheticIdFromItem(ChangedAddonItems.LUNAR_ROSE.get())));
 
         // Seringa com Variant específica
         ItemStack syringeStack = new ItemStack(ChangedItems.LATEX_SYRINGE.get());
         Syringe.setVariant(syringeStack, ChangedAddonTransfurVariants.LUMINARA_FLOWER_BEAST.get().getFormId());
-        registry.addAlias(EmiStack.of(syringeStack), Component.translatable("jei_descriptions.changed_addon.luminara.riddle"));
+        registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(syringeStack)), List.of(Component.translatable("jei_descriptions.changed_addon.luminara.riddle")), ChangedAddonMod.resourceLoc("info/luminara_beast_awakening")));
 
         // Fragmentos compartilhados
         List<Item> fragments = List.of(
@@ -114,24 +121,44 @@ public class ChangedAddonEmiPlugin implements EmiPlugin {
 
         // Encantamentos
         registerEnchantmentDescriptions(registry);
-        
+
         addItemDesc(registry, ChangedAddonItems.ALPHA_SERUM_SYRINGE.get(), "jei_descriptions.changed_addon.alpha_serum_syringe");
     }
 
+
+    public static ResourceLocation getItemIdFromStack(Item stack) {
+        return ForgeRegistries.ITEMS.getKey(stack);
+    }
+
+    private static @NotNull ResourceLocation getInfoIdFromItem(Item item) {
+        return ResourceLocation.fromNamespaceAndPath(getItemIdFromStack(item).getNamespace(), "info/" + getItemIdFromStack(item).getPath());
+    }
+
+    private static @NotNull ResourceLocation getInfoSyntheticIdFromItem(Item item) {
+        return ResourceLocation.fromNamespaceAndPath(getItemIdFromStack(item).getNamespace(), "/info/" + getItemIdFromStack(item).getPath());
+    }
+
     private void addItemDesc(EmiRegistry registry, Item item, String translationKey) {
-        registry.addAlias(EmiStack.of(item), Component.translatable(translationKey));
+        ResourceLocation id = getInfoSyntheticIdFromItem(item);
+        registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(item)), List.of(Component.translatable(translationKey)), id));
+    }
+
+
+    private void addItemDesc(EmiRegistry registry, Item item, List<Component> decs) {
+        ResourceLocation id = getInfoSyntheticIdFromItem(item);
+        registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(item)), decs, id));
     }
 
     private void registerEnchantmentDescriptions(EmiRegistry registry) {
         ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-        
+
         // Latex Solvent
         for (int i = 1; i <= 5; i++) {
             ItemStack currentBook = book.copy();
             float math = i * 0.20f * 100;
             EnchantmentHelper.setEnchantments(Map.of(ChangedAddonEnchantments.LATEX_SOLVENT.get(), i), currentBook);
             String text = Component.translatable("enchantment.changed_addon.latex_solvent.jei_desc", Math.round(math)).getString().replace(" T ", "% ");
-            registry.addAlias(EmiStack.of(currentBook), Component.literal(text));
+            registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(currentBook)), List.of(Component.literal(text)), getInfoSyntheticIdFromItem(currentBook.getItem())));
         }
 
         // Transfur Aspect
@@ -140,14 +167,14 @@ public class ChangedAddonEmiPlugin implements EmiPlugin {
             EnchantmentHelper.setEnchantments(Map.of(ChangedAddonEnchantments.TRANSFUR_ASPECT.get(), i), currentBook);
             LocalPlayer player = Minecraft.getInstance().player;
             float math = player != null ? net.foxyas.changedaddon.enchantment.TransfurAspectEnchantment.getTransfurDamage(player, null, i) : 0.0f;
-            registry.addAlias(EmiStack.of(currentBook), Component.translatable("enchantment.changed_addon.transfur_aspect.jei_desc", math));
+            registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(currentBook)), List.of(Component.translatable("enchantment.changed_addon.transfur_aspect.jei_desc", math)), getInfoSyntheticIdFromItem(currentBook.getItem())));
         }
 
         // Changed Lure
         for (int i = 1; i <= 5; i++) {
             ItemStack currentBook = book.copy();
             EnchantmentHelper.setEnchantments(Map.of(ChangedAddonEnchantments.CHANGED_LURE.get(), i), currentBook);
-            registry.addAlias(EmiStack.of(currentBook), Component.translatable("enchantment.changed_addon.changed_lure.desc"));
+            registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(currentBook)), List.of(Component.translatable("enchantment.changed_addon.changed_lure.desc")), getInfoSyntheticIdFromItem(currentBook.getItem())));
         }
     }
 }
