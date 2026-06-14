@@ -9,7 +9,9 @@ import mezz.jei.api.recipe.vanilla.IJeiBrewingRecipe;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.*;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.client.gui.CatalyzerGuiScreen;
 import net.foxyas.changedaddon.client.gui.FoxyasInventoryMenuScreen;
+import net.foxyas.changedaddon.client.gui.UnifuserGuiScreen;
 import net.foxyas.changedaddon.enchantment.TransfurAspectEnchantment;
 import net.foxyas.changedaddon.extension.jei.guisHandlers.FoxyasGuiContainerHandler;
 import net.foxyas.changedaddon.extension.jei.itemTransfers.CatalyzerRecipeHandler;
@@ -127,6 +129,8 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
 
     public static class ChangedAddonJeiGuiHandler {
         public static void registerModMenusHandlers(IGuiHandlerRegistration registration) {
+            registration.addRecipeClickArea(UnifuserGuiScreen.class, 75, 34, 29, 18, UNIFUSER_RECIPE_TYPE);
+            registration.addRecipeClickArea(CatalyzerGuiScreen.class, 75, 43, 29, 18, CATALYZER_RECIPE_TYPE);
             registration.addGuiContainerHandler(FoxyasInventoryMenuScreen.class, new FoxyasGuiContainerHandler());
         }
     }

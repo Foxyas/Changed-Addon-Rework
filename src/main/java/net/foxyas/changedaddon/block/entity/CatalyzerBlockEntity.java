@@ -183,15 +183,11 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
         update(serverLevel, pos, state, catalyzer);
     }
 
-    static @Nullable CatalyzerRecipe findRecipe(ServerLevel level, ItemStack input) {
+    public static @Nullable CatalyzerRecipe findRecipe(ServerLevel level, ItemStack input) {
         RecipeManager recipeManager = level.getRecipeManager();
 
         // Obtém todas as receitas do tipo JeiCatalyzerRecipe
         List<CatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(CatalyzerRecipe.Type.INSTANCE);
-
-        // Cria um contêiner simples com o input fornecido
-        SimpleContainer container = new SimpleContainer(1);
-        container.setItem(0, input);
 
         // Verifica cada receita para ver se ela corresponde ao input fornecido
         for (CatalyzerRecipe recipe : catalyzerRecipes) {

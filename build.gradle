@@ -146,14 +146,14 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
 
     // REI Mod.
-    runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:${reiVersion}")
-    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothVersion}")
-    implementation fg.deobf("dev.architectury:architectury-forge:${archVersion}")
+    compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothVersion}")
+    compileOnly fg.deobf("dev.architectury:architectury-forge:${archVersion}")
 
     // EMI
     compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}:api")
-    compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
+    runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
 
     // Gun Mods.
     implementation fg.deobf("com.mrcrayfish.framework:framework-forge-1.20.1-0.8.0:0.8.0")

@@ -12,7 +12,7 @@
       "nbt": "{type:\"white_latex\"}"
     },
     {
-      "tag": "changed_addon:air"
+      "tag": "minecraft:air"
     }
   ],
   "output": {

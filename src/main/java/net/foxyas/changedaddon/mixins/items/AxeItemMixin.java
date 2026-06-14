@@ -1,18 +1,12 @@
 package net.foxyas.changedaddon.mixins.items;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.block.interfaces.IStrippableLog;
 import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-
-import java.util.Map;
 
 @Mixin(AxeItem.class)
 public class AxeItemMixin {
@@ -26,6 +20,20 @@ public class AxeItemMixin {
 //            }
 //        }
 //        return original;
+//    }
+
+//    @Final
+//    @Shadow
+//    @Mutable
+//    protected static Map<Block, Block> STRIPPABLES;
+//
+//    @Inject(method = "<clinit>", at = @At("TAIL"))
+//    private static void onClinit(CallbackInfo ci) {
+//        Map<Block, Block> mutableStrippables = new HashMap<>(STRIPPABLES);
+//
+//        mutableStrippables.put(ChangedAddonBlocks.LUMINARA_LOG.get(), ChangedAddonBlocks.STRIPPED_LUMINARA_LOG.get());
+//
+//        STRIPPABLES = ImmutableMap.copyOf(mutableStrippables);
 //    }
 
     @ModifyReturnValue(method = "getAxeStrippingState", at = @At("RETURN"), remap = false)
