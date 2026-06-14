@@ -433,7 +433,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("catalyzer.nitrogen_usage", "A haladási sebesség tikkenként %1$s, és %2$s nitrogénerőt használ");
         addGui("recipe_progress", "A haladási sebesség %s tikkenként");
         addGui("catalyzer_gui.label_full", "Tele");
-        addGui("catalyzer_gui.tooltip.place_first_ingredient", "Tedd ide a porokat vagy a fecskendőt");
+        addGui("catalyzer_gui.tooltip.place_first_ingredient", "Helyezze el az első hozzávalót");
         addGui("fight_to_keep_consciousness_minigame.button_fight", "           Küzdj            ");
         addGui("fight_to_keep_consciousness_minigame.button_give_up", "     felad      ");
         addGui("fight_to_keep_consciousness_minigame.label_text", "Már csak %s tikk maradt hátra, SIESS!");
