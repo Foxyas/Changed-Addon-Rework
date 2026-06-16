@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.block.entity.LuminarCrystalHeartedBlockEntity;
 import net.foxyas.changedaddon.block.interfaces.IBrushableBlock;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.*;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
@@ -186,6 +185,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (level.isClientSide()) return;
         if (entity instanceof AbstractLuminarcticLeopard) return;
 
         super.entityInside(state, level, pos, entity);
@@ -193,8 +193,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
         if (livingEntity instanceof Player player
                 && (player.isCreative() || ProcessTransfur.getPlayerTransfurVariantSafe(player)
-                .map(var -> var.is(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_MALE)
-                        || var.is(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_FEMALE)).orElse(false))) {
+                .map(var -> var.getChangedEntity() instanceof AbstractLuminarcticLeopard).orElse(false))) {
             return;
         }
 

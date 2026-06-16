@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.block.entity.LuminarCrystalHeartedBlockEntity;
 import net.foxyas.changedaddon.block.interfaces.IBrushableBlock;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.*;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -49,7 +48,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Comparator;
 import java.util.List;
 
-import static net.foxyas.changedaddon.block.LuminarCrystalBlock.moveOrTarget;
 import static net.foxyas.changedaddon.block.LuminarCrystalBlock.spawnParticleOnFace;
 
 public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedBlock, EntityBlock, IBrushableBlock {
@@ -220,6 +218,7 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
 
     @Override
     public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+        if (level.isClientSide()) return;
         if (entity instanceof AbstractLuminarcticLeopard) return;
 
         entity.makeStuckInBlock(state, new Vec3(0.8F, 0.75F, 0.8F));
@@ -227,8 +226,7 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
 
         if (livingEntity instanceof Player player
                 && (player.isCreative() || ProcessTransfur.getPlayerTransfurVariantSafe(player)
-                .map(var -> var.is(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_MALE)
-                        || var.is(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_FEMALE)).orElse(false))) {
+                .map(var -> var.getChangedEntity() instanceof AbstractLuminarcticLeopard).orElse(false))) {
             return;
         }
 
