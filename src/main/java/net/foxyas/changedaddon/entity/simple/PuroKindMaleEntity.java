@@ -7,11 +7,14 @@ import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
@@ -19,6 +22,8 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
@@ -160,6 +165,55 @@ public class PuroKindMaleEntity extends AbstractDarkLatexWolf implements IDynami
     @Override
     public @NotNull SoundEvent getDeathSound() {
         return SoundEvents.GENERIC_DEATH;
+    }
+
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        InteractionResult result = super.mobInteract(player, hand);
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (!this.level().isClientSide) {
+            if (result.consumesAction()) {
+                return result;
+            }
+
+            if (!this.isTame() && this.isTameItem(itemstack)) {
+                if (!player.getAbilities().instabuild) {
+                    itemstack.shrink(1);
+                }
+
+                ProcessTransfur.ifPlayerTransfurred(player, (variant) -> {
+                    if (ChangedLatexTypes.DARK_LATEX.get().isFriendlyTo(variant.getLatexType()) && this.random.nextInt(3) == 0) {
+                        this.tame(player);
+                        this.navigation.stop();
+                        this.setTarget(null);
+                        this.level().broadcastEntityEvent(this, (byte)7);
+                    } else if (!ChangedLatexTypes.DARK_LATEX.get().isHostileTo(variant.getLatexType()) && this.random.nextInt(10) == 0) {
+                        this.tame(player);
+                        this.navigation.stop();
+                        this.setTarget(null);
+                        this.level().broadcastEntityEvent(this, (byte)7);
+                    } else {
+                        this.level().broadcastEntityEvent(this, (byte)6);
+                    }
+
+                }, () -> {
+                    if (this.random.nextInt(10) == 0) {
+                        this.tame(player);
+                        this.navigation.stop();
+                        this.setTarget(null);
+                        this.level().broadcastEntityEvent(this, (byte)7);
+                    } else {
+                        this.level().broadcastEntityEvent(this, (byte)6);
+                    }
+
+                });
+                return InteractionResult.SUCCESS;
+            } else {
+                return result;
+            }
+        } else {
+            boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
+            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+        }
     }
 
 }
