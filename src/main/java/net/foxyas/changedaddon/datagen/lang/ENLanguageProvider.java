@@ -180,6 +180,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addBlockFromId(ChangedAddonBlocks.LUMINARA_LOG);
         addBlockFromId(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG);
         addBlockFromId(ChangedAddonBlocks.LUMINARA_LEAVES);
+        addBlockFromId(ChangedAddonBlocks.LUMINARA_SAPLING);
 
         addAbility("advanced_hearing", "Advanced Hearing");
         addAbility("carry", "Carry");

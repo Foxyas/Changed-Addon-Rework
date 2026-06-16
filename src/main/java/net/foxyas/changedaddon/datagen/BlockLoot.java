@@ -15,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -142,9 +141,8 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
         coverBlockDropSelfOrOther(DARK_LATEX_COVER_BLOCK.get(), ChangedItems.DARK_LATEX_GOO.get());
         coverBlockDropSelfOrOther(WHITE_LATEX_COVER_BLOCK.get(), ChangedItems.WHITE_LATEX_GOO.get());
 
-        add(LUMINARA_LEAVES.get(), (block) -> {
-            return this.createLeavesDrops(block, LUMINARA_BLOOM.get(), NORMAL_LEAVES_SAPLING_CHANCES);
-        });
+        add(LUMINARA_LEAVES.get(), (block) -> this.createLeavesDrops(block, LUMINARA_BLOOM.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+        dropSelf(LUMINARA_SAPLING.get());
         dropSelf(LUMINARA_LOG.get());
         dropSelf(STRIPPED_LUMINARA_LOG.get());
     }

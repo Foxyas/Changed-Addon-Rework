@@ -112,6 +112,10 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         luminaraPillarBlock(STRIPPED_LUMINARA_LOG, "");
         simpleBlock(LUMINARA_LEAVES);
 
+        ResourceLocation loc = LUMINARA_SAPLING.getId();
+        ConfiguredModel[] model = {new ConfiguredModel(models().cross(loc.getPath(), blockLoc(loc)).renderType("cutout"))};
+        getVariantBuilder(LUMINARA_SAPLING.get()).forAllStates(state -> model);
+
         largeLuminarCrystalAnimatedWithItem();
     }
 

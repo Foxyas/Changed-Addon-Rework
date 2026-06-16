@@ -5,7 +5,6 @@ import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BlockModelProvider extends net.minecraftforge.client.model.generators.BlockModelProvider {

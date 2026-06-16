@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
 
-import static net.foxyas.changedaddon.init.ChangedAddonFeatures.PlacedFeatures.*;
+import static net.foxyas.changedaddon.init.ChangedAddonFeatures.Placed.*;
 
 public class OrePlacements {
 
@@ -20,7 +20,7 @@ public class OrePlacements {
         context.register(
                 PAINITE_ORE_BURIED,
                 new PlacedFeature(
-                        lookup.getOrThrow(ChangedAddonFeatures.ConfiguredFeatures.PAINITE_ORE_BURIED),
+                        lookup.getOrThrow(ChangedAddonFeatures.Configured.PAINITE_ORE_BURIED),
                         List.of(
                                 CountPlacement.of(4),
                                 InSquarePlacement.spread(),
@@ -36,7 +36,7 @@ public class OrePlacements {
         context.register(
                 IRIDIUM_ORE_SMALL,
                 new PlacedFeature(
-                        lookup.getOrThrow(ChangedAddonFeatures.ConfiguredFeatures.IRIDIUM_ORE_SMALL),
+                        lookup.getOrThrow(ChangedAddonFeatures.Configured.IRIDIUM_ORE_SMALL),
                         List.of(
                                 CountPlacement.of(2),
                                 InSquarePlacement.spread(),
@@ -52,7 +52,7 @@ public class OrePlacements {
         context.register(
                 IRIDIUM_ORE_LARGE,
                 new PlacedFeature(
-                        lookup.getOrThrow(ChangedAddonFeatures.ConfiguredFeatures.IRIDIUM_ORE_LARGE),
+                        lookup.getOrThrow(ChangedAddonFeatures.Configured.IRIDIUM_ORE_LARGE),
                         List.of(
                                 CountPlacement.of(2),
                                 InSquarePlacement.spread(),
@@ -68,7 +68,7 @@ public class OrePlacements {
         context.register(
                 IRIDIUM_ORE_BURIED,
                 new PlacedFeature(
-                        lookup.getOrThrow(ChangedAddonFeatures.ConfiguredFeatures.IRIDIUM_ORE_BURIED),
+                        lookup.getOrThrow(ChangedAddonFeatures.Configured.IRIDIUM_ORE_BURIED),
                         List.of(
                                 CountPlacement.of(2),
                                 InSquarePlacement.spread(),

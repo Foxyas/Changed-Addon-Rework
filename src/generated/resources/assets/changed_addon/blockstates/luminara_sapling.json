@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "changed_addon:block/luminara_sapling"
+    },
+    "stage=1": {
+      "model": "changed_addon:block/luminara_sapling"
+    }
+  }
+}

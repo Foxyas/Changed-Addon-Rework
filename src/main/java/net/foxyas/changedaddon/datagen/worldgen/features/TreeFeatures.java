@@ -1,8 +1,6 @@
 package net.foxyas.changedaddon.datagen.worldgen.features;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.LuminaraLogBlock;
-import net.foxyas.changedaddon.datagen.worldgen.ConfiguredFeatureProvider;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonFeatures;
 import net.foxyas.changedaddon.world.features.tree.TreeWithFlowersFeatureConfiguration;
@@ -10,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -30,8 +27,6 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStatePr
 import net.minecraft.world.level.levelgen.feature.trunkplacers.CherryTrunkPlacer;
 
 public class TreeFeatures {
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> LUMINARA_TREE = ConfiguredFeatureProvider.createKey(ChangedAddonMod.resourceLoc("luminara_tree"));
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> pContext) {
 //        BlockState baseLog = ChangedAddonBlocks.LUMINARA_LOG.get().defaultBlockState().setValue(BlockStateProperties.AXIS, Direction.Axis.Y);
@@ -106,7 +101,7 @@ public class TreeFeatures {
                 )
         );
 
-        FeatureUtils.register(pContext, LUMINARA_TREE,
+        FeatureUtils.register(pContext, ChangedAddonFeatures.Configured.LUMINARA_TREE,
                 ChangedAddonFeatures.TREE_WITH_FLOWERS.get(),
                 new TreeWithFlowersFeatureConfiguration(treeConfig, flowerConfig)
         );
