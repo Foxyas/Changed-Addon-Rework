@@ -333,7 +333,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         }
     }
 
-    @Inject(method = "setTarget", at = @At("TAIL"))
+    @Inject(method = "setTarget", at = @At("TAIL"), remap = true)
     private void makeAlphaNotDespawnWhenTargetAPlayer(LivingEntity target, CallbackInfo ci) {
         if (target instanceof Player || target instanceof AbstractVillager) this.setPersistenceRequired();
     }
