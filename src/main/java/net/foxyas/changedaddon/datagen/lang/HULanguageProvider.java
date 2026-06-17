@@ -179,6 +179,7 @@ public class HULanguageProvider extends LanguageProvider {
         addBlock(ChangedAddonBlocks.LUMINARA_LOG, "Luminararönk");
         addBlock(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG, "Kérgezett luminararönk");
         addBlock(ChangedAddonBlocks.LUMINARA_LEAVES, "Luminaralevelek");
+        addBlock(ChangedAddonBlocks.LUMINARA_SAPLING, "Luminara csemete");
 
         addAbility("advanced_hearing", "Fejlett hallás");
         addAbility("carry", "Hordozás");
@@ -490,6 +491,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(CATALYZED_DNA, "Katalizált DNS");
         addItem(CATALYZER_BLOCK_ILLUSTRATIVE_ITEM, "Katalizátor receptek információi");
         addItem(CHANGED_BOOK, "Útikönyv");
+        add("item.changed_addon.colorful_wolf_crystal_fragment", "Színes szilánkok");//FIXME move to a better key
         add("item.changed_addon.colorful_wolf_crystal_fragment_desc", "Színezett festékkel bevont farkas kristály blokkból kitermelt kis kristályból nyerhető.");//FIXME move to a better key
         addItem(CROWBAR, "Emelőrúd");
         addItem(CRYSTAL_DAGGER_BLACK, "Sötét kristálytőr");
