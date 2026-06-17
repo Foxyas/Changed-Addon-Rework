@@ -14,7 +14,9 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandler;
 
@@ -140,6 +142,11 @@ public class ApplyBonemealGoal extends Goal {
     }
 
     private boolean isBlockInvalid(Level level, BlockState state, BlockPos pos) {
+        if (!(state.getBlock() instanceof BonemealableBlock)) return true;
+        if (state.getBlock() instanceof SaplingBlock saplingBlock) {
+            return !(saplingBlock.isValidBonemealTarget(level, pos, state, level.isClientSide()));
+        }
+
         return !(state.getBlock() instanceof CropBlock crop) || crop.isMaxAge(state)
                 || !crop.isValidBonemealTarget(level, pos, state, level.isClientSide());
     }
@@ -184,7 +191,7 @@ public class ApplyBonemealGoal extends Goal {
         if (isBlockInvalid(level, state, pos)) return;
 
         entity.swing(entity.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        ((CropBlock) state.getBlock()).performBonemeal(serverLevel, level.getRandom(), pos, state);
+        ((BonemealableBlock) state.getBlock()).performBonemeal(serverLevel, level.getRandom(), pos, state);
         level.levelEvent(1505, targetPos, 8); // Bone meal particles
     }
 }

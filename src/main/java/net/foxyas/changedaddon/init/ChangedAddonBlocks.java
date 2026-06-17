@@ -9,15 +9,10 @@ import net.foxyas.changedaddon.block.advanced.TimedKeypadBlock;
 import net.foxyas.changedaddon.block.debug.StructureSpawnerBlock;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -25,7 +20,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class ChangedAddonBlocks {
 
@@ -78,12 +72,7 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<LuminaraLogBlock> LUMINARA_LOG = REGISTRY.register("luminara_log", LuminaraLogBlock::new);
     public static final RegistryObject<StrippedLuminaraLogBlock> STRIPPED_LUMINARA_LOG = REGISTRY.register("stripped_luminara_log", StrippedLuminaraLogBlock::new);
     public static final RegistryObject<LuminaraLeavesBlock> LUMINARA_LEAVES = REGISTRY.register("luminara_leaves", LuminaraLeavesBlock::new);
-    public static final RegistryObject<SaplingBlock> LUMINARA_SAPLING = REGISTRY.register("luminara_sapling", () -> new SaplingBlock(new AbstractTreeGrower() {
-        @Override
-        protected @Nullable ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(@NotNull RandomSource pRandom, boolean pHasFlowers) {
-            return ChangedAddonFeatures.Configured.LUMINARA_TREE;
-        }
-    }, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PINK).noCollission().randomTicks().instabreak().sound(SoundType.CHERRY_SAPLING).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<LuminaraSapling> LUMINARA_SAPLING = REGISTRY.register("luminara_sapling", LuminaraSapling::new);
     public static final RegistryObject<MultifaceBlock> COVER_BLOCK = REGISTRY.register("cover_block", () -> new MultifaceBlock(BlockBehaviour.Properties.copy(Blocks.VINE).mapColor(MapColor.TERRACOTTA_BLACK)) {
         @Override
         public boolean skipRendering(@NotNull BlockState pState, @NotNull BlockState pAdjacentBlockState, @NotNull Direction pSide) {
