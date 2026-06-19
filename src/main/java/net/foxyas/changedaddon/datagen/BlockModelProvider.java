@@ -13,6 +13,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
     public static final ResourceLocation EMISSIVE_CUBE_ALL = ChangedAddonMod.resourceLoc("customs/emissive_cube_all");
     public static final ResourceLocation EMISSIVE_CUBE_COLUMN = ChangedAddonMod.resourceLoc("customs/emissive_cube_column");
     public static final ResourceLocation EMISSIVE_CUBE = ChangedAddonMod.resourceLoc("customs/emissive_cube");
+    public static final ResourceLocation EMISSIVE_POTTED_PLANT = ChangedAddonMod.resourceLoc("customs/emissive_potted_plant");
 
     public BlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ChangedAddonMod.MODID, existingFileHelper);
@@ -24,6 +25,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         generateEmissiveCube();
         generateEmissiveCubeAll();
         generateEmissiveCubeColumn();
+        generateEmissivePottedPlant();
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_BLOOM.getId().getPath(), EMISSIVE_CROSS)
                 .renderType("minecraft:cutout")
@@ -75,6 +77,31 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .texture("all", "changed_addon:block/luminara_tree/luminara_leaves")
                 //.texture("all_glow", "changed_addon:block/luminara_tree/luminara_leaves_glow")
                 .texture("all_glow", "changed_addon:block/luminara_tree/empty")
+        ;
+
+        withExistingParent(ChangedAddonBlocks.LUMINARA_LEAVES.getId().getPath(), EMISSIVE_CUBE_ALL)
+                .renderType("minecraft:cutout")
+                .texture("all", "changed_addon:block/luminara_tree/luminara_leaves")
+                //.texture("all_glow", "changed_addon:block/luminara_tree/luminara_leaves_glow")
+                .texture("all_glow", "changed_addon:block/luminara_tree/empty")
+        ;
+
+        withExistingParent(ChangedAddonBlocks.LUMINARA_SAPLING.getId().getPath(), EMISSIVE_CROSS)
+                .renderType("minecraft:cutout")
+                .texture("cross", ChangedAddonMod.resourceLoc("block/luminara_sapling"))
+                .texture("glow", ChangedAddonMod.resourceLoc("block/luminara_sapling_emissive"))
+        ;
+
+        withExistingParent(ChangedAddonBlocks.POTTED_LUMINARA_BLOOM.getId().getPath(), EMISSIVE_POTTED_PLANT)
+                .renderType("minecraft:cutout")
+                .texture("plant", "changed_addon:block/luminara_bloom")
+                .texture("plant_glow", "changed_addon:block/luminara_bloom_emissive")
+        ;
+
+        withExistingParent(ChangedAddonBlocks.POTTED_LUMINARA_SAPLING.getId().getPath(), EMISSIVE_POTTED_PLANT)
+                .renderType("minecraft:cutout")
+                .texture("plant", "changed_addon:block/luminara_sapling")
+                .texture("plant_glow", "changed_addon:block/luminara_sapling_emissive")
         ;
     }
 
@@ -317,6 +344,125 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
                 .texture("#glow")
                 .color(0xFFFFFFFF).emissivity(15, 15).ao(false) // 15 block light, no ambient occlusion shadows
+                .end()
+                .end();
+    }
+
+    private void generateEmissivePottedPlant() {
+        // Generates the model under assets/changed_addon/models/block/customs/emissive_potted_plant.json
+        getBuilder("customs/emissive_potted_plant")
+                .ao(false) // Disable ambient occlusion globally for the model to prevent shading on the flower pot walls
+                .texture("particle", "minecraft:block/flower_pot") // Fallback particle texture
+                .texture("flowerpot", "minecraft:block/flower_pot") // Links default pot texture variable
+                .texture("dirt", "minecraft:block/dirt")           // Links default dirt texture variable
+
+                // ==========================================
+                // VANILLA FLOWER POT STRUCTURAL CUBES
+                // ==========================================
+
+                // Pot Wall: West
+                .element().from(5.0f, 0.0f, 5.0f).to(6.0f, 6.0f, 11.0f)
+                .face(Direction.DOWN).uvs(5.0f, 5.0f, 6.0f, 11.0f).texture("#flowerpot").cullface(Direction.DOWN).end()
+                .face(Direction.UP).uvs(5.0f, 5.0f, 6.0f, 11.0f).texture("#flowerpot").end()
+                .face(Direction.NORTH).uvs(10.0f, 10.0f, 11.0f, 16.0f).texture("#flowerpot").end()
+                .face(Direction.SOUTH).uvs(5.0f, 10.0f, 6.0f, 16.0f).texture("#flowerpot").end()
+                .face(Direction.WEST).uvs(5.0f, 10.0f, 11.0f, 16.0f).texture("#flowerpot").end()
+                .face(Direction.EAST).uvs(5.0f, 10.0f, 11.0f, 16.0f).texture("#flowerpot").end()
+                .end()
+
+                // Pot Wall: East
+                .element().from(10.0f, 0.0f, 5.0f).to(11.0f, 6.0f, 11.0f)
+                .face(Direction.DOWN).uvs(10.0f, 5.0f, 11.0f, 11.0f).texture("#flowerpot").cullface(Direction.DOWN).end()
+                .face(Direction.UP).uvs(10.0f, 5.0f, 11.0f, 11.0f).texture("#flowerpot").end()
+                .face(Direction.NORTH).uvs(5.0f, 10.0f, 6.0f, 16.0f).texture("#flowerpot").end()
+                .face(Direction.SOUTH).uvs(10.0f, 10.0f, 11.0f, 16.0f).texture("#flowerpot").end()
+                .face(Direction.WEST).uvs(5.0f, 10.0f, 11.0f, 16.0f).texture("#flowerpot").end()
+                .face(Direction.EAST).uvs(5.0f, 10.0f, 11.0f, 16.0f).texture("#flowerpot").end()
+                .end()
+
+                // Pot Wall: North
+                .element().from(6.0f, 0.0f, 5.0f).to(10.0f, 6.0f, 6.0f)
+                .face(Direction.DOWN).uvs(6.0f, 10.0f, 10.0f, 11.0f).texture("#flowerpot").cullface(Direction.DOWN).end()
+                .face(Direction.UP).uvs(6.0f, 5.0f, 10.0f, 6.0f).texture("#flowerpot").end()
+                .face(Direction.NORTH).uvs(6.0f, 10.0f, 10.0f, 16.0f).texture("#flowerpot").end()
+                .face(Direction.SOUTH).uvs(6.0f, 10.0f, 10.0f, 16.0f).texture("#flowerpot").end()
+                .end()
+
+                // Pot Wall: South
+                .element().from(6.0f, 0.0f, 10.0f).to(10.0f, 6.0f, 11.0f)
+                .face(Direction.DOWN).uvs(6.0f, 5.0f, 10.0f, 6.0f).texture("#flowerpot").cullface(Direction.DOWN).end()
+                .face(Direction.UP).uvs(6.0f, 10.0f, 10.0f, 11.0f).texture("#flowerpot").end()
+                .face(Direction.NORTH).uvs(6.0f, 10.0f, 10.0f, 16.0f).texture("#flowerpot").end()
+                .face(Direction.SOUTH).uvs(6.0f, 10.0f, 10.0f, 16.0f).texture("#flowerpot").end()
+                .end()
+
+                // Soil / Dirt Plane
+                .element().from(6.0f, 0.0f, 6.0f).to(10.0f, 4.0f, 10.0f)
+                .face(Direction.DOWN).uvs(6.0f, 12.0f, 10.0f, 16.0f).texture("#flowerpot").cullface(Direction.DOWN).end()
+                .face(Direction.UP).uvs(6.0f, 6.0f, 10.0f, 10.0f).texture("#dirt").end()
+                .end()
+
+                // ==========================================
+                // BASE PLANT LAYER: Non-glowing plant planes
+                // ==========================================
+
+                // Plant Diagonal Plane 1 (North-South segment)
+                .element().from(2.6f, 4.0f, 8.0f).to(13.4f, 16.0f, 8.0f)
+                .rotation().origin(8.0f, 8.0f, 8.0f).axis(Direction.Axis.Y).angle(45.0f).rescale(true).end()
+                .shade(false)
+                .face(Direction.NORTH).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#plant").end()
+                .face(Direction.SOUTH).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#plant").end()
+                .end()
+
+                // Plant Diagonal Plane 2 (West-East segment)
+                .element().from(8.0f, 4.0f, 2.6f).to(8.0f, 16.0f, 13.4f)
+                .rotation().origin(8.0f, 8.0f, 8.0f).axis(Direction.Axis.Y).angle(45.0f).rescale(true).end()
+                .shade(false)
+                .face(Direction.WEST).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#plant").end()
+                .face(Direction.EAST).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#plant").end()
+                .end()
+
+                // ==========================================
+                // GLOW PLANT LAYER: Emissive overlay layers
+                // ==========================================
+
+                // Emissive Plant Diagonal Plane 1 (North-South overlay)
+                .element().from(2.6f, 4.0f, 8.0f).to(13.4f, 16.0f, 8.0f)
+                .rotation().origin(8.0f, 8.0f, 8.0f).axis(Direction.Axis.Y).angle(45.0f).rescale(true).end()
+                .shade(false)
+                .face(Direction.NORTH)
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
+                .texture("#plant_glow") // Points to custom emissive texture template variable
+                .color(0xFFFFFFFF)
+                .emissivity(15, 15) // Dynamic ForgeFaceData emission coordinates
+                .ao(false)
+                .end()
+                .face(Direction.SOUTH)
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
+                .texture("#plant_glow")
+                .color(0xFFFFFFFF)
+                .emissivity(15, 15)
+                .ao(false)
+                .end()
+                .end()
+
+                // Emissive Plant Diagonal Plane 2 (West-East overlay)
+                .element().from(8.0f, 4.0f, 2.6f).to(8.0f, 16.0f, 13.4f)
+                .rotation().origin(8.0f, 8.0f, 8.0f).axis(Direction.Axis.Y).angle(45.0f).rescale(true).end()
+                .shade(false)
+                .face(Direction.WEST)
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
+                .texture("#plant_glow")
+                .color(0xFFFFFFFF)
+                .emissivity(15, 15)
+                .ao(false)
+                .end()
+                .face(Direction.EAST)
+                .uvs(0.0f, 0.0f, 16.0f, 16.0f)
+                .texture("#plant_glow")
+                .color(0xFFFFFFFF)
+                .emissivity(15, 15)
+                .ao(false)
                 .end()
                 .end();
     }

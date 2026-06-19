@@ -33,6 +33,10 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         tag(BlockTags.LOGS).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
+        tag(BlockTags.FLOWER_POTS).add(POTTED_LUMINARA_SAPLING.get(), POTTED_LUMINARA_BLOOM.get());
+        tag(BlockTags.LEAVES).add(LUMINARA_LEAVES.get());
+        tag(BlockTags.SAPLINGS).add(LUMINARA_SAPLING.get());
+        tag(BlockTags.MINEABLE_WITH_HOE).add(LUMINARA_LEAVES.get());
         tag(BlockTags.OVERWORLD_NATURAL_LOGS).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
         tag(BlockTags.LOGS_THAT_BURN).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
 
@@ -55,7 +59,9 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
                 BLUE_WOLF_CRYSTAL_SMALL.get(),
                 WHITE_WOLF_CRYSTAL_SMALL.get(),
                 LUMINARA_BLOOM.get(),
-                POTTED_LUMINARA_BLOOM.get()
+                POTTED_LUMINARA_BLOOM.get(),
+                LUMINARA_SAPLING.get(),
+                POTTED_LUMINARA_SAPLING.get()
         );
 
 

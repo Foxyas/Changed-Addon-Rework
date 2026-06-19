@@ -82,6 +82,7 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
         dropSelf(REINFORCED_CROSS_BLOCK.get());
         dropSelf(WALL_WHITE_CRACKED.get());
         dropPottedContents(ChangedAddonBlocks.POTTED_LUMINARA_BLOOM.get());
+        dropPottedContents(POTTED_LUMINARA_SAPLING.get());
 
         add(LUMINAR_CRYSTAL_BLOCK.get(), createSilkTouchDispatchTable(LUMINAR_CRYSTAL_BLOCK.get(), LootItem.lootTableItem(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get())
                 .apply(ApplyExplosionDecay.explosionDecay())

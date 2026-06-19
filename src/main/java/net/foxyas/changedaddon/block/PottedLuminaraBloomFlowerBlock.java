@@ -29,7 +29,7 @@ public class PottedLuminaraBloomFlowerBlock extends FlowerPotBlock {
     @SuppressWarnings("deprecation")
     @Override
     public int getLightBlock(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
-        return 3;
+        return 5;
     }
 
     @SuppressWarnings("deprecation")

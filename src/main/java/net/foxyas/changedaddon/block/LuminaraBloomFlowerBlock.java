@@ -97,7 +97,7 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
     @SuppressWarnings("deprecation")
     @Override
     public int getLightBlock(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
-        return 3;
+        return 5;
     }
 
     @Override
