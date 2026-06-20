@@ -41,6 +41,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.BossEvent;
@@ -787,20 +788,20 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             this.setHealth(this.getHealth() - 0.25f);
         }
 
-        Random randomSource = new Random();
+        RandomSource randomSource = this.getRandom();
         if (randomSource.nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
             if (this.isPhase2()) {
                 if (this.shouldBleed) {
-                    ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
-                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
+                    ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
+                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
                 } else {
                     if (randomSource.nextFloat() > 0.95) {
-                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
+                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
                     }
-                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);
+                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.25f, 0.25f, 0.25f, 10, 1);
                 }
             } else {
-                ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 5, 1);
+                ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.25f, 0.25f, 0.25f, 5, 1);
             }
         }
 
