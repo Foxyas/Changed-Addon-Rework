@@ -15,8 +15,8 @@ public class PottedLuminaraSaplingBlock extends FlowerPotBlock {
     public PottedLuminaraSaplingBlock() {
         super(() -> (FlowerPotBlock) Blocks.FLOWER_POT, LUMINARA_SAPLING,
                 Properties.copy(Blocks.POTTED_DANDELION).noOcclusion()
-                        .emissiveRendering((state, blockGetter, blockPos) -> true)
-                        .hasPostProcess((state, blockGetter, blockPos) -> true)
+                        //.emissiveRendering((state, blockGetter, blockPos) -> true)
+                        //.hasPostProcess((state, blockGetter, blockPos) -> true)
         );
         if (LUMINARA_SAPLING.getId() != null) {
             ((FlowerPotBlock) Blocks.FLOWER_POT)
