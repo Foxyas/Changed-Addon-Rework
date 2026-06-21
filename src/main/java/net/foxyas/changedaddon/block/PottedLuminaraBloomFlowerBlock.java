@@ -21,15 +21,15 @@ public class PottedLuminaraBloomFlowerBlock extends FlowerPotBlock {
     public PottedLuminaraBloomFlowerBlock() {
         super(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ChangedAddonBlocks.LUMINARA_BLOOM,
                 Properties.copy(Blocks.POTTED_DANDELION).noOcclusion()
-                        .emissiveRendering((state, blockGetter, blockPos) -> true)
-                        .hasPostProcess((state, blockGetter, blockPos) -> true)
+                        //.emissiveRendering((state, blockGetter, blockPos) -> true)
+                        //.hasPostProcess((state, blockGetter, blockPos) -> true)
         );
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public int getLightBlock(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
-        return 3;
+        return 5;
     }
 
     @SuppressWarnings("deprecation")

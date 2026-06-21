@@ -1,6 +1,6 @@
 {
-  "replace": false,
   "values": [
+    "changed_addon:potted_luminara_sapling",
     "changed_addon:potted_luminara_bloom"
   ]
 }

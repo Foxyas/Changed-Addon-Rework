@@ -210,10 +210,10 @@ public class ThunderDiveGoal extends Goal {
 
         // Anel de trovões em 4 ondas (outline em XZ)
         applyKnockBack(center);
-        spawnThunderCircle(serverLevel, center, ringRadius, 6);
-        DelayedTask.schedule(5, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.4f, 4));
-        DelayedTask.schedule(10, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.8f, 8));
-        DelayedTask.schedule(15, () -> spawnThunderCircle(serverLevel, center, ringRadius * 2.2f, 14));
+        spawnThunderCircle(mob, serverLevel, center, ringRadius, 6);
+        DelayedTask.schedule(5, () -> spawnThunderCircle(mob, serverLevel, center, ringRadius * 1.4f, 4));
+        DelayedTask.schedule(10, () -> spawnThunderCircle(mob, serverLevel, center, ringRadius * 1.8f, 8));
+        DelayedTask.schedule(15, () -> spawnThunderCircle(mob, serverLevel, center, ringRadius * 2.2f, 14));
 
         // efeito visual simples no chão
         serverLevel.levelEvent(2001, center, Block.getId(Blocks.LIGHTNING_ROD.defaultBlockState()));

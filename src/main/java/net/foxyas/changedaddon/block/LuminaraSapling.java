@@ -1,12 +1,15 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.init.ChangedAddonFeatures;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -32,6 +35,12 @@ public class LuminaraSapling extends SaplingBlock {
                         .instabreak()
                         .sound(SoundType.CHERRY_SAPLING)
                         .pushReaction(PushReaction.DESTROY));
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public int getLightBlock(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
+        return 5;
     }
 
 }

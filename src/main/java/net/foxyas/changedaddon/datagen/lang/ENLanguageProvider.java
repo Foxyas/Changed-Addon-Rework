@@ -181,6 +181,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addBlockFromId(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG);
         addBlockFromId(ChangedAddonBlocks.LUMINARA_LEAVES);
         addBlockFromId(ChangedAddonBlocks.LUMINARA_SAPLING);
+        addBlock(POTTED_LUMINARA_SAPLING, "Flower Pot with Luminara Sapling");
 
         addAbility("advanced_hearing", "Advanced Hearing");
         addAbility("carry", "Carry");

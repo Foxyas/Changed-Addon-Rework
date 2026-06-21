@@ -24,8 +24,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.EnumSet;
-
 public class LightningComboAttackGoal extends Goal {
 
     protected final PathfinderMob holder;
@@ -53,7 +51,7 @@ public class LightningComboAttackGoal extends Goal {
         damageProvider = damage;
         adjustDamageSource(holder);
 
-        setFlags(EnumSet.of(Flag.MOVE));
+        //setFlags(EnumSet.of(Flag.MOVE));
     }
 
     private DamageSource adjustDamageSource(PathfinderMob holder) {

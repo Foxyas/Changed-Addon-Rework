@@ -100,6 +100,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         simpleBlock(YELLOW_WOLF_CRYSTAL_BLOCK);
         simpleBlock(YELLOW_WOLF_CRYSTAL_SMALL);
         simpleBlock(POTTED_LUMINARA_BLOOM);
+        simpleBlock(POTTED_LUMINARA_SAPLING);
 
         timedKeypad();
 
@@ -112,8 +113,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         luminaraPillarBlock(STRIPPED_LUMINARA_LOG, "");
         simpleBlock(LUMINARA_LEAVES);
 
-        ResourceLocation loc = LUMINARA_SAPLING.getId();
-        ConfiguredModel[] model = {new ConfiguredModel(models().cross(loc.getPath(), blockLoc(loc)).renderType("cutout"))};
+        ConfiguredModel[] model = {new ConfiguredModel(models().getExistingFile(blockLoc(LUMINARA_SAPLING.getId())))};
         getVariantBuilder(LUMINARA_SAPLING.get()).forAllStates(state -> model);
 
         largeLuminarCrystalAnimatedWithItem();

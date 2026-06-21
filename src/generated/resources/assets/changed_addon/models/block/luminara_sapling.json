@@ -1,7 +1,8 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "changed_addon:customs/emissive_cross",
   "render_type": "minecraft:cutout",
   "textures": {
-    "cross": "changed_addon:block/luminara_sapling"
+    "cross": "changed_addon:block/luminara_sapling",
+    "glow": "changed_addon:block/luminara_sapling_emissive"
   }
 }

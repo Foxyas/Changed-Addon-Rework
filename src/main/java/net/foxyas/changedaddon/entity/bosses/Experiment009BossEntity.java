@@ -41,6 +41,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.BossEvent;
@@ -64,6 +65,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -391,6 +393,15 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             shouldDodgeAndNegateDamage = true;
         }
 
+//        if (isProjectile && isVulnerableToProjectiles()) {
+//            shouldDodgeAndNegateDamage = false;
+//            this.goalSelector.getRunningGoals().map(WrappedGoal::getGoal).filter(goal -> goal instanceof AoEThunderStrikeGoal).forEach(goal -> {
+//                if (goal instanceof AoEThunderStrikeGoal aoEThunderStrikeGoal) {
+//                    aoEThunderStrikeGoal.setCanceled(true);
+//                }
+//            });
+//        }
+
         shouldTeleportAndNegateDamage = source.is(DamageTypes.IN_WALL);
         if (source.getEntity() instanceof Warden) {
             shouldDodgeAndNegateDamage = true;
@@ -567,41 +578,50 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 final float ringRadius = 4;
                 final int bolts = 8;
                 if (this.level() instanceof ServerLevel serverLevel) {
-                    spawnThunderCircle(serverLevel, center, ringRadius, bolts);
-                    DelayedTask.schedule(5, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.4f, bolts * 2));
-                    DelayedTask.schedule(10, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.8f, bolts * 3));
-                    DelayedTask.schedule(15, () -> spawnThunderCircle(serverLevel, center, ringRadius * 2.2f, bolts * 4));
+                    spawnThunderCircle(this, serverLevel, center, ringRadius, bolts);
+                    DelayedTask.schedule(5, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 1.4f, bolts * 2));
+                    DelayedTask.schedule(10, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 1.8f, bolts * 3));
+                    DelayedTask.schedule(15, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 2.2f, bolts * 4));
                 }
                 this.knockbackNearbyEntities(this);
             }
         }
     }
 
-    public static void spawnThunderCircle(ServerLevel level, BlockPos center, float radius, int bolts) {
-        // garante que os strikes ocorram no topo do terreno naquele XZ
+    public static void spawnThunderCircle(LivingEntity livingEntity, ServerLevel level, BlockPos center, float radius, int bolts) {
         float angle, x, z;
+        // Calcula minY/maxY uma vez fora do loop de bolts
+        int minY = livingEntity.getBlockY() - 5;
+        int maxY = livingEntity.getBlockY() + 5;
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+
         for (int i = 0; i < bolts; i++) {
             angle = (2 * Mth.PI * i) / bolts;
             x = center.getX() + 0.5f + radius * Mth.cos(angle);
             z = center.getZ() + 0.5f + radius * Mth.sin(angle);
 
-            // Começa do teto e desce até achar espaço
-            int minY = level.getMinBuildHeight() - 1;
-            pos.set(x, minY, z);
-            for (int y = minY; y < (level.getMaxBuildHeight() - 1); y++) {
-                pos.setY(y);
-                // Verifica se tem 2 blocos de espaço (ou mais, dependendo da entidade)
-                if (level.isEmptyBlock(pos) && level.isEmptyBlock(pos.above())) {
-                    break;
+            // Tenta usar o heightmap primeiro (O(1), sem loop)
+            int surfaceY = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) x, (int) z);
+
+            if (surfaceY >= minY && surfaceY <= maxY) {
+                // Heightmap deu uma Y válida dentro do range, usa direto
+                pos.set((int) x, surfaceY, (int) z);
+            } else {
+                // Fallback: busca manual só se heightmap fugiu do range (ex: teto fechado)
+                pos.set((int) x, minY, (int) z);
+                for (int y = minY; y < maxY; y++) {
+                    pos.setY(y);
+                    if (level.isEmptyBlock(pos) && level.isEmptyBlock(pos.above())) {
+                        break;
+                    }
                 }
             }
 
             LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
-            if (bolt == null) return;
+            if (bolt == null) continue; // continue em vez de return, para não abortar os outros raios
 
             bolt.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-            bolt.setVisualOnly(false); // true = só visual (sem dano/fogo)
+            bolt.setVisualOnly(false);
             bolt.setDamage(2f);
             level.addFreshEntity(bolt);
         }
@@ -768,20 +788,20 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             this.setHealth(this.getHealth() - 0.25f);
         }
 
-        Random randomSource = new Random();
+        RandomSource randomSource = this.getRandom();
         if (randomSource.nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
             if (this.isPhase2()) {
                 if (this.shouldBleed) {
-                    ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
-                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
+                    ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
+                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
                 } else {
                     if (randomSource.nextFloat() > 0.95) {
-                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
+                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
                     }
-                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);
+                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.25f, 0.25f, 0.25f, 10, 1);
                 }
             } else {
-                ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 5, 1);
+                ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.25f, 0.25f, 0.25f, 5, 1);
             }
         }
 
@@ -1065,7 +1085,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             Entity pTarget = entityHitResult.getEntity();
             if (!pTarget.level.isClientSide()) {
                 if (pTarget instanceof Experiment009BossEntity experiment009BossEntity) {
-                    if (experiment009BossEntity.isVulnerableToProjectiles()) {
+                    if (!experiment009BossEntity.isVulnerableToProjectiles()) {
+                        double speed = Math.min(self.getDeltaMovement().length(), 2.0f);
+                        var dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
+                        DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(experiment009BossEntity, dodgeAnimationParameters);
+                        experiment009BossEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
                         event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
                     }
                 }
