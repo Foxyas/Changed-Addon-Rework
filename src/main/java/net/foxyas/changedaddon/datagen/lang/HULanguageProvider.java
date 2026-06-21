@@ -180,6 +180,7 @@ public class HULanguageProvider extends LanguageProvider {
         addBlock(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG, "Kérgezett luminararönk");
         addBlock(ChangedAddonBlocks.LUMINARA_LEAVES, "Luminaralevelek");
         addBlock(ChangedAddonBlocks.LUMINARA_SAPLING, "Luminara csemete");
+        addBlock(POTTED_LUMINARA_SAPLING, "Virágcserép luminara csemetével");
 
         addAbility("advanced_hearing", "Fejlett hallás");
         addAbility("carry", "Hordozás");
