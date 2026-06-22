@@ -12,6 +12,7 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
@@ -365,6 +366,62 @@ public final class ChangedAddonRenderTypes extends RenderType {
         return create("glow_dynamic", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true, rendertype$compositestate);
     });
 
+    public static final RenderType DYNAMIC_END_PORTAL = RenderType.create(ChangedAddonMod.resourceLocString("dynamic_end_portal"),
+            DefaultVertexFormat.POSITION_TEX, // <--- IGUAL AO ARMOR GLINT!
+            VertexFormat.Mode.QUADS, 256, false, false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_END_PORTAL_SHADER) // O shader do portal clássico
+                    .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
+                            .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
+                            .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false)
+                            .build())
+                    .setWriteMaskState(COLOR_WRITE)
+                    .setCullState(NO_CULL)
+                    .setDepthTestState(EQUAL_DEPTH_TEST) // Só renderiza onde já tem pixel desenhado
+                    .setTransparencyState(GLINT_TRANSPARENCY)
+                    .createCompositeState(false)
+    );
+
+    public static final Function<ResourceLocation,RenderType> DYNAMIC_END_PORTAL_TEXTURE = Util.memoize(texture -> {
+        return RenderType.create(ChangedAddonMod.resourceLocString("dynamic_end_portal"),
+                DefaultVertexFormat.POSITION_TEX, // <--- IGUAL AO ARMOR GLINT!
+                VertexFormat.Mode.QUADS, 256, false, false,
+                RenderType.CompositeState.builder()
+                        .setShaderState(RENDERTYPE_END_PORTAL_SHADER) // O shader do portal clássico
+                        .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
+                                .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
+                                .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false)
+                                .add(texture, false ,false)
+                                .build())
+                        .setWriteMaskState(COLOR_WRITE)
+                        .setCullState(NO_CULL)
+                        .setDepthTestState(EQUAL_DEPTH_TEST) // Só renderiza onde já tem pixel desenhado
+                        .setTransparencyState(GLINT_TRANSPARENCY)
+                        .createCompositeState(false)
+        );
+    });
+
+    private static ShaderInstance DYNAMIC_GALAXY_SHADER;
+    public static final Function<ResourceLocation,RenderType> DYNAMIC_GALAXY = Util.memoize(texture -> {
+        return RenderType.create(
+                ChangedAddonMod.resourceLocString("dynamic_galaxy"), // IT CAN BE NEW_ENTITY.
+                DefaultVertexFormat.POSITION_TEX, // Continua POSITION_TEX (já envia a UV0 automaticamente)
+                VertexFormat.Mode.QUADS, 256, false, false,
+                RenderType.CompositeState.builder()
+                        .setShaderState(new ShaderStateShard(() -> DYNAMIC_GALAXY_SHADER))
+                        .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
+                                .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)   // Sampler0
+                                .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false) // Sampler1
+                                .add(texture, false, false) // Sampler2: PIXELS MASK
+                                .build())
+                        .setWriteMaskState(COLOR_WRITE)
+                        .setCullState(NO_CULL)
+                        .setDepthTestState(EQUAL_DEPTH_TEST)
+                        .setTransparencyState(GLINT_TRANSPARENCY)
+                        .createCompositeState(false)
+        );
+    });
+
     // unused, just needed to extend RenderType for protected constants
     private ChangedAddonRenderTypes(String p_173178_, VertexFormat p_173179_, VertexFormat.Mode p_173180_, int p_173181_, boolean p_173182_, boolean p_173183_, Runnable p_173184_, Runnable p_173185_) {
         super(p_173178_, p_173179_, p_173180_, p_173181_, p_173182_, p_173183_, p_173184_, p_173185_);
@@ -372,7 +429,34 @@ public final class ChangedAddonRenderTypes extends RenderType {
 
     @SubscribeEvent
     public static void onRegisterShaders(RegisterShadersEvent event) throws IOException {
-        event.registerShader(new ShaderInstance(event.getResourceProvider(), ChangedAddonMod.resourceLoc("translucent_outline"), DefaultVertexFormat.POSITION_COLOR_TEX), shader -> TRANSLUCENT_OUTLINE_SHADER = shader);
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                ChangedAddonMod.resourceLoc("translucent_outline"),
+                DefaultVertexFormat.POSITION_COLOR_TEX), shader -> TRANSLUCENT_OUTLINE_SHADER = shader);
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                ChangedAddonMod.resourceLoc("dynamic_galaxy"),
+                DefaultVertexFormat.POSITION_COLOR_TEX), shader -> DYNAMIC_GALAXY_SHADER = shader);
+    }
+
+    @Nullable
+    public static ShaderInstance getTranslucentOutlineShader() {
+        return TRANSLUCENT_OUTLINE_SHADER;
+    }
+
+    @Nullable
+    public static ShaderInstance getDynamicGalaxyShader() {
+        return DYNAMIC_GALAXY_SHADER;
+    }
+
+    public static RenderType dynamicEndPortal() {
+        return DYNAMIC_END_PORTAL;
+    }
+
+    public static RenderType dynamicEndPortal(ResourceLocation resourceLocation) {
+        return DYNAMIC_END_PORTAL_TEXTURE.apply(resourceLocation);
+    }
+
+    public static RenderType dynamicGalaxy(ResourceLocation resourceLocation) {
+        return DYNAMIC_GALAXY.apply(resourceLocation);
     }
 
     public static RenderType glowWithNoTransluced(ResourceLocation location) {

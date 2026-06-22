@@ -33,27 +33,27 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
     private final ModelPart RightEar;
     private final ModelPart RightEarPivot;
     private final ModelPart Torso;
-    private final ModelPart RightWing;
+    private final ModelPart rightWing;
     private final ModelPart rightWingRoot;
     private final ModelPart rightSecondaries;
     private final ModelPart rightTertiaries;
-    private final ModelPart LeftWing;
+    private final ModelPart reftWing;
     private final ModelPart leftWingRoot;
     private final ModelPart leftSecondaries;
     private final ModelPart leftTertiaries;
-    private final ModelPart BigTail;
-    private final ModelPart BigTailPrimary;
-    private final ModelPart BigTailSecondary;
-    private final ModelPart BigTailTertiary;
-    private final ModelPart BigTailQuaternary;
-    private final ModelPart TipFlowerTail;
-    private final ModelPart TipFlowerTailPrimary;
-    private final ModelPart TipFlowerTailSecondary;
-    private final ModelPart TipFlowerTailTertiary;
-    private final ModelPart Tail;
-    private final ModelPart TailPrimary;
-    private final ModelPart TailSecondary;
-    private final ModelPart TailTertiary;
+    private final ModelPart bigTail;
+    private final ModelPart bigTailPrimary;
+    private final ModelPart bigTailSecondary;
+    private final ModelPart bigTailTertiary;
+    private final ModelPart bigTailQuaternary;
+    private final ModelPart tipFlowerTail;
+    private final ModelPart tipFlowerTailPrimary;
+    private final ModelPart tipFlowerTailSecondary;
+    private final ModelPart tipFlowerTailTertiary;
+    private final ModelPart tail;
+    private final ModelPart tailPrimary;
+    private final ModelPart tailSecondary;
+    private final ModelPart tailTertiary;
     private final ModelPart RightArm;
     private final ModelPart LeftArm;
     private final ModelPart RightLeg;
@@ -77,27 +77,27 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
         this.RightEar = this.Head.getChild("RightEar");
         this.RightEarPivot = this.RightEar.getChild("RightEarPivot");
         this.Torso = root.getChild("Torso");
-        this.RightWing = this.Torso.getChild("RightWing");
-        this.rightWingRoot = this.RightWing.getChild("rightWingRoot");
+        this.rightWing = this.Torso.getChild("RightWing");
+        this.rightWingRoot = this.rightWing.getChild("rightWingRoot");
         this.rightSecondaries = this.rightWingRoot.getChild("rightSecondaries");
         this.rightTertiaries = this.rightSecondaries.getChild("rightTertiaries");
-        this.LeftWing = this.Torso.getChild("LeftWing");
-        this.leftWingRoot = this.LeftWing.getChild("leftWingRoot");
+        this.reftWing = this.Torso.getChild("LeftWing");
+        this.leftWingRoot = this.reftWing.getChild("leftWingRoot");
         this.leftSecondaries = this.leftWingRoot.getChild("leftSecondaries");
         this.leftTertiaries = this.leftSecondaries.getChild("leftTertiaries");
-        this.BigTail = this.Torso.getChild("BigTail");
-        this.BigTailPrimary = this.BigTail.getChild("BigTailPrimary");
-        this.BigTailSecondary = this.BigTailPrimary.getChild("BigTailSecondary");
-        this.BigTailTertiary = this.BigTailSecondary.getChild("BigTailTertiary");
-        this.BigTailQuaternary = this.BigTailTertiary.getChild("BigTailQuaternary");
-        this.TipFlowerTail = this.BigTailQuaternary.getChild("TipFlowerTail");
-        this.TipFlowerTailPrimary = this.TipFlowerTail.getChild("TipFlowerTailPrimary");
-        this.TipFlowerTailSecondary = this.TipFlowerTailPrimary.getChild("TipFlowerTailSecondary");
-        this.TipFlowerTailTertiary = this.TipFlowerTailSecondary.getChild("TipFlowerTailTertiary");
-        this.Tail = this.Torso.getChild("Tail");
-        this.TailPrimary = this.Tail.getChild("TailPrimary");
-        this.TailSecondary = this.TailPrimary.getChild("TailSecondary");
-        this.TailTertiary = this.TailSecondary.getChild("TailTertiary");
+        this.bigTail = this.Torso.getChild("BigTail");
+        this.bigTailPrimary = this.bigTail.getChild("BigTailPrimary");
+        this.bigTailSecondary = this.bigTailPrimary.getChild("BigTailSecondary");
+        this.bigTailTertiary = this.bigTailSecondary.getChild("BigTailTertiary");
+        this.bigTailQuaternary = this.bigTailTertiary.getChild("BigTailQuaternary");
+        this.tipFlowerTail = this.bigTailQuaternary.getChild("TipFlowerTail");
+        this.tipFlowerTailPrimary = this.tipFlowerTail.getChild("TipFlowerTailPrimary");
+        this.tipFlowerTailSecondary = this.tipFlowerTailPrimary.getChild("TipFlowerTailSecondary");
+        this.tipFlowerTailTertiary = this.tipFlowerTailSecondary.getChild("TipFlowerTailTertiary");
+        this.tail = this.Torso.getChild("Tail");
+        this.tailPrimary = this.tail.getChild("TailPrimary");
+        this.tailSecondary = this.tailPrimary.getChild("TailSecondary");
+        this.tailTertiary = this.tailSecondary.getChild("TailTertiary");
         this.RightArm = root.getChild("RightArm");
         this.LeftArm = root.getChild("LeftArm");
         this.RightLeg = root.getChild("RightLeg");
@@ -113,8 +113,8 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
                 this.Torso,
                 this.LeftArm,
                 this.RightArm,
-                this.Tail,
-                List.of(TailPrimary, TailSecondary, TailTertiary),
+                this.tail,
+                List.of(tailPrimary, tailSecondary, tailTertiary),
                 this.LeftLeg,
                 LeftLowerLeg,
                 LeftFoot,
@@ -129,8 +129,8 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
                         this.Torso,
                         this.LeftArm,
                         this.RightArm,
-                        this.Tail,
-                        List.of(TailPrimary, TailSecondary, TailTertiary),
+                        this.tail,
+                        List.of(tailPrimary, tailSecondary, tailTertiary),
                         this.LeftLeg,
                         LeftLowerLeg,
                         LeftFoot,
@@ -146,22 +146,22 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
                         rightSecondaries,
                         rightTertiaries)
                 ).addPreset(
-                        dragonTail(BigTail, List.of(BigTailPrimary,
-                                BigTailSecondary,
-                                BigTailTertiary,
-                                BigTailQuaternary,
-                                TipFlowerTail,
-                                TipFlowerTailPrimary,
-                                TipFlowerTailSecondary,
-                                TipFlowerTailTertiary)))
-                .addAnimator(new DragonTailCreativeFlyAnimator<>(BigTail, List.of(BigTailPrimary,
-                        BigTailSecondary,
-                        BigTailTertiary,
-                        BigTailQuaternary,
-                        TipFlowerTail,
-                        TipFlowerTailPrimary,
-                        TipFlowerTailSecondary,
-                        TipFlowerTailTertiary))
+                        dragonTail(bigTail, List.of(bigTailPrimary,
+                                bigTailSecondary,
+                                bigTailTertiary,
+                                bigTailQuaternary,
+                                tipFlowerTail,
+                                tipFlowerTailPrimary,
+                                tipFlowerTailSecondary,
+                                tipFlowerTailTertiary)))
+                .addAnimator(new DragonTailCreativeFlyAnimator<>(bigTail, List.of(bigTailPrimary,
+                        bigTailSecondary,
+                        bigTailTertiary,
+                        bigTailQuaternary,
+                        tipFlowerTail,
+                        tipFlowerTailPrimary,
+                        tipFlowerTailSecondary,
+                        tipFlowerTailTertiary))
                 ).addAnimator(new DragonBigWingCreativeFlyAnimator<>(leftWingRoot,
                         leftSecondaries,
                         leftTertiaries,
@@ -174,8 +174,8 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
                         this.Torso,
                         this.LeftArm,
                         this.RightArm,
-                        this.Tail,
-                        List.of(TailPrimary, TailSecondary, TailTertiary),
+                        this.tail,
+                        List.of(tailPrimary, tailSecondary, tailTertiary),
                         this.LeftLeg,
                         LeftLowerLeg,
                         LeftFoot,
@@ -191,22 +191,22 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
                         rightSecondaries,
                         rightTertiaries)
                 ).addPreset(
-                        dragonTail(BigTail, List.of(BigTailPrimary,
-                                BigTailSecondary,
-                                BigTailTertiary,
-                                BigTailQuaternary,
-                                TipFlowerTail,
-                                TipFlowerTailPrimary,
-                                TipFlowerTailSecondary,
-                                TipFlowerTailTertiary)))
-                .addAnimator(new DragonTailCreativeFlyAnimator<>(BigTail, List.of(BigTailPrimary,
-                        BigTailSecondary,
-                        BigTailTertiary,
-                        BigTailQuaternary,
-                        TipFlowerTail,
-                        TipFlowerTailPrimary,
-                        TipFlowerTailSecondary,
-                        TipFlowerTailTertiary))
+                        dragonTail(bigTail, List.of(bigTailPrimary,
+                                bigTailSecondary,
+                                bigTailTertiary,
+                                bigTailQuaternary,
+                                tipFlowerTail,
+                                tipFlowerTailPrimary,
+                                tipFlowerTailSecondary,
+                                tipFlowerTailTertiary)))
+                .addAnimator(new DragonTailCreativeFlyAnimator<>(bigTail, List.of(bigTailPrimary,
+                        bigTailSecondary,
+                        bigTailTertiary,
+                        bigTailQuaternary,
+                        tipFlowerTail,
+                        tipFlowerTailPrimary,
+                        tipFlowerTailSecondary,
+                        tipFlowerTailTertiary))
                 ).addAnimator(new DragonBigWingCreativeFlyAnimator<>(leftWingRoot,
                         leftSecondaries,
                         leftTertiaries,
@@ -475,7 +475,7 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
     }
 
     public List<ModelPart> hiddenPartsByDefault() {
-        return List.of(this.BigTail, this.RightWing, this.LeftWing);
+        return List.of(this.bigTail, this.rightWing, this.reftWing);
     }
 
     public @NotNull ModelPart getArm(HumanoidArm p_102852) {
@@ -492,6 +492,14 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
 
     public ModelPart getLeg(HumanoidArm humanoidArm) {
         return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
+    }
+
+    public ModelPart getWing(HumanoidArm arm) {
+        return arm == HumanoidArm.LEFT ? this.reftWing : this.rightWing;
+    }
+
+    public ModelPart getWingRoot(HumanoidArm arm) {
+        return arm == HumanoidArm.LEFT ? this.leftWingRoot : this.rightWingRoot;
     }
 
     @Override
@@ -513,10 +521,10 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
     }
 
     public void handleVisibility(@NotNull LuminaraFlowerBeastEntity entity) {
-        this.BigTail.visible = entity.isAwakened();
-        this.LeftWing.visible = entity.isAwakened();
-        this.RightWing.visible = entity.isAwakened();
-        this.Tail.visible = !entity.isAwakened();
+        this.bigTail.visible = entity.isAwakened();
+        this.reftWing.visible = entity.isAwakened();
+        this.rightWing.visible = entity.isAwakened();
+        this.tail.visible = !entity.isAwakened();
         this.shouldHaveBigWings = entity.isHyperAwakened();
     }
 
@@ -543,19 +551,19 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
         poseStack.scale(1.5f, 1.5f, 1.5f);
 
         poseStack.pushPose();
-        LeftWing.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        reftWing.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         poseStack.popPose();
 
         poseStack.pushPose();
-        RightWing.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        rightWing.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         poseStack.popPose();
 
         poseStack.popPose();
     }
 
     private void setWingsVisibility(boolean wingsVisibility) {
-        LeftWing.visible = wingsVisibility;
-        RightWing.visible = wingsVisibility;
+        reftWing.visible = wingsVisibility;
+        rightWing.visible = wingsVisibility;
     }
 
     @Override
