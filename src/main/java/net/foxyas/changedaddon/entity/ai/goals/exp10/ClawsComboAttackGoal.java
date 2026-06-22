@@ -162,7 +162,7 @@ public class ClawsComboAttackGoal extends Goal {
             }
 
             direction = livingEntity.position().subtract(attackPos).normalize();
-            knockback = radius / dist * knockbackMul;
+            knockback = dist == 0 ? radius : (radius / dist) * knockbackMul;
             if (blocked) {
                 knockback *= 0.25f;
                 anyBlocked = true;
