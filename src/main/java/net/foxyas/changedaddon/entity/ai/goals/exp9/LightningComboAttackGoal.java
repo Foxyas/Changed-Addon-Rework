@@ -207,7 +207,7 @@ public class LightningComboAttackGoal extends Goal {
             livingEntity.hurt(adjustDamageSource(holder), damageProvider.sample(random) * damageMul);//hurt anyway to damage shield
 
             direction = livingEntity.position().subtract(attackPos).normalize();
-            knockback = radius / dist * knockbackMul;
+            knockback = dist == 0 ? radius : (radius / dist) * knockbackMul;
             if (blocked) {
                 knockback *= 0.25f;
                 anyBlocked = true;
