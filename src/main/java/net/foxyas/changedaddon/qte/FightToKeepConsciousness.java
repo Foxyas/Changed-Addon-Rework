@@ -75,9 +75,16 @@ public class FightToKeepConsciousness {
         }
 
         event.shouldKeepConscious = true;
+        startFightToKeepConsciousness(player);
+    }
 
-        ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
+    public static void startFightToKeepConsciousness(ServerPlayer player) {
         MinigameType minigameType = MinigameType.getRandom(player.getRandom());
+        startFightToKeepConsciousness(player, minigameType);
+    }
+
+    public static void startFightToKeepConsciousness(ServerPlayer player, MinigameType minigameType) {
+        ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
         vars.isTransfuredBySafeMethod = false;
         updatePlayerVariables(vars, minigameType, 0, player);
 
