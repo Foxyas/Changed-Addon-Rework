@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_right_open",
+  "textures": {
+    "bottom": "changed_addon:block/luminara_planks",
+    "top": "changed_addon:block/luminara_planks"
+  }
+}

@@ -10,10 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.PipeBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -68,39 +65,39 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         horizontalBlock(ADVANCED_UNIFUSER);
         horizontalBlock(CATALYZER);
         horizontalBlock(UNIFUSER);
-        simpleBlock(BLUE_WOLF_CRYSTAL_BLOCK);
-        simpleBlock(BLUE_WOLF_CRYSTAL_SMALL);
-        simpleBlock(CONTAINMENT_CONTAINER, BlockStateProperties.WATERLOGGED);
+        simpleBlockExisting(BLUE_WOLF_CRYSTAL_BLOCK);
+        simpleBlockExisting(BLUE_WOLF_CRYSTAL_SMALL);
+        simpleBlockExisting(CONTAINMENT_CONTAINER, BlockStateProperties.WATERLOGGED);
         horizontalBlock(DARK_LATEX_PUDDLE);
-        simpleBlock(PAINITE_BLOCK);
-        simpleBlock(DEEPSLATE_PAINITE_ORE);
-        simpleBlock(DORMANT_DARK_LATEX);
-        simpleBlock(DORMANT_WHITE_LATEX);
+        simpleBlockExisting(PAINITE_BLOCK);
+        simpleBlockExisting(DEEPSLATE_PAINITE_ORE);
+        simpleBlockExisting(DORMANT_DARK_LATEX);
+        simpleBlockExisting(DORMANT_WHITE_LATEX);
         stackableCan(FOXTA_CAN);
-        simpleBlock(GOO_CORE);
+        simpleBlockExisting(GOO_CORE);
         horizontalBlock(INFORMANT_BLOCK);
-        simpleBlock(IRIDIUM_BLOCK);
-        simpleBlock(DEEPSLATE_IRIDIUM_ORE);
-        simpleBlock(LATEX_INSULATOR);
-        simpleBlock(LITIX_CAMONIA_FLUID, BlockStateProperties.LEVEL);
-        simpleBlock(LUMINARA_BLOOM);
-        simpleBlock(ORANGE_WOLF_CRYSTAL_BLOCK);
-        simpleBlock(ORANGE_WOLF_CRYSTAL_SMALL);
-        simpleBlock(REINFORCED_CROSS_BLOCK);
-        simpleBlock(REINFORCED_WALL);
-        simpleBlock(REINFORCED_WALL_CAUTION);
-        simpleBlock(REINFORCED_WALL_SILVER_STRIPED);
-        simpleBlock(REINFORCED_WALL_SILVER_TILED);
+        simpleBlockExisting(IRIDIUM_BLOCK);
+        simpleBlockExisting(DEEPSLATE_IRIDIUM_ORE);
+        simpleBlockExisting(LATEX_INSULATOR);
+        simpleBlockExisting(LITIX_CAMONIA_FLUID, BlockStateProperties.LEVEL);
+        simpleBlockExisting(LUMINARA_BLOOM);
+        simpleBlockExisting(ORANGE_WOLF_CRYSTAL_BLOCK);
+        simpleBlockExisting(ORANGE_WOLF_CRYSTAL_SMALL);
+        simpleBlockExisting(REINFORCED_CROSS_BLOCK);
+        simpleBlockExisting(REINFORCED_WALL);
+        simpleBlockExisting(REINFORCED_WALL_CAUTION);
+        simpleBlockExisting(REINFORCED_WALL_SILVER_STRIPED);
+        simpleBlockExisting(REINFORCED_WALL_SILVER_TILED);
         stackableCan(SNEPSI_CAN);
-        simpleBlock(WALL_WHITE_CRACKED);
-        simpleBlock(WHITE_WOLF_CRYSTAL_BLOCK);
-        simpleBlock(WHITE_WOLF_CRYSTAL_SMALL);
+        simpleBlockExisting(WALL_WHITE_CRACKED);
+        simpleBlockExisting(WHITE_WOLF_CRYSTAL_BLOCK);
+        simpleBlockExisting(WHITE_WOLF_CRYSTAL_SMALL);
         horizontalBlock(WOLF_PLUSHY);
         horizontalBlock(DARK_LATEX_WOLF_PLUSHY);
-        simpleBlock(YELLOW_WOLF_CRYSTAL_BLOCK);
-        simpleBlock(YELLOW_WOLF_CRYSTAL_SMALL);
-        simpleBlock(POTTED_LUMINARA_BLOOM);
-        simpleBlock(POTTED_LUMINARA_SAPLING);
+        simpleBlockExisting(YELLOW_WOLF_CRYSTAL_BLOCK);
+        simpleBlockExisting(YELLOW_WOLF_CRYSTAL_SMALL);
+        simpleBlockExisting(POTTED_LUMINARA_BLOOM);
+        simpleBlockExisting(POTTED_LUMINARA_SAPLING);
 
         timedKeypad();
 
@@ -111,12 +108,32 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
         luminaraPillarBlock(LUMINARA_LOG, "");
         luminaraPillarBlock(STRIPPED_LUMINARA_LOG, "");
-        simpleBlock(LUMINARA_LEAVES);
+        luminaraPillarBlock1(LUMINARA_WOOD, "");
+        luminaraPillarBlock1(STRIPPED_LUMINARA_WOOD, "");
+        simpleBlock(LUMINARA_PLANKS.get());
+        ResourceLocation planksTex = blockLoc(LUMINARA_PLANKS.getId());
+        stairsBlock(LUMINARA_STAIRS.get(), planksTex);
+        slabBlock(LUMINARA_SLAB.get(), planksTex, planksTex);
+        doorBlock(LUMINARA_DOOR.get(), planksTex, planksTex);//TODO replace with a more fitting tex
+        trapdoorBlock(LUMINARA_TRAPDOOR.get(), planksTex, true);
+        fenceBlock(LUMINARA_FENCE.get(), planksTex);
+        fenceGateBlock(LUMINARA_FENCE_GATE.get(), planksTex);
+        signBlock(LUMINARA_SIGN.get(), LUMINARA_WALL_SIGN.get(), planksTex);
+        hangingSign(LUMINARA_HANGING_SIGN, LUMINARA_WALL_HANGING_SIGN, planksTex);
+        buttonBlock(LUMINARA_BUTTON.get(), planksTex);
+        pressurePlateBlock(LUMINARA_PRESSURE_PLATE.get(), planksTex);
+        simpleBlockExisting(LUMINARA_LEAVES);
 
         ConfiguredModel[] model = {new ConfiguredModel(models().getExistingFile(blockLoc(LUMINARA_SAPLING.getId())))};
         getVariantBuilder(LUMINARA_SAPLING.get()).forAllStates(state -> model);
 
         largeLuminarCrystalAnimatedWithItem();
+    }
+
+    protected void hangingSign(RegistryObject<? extends CeilingHangingSignBlock> sign, RegistryObject<? extends WallHangingSignBlock> wall, ResourceLocation tex) {
+        ModelFile signModel = models().sign(sign.getId().getPath(), tex);
+        simpleBlock(sign.get(), signModel);
+        simpleBlock(wall.get(), signModel);
     }
 
     private void timedKeypad() {
@@ -172,7 +189,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), newPath);
     }
 
-    private void simpleBlock(RegistryObject<? extends Block> block, Property<?>... ignore) {
+    private void simpleBlockExisting(RegistryObject<? extends Block> block, Property<?>... ignore) {
         ConfiguredModel[] model = new ConfiguredModel[]{new ConfiguredModel(models().getExistingFile(blockLoc(block.getId())))};
 
         getVariantBuilder(block.get()).forAllStatesExcept(state -> model, ignore);
@@ -278,6 +295,25 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                         },
                 BlockStateProperties.WATERLOGGED // Ignores waterlogged property if present to avoid duplicating state variants
         );
+
+        // Automatically generates the item model corresponding to this pillar
+        simpleBlockItem(block, model);
+    }
+
+    private void luminaraPillarBlock1(RegistryObject<? extends RotatedPillarBlock> pillar, String customPath) {
+        RotatedPillarBlock block = pillar.get();
+        ResourceLocation blockId = pillar.getId();
+
+        ResourceLocation blockLoc = customPath.isEmpty() ? blockLoc(blockId) : blockLoc(blockId, customPath);
+
+        ModelFile model = models().getExistingFile(blockLoc);
+
+        // Maps the BlockState AXIS property to the correct model rotations
+        getVariantBuilder(block).forAllStatesExcept(state -> switch (state.getValue(BlockStateProperties.AXIS)) {
+            case Y -> new ConfiguredModel[]{new ConfiguredModel(model)};
+            case Z -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 0, false)};
+            case X -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 90, false)};
+        }, BlockStateProperties.WATERLOGGED); // Ignores waterlogged property if present to avoid duplicating state variants
 
         // Automatically generates the item model corresponding to this pillar
         simpleBlockItem(block, model);

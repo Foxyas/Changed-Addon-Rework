@@ -48,6 +48,18 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
         tag(ChangedAddonTags.Items.MAKE_TRANSFUR_SAFE).add(Items.ENCHANTED_GOLDEN_APPLE);
         tag(ChangedAddonTags.Items.STABILIZER_TICKS).add(LUMINARA_BLOOM_PETALS.get());
 
+        tag(ItemTags.PLANKS).add(ChangedAddonItems.LUMINARA_PLANKS.get());
+        tag(ItemTags.SLABS).add(LUMINARA_SLAB.get());
+        tag(ItemTags.WOODEN_DOORS).add(LUMINARA_DOOR.get());
+        tag(ItemTags.WOODEN_TRAPDOORS).add(LUMINARA_TRAPDOOR.get());
+        tag(ItemTags.WOODEN_FENCES).add(LUMINARA_FENCE.get());
+        tag(ItemTags.FENCE_GATES).add(LUMINARA_FENCE_GATE.get());
+        tag(Tags.Items.FENCE_GATES_WOODEN).add(LUMINARA_FENCE_GATE.get());
+        tag(ItemTags.SIGNS).add(LUMINARA_SIGN.get(), LUMINARA_HANGING_SIGN.get());
+        tag(ItemTags.WOODEN_BUTTONS).add(LUMINARA_BUTTON.get());
+        tag(ItemTags.WOODEN_PRESSURE_PLATES).add(LUMINARA_PRESSURE_PLATE.get());
+        tag(ChangedAddonTags.Items.LUMINARA_LOGS).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get(), LUMINARA_WOOD.get(), STRIPPED_LUMINARA_WOOD.get());
+
         tag(ChangedAddonTags.Items.UNIFUSER_RECIPE_CATALYST).add(ChangedAddonItems.CATALYZED_DNA.get(),
                 ChangedItems.BLOOD_SYRINGE.get(),
                 ChangedItems.LATEX_SYRINGE.get());

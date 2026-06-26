@@ -32,13 +32,26 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
-        tag(BlockTags.LOGS).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
         tag(BlockTags.FLOWER_POTS).add(POTTED_LUMINARA_SAPLING.get(), POTTED_LUMINARA_BLOOM.get());
         tag(BlockTags.LEAVES).add(LUMINARA_LEAVES.get());
         tag(BlockTags.SAPLINGS).add(LUMINARA_SAPLING.get());
         tag(BlockTags.MINEABLE_WITH_HOE).add(LUMINARA_LEAVES.get());
         tag(BlockTags.OVERWORLD_NATURAL_LOGS).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
-        tag(BlockTags.LOGS_THAT_BURN).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
+        tag(BlockTags.LOGS_THAT_BURN).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get(), LUMINARA_WOOD.get(), STRIPPED_LUMINARA_WOOD.get());
+        tag(BlockTags.PLANKS).add(LUMINARA_PLANKS.get());
+        tag(BlockTags.STAIRS).add(LUMINARA_STAIRS.get());
+        tag(BlockTags.SLABS).add(LUMINARA_SLAB.get());
+        tag(BlockTags.WOODEN_DOORS).add(LUMINARA_DOOR.get());
+        tag(BlockTags.WOODEN_TRAPDOORS).add(LUMINARA_TRAPDOOR.get());
+        tag(BlockTags.WOODEN_FENCES).add(LUMINARA_FENCE.get());
+        tag(BlockTags.FENCE_GATES).add(LUMINARA_FENCE_GATE.get());
+        tag(Tags.Blocks.FENCE_GATES_WOODEN).add(LUMINARA_FENCE_GATE.get());
+        tag(BlockTags.SIGNS).add(LUMINARA_SIGN.get());
+        tag(BlockTags.WALL_SIGNS).add(LUMINARA_WALL_SIGN.get());
+        tag(BlockTags.CEILING_HANGING_SIGNS).add(LUMINARA_HANGING_SIGN.get());
+        tag(BlockTags.WALL_HANGING_SIGNS).add(LUMINARA_WALL_HANGING_SIGN.get());
+        tag(BlockTags.WOODEN_BUTTONS).add(LUMINARA_BUTTON.get());
+        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(LUMINARA_PRESSURE_PLATE.get());
 
         tag(Tags.Blocks.ORES).add(DEEPSLATE_IRIDIUM_ORE.get());
         tag(forgeOresIridium).add(DEEPSLATE_IRIDIUM_ORE.get());

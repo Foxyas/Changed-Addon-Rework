@@ -2,11 +2,13 @@ package net.foxyas.changedaddon.event;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.*;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonMenus;
 import net.foxyas.changedaddon.item.tooltip.ClientTransfurTotemTooltipComponent;
 import net.foxyas.changedaddon.item.tooltip.TransfurTotemTooltipComponent;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -28,6 +30,8 @@ public class ClientMod {
     @SubscribeEvent
     public static void clientLoad(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
+            Sheets.addWoodType(ChangedAddonBlocks.LUMINARA_WOOD_TYPE);
+
             MenuScreens.register(ChangedAddonMenus.CATALYZER_MENU.get(), CatalyzerGuiScreen::new);
             MenuScreens.register(ChangedAddonMenus.UNIFUSER_MENU.get(), UnifuserGuiScreen::new);
             MenuScreens.register(ChangedAddonMenus.INFORMANT_MENU.get(), InformantGuiScreen::new);

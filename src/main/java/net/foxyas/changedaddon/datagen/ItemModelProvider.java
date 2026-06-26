@@ -57,6 +57,18 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
         luminaraBloom();
 
+        ResourceLocation planksTex = blockLoc(LUMINARA_PLANKS.getId());
+        basicBlockItem(ChangedAddonBlocks.LUMINARA_PLANKS);
+        basicBlockItem(ChangedAddonBlocks.LUMINARA_STAIRS);
+        basicBlockItem(ChangedAddonBlocks.LUMINARA_SLAB);
+        basicItem(LUMINARA_DOOR.get());
+        trapdoorBottom(LUMINARA_TRAPDOOR.getId().getPath(), planksTex);
+        fenceInventory(ChangedAddonBlocks.LUMINARA_FENCE.getId().getPath(), planksTex);
+        fenceGate(ChangedAddonBlocks.LUMINARA_FENCE_GATE.getId().getPath(), planksTex);
+        basicItem(LUMINARA_SIGN.getId());//TODO replace with better textures
+        basicItem(LUMINARA_HANGING_SIGN.getId());
+        buttonInventory(LUMINARA_BUTTON.getId().getPath(), planksTex);
+        pressurePlate(LUMINARA_PRESSURE_PLATE.getId().getPath(), planksTex);
 
         basicBlockItem(ChangedAddonBlocks.LUMINARA_LEAVES);
         getBuilder(LUMINARA_SAPLING.getId().toString())

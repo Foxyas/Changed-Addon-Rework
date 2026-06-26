@@ -68,6 +68,8 @@ public final class ChangedAddonTags {
 
         public static final TagKey<Item> UNIFUSER_RECIPE_CATALYST = key("unifuser_recipe_catalyst");
 
+        public static final TagKey<Item> LUMINARA_LOGS = key("luminara_logs");
+
         private static TagKey<Item> key(String path) {
             return TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), ChangedAddonMod.resourceLoc(path));
         }

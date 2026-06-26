@@ -11,10 +11,7 @@ import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeBuilder;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -179,6 +176,36 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
 
         BasicCropRecipeProvider.buildRecipes(recipeConsumer);
         BasicSoilRecipeProvider.buildRecipes(recipeConsumer);
+
+        woodFromLogs(recipeConsumer, LUMINARA_WOOD.get(), LUMINARA_LOG.get());
+        woodFromLogs(recipeConsumer, STRIPPED_LUMINARA_WOOD.get(), STRIPPED_LUMINARA_LOG.get());
+        planksFromLog(recipeConsumer, LUMINARA_PLANKS.get(), ChangedAddonTags.Items.LUMINARA_LOGS, 4);
+        String hasPlanksStr = getHasName(LUMINARA_PLANKS.get());
+        var hasLumiPlanks = has(LUMINARA_PLANKS.get());
+        stairBuilder(LUMINARA_STAIRS.get(), Ingredient.of(LUMINARA_PLANKS.get()))
+                .unlockedBy(hasPlanksStr, hasLumiPlanks)
+                .save(recipeConsumer);
+        slab(recipeConsumer, RecipeCategory.BUILDING_BLOCKS, LUMINARA_SLAB.get(), LUMINARA_PLANKS.get());
+        doorBuilder(LUMINARA_DOOR.get(), Ingredient.of(LUMINARA_PLANKS.get()))
+                .unlockedBy(hasPlanksStr, hasLumiPlanks)
+                .save(recipeConsumer);
+        trapdoorBuilder(LUMINARA_TRAPDOOR.get(), Ingredient.of(LUMINARA_PLANKS.get()))
+                .unlockedBy(hasPlanksStr, hasLumiPlanks)
+                .save(recipeConsumer);
+        fenceBuilder(LUMINARA_FENCE.get(), Ingredient.of(LUMINARA_PLANKS.get()))
+                .unlockedBy(hasPlanksStr, hasLumiPlanks)
+                .save(recipeConsumer);
+        fenceGateBuilder(LUMINARA_FENCE_GATE.get(), Ingredient.of(LUMINARA_PLANKS.get()))
+                .unlockedBy(hasPlanksStr, hasLumiPlanks)
+                .save(recipeConsumer);
+        signBuilder(LUMINARA_SIGN.get(), Ingredient.of(LUMINARA_PLANKS.get()))
+                .unlockedBy(hasPlanksStr, hasLumiPlanks)
+                .save(recipeConsumer);
+        hangingSign(recipeConsumer, LUMINARA_HANGING_SIGN.get(), LUMINARA_PLANKS.get());
+        buttonBuilder(LUMINARA_BUTTON.get(), Ingredient.of(LUMINARA_PLANKS.get()))
+                .unlockedBy(hasPlanksStr, hasLumiPlanks)
+                .save(recipeConsumer);
+        pressurePlate(recipeConsumer, LUMINARA_PRESSURE_PLATE.get(), LUMINARA_PLANKS.get());
     }
 
     private ShapedRecipeBuilder reinforce(ItemLike result, ItemLike input, String criterionName, CriterionTriggerInstance criterion) {

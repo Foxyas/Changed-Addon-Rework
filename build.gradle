@@ -156,10 +156,10 @@ dependencies {
     runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
 
     // Gun Mods.
-    implementation fg.deobf("com.mrcrayfish.framework:framework-forge-1.20.1-0.8.0:0.8.0")
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1-4.8.3:4.8.3")
-    implementation fg.deobf("ttv.migami.jeg:JustEnoughGuns-0.13.2-1.20.1:0.13.2")
-    implementation fg.deobf("com.tacz.guns:tacz-1.20.1-1.1.7-hotfix2:1.1.7")
+    compileOnly fg.deobf("com.mrcrayfish.framework:framework-forge-1.20.1-0.8.0:0.8.0")
+    compileOnly fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1-4.8.3:4.8.3")
+    compileOnly fg.deobf("ttv.migami.jeg:JustEnoughGuns-0.13.2-1.20.1:0.13.2")
+    compileOnly fg.deobf("com.tacz.guns:tacz-1.20.1-1.1.7-hotfix2:1.1.7")
 
     // First Person Mod.
     implementation fg.deobf("dev.tr7zw:notenoughanimations-forge-1.11.1-mc1.20.1:1.10.0")
@@ -168,16 +168,16 @@ dependencies {
     runtimeOnly fg.deobf("dev.tr7zw:TRansition-1.0.11-1.20.1-forge-SNAPSHOT:1.0.3")
 
     // Vivecraft Mod.
-    implementation fg.deobf("curse.maven:vivecraft-667903:7625923")
+    compileOnly fg.deobf("curse.maven:vivecraft-667903:7625923")
 
-    implementation fg.deobf("curse.maven:thirst-was-taken-679270:6660408")
+    compileOnly fg.deobf("curse.maven:thirst-was-taken-679270:6660408")
     implementation fg.deobf("curse.maven:trimmed-857036:4845938")
 
     // Botany Mod.
     implementation fg.deobf("curse.maven:bookshelf-228525:7612389")
     implementation fg.deobf("curse.maven:botany-pots-353928:7612402")
 
-    implementation fg.deobf("curse.maven:create-328085:7178761")
+    compileOnly fg.deobf("curse.maven:create-328085:7178761")
 
     implementation fg.deobf("curse.maven:appleskin-248787:4770828")
     //implementation files("libs/Changed-m1.18.2-v0.14")
