@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/template_orientable_trapdoor_open",
+  "render_type": "minecraft:cutout",
   "textures": {
-    "texture": "changed_addon:block/luminara_planks"
+    "texture": "changed_addon:block/luminara_trapdoor"
   }
 }

@@ -6,14 +6,14 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class LuminaraWoodBlock extends LuminaraLogBlock implements IStrippableLog {
+public class StrippedLuminaraWoodBlock extends LuminaraWoodBlock {
 
-    public LuminaraWoodBlock(Properties pProperties) {
+    public StrippedLuminaraWoodBlock(Properties pProperties) {
         super(pProperties);
     }
 
     @Override
     public @Nullable BlockState getStripedVariant(BlockState state) {
-        return ChangedAddonBlocks.STRIPPED_LUMINARA_WOOD.get().defaultBlockState();
+        return null;
     }
 }

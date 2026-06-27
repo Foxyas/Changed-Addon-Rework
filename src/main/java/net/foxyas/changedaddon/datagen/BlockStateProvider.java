@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +41,10 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
     private static ResourceLocation blockLoc(ResourceLocation loc, String path) {
         return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + path + "/" + loc.getPath());
+    }
+
+    private static ResourceLocation blockLocWithSuffix(ResourceLocation loc, String suffix) {
+        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + loc.getPath() + suffix);
     }
 
     private static int getXRotation(Direction dir) {
@@ -112,14 +117,22 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         luminaraPillarBlock1(STRIPPED_LUMINARA_WOOD, "");
         simpleBlock(LUMINARA_PLANKS.get());
         ResourceLocation planksTex = blockLoc(LUMINARA_PLANKS.getId());
+        ResourceLocation trapDoorTex = blockLoc(LUMINARA_TRAPDOOR.getId());
+        ResourceLocation strippedLuminaraLogId = STRIPPED_LUMINARA_LOG.getId();
+        ResourceLocation strippedLogTex = blockLoc(
+                ResourceLocation.fromNamespaceAndPath(
+                        strippedLuminaraLogId.getNamespace(),
+                        strippedLuminaraLogId.getPath() + "_side"), "luminara_tree");
+        ResourceLocation doorTopTex = blockLocWithSuffix(LUMINARA_DOOR.getId(), "_top");
+        ResourceLocation doorBottomTex = blockLocWithSuffix(LUMINARA_DOOR.getId(), "_bottom");
         stairsBlock(LUMINARA_STAIRS.get(), planksTex);
         slabBlock(LUMINARA_SLAB.get(), planksTex, planksTex);
-        doorBlock(LUMINARA_DOOR.get(), planksTex, planksTex);//TODO replace with a more fitting tex
-        trapdoorBlock(LUMINARA_TRAPDOOR.get(), planksTex, true);
+        doorBlockWithCutoutRenderType(LUMINARA_DOOR.get(), doorBottomTex, doorTopTex);//TODO replace with a more fitting tex
+        trapdoorBlockWithCutoutRenderType(LUMINARA_TRAPDOOR.get(), trapDoorTex, true);
         fenceBlock(LUMINARA_FENCE.get(), planksTex);
         fenceGateBlock(LUMINARA_FENCE_GATE.get(), planksTex);
-        signBlock(LUMINARA_SIGN.get(), LUMINARA_WALL_SIGN.get(), planksTex);
-        hangingSign(LUMINARA_HANGING_SIGN, LUMINARA_WALL_HANGING_SIGN, planksTex);
+        signBlock(LUMINARA_SIGN.get(), LUMINARA_WALL_SIGN.get(), strippedLogTex);
+        hangingSign(LUMINARA_HANGING_SIGN, LUMINARA_WALL_HANGING_SIGN, strippedLogTex);
         buttonBlock(LUMINARA_BUTTON.get(), planksTex);
         pressurePlateBlock(LUMINARA_PRESSURE_PLATE.get(), planksTex);
         simpleBlockExisting(LUMINARA_LEAVES);
@@ -306,17 +319,28 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
         ResourceLocation blockLoc = customPath.isEmpty() ? blockLoc(blockId) : blockLoc(blockId, customPath);
 
-        ModelFile model = models().getExistingFile(blockLoc);
+        ModelFile defaultModel = models().getExistingFile(blockLoc);
 
         // Maps the BlockState AXIS property to the correct model rotations
-        getVariantBuilder(block).forAllStatesExcept(state -> switch (state.getValue(BlockStateProperties.AXIS)) {
-            case Y -> new ConfiguredModel[]{new ConfiguredModel(model)};
-            case Z -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 0, false)};
-            case X -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 90, false)};
+        getVariantBuilder(block).forAllStatesExcept(state -> {
+            ModelFile model = defaultModel;
+            if (state.getValue(LuminaraLogBlock.ACTIVE)) {
+//                        String id = pillar.getId().toString();
+//                        model = models().cubeColumn("active_" + blockId.getPath(),
+//                                withPrefixOn(sideTexture, id, "active_"),
+//                                withPrefixOn(topTexture, id, "active_"));
+                model = models().getExistingFile(blockLoc(withPrefix(blockId, "active_")));
+            }
+
+            return switch (state.getValue(BlockStateProperties.AXIS)) {
+                case Y -> new ConfiguredModel[]{new ConfiguredModel(model)};
+                case Z -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 0, false)};
+                case X -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 90, false)};
+            };
         }, BlockStateProperties.WATERLOGGED); // Ignores waterlogged property if present to avoid duplicating state variants
 
         // Automatically generates the item model corresponding to this pillar
-        simpleBlockItem(block, model);
+        simpleBlockItem(block, defaultModel);
     }
 
     private void luminaraPillarBlock(RegistryObject<? extends RotatedPillarBlock> pillar, String customPath) {
@@ -499,6 +523,41 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         return models().withExistingParent(name, BlockModelProvider.EMISSIVE_CUBE_ALL)
                 .texture("cross", cross)
                 .texture("glow", glow);
+    }
+
+    protected ResourceLocation key(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
+    }
+
+    public void doorBlockWithCutoutRenderType(DoorBlock block, ResourceLocation bottom, ResourceLocation top) {
+        doorBlockInternalWithCutoutRenderType(block, key(block).toString(), bottom, top);
+    }
+
+    protected void doorBlockInternalWithCutoutRenderType(DoorBlock block, String baseName, ResourceLocation bottom, ResourceLocation top) {
+        ModelFile bottomLeft = models().doorBottomLeft(baseName + "_bottom_left", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile bottomLeftOpen = models().doorBottomLeftOpen(baseName + "_bottom_left_open", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile bottomRight = models().doorBottomRight(baseName + "_bottom_right", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile bottomRightOpen = models().doorBottomRightOpen(baseName + "_bottom_right_open", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile topLeft = models().doorTopLeft(baseName + "_top_left", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile topLeftOpen = models().doorTopLeftOpen(baseName + "_top_left_open", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile topRight = models().doorTopRight(baseName + "_top_right", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile topRightOpen = models().doorTopRightOpen(baseName + "_top_right_open", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        doorBlock(block, bottomLeft, bottomLeftOpen, bottomRight, bottomRightOpen, topLeft, topLeftOpen, topRight, topRightOpen);
+    }
+
+    protected void trapdoorBlockWithCutoutRenderType(TrapDoorBlock block, ResourceLocation texture, boolean orientable) {
+        trapdoorBlockInternalWithCutoutRenderType(block, key(block).toString(), texture, orientable);
+    }
+
+    protected void trapdoorBlockInternalWithCutoutRenderType(TrapDoorBlock block, String baseName, ResourceLocation texture, boolean orientable) {
+        var bottom = orientable ? models().trapdoorOrientableBottom(baseName + "_bottom", texture) : models().trapdoorBottom(baseName + "_bottom", texture);
+        var top = orientable ? models().trapdoorOrientableTop(baseName + "_top", texture) : models().trapdoorTop(baseName + "_top", texture);
+        var open = orientable ? models().trapdoorOrientableOpen(baseName + "_open", texture) : models().trapdoorOpen(baseName + "_open", texture);
+        trapdoorBlock(block,
+                bottom.renderType(ResourceLocation.withDefaultNamespace("cutout")),
+                top.renderType(ResourceLocation.withDefaultNamespace("cutout")),
+                open.renderType(ResourceLocation.withDefaultNamespace("cutout")),
+                orientable);
     }
 
 }

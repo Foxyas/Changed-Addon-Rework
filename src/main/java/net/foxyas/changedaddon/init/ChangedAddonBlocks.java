@@ -12,6 +12,7 @@ import net.foxyas.changedaddon.block.entity.LuminaraSignEntity;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -78,8 +79,24 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<LuminaraLogBlock> LUMINARA_LOG = REGISTRY.register("luminara_log", LuminaraLogBlock::new);
     public static final RegistryObject<StrippedLuminaraLogBlock> STRIPPED_LUMINARA_LOG = REGISTRY.register("stripped_luminara_log", StrippedLuminaraLogBlock::new);
     public static final RegistryObject<LuminaraWoodBlock> LUMINARA_WOOD = REGISTRY.register("luminara_wood", () -> new LuminaraWoodBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_WOOD)));
-    public static final RegistryObject<RotatedPillarBlock> STRIPPED_LUMINARA_WOOD = REGISTRY.register("stripped_luminara_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_CHERRY_WOOD)));
-    public static final WoodType LUMINARA_WOOD_TYPE = WoodType.register(new WoodType(ChangedAddonMod.resourceLocString("luminara"), BlockSetType.CHERRY));
+    public static final RegistryObject<StrippedLuminaraWoodBlock> STRIPPED_LUMINARA_WOOD = REGISTRY.register("stripped_luminara_wood", () -> new StrippedLuminaraWoodBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_CHERRY_WOOD)));
+
+    public static final BlockSetType LUMINARA_BLOCK_SET_TYPE = BlockSetType.register(new BlockSetType(ChangedAddonMod.resourceLocString("luminara"),
+            true,
+            SoundType.CHERRY_WOOD,
+            SoundEvents.CHERRY_WOOD_DOOR_CLOSE,
+            SoundEvents.CHERRY_WOOD_DOOR_OPEN,
+            SoundEvents.CHERRY_WOOD_TRAPDOOR_CLOSE,
+            SoundEvents.CHERRY_WOOD_TRAPDOOR_OPEN,
+            SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_OFF,
+            SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_ON,
+            SoundEvents.CHERRY_WOOD_BUTTON_CLICK_OFF,
+            SoundEvents.CHERRY_WOOD_BUTTON_CLICK_ON)
+    );
+    public static final WoodType LUMINARA_WOOD_TYPE = WoodType.register(new WoodType(ChangedAddonMod.resourceLocString("luminara"),
+            LUMINARA_BLOCK_SET_TYPE)
+    );
+
     public static final BlockBehaviour.Properties LUMINARA_PLANK_PROPERTIES = BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS);
     public static final RegistryObject<Block> LUMINARA_PLANKS = REGISTRY.register("luminara_planks", () -> new Block(LUMINARA_PLANK_PROPERTIES));
     public static final RegistryObject<StairBlock> LUMINARA_STAIRS = REGISTRY.register("luminara_stairs", () -> new StairBlock(() -> LUMINARA_PLANKS.get().defaultBlockState(), LUMINARA_PLANK_PROPERTIES));
@@ -90,25 +107,25 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<FenceGateBlock> LUMINARA_FENCE_GATE = REGISTRY.register("luminara_fence_gate", () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_FENCE_GATE), LUMINARA_WOOD_TYPE));
     public static final RegistryObject<StandingSignBlock> LUMINARA_SIGN = REGISTRY.register("luminara_sign", () -> new StandingSignBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_SIGN), LUMINARA_WOOD_TYPE) {
         @Override
-        public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        public @NotNull BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
             return new LuminaraSignEntity(pPos, pState);
         }
     });
     public static final RegistryObject<WallSignBlock> LUMINARA_WALL_SIGN = REGISTRY.register("luminara_wall_sign", () -> new WallSignBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_WALL_SIGN), LUMINARA_WOOD_TYPE) {
         @Override
-        public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        public @NotNull BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
             return new LuminaraSignEntity(pPos, pState);
         }
     });
     public static final RegistryObject<CeilingHangingSignBlock> LUMINARA_HANGING_SIGN = REGISTRY.register("luminara_hanging_sign", () -> new CeilingHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_HANGING_SIGN), LUMINARA_WOOD_TYPE) {
         @Override
-        public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        public @NotNull BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
             return new LuminaraHangingSignEntity(pPos, pState);
         }
     });
     public static final RegistryObject<WallHangingSignBlock> LUMINARA_WALL_HANGING_SIGN = REGISTRY.register("luminara_wall_hanging_sign", () -> new WallHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_WALL_HANGING_SIGN), LUMINARA_WOOD_TYPE) {
         @Override
-        public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        public @NotNull BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
             return new LuminaraHangingSignEntity(pPos, pState);
         }
     });
@@ -141,7 +158,6 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<WolfCrystalPillar> WOLF_CRYSTAL_PILLAR = REGISTRY.register("wolf_crystal_pillar", WolfCrystalPillar::new);
 
     public static final RegistryObject<StructureSpawnerBlock> STRUCTURE_SPAWNER = REGISTRY.register("structure_spawner", StructureSpawnerBlock::new);
-
 
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
