@@ -9,7 +9,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -52,7 +51,7 @@ public class CuttingRecipes {
                         KNIVES,
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
                         4)
-                .saveToFD(consumer);
+                .save(consumer);
         CuttingBoardRecipeBuilder.cuttingRecipe(
                         Ingredient.of(ChangedAddonItems.LUMINARA_SAPLING.get()), KNIVES, ChangedAddonItems.LUMINARA_BLOOM.get(),
                         4
@@ -72,7 +71,7 @@ public class CuttingRecipes {
                         0.5f,
                         1
                 )
-                .saveToFD(consumer);
+                .save(consumer);
     }
 
     private static void strippingWood(Consumer<FinishedRecipe> consumer) {
@@ -86,7 +85,7 @@ public class CuttingRecipes {
 
     private static void salvagingWoodenFurniture(Consumer<FinishedRecipe> consumer) {
         salvagePlankFromFurniture(consumer,
-                ChangedAddonBlocks.LUMINARA_WOOD_TYPE,
+                ResourceLocation.parse(ChangedAddonBlocks.LUMINARA_WOOD_TYPE.name()).getPath(),
                 // Planks
                 ChangedAddonBlocks.LUMINARA_PLANKS.get(),
 
@@ -156,65 +155,6 @@ public class CuttingRecipes {
                 .save(consumer, salvagingRecipe("luminara_leaves"));
     }
 
-    private static void salvagingBlockFromVehicle(Consumer<FinishedRecipe> consumer) {
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.CHEST_MINECART), HOES, Items.MINECART, 1)
-                .addResult(Items.CHEST)
-                .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.METAL_BREAK).toString())
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.FURNACE_MINECART), HOES, Items.MINECART, 1)
-                .addResult(Items.FURNACE)
-                .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.METAL_BREAK).toString())
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.HOPPER_MINECART), HOES, Items.MINECART, 1)
-                .addResult(Items.HOPPER)
-                .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.METAL_BREAK).toString())
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.TNT_MINECART), HOES, Items.MINECART, 1)
-                .addResult(Items.TNT)
-                .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.METAL_BREAK).toString())
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.OAK_CHEST_BOAT), HOES, Items.OAK_BOAT, 1)
-                .addResult(Items.CHEST)
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.SPRUCE_CHEST_BOAT), HOES, Items.SPRUCE_BOAT, 1)
-                .addResult(Items.CHEST)
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.BIRCH_CHEST_BOAT), HOES, Items.BIRCH_BOAT, 1)
-                .addResult(Items.CHEST)
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.JUNGLE_CHEST_BOAT), HOES, Items.JUNGLE_BOAT, 1)
-                .addResult(Items.CHEST)
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.ACACIA_CHEST_BOAT), HOES, Items.ACACIA_BOAT, 1)
-                .addResult(Items.CHEST)
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.DARK_OAK_CHEST_BOAT), HOES, Items.DARK_OAK_BOAT, 1)
-                .addResult(Items.CHEST)
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.MANGROVE_CHEST_BOAT), HOES, Items.MANGROVE_BOAT, 1)
-                .addResult(Items.CHEST)
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.CHERRY_CHEST_BOAT), HOES, Items.CHERRY_BOAT, 1)
-                .addResult(Items.CHEST)
-                .salvaging()
-                .saveToFD(consumer);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.BAMBOO_CHEST_RAFT), HOES, Items.BAMBOO_RAFT, 1)
-                .addResult(Items.CHEST)
-                .salvaging()
-                .saveToFD(consumer);
-    }
-
     /**
      * Generates an axe-cutting recipe for wooded furniture items, with a chance to recover one plank of the given type.
      */
@@ -224,9 +164,27 @@ public class CuttingRecipes {
     }
 
     /**
+     * Generates an axe-cutting recipe for wooded furniture items, with a chance to recover one plank of the given type.
+     */
+    private static void salvagePlankFromFurniture(Consumer<FinishedRecipe> consumer, String woodTypeId, ItemLike plank, ItemLike... furniture) {
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(furniture), AXES, plank, 1, 0.75F)
+                .save(consumer, salvagingRecipe(woodTypeId + "_furniture"));
+    }
+
+    /**
      * Generates an axe-stripping recipe for the pair of given logs, with custom sound and a Tree Bark result attached.
      */
     private static void stripLogForBark(Consumer<FinishedRecipe> consumer, ItemLike log, ItemLike strippedLog) {
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(log), AXES_STRIP, strippedLog)
+                .addResult(ModItems.TREE_BARK.get())
+                .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.AXE_STRIP).toString())
+                .save(consumer);
+    }
+
+    /**
+     * Generates an axe-stripping recipe for the pair of given logs, with custom sound and a Tree Bark result attached.
+     */
+    private static void stripLogForBarkFD(Consumer<FinishedRecipe> consumer, ItemLike log, ItemLike strippedLog) {
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(log), AXES_STRIP, strippedLog)
                 .addResult(ModItems.TREE_BARK.get())
                 .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.AXE_STRIP).toString())

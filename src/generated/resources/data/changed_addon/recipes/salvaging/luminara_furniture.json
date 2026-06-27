@@ -1,0 +1,46 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    [
+      {
+        "item": "changed_addon:luminara_door"
+      },
+      {
+        "item": "changed_addon:luminara_trapdoor"
+      },
+      {
+        "item": "changed_addon:luminara_sign"
+      },
+      {
+        "item": "changed_addon:luminara_hanging_sign"
+      },
+      {
+        "item": "changed_addon:luminara_fence"
+      },
+      {
+        "item": "changed_addon:luminara_fence_gate"
+      },
+      {
+        "item": "changed_addon:luminara_pressure_plate"
+      },
+      {
+        "item": "changed_addon:luminara_button"
+      }
+    ]
+  ],
+  "result": [
+    {
+      "chance": 0.75,
+      "item": "changed_addon:luminara_planks"
+    }
+  ],
+  "tool": [
+    {
+      "type": "farmersdelight:tool_action",
+      "action": "axe_dig"
+    },
+    {
+      "tag": "minecraft:axes"
+    }
+  ]
+}
