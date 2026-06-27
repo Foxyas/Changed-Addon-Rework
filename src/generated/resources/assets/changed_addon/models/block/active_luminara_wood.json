@@ -2,9 +2,9 @@
   "parent": "changed_addon:customs/emissive_cube_column",
   "render_type": "minecraft:cutout",
   "textures": {
-    "end": "changed_addon:block/luminara_tree/active_stripped_luminara_log_side",
-    "end_glow": "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_glow",
-    "side": "changed_addon:block/luminara_tree/active_stripped_luminara_log_side",
-    "side_glow": "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_glow"
+    "end": "changed_addon:block/luminara_tree/active_luminara_log_side",
+    "end_glow": "changed_addon:block/luminara_tree/active_luminara_log_side_glow",
+    "side": "changed_addon:block/luminara_tree/active_luminara_log_side",
+    "side_glow": "changed_addon:block/luminara_tree/active_luminara_log_side_glow"
   }
 }

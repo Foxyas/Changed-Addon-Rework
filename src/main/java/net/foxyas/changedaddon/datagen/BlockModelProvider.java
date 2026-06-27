@@ -90,10 +90,10 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
 
         withExistingParent("active_" + ChangedAddonBlocks.LUMINARA_WOOD.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
-                .texture("end", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side")
-                .texture("end_glow", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_glow")
-                .texture("side", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_glow")
+                .texture("end", "changed_addon:block/luminara_tree/active_luminara_log_side")
+                .texture("end_glow", "changed_addon:block/luminara_tree/active_luminara_log_side_glow")
+                .texture("side", "changed_addon:block/luminara_tree/active_luminara_log_side")
+                .texture("side_glow", "changed_addon:block/luminara_tree/active_luminara_log_side_glow")
         ;
 
         withExistingParent("active_" + ChangedAddonBlocks.STRIPPED_LUMINARA_WOOD.getId().getPath(), EMISSIVE_CUBE_COLUMN)
