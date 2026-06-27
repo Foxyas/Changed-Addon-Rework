@@ -3,6 +3,8 @@ package net.foxyas.changedaddon.datagen;
 import net.foxyas.changedaddon.datagen.builders.ChangedAddonRecipeBuilder;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicCropRecipeProvider;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicSoilRecipeProvider;
+import net.foxyas.changedaddon.datagen.recipes.farmers_delight.CookingRecipes;
+import net.foxyas.changedaddon.datagen.recipes.farmers_delight.CuttingRecipes;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
@@ -11,7 +13,10 @@ import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -176,6 +181,9 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
 
         BasicCropRecipeProvider.buildRecipes(recipeConsumer);
         BasicSoilRecipeProvider.buildRecipes(recipeConsumer);
+
+        CookingRecipes.register(recipeConsumer);
+        CuttingRecipes.register(recipeConsumer);
 
         woodFromLogs(recipeConsumer, LUMINARA_WOOD.get(), LUMINARA_LOG.get());
         woodFromLogs(recipeConsumer, STRIPPED_LUMINARA_WOOD.get(), STRIPPED_LUMINARA_LOG.get());
