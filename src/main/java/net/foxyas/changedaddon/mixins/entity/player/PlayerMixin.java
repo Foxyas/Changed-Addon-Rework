@@ -11,7 +11,7 @@ import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.item.AbstractKatanaItem;
 import net.foxyas.changedaddon.item.api.IDrinkItem;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
-import net.foxyas.changedaddon.variant.VariantExtraStats;
+import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
 import net.ltxprogrammer.changed.data.AccessorySlots;
@@ -207,8 +207,8 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
     public boolean changed$shouldIgnoreFallDamage(Abilities instance, Operation<Boolean> original) {
         var self = (Player) (Object) this;
         TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(self);
-        if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof VariantExtraStats variantExtraStats)
-            return original.call(instance) && !variantExtraStats.shouldTakeFallDamage();
+        if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof ILatexVariantExtraStats ILatexVariantExtraStats)
+            return original.call(instance) && !ILatexVariantExtraStats.shouldTakeFallDamage();
         return original.call(instance);
     }
 

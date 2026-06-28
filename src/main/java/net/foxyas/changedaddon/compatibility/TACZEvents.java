@@ -1,15 +1,13 @@
 package net.foxyas.changedaddon.compatibility;
 
-import com.tacz.guns.api.event.common.GunFireEvent;
 import com.tacz.guns.api.event.common.GunShootEvent;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
-import net.foxyas.changedaddon.variant.VariantExtraStats;
+import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -62,7 +60,7 @@ public class TACZEvents {
             boolean isRestricted = false;
             ChangedEntity changedEntity = transfurVariantInstance.getChangedEntity();
 
-            if (changedEntity instanceof VariantExtraStats variantExtraStats && !variantExtraStats.canFireGuns()) {
+            if (changedEntity instanceof ILatexVariantExtraStats ILatexVariantExtraStats && !ILatexVariantExtraStats.canFireGuns()) {
                 isRestricted = true;
             } else if (ChangedAddonServerConfiguration.STOP_TRANSFURRED_PLAYERS_USE_GUNS.get()) {
                 isRestricted = true;

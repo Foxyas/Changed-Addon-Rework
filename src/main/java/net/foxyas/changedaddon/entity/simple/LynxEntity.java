@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.entity.simple;
 import net.foxyas.changedaddon.entity.defaults.AbstractSwimmableEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;
-import net.foxyas.changedaddon.variant.VariantExtraStats;
+import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -22,7 +22,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
-public class LynxEntity extends AbstractSwimmableEntity implements PowderSnowWalkable, VariantExtraStats {
+public class LynxEntity extends AbstractSwimmableEntity implements PowderSnowWalkable, ILatexVariantExtraStats {
 
     public LynxEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.LYNX.get(), world);

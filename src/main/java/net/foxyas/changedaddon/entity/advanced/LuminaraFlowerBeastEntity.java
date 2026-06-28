@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.advanced;
 
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
-import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
@@ -14,7 +13,7 @@ import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
-import net.foxyas.changedaddon.variant.VariantExtraStats;
+import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.PowderSnowWalkable;
@@ -63,7 +62,7 @@ import net.minecraftforge.network.PlayMessages;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats, CustomPatReaction, PowderSnowWalkable, IDynamicRideOffsetEntity, IBestiaryEntityData {
+public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity implements ILatexVariantExtraStats, CustomPatReaction, PowderSnowWalkable, IDynamicRideOffsetEntity, IBestiaryEntityData {
 
     public static final CreatureDietsHandleProcedure.DietType LUMINARA_DIET = CreatureDietsHandleProcedure.DietType.create("LUMINARA", ChangedAddonTags.TransfurTypes.DRAGON_LIKE, ChangedAddonTags.Items.DRAGON_DIET, List.of(Items.CHORUS_FRUIT, ChangedItems.ORANGE.get()));
     private static final EntityDataAccessor<Boolean> AWAKENED = SynchedEntityData.defineId(LuminaraFlowerBeastEntity.class, EntityDataSerializers.BOOLEAN);

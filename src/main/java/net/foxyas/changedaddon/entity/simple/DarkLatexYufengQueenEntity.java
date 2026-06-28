@@ -2,11 +2,8 @@ package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
-import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
-import net.foxyas.changedaddon.variant.VariantExtraStats;
+import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
@@ -19,13 +16,11 @@ import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
 import net.ltxprogrammer.changed.entity.beast.DarkLatexEntity;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.util.EntityUtil;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -36,7 +31,7 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.Objects;
 
-public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements VariantExtraStats, GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions {
+public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements ILatexVariantExtraStats, GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions {
 
     protected final SimpleAbilityInstance summonPups;
 

@@ -6,7 +6,7 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
 
-public interface LavaSwimmableVariant extends VariantExtraStats {
+public interface ILavaSwimmableILatexVariant extends ILatexVariantExtraStats {
 
     @Override
     default boolean variantOverrideSwim() {

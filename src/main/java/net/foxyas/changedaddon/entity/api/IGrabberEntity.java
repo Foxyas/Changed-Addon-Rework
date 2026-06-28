@@ -207,4 +207,19 @@ public interface IGrabberEntity {
         }
         return selfType.is(ChangedAddonTags.EntityTypes.CAN_GRAB) || isAbleToGrab();
     }
+
+    /// Optional Function to handle the grab type decision
+    default GrabStrategy getGrabStrategy() {
+        if (this instanceof LivingEntity living) {
+            if (living.getType().is(ChangedAddonTags.EntityTypes.CAN_GRAB_SUIT)) {
+                return living.getRandom().nextFloat() <= 0.25f ? GrabStrategy.SUIT : GrabStrategy.GRAB;
+            }
+        }
+        return GrabStrategy.GRAB;
+    }
+
+    enum GrabStrategy {
+        GRAB,
+        SUIT;
+    }
 }

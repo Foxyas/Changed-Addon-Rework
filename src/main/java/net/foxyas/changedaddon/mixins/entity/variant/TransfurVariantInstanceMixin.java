@@ -6,8 +6,8 @@ import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
+import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
-import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -202,16 +202,16 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
 
     @ModifyReturnValue(method = "canElytraGlide", at = @At("RETURN"))
     private boolean canElytraGlideHook(boolean original) {
-        if (this.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
-            return variantExtraStats.getFlyType().canGlide();
+        if (this.getChangedEntity() instanceof ILatexVariantExtraStats ILatexVariantExtraStats) {
+            return ILatexVariantExtraStats.getFlyType().canGlide();
         }
         return original;
     }
 
     @ModifyReturnValue(method = "canCreativeFly", at = @At("RETURN"))
     private boolean canCreativeFlyHook(boolean original) {
-        if (this.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
-            return variantExtraStats.getFlyType().canFly();
+        if (this.getChangedEntity() instanceof ILatexVariantExtraStats ILatexVariantExtraStats) {
+            return ILatexVariantExtraStats.getFlyType().canFly();
         }
         return original;
     }
@@ -234,7 +234,7 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     @Inject(method = "save", at = @At("RETURN"))
     private void InjectData(CallbackInfoReturnable<CompoundTag> cir) {
         CompoundTag returnValue = cir.getReturnValue();
-        if (this.getChangedEntity() instanceof VariantExtraStats stats) {
+        if (this.getChangedEntity() instanceof ILatexVariantExtraStats stats) {
             stats.saveExtraData(returnValue);
         }
 
@@ -246,8 +246,8 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
 
     @Inject(method = "load", at = @At("RETURN"))
     private void readInjectedData(CompoundTag tag, CallbackInfo cir) {
-        if (this.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
-            variantExtraStats.readExtraData(tag);
+        if (this.getChangedEntity() instanceof ILatexVariantExtraStats ILatexVariantExtraStats) {
+            ILatexVariantExtraStats.readExtraData(tag);
         }
 
         if (tag.contains("untransfurImmunity"))

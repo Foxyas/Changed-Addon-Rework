@@ -1,11 +1,10 @@
 package net.foxyas.changedaddon.entity.advanced;
 
 import com.google.common.collect.ImmutableMap;
-import net.foxyas.changedaddon.entity.api.IDynamicColors;
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
-import net.foxyas.changedaddon.variant.VariantExtraStats;
+import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.EntityColorProvider;
 import net.ltxprogrammer.changed.entity.ModifiableEntity;
@@ -36,7 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats, ModifiableEntity, EntityColorProvider {
+public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements ILatexVariantExtraStats, ModifiableEntity, EntityColorProvider {
 
     protected static final EntityDataAccessor<Integer> PRIMARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> SECONDARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);

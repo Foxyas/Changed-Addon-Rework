@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.network.packet.SafeGrabSyncPacket;
@@ -57,6 +58,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Shadow
     int instructionTicks;
 
+    @Shadow public KeyReference currentEscapeKey;
     @Unique
     private boolean safeMode = false;
     @Unique
@@ -134,6 +136,16 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             return;
         }
         original.call(instance, debuffs);
+    }
+
+    @Inject(method = "tickIdle", at = @At(value = "HEAD"), cancellable = true)
+    private void tickSendKeyBindInfo(CallbackInfo ci) {
+        Level level = entity.getLevel();
+        if (level.isClientSide()) {
+            if (ChangedAddonClientConfiguration.GRAB_ABILITY_KEY_INFO.get()) {
+                this.entity.displayClientMessage(this.currentEscapeKey.getName(level), true);
+            }
+        }
     }
 
     @Inject(method = "tickIdle", at = @At(value = "HEAD"), cancellable = true)

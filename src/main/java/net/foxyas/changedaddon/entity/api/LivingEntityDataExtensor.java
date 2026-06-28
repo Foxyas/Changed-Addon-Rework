@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.api;
 
 import net.foxyas.changedaddon.init.ChangedAddonTags;
-import net.foxyas.changedaddon.variant.VariantExtraStats;
+import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.tags.FluidTags;
@@ -30,8 +30,8 @@ public interface LivingEntityDataExtensor {
     default boolean overrideSwim() {
         if (this instanceof Player player) {
             TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
-                return variantExtraStats.variantOverrideSwim();
+            if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof ILatexVariantExtraStats ILatexVariantExtraStats) {
+                return ILatexVariantExtraStats.variantOverrideSwim();
             }
 
             return isEyeOnLavaWithTransfurAndFireResistance(player);
@@ -45,8 +45,8 @@ public interface LivingEntityDataExtensor {
     default boolean overrideSwimUpdate() {
         if (this instanceof Player player) {
             TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
-                return variantExtraStats.variantOverrideSwimUpdate();
+            if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof ILatexVariantExtraStats ILatexVariantExtraStats) {
+                return ILatexVariantExtraStats.variantOverrideSwimUpdate();
             }
 
             return isEyeOnLavaWithTransfurAndFireResistance(player);
@@ -59,8 +59,8 @@ public interface LivingEntityDataExtensor {
     default boolean overrideIsInWater() {
         if (this instanceof Player player) {
             TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
-                return variantExtraStats.variantOverrideIsInWater();
+            if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof ILatexVariantExtraStats ILatexVariantExtraStats) {
+                return ILatexVariantExtraStats.variantOverrideIsInWater();
             }
 
             return isOnLavaWithTransfurAndFireResistance(player);

@@ -10,7 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
-public interface VariantExtraStats {
+public interface ILatexVariantExtraStats {
 
     float defaultPlayerFlySpeed = AttributesHandle.DefaultPlayerFlySpeed;
 
