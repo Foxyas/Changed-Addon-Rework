@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.entity.simple;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
-import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
+import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
@@ -31,7 +31,7 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.Objects;
 
-public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements ILatexVariantExtraStats, GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions {
+public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements IVariantExtraStats, GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions {
 
     protected final SimpleAbilityInstance summonPups;
 

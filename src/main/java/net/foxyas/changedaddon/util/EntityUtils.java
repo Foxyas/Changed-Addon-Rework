@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.util;
 
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
-import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
+import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -19,8 +19,8 @@ public class EntityUtils {
     // Mixin Friendly Method.
     public static int getCutenessLevelOfEntity(LivingEntity livingEntity) {
         int cutenessLevel = 0;
-        if (livingEntity instanceof ILatexVariantExtraStats ILatexVariantExtraStats) {
-            cutenessLevel = ILatexVariantExtraStats.cutenessLevel();
+        if (livingEntity instanceof IVariantExtraStats IVariantExtraStats) {
+            cutenessLevel = IVariantExtraStats.cutenessLevel();
         } else {
             MobEffectInstance effect = livingEntity.getEffect(ChangedAddonMobEffects.PACIFIED.get());
             if (effect != null) cutenessLevel = effect.getAmplifier();

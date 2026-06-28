@@ -4,7 +4,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.process.variantsExtraStats.FormDietEvent;
-import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
+import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
@@ -116,7 +116,7 @@ public class CreatureDietsHandleProcedure {
             if (diet.hasDiet(changedEntity, variant)) dietTypes.add(diet);
         }
 
-        if (changedEntity instanceof ILatexVariantExtraStats stats) {
+        if (changedEntity instanceof IVariantExtraStats stats) {
             dietTypes.addAll(stats.getExtraDietTypes());
         }
 

@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
-import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
+import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -172,8 +172,8 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
 
         @Override
         public boolean canUse() {
-            if (this.entity.getChangedEntity() instanceof ILatexVariantExtraStats extraStats) {
-                if (extraStats.getFlyType() == ILatexVariantExtraStats.FlyType.NONE) {
+            if (this.entity.getChangedEntity() instanceof IVariantExtraStats extraStats) {
+                if (extraStats.getFlyType() == IVariantExtraStats.FlyType.NONE) {
                     return false;
                 }
             }
@@ -189,8 +189,8 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
 
         @Override
         public boolean canKeepUsing() {
-            if (this.entity.getChangedEntity() instanceof ILatexVariantExtraStats extraStats) {
-                if (extraStats.getFlyType() == ILatexVariantExtraStats.FlyType.NONE) {
+            if (this.entity.getChangedEntity() instanceof IVariantExtraStats extraStats) {
+                if (extraStats.getFlyType() == IVariantExtraStats.FlyType.NONE) {
                     return false;
                 }
             }

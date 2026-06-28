@@ -139,6 +139,15 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     }
 
     @Inject(method = "tickIdle", at = @At(value = "HEAD"), cancellable = true)
+    private void tickIdleHook(CallbackInfo ci) {
+        if (!isSafeMode()) return;
+        if (this.isAlreadySnuggledTight()) {
+
+        }
+
+    }
+
+    @Inject(method = "tickIdle", at = @At(value = "HEAD"), cancellable = true)
     private void tickSendKeyBindInfo(CallbackInfo ci) {
         Level level = entity.getLevel();
         if (level.isClientSide()) {

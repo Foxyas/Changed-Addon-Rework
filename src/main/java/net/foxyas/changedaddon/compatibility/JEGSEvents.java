@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.compatibility;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
-import net.foxyas.changedaddon.variant.ILatexVariantExtraStats;
+import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
@@ -29,7 +29,7 @@ public class JEGSEvents {
             boolean isRestricted = false;
             ChangedEntity changedEntity = transfurVariantInstance.getChangedEntity();
 
-            if (changedEntity instanceof ILatexVariantExtraStats ILatexVariantExtraStats && !ILatexVariantExtraStats.canFireGuns()) {
+            if (changedEntity instanceof IVariantExtraStats IVariantExtraStats && !IVariantExtraStats.canFireGuns()) {
                 isRestricted = true;
             } else if (ChangedAddonServerConfiguration.STOP_TRANSFURRED_PLAYERS_USE_GUNS.get()) {
                 isRestricted = true;

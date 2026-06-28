@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.ability.api;
 
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -34,6 +35,9 @@ public interface GrabEntityAbilityExtensor {
                 }
                 player.level().playSound(null, player, ChangedAddonSoundEvents.PLUSHY_SOUND.get(), SoundSource.BLOCKS, 1, 1);
                 setSnuggled(true);
+                if (EntityUtil.maybeGetUnderlying(player) instanceof IVariantExtraStats iVariantExtraStats) {
+                    iVariantExtraStats.onHugTarget(livingEntity, HugType.SNUGGLE);
+                }
             }
             if (livingEntity instanceof Player grabbedPlayer) {
                 if (!grabbedPlayer.level().isClientSide())
@@ -60,6 +64,9 @@ public interface GrabEntityAbilityExtensor {
                 }
                 player.level().playSound(null, player, ChangedAddonSoundEvents.PLUSHY_SOUND.get(), SoundSource.BLOCKS, 1, 1);
                 setSnuggledTight(true);
+                if (EntityUtil.maybeGetUnderlying(player) instanceof IVariantExtraStats iVariantExtraStats) {
+                    iVariantExtraStats.onHugTarget(livingEntity, HugType.TIGHT);
+                }
             }
             if (livingEntity instanceof Player grabbedPlayer) {
                 if (!grabbedPlayer.level().isClientSide()) {
@@ -101,5 +108,10 @@ public interface GrabEntityAbilityExtensor {
             }
             return livingTarget instanceof ChangedEntity && allowGrabTransfurred;
         }
+    }
+
+    enum HugType {
+        SNUGGLE,
+        TIGHT
     }
 }
