@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedure;
 
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.server.level.ServerPlayer;

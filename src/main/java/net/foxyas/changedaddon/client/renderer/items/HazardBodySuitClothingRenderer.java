@@ -5,7 +5,7 @@ import net.foxyas.changedaddon.client.model.clothes.HazardBodySuitLayers;
 import net.foxyas.changedaddon.client.model.clothes.LatexHumanHazardBodySuitModel;
 import net.foxyas.changedaddon.client.model.clothes.PlayerModelVisibilityModifier;
 import net.foxyas.changedaddon.item.armor.HazardBodySuit;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.accessory.AccessoryRenderer;

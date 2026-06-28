@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
-import static net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants.*;
+import static net.foxyas.changedaddon.init.ChangedAddonTransfurVariants.*;
 
 public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
 

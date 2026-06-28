@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
-import static net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants.*;
+import static net.foxyas.changedaddon.init.ChangedAddonTransfurVariants.*;
 
 public class TransfurVariantsInfo {
 

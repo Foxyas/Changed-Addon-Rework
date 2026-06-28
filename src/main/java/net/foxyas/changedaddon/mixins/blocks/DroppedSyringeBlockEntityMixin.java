@@ -1,9 +1,13 @@
 package net.foxyas.changedaddon.mixins.blocks;
 
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.block.entity.DroppedSyringeBlockEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -14,15 +18,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Mixin(value = DroppedSyringeBlockEntity.class)
-public abstract class DroppedSyringeBlockEntityMixin {
+public abstract class DroppedSyringeBlockEntityMixin extends BlockEntity {
 
     @Shadow(remap = false)
     private TransfurVariant<?> variant;
     @Unique
     private boolean changed_Addon_Rework$AllowBosses = false;
+
+    public DroppedSyringeBlockEntityMixin(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+        super(pType, pPos, pBlockState);
+    }
 
     @Inject(method = "getVariant", at = @At("RETURN"), cancellable = true, remap = false)
     private void checkAllowBossTag(CallbackInfoReturnable<TransfurVariant<?>> cir) {
@@ -34,7 +41,7 @@ public abstract class DroppedSyringeBlockEntityMixin {
                     || ChangedAddonTransfurVariants.getVariantsRemovedFromSyringes().contains(this.variant)) {
                 List<TransfurVariant<?>> list = new ArrayList<>(TransfurVariant.getPublicTransfurVariants().toList());
                 list.removeIf(transfurVariant -> ChangedAddonTransfurVariants.getBossVariants().contains(transfurVariant));
-                TransfurVariant<?> transfurVariant = list.get(new Random().nextInt(list.size()));
+                TransfurVariant<?> transfurVariant = list.get(this.level.getRandom().nextInt(list.size()));
                 if (transfurVariant == null) return;
                 this.variant = transfurVariant;
                 cir.setReturnValue(transfurVariant);

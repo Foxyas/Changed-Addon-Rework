@@ -13,7 +13,7 @@ import net.foxyas.changedaddon.init.ChangedAddonMenus;
 import net.foxyas.changedaddon.recipe.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipe.UnifuserRecipe;
 import net.foxyas.changedaddon.recipe.special.KeycardColorRecipe;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.item.Syringe;
 import net.minecraft.client.Minecraft;

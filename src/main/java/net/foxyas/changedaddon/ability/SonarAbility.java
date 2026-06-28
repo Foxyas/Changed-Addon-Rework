@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.ability;
 import net.foxyas.changedaddon.client.renderer.layers.features.RenderMode;
 import net.foxyas.changedaddon.network.PacketUtil;
 import net.foxyas.changedaddon.network.packet.ClientboundSonarUpdatePacket;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.VisionType;

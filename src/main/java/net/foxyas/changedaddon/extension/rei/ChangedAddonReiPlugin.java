@@ -25,7 +25,7 @@ import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
 import net.foxyas.changedaddon.recipe.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipe.UnifuserRecipe;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.item.Syringe;
 import net.minecraft.client.Minecraft;

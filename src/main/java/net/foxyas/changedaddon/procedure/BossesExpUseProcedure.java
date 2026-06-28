@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedure;
 
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.item.LatexSyringe;
 import net.minecraft.network.chat.Component;

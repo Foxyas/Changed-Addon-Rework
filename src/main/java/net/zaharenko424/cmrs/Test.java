@@ -5,7 +5,7 @@ import net.foxyas.changedaddon.client.gui.BestiaryScreen;
 import net.foxyas.changedaddon.client.gui.ftkc.CircleHoverMinigameScreen;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.process.DEBUG;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;

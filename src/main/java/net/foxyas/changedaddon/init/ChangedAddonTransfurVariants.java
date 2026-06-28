@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.variant;
+package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.advanced.*;
@@ -6,9 +6,6 @@ import net.foxyas.changedaddon.entity.api.IOriginalCharacterEntity;
 import net.foxyas.changedaddon.entity.bosses.*;
 import net.foxyas.changedaddon.entity.partials.SnowLeopardPartialEntity;
 import net.foxyas.changedaddon.entity.simple.*;
-import net.foxyas.changedaddon.init.ChangedAddonAbilities;
-import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.PatronOC;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -643,7 +640,16 @@ public class ChangedAddonTransfurVariants {
 
     public static List<TransfurVariant<?>> getRemovedVariantsList() {
         if (REMOVED_VARS == null) {
-            REMOVED_VARS = List.of(VOID_FOX.get(), REYN.get(), FENGQI_WOLF.get(), EXPERIMENT_009.get(), EXPERIMENT_10.get(), EXPERIMENT_009_BOSS.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD_MALE.get(), LUMINARCTIC_LEOPARD_FEMALE.get());
+            REMOVED_VARS = List.of(VOID_FOX.get(),
+                    REYN.get(),
+                    FENGQI_WOLF.get(),
+                    EXPERIMENT_009.get(),
+                    EXPERIMENT_10.get(),
+                    EXPERIMENT_009_BOSS.get(),
+                    EXPERIMENT_10_BOSS.get(),
+                    LATEX_SNEP_FERAL_FORM.get(),
+                    LUMINARCTIC_LEOPARD_MALE.get(),
+                    LUMINARCTIC_LEOPARD_FEMALE.get());
         }
         return REMOVED_VARS;
     }
@@ -651,6 +657,7 @@ public class ChangedAddonTransfurVariants {
     public static List<TransfurVariant<?>> getVariantsRemovedFromSyringes() {
         if (REMOVED_FROM_SYRINGES == null) {
             List<TransfurVariant<?>> tmp = new ArrayList<>(getRemovedVariantsList());
+            tmp.add(LUMINARA_FLOWER_BEAST.get());
             REMOVED_FROM_SYRINGES = List.copyOf(tmp);
         }
         return REMOVED_FROM_SYRINGES;

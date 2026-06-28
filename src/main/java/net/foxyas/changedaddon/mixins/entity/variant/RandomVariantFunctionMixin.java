@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins.entity.variant;
 
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.item.loot.RandomVariantFunction;
 import net.minecraft.resources.ResourceLocation;

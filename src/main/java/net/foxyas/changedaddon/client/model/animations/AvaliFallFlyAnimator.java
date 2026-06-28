@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.client.model.animations;
 import net.foxyas.changedaddon.ability.WingFlapAbility;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator.AnimateStage;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.recipe.special;
 
 import com.google.gson.JsonObject;
 import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
