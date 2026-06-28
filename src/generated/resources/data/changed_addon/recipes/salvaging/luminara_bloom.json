@@ -1,0 +1,23 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "changed_addon:luminara_bloom"
+    }
+  ],
+  "result": [
+    {
+      "count": 4,
+      "item": "changed_addon:luminara_bloom_petals"
+    }
+  ],
+  "tool": [
+    {
+      "type": "farmersdelight:tool_action",
+      "action": "shears_dig"
+    },
+    {
+      "tag": "forge:shears"
+    }
+  ]
+}

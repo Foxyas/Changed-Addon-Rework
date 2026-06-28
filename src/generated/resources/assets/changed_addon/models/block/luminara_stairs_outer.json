@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "changed_addon:block/luminara_planks",
+    "side": "changed_addon:block/luminara_planks",
+    "top": "changed_addon:block/luminara_planks"
+  }
+}

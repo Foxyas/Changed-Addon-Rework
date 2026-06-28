@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "changed_addon:luminara_trapdoor"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "changed_addon:blocks/luminara_trapdoor"
+}

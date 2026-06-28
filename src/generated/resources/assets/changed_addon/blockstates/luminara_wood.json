@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "active=false,axis=x": {
+      "model": "changed_addon:block/luminara_wood",
+      "x": 90,
+      "y": 90
+    },
+    "active=false,axis=y": {
+      "model": "changed_addon:block/luminara_wood"
+    },
+    "active=false,axis=z": {
+      "model": "changed_addon:block/luminara_wood",
+      "x": 90
+    },
+    "active=true,axis=x": {
+      "model": "changed_addon:block/active_luminara_wood",
+      "x": 90,
+      "y": 90
+    },
+    "active=true,axis=y": {
+      "model": "changed_addon:block/active_luminara_wood"
+    },
+    "active=true,axis=z": {
+      "model": "changed_addon:block/active_luminara_wood",
+      "x": 90
+    }
+  }
+}

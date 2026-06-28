@@ -144,14 +144,29 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
         coverBlockDropSelfOrOther(DARK_LATEX_COVER_BLOCK.get(), ChangedItems.DARK_LATEX_GOO.get());
         coverBlockDropSelfOrOther(WHITE_LATEX_COVER_BLOCK.get(), ChangedItems.WHITE_LATEX_GOO.get());
 
-        add(LUMINARA_LEAVES.get(), (block) -> {
-            LootTable.Builder luminaraBloomDropChance = this.createLeavesDrops(block, LUMINARA_BLOOM.get(), NORMAL_LEAVES_SAPLING_CHANCES);
-            LootTable.Builder luminaraSaplingDropChance = this.createLeavesDrops(block, LUMINARA_BLOOM.get(), NORMAL_LEAVES_SAPLING_CHANCES);
-            return createLeavesWithFruitDrops(block, LUMINARA_SAPLING.get(), LUMINARA_BLOOM.get().asItem(), NORMAL_LEAVES_SAPLING_CHANCES);
-        });
+        add(LUMINARA_LEAVES.get(), (block) -> createLeavesWithFruitDrops(block, LUMINARA_SAPLING.get(), LUMINARA_BLOOM.get().asItem(), NORMAL_LEAVES_SAPLING_CHANCES));
         dropSelf(LUMINARA_SAPLING.get());
         dropSelf(LUMINARA_LOG.get());
         dropSelf(STRIPPED_LUMINARA_LOG.get());
+        dropSelf(LUMINARA_WOOD);
+        dropSelf(STRIPPED_LUMINARA_WOOD);
+        dropSelf(LUMINARA_PLANKS);
+        dropSelf(LUMINARA_STAIRS);
+        add(LUMINARA_SLAB.get(), this::createSlabItemTable);
+        add(LUMINARA_DOOR.get(), this::createDoorTable);
+        dropSelf(LUMINARA_TRAPDOOR);
+        dropSelf(LUMINARA_FENCE);
+        dropSelf(LUMINARA_FENCE_GATE);
+        dropSelf(LUMINARA_SIGN);
+        dropSelf(LUMINARA_WALL_SIGN);
+        dropSelf(LUMINARA_HANGING_SIGN);
+        dropSelf(LUMINARA_WALL_HANGING_SIGN);
+        dropSelf(LUMINARA_BUTTON);
+        dropSelf(LUMINARA_PRESSURE_PLATE);
+    }
+
+    protected void dropSelf(RegistryObject<? extends Block> block) {
+        dropSelf(block.get());
     }
 
     /**

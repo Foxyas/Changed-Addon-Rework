@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/door_top_left",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "changed_addon:block/luminara_door_bottom",
+    "top": "changed_addon:block/luminara_door_top"
+  }
+}

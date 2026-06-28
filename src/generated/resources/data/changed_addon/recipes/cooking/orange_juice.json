@@ -1,0 +1,29 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "item": "minecraft:glass_bottle"
+  },
+  "cookingtime": 100,
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "item": "changed:orange"
+    },
+    {
+      "item": "changed:orange"
+    },
+    {
+      "item": "changed:orange"
+    },
+    {
+      "item": "changed:orange"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "item": "changed_addon:orange_juice"
+  }
+}

@@ -5,6 +5,8 @@ import net.foxyas.changedaddon.block.advanced.TimedKeypadBlockEntity;
 import net.foxyas.changedaddon.block.debug.entity.StructureSpawnerBlockEntity;
 import net.foxyas.changedaddon.block.entity.*;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.*;
+import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -40,6 +42,8 @@ public class ChangedAddonBlockEntities {
     public static final RegistryObject<BlockEntityType<StructureSpawnerBlockEntity>> STRUCTURE_SPAWNER = REGISTRY.register("structure_spawner", () -> BlockEntityType.Builder.of(StructureSpawnerBlockEntity::new, ChangedAddonBlocks.STRUCTURE_SPAWNER.get()).build(null));
     public static final RegistryObject<BlockEntityType<LuminarCrystalHeartedBlockEntity>> LUMINAR_CRYSTAL_HEARTED = REGISTRY.register("luminar_crystal_hearted", () -> BlockEntityType.Builder.of(LuminarCrystalHeartedBlockEntity::new, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get(), ChangedAddonBlocks.LUMINAR_CRYSTAL_LARGE.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<LuminaraSignEntity>> LUMINARA_SIGN = REGISTRY.register("luminara_sign", () -> BlockEntityType.Builder.of(LuminaraSignEntity::new, ChangedAddonBlocks.LUMINARA_SIGN.get(), ChangedAddonBlocks.LUMINARA_WALL_SIGN.get()).build(null));
+    public static final RegistryObject<BlockEntityType<LuminaraHangingSignEntity>> LUMINARA_HANGING_SIGN = REGISTRY.register("luminara_hanging_sign", () -> BlockEntityType.Builder.of(LuminaraHangingSignEntity::new, ChangedAddonBlocks.LUMINARA_HANGING_SIGN.get(), ChangedAddonBlocks.LUMINARA_WALL_HANGING_SIGN.get()).build(null));
 
     //Stop breaking the lines on this code
     private static RegistryObject<BlockEntityType<?>> registerGeneric(String registryName, RegistryObject<? extends Block> block, BlockEntityType.BlockEntitySupplier<?> supplier) {
@@ -59,6 +63,8 @@ public class ChangedAddonBlockEntities {
         event.registerBlockEntityRenderer(INFORMANT_BLOCK.get(), InformantBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(SIGNAL_BLOCK.get(), SignalBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(LUMINAR_CRYSTAL_HEARTED.get(), LuminaraCrystalHeartedBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(LUMINARA_SIGN.get(), SignRenderer::new);
+        event.registerBlockEntityRenderer(LUMINARA_HANGING_SIGN.get(), HangingSignRenderer::new);
     }
 
 }

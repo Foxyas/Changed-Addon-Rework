@@ -10,10 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.PipeBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -21,6 +18,7 @@ import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -43,6 +41,10 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
     private static ResourceLocation blockLoc(ResourceLocation loc, String path) {
         return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + path + "/" + loc.getPath());
+    }
+
+    private static ResourceLocation blockLocWithSuffix(ResourceLocation loc, String suffix) {
+        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + loc.getPath() + suffix);
     }
 
     private static int getXRotation(Direction dir) {
@@ -68,39 +70,39 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         horizontalBlock(ADVANCED_UNIFUSER);
         horizontalBlock(CATALYZER);
         horizontalBlock(UNIFUSER);
-        simpleBlock(BLUE_WOLF_CRYSTAL_BLOCK);
-        simpleBlock(BLUE_WOLF_CRYSTAL_SMALL);
-        simpleBlock(CONTAINMENT_CONTAINER, BlockStateProperties.WATERLOGGED);
+        simpleBlockExisting(BLUE_WOLF_CRYSTAL_BLOCK);
+        simpleBlockExisting(BLUE_WOLF_CRYSTAL_SMALL);
+        simpleBlockExisting(CONTAINMENT_CONTAINER, BlockStateProperties.WATERLOGGED);
         horizontalBlock(DARK_LATEX_PUDDLE);
-        simpleBlock(PAINITE_BLOCK);
-        simpleBlock(DEEPSLATE_PAINITE_ORE);
-        simpleBlock(DORMANT_DARK_LATEX);
-        simpleBlock(DORMANT_WHITE_LATEX);
+        simpleBlockExisting(PAINITE_BLOCK);
+        simpleBlockExisting(DEEPSLATE_PAINITE_ORE);
+        simpleBlockExisting(DORMANT_DARK_LATEX);
+        simpleBlockExisting(DORMANT_WHITE_LATEX);
         stackableCan(FOXTA_CAN);
-        simpleBlock(GOO_CORE);
+        simpleBlockExisting(GOO_CORE);
         horizontalBlock(INFORMANT_BLOCK);
-        simpleBlock(IRIDIUM_BLOCK);
-        simpleBlock(DEEPSLATE_IRIDIUM_ORE);
-        simpleBlock(LATEX_INSULATOR);
-        simpleBlock(LITIX_CAMONIA_FLUID, BlockStateProperties.LEVEL);
-        simpleBlock(LUMINARA_BLOOM);
-        simpleBlock(ORANGE_WOLF_CRYSTAL_BLOCK);
-        simpleBlock(ORANGE_WOLF_CRYSTAL_SMALL);
-        simpleBlock(REINFORCED_CROSS_BLOCK);
-        simpleBlock(REINFORCED_WALL);
-        simpleBlock(REINFORCED_WALL_CAUTION);
-        simpleBlock(REINFORCED_WALL_SILVER_STRIPED);
-        simpleBlock(REINFORCED_WALL_SILVER_TILED);
+        simpleBlockExisting(IRIDIUM_BLOCK);
+        simpleBlockExisting(DEEPSLATE_IRIDIUM_ORE);
+        simpleBlockExisting(LATEX_INSULATOR);
+        simpleBlockExisting(LITIX_CAMONIA_FLUID, BlockStateProperties.LEVEL);
+        simpleBlockExisting(LUMINARA_BLOOM);
+        simpleBlockExisting(ORANGE_WOLF_CRYSTAL_BLOCK);
+        simpleBlockExisting(ORANGE_WOLF_CRYSTAL_SMALL);
+        simpleBlockExisting(REINFORCED_CROSS_BLOCK);
+        simpleBlockExisting(REINFORCED_WALL);
+        simpleBlockExisting(REINFORCED_WALL_CAUTION);
+        simpleBlockExisting(REINFORCED_WALL_SILVER_STRIPED);
+        simpleBlockExisting(REINFORCED_WALL_SILVER_TILED);
         stackableCan(SNEPSI_CAN);
-        simpleBlock(WALL_WHITE_CRACKED);
-        simpleBlock(WHITE_WOLF_CRYSTAL_BLOCK);
-        simpleBlock(WHITE_WOLF_CRYSTAL_SMALL);
+        simpleBlockExisting(WALL_WHITE_CRACKED);
+        simpleBlockExisting(WHITE_WOLF_CRYSTAL_BLOCK);
+        simpleBlockExisting(WHITE_WOLF_CRYSTAL_SMALL);
         horizontalBlock(WOLF_PLUSHY);
         horizontalBlock(DARK_LATEX_WOLF_PLUSHY);
-        simpleBlock(YELLOW_WOLF_CRYSTAL_BLOCK);
-        simpleBlock(YELLOW_WOLF_CRYSTAL_SMALL);
-        simpleBlock(POTTED_LUMINARA_BLOOM);
-        simpleBlock(POTTED_LUMINARA_SAPLING);
+        simpleBlockExisting(YELLOW_WOLF_CRYSTAL_BLOCK);
+        simpleBlockExisting(YELLOW_WOLF_CRYSTAL_SMALL);
+        simpleBlockExisting(POTTED_LUMINARA_BLOOM);
+        simpleBlockExisting(POTTED_LUMINARA_SAPLING);
 
         timedKeypad();
 
@@ -111,12 +113,40 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
         luminaraPillarBlock(LUMINARA_LOG, "");
         luminaraPillarBlock(STRIPPED_LUMINARA_LOG, "");
-        simpleBlock(LUMINARA_LEAVES);
+        luminaraPillarBlock1(LUMINARA_WOOD, "");
+        luminaraPillarBlock1(STRIPPED_LUMINARA_WOOD, "");
+        simpleBlock(LUMINARA_PLANKS.get());
+        ResourceLocation planksTex = blockLoc(LUMINARA_PLANKS.getId());
+        ResourceLocation trapDoorTex = blockLoc(LUMINARA_TRAPDOOR.getId());
+        ResourceLocation strippedLuminaraLogId = STRIPPED_LUMINARA_LOG.getId();
+        ResourceLocation strippedLogTex = blockLoc(
+                ResourceLocation.fromNamespaceAndPath(
+                        strippedLuminaraLogId.getNamespace(),
+                        strippedLuminaraLogId.getPath() + "_side"), "luminara_tree");
+        ResourceLocation doorTopTex = blockLocWithSuffix(LUMINARA_DOOR.getId(), "_top");
+        ResourceLocation doorBottomTex = blockLocWithSuffix(LUMINARA_DOOR.getId(), "_bottom");
+        stairsBlock(LUMINARA_STAIRS.get(), planksTex);
+        slabBlock(LUMINARA_SLAB.get(), planksTex, planksTex);
+        doorBlockWithCutoutRenderType(LUMINARA_DOOR.get(), doorBottomTex, doorTopTex);//TODO replace with a more fitting tex
+        trapdoorBlockWithCutoutRenderType(LUMINARA_TRAPDOOR.get(), trapDoorTex, true);
+        fenceBlock(LUMINARA_FENCE.get(), planksTex);
+        fenceGateBlock(LUMINARA_FENCE_GATE.get(), planksTex);
+        signBlock(LUMINARA_SIGN.get(), LUMINARA_WALL_SIGN.get(), strippedLogTex);
+        hangingSign(LUMINARA_HANGING_SIGN, LUMINARA_WALL_HANGING_SIGN, strippedLogTex);
+        buttonBlock(LUMINARA_BUTTON.get(), planksTex);
+        pressurePlateBlock(LUMINARA_PRESSURE_PLATE.get(), planksTex);
+        simpleBlockExisting(LUMINARA_LEAVES);
 
         ConfiguredModel[] model = {new ConfiguredModel(models().getExistingFile(blockLoc(LUMINARA_SAPLING.getId())))};
         getVariantBuilder(LUMINARA_SAPLING.get()).forAllStates(state -> model);
 
         largeLuminarCrystalAnimatedWithItem();
+    }
+
+    protected void hangingSign(RegistryObject<? extends CeilingHangingSignBlock> sign, RegistryObject<? extends WallHangingSignBlock> wall, ResourceLocation tex) {
+        ModelFile signModel = models().sign(sign.getId().getPath(), tex);
+        simpleBlock(sign.get(), signModel);
+        simpleBlock(wall.get(), signModel);
     }
 
     private void timedKeypad() {
@@ -172,7 +202,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), newPath);
     }
 
-    private void simpleBlock(RegistryObject<? extends Block> block, Property<?>... ignore) {
+    private void simpleBlockExisting(RegistryObject<? extends Block> block, Property<?>... ignore) {
         ConfiguredModel[] model = new ConfiguredModel[]{new ConfiguredModel(models().getExistingFile(blockLoc(block.getId())))};
 
         getVariantBuilder(block.get()).forAllStatesExcept(state -> model, ignore);
@@ -281,6 +311,36 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
         // Automatically generates the item model corresponding to this pillar
         simpleBlockItem(block, model);
+    }
+
+    private void luminaraPillarBlock1(RegistryObject<? extends RotatedPillarBlock> pillar, String customPath) {
+        RotatedPillarBlock block = pillar.get();
+        ResourceLocation blockId = pillar.getId();
+
+        ResourceLocation blockLoc = customPath.isEmpty() ? blockLoc(blockId) : blockLoc(blockId, customPath);
+
+        ModelFile defaultModel = models().getExistingFile(blockLoc);
+
+        // Maps the BlockState AXIS property to the correct model rotations
+        getVariantBuilder(block).forAllStatesExcept(state -> {
+            ModelFile model = defaultModel;
+            if (state.getValue(LuminaraLogBlock.ACTIVE)) {
+//                        String id = pillar.getId().toString();
+//                        model = models().cubeColumn("active_" + blockId.getPath(),
+//                                withPrefixOn(sideTexture, id, "active_"),
+//                                withPrefixOn(topTexture, id, "active_"));
+                model = models().getExistingFile(blockLoc(withPrefix(blockId, "active_")));
+            }
+
+            return switch (state.getValue(BlockStateProperties.AXIS)) {
+                case Y -> new ConfiguredModel[]{new ConfiguredModel(model)};
+                case Z -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 0, false)};
+                case X -> new ConfiguredModel[]{new ConfiguredModel(model, 90, 90, false)};
+            };
+        }, BlockStateProperties.WATERLOGGED); // Ignores waterlogged property if present to avoid duplicating state variants
+
+        // Automatically generates the item model corresponding to this pillar
+        simpleBlockItem(block, defaultModel);
     }
 
     private void luminaraPillarBlock(RegistryObject<? extends RotatedPillarBlock> pillar, String customPath) {
@@ -463,6 +523,41 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         return models().withExistingParent(name, BlockModelProvider.EMISSIVE_CUBE_ALL)
                 .texture("cross", cross)
                 .texture("glow", glow);
+    }
+
+    protected ResourceLocation key(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
+    }
+
+    public void doorBlockWithCutoutRenderType(DoorBlock block, ResourceLocation bottom, ResourceLocation top) {
+        doorBlockInternalWithCutoutRenderType(block, key(block).toString(), bottom, top);
+    }
+
+    protected void doorBlockInternalWithCutoutRenderType(DoorBlock block, String baseName, ResourceLocation bottom, ResourceLocation top) {
+        ModelFile bottomLeft = models().doorBottomLeft(baseName + "_bottom_left", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile bottomLeftOpen = models().doorBottomLeftOpen(baseName + "_bottom_left_open", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile bottomRight = models().doorBottomRight(baseName + "_bottom_right", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile bottomRightOpen = models().doorBottomRightOpen(baseName + "_bottom_right_open", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile topLeft = models().doorTopLeft(baseName + "_top_left", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile topLeftOpen = models().doorTopLeftOpen(baseName + "_top_left_open", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile topRight = models().doorTopRight(baseName + "_top_right", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        ModelFile topRightOpen = models().doorTopRightOpen(baseName + "_top_right_open", bottom, top).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+        doorBlock(block, bottomLeft, bottomLeftOpen, bottomRight, bottomRightOpen, topLeft, topLeftOpen, topRight, topRightOpen);
+    }
+
+    protected void trapdoorBlockWithCutoutRenderType(TrapDoorBlock block, ResourceLocation texture, boolean orientable) {
+        trapdoorBlockInternalWithCutoutRenderType(block, key(block).toString(), texture, orientable);
+    }
+
+    protected void trapdoorBlockInternalWithCutoutRenderType(TrapDoorBlock block, String baseName, ResourceLocation texture, boolean orientable) {
+        var bottom = orientable ? models().trapdoorOrientableBottom(baseName + "_bottom", texture) : models().trapdoorBottom(baseName + "_bottom", texture);
+        var top = orientable ? models().trapdoorOrientableTop(baseName + "_top", texture) : models().trapdoorTop(baseName + "_top", texture);
+        var open = orientable ? models().trapdoorOrientableOpen(baseName + "_open", texture) : models().trapdoorOpen(baseName + "_open", texture);
+        trapdoorBlock(block,
+                bottom.renderType(ResourceLocation.withDefaultNamespace("cutout")),
+                top.renderType(ResourceLocation.withDefaultNamespace("cutout")),
+                open.renderType(ResourceLocation.withDefaultNamespace("cutout")),
+                orientable);
     }
 
 }

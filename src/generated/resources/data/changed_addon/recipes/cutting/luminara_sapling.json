@@ -1,0 +1,35 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "changed_addon:luminara_sapling"
+    }
+  ],
+  "result": [
+    {
+      "count": 4,
+      "item": "changed_addon:luminara_bloom"
+    },
+    {
+      "chance": 0.5,
+      "item": "changed_addon:luminara_bloom_petals"
+    },
+    {
+      "chance": 0.5,
+      "item": "changed_addon:luminara_bloom_petals"
+    },
+    {
+      "chance": 0.5,
+      "item": "changed_addon:luminara_bloom_petals"
+    }
+  ],
+  "tool": [
+    {
+      "type": "farmersdelight:tool_action",
+      "action": "knife_dig"
+    },
+    {
+      "tag": "forge:tools/knives"
+    }
+  ]
+}

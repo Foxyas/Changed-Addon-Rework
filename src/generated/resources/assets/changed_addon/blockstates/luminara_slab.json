@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "changed_addon:block/luminara_slab"
+    },
+    "type=double": {
+      "model": "changed_addon:block/luminara_planks"
+    },
+    "type=top": {
+      "model": "changed_addon:block/luminara_slab_top"
+    }
+  }
+}
