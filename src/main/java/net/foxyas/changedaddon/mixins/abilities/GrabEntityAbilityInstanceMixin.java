@@ -142,9 +142,8 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     private void tickIdleHook(CallbackInfo ci) {
         if (!isSafeMode()) return;
         if (this.isAlreadySnuggledTight()) {
-
+            // TODO: maybe make hugs heal targets?
         }
-
     }
 
     @Inject(method = "tickIdle", at = @At(value = "HEAD"), cancellable = true)
