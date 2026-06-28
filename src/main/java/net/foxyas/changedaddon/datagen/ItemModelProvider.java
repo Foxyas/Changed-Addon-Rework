@@ -72,9 +72,7 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         pressurePlate(LUMINARA_PRESSURE_PLATE.getId().getPath(), planksTex);
 
         basicBlockItem(ChangedAddonBlocks.LUMINARA_LEAVES);
-        getBuilder(LUMINARA_SAPLING.getId().toString())
-                .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", LUMINARA_SAPLING.getId().withPrefix(BLOCK_FOLDER + "/"));
+        luminaraSapling();
     }
 
     public void luminaraBloom() {
@@ -82,7 +80,16 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "block/" + item.getPath()))
-                .texture("layer1", ResourceLocation.fromNamespaceAndPath(LUMINARA_BLOOM.getId().getNamespace(), "block/" + LUMINARA_BLOOM.getId().getPath() + "_emissive"))
+                .texture("layer1", ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "block/" + item.getPath() + "_emissive"))
+                .customLoader(ItemLayerModelBuilder::begin).emissive(15, 15, 1);
+    }
+
+    public void luminaraSapling() {
+        ResourceLocation item = LUMINARA_SAPLING.getId();
+        getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "block/" + item.getPath()))
+                .texture("layer1", ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "block/" + item.getPath() + "_emissive"))
                 .customLoader(ItemLayerModelBuilder::begin).emissive(15, 15, 1);
     }
 

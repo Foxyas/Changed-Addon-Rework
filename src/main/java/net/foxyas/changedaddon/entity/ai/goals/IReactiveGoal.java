@@ -10,7 +10,7 @@ public interface IReactiveGoal {
     interface ICancelOnDamageGoal extends IReactiveGoal {
         @Override
         default void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount) {
-
+            this.setCanceled(true);
         };
     }
 

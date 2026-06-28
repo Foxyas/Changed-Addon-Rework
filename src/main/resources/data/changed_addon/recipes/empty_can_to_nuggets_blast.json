@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "changed_addon:empty_can"
+  },
+  "result": {
+    "item": "minecraft:iron_nugget",
+    "count": 4
+  },
+  "experience": 18,
+  "cookingtime": 50
+}
