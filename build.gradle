@@ -135,15 +135,15 @@ dependencies {
         changing = true
     }//Changed
 
-    implementation fg.deobf("net.zaharenko424.casualties_cubed:casualties_cubed-1.1.0:1.1.0")
+    implementation fg.deobf("net.zaharenko424.casualties_cubed:casualties_cubed-1.1.0-all:1.1.0")
 
 
     // JEI Mod.
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common-api:${jeiVersion}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge-api:${jeiVersion}")
 
-    compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common:${jeiVersion}")
-    compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
+    implementation fg.deobf("mezz.jei:jei-${minecraftVersion}-common:${jeiVersion}")
+    implementation fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
 
     // REI Mod.
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
@@ -153,7 +153,7 @@ dependencies {
 
     // EMI
     compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}:api")
-    runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
+    compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
 
     // Gun Mods.
     compileOnly fg.deobf("com.mrcrayfish.framework:framework-forge-1.20.1-0.8.0:0.8.0")
@@ -177,9 +177,15 @@ dependencies {
     implementation fg.deobf("curse.maven:bookshelf-228525:7612389")
     implementation fg.deobf("curse.maven:botany-pots-353928:7612402")
 
+    // Create
     compileOnly fg.deobf("curse.maven:create-328085:7178761")
 
+    // Apple Skin (Saturation View mod)
     implementation fg.deobf("curse.maven:appleskin-248787:4770828")
+
+    // Farmers Delight
+    implementation fg.deobf("curse.maven:farmers-delight-398521:8083474")
+
     //implementation files("libs/Changed-m1.18.2-v0.14")
 }
 
