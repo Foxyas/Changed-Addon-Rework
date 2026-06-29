@@ -513,9 +513,9 @@ public class ENLanguageProvider extends LanguageProvider {
         add(EXP_9_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "High voltage energy hums and throbs within the glass.");
         addItem(EXP_9_LATEX_BASE, "Exp9 Latex Base");
         addItem(EXPERIMENT_009_DNA, "Experiment 009 DNA");
-        add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".description", "§3A Strange Orb...");
+        add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".description", "§3DNA infused with the power of pure energy manipulation and electricity.");
         addItem(EXPERIMENT_10_DNA, "§4Experiment 10 DNA");
-        add(EXPERIMENT_10_DNA.get().getDescriptionId() + ".description", "§4A Strange Orb...");
+        add(EXPERIMENT_10_DNA.get().getDescriptionId() + ".description", "§4DNA corrupted by rot and decay, seems capable of decomposing living matter.");
         addItemFromId(LUMINARA_BLOOM_PETALS);
         add(FOXTA.get().getDescriptionId() + ".desc", "Now made with 200% more oranges! Only $2.99! Tastes like Heaven!");
         addItemFromId(GOLDEN_ORANGE);
@@ -696,6 +696,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addText("display.hazard_body_suit.cant_have_helmet", "Mmph... it’s squishing my ears! Better not wear it.");
 
         addText("item.vial.wrong_use", "Using this item in there will not work");
+        addText("item.vial.wrong_use.hint", "Using this item in there will not work, try applying in a living source");
 
         addText("rp.guns_compatibility.paws_too_big", "Your paws are too bulky to fit in the trigger guard!");
         addText("rp.guns_compatibility.no_fingers_for_trigger", "You lack the finger dexterity to pull the trigger!");

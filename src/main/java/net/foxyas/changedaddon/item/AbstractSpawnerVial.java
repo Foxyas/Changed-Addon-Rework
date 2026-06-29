@@ -68,7 +68,7 @@ public abstract class AbstractSpawnerVial extends InteractableSpecialSpawnEggIte
     @Override
     protected InteractionResult onFailUseOn(UseOnContext context) {
         if (context.getPlayer() instanceof ServerPlayer serverPlayer) {
-            serverPlayer.displayClientMessage(Component.translatable("text.changed_addon.item.vial.wrong_use"), true);
+            serverPlayer.displayClientMessage(Component.translatable("text.changed_addon.item.vial.wrong_use.hint"), true);
         }
 
         return super.onFailUseOn(context);
