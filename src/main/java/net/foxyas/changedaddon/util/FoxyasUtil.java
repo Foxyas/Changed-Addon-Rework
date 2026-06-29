@@ -37,7 +37,7 @@ import java.util.stream.Stream;
 
 import static net.foxyas.changedaddon.util.DynamicClipContext.IGNORE_TRANSLUCENT;
 
-public class FoxyasUtils {
+public class FoxyasUtil {
 
     public static List<ItemStack> getAllItemsFromContainer(Container container) {
         List<ItemStack> items = new ArrayList<>();

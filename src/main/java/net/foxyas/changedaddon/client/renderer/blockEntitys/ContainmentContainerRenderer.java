@@ -48,7 +48,7 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
                     light,
                     overlay, firstColor.red(), firstColor.green(), firstColor.blue(), 1
             );
-            if (variantColorGet.is(ChangedAddonTags.TransfurTypes.GLOWING_VARIANTS)) {
+            if (variantColorGet.is(ChangedAddonTags.TransfurVariants.GLOWING_VARIANTS)) {
                 /*
                 * Minecraft minecraft = Minecraft.getInstance();
                 * OutlineBufferSource outlineBufferSource = minecraft.renderBuffers().outlineBufferSource();

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.util;
 
 import java.util.function.Function;
 
-public class MathFormulasUtils {
+public class MathFormulasUtil {
 
     /**
      * Main method: Maps a time value (0 to 1) to a range [min, max] using a specific easing function.

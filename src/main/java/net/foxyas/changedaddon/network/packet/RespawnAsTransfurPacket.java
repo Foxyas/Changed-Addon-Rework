@@ -2,9 +2,9 @@ package net.foxyas.changedaddon.network.packet;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.event.UntransfurEvent;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.network.PacketUtil;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -20,6 +20,7 @@ import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.List;
@@ -39,6 +40,8 @@ public record RespawnAsTransfurPacket(ResourceLocation selected) {
             ServerPlayer player = context.getSender();
             if (player == null || !player.isDeadOrDying()) return;
 
+
+            Level level = player.level();
             player.connection.handleClientCommand(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));
             player = player.connection.player;//Get new player
 
@@ -51,10 +54,10 @@ public record RespawnAsTransfurPacket(ResourceLocation selected) {
                 tf = pickRandomAllowed(player);
             } else {
                 if (selected == null || selected.equals(RANDOM)) {
-                    tf = pickRandom(player.getRandom());
+                    tf = pickRandom(level);
                 } else {
                     tf = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(selected);
-                    if (isForRemoval(tf)) tf = pickRandom(player.getRandom());
+                    if (isForRemoval(tf, level)) tf = pickRandom(level);
                 }
             }
 
@@ -78,17 +81,20 @@ public record RespawnAsTransfurPacket(ResourceLocation selected) {
                 player.level,
                 true,
                 true
-        ).stream().map(loc -> ChangedRegistry.TRANSFUR_VARIANT.get().getValue(loc)).filter(tf -> tf != null && !isForRemoval(tf)).toList();
+        ).stream().map(loc -> ChangedRegistry.TRANSFUR_VARIANT.get().getValue(loc))
+                .filter(tf -> tf != null && !isForRemoval(tf, player.level()))
+                .toList();
 
         return Util.getRandom(list, player.getRandom());
     }
 
-    private static TransfurVariant<?> pickRandom(RandomSource random) {
-        return Util.getRandom(TransfurVariant.getPublicTransfurVariants().filter(tf -> !isForRemoval(tf)).toList(), random);
+    private static TransfurVariant<?> pickRandom(Level level) {
+        RandomSource random = level.getRandom();
+        return Util.getRandom(TransfurVariant.getPublicTransfurVariants().filter(tf -> !isForRemoval(tf, level)).toList(), random);
     }
 
-    private static boolean isForRemoval(TransfurVariant<?> variant) {
-        return ChangedAddonTransfurVariants.getRemovedVariantsList().contains(variant);
+    private static boolean isForRemoval(TransfurVariant<?> variant, Level level) {
+        return ChangedAddonTransfurVariants.getRemovedVariantsList(level).contains(variant);
     }
 
     public void encode(FriendlyByteBuf buf) {

@@ -203,13 +203,13 @@ public class PlayerUtil {
 
     public static boolean isCatTransfur(Player player) {
         TransfurVariant<?> variant = ProcessTransfur.getPlayerTransfurVariant(player).getParent();
-        return variant.is(ChangedAddonTags.TransfurTypes.CAT_LIKE) ||
-                variant.is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
+        return variant.is(ChangedAddonTags.TransfurVariants.CAT_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurVariants.LEOPARD_LIKE);
     }
 
     public static boolean isWolfTransfur(Player player) {
         TransfurVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getParent();
-        if (variant.is(ChangedAddonTags.TransfurTypes.WOLF_LIKE)) return true;
+        if (variant.is(ChangedAddonTags.TransfurVariants.WOLF_LIKE)) return true;
 
         ChangedEntity entity = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getChangedEntity();
         return Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(entity.getType())).toString().contains("dog") ||
@@ -219,7 +219,7 @@ public class PlayerUtil {
 
     public static boolean isFoxTransfur(Player player) {
         TransfurVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getParent();
-        if (variant.is(ChangedAddonTags.TransfurTypes.FOX_LIKE)) return true;
+        if (variant.is(ChangedAddonTags.TransfurVariants.FOX_LIKE)) return true;
 
         ChangedEntity entity = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getChangedEntity();
         return ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()).toString().contains("fox") ||
@@ -228,7 +228,7 @@ public class PlayerUtil {
 
     public static boolean isDragonTransfur(Player player) {
         TransfurVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getParent();
-        if (variant.is(ChangedAddonTags.TransfurTypes.DRAGON_LIKE)) return true;
+        if (variant.is(ChangedAddonTags.TransfurVariants.DRAGON_LIKE)) return true;
 
         ChangedEntity entity = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getChangedEntity();
         return ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()).toString().contains("dragon");
@@ -236,7 +236,7 @@ public class PlayerUtil {
 
     public static boolean isAquaticTransfur(Player player) {
         TransfurVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getParent();
-        if (variant.is(ChangedAddonTags.TransfurTypes.AQUATIC_LIKE)) return true;
+        if (variant.is(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE)) return true;
 
         ChangedEntity entity = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getChangedEntity();
         return entity instanceof AbstractAquaticEntity;
@@ -244,7 +244,7 @@ public class PlayerUtil {
 
     public static boolean isSpiderTransfur(Player player) {
         TransfurVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getParent();
-        return variant.is(ChangedAddonTags.TransfurTypes.SPIDER_LIKE);
+        return variant.is(ChangedAddonTags.TransfurVariants.SPIDER_LIKE);
     }
 
     public static boolean canRoar(Player player) {

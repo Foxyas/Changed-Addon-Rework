@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.simple;
 
-import net.foxyas.changedaddon.util.EntityUtils;
+import net.foxyas.changedaddon.util.EntityUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,7 +8,6 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.phys.AABB;
 
 import java.util.EnumSet;
@@ -66,7 +65,7 @@ public class PatNearbyEntity extends Goal {
 
         if (mob instanceof AbstractVillager villager && entity instanceof ChangedEntity changedEntity) {
             boolean shouldScareVillager = TransfurVariant.shouldScareVillager(changedEntity, villager);
-            return !shouldScareVillager && EntityUtils.isCuteEnoughToReceivePatsFromVillagers(villager, changedEntity);
+            return !shouldScareVillager && EntityUtil.isCuteEnoughToReceivePatsFromVillagers(villager, changedEntity);
         }
         return true;
     }

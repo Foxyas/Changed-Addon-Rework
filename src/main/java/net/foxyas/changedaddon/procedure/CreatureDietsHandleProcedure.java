@@ -109,7 +109,7 @@ public class CreatureDietsHandleProcedure {
     }
 
     private static List<DietType> determineDietTypes(ChangedEntity changedEntity, TransfurVariant<?> variant) {
-        if (variant.is(ChangedAddonTags.TransfurTypes.NO_DIET)) return List.of();
+        if (variant.is(ChangedAddonTags.TransfurVariants.NO_DIET)) return List.of();
 
         List<DietType> dietTypes = new ArrayList<>();
         for (DietType diet : DietType.values()) {
@@ -124,14 +124,14 @@ public class CreatureDietsHandleProcedure {
     }
 
     public enum DietType implements IExtensibleEnum {
-        AQUATIC(ChangedAddonTags.TransfurTypes.AQUATIC_DIET, ChangedAddonTags.Items.AQUATIC_DIET),
-        SHARK(ChangedAddonTags.TransfurTypes.SHARK_DIET, ChangedAddonTags.Items.SHARK_DIET),
-        CAT(ChangedAddonTags.TransfurTypes.CAT_DIET, ChangedAddonTags.Items.CAT_DIET),
-        DRAGON(ChangedAddonTags.TransfurTypes.DRAGON_DIET, ChangedAddonTags.Items.DRAGON_DIET),
-        FOX(ChangedAddonTags.TransfurTypes.FOX_DIET, ChangedAddonTags.Items.FOX_DIET),
-        SWEET_TOOTH(ChangedAddonTags.TransfurTypes.SWEET_DIET, ChangedAddonTags.Items.SWEET_DIET),
-        WOLF(ChangedAddonTags.TransfurTypes.WOLF_DIET, ChangedAddonTags.Items.WOLF_DIET),
-        SPECIAL(ChangedAddonTags.TransfurTypes.SPECIAL_DIET, ChangedAddonTags.Items.SPECIAL_DIET);
+        AQUATIC(ChangedAddonTags.TransfurVariants.AQUATIC_DIET, ChangedAddonTags.Items.AQUATIC_DIET),
+        SHARK(ChangedAddonTags.TransfurVariants.SHARK_DIET, ChangedAddonTags.Items.SHARK_DIET),
+        CAT(ChangedAddonTags.TransfurVariants.CAT_DIET, ChangedAddonTags.Items.CAT_DIET),
+        DRAGON(ChangedAddonTags.TransfurVariants.DRAGON_DIET, ChangedAddonTags.Items.DRAGON_DIET),
+        FOX(ChangedAddonTags.TransfurVariants.FOX_DIET, ChangedAddonTags.Items.FOX_DIET),
+        SWEET_TOOTH(ChangedAddonTags.TransfurVariants.SWEET_DIET, ChangedAddonTags.Items.SWEET_DIET),
+        WOLF(ChangedAddonTags.TransfurVariants.WOLF_DIET, ChangedAddonTags.Items.WOLF_DIET),
+        SPECIAL(ChangedAddonTags.TransfurVariants.SPECIAL_DIET, ChangedAddonTags.Items.SPECIAL_DIET);
 
         private final TagKey<TransfurVariant<?>> tfTag;
         private final TagKey<Item> dietTag;

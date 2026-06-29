@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.entity.ai.goals.abilities;
 
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
-import net.foxyas.changedaddon.util.EntityUtils;
+import net.foxyas.changedaddon.util.EntityUtil;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -100,7 +100,7 @@ public class MayGrabTargetGoal extends Goal {
             GrabEntityAbilityInstance grabAbilityInstance = grabber.getGrabAbilityInstance();
             EntityDimensions dimensions = living.getDimensions(living.getPose()).scale(1.25f);
             AABB grabReach = dimensions.makeBoundingBox(living.position());
-            if (target != null && (grabReach.contains(target.position()) || target.distanceTo(living) <= EntityUtils.getAttributeValueSafe(living, ForgeMod.ENTITY_REACH.get()).orElse(2.5f))) {
+            if (target != null && (grabReach.contains(target.position()) || target.distanceTo(living) <= EntityUtil.getAttributeValueSafe(living, ForgeMod.ENTITY_REACH.get()).orElse(2.5f))) {
                 if (grabAbilityInstance != null) {
                     if (grabAbilityInstance.getController() instanceof AbilityControllerAccessor accessor)
                         accessor.setHoldTicks(20);

@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.renderer.layers.features;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTypes;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
@@ -54,7 +54,7 @@ public class SonarOutlineLayer<T extends LivingEntity, M extends EntityModel<T>>
         }
 
         if (camera.distanceToSqr(livingEntity) > SonarOutlineLayer.SonarClientState.getMaxDistSqr()) {
-            if (!FoxyasUtils.canEntitySeeOther(camera, livingEntity)) {
+            if (!FoxyasUtil.canEntitySeeOther(camera, livingEntity)) {
                 return;
             }
         }
@@ -149,7 +149,7 @@ public class SonarOutlineLayer<T extends LivingEntity, M extends EntityModel<T>>
                 }
 
                 if (camera.distanceToSqr(living) > SonarOutlineLayer.SonarClientState.getMaxDistSqr()) {
-                    if (!FoxyasUtils.canEntitySeeOther(camera, living)) {
+                    if (!FoxyasUtil.canEntitySeeOther(camera, living)) {
                         continue;
                     }
                 }

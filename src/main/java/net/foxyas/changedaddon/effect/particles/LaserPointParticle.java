@@ -10,7 +10,7 @@ import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.item.LaserPointerItem;
 import net.foxyas.changedaddon.util.DynamicClipContext;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
@@ -62,7 +62,7 @@ public class LaserPointParticle extends TextureSheetParticle {
     public void render(@NotNull VertexConsumer pBuffer, @NotNull Camera pRenderInfo, float pPartialTicks) {
 
         if (level.isClientSide() && Minecraft.getInstance().player != null && ProcessTransfur.getPlayerTransfurVariantSafe(Minecraft.getInstance().player).map(
-                transfurVariantInstance -> transfurVariantInstance.getParent().is(ChangedAddonTags.TransfurTypes.CAT_LIKE) || transfurVariantInstance.getParent().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE)
+                transfurVariantInstance -> transfurVariantInstance.getParent().is(ChangedAddonTags.TransfurVariants.CAT_LIKE) || transfurVariantInstance.getParent().is(ChangedAddonTags.TransfurVariants.LEOPARD_LIKE)
         ).orElse(false) && bbWidth != .35) {
             this.setSize(0.35f, 0.35f);
             this.quadSize = 0.35f;
@@ -108,7 +108,7 @@ public class LaserPointParticle extends TextureSheetParticle {
         } else if (result instanceof BlockHitResult blockResult) {
             hitPos = blockResult.getLocation();
             face = blockResult.getDirection();
-            hitPos = FoxyasUtils.applyOffset(hitPos, face, !Subtract ? -0.01f : 0.05f);
+            hitPos = FoxyasUtil.applyOffset(hitPos, face, !Subtract ? -0.01f : 0.05f);
         }
 
         // Aplica offset dinâmico baseado na direção

@@ -18,7 +18,7 @@ import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.projectile.AbstractVoidFoxParticleProjectile;
 import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
 import net.foxyas.changedaddon.init.*;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.EyeStyle;
@@ -378,7 +378,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             public void stop() {
                 if (this.isShouldEnd()) {
                     if (getTarget() != null) {
-                        FoxyasUtils.repairArmor(getTarget(), 25);
+                        FoxyasUtil.repairArmor(getTarget(), 25);
                     }
                     if (getTarget() instanceof Player player) {
                         player.displayClientMessage(Component.literal("Heh nice one").withStyle((style -> {
@@ -454,7 +454,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             public void stop() {
                 if (this.isShouldEnd()) {
                     if (getTarget() != null) {
-                        FoxyasUtils.repairArmor(getTarget(), 25);
+                        FoxyasUtil.repairArmor(getTarget(), 25);
                     }
                     if (getTarget() instanceof Player player) {
                         player.displayClientMessage(Component.literal("Heh it seems so").withStyle((style -> {
@@ -531,7 +531,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             public void stop() {
                 if (this.isShouldEnd()) {
                     if (getTarget() != null) {
-                        FoxyasUtils.repairArmor(getTarget(), 25);
+                        FoxyasUtil.repairArmor(getTarget(), 25);
                     }
                     if (getTarget() instanceof Player player) {
                         player.displayClientMessage(Component.literal("Wow yeah it seems so").withStyle((style -> {
@@ -793,7 +793,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     @Override
     public void die(@NotNull DamageSource pDamageSource) {
         if (pDamageSource.getEntity() instanceof LivingEntity living) {
-            FoxyasUtils.repairAllItems(living, 1000);
+            FoxyasUtil.repairAllItems(living, 1000);
         }
 
         super.die(pDamageSource);

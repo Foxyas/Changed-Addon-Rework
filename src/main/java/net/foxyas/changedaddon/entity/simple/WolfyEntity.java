@@ -4,12 +4,8 @@ import net.foxyas.changedaddon.entity.ai.goals.abilities.MayCauseGrabDamageGoal;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
-import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
-import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.ILavaSwimmableVariant;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -54,7 +50,7 @@ import static net.foxyas.changedaddon.procedure.CreatureDietsHandleProcedure.Die
 
 public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmableVariant, IGrabberEntity {
 
-    public static final DietType WOLFY_DIET = DietType.create("WOLFY", ChangedAddonTags.TransfurTypes.WOLF_DIET, ChangedAddonTags.Items.WOLF_DIET, List.of(ChangedAddonItems.FOXTA.get(), ChangedItems.ORANGE.get()));
+    public static final DietType WOLFY_DIET = DietType.create("WOLFY", ChangedAddonTags.TransfurVariants.WOLF_DIET, ChangedAddonTags.Items.WOLF_DIET, List.of(ChangedAddonItems.FOXTA.get(), ChangedItems.ORANGE.get()));
     public GrabEntityAbilityInstance grabInstance = null;
 
     public WolfyEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {

@@ -70,7 +70,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
     public int getLightBlock(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos) {
         ContainmentContainerBlockEntity blockEntity = this.getBlockEntity(state, worldIn, pos);
         if (blockEntity != null && blockEntity.getTransfurVariant() != null) {
-            if (blockEntity.getTransfurVariant().is(ChangedAddonTags.TransfurTypes.GLOWING_VARIANTS)) {
+            if (blockEntity.getTransfurVariant().is(ChangedAddonTags.TransfurVariants.GLOWING_VARIANTS)) {
                 return 8;
             }
         }

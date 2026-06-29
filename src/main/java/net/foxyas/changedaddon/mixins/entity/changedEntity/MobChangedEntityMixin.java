@@ -4,7 +4,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
-import net.foxyas.changedaddon.util.MathFormulasUtils;
+import net.foxyas.changedaddon.util.MathFormulasUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
@@ -35,7 +35,7 @@ public abstract class MobChangedEntityMixin extends LivingEntity {
             if (random.nextFloat() <= chance) {
                 iAlphaAbleEntity.setAlpha(true);
                 float rand = random.nextFloat();
-                float alphaScale = MathFormulasUtils.lerpEase(rand, 0.5f, 2.5f, MathFormulasUtils.EasingType.QUAD_IN);
+                float alphaScale = MathFormulasUtil.lerpEase(rand, 0.5f, 2.5f, MathFormulasUtil.EasingType.QUAD_IN);
                 iAlphaAbleEntity.setAlphaScale(alphaScale);
             }
         }

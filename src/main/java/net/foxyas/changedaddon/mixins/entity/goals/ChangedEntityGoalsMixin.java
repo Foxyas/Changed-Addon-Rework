@@ -27,8 +27,8 @@ public class ChangedEntityGoalsMixin {
             thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal(thisFixed, true));
         }
         if (thisFixed.getSelfVariant() != null
-                && (thisFixed.getSelfVariant().is(ChangedAddonTags.TransfurTypes.CAT_LIKE)
-                || thisFixed.getSelfVariant().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE))) {
+                && (thisFixed.getSelfVariant().is(ChangedAddonTags.TransfurVariants.CAT_LIKE)
+                || thisFixed.getSelfVariant().is(ChangedAddonTags.TransfurVariants.LEOPARD_LIKE))) {
             thisFixed.goalSelector.addGoal(5, new FollowAndLookAtLaser(thisFixed, 0.4));
         }
     }

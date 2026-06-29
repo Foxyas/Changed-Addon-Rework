@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
+import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -13,11 +14,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.FloatProvider;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -32,8 +34,9 @@ import java.util.EnumSet;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class SummonLightningGoal extends Goal {
+public class SummonLightningGoal extends CastingAttackGoal implements IReactiveGoal {
 
+    public static final int FAIL_SAFE_TICKS = 200;
     protected final PathfinderMob holder;
     protected final IntProvider cooldownProvider;
     protected final IntProvider lightningCountProvider;
@@ -48,6 +51,10 @@ public class SummonLightningGoal extends Goal {
     protected int lightningDelay;
     protected Vec3 strikePos;
     protected BlockPos aboveWaterPos;
+
+    protected int ticks = 0;
+    protected boolean isCanceled;
+    protected int hurtTimes;
 
     public SummonLightningGoal(PathfinderMob holder, IntProvider cooldown, IntProvider lightningCount, IntProvider castDuration, IntProvider lightningDelay, FloatProvider damage) {
         this.holder = holder;
@@ -111,7 +118,7 @@ public class SummonLightningGoal extends Goal {
 
     @Override
     public boolean isInterruptable() {
-        return false;
+        return this.ticks >= FAIL_SAFE_TICKS;
     }
 
     @Override
@@ -127,6 +134,9 @@ public class SummonLightningGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
+        if (isCanceled) {
+            return false;
+        }
         if (target instanceof Player player) {
             if (player.isCreative() || player.isSpectator()) {
                 return false;
@@ -146,34 +156,37 @@ public class SummonLightningGoal extends Goal {
         }
         holder.level.playSound(null, holder.getX(), holder.getY(), holder.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 1, 1);
         holder.getNavigation().stop();
+        this.ticks = 0;
+        this.setCanceledTo(false);
+        this.hurtTimes = 0;
     }
 
     @Override
     public void tick() {
+        ticks++;
         if (lightnings <= 0) return;
 
         if (!(holder.level instanceof ServerLevel level)) {
             return;
         }
 
+        if (holder instanceof Experiment009BossEntity exp9) {
+            exp9.setCastingAttack(castDuration > 0);
+        }
+
+        holder.setDeltaMovement(Vec3.ZERO);
         if (castDuration > 0) {
             castDuration--;
 
-            holder.setDeltaMovement(Vec3.ZERO);
             if (target == null) return;
-            //holder.getLookControl().setLookAt(target, 90f, 90f);
+            holder.getLookControl().setLookAt(target, 90f, 90f);
             //holder.setYBodyRot(holder.yHeadRot);
 
             if (holder.tickCount % 2 == 0) {
                 level.sendParticles(ParticleTypes.ELECTRIC_SPARK,
-                        holder.getX() - 0.5, holder.getY(), holder.getZ() - 0.5,
-                        25, 1, 0.1, 1, 0.5);
+                        holder.getX() - 0.5, holder.getEyeY(), holder.getZ() - 0.5,
+                        12, 0.75f, 0.25f, 0.75f, 0.5);
             }
-
-            if (holder instanceof Experiment009BossEntity exp9) {
-                exp9.setCastingAttack(castDuration > 0);
-            }
-
             return;
         }
 
@@ -224,15 +237,14 @@ public class SummonLightningGoal extends Goal {
                         (target -> !target.is(holder))
                 );
 
-        Vec3 direction;
         for (LivingEntity livingEntity : list) {
-            direction = livingEntity.position().subtract(strikePos).normalize();
+            Vec3 direction = livingEntity.position().subtract(strikePos).normalize();
 
             float strength = 6f / (float) Math.sqrt(livingEntity.distanceToSqr(strikePos));
 
             livingEntity.push(
                     direction.x * strength,
-                    Math.min(Math.max(direction.y, 0.1) * strength * 2, 4f),
+                    Math.min(Math.max(direction.y, 0.1) * strength * 2, 0.25f),
                     direction.z * strength
             );
 
@@ -255,5 +267,44 @@ public class SummonLightningGoal extends Goal {
         if (holder instanceof Experiment009BossEntity exp9) {
             exp9.setCastingAttack(false);
         }
+        this.ticks = 0;
+        this.setCanceledTo(false);
+        this.hurtTimes = 0;
+    }
+
+    @Override
+    public void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount) {
+        this.hurtTimes++;
+
+        if (hurtTimes >= getHurtTimesNeedToStop()) {
+            this.setCanceled();
+        }
+    }
+
+    protected int getHurtTimesNeedToStop() {
+        if (holder instanceof Experiment009BossEntity exp) {
+            return (int) (5 / (exp.getPhase().ordinal() + 1));
+        }
+        return 5;
+    }
+
+    @Override
+    public void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount, boolean willCauseDamage) {
+
+    }
+
+    @Override
+    public void onHeal(LivingEntity livingEntity, float amount) {
+
+    }
+
+    @Override
+    public boolean isCanceled() {
+        return this.isCanceled;
+    }
+
+    @Override
+    public void setCanceledTo(boolean canceled) {
+        this.isCanceled = canceled;
     }
 }

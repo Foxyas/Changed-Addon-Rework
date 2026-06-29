@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.client.renderer.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.ModelUtils;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -90,7 +90,7 @@ public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends 
 
     protected Vec3 getWorldPositionFromPart(T entity, AdvancedHumanoidModel<?> model, ModelPart part) {
         if (part == model.getHead()) {
-            return FoxyasUtils.getRelativePositionEyes(entity, new Vec3(0, 0, 0.1f));
+            return FoxyasUtil.getRelativePositionEyes(entity, new Vec3(0, 0, 0.1f));
         } else if (ModelUtils.getTailFromModelIfAny(model).contains(part)) {
             Vector3f offset = DEFAULT_OFFSET;
             offset.add(0, 0, 0.5f);

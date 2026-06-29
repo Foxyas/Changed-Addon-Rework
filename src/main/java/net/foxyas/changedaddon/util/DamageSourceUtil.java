@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class DamageSourceUtils {
+public class DamageSourceUtil {
 
     public static DamageSource projectileDamageSourceOfType(Holder<DamageType> pType, @Nullable Entity pEntity) {
         return new DamageSource(pType, pEntity) {

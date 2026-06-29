@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.item.loot.RandomVariantFunction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 @Mixin(value = RandomVariantFunction.Builder.class, remap = false)
-public class RandomVariantFunctionMixin {
+public abstract class RandomVariantFunctionMixin extends LootItemConditionalFunction.Builder<RandomVariantFunction.Builder> {
 
     @Shadow
     private List<ResourceLocation> variants;
@@ -21,7 +22,7 @@ public class RandomVariantFunctionMixin {
     @Inject(method = "withAllVariants", at = @At(value = "RETURN"))
     private void RemoveVariant(CallbackInfoReturnable<Boolean> cir) {
         // Obtém a lista de variantes a serem removidas
-        List<ResourceLocation> list = ChangedAddonTransfurVariants.getRemovedVariantsList()
+        List<ResourceLocation> list = ChangedAddonTransfurVariants.getHardCodedRemovedVariantsList()
                 .stream()
                 .map(TransfurVariant::getFormId)
                 .toList();

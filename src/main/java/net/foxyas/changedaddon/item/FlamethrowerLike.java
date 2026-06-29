@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.block.LatexCoverBlock;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.GasAreaUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -125,8 +125,8 @@ public abstract class FlamethrowerLike extends Item implements SpecializedAnimat
             double deltaX = hand == InteractionHand.MAIN_HAND ? 0.25 : -0.25;
             if (player.getMainArm() == HumanoidArm.LEFT) deltaX = -deltaX;
 
-            Vec3 relativePosition = FoxyasUtils.getRelativePosition(player, deltaX, 0, i * 0.5 + 1f, true);
-            Vec3 maxRelativePosition = FoxyasUtils.getRelativePosition(player, deltaX, 0, range * 0.5, true);
+            Vec3 relativePosition = FoxyasUtil.getRelativePosition(player, deltaX, 0, i * 0.5 + 1f, true);
+            Vec3 maxRelativePosition = FoxyasUtil.getRelativePosition(player, deltaX, 0, range * 0.5, true);
             ParticlesUtil.sendParticlesWithMotionAndOffset(player, this.particle(), player.getEyePosition().add(relativePosition), new Vec3(0.15f, 0.15f, 0.15f), maxRelativePosition, new Vec3(0.25f, 0.25f, 0.25f), 2, 0.10f);
 
 

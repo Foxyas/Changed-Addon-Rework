@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.block;
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -49,7 +49,7 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
     public static void tryToPacifyNearbyEntities(@NotNull ServerLevel pLevel, BlockPos pPos, double range) {
         List<LivingEntity> nearChangedBeasts = pLevel.getEntitiesOfClass(LivingEntity.class,
                 new AABB(pPos, pPos).inflate(range),
-                (entity) -> FoxyasUtils.canEntitySeePosIgnoreGlass(entity, Vec3.atCenterOf(pPos), 90));
+                (entity) -> FoxyasUtil.canEntitySeePosIgnoreGlass(entity, Vec3.atCenterOf(pPos), 90));
         for (LivingEntity livingEntity : nearChangedBeasts) {
             if (livingEntity instanceof ChangedEntity changedEntity) {
                 if (changedEntity.getType().is(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE)) {
@@ -88,7 +88,7 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
     }
 
     public void tryToGrowIntoATree(@NotNull ServerLevel level, BlockPos pos) {
-        Stream<BlockPos> blockPoses = FoxyasUtils.betweenClosedStreamSphere(pos, 2, 1);
+        Stream<BlockPos> blockPoses = FoxyasUtil.betweenClosedStreamSphere(pos, 2, 1);
         for (BlockPos blockPos : blockPoses.toList()) {
 
         }

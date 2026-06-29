@@ -1,9 +1,12 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.mixins.entity.projectiles.AbstractArrowAccessor;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.PlayerUtil;
-import net.ltxprogrammer.changed.ability.*;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
+import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
@@ -33,7 +36,7 @@ public class PsychicGrabInstance extends AbstractAbilityInstance {
         super(ability, entity);
         offset = new Vec3(0, 0, 3);
         if (entity.getEntity() instanceof Player player) {
-            look = FoxyasUtils.getRelativePositionEyes(player, offset.scale(0.1));
+            look = FoxyasUtil.getRelativePositionEyes(player, offset.scale(0.1));
         }
     }
 
@@ -176,7 +179,7 @@ public class PsychicGrabInstance extends AbstractAbilityInstance {
                     return;
                 }
             }
-            look = FoxyasUtils.getRelativePositionEyes(entity.getEntity(), offset.add(0, 0, 2));
+            look = FoxyasUtil.getRelativePositionEyes(entity.getEntity(), offset.add(0, 0, 2));
             Vec3 scale = (look.subtract(target.position())).scale(0.25);
             if (target instanceof AbstractArrow projectile && projectile instanceof AbstractArrowAccessor accessor && accessor.inGround()) {
                 projectile.move(MoverType.PLAYER, scale);

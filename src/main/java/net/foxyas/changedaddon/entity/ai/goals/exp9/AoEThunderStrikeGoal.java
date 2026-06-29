@@ -37,7 +37,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class AoEThunderStrikeGoal extends Goal implements IReactiveGoal.ICancelOnDamageGoal {
+public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactiveGoal.ICancelOnDamageGoal {
+    public static final int FAIL_SAFE_TICKS = 200;
     protected final IntProvider cooldownProvider;
     protected final Experiment009Entity experiment009;
     protected final IntProvider damageProvider;
@@ -60,7 +61,7 @@ public class AoEThunderStrikeGoal extends Goal implements IReactiveGoal.ICancelO
 
     @Override
     public boolean isInterruptable() {
-        return false;
+        return tickCounter >= FAIL_SAFE_TICKS;
     }
 
     @Override
@@ -78,6 +79,7 @@ public class AoEThunderStrikeGoal extends Goal implements IReactiveGoal.ICancelO
         this.target = experiment009.getTarget();
         this.groundPos = experiment009.blockPosition();
         this.tickCounter = 0;
+        this.setCanceledTo(false);
 
         // Lança a entidade para cima
         Vec3 velocity = experiment009.position().vectorTo(target.position()).normalize().scale(0.5f);
@@ -245,12 +247,12 @@ public class AoEThunderStrikeGoal extends Goal implements IReactiveGoal.ICancelO
         var list = lightning.level
                 .getEntitiesOfClass(
                         LivingEntity.class,
-                        getBoundingBoxFromLightningBolt(lightning).inflate(-0.5),
+                        getBoundingBoxFromLightningBolt(lightning).inflate(-6.5),
                         (target) -> !target.is(lightning) && !target.is(experiment009) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(target)
                 );
 
         for (LivingEntity livingEntity : list) {
-            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f).multiply(1f, livingEntity.onGround() ? 1.45f : 0.05f, 1f);
+            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.25f).add(0, livingEntity.onGround() ? 0.25f : 0.05f, 0);
             if (!livingEntity.isBlocking()) {
                 if (livingEntity instanceof ServerPlayer serverPlayer) {
                     serverPlayer.push(pushForce.x(), pushForce.y(), pushForce.z());
@@ -261,6 +263,8 @@ public class AoEThunderStrikeGoal extends Goal implements IReactiveGoal.ICancelO
                 } else {
                     livingEntity.push(pushForce.x(), pushForce.y(), pushForce.z());
                 }
+
+                livingEntity.hasImpulse = true;
             }
         }
     }
@@ -292,10 +296,12 @@ public class AoEThunderStrikeGoal extends Goal implements IReactiveGoal.ICancelO
         if (experiment009 instanceof Experiment009BossEntity experiment009BossEntity) {
             experiment009BossEntity.setCastingAttack(false);
         }
+        this.tickCounter = 0;
+        this.setCanceledTo(false);
     }
 
     @Override
-    public void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount) {
+    public void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount, boolean willCauseDamage) {
 
     }
 
@@ -310,7 +316,7 @@ public class AoEThunderStrikeGoal extends Goal implements IReactiveGoal.ICancelO
     }
 
     @Override
-    public void setCanceled(boolean canceled) {
+    public void setCanceledTo(boolean canceled) {
         this.canceled = true;
     }
 }

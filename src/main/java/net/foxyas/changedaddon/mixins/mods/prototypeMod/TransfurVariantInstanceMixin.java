@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.mixins.mods.prototypeMod;
 
 import net.foxyas.changedaddon.extension.RequiredMods;
-import net.foxyas.changedaddon.util.EntityUtils;
-import net.foxyas.changedaddon.util.MathFormulasUtils;
+import net.foxyas.changedaddon.util.EntityUtil;
+import net.foxyas.changedaddon.util.MathFormulasUtil;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -46,12 +46,12 @@ public class TransfurVariantInstanceMixin {
 
             float healthRatio = self.getBloodVolume() / maxNormalBloodVolume; //EntityUtils.getHealthRatio(player);
             // Food: 0.0 a 1.0 (ex: 20/20 = 1.0)
-            float foodRatio = EntityUtils.getFoodRatio(player, null);
+            float foodRatio = EntityUtil.getFoodRatio(player, null);
 
             // Base de 100 ticks, escalada pela saúde e fome
             // Se ambos estiverem no máximo, ganha 100. Se um estiver baixo, ganha menos.
             float progressBonus = 100f * healthRatio * foodRatio;
-            MathFormulasUtils.lerpEase(healthRatio * foodRatio, 100, 300, MathFormulasUtils.EasingType.QUAD_IN);
+            MathFormulasUtil.lerpEase(healthRatio * foodRatio, 100, 300, MathFormulasUtil.EasingType.QUAD_IN);
 
             // Valor máximo de regrow (20 ticks * 60 segundos = 1200)
             float maxRegrow = 20 * 60;

@@ -15,18 +15,16 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-
 import java.util.EnumSet;
 
 import static net.minecraft.tags.BlockTags.FIRE;
 
 @ParametersAreNonnullByDefault
-public class StaticDischargeGoal extends Goal {
+public class StaticDischargeGoal extends CastingAttackGoal {
 
     protected final PathfinderMob holder;
     protected final IntProvider cooldownProvider;
@@ -99,6 +97,10 @@ public class StaticDischargeGoal extends Goal {
                 exp9.setCastingAttack(castDuration > 0);
             }
             holder.setDeltaMovement(Vec3.ZERO);
+
+            if (target != null) {
+                holder.getLookControl().setLookAt(target, 180, 180);
+            }
             return;
         }
 

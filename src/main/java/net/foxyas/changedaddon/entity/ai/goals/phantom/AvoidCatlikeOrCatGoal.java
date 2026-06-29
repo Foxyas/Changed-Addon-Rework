@@ -63,12 +63,12 @@ public class AvoidCatlikeOrCatGoal extends Goal {
 
     private boolean isCatlike(LivingEntity entity) {
         if (entity instanceof Player player) {
-            return ProcessTransfur.getPlayerTransfurVariantSafe(player).map(v -> v.getParent().is(ChangedAddonTags.TransfurTypes.CAT_LIKE) ||
-                    v.getParent().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE)
+            return ProcessTransfur.getPlayerTransfurVariantSafe(player).map(v -> v.getParent().is(ChangedAddonTags.TransfurVariants.CAT_LIKE) ||
+                    v.getParent().is(ChangedAddonTags.TransfurVariants.LEOPARD_LIKE)
             ).orElse(false);
         } else if (entity instanceof ChangedEntity changed && changed.getSelfVariant() != null) {
-            return changed.getSelfVariant().is(ChangedAddonTags.TransfurTypes.CAT_LIKE) ||
-                    changed.getSelfVariant().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
+            return changed.getSelfVariant().is(ChangedAddonTags.TransfurVariants.CAT_LIKE) ||
+                    changed.getSelfVariant().is(ChangedAddonTags.TransfurVariants.LEOPARD_LIKE);
         }
 
         return false;

@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
 import net.ltxprogrammer.changed.init.ChangedAnimationEvents;
 import net.ltxprogrammer.changed.init.ChangedSounds;
@@ -45,7 +45,7 @@ public class ElectrifyNearbyWaterGoal extends Goal {
     public void tick() {
         super.tick();
         Level level = boss.level;
-        List<BlockPos> connectedFluids = FoxyasUtils.getConnectedFluids(level, boss.blockPosition(), 128).stream().map(BlockPos::immutable).toList();
+        List<BlockPos> connectedFluids = FoxyasUtil.getConnectedFluids(level, boss.blockPosition(), 128).stream().map(BlockPos::immutable).toList();
         List<LivingEntity> nearbyEntities = level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(32), EntitySelector.NO_CREATIVE_OR_SPECTATOR.and((entity) -> {
             if (entity.is(boss)) return false;
 

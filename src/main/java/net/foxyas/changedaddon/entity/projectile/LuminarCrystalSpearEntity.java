@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.entity.projectile;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -209,7 +209,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
             //AABB BoundBox = new AABB(result.getBlockPos());
             //BoundBox.inflate(1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem));
             int radius = 1 + Math.max(0, (EnchantmentHelper.getTagEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem) / 3));
-            for (BlockPos pos : FoxyasUtils.betweenClosedStreamSphere(result.getBlockPos(), radius, radius, 1.25f).toList()) {
+            for (BlockPos pos : FoxyasUtil.betweenClosedStreamSphere(result.getBlockPos(), radius, radius, 1.25f).toList()) {
                 BlockState state = serverLevel.getBlockState(pos);
                 if (state.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get()) || state.isAir()) {
                     continue;

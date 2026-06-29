@@ -33,20 +33,41 @@ public abstract class DroppedSyringeBlockEntityMixin extends BlockEntity {
 
     @Inject(method = "getVariant", at = @At("RETURN"), cancellable = true, remap = false)
     private void checkAllowBossTag(CallbackInfoReturnable<TransfurVariant<?>> cir) {
+        if (this.variant == null || cir.getReturnValue() == null || level == null) {
+            return;
+        }
+
         if (!changed_Addon_Rework$AllowBosses) {
-            if (this.variant == null || cir.getReturnValue() == null) {
-                return;
-            }
-            if (ChangedAddonTransfurVariants.getBossVariants().contains(this.variant)
-                    || ChangedAddonTransfurVariants.getVariantsRemovedFromSyringes().contains(this.variant)) {
+            List<TransfurVariant<?>> bossVariants = ChangedAddon$getBossVariants();
+            if (bossVariants.contains(this.variant)) {
                 List<TransfurVariant<?>> list = new ArrayList<>(TransfurVariant.getPublicTransfurVariants().toList());
-                list.removeIf(transfurVariant -> ChangedAddonTransfurVariants.getBossVariants().contains(transfurVariant));
+                list.removeIf(bossVariants::contains);
                 TransfurVariant<?> transfurVariant = list.get(this.level.getRandom().nextInt(list.size()));
                 if (transfurVariant == null) return;
                 this.variant = transfurVariant;
                 cir.setReturnValue(transfurVariant);
             }
         }
+
+        List<TransfurVariant<?>> variantsRemovedFromSyringes = ChangedAddon$getVariantsRemovedFromSyringes();
+        if (variantsRemovedFromSyringes.contains(this.variant)) {
+            List<TransfurVariant<?>> list = new ArrayList<>(TransfurVariant.getPublicTransfurVariants().toList());
+            list.removeIf(variantsRemovedFromSyringes::contains);
+            TransfurVariant<?> transfurVariant = list.get(this.level.getRandom().nextInt(list.size()));
+            if (transfurVariant == null) return;
+            this.variant = transfurVariant;
+            cir.setReturnValue(transfurVariant);
+        }
+    }
+
+    @Unique
+    private List<TransfurVariant<?>> ChangedAddon$getBossVariants() {
+        return ChangedAddonTransfurVariants.getBossVariants(level);
+    }
+
+    @Unique
+    private List<TransfurVariant<?>> ChangedAddon$getVariantsRemovedFromSyringes() {
+        return ChangedAddonTransfurVariants.getVariantsRemovedFromSyringes(level);
     }
 
     @Inject(method = "load", at = @At("HEAD"))
@@ -58,7 +79,7 @@ public abstract class DroppedSyringeBlockEntityMixin extends BlockEntity {
 
     @Inject(method = "saveAdditional", at = @At("HEAD"))
     private void AddDataMod(CompoundTag tag, CallbackInfo ci) {
-        if (this.variant != null && ChangedAddonTransfurVariants.getBossVariants().contains(this.variant)) {
+        if (this.variant != null && ChangedAddon$getBossVariants().contains(this.variant)) {
             tag.putBoolean("AllowBosses", changed_Addon_Rework$AllowBosses);
         }
     }

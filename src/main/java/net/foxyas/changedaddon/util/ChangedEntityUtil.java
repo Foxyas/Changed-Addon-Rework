@@ -56,13 +56,13 @@ public class ChangedEntityUtil {
 
     public static boolean isCatTransfur(ChangedEntity changedEntity) {
         TransfurVariant<?> variant = changedEntity.getSelfVariant();
-        return variant.is(ChangedAddonTags.TransfurTypes.CAT_LIKE) ||
-                variant.is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
+        return variant.is(ChangedAddonTags.TransfurVariants.CAT_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurVariants.LEOPARD_LIKE);
     }
 
     public static boolean isWolfTransfur(ChangedEntity changedEntity) {
         TransfurVariant<?> variant = changedEntity.getSelfVariant();
-        if (variant.is(ChangedAddonTags.TransfurTypes.WOLF_LIKE)) return true;
+        if (variant.is(ChangedAddonTags.TransfurVariants.WOLF_LIKE)) return true;
 
         String id = ForgeRegistries.ENTITY_TYPES.getKey(changedEntity.getType()).toString();
         return id.toString().contains("dog") ||
@@ -72,7 +72,7 @@ public class ChangedEntityUtil {
 
     public static boolean isFoxTransfur(ChangedEntity changedEntity) {
         TransfurVariant<?> variant = changedEntity.getSelfVariant();
-        if (variant.is(ChangedAddonTags.TransfurTypes.FOX_LIKE)) return true;
+        if (variant.is(ChangedAddonTags.TransfurVariants.FOX_LIKE)) return true;
 
         return ForgeRegistries.ENTITY_TYPES.getKey(changedEntity.getType()).toString().contains("fox") ||
                 changedEntity instanceof AbstractSnowFoxEntity;
@@ -80,20 +80,20 @@ public class ChangedEntityUtil {
 
     public static boolean isDragonTransfur(ChangedEntity changedEntity) {
         TransfurVariant<?> variant = changedEntity.getSelfVariant();
-        if (variant.is(ChangedAddonTags.TransfurTypes.DRAGON_LIKE)) return true;
+        if (variant.is(ChangedAddonTags.TransfurVariants.DRAGON_LIKE)) return true;
         return ForgeRegistries.ENTITY_TYPES.getKey(changedEntity.getType()).toString().contains("dragon");
     }
 
     public static boolean isAquaticTransfur(ChangedEntity changedEntity) {
         TransfurVariant<?> variant = changedEntity.getSelfVariant();
-        if (variant.is(ChangedAddonTags.TransfurTypes.AQUATIC_LIKE)) return true;
+        if (variant.is(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE)) return true;
 
         return changedEntity instanceof AbstractAquaticEntity;
     }
 
     public static boolean isSpiderTransfur(ChangedEntity changedEntity) {
         TransfurVariant<?> variant = changedEntity.getSelfVariant();
-        return variant.is(ChangedAddonTags.TransfurTypes.SPIDER_LIKE);
+        return variant.is(ChangedAddonTags.TransfurVariants.SPIDER_LIKE);
     }
 
     public static boolean canRoar(ChangedEntity changedEntity) {

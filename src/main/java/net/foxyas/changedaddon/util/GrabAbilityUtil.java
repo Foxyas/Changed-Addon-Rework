@@ -7,7 +7,7 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.network.PacketDistributor;
 
-public class GrabAbilityUtils {
+public class GrabAbilityUtil {
 
     public static boolean grabEntity(LivingEntity target,
                                      LivingEntity grabber,

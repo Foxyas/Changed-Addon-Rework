@@ -5,9 +5,9 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.ChangedAdditionsModConflictWarningScreen;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
 import net.foxyas.changedaddon.command.ChangedAddonClientCommands;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.process.sounds.BossMusicHandler;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedItems;
@@ -174,7 +174,7 @@ public class ClientEvent {
                 List<Component> ocVariantComponents = ChangedAddonTransfurVariants.getVariantComponentIfAny(tf, player.level());
                 MutableComponent append = Component.literal("§8OC Transfur");
                 tooltip.add(append);
-                if (ocVariantComponents != null && !ocVariantComponents.isEmpty()) {
+                if (!ocVariantComponents.isEmpty()) {
                     tooltip.addAll(ocVariantComponents);
                 }
             }

@@ -4,9 +4,9 @@ import net.foxyas.changedaddon.block.entity.DarkLatexWolfPlushyBlockEntity;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.util.DynamicClipContext;
-import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.util.DynamicClipContext;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -92,7 +92,7 @@ public class DarkLatexWolfPlushyBlock extends AbstractPlushyBlock {
             Level world = player.level();
             RandomSource random = player.getRandom();
             BlockPos playerBlockPos = player.blockPosition();
-            Stream<BlockPos> posStream = FoxyasUtils.betweenClosedStreamSphere(playerBlockPos, 3, 2);
+            Stream<BlockPos> posStream = FoxyasUtil.betweenClosedStreamSphere(playerBlockPos, 3, 2);
             Vec3 position = player.getEyePosition();
             float intensity = 1 + (player.getInventory().items.stream().filter((itemStack -> itemStack.is(ChangedAddonItems.DARK_LATEX_WOLF_PLUSH.get()))).count() / 100f);
             for (BlockPos plushyPos : posStream.filter((pos) -> world.getBlockState(pos).is(ChangedAddonBlocks.DARK_LATEX_WOLF_PLUSHY.get())).toList()) {

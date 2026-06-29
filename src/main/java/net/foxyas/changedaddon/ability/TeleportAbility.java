@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.entity.advanced.AbstractKitsuneEntity;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
@@ -66,7 +66,7 @@ public class TeleportAbility extends SimpleAbility {
 
         LivingEntity living = entity.getEntity();
         if (living instanceof Player player) {
-            Vec3 eyeLocation = FoxyasUtils.getRelativePositionEyes(player, 0f, 0f, 16f);
+            Vec3 eyeLocation = FoxyasUtil.getRelativePositionEyes(player, 0f, 0f, 16f);
             BlockHitResult blockHitResult = player.level().clip(new ClipContext(player.getEyePosition(), eyeLocation, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
             Vec3 location = blockHitResult.getLocation();
             player.teleportToWithTicket(location.x, location.y, location.z);

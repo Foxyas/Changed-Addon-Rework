@@ -354,7 +354,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
                 source.is(DamageTypes.DRAGON_BREATH) ||
                 source.is(DamageTypes.WITHER) ||
                 source.getMsgId().equals("witherSkull")) {
-            triggerOnDamageReactiveGoals(source, amount);
+            triggerOnDamageReactiveGoals(source, amount, false);
             return false;
         }
 
@@ -362,20 +362,20 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
             amount *= 0.5f;
         }
 
-        triggerOnDamageReactiveGoals(source, amount);
-
-        return super.hurt(source, amount);
+        boolean willCauseDamage = super.hurt(source, amount);
+        triggerOnDamageReactiveGoals(source, amount, willCauseDamage);
+        return willCauseDamage;
     }
 
-    public void triggerOnDamageReactiveGoals(DamageSource source, float finalAmount) {
+    public void triggerOnDamageReactiveGoals(DamageSource source, float finalAmount, boolean willCauseDamage) {
         this.goalSelector.getRunningGoals()
                 .map(WrappedGoal::getGoal)
                 .filter(goal -> goal instanceof IReactiveGoal)
-                .forEach(goal -> ((IReactiveGoal) goal).onDamage(this, source, finalAmount));
+                .forEach(goal -> ((IReactiveGoal) goal).onDamage(this, source, finalAmount, willCauseDamage));
         this.targetSelector.getRunningGoals()
                 .map(WrappedGoal::getGoal)
                 .filter(goal -> goal instanceof IReactiveGoal)
-                .forEach(goal -> ((IReactiveGoal) goal).onDamage(this, source, finalAmount));
+                .forEach(goal -> ((IReactiveGoal) goal).onDamage(this, source, finalAmount, willCauseDamage));
     }
 
     @Override

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class EntityUtils {
+public class EntityUtil {
 
     public static final int CUTENESS_LEVEL_NEEDED = 5;
 

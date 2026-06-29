@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.item;
 
-import net.foxyas.changedaddon.util.DamageSourceUtils;
+import net.foxyas.changedaddon.util.DamageSourceUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -92,7 +92,7 @@ public class FlamethrowerItem extends FlamethrowerLike {
 
     @Override
     protected void affectEntity(Player shooter, LivingEntity entity) {//needs a new damage type to be ranged
-        entity.hurt(DamageSourceUtils.projectileDamageSourceOfType(shooter.damageSources().onFire().typeHolder(), shooter), 6);
+        entity.hurt(DamageSourceUtil.projectileDamageSourceOfType(shooter.damageSources().onFire().typeHolder(), shooter), 6);
         entity.setSecondsOnFire(5);
     }
 }

@@ -52,7 +52,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.extensions.IForgeBoat;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
@@ -518,7 +517,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                 TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
                 if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
                         && instance != null
-                        && instance.getParent().is(ChangedAddonTags.TransfurTypes.CAUSE_FREEZING)) {
+                        && instance.getParent().is(ChangedAddonTags.TransfurVariants.CAUSE_FREEZING)) {
                     ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.getEyePosition(), 0.3f, 0.5f, 0.3f, 4, 0.05f);
                     target.setTicksFrozen(Math.min(target.getTicksRequiredToFreeze(), pTicksFrozen));
                     target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);

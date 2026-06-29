@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.entity.api.IOriginalCharacterEntity;
 import net.foxyas.changedaddon.entity.bosses.*;
 import net.foxyas.changedaddon.entity.partials.SnowLeopardPartialEntity;
 import net.foxyas.changedaddon.entity.simple.*;
+import net.foxyas.changedaddon.util.TagKeyUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.PatronOC;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -27,12 +28,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 
 import static net.foxyas.changedaddon.variant.TransfurVariantsInfo.OCS;
@@ -616,8 +615,8 @@ public class ChangedAddonTransfurVariants {
     private static List<TransfurVariant<?>> REMOVED_FROM_SYRINGES;
 
     // Utils
-    private static List<TransfurVariant<?>> BOSS_VARS1;
-    private static Map<TransfurVariant<?>, TransfurVariant<?>> BOSS_VARS;
+    private static List<TransfurVariant<?>> BOSS_VARS;
+    private static Map<TransfurVariant<?>, TransfurVariant<?>> BOSS_VARS_MAP;
 
     private static <T extends ChangedEntity> RegistryObject<TransfurVariant<T>> register(String name, TransfurVariant.Builder<T> builder) {
         Objects.requireNonNull(builder);
@@ -633,61 +632,73 @@ public class ChangedAddonTransfurVariants {
         ChangedEntity entity = variantInstance.getChangedEntity();
         TransfurVariant<?> variant = variantInstance.getParent();
         return entity instanceof AquaticEntity ||
-                variant.is(ChangedAddonTags.TransfurTypes.SHARK_LIKE) ||
-                variant.is(ChangedAddonTags.TransfurTypes.AQUATIC_LIKE) ||
-                variant.is(ChangedAddonTags.TransfurTypes.AQUATIC_DIET);
+                variant.is(ChangedAddonTags.TransfurVariants.SHARK_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurVariants.AQUATIC_DIET);
     }
 
-    public static List<TransfurVariant<?>> getRemovedVariantsList() {
+    public static List<TransfurVariant<?>> getRemovedVariantsList(Level level) {
         if (REMOVED_VARS == null) {
-            REMOVED_VARS = List.of(VOID_FOX.get(),
-                    REYN.get(),
-                    FENGQI_WOLF.get(),
-                    EXPERIMENT_009.get(),
-                    EXPERIMENT_10.get(),
-                    EXPERIMENT_009_BOSS.get(),
-                    EXPERIMENT_10_BOSS.get(),
-                    LATEX_SNEP_FERAL_FORM.get(),
-                    LUMINARCTIC_LEOPARD_MALE.get(),
-                    LUMINARCTIC_LEOPARD_FEMALE.get());
+
+            HashSet<TransfurVariant<?>> variants = new HashSet<>(
+                    TagKeyUtil.getTagContents(level,
+                            ChangedAddonTags.TransfurVariants.REMOVED_FROM_RANDOM_VARIANT_FUNCTION).toList()
+            );
+            variants.addAll(getHardCodedRemovedVariantsList());
+
+            REMOVED_VARS = variants.stream().toList();
         }
         return REMOVED_VARS;
     }
 
-    public static List<TransfurVariant<?>> getVariantsRemovedFromSyringes() {
+    public static List<TransfurVariant<?>> getHardCodedRemovedVariantsList() {
+        return List.of(VOID_FOX.get(),
+                REYN.get(),
+                FENGQI_WOLF.get(),
+                EXPERIMENT_009.get(),
+                EXPERIMENT_10.get(),
+                EXPERIMENT_009_BOSS.get(),
+                EXPERIMENT_10_BOSS.get(),
+                LATEX_SNEP_FERAL_FORM.get(),
+                LUMINARCTIC_LEOPARD_MALE.get(),
+                LUMINARCTIC_LEOPARD_FEMALE.get()
+        );
+    }
+
+    public static List<TransfurVariant<?>> getVariantsRemovedFromSyringes(Level level) {
         if (REMOVED_FROM_SYRINGES == null) {
-            List<TransfurVariant<?>> tmp = new ArrayList<>(getRemovedVariantsList());
-            tmp.add(LUMINARA_FLOWER_BEAST.get());
-            REMOVED_FROM_SYRINGES = List.copyOf(tmp);
+//            List<TransfurVariant<?>> tmp = new ArrayList<>(getRemovedVariantsList(level));
+//            tmp.add(LUMINARA_FLOWER_BEAST.get());
+            REMOVED_FROM_SYRINGES = TagKeyUtil.getTagContents(level, ChangedAddonTags.TransfurVariants.REMOVED_FROM_GROUNDED_SYRINGES).toList();
+//            List.copyOf(tmp);
         }
         return REMOVED_FROM_SYRINGES;
     }
 
-    public static List<TransfurVariant<?>> getBossVariants() {
-        if (BOSS_VARS1 == null) {
-            BOSS_VARS1 = List.of(EXPERIMENT_009_BOSS.get(), EXPERIMENT_10_BOSS.get(), EXPERIMENT_009.get(), EXPERIMENT_10.get(), VOID_FOX.get());
-        }
-        return BOSS_VARS1;
-    }
-
-    public static Map<TransfurVariant<?>, TransfurVariant<?>> bossVariants() {
+    public static List<TransfurVariant<?>> getBossVariants(Level level) {
         if (BOSS_VARS == null) {
-            BOSS_VARS = Map.of(
-                    EXPERIMENT_009.get(), EXPERIMENT_009_BOSS.get(),
-                    EXPERIMENT_10.get(), EXPERIMENT_10_BOSS.get()
-            );
+            BOSS_VARS = TagKeyUtil.getTagContents(level, ChangedAddonTags.TransfurVariants.BOSS_VARIANTS).toList();
+            //List.of(EXPERIMENT_009_BOSS.get(), EXPERIMENT_10_BOSS.get(), EXPERIMENT_009.get(), EXPERIMENT_10.get(), VOID_FOX.get());
         }
         return BOSS_VARS;
     }
 
+    public static Map<TransfurVariant<?>, TransfurVariant<?>> bossVariantsMap() {
+        if (BOSS_VARS_MAP == null) {
+            BOSS_VARS_MAP = Map.of(
+                    EXPERIMENT_009.get(), EXPERIMENT_009_BOSS.get(),
+                    EXPERIMENT_10.get(), EXPERIMENT_10_BOSS.get()
+            );
+        }
+        return BOSS_VARS_MAP;
+    }
+
     public static boolean isBossVariant(TransfurVariant<?> transfurVariant) {
-        return bossVariants()
-                .containsValue(transfurVariant);
+        return bossVariantsMap().containsValue(transfurVariant) || transfurVariant.is(ChangedAddonTags.TransfurVariants.BOSS_VARIANTS);
     }
 
     public static TransfurVariant<?> getBossVersionOf(TransfurVariant<?> transfurVariant) {
-        TransfurVariant<?> variant = bossVariants()
-                .get(transfurVariant);
+        TransfurVariant<?> variant = bossVariantsMap().get(transfurVariant);
         return variant != null ? variant : transfurVariant;
     }
 
@@ -696,7 +707,7 @@ public class ChangedAddonTransfurVariants {
         return OCS.get().get(transfurVariant);
     }
 
-    @Nullable
+    @NotNull
     public static List<Component> getVariantComponentIfAny(TransfurVariant<?> transfurVariant, Level level) {
         if (isVariantOC(transfurVariant, level)) {
             if (ChangedEntities.getCachedEntity(level, transfurVariant.getEntityType()) instanceof IOriginalCharacterEntity iOriginalCharacterEntity) {
@@ -704,7 +715,7 @@ public class ChangedAddonTransfurVariants {
             }
             return OCS.get().get(transfurVariant);
         }
-        return null;
+        return List.of();
     }
 
 

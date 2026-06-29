@@ -11,9 +11,8 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.DelayedTask;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -314,7 +313,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     public Exp9Phase getPhase() {
-        if (isPhase2()) return Exp9Phase.PHASE2;
+        if (isPhase2() && !isPhase3()) return Exp9Phase.PHASE2;
         if (isPhase3()) return Exp9Phase.PHASE3;
         return Exp9Phase.PHASE1;
     }
@@ -423,7 +422,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
             }
 
-            triggerOnDamageReactiveGoals(source, amount);
+            triggerOnDamageReactiveGoals(source, amount, false);
             return false;
         }
 
@@ -731,6 +730,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public void die(@NotNull DamageSource damageSource) {
+        if (this.isCastingAttack()) {
+            this.setCastingAttack(false);
+        }
         if (damageSource.getDirectEntity() == null) {
             super.die(damageSource);
             return;
@@ -759,7 +761,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         this.playSound(SoundEvents.GENERIC_EXPLODE, 1, 1);
-        for (BlockPos pos : FoxyasUtils.betweenClosedStreamSphere(blockPosition(), 16, 16, 1).toList()) {
+        for (BlockPos pos : FoxyasUtil.betweenClosedStreamSphere(blockPosition(), 16, 16, 1).toList()) {
             BlockState state = level.getBlockState(pos);
 
             if (state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)) {
@@ -769,7 +771,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         if (damageSource.getEntity() instanceof LivingEntity living) {
-            FoxyasUtils.repairAllItems(living, 1000);
+            FoxyasUtil.repairAllItems(living, 1000);
         }
 
         super.die(damageSource);
@@ -779,6 +781,14 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     public void baseTick() {
         super.baseTick();
         if (getUnderlyingPlayer() != null) return;
+        if (this.isCastingAttack()) {
+//            if (this.goalSelector.getRunningGoals().noneMatch(wrappedGoal -> wrappedGoal.getGoal() instanceof CastingAttackGoal) && this.targetSelector.getRunningGoals().noneMatch(wrappedGoal -> wrappedGoal.getGoal() instanceof CastingAttackGoal)) {
+//                this.setCastingAttack(false);
+//            }
+            if (this.getTarget() == null) {
+                this.setCastingAttack(false);
+            }
+        }
 
         if (firstTick) {
             applyDefaultBasicPlayerInfo();

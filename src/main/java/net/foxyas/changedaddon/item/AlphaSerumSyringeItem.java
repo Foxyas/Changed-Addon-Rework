@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.util.MathFormulasUtils;
+import net.foxyas.changedaddon.util.MathFormulasUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -54,7 +54,7 @@ public class AlphaSerumSyringeItem extends AbstractSyringeItem {
 
         iAlphaAbleEntity.setAlpha(true);
         float rand = player.getRandom().nextFloat();
-        float alphaScale = MathFormulasUtils.lerpEase(rand, 0.5f, 2.5f, MathFormulasUtils.EasingType.QUAD_IN);
+        float alphaScale = MathFormulasUtil.lerpEase(rand, 0.5f, 2.5f, MathFormulasUtil.EasingType.QUAD_IN);
         iAlphaAbleEntity.setAlphaScale(alphaScale);
     }
 

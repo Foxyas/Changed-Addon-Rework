@@ -10,19 +10,23 @@ public interface IReactiveGoal {
     interface ICancelOnDamageGoal extends IReactiveGoal {
         @Override
         default void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount) {
-            this.setCanceled(true);
+            this.setCanceledTo(true);
         };
     }
 
     void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount);
-    void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount);
+    void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount, boolean willCauseDamage);
     void onHeal(LivingEntity livingEntity, float amount);
 
     boolean isCanceled();
-    void setCanceled(boolean canceled);
+    void setCanceledTo(boolean canceled);
+
+    default void setCanceled() {
+        this.setCanceledTo(true);
+    }
 
     default void forceCancelGoal() {
-        this.setCanceled(true);
+        this.setCanceledTo(true);
         if (this instanceof Goal goal) {
             goal.stop();
         }

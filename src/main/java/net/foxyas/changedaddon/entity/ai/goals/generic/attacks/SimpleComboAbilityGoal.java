@@ -300,7 +300,7 @@ public class SimpleComboAbilityGoal extends Goal {
             }
 
             if (type != 1 && type != 2 && attacker instanceof ChangedEntity changedEntity) {
-                if (changedEntity.getSelfVariant() != null && changedEntity.getSelfVariant().is(ChangedAddonTags.TransfurTypes.HAS_CLAWS)) {
+                if (changedEntity.getSelfVariant() != null && changedEntity.getSelfVariant().is(ChangedAddonTags.TransfurVariants.HAS_CLAWS)) {
                     if (changedEntity.getMainHandItem().isEmpty()) {
                         doClawsAttackEffect(changedEntity);
                     }

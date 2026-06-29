@@ -102,7 +102,7 @@ public final class ChangedAddonTags {
         }
     }
 
-    public static final class TransfurTypes {
+    public static final class TransfurVariants {
 
         // Transfur Details
         public static final TagKey<TransfurVariant<?>> ABLE_TO_CARRY = key("able_to_carry");
@@ -130,6 +130,11 @@ public final class ChangedAddonTags {
         public static final TagKey<TransfurVariant<?>> SWEET_DIET = key("sweet_tooth");
         public static final TagKey<TransfurVariant<?>> WOLF_DIET = key("wolf_diet");
         public static final TagKey<TransfurVariant<?>> NO_DIET = key("no_diet");
+
+        public static final TagKey<TransfurVariant<?>> BOSS_VARIANTS = key("boss_variants");
+        public static final TagKey<TransfurVariant<?>> REMOVED_FROM_GROUNDED_SYRINGES = key("removed_from/grounded_syringes");
+        public static final TagKey<TransfurVariant<?>> REMOVED_FROM_RANDOM_VARIANT_FUNCTION = key("removed_from/random_variant_function");
+
 
         private static TagKey<TransfurVariant<?>> key(String path) {
             return TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(), ChangedAddonMod.resourceLoc(path));

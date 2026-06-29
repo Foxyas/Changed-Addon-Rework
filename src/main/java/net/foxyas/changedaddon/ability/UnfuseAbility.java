@@ -6,7 +6,7 @@ import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
 import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractUnfuseableChangedEntity;
-import net.foxyas.changedaddon.util.FoxyasUtils;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -152,7 +152,7 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
                 changedEntityUnfused.setPos(host.position());
                 LivingEntity target = host.getLastHurtByMob();
 
-                if (target != null && target.distanceTo(host) < 5 && FoxyasUtils.canEntitySeeOther(changedEntityUnfused, target)) {
+                if (target != null && target.distanceTo(host) < 5 && FoxyasUtil.canEntitySeeOther(changedEntityUnfused, target)) {
                     if (changedEntityUnfused.canAttack(target)) {
                         changedEntityUnfused.setTarget(target);
                     }
