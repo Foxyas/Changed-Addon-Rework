@@ -527,9 +527,9 @@ public class HULanguageProvider extends LanguageProvider {
         add(EXP_9_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Nagyfeszültségű energia zümmög és lüktet az üvegben.");
         addItem(EXP_9_LATEX_BASE, "009-es kísérlet latex alapja");
         addItem(EXPERIMENT_009_DNA, "009-es kísérlet DNS-e");
-        add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".description", "§3Egy furcsa golyó...");
+        add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".description", "§3A tiszta energia-manipuláció és az elektromosság erejével átitatott DNS.");
         addItem(EXPERIMENT_10_DNA, "§410-es kísérlet DNS-e");
-        add(EXPERIMENT_10_DNA.get().getDescriptionId() + ".description", "§4Egy furcsa golyó...");
+        add(EXPERIMENT_10_DNA.get().getDescriptionId() + ".description", "§4A rothadás és bomlás által károsított DNS képesnek tűnik az élő anyag lebontására.");
         addItem(LUMINARA_BLOOM_PETALS, "Luminara virág sziromlevelei");
         add(FOXTA.get().getDescriptionId() + ".desc", "Most 200%-kal több narancsból készült! Csak 982 forint! Mennyei íze van!");
         addItem(GOLDEN_ORANGE, "Aranynarancs");
@@ -710,6 +710,7 @@ public class HULanguageProvider extends LanguageProvider {
         addText("display.hazard_body_suit.cant_have_helmet", "Mmph... Nyomja a fülem! Jobb, ha nem veszem fel.");
 
         addText("item.vial.wrong_use", "Ennek a tárgynak a használata ott nem fog működni.");
+        addText("item.vial.wrong_use.hint", "Ennek a tárgynak a használata ott nem fog működni, próbáld meg élő forrásban alkalmazni.");
 
         addText("rp.guns_compatibility.paws_too_big", "Túl nagyok a mancsaid ahhoz, hogy beleférjenek a ravaszvédőbe!");
         addText("rp.guns_compatibility.no_fingers_for_trigger", "Hiányzik az ujjügyességed a ravasz meghúzásához!");
