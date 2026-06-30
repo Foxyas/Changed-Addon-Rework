@@ -109,6 +109,16 @@ repositories {
         // EMI
         url = "https://maven.terraformersmc.com/"
     }
+
+    maven {
+        // location of the maven that hosts PatchouliProvider files
+        name = "BlameJared's maven"
+        url = 'https://maven.blamejared.com'
+    }
+
+    maven {
+        url 'https://maven.blamejared.com'
+    }
 }
 
 mixin {
@@ -185,6 +195,13 @@ dependencies {
 
     // Farmers Delight
     implementation fg.deobf("curse.maven:farmers-delight-398521:8083474")
+
+    // Patcholi Provider
+    implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:1.20.1-1.0.9-Snapshot.4")
+
+    // Patcholi Main Mod
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-85-FORGE:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-85-FORGE")
 
     //implementation files("libs/Changed-m1.18.2-v0.14")
 }

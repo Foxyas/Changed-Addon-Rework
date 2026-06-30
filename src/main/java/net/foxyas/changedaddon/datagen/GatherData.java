@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.datagen.ability_tree.AbilityTreeProviderImpl;
 import net.foxyas.changedaddon.datagen.compatibility.ModTrimMapsProvider;
 import net.foxyas.changedaddon.datagen.lang.ENLanguageProvider;
 import net.foxyas.changedaddon.datagen.lang.HULanguageProvider;
+import net.foxyas.changedaddon.datagen.patchouli.ModPatchouliBookProvider;
 import net.foxyas.changedaddon.datagen.worldgen.changed.facility.FacilityPieceProvider;
 import net.foxyas.changedaddon.datagen.worldgen.changed.facility_zone_spawns.FacilityZoneSpawnsProvider;
 import net.minecraft.core.HolderLookup;
@@ -63,5 +64,7 @@ public class GatherData {
         generator.addProvider(true, new AtlasProvider(packOutput, helper));
         generator.addProvider(true, new ENLanguageProvider(packOutput));
         generator.addProvider(true, new HULanguageProvider(packOutput));
+
+        generator.addProvider(true, new ModPatchouliBookProvider(packOutput));
     }
 }
