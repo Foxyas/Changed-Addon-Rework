@@ -319,8 +319,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addJeiDescriptions("luminara.riddle", "Where the world ends and the void devours all, \nthe beast must cast itself into the abyss. \nIn the silence where no flame dares burn, its soul is torn and remade. \nYet beware the breath of the dragon— \nfor those who fall touched by its venom do not merely evolve, \nbut awaken in Hyper radiance, burning brighter than the abyss itself.");
 
         addPatchouliDescriptions("riddles", "General information about the mod riddles.$(br)Solve the riddle, and something good you shall earn!$(br2)Use your mind, pay close attention,$(br)each clue holds a hint worth mention.");
-        addPatchouliDescriptions("lunar_rose.page1", "§f§lWhisper of the Lunar Bloom$(br)§r§oIn twilight’s hush, a flower concealed,§oA silent glow, its fate is sealed. §oBorn from a mirror that hides the light,§oAnd a frozen tear, both pure and bright. §oThrough hands unseen, they intertwine, §oIn crafted bond, their fates align. §oNo flame nor forge shall shape its form,§oYet under stars, it shall be born.");
-        addPatchouliDescriptions("lunar_rose.page2", "§oSeek the unseen, let wisdom ignite,§oFor only the knowing shall glimpse its light.");
+        addPatchouliDescriptions("lunar_rose.page1", "§f§lWhisper of the Lunar Bloom$(br)§r§oIn twilight’s hush, a flower concealed,§oA silent glow, its fate is sealed. §oBorn from a mirror that hides the light,§oAnd a frozen tear, both pure and bright. §oThrough hands unseen, they intertwine, §oIn crafted bond, their fates align. §oNo flame nor forge shall shape its form, §oYet under stars, it shall be born.");
+        addPatchouliDescriptions("lunar_rose.page2", "§oSeek the unseen, let wisdom ignite, §oFor only the knowing shall glimpse its light.");
 
         add(modid + ".latex_syringe.not_valid", "You hesitate. Something within warns you not to release what's inside.");
 
