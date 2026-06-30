@@ -5,7 +5,11 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "patchouli_descriptions.changed_addon.lunar_rose"
+      "text": "patchouli_descriptions.changed_addon.lunar_rose.page1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "patchouli_descriptions.changed_addon.lunar_rose.page2"
     }
   ]
 }

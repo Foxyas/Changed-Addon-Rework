@@ -20,9 +20,11 @@ public class ModPatchouliBookProvider extends PatchouliBookProvider {
 
     @Override
     protected void addBooks(Consumer<BookBuilder> consumer) {
+
+        // MAIN BOOK START \\
         BookBuilder book = createBookBuilder(
                 "guidebook",
-                "§3Changed Addon Guide",
+                "§bChanged Addon Guide",
                 "Welcome to the Changed Addon guidebook!"
         );
         book.setCustomBookItem(ChangedAddonItems.CHANGED_BOOK.get().getDefaultInstance());
@@ -34,7 +36,9 @@ public class ModPatchouliBookProvider extends PatchouliBookProvider {
         book.setCreativeTab(ChangedAddonCreativeTabs.CHANGED_ADDON_MAIN_TAB.getId().toString());
         book.setModel(ChangedAddonItems.CHANGED_BOOK.getId());
         book.setShowToasts(true);
+        // MAIN BOOK END \\
 
+        // RIDDLES CATEGORY START \\
         ItemStack lunarRose = ChangedAddonItems.LUNAR_ROSE.get().getDefaultInstance();
         ItemStack paper = Items.PAPER.getDefaultInstance();
         CategoryBuilder riddles = book.addCategory(
@@ -49,7 +53,9 @@ public class ModPatchouliBookProvider extends PatchouliBookProvider {
                         "Lunar Rose Poem",
                         lunarRose
                 )
-                .addSimpleTextPage("patchouli_descriptions.changed_addon.lunar_rose");
+                .addSimpleTextPage("patchouli_descriptions.changed_addon.lunar_rose.page1")
+                .addSimpleTextPage("patchouli_descriptions.changed_addon.lunar_rose.page2");
+        // RIDDLES CATEGORY END \\
 
         consumer.accept(book);
     }
