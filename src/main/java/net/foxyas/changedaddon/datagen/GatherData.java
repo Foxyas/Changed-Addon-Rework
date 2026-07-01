@@ -50,7 +50,7 @@ public class GatherData {
         generator.addProvider(event.includeServer(), FacilityZoneSpawnsProvider.getChangedAddonZoneSpawns(packOutput, existingFileHelper));
         generator.addProvider(event.includeServer(), FacilityPieceProvider.getChangedAddonFacilitiesPieces(packOutput, existingFileHelper));
 
-        generator.addProvider(true, new RecipeProvider(packOutput));
+        generator.addProvider(true, new ModRecipeProvider(packOutput));
 
 
         generator.addProvider(true, new BlockModelProvider(packOutput, helper));

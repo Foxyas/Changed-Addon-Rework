@@ -191,6 +191,10 @@ public abstract class LanguageProvider extends net.minecraftforge.common.data.La
         add("jei_descriptions." + modid + "." + key, value);
     }
 
+    protected void addPatchouliDescriptions(String key, String value) {
+        add("patchouli_descriptions." + modid + "." + key, value);
+    }
+
     protected void addEffect(RegistryObject<? extends MobEffect> effect, String value, @Nullable String description) {
         String key = effect.get().getDescriptionId();
         add(key, value);

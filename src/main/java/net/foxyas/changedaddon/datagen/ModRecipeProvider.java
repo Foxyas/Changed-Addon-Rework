@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.datagen;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.datagen.builders.ChangedAddonRecipeBuilder;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicCropRecipeProvider;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicSoilRecipeProvider;
@@ -13,28 +14,31 @@ import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeBuilder;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
+import net.minecraftforge.common.crafting.conditions.ICondition;
+import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import org.jetbrains.annotations.NotNull;
+import vazkii.patchouli.api.PatchouliAPI;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
 import static net.minecraft.world.item.Items.DIAMOND;
 import static net.minecraft.world.item.Items.TINTED_GLASS;
 
-public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
+public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
 
-    public RecipeProvider(PackOutput output) {
+    public ModRecipeProvider(PackOutput output) {
         super(output);
     }
 
@@ -214,6 +218,64 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .unlockedBy(hasPlanksStr, hasLumiPlanks)
                 .save(recipeConsumer);
         pressurePlate(recipeConsumer, LUMINARA_PRESSURE_PLATE.get(), LUMINARA_PLANKS.get());
+
+
+        Item changedBook = CHANGED_BOOK.get();
+        ResourceLocation changedBookRecipeID = ChangedAddonMod.resourceLoc("guide_book");
+        ShapelessRecipeBuilder changedBookRecipe = ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, changedBook)
+                .requires(ChangedItems.DARK_LATEX_GOO.get())
+                .requires(ChangedItems.LAB_BOOK.get())
+                .requires(ChangedItems.WHITE_LATEX_GOO.get())
+                .unlockedBy(
+                        getHasName(Items.BOOK),
+                        has(Items.BOOK)
+                )
+                .unlockedBy(
+                        getHasName(ChangedItems.DARK_LATEX_GOO.get()),
+                        has(ChangedItems.DARK_LATEX_GOO.get())
+                )
+                .unlockedBy(
+                        getHasName(ChangedItems.LAB_BOOK.get()),
+                        has(ChangedItems.LAB_BOOK.get())
+                )
+                .unlockedBy(
+                        getHasName(ChangedItems.WHITE_LATEX_GOO.get()),
+                        has(ChangedItems.WHITE_LATEX_GOO.get())
+                );
+
+//        ConditionalRecipe.Builder hasPatchouliMod = ConditionalRecipe.builder().addCondition(this.modLoaded(PatchouliAPI.MOD_ID));
+//        hasPatchouliMod.addRecipe(changedBookRecipe::save).build(recipeConsumer, changedBookRecipeID);
+
+        saveRecipeWithConditionAndSpecificID(recipeConsumer, changedBookRecipe, changedBookRecipeID, this.modLoaded(PatchouliAPI.MOD_ID));
+    }
+
+    private void saveRecipeWithCondition(Consumer<FinishedRecipe> recipeConsumer, RecipeBuilder recipe, ICondition... conditions) {
+        ConditionalRecipe.Builder builder = ConditionalRecipe.builder();
+        for (ICondition condition : conditions) {
+            builder.addCondition(condition);
+        }
+        builder.addRecipe(recipe::save);
+        builder.build(recipeConsumer, RecipeBuilder.getDefaultRecipeId(recipe.getResult()));
+    }
+
+    private void saveRecipeWithConditionAndSpecificID(Consumer<FinishedRecipe> recipeConsumer, RecipeBuilder recipe, ResourceLocation recipeID, ICondition... conditions) {
+        ConditionalRecipe.Builder builder = ConditionalRecipe.builder();
+        for (ICondition condition : conditions) {
+            builder.addCondition(condition);
+        }
+        builder.addRecipe(recipe::save);
+        builder.build(recipeConsumer, recipeID);
+    }
+
+    private void saveRecipesWithCondition(Consumer<FinishedRecipe> recipeConsumer, List<RecipeBuilder> recipes, ResourceLocation recipesConditionID, ICondition... conditions) {
+        ConditionalRecipe.Builder builder = ConditionalRecipe.builder();
+        for (ICondition condition : conditions) {
+            builder.addCondition(condition);
+        }
+        for (RecipeBuilder recipe : recipes) {
+            builder.addRecipe(recipe::save);
+        }
+        builder.build(recipeConsumer, recipesConditionID);
     }
 
     private ShapedRecipeBuilder reinforce(ItemLike result, ItemLike input, String criterionName, CriterionTriggerInstance criterion) {

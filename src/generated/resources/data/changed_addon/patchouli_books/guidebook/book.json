@@ -1,6 +1,12 @@
 {
+  "creative_tab": "changed_addon:main_tab",
+  "custom_book_item": "changed_addon:changedbook",
+  "dont_generate_book": false,
   "i18n": true,
   "landing_text": "Welcome to the Changed Addon guidebook!",
-  "name": "Changed Addon Guide",
+  "model": "changed_addon:changedbook",
+  "name": "§bChanged Addon Guide",
+  "show_progress": false,
+  "show_toasts": true,
   "use_resource_pack": true
 }
