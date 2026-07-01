@@ -317,6 +317,10 @@ public class HULanguageProvider extends LanguageProvider {
         addJeiDescriptions("pot_with_cammonia", "Elég visszatranszfurálási hatást biztosít ahhoz, hogy elfogyasztásakor teljesen visszafordítsa az átalakulást.");
         addJeiDescriptions("luminara.riddle", "Ahol a világ véget ér és az űr mindent elnyel, \na lénynek a mélységbe kell vetnie magát. \nA csendben, ahol semmilyen láng nem mer égni, lelke szétszakad és újjáalakul. \nDe óvakodjatok a sárkány leheletétől— \nmert akiket megérint a mérge, nemcsak fejlődnek, \nhanem hiper-sugárzásban ébrednek fel, fényesebben égve, mint maga a mélység.");
 
+        addPatchouliDescriptions("riddles", "Általános információk a mod rejtvényekről.$(br)Fejtsd meg a rejtvényt, és valami jót fogsz nyerni!$(br2)Használd az eszed, figyelj nagyon,$(br)minden nyom tartalmaz egy említésre méltó utalást.");
+        addPatchouliDescriptions("lunar_rose.page1", "§f§lA holdvirág suttogása$(br)§r§oA szürkület csendjében egy virág rejtőzik,§oCsendes ragyogás, sorsa megpecsételődött. §oA fényt elrejtő tükörből született,§oÉs egy fagyos könnyből, tiszta és ragyogó. §oLáthatatlan kezek által összefonódnak, §oKézműves kötelékben, sorsuk egybefonódik. §oSem láng, sem kovácsműhely nem formálja alakját, §oDe a csillagok alatt megszületik.");
+        addPatchouliDescriptions("lunar_rose.page2", "§oKeresd a láthatatlant, hagyd, hogy a bölcsesség lángra gyúljon, §oMert csak a tudók pillanthatnak meg fényét.");  
+        
         add(modid + ".latex_syringe.not_valid", "Habozol. Valami benned figyelmeztet, hogy ne engedd el, ami benne van.");
 
         add(modid + ".latex_totem.not_valid", "Totem §cnegatívan§r reagált a §bDNS§r-edre");
