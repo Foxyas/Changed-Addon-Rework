@@ -15,7 +15,7 @@ public class ChangedAddonAbilityTreeCodecs {
     public static final DeferredRegister<Codec<? extends AbilityTree.NodeEffect>> NODE_EFFECT_REGISTRY = ChangedRegistry.ABILITY_NODE_EFFECTS.createDeferred(ChangedAddonMod.MODID);
     public static final DeferredRegister<Codec<? extends AbstractCondition>> EFFECT_CONDITION_REGISTRY = ChangedRegistry.ABILITY_EFFECT_CONDITIONS.createDeferred(ChangedAddonMod.MODID);
 
-    public static final RegistryObject<Codec<AlphaCondition>> ALPHA_CONDITION = EFFECT_CONDITION_REGISTRY.register("alphaCondition", () -> AlphaCondition.CODEC);
+    public static final RegistryObject<Codec<AlphaCondition>> ALPHA_CONDITION = EFFECT_CONDITION_REGISTRY.register("alpha_condition", () -> AlphaCondition.CODEC);
 
 
     public static void register(IEventBus eventBus) {

@@ -14,7 +14,7 @@ import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -76,7 +76,7 @@ import java.util.List;
 
 import static net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal.hasValidAlphaSleepGoal;
 import static net.foxyas.changedaddon.event.TransfurEvents.resolveChangedEntity;
-import static net.foxyas.changedaddon.process.features.ProcessPatFeature.*;
+import static net.foxyas.changedaddon.process.features.ProcessPatFeature.GlobalPatReactionEvent;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
 public class CommonEvent {
@@ -198,7 +198,8 @@ public class CommonEvent {
     @SubscribeEvent
     public static void onBedInteract(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getEntity();
-        if (player.isCrouching() || player.isSleeping() || !ChangedAddonVariables.ofOrDefault(player).isCuddling) return;
+        if (player.isCrouching() || player.isSleeping() || !ChangedAddonVariables.ofOrDefault(player).isCuddling)
+            return;
 
         Level level = player.level;
         BlockHitResult result = event.getHitVec();
@@ -230,7 +231,7 @@ public class CommonEvent {
         if (targetGrab != null) {
             if (targetGrab.grabbedEntity != null) return;
 
-            if (((GrabEntityAbilityExtensor)targetGrab).canGrabEntity(player) || !ProcessTransfur.isPlayerTransfurred(player)) {
+            if (((GrabEntityAbilityExtensor) targetGrab).canGrabEntity(player) || !ProcessTransfur.isPlayerTransfurred(player)) {
                 if (targetGrab.grabEntity(player)) {
                     Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> target), GrabEntityPacket.initialGrab(target, player));
                     event.setCanceled(true);
@@ -319,8 +320,14 @@ public class CommonEvent {
     @SubscribeEvent
     public static void onPlayerLoggedInSyncPlayerVariables(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getEntity();
-        if (!player.level.isClientSide())
+        if (!player.level.isClientSide()) {
             ChangedAddonVariables.ofOrDefault(player).syncPlayerVariables(player);
+
+            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (transfurVariant instanceof TransfurVariantInstanceExtensor transfurVariantInstanceExtensor) {
+                transfurVariantInstanceExtensor.maySendDataUpdate();
+            }
+        }
     }
 
     @SubscribeEvent
