@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.datagen.builders.BetterShapelessRecipeBuilder;
 import net.foxyas.changedaddon.datagen.builders.ChangedAddonRecipeBuilder;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicCropRecipeProvider;
 import net.foxyas.changedaddon.datagen.recipes.crop.BasicSoilRecipeProvider;
@@ -16,7 +17,6 @@ import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -220,9 +220,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         pressurePlate(recipeConsumer, LUMINARA_PRESSURE_PLATE.get(), LUMINARA_PLANKS.get());
 
 
-        Item changedBook = CHANGED_BOOK.get();
+        StrictNBTIngredient changedBook = StrictNBTIngredient.of(PatchouliAPI.get().getBookStack(ChangedAddonMod.resourceLoc("guide_book")));
         ResourceLocation changedBookRecipeID = ChangedAddonMod.resourceLoc("guide_book");
-        ShapelessRecipeBuilder changedBookRecipe = ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, changedBook)
+        BetterShapelessRecipeBuilder changedBookRecipe = BetterShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, changedBook)
                 .requires(ChangedItems.DARK_LATEX_GOO.get())
                 .requires(ChangedItems.LAB_BOOK.get())
                 .requires(ChangedItems.WHITE_LATEX_GOO.get())

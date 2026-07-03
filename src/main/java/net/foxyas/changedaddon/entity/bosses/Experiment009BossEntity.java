@@ -10,6 +10,7 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingA
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
@@ -71,6 +72,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -89,6 +91,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> CASTING_ATTACK =
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Exp9Phase> PHASE =
+            SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
+//
+//    private static EntityDataAccessor<Exp9Phase> PHASE() {
+//        return SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
+//    }
 
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private boolean shouldBleed;
@@ -106,7 +114,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
-        applyDefaultBasicPlayerInfo();
         this.waterNavigation = new WaterBoundPathNavigation(this, world);
         this.groundNavigation = new GroundPathNavigation(this, world);
         this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
@@ -137,10 +144,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return GearTier.LOW;
     }
 
-    protected void applyDefaultBasicPlayerInfo() {
-        super.applyDefaultBasicPlayerInfo();
-    }
-
     public DamageSource getThunderDmg() {
         DamageSource damageSource = this.level().damageSources().lightningBolt();
         Holder<DamageType> pType = damageSource.typeHolder();
@@ -158,11 +161,17 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         super.defineSynchedData();
         this.entityData.define(PHASE3, false);
         this.entityData.define(CASTING_ATTACK, false);
+        this.entityData.define(PHASE, this.getPhase());
     }
 
     @Override
     protected EntityDataAccessor<Boolean> getPhase2DataAccessor() {
         return PHASE2;
+    }
+
+    @Override
+    public void updateSwimming() {
+        super.updateSwimming();
     }
 
     public boolean isCastingAttack() {
@@ -312,10 +321,31 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
+    @Override
     public Exp9Phase getPhase() {
-        if (isPhase2() && !isPhase3()) return Exp9Phase.PHASE2;
-        if (isPhase3()) return Exp9Phase.PHASE3;
-        return Exp9Phase.PHASE1;
+        if (entityData.hasItem(PHASE)) {
+            return entityData.get(PHASE);
+        } else {
+            if (isPhase3()) return Exp9Phase.PHASE3;
+            if (isPhase2()) return Exp9Phase.PHASE2;
+            return Exp9Phase.PHASE1;
+        }
+    }
+
+    @Override
+    public void setPhase(Exp9Phase phase) {
+        entityData.set(PHASE, phase);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {
+        super.onSyncedDataUpdated(pKey);
+        if (pKey.equals(PHASE3) || pKey.equals(PHASE2)) {
+            this.setPhase(entityData.get(PHASE3) ? Exp9Phase.PHASE3 : entityData.get(PHASE2) ? Exp9Phase.PHASE2 : Exp9Phase.PHASE1);
+        }
+        if (pKey.equals(PHASE)) {
+            onPhaseChange(entityData.get(PHASE));
+        }
     }
 
     @Override
@@ -544,11 +574,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     protected void actuallyHurt(@NotNull DamageSource pDamageSource, float pDamageAmount) {
+        float beforeHealth = this.getHealth();
         super.actuallyHurt(pDamageSource, pDamageAmount);
-
         float currentHealth = this.getHealth();
         float maxHealth = this.getMaxHealth();
-
 
         if (this.isPhase2()) {
             float ratio = this.computeHealthRatio();
@@ -788,10 +817,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             if (this.getTarget() == null) {
                 this.setCastingAttack(false);
             }
-        }
-
-        if (firstTick) {
-            applyDefaultBasicPlayerInfo();
         }
 
         if (shouldBleed && (this.computeHealthRatio() / 0.4f) > 0.25f && this.tickCount % 4 == 0) {
@@ -1082,6 +1107,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 case LOW -> event.setAmount(event.getAmount() * 2.5F);
                 case MID, HIGH -> event.setAmount(event.getAmount());
             }
+        }
+
+        @SubscribeEvent
+        public static void onPlayerHurtBoss(LivingDamageEvent event) {
+            if (!(event.getEntity() instanceof Experiment009BossEntity target)) return;
         }
 
         @SubscribeEvent

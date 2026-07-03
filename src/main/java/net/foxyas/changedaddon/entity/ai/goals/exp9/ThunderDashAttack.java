@@ -1,9 +1,10 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
-import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -45,6 +46,11 @@ public class ThunderDashAttack extends Goal {
 
     public void setTickCount(int tickCount) {
         this.tickCount = tickCount;
+    }
+
+    @Override
+    public boolean isInterruptable() {
+        return false;
     }
 
     @Override
@@ -106,7 +112,7 @@ public class ThunderDashAttack extends Goal {
             dasher.getNavigation().stop();
             if (target == null || target.isRemoved() || target.isDeadOrDying()) return;
             if (target.distanceTo(dasher) > 0) {
-                dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
+                dasher.getLookControl().setLookAt(target, 90f, 90f);
             }
             dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
             dasher.level().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
@@ -123,8 +129,12 @@ public class ThunderDashAttack extends Goal {
         }
 
         if (tickCount <= PREPARE_TIME + MAX_DASH_TICKS) {
+            dasher.getNavigation().stop();
+
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
+            Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection);
+            dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 180, 180);
             if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
                 tickCount += 5;
             }
@@ -149,7 +159,13 @@ public class ThunderDashAttack extends Goal {
                     } else {
                         dasher.level().playSound(null, entity, SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1, 1);
                     }
-                    entity.setDeltaMovement(entity.getDeltaMovement().add(knockback));
+                    entity.setDeltaMovement(entity.getDeltaMovement().add(knockback.multiply(1f, 0.0025f, 1f)));
+                    if (entity instanceof ServerPlayer serverPlayer) {
+                        serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                                serverPlayer.getId(),
+                                serverPlayer.getDeltaMovement())
+                        );
+                    }
                 }
             }
             this.isDashing = false;

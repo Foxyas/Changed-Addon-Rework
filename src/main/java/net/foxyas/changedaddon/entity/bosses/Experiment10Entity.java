@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -65,24 +66,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(getPhase2DataAccessor(), false);
-    }
-
-    @Override
-    public void setYRot(float pYRot) {
-        if (!Float.isFinite(pYRot)) {
-            return;
-        }
-
-        super.setYRot(pYRot);
-    }
-
-    @Override
-    public void setXRot(float pXRot) {
-        if (!Float.isFinite(pXRot)) {
-            return;
-        }
-
-        super.setXRot(pXRot);
     }
 
     protected EntityDataAccessor<Boolean> getPhase2DataAccessor() {
@@ -262,12 +245,14 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         return super.hurt(source, amount);
     }
 
-    protected void applyDefaultBasicPlayerInfo() {
-        this.getBasicPlayerInfo().setSize(1f);
-        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-        this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#880015"));
-        this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#880015"));
-        this.getBasicPlayerInfo().setScleraColor(Color3.getColor("#edd725"));
+    @Override
+    protected void initializeBPI(BasicPlayerInfo info, RandomSource random) {
+        super.initializeBPI(info, random);
+        info.setSize(1f);
+        info.setEyeStyle(EyeStyle.TALL);
+        info.setRightIrisColor(Color3.getColor("#880015"));
+        info.setLeftIrisColor(Color3.getColor("#880015"));
+        info.setScleraColor(Color3.getColor("#edd725"));
     }
 
     @Override

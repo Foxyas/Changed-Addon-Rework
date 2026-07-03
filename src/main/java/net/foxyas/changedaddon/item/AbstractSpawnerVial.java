@@ -35,9 +35,13 @@ public abstract class AbstractSpawnerVial extends InteractableSpecialSpawnEggIte
 
     @Override
     public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player player, @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand) {
+        return maySpawnOnInteractLivingEntity(stack, player, pInteractionTarget, pUsedHand, player.isCrouching());
+    }
+
+    public @NotNull InteractionResult maySpawnOnInteractLivingEntity(@NotNull ItemStack stack, @NotNull Player player, @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand, boolean confirmed) {
         if (shouldSpawnInLivingInteraction()) {
             if (pInteractionTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS) && !(pInteractionTarget instanceof Player)) {
-                if (!player.isCrouching()) {
+                if (!confirmed) {
                     player.displayClientMessage(Component.translatable("text.changed_addon.confirm_vial_use"), true);
                     return InteractionResult.CONSUME_PARTIAL;
                 }
@@ -57,6 +61,19 @@ public abstract class AbstractSpawnerVial extends InteractableSpecialSpawnEggIte
         }
 
         return onFailInteractLivingEntity(stack, player, pInteractionTarget, pUsedHand);
+    }
+
+    @Override
+    public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+        if (entity instanceof LivingEntity livingEntity) {
+            var interaction = this.maySpawnOnInteractLivingEntity(stack, player, livingEntity, player.getUsedItemHand(), true);
+            if (interaction.consumesAction()) {
+                return true;
+            }
+        }
+
+
+        return super.onLeftClickEntity(stack, player, entity);
     }
 
     @Override

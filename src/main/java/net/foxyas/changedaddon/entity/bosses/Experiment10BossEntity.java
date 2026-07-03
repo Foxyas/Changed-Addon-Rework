@@ -80,7 +80,6 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
-        applyDefaultBasicPlayerInfo();
         this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
     }
 
@@ -322,10 +321,6 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     @Override
     public void baseTick() {
         super.baseTick();
-        if (firstTick) {
-            applyDefaultBasicPlayerInfo();
-        }
-
         SetDefense(this);
         SetAttack(this);
         SetSpeed(this);

@@ -6,10 +6,12 @@ import net.foxyas.changedaddon.entity.ai.LatexAttackCondition;
 import net.foxyas.changedaddon.entity.ai.LatexAttackType;
 import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.ai.LatexTargetType;
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ChangedAddonEntityDataSerializers {
 
@@ -21,6 +23,7 @@ public class ChangedAddonEntityDataSerializers {
     public static final EntityDataSerializer<LatexAttackCondition> LATEX_ATTACK_CONDITION = EntityDataSerializer.simpleEnum(LatexAttackCondition.class);
     public static final EntityDataSerializer<LatexFavor> LATEX_FAVOR = EntityDataSerializer.simpleEnum(LatexFavor.class);
     public static final EntityDataSerializer<AvaliEntity.StyleType> AVALI_STYLE_TYPE = EntityDataSerializer.simpleEnum(AvaliEntity.StyleType.class);
+    public static final RegistryObject<EntityDataSerializer<Experiment009BossEntity.Exp9Phase>> EXP9_PHASES = SERIALIZERS.register("exp9_phase", () -> EntityDataSerializer.simpleEnum(Experiment009BossEntity.Exp9Phase.class));
 
     static {
         EntityDataSerializers.registerSerializer(LATEX_TARGET_TYPE);

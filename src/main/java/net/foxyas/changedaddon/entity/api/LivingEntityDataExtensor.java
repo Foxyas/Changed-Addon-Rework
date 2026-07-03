@@ -72,7 +72,7 @@ public interface LivingEntityDataExtensor {
 
     // Utils
 
-    default boolean isEyeOnLavaWithTransfurAndFireResistance(Player player) {
+    static boolean isEyeOnLavaWithTransfurAndFireResistance(Player player) {
         TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
         if (transfurVariant != null && (player.hasEffect(MobEffects.FIRE_RESISTANCE) && player.isEyeInFluid(FluidTags.LAVA))) {
             boolean aquaticLike = transfurVariant.getParent().is(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE);
@@ -86,7 +86,7 @@ public interface LivingEntityDataExtensor {
         return false;
     }
 
-    default boolean isOnLavaWithTransfurAndFireResistance(Player player) {
+    static boolean isOnLavaWithTransfurAndFireResistance(Player player) {
         TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
         if (transfurVariant != null && (player.hasEffect(MobEffects.FIRE_RESISTANCE) && player.level().getFluidState(player.blockPosition()).is(FluidTags.LAVA))) {
             boolean aquaticLike = transfurVariant.getParent().is(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE);

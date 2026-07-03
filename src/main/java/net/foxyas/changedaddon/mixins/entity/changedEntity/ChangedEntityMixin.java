@@ -8,8 +8,10 @@ import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.entity.simple.WolfyEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
-import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
+import net.foxyas.changedaddon.util.TagKeyUtil;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -18,9 +20,12 @@ import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.LatexSnowLeopardFemale;
 import net.ltxprogrammer.changed.entity.beast.LatexSnowLeopardMale;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,6 +34,9 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,6 +46,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.List;
 import java.util.Optional;
 
 @Mixin(value = ChangedEntity.class, remap = false)
@@ -57,6 +66,23 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
                 && itemStack.getItem() instanceof DarkLatexCoatItem;
     }
 
+    @Override
+    public boolean canSwimInFluidType(FluidType type) {
+        List<FluidType> lavaFluids = TagKeyUtil.getTagContents(level, FluidTags.LAVA).map(Fluid::getFluidType).toList();
+
+        var transfurVariant = getSelfVariant();
+        if (transfurVariant != null && (this.hasEffect(MobEffects.FIRE_RESISTANCE) && lavaFluids.contains(type))) {
+            boolean aquaticLike = transfurVariant.is(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE);
+            boolean fastSwimSpeed = this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) > 1;
+            boolean aquaticBreath = transfurVariant.breatheMode.canBreatheWater();
+            boolean aquaticAffinity = transfurVariant.breatheMode.hasAquaAffinity();
+
+            return aquaticLike || fastSwimSpeed || aquaticBreath || aquaticAffinity;
+        }
+
+        return super.canSwimInFluidType(type);
+    }
+
     @Shadow
     public abstract LivingEntity maybeGetUnderlying();
 
@@ -71,6 +97,8 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
 
     @Shadow
     public abstract TransfurContext getReplicateContext();
+
+    @Shadow public abstract TransfurVariant<?> getSelfVariant();
 
     @Override
     protected boolean shouldDespawnInPeaceful() {

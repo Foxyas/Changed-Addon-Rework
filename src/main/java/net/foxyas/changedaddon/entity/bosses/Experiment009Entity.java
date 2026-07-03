@@ -25,6 +25,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -68,32 +69,6 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         xpReward = 160;
         setNoAi(false);
         setPersistenceRequired();
-        applyDefaultBasicPlayerInfo();
-    }
-
-    @Override
-    public void setYRot(float pYRot) {
-        if (!Float.isFinite(pYRot)) {
-            super.setYRot(0);
-            return;
-        }
-
-        super.setYRot(pYRot);
-    }
-
-    @Override
-    public void setXRot(float pXRot) {
-        if (!Float.isFinite(pXRot)) {
-            super.setXRot(0);
-            return;
-        }
-
-        super.setXRot(pXRot);
-    }
-
-    @Override
-    public void setYBodyRot(float pOffset) {
-        super.setYBodyRot(pOffset);
     }
 
     @Override
@@ -440,7 +415,9 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         super.customServerAiStep();
     }
 
-    protected void applyDefaultBasicPlayerInfo() {
+    @Override
+    protected void initializeBPI(BasicPlayerInfo info, RandomSource random) {
+        super.initializeBPI(info, random);
         this.getBasicPlayerInfo().setSize(1f);
         this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
     }
@@ -500,7 +477,6 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     public void applyBestiaryRenderState(ChangedEntity changedEntity, GuiGraphics guiGraphics) {
         if (changedEntity instanceof Experiment009Entity entity) {
             entity.setPhase2(true);
-            entity.applyDefaultBasicPlayerInfo();
         }
     }
 

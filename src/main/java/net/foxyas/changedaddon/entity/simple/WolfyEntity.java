@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
+import net.foxyas.changedaddon.util.TagKeyUtil;
 import net.foxyas.changedaddon.variant.ILavaSwimmableVariant;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -34,9 +35,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -115,35 +118,35 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmable
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    @Override
-    public boolean variantOverrideSwim() {
-        if (this.maybeGetUnderlying() instanceof Player player) {
-            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-            return transfurVariant != null && player.isEyeInFluid(FluidTags.LAVA);
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean variantOverrideSwimUpdate() {
-        if (this.maybeGetUnderlying() instanceof Player player) {
-            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-            return transfurVariant != null && player.isEyeInFluid(FluidTags.LAVA);
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean variantOverrideIsInWater() {
-        if (this.maybeGetUnderlying() instanceof Player player) {
-            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-            return transfurVariant != null && player.level().getFluidState(player.blockPosition()).is(FluidTags.LAVA);
-        }
-
-        return false;
-    }
+//    @Override
+//    public boolean variantOverrideSwim() {
+//        if (this.maybeGetUnderlying() instanceof Player player) {
+//            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+//            return transfurVariant != null && player.isEyeInFluid(FluidTags.LAVA);
+//        }
+//
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean variantOverrideSwimUpdate() {
+//        if (this.maybeGetUnderlying() instanceof Player player) {
+//            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+//            return transfurVariant != null && player.isEyeInFluid(FluidTags.LAVA);
+//        }
+//
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean variantOverrideIsInWater() {
+//        if (this.maybeGetUnderlying() instanceof Player player) {
+//            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+//            return transfurVariant != null && player.level().getFluidState(player.blockPosition()).is(FluidTags.LAVA);
+//        }
+//
+//        return false;
+//    }
 
     @Override
     public TransfurMode getTransfurMode() {
@@ -337,6 +340,12 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmable
         if (source.is(DamageTypeTags.IS_FIRE))
             return false;
         return super.hurt(source, amount);
+    }
+
+    @Override
+    public boolean canSwimInFluidType(FluidType type) {
+        List<FluidType> lavaFluids = TagKeyUtil.getTagContents(level, FluidTags.LAVA).map(Fluid::getFluidType).toList();
+        return super.canSwimInFluidType(type) || lavaFluids.contains(type);
     }
 
     @Mod.EventBusSubscriber

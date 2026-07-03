@@ -23,7 +23,10 @@
           }
         ],
         "result": {
-          "item": "changed_addon:changedbook"
+          "type": "forge:nbt",
+          "count": 1,
+          "item": "patchouli:guide_book",
+          "nbt": "{\"patchouli:book\":\"changed_addon:guide_book\"}"
         }
       }
     }

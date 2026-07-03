@@ -4,7 +4,9 @@ import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -127,6 +129,7 @@ public class LightningComboAttackGoal extends CastingAttackGoal {
             return;
         }
 
+        holder.getNavigation().stop();
         if (target != null) {
             if (target.isRemoved() && target.isDeadOrDying()) return;
             if (target.distanceTo(holder) > 0) {
@@ -165,6 +168,7 @@ public class LightningComboAttackGoal extends CastingAttackGoal {
 
         attacks--;
 
+        if (holder instanceof Experiment009BossEntity exp9) exp9.setCastingAttack(false);
         holder.teleportTo(attackPos.x, attackPos.y, attackPos.z);
         holder.swing(InteractionHand.MAIN_HAND);
 
@@ -217,6 +221,13 @@ public class LightningComboAttackGoal extends CastingAttackGoal {
                     direction.y * knockback,
                     direction.z * knockback
             );
+
+            if (livingEntity instanceof ServerPlayer serverPlayer) {
+                serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                        serverPlayer.getId(),
+                        serverPlayer.getDeltaMovement())
+                );
+            }
         }
 
         if (anyBlocked) {

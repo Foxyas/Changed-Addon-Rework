@@ -23,7 +23,7 @@ public class ModPatchouliBookProvider extends PatchouliBookProvider {
 
         // MAIN BOOK START \\
         BookBuilder book = createBookBuilder(
-                "guidebook",
+                "guide_book",
                 "§bChanged Addon Guide",
                 "Welcome to the Changed Addon guidebook!"
         );
