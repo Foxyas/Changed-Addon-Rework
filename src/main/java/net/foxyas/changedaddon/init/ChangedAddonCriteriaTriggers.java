@@ -13,4 +13,5 @@ public class ChangedAddonCriteriaTriggers {
     public static final LavaSwimmingTrigger LAVA_SWIMMING_TRIGGER = register(new LavaSwimmingTrigger());
     public static final SleepNextAPlushyTrigger SLEEP_NEXT_A_PLUSHY_TRIGGER = register(new SleepNextAPlushyTrigger());
     public static final UsedItemAmountTrigger USED_ITEM_AMOUNT_TRIGGER = register(new UsedItemAmountTrigger());
+    public static final SimpleIDTrigger SIMPLE_ID_TRIGGER = register(new SimpleIDTrigger());
 }

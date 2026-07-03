@@ -10,12 +10,8 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.DashPunchGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.LeapSmashGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
-import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.init.ChangedAddonGameRules;
-import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -380,7 +376,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     public void WhenPattedReaction(LivingEntity patter, InteractionHand hand) {
         if (!(patter.level() instanceof ServerLevel)) return;
         if (patter instanceof ServerPlayer serverPlayer) {
-            ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.Trigger(serverPlayer, this, "pats_on_the_beast");
+            ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(serverPlayer, this, "pats_on_the_beast");
         }
         if (!(patter instanceof Player player)) {
             return;

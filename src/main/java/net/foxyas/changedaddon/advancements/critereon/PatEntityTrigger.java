@@ -43,11 +43,11 @@ public class PatEntityTrigger extends SimpleCriterionTrigger<PatEntityTrigger.Tr
         return new TriggerInstance(p_66249_, headSlot, chestSlot, legsSlot, feetSlot, entityType);
     }
 
-    public void Trigger(ServerPlayer player, Entity toPatTarget) {
+    public void trigger(ServerPlayer player, Entity toPatTarget) {
         this.trigger(player, instance -> instance.matches(player, toPatTarget));
     }
 
-    public void Trigger(ServerPlayer player, Entity toPatTarget, String name) {
+    public void trigger(ServerPlayer player, Entity toPatTarget, String name) {
         this.trigger(player, instance -> instance.matches(player, toPatTarget, name));
     }
 

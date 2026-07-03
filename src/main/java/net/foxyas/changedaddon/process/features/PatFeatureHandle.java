@@ -177,11 +177,11 @@ public class PatFeatureHandle {
     }
 
     public static void GivePatAdvancement(ServerPlayer player, Entity target) {
-        ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.Trigger(player, target, "chance");
+        ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(player, target, "chance");
     }
 
     public static void GiveStealthPatAdvancement(ServerPlayer player, Entity target) {
-        ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.Trigger(player, target, "stealth");
+        ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(player, target, "stealth");
     }
 
     private static void onPat(ServerPlayer player) {
