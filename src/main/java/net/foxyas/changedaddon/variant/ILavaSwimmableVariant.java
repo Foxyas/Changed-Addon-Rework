@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 public interface ILavaSwimmableVariant extends IVariantExtraStats {
 
     @Override
-    default boolean variantOverrideSwim() {
+    default boolean variantOverrideWasUnderwater() {
         if (this instanceof ChangedEntity changedEntity) {
             if (changedEntity.maybeGetUnderlying() instanceof Player player) {
                 TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);

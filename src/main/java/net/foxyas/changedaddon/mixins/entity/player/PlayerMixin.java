@@ -8,9 +8,9 @@ import net.foxyas.changedaddon.client.renderer.items.HazardBodySuitClothingRende
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.AbstractKatanaItem;
 import net.foxyas.changedaddon.item.api.IDrinkItem;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
@@ -101,7 +101,7 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
         Boolean returnValue = cir.getReturnValue();
         if (returnValue != null) {
             if (!returnValue) {
-                this.wasUnderwater = overrideSwim();
+                this.wasUnderwater = overrideWasUnderwater();
                 cir.setReturnValue(wasUnderwater);
             }
         }

@@ -46,14 +46,17 @@ public interface IVariantExtraStats {
         return List.of();
     }
 
-    default boolean variantOverrideSwim() {
+    // Defines if it should play the "splash" sound effect when entering the water or etc.
+    default boolean variantOverrideWasUnderwater() {
         return false;
     }
 
+    // Defines if it should allow the player to keep swimming
     default boolean variantOverrideSwimUpdate() {
         return false;
     }
 
+    // Defines if it should allow the player to swim
     default boolean variantOverrideIsInWater() {
         return false;
     }

@@ -20,18 +20,19 @@ public interface LivingEntityDataExtensor {
         return (entity instanceof LivingEntityDataExtensor livingEntityDataExtensor) ? livingEntityDataExtensor : null;
     }
 
-    default void setSleepCounter(int value) {}
+    default void setSleepCounter(int value) {
+    }
 
     default AnimationState getCustomAnimationState(int id) {
         return null;
     }
 
     ///  It tries to override the {@link Player#updateIsUnderwater() updateIsUnderwater} which make the override value need to be other than false
-    default boolean overrideSwim() {
+    default boolean overrideWasUnderwater() {
         if (this instanceof Player player) {
             TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
             if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof IVariantExtraStats IVariantExtraStats) {
-                return IVariantExtraStats.variantOverrideSwim();
+                return IVariantExtraStats.variantOverrideWasUnderwater();
             }
 
             return isEyeOnLavaWithTransfurAndFireResistance(player);
@@ -74,7 +75,7 @@ public interface LivingEntityDataExtensor {
 
     static boolean isEyeOnLavaWithTransfurAndFireResistance(Player player) {
         TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-        if (transfurVariant != null && (player.hasEffect(MobEffects.FIRE_RESISTANCE) && player.isEyeInFluid(FluidTags.LAVA))) {
+        if (!player.canSwimInFluidType(ForgeMod.LAVA_TYPE.get()) && transfurVariant != null && (player.hasEffect(MobEffects.FIRE_RESISTANCE) && player.isEyeInFluid(FluidTags.LAVA))) {
             boolean aquaticLike = transfurVariant.getParent().is(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE);
             boolean fastSwimSpeed = transfurVariant.getChangedEntity().getAttributeValue(ForgeMod.SWIM_SPEED.get()) > 1;
             boolean aquaticBreath = transfurVariant.getParent().breatheMode.canBreatheWater();
@@ -88,7 +89,7 @@ public interface LivingEntityDataExtensor {
 
     static boolean isOnLavaWithTransfurAndFireResistance(Player player) {
         TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-        if (transfurVariant != null && (player.hasEffect(MobEffects.FIRE_RESISTANCE) && player.level().getFluidState(player.blockPosition()).is(FluidTags.LAVA))) {
+        if (!player.canSwimInFluidType(ForgeMod.LAVA_TYPE.get()) && transfurVariant != null && (player.hasEffect(MobEffects.FIRE_RESISTANCE) && player.level().getFluidState(player.blockPosition()).is(FluidTags.LAVA))) {
             boolean aquaticLike = transfurVariant.getParent().is(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE);
             boolean fastSwimSpeed = transfurVariant.getChangedEntity().getAttributeValue(ForgeMod.SWIM_SPEED.get()) > 1;
             boolean aquaticBreath = transfurVariant.getParent().breatheMode.canBreatheWater();
