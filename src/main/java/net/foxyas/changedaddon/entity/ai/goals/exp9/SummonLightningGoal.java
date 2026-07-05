@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -85,14 +86,15 @@ public class SummonLightningGoal extends CastingAttackGoal implements IReactiveG
     protected static boolean isConductive(BlockState state) {
         Block block = state.getBlock();
 
-        return block == Blocks.COPPER_BLOCK
+        return state.is(ChangedAddonTags.Blocks.CONDUCTIVE)
+                /*|| block == Blocks.COPPER_BLOCK
                 || block == Blocks.EXPOSED_COPPER
                 || block == Blocks.WEATHERED_COPPER
                 || block == Blocks.OXIDIZED_COPPER
                 || block == Blocks.CUT_COPPER
                 || block == Blocks.IRON_BLOCK
                 || block == Blocks.GOLD_BLOCK
-                || block == Blocks.LIGHTNING_ROD;
+                || block == Blocks.LIGHTNING_ROD*/;
     }
 
     protected static List<BlockPos> findConductiveBlocks(Level level, BlockPos center, int radius) {
@@ -152,7 +154,7 @@ public class SummonLightningGoal extends CastingAttackGoal implements IReactiveG
         lightnings = lightningCountProvider.sample(holder.getRandom());
         castDuration = castDurationProvider.sample(holder.getRandom());
         if (holder instanceof Experiment009BossEntity boss) {
-            castDuration *= (int) boss.getPhase().getCastModifier();
+            castDuration *= (int) boss.getPhase().getCastModifier(target);
         }
         holder.level.playSound(null, holder.getX(), holder.getY(), holder.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 1, 1);
         holder.getNavigation().stop();
@@ -174,11 +176,11 @@ public class SummonLightningGoal extends CastingAttackGoal implements IReactiveG
             exp9.setCastingAttack(castDuration > 0);
         }
 
-        holder.setDeltaMovement(Vec3.ZERO);
         if (castDuration > 0) {
             castDuration--;
-
             if (target == null) return;
+            holder.setDeltaMovement(Vec3.ZERO);
+
             holder.getLookControl().setLookAt(target, 90f, 90f);
             //holder.setYBodyRot(holder.yHeadRot);
 

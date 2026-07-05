@@ -24,6 +24,7 @@ public final class ChangedAddonTags {
         public static final TagKey<Block> CAN_LUMINAR_CRYSTAL_SURVIVE = key("can_luminar_crystal_survive");
         public static final TagKey<Block> CAN_SPAWN_LUMINARCTIC_LEOPARDS_ON_CRYSTAL_BREAK = key("can_spawn_luminarctic_leopards_on_crystal_break");
         public static final TagKey<Block> DORMANT_LATEX_BLOCKS = key("dormant_latex_blocks");
+        public static final TagKey<Block> CONDUCTIVE = key("conductive");
 
         private static TagKey<Block> key(String path) {
             return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), ChangedAddonMod.resourceLoc(path));

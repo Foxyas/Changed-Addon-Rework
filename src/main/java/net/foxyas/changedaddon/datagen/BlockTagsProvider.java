@@ -87,6 +87,18 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
         tag(ChangedAddonTags.Blocks.DORMANT_LATEX_BLOCKS).add(DORMANT_DARK_LATEX.get()).add(DORMANT_WHITE_LATEX.get());
         tag(ChangedAddonTags.Blocks.CAN_LUMINAR_CRYSTAL_SURVIVE).add(LUMINAR_CRYSTAL_BLOCK.get()).add(Blocks.STONE).add(Blocks.CRYING_OBSIDIAN).add(Blocks.AMETHYST_BLOCK).add(Blocks.AMETHYST_CLUSTER).add(Blocks.SEA_LANTERN).add(Blocks.CALCITE).addTag(ChangedAddonTags.Blocks.DORMANT_LATEX_BLOCKS).addTag(BlockTags.ICE).addTag(Tags.Blocks.STORAGE_BLOCKS_QUARTZ);
         tag(ChangedAddonTags.Blocks.CAN_SPAWN_LUMINARCTIC_LEOPARDS_ON_CRYSTAL_BREAK).add(LUMINAR_CRYSTAL_BLOCK.get());
+        tag(ChangedAddonTags.Blocks.CONDUCTIVE)
+                .addTag(Tags.Blocks.STORAGE_BLOCKS_RAW_IRON)
+                .addTag(Tags.Blocks.STORAGE_BLOCKS_RAW_COPPER)
+                .addTag(Tags.Blocks.STORAGE_BLOCKS_RAW_GOLD)
+                .addTag(Tags.Blocks.STORAGE_BLOCKS_IRON)
+                .addTag(Tags.Blocks.STORAGE_BLOCKS_COPPER)
+                .addTag(Tags.Blocks.STORAGE_BLOCKS_GOLD)
+                .addTag(BlockTags.IRON_ORES)
+                .addTag(BlockTags.GOLD_ORES)
+                .addTag(BlockTags.COPPER_ORES)
+                .add(Blocks.LIGHTNING_ROD)
+        ;
 
         tag(Tags.Blocks.NEEDS_NETHERITE_TOOL).add(DEEPSLATE_PAINITE_ORE.get(), PAINITE_BLOCK.get());
 

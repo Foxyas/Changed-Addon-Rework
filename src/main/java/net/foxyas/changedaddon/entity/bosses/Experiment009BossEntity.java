@@ -312,11 +312,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             this.castModifier = castModifier;
         }
 
-        public float getDamageModifier(LivingEntity target) {
+        public float getDamageModifier(@Nullable LivingEntity target) {
             return damageModifier; //Todo tweak this damage modifier to be less or more based on the player "metalic points". (Being a prototype/Protogen,using metal armor, etc).
         }
 
-        public float getCastModifier() {
+        public float getCastModifier(@Nullable LivingEntity target) {
             return castModifier;
         }
     }

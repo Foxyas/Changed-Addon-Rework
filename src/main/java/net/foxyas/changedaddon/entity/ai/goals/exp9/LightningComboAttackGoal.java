@@ -25,6 +25,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.EnumSet;
+
 public class LightningComboAttackGoal extends CastingAttackGoal {
 
     protected final PathfinderMob holder;
@@ -52,7 +54,7 @@ public class LightningComboAttackGoal extends CastingAttackGoal {
         damageProvider = damage;
         adjustDamageSource(holder);
 
-        //setFlags(EnumSet.of(Flag.MOVE));
+        setFlags(EnumSet.of(Flag.MOVE));
     }
 
     private DamageSource adjustDamageSource(PathfinderMob holder) {
@@ -99,7 +101,7 @@ public class LightningComboAttackGoal extends CastingAttackGoal {
         attacks = attackCountProvider.sample(random);
         castDuration = castDurationProvider.sample(random);
         if (holder instanceof Experiment009BossEntity boss) {
-            castDuration *= (int) boss.getPhase().getCastModifier();
+            castDuration *= (int) boss.getPhase().getCastModifier(target);
         }
         pickAttackPos();
 

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
+import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -8,17 +9,19 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 import java.util.List;
 
-public class ThunderDashAttack extends Goal {
+public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
     private static final int PREPARE_TIME = 60; // 3 seconds
     private static final int MAX_DASH_TICKS = 20;
@@ -82,7 +85,6 @@ public class ThunderDashAttack extends Goal {
         this.dashSpeed = dashSpeed;
     }
 
-
     @Override
     public void start() {
         if (tickCount >= PREPARE_TIME + MAX_DASH_TICKS) {
@@ -94,11 +96,11 @@ public class ThunderDashAttack extends Goal {
     }
 
     public boolean isChargingDash() {
-        return !(tickCount > PREPARE_TIME);
+        return tickCount < PREPARE_TIME;
     }
 
     public boolean isDashing() {
-        return isDashing;
+        return isDashing || (tickCount <= PREPARE_TIME + MAX_DASH_TICKS);
     }
 
     @Override
@@ -116,6 +118,9 @@ public class ThunderDashAttack extends Goal {
             }
             dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
             dasher.level().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
+            if (tickCount == PREPARE_TIME - 1) {
+                dasher.level().playSound(null, dasher, SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
+            }
             if (dasher.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
                 serverLevel.sendParticles(ParticleTypes.END_ROD, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.05f);
@@ -130,11 +135,17 @@ public class ThunderDashAttack extends Goal {
 
         if (tickCount <= PREPARE_TIME + MAX_DASH_TICKS) {
             dasher.getNavigation().stop();
+            if (tickCount == PREPARE_TIME) {
+                dasher.level().playSound(null, dasher, SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 2, 1);
+            }
 
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
             Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection);
             dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 180, 180);
+            dasher.yBodyRot = dasher.yHeadRot;
+            dasher.yBodyRotO = dasher.yHeadRotO;
+
             if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
                 tickCount += 5;
             }
@@ -153,8 +164,9 @@ public class ThunderDashAttack extends Goal {
                 if (distance > 0.1) {
                     Vec3 knockback = difference.normalize().scale(distance * KNOCKBACK_MULTIPLIER);
                     dasher.swing(InteractionHand.MAIN_HAND);
-                    if (!entity.isBlocking()) {
-                        entity.hurt(entity.level().damageSources().mobAttack(dasher), 6.0F);
+                    DamageSource pSource = dasher.level().damageSources().mobAttack(dasher);
+                    if (!entity.isDamageSourceBlocked(pSource)) {
+                        entity.hurt(pSource, 6.0F);
                         dasher.level().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
                     } else {
                         dasher.level().playSound(null, entity, SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1, 1);
@@ -182,5 +194,32 @@ public class ThunderDashAttack extends Goal {
 
     public Mob getDasher() {
         return dasher;
+    }
+
+    @Override
+    public void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount) {
+        if (this.isChargingDash()) {
+            this.tickCount += (int) (PREPARE_TIME * 0.25);
+        }
+    }
+
+    @Override
+    public void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount, boolean willCauseDamage) {
+
+    }
+
+    @Override
+    public void onHeal(LivingEntity livingEntity, float amount) {
+
+    }
+
+    @Override
+    public boolean isCanceled() {
+        return false;
+    }
+
+    @Override
+    public void setCanceledTo(boolean canceled) {
+
     }
 }

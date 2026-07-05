@@ -1,7 +1,8 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
-import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.LivingEntity;
@@ -47,17 +48,17 @@ public class ThunderStorm extends Goal {
 
     @Override
     public void start() {
-        run();
+        spawnThunderStorm();
     }
 
-    public void run() {
+    public void spawnThunderStorm() {
         thunderStorm();
     }
 
     @Override
     public void stop() {
         super.stop();
-        cooldown = (int) (cooldownProvider.sample(this.boss.getRandom()) * boss.getPhase().getDamageModifier(boss.getTarget()));
+        cooldown = cooldownProvider.sample(this.boss.getRandom());
     }
 
     private void thunderStorm() {
@@ -67,17 +68,27 @@ public class ThunderStorm extends Goal {
                 for (int i = 0; i < 7; i++) {
                     double offsetX = boss.getRandom().nextGaussian() * 20;
                     double offsetZ = boss.getRandom().nextGaussian() * 20;
-                    BlockPos pos = new BlockPos((int) (this.boss.getX() + offsetX), (int) this.boss.getY(), (int) (this.boss.getZ() + offsetZ));
-                    if (level.getBlockState(pos.below()).isAir()) return;
-                    this.boss.spawnThunderBolt(pos);
+                    MutableBlockPos pos = new MutableBlockPos((int) (this.boss.getX() + offsetX), (int) this.boss.getY(), (int) (this.boss.getZ() + offsetZ));
+                    while (level.getBlockState(pos.below()).isAir()) {
+                        if (level.isOutsideBuildHeight(pos.below())) {
+                            break;
+                        }
+                        pos.move(Direction.DOWN);
+                    }
+                    this.boss.spawnThunderBolt(pos.immutable());
                 }
             } else {
                 for (int i = 0; i < 12; i++) {
                     double offsetX = boss.getRandom().nextGaussian() * 10;
                     double offsetZ = boss.getRandom().nextGaussian() * 10;
-                    BlockPos pos = new BlockPos((int) (this.boss.getX() + offsetX), (int) this.boss.getY(), (int) (this.boss.getZ() + offsetZ));
-                    if (level.getBlockState(pos.below()).isAir()) return;
-                    this.boss.spawnThunderBolt(pos);
+                    MutableBlockPos pos = new MutableBlockPos((int) (this.boss.getX() + offsetX), (int) this.boss.getY(), (int) (this.boss.getZ() + offsetZ));
+                    while (level.getBlockState(pos.below()).isAir()) {
+                        if (level.isOutsideBuildHeight(pos.below())) {
+                            break;
+                        }
+                        pos.move(Direction.DOWN);
+                    }
+                    this.boss.spawnThunderBolt(pos.immutable());
                 }
             }
         }
