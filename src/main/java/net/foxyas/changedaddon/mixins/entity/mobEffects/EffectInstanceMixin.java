@@ -15,7 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(net.minecraft.world.effect.MobEffectInstance.class)
 public class EffectInstanceMixin {
 
-    @WrapOperation(remap = false, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/effect/MobEffectInstance;readCurativeItems(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/effect/MobEffectInstance;"), method = "loadSpecifiedEffect")
+    @WrapOperation(
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/effect/MobEffectInstance;readCurativeItems(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/effect/MobEffectInstance;", remap = false
+            ),
+            method = "loadSpecifiedEffect"
+    )
     private static MobEffectInstance specifiedEffectInstanceMixin(MobEffectInstance mobEffectInstance, CompoundTag data, Operation<MobEffectInstance> original) {
         if (mobEffectInstance.getEffect() instanceof ICustomEffectInstance<?> iCustomEffectInstance) {
             var otherInstance = iCustomEffectInstance.load(mobEffectInstance, data);
