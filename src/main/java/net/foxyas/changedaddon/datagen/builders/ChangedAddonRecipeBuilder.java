@@ -239,9 +239,9 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
             pJson.add("output", jsonobject);
 
             // ✅ Adiciona propriedades customizadas
-            progressSpeed.ifPresent(speed -> pJson.addProperty("ProgressSpeed", speed));
+            progressSpeed.ifPresent(speed -> pJson.addProperty("progressSpeed", speed));
             if (type == ChangedAddonRecipeTypes.CATALYZER_RECIPE.get()) {
-                nitrogenUsage.ifPresent(nitrogen -> pJson.addProperty("NitrogenUsage", nitrogen));
+                nitrogenUsage.ifPresent(nitrogen -> pJson.addProperty("nitrogenUsage", nitrogen));
             }
         }
 

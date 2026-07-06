@@ -26,7 +26,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -384,7 +383,7 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
     }
 
     @Override
-    public void fillStackedContents(StackedContents stackedContents) {
+    public void fillStackedContents(@NotNull StackedContents stackedContents) {
         for (ItemStack itemstack : this.stacks) {
             stackedContents.accountStack(itemstack);
         }
@@ -413,9 +412,9 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
         List<Recipe<?>> list = Lists.newArrayList();
 
         for (Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
-            pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent((p_155023_) -> {
-                list.add(p_155023_);
-                createExperience(pLevel, pPopVec, entry.getIntValue(), ((AbstractCookingRecipe) p_155023_).getExperience());
+            pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent((recipe) -> {
+                list.add(recipe);
+                createExperience(pLevel, pPopVec, entry.getIntValue(), ((UnifuserRecipe) recipe).getExperience());
             });
         }
 

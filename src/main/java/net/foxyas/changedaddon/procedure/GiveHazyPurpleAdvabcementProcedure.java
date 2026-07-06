@@ -37,12 +37,12 @@ public class GiveHazyPurpleAdvabcementProcedure {
                 || (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_10_DNA.get()
                 && (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_009_DNA.get()) {
             if (entity instanceof ServerPlayer _player) {
-                Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:hazy_purple"));
-                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+                Advancement advancement = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:hazy_purple"));
+                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(advancement);
                 if (!_ap.isDone()) {
                     Iterator _iterator = _ap.getRemainingCriteria().iterator();
                     while (_iterator.hasNext())
-                        _player.getAdvancements().award(_adv, (String) _iterator.next());
+                        _player.getAdvancements().award(advancement, (String) _iterator.next());
                 }
             }
         }

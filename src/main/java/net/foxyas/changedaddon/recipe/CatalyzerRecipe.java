@@ -23,15 +23,17 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
-    private final float ProgressSpeed;
-    private final float NitrogenUsage;
+    private final float progressSpeed;
+    private final float nitrogenUsage;
+    private final float experience;
 
-    public CatalyzerRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, float ProgressSpeed, float NitrogenUsage) {
+    public CatalyzerRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, float progressSpeed, float nitrogenUsage, float experience) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
-        this.ProgressSpeed = ProgressSpeed;
-        this.NitrogenUsage = NitrogenUsage;
+        this.progressSpeed = progressSpeed;
+        this.nitrogenUsage = nitrogenUsage;
+        this.experience = experience;
     }
 
     @Override
@@ -78,11 +80,15 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
     }
 
     public float getProgressSpeed() {
-        return ProgressSpeed;
+        return progressSpeed;
     }
 
     public float getNitrogenUsage() {
-        return NitrogenUsage;
+        return nitrogenUsage;
+    }
+
+    public float getExperience() {
+        return experience;
     }
 
     @Override
@@ -141,10 +147,11 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
 
                 inputs.set(i, ingredient);
             }
-            float ProgressSpeed = GsonHelper.getAsFloat(pSerializedRecipe, "ProgressSpeed", 1.0f);
-            float NitrogenUsage = GsonHelper.getAsFloat(pSerializedRecipe, "NitrogenUsage", 0.0f);
+            float progressSpeed = GsonHelper.getAsFloat(pSerializedRecipe, "progressSpeed", 1.0f);
+            float nitrogenUsage = GsonHelper.getAsFloat(pSerializedRecipe, "nitrogenUsage", 0.0f);
+            float experience = GsonHelper.getAsFloat(pSerializedRecipe, "experience", 0.0f);
 
-            return new CatalyzerRecipe(pRecipeId, output, inputs, ProgressSpeed, NitrogenUsage);
+            return new CatalyzerRecipe(pRecipeId, output, inputs, progressSpeed, nitrogenUsage, experience);
         }
 
         @Override
@@ -153,8 +160,9 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
             inputs.replaceAll(ignored -> Ingredient.fromNetwork(buf));
             ItemStack output = buf.readItem();
             float ProgressSpeed = buf.readFloat();
-            float NitrogenUsage = buf.readFloat();
-            return new CatalyzerRecipe(id, output, inputs, ProgressSpeed, NitrogenUsage);
+            float nitrogenUsage = buf.readFloat();
+            float experience = buf.readFloat();
+            return new CatalyzerRecipe(id, output, inputs, ProgressSpeed, nitrogenUsage, experience);
         }
 
         @Override
@@ -166,6 +174,7 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
             buf.writeItemStack(recipe.output, false);
             buf.writeFloat(recipe.getProgressSpeed());
             buf.writeFloat(recipe.getNitrogenUsage());
+            buf.writeFloat(recipe.getExperience());
         }
 
         public ResourceLocation getRegistryName() {

@@ -260,9 +260,9 @@ public class ChangedAddonItems {
     @SubscribeEvent
     public static void clientLoad(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            ItemProperties.register(LAETHIN.get(), ChangedAddonMod.resourceLoc("laethin_type"), (itemStackToRender, clientWorld, entity, itemEntityId) -> LaethinItem.getLaethinTypeOfStack(itemStackToRender));
+            ItemProperties.register(LAETHIN.get(), ChangedAddonMod.resourceLoc("laethin_type"), (itemStackToRender, clientWorld, entity, itemEntityId) -> LaethinItem.getLaethinTypeOfStack(itemStackToRender).getValue());
             ItemProperties.register(LAETHIN_SYRINGE.get(), ChangedAddonMod.resourceLoc("laethin_syringe_type"),
-                    (itemStackToRender, clientWorld, entity, itemEntityId) -> LaethinItem.getLaethinTypeOfStack(itemStackToRender));
+                    (itemStackToRender, clientWorld, entity, itemEntityId) -> LaethinItem.getLaethinTypeOfStack(itemStackToRender).getValue());
             ItemProperties.register(TRANSFUR_TOTEM.get(), ChangedAddonMod.resourceLoc("transfur_totem_glowtick"), (itemStackToRender, clientWorld, entity, itemEntityId) -> TransfurTotemItem.itemPropertyFunc(entity));
             ItemProperties.register(SIGNAL_CATCHER.get(), ChangedAddonMod.resourceLoc("signal_catcher_dot_value"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) DotValueOfViewProcedure.execute(entity, itemStackToRender));
             ItemProperties.register(SIGNAL_CATCHER.get(), ChangedAddonMod.resourceLoc("signal_catcher_cord_set"), (stack, level, entity, itemEntityId) -> {

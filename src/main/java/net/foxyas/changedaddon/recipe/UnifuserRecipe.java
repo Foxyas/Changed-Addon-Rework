@@ -26,13 +26,15 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
-    private final float ProgressSpeed;
+    private final float progressSpeed;
+    private final float experience;
 
-    public UnifuserRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, float ProgressSpeed) {
+    public UnifuserRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, float progressSpeed, float experience) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
-        this.ProgressSpeed = ProgressSpeed;
+        this.progressSpeed = progressSpeed;
+        this.experience = experience;
     }
 
     public boolean isHidden() {
@@ -83,7 +85,11 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
     }
 
     public float getProgressSpeed() {
-        return ProgressSpeed;
+        return progressSpeed;
+    }
+
+    public float getExperience() {
+        return experience;
     }
 
     @Override
@@ -146,9 +152,10 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
                 inputs.set(i, ingredient);
             }
 
-            float progressSpeed = GsonHelper.getAsFloat(pSerializedRecipe, "ProgressSpeed", 1.0f);
+            float progressSpeed = GsonHelper.getAsFloat(pSerializedRecipe, "progressSpeed", 1.0f);
+            float experience = GsonHelper.getAsFloat(pSerializedRecipe, "experience", 0f);
 
-            return new UnifuserRecipe(pRecipeId, output, inputs, progressSpeed);
+            return new UnifuserRecipe(pRecipeId, output, inputs, progressSpeed, experience);
         }
 
         @Override
@@ -156,8 +163,9 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
             inputs.replaceAll(ignored -> Ingredient.fromNetwork(buf));
             ItemStack output = buf.readItem();
-            float ProgressSpeed = buf.readFloat();
-            return new UnifuserRecipe(id, output, inputs, ProgressSpeed);
+            float progressSpeed = buf.readFloat();
+            float experience = buf.readFloat();
+            return new UnifuserRecipe(id, output, inputs, progressSpeed, experience);
         }
 
         @Override
@@ -168,6 +176,7 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
             }
             buf.writeItemStack(recipe.output, false);
             buf.writeFloat(recipe.getProgressSpeed());
+            buf.writeFloat(recipe.getExperience());
         }
 
         public ResourceLocation getRegistryName() {

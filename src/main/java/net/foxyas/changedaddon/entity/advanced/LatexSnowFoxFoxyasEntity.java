@@ -161,11 +161,11 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
         super.die(source);
 
         if (source.getEntity() instanceof ServerPlayer player) {
-            Advancement _adv = player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:foxyas_advancement"));
-            assert _adv != null;
-            AdvancementProgress _ap = player.getAdvancements().getOrStartProgress(_adv);
+            Advancement advancement = player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:foxyas_advancement"));
+            assert advancement != null;
+            AdvancementProgress _ap = player.getAdvancements().getOrStartProgress(advancement);
             if (!_ap.isDone()) {
-                for (String s : _ap.getRemainingCriteria()) player.getAdvancements().award(_adv, s);
+                for (String s : _ap.getRemainingCriteria()) player.getAdvancements().award(advancement, s);
             }
         }
     }

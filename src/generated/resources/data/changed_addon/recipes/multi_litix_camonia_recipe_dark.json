@@ -1,6 +1,5 @@
 {
   "type": "changed_addon:unifuser",
-  "ProgressSpeed": 0.5,
   "ingredients": [
     {
       "item": "changed_addon:litix_camonia"
@@ -19,5 +18,6 @@
     "type": "forge:nbt",
     "count": 3,
     "item": "changed_addon:litix_camonia"
-  }
+  },
+  "progressSpeed": 0.5
 }

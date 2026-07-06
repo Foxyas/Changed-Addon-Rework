@@ -294,7 +294,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         this.goalSelector.addGoal(15, new ThunderDashAttack(this));
         this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
-        this.goalSelector.addGoal(10, new ExtinguishFireNearbyGoal(this) {
+        this.goalSelector.addGoal(20, new ExtinguishFireNearbyGoal(this) {
             @Override
             public void start() {
                 super.start();
@@ -487,20 +487,20 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         float nextFloat = this.random.nextFloat();
         if (source.is(DamageTypeTags.IS_FIRE) && nextFloat >= 0.25f) {
-            player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_damage")), true);
+            player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_damage")), false);
         }
 
         if (source.is(DamageTypeTags.IS_PROJECTILE)) {
             if (isVulnerableToProjectiles()) {
                 if (player.distanceTo(this) >= 3 && isPhase3()) {
                     if (nextFloat >= 0.25f) {
-                        player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_at_distance")), true);
+                        player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_at_distance")), false);
                     }
                 } else if (nextFloat >= 0.25f) {
-                    player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_when_vulnerable")), true);
+                    player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_when_vulnerable")), false);
                 }
             } else { // Hints will always show up but "rage bait" reactions is a random.
-                player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.not_affect")), true);
+                player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.not_affect")), false);
             }
         }
     }

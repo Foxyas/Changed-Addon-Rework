@@ -28,15 +28,15 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
     private static final double DETECTION_DISTANCE = 3.5D;
     private static final double KNOCKBACK_MULTIPLIER = 1.5;
 
-    private final Experiment009BossEntity dasher;
-    private LivingEntity target;
+    protected final Experiment009BossEntity dasher;
+    protected LivingEntity target;
 
-    private int tickCount = 0;
-    private boolean isDashing = false;
+    protected int tickCount = 0;
+    protected boolean isDashing = false;
 
-    private Vec3 dashDirection = Vec3.ZERO;
-    private float dashSpeed = 1.0f;
-    private float strength = 1.0f;
+    protected Vec3 dashDirection = Vec3.ZERO;
+    protected float dashSpeed = 1.0f;
+    protected float strength = 1.0f;
 
     public ThunderDashAttack(Experiment009BossEntity dasher) {
         this.dasher = dasher;
@@ -129,15 +129,15 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
             return;
         }
 
+        boolean beforeIsDashing = isDashing;
         if (!isDashing) {
             isDashing = true;
+            dasher.level().playSound(null, dasher, SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 2, 1);
         }
+
 
         if (tickCount <= PREPARE_TIME + MAX_DASH_TICKS) {
             dasher.getNavigation().stop();
-            if (tickCount == PREPARE_TIME) {
-                dasher.level().playSound(null, dasher, SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 2, 1);
-            }
 
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);

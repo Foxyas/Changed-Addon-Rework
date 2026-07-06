@@ -22,10 +22,10 @@ public class KillExperiment009ProcedureProcedure {
         Entity sourceentity = event.getSource().getEntity();
         if (!(sourceentity instanceof ServerPlayer player)) return;
 
-        Advancement _adv = player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:kill_experiment_009"));
-        AdvancementProgress _ap = player.getAdvancements().getOrStartProgress(_adv);
+        Advancement advancement = player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:kill_experiment_009"));
+        AdvancementProgress _ap = player.getAdvancements().getOrStartProgress(advancement);
         if (!_ap.isDone()) {
-            for (String s : _ap.getRemainingCriteria()) player.getAdvancements().award(_adv, s);
+            for (String s : _ap.getRemainingCriteria()) player.getAdvancements().award(advancement, s);
         }
     }
 }

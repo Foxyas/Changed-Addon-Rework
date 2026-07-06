@@ -711,9 +711,9 @@ public class ChangedAddonTransfurVariants {
     public static List<Component> getVariantComponentIfAny(TransfurVariant<?> transfurVariant, Level level) {
         if (isVariantOC(transfurVariant, level)) {
             if (ChangedEntities.getCachedEntity(level, transfurVariant.getEntityType()) instanceof IOriginalCharacterEntity iOriginalCharacterEntity) {
-                return iOriginalCharacterEntity.getOcVariantComponents();
+                return Objects.requireNonNullElse(iOriginalCharacterEntity.getOcVariantComponents(), List.of());
             }
-            return OCS.get().get(transfurVariant);
+            return Objects.requireNonNullElse(OCS.get().get(transfurVariant), List.of());
         }
         return List.of();
     }

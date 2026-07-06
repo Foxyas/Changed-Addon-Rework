@@ -141,64 +141,18 @@ public class PlayerUtil {
     }
 
     public static void unTransfurPlayer(Player player, boolean shouldApplyEffects) {
-        if (player.level.isClientSide()) return;
-
-        ProcessTransfur.ifPlayerTransfurred(player, (instance) -> {
-            TransfurVariant<?> transfurVariant = null;
-            if (instance != null) transfurVariant = instance.getParent();
-            UntransfurEvent untransfurEvent = new UntransfurEvent(player, transfurVariant, UntransfurEvent.UntransfurType.SURVIVAL);
-            if (ChangedAddonMod.postEvent(untransfurEvent)) {
-                if (untransfurEvent.newVariant != null) {
-                    ProcessTransfur.setPlayerTransfurVariant(player, untransfurEvent.newVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), 1, false);
-                    return;
-                }
-
-                player.displayClientMessage(Component.translatable("changed_addon.untransfur.fail"), true);
-                return;
-            }
-
-            if (instance == null) return;
-
-            instance.unhookAll(player);
-            ProcessTransfur.removePlayerTransfurVariant(player);
-            ProcessTransfur.setPlayerTransfurProgress(player, 0.0f);
-            if (shouldApplyEffects && !player.level().isClientSide()) {
-                player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
-                player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
-            }
-        });
+        unTransfurPlayer(player);
+        if (shouldApplyEffects && !player.level().isClientSide()) {
+            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
+            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
+        }
     }
 
     public static void unTransfurPlayerAndPlaySound(Player player, boolean shouldApplyEffects) {
-        if (player.level.isClientSide()) return;
-
-        ProcessTransfur.ifPlayerTransfurred(player, (instance) -> {
-            TransfurVariant<?> transfurVariant = null;
-            if (instance != null) transfurVariant = instance.getParent();
-            UntransfurEvent untransfurEvent = new UntransfurEvent(player, transfurVariant, UntransfurEvent.UntransfurType.SURVIVAL);
-            if (ChangedAddonMod.postEvent(untransfurEvent)) {
-                if (untransfurEvent.newVariant != null) {
-                    ProcessTransfur.setPlayerTransfurVariant(player, untransfurEvent.newVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), 1, false);
-                    return;
-                }
-
-                player.displayClientMessage(Component.translatable("changed_addon.untransfur.fail"), true);
-                return;
-            }
-
-            if (instance == null) return;
-
-            instance.unhookAll(player);
-            ProcessTransfur.removePlayerTransfurVariant(player);
-            ProcessTransfur.setPlayerTransfurProgress(player, 0.0f);
-            if (shouldApplyEffects && !player.level().isClientSide()) {
-                player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
-                player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
-                if (player.level() instanceof ServerLevel serverLevel) {
-                    serverLevel.playSound(null, player.getX(), player.getEyeY(), player.getZ(), ChangedAddonSoundEvents.UNTRANSFUR.get(), SoundSource.PLAYERS, 1, 1);
-                }
-            }
-        });
+        unTransfurPlayer(player,shouldApplyEffects);
+        if (player.level() instanceof ServerLevel serverLevel) {
+            serverLevel.playSound(null, player.getX(), player.getEyeY(), player.getZ(), ChangedAddonSoundEvents.UNTRANSFUR.get(), SoundSource.PLAYERS, 1, 1);
+        }
     }
 
     public static boolean isCatTransfur(Player player) {

@@ -301,6 +301,13 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
     }
 
     @Override
+    public void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount) {
+        if (pDamageAmount >= 8) {
+            ICancelOnDamageGoal.super.onHurt(livingEntity, pDamageSource, pDamageAmount);
+        }
+    }
+
+    @Override
     public void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount, boolean willCauseDamage) {
 
     }

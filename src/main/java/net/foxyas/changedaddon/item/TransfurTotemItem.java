@@ -387,9 +387,9 @@ public class TransfurTotemItem extends Item {
         if (entity instanceof ServerPlayer _player) {
             player.displayClientMessage(Component.literal("The totem you were carrying has been activated"), true);
 
-            Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:transfur_totem_advancement_2"));
-            AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-            if (!_ap.isDone()) for (String s : _ap.getRemainingCriteria()) _player.getAdvancements().award(_adv, s);
+            Advancement advancement = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:transfur_totem_advancement_2"));
+            AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(advancement);
+            if (!_ap.isDone()) for (String s : _ap.getRemainingCriteria()) _player.getAdvancements().award(advancement, s);
         }
     }
 

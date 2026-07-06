@@ -128,7 +128,7 @@ public class UnifuserRecipeBuilder implements RecipeBuilder {
             json.add("output", itemStackToJson(result));
 
             if (this.progressSpeed != 1.0f) {
-                json.addProperty("ProgressSpeed", this.progressSpeed);
+                json.addProperty("progressSpeed", this.progressSpeed);
             }
         }
 

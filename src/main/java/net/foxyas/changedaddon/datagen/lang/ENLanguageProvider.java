@@ -351,6 +351,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addDeathMessage("untransfur_fail", "%1$s dies when the untransfurmation attempt fails", null, "%1$s dies for a fail untransfurmation attempt while fighting %2$s");
 
         addEffect(ChangedAddonMobEffects.UNTRANSFUR, "§7Untransfur", "Displays untransfur progress via overlay. Progress speeds up when sleeping. When complete, the untransfur is applied.");
+        add("effect.changed_addon." + ChangedAddonMobEffects.UNTRANSFUR.getId().getPath() + ".no_effect", "The effect doesn't seem to be working");
         addEffect(LATEX_SOLVENT, "Latex Solvent", "Damages latex-based entities. The stronger the effect, the more damage is inflicted.");
         addEffect(LATEX_CONTAMINATION, "Latex Contamination", "Gradually increases infection in humanoid entities. The higher the effect's level, the faster the infection spreads.");
         addEffect(TRANSFUR_DAMAGE_BOOST, "Transfur Strength", "Increases the damage of Changed entities when attacking humanoid targets. Higher levels amplify transfur effectiveness.");
@@ -540,6 +541,7 @@ public class ENLanguageProvider extends LanguageProvider {
 
         addItemFromId(LAETHIN);
         addItemFromId(LAETHIN_SYRINGE);
+        add("item.changed_addon.laethin.type", "Latex Type: %s");
         addItemFromId(ALPHA_SERUM_SYRINGE);
         addItemFromId(LAETHINMINATOR);
         addItemFromId(FLAMETHROWER);

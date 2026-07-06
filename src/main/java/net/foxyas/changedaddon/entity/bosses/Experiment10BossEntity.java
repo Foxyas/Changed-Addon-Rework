@@ -222,7 +222,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
             amount *= 0.5f;
         }
 
-        maybeSendReactionToPlayer(source);
+        maybeSendDamageReactionToPlayer(source);
 
         return super.hurt(source, amount);
     }
@@ -240,14 +240,14 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         }
     }
 
-    private void maybeSendReactionToPlayer(DamageSource source) {
+    private void maybeSendDamageReactionToPlayer(DamageSource source) {
         if (!(source.getEntity() instanceof Player player)) return;
 
         if (this.random.nextFloat() <= 0.25f) {
             if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.reaction.range_attacks"), true);
+                player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp10.reaction.range_attacks")), false);
             } else if (source.is(DamageTypeTags.IS_FIRE)) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.reaction.fire_damage"), true);
+                player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp10.reaction.fire_damage")), false);
             }
         }
     }

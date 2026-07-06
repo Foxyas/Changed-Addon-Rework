@@ -25,11 +25,11 @@ public class LitixCamoniaItem extends Item {
     public void onCraftedBy(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull Player entity) {
         super.onCraftedBy(itemstack, world, entity);
         if (entity instanceof ServerPlayer _player) {
-            Advancement _adv = _player.server.getAdvancements().getAdvancement(advLocation);
-            assert _adv != null;
-            AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+            Advancement advancement = _player.server.getAdvancements().getAdvancement(advLocation);
+            assert advancement != null;
+            AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(advancement);
             if (!_ap.isDone()) {
-                for (String s : _ap.getRemainingCriteria()) _player.getAdvancements().award(_adv, s);
+                for (String s : _ap.getRemainingCriteria()) _player.getAdvancements().award(advancement, s);
             }
         }
     }

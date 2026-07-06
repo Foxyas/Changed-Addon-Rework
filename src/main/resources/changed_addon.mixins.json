@@ -51,6 +51,7 @@
     "entity.goals.MeleeAttackGoalMixin",
     "entity.goals.PhantomAIMixin",
     "entity.goals.VillagerHostilesSensorMixin",
+    "entity.mobEffects.EffectInstanceMixin",
     "entity.player.PlayerMixin",
     "entity.player.ServerPlayerMixin",
     "entity.projectiles.AbstractArrowAccessor",

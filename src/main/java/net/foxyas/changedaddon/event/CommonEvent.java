@@ -561,10 +561,10 @@ public class CommonEvent {
 
             if (ticks >= 600) {
                 ServerPlayer sPlayer = (ServerPlayer) player;
-                Advancement _adv = sPlayer.server.getAdvancements().getAdvancement(ChangedAddonMod.resourceLoc("swim_regret"));
-                AdvancementProgress _ap = sPlayer.getAdvancements().getOrStartProgress(_adv);
+                Advancement advancement = sPlayer.server.getAdvancements().getAdvancement(ChangedAddonMod.resourceLoc("swim_regret"));
+                AdvancementProgress _ap = sPlayer.getAdvancements().getOrStartProgress(advancement);
                 if (!_ap.isDone()) {
-                    for (String s : _ap.getRemainingCriteria()) sPlayer.getAdvancements().award(_adv, s);
+                    for (String s : _ap.getRemainingCriteria()) sPlayer.getAdvancements().award(advancement, s);
                 }
                 ticks = -1;
             }

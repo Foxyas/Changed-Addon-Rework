@@ -19,13 +19,14 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
+import static net.foxyas.changedaddon.item.LaethinItem.getLaethinTypeOfStack;
 import static net.foxyas.changedaddon.item.LaethinItem.setLaethinTypeForStack;
 
 public class LaethinSyringeItem extends AbstractSyringeItem implements SpecializedAnimations, IDynamicCreativeTab {
@@ -96,6 +97,14 @@ public class LaethinSyringeItem extends AbstractSyringeItem implements Specializ
 
         // Play sound
         level.playSound(null, player.getX(), player.getY(), player.getZ(), ChangedAddonSoundEvents.UNTRANSFUR.get(), SoundSource.NEUTRAL, 1, 1);
+    }
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        LaethinItem.Type laethinTypeOfStack = getLaethinTypeOfStack(pStack);
+        pTooltipComponents.add(laethinTypeOfStack.getFormatedName());
+
     }
 
     protected void applyMobEffect(Player entity, MobEffect effect, int duration) {
