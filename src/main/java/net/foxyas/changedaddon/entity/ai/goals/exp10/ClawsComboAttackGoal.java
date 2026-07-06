@@ -170,7 +170,7 @@ public class ClawsComboAttackGoal extends Goal {
 
             livingEntity.push(
                     direction.x * knockback,
-                    direction.y * knockback,
+                    direction.y * knockback * 0.025,
                     direction.z * knockback
             );
         }

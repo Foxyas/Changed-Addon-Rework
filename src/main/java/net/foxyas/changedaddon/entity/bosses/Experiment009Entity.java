@@ -397,7 +397,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     @Override
     public boolean canChangeDimensions() {
-        return false;
+        return this.getTarget() == null && super.canChangeDimensions();
     }
 
     @Override
@@ -418,8 +418,8 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     @Override
     protected void initializeBPI(BasicPlayerInfo info, RandomSource random) {
         super.initializeBPI(info, random);
-        this.getBasicPlayerInfo().setSize(1f);
-        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+        info.setSize(1f);
+        info.setEyeStyle(EyeStyle.TALL);
     }
 
     public boolean isPhase2() {

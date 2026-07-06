@@ -426,6 +426,8 @@ public class DEBUG {
                 MOTIONTEST = 1;
             } else if (MOTIONTEST == 1) {
                 MOTIONTEST = 2;
+            } else if (MOTIONTEST == 2) {
+                MOTIONTEST = 3;
             } else {
                 MOTIONTEST = 0;
             }
@@ -521,6 +523,10 @@ public class DEBUG {
             } else if (MOTIONTEST == 2) {
                 if (!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
                     ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new RequestMovementCheckPacket(true));
+                }
+            } else if (MOTIONTEST == 3) {
+                if (!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.displayClientMessage(Component.literal("Moving: " + serverPlayer.walkAnimation.isMoving()), true);
                 }
             }
         }

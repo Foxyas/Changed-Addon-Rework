@@ -118,6 +118,9 @@ public class DashPunchGoal extends Goal {
                         mob.getX(), mob.getEyeY(), mob.getZ(), 0, 0.2, 0.2, 0.2, 0.0
                 );
             }
+            if (chargeTicks == 1) {
+                server.playSound(null, mob, SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 2, 1);
+            }
         }
 
         if (chargeTicks >= 40) {
@@ -129,6 +132,7 @@ public class DashPunchGoal extends Goal {
         phase = Phase.DASHING;
         dashTicks = 0;
         mob.level().playSound(null, mob.blockPosition(), SoundEvents.GOAT_LONG_JUMP, SoundSource.HOSTILE, 1.0F, 0.9F);
+        mob.level().playSound(null, mob, SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 2, 1);
     }
 
     protected void handleDashing() {

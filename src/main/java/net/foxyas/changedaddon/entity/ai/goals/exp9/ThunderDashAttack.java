@@ -111,6 +111,9 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
         // Preparando o dash
         if (tickCount < PREPARE_TIME) {
+            if (tickCount == 0) {
+                dasher.level().playSound(null, dasher, SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 2, 1);
+            }
             dasher.getNavigation().stop();
             if (target == null || target.isRemoved() || target.isDeadOrDying()) return;
             if (target.distanceTo(dasher) > 0) {
@@ -118,9 +121,6 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
             }
             dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
             dasher.level().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
-            if (tickCount == PREPARE_TIME - 1) {
-                dasher.level().playSound(null, dasher, SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
-            }
             if (dasher.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
                 serverLevel.sendParticles(ParticleTypes.END_ROD, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.05f);
@@ -182,6 +182,13 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
             }
             this.isDashing = false;
         }
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        this.tickCount = 0;
+        isDashing = false;
     }
 
     public void setStrength(float strength) {

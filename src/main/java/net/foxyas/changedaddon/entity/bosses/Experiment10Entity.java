@@ -257,7 +257,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
 
     @Override
     public boolean canChangeDimensions() {
-        return false;
+        return this.getTarget() == null && super.canChangeDimensions();
     }
 
     @Override

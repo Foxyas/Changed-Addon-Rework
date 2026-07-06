@@ -22,7 +22,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -84,7 +83,7 @@ public class SummonLightningGoal extends CastingAttackGoal implements IReactiveG
     }
 
     protected static boolean isConductive(BlockState state) {
-        Block block = state.getBlock();
+//        Block block = state.getBlock();
 
         return state.is(ChangedAddonTags.Blocks.CONDUCTIVE)
                 /*|| block == Blocks.COPPER_BLOCK
@@ -246,7 +245,7 @@ public class SummonLightningGoal extends CastingAttackGoal implements IReactiveG
 
             livingEntity.push(
                     direction.x * strength,
-                    Math.min(Math.max(direction.y, 0.1) * strength * 2, 0.25f),
+                    Math.min(Math.max(direction.y, 0.1) * strength * 2, 0.025f),
                     direction.z * strength
             );
 
