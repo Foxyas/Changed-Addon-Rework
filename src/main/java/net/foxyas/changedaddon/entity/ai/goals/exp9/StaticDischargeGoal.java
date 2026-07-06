@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -117,7 +118,7 @@ public class StaticDischargeGoal extends CastingAttackGoal {
             AABB aabb = AABB.ofSize(holder.position(), aoe * 2, aoe * 2, aoe * 2);
             RandomSource random = holder.getRandom();
             BlockPos bossPos = holder.blockPosition();
-            for (BlockPos blockPos : BlockPos.betweenClosedStream(bossPos.offset(-16, -16, -16), bossPos.offset(16, 16, 16)).map(BlockPos::immutable).filter(pos -> level.getBlockState(pos).is(FIRE)).toList()) {
+            for (BlockPos blockPos : FoxyasUtil.betweenClosedStreamSphere(bossPos.offset(-16, -16, -16), bossPos.offset(16, 16, 16)).map(BlockPos::immutable).filter(pos -> level.getBlockState(pos).is(FIRE)).toList()) {
                 level.removeBlock(blockPos, false);
                 level.levelEvent(1009, blockPos, 0);
             }

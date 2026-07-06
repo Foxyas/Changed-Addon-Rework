@@ -119,7 +119,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
             if (target.distanceTo(dasher) > 0) {
                 dasher.getLookControl().setLookAt(target, 90f, 90f);
             }
-            dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
+            dashDirection = dasher.getViewVector(0).scale(strength).multiply(1, 0, 1);
             dasher.level().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
             if (dasher.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
@@ -141,10 +141,9 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
-            Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection);
+            Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection.normalize());
             dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 180, 180);
-            dasher.yBodyRot = dasher.yHeadRot;
-            dasher.yBodyRotO = dasher.yHeadRotO;
+            dasher.yBodyRot = dasher.getYRot();
 
             if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
                 tickCount += 5;

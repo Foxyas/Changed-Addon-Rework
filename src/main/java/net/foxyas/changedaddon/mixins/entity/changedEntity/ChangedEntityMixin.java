@@ -17,8 +17,6 @@ import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
-import net.ltxprogrammer.changed.entity.beast.LatexSnowLeopardFemale;
-import net.ltxprogrammer.changed.entity.beast.LatexSnowLeopardMale;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
@@ -211,8 +209,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void changedAiPathNavigator(EntityType<?> type, Level level, CallbackInfo ci) {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        if (self instanceof LatexSnowLeopardMale || self instanceof LatexSnowLeopardFemale) {
+        if (type.is(ChangedAddonTags.EntityTypes.HAS_BETTER_GROUND_PATHFIND)) {
             this.navigation = new AdvancedGroundPathNavigation(this, level);
         }
     }

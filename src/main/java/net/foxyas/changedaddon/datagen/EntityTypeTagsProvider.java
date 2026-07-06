@@ -121,6 +121,7 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
                 EXPERIMENT_009_BOSS.get(),
                 EXPERIMENT_10_BOSS.get()
         );
+        tag(ChangedAddonTags.EntityTypes.HAS_BETTER_GROUND_PATHFIND);
 
         tag(ChangedTags.EntityTypes.CAN_WEAR_EXOSKELETON).add(canUseExoskeleton().toArray(new EntityType[0]));
     }

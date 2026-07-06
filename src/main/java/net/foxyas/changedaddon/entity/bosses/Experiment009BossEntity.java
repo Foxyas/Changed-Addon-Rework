@@ -1,10 +1,13 @@
 package net.foxyas.changedaddon.entity.bosses;
 
 import com.google.common.collect.Iterables;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
+import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
@@ -20,6 +23,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.*;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
@@ -53,8 +57,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -100,8 +103,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private boolean shouldBleed;
-    protected final WaterBoundPathNavigation waterNavigation;
-    protected final GroundPathNavigation groundNavigation;
     public final TargetDataManager targetDataManager;
 
     public Experiment009BossEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
@@ -114,8 +115,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
-        this.waterNavigation = new WaterBoundPathNavigation(this, world);
-        this.groundNavigation = new GroundPathNavigation(this, world);
         this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
     }
 
@@ -295,6 +294,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         this.goalSelector.addGoal(15, new ThunderDashAttack(this));
         this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
+        this.goalSelector.addGoal(10, new ExtinguishFireNearbyGoal(this) {
+            @Override
+            public void start() {
+                super.start();
+                Experiment009BossEntity.this.maySpeak(FIRE_EXTINGUISH_MESSAGE_ID);
+            }
+        });
 //        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
     }
 
@@ -458,7 +464,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
 
         if (source.is(DamageTypes.THORNS) || source.is(DamageTypeTags.IS_FIRE)) amount = 0;
-        maybeSendReactionToPlayer(source);
+        maybeSendDamageReactionToPlayer(source);
 
         return super.hurt(source, amount);
     }
@@ -476,26 +482,69 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return (isCastingAttack() && isPhase2()) || isPhase3();
     }
 
-    private void maybeSendReactionToPlayer(DamageSource source) {
+    private void maybeSendDamageReactionToPlayer(DamageSource source) {
         if (!(source.getEntity() instanceof Player player)) return;
 
-        float v = this.random.nextFloat();
-        if (source.is(DamageTypeTags.IS_FIRE) && v >= 0.25f) {
-            player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_damage"), true);
+        float nextFloat = this.random.nextFloat();
+        if (source.is(DamageTypeTags.IS_FIRE) && nextFloat >= 0.25f) {
+            player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_damage")), true);
         }
 
         if (source.is(DamageTypeTags.IS_PROJECTILE)) {
             if (isVulnerableToProjectiles()) {
                 if (player.distanceTo(this) >= 3 && isPhase3()) {
-                    if (v >= 0.25f) {
-                        player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_at_distance"), true);
+                    if (nextFloat >= 0.25f) {
+                        player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_at_distance")), true);
                     }
-                } else if (v >= 0.25f) {
-                    player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_when_vulnerable"), true);
+                } else if (nextFloat >= 0.25f) {
+                    player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_when_vulnerable")), true);
                 }
             } else { // Hints will always show up but "rage bait" reactions is a random.
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.not_affect"), true);
+                player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.not_affect")), true);
             }
+        }
+    }
+
+    public static final int FIRE_EXTINGUISH_MESSAGE_ID = 1001;
+    private static final Int2ObjectMap<Component> TALK_MESSAGES = Util.make(new Int2ObjectArrayMap<>(), (map) -> {
+        map.put(FIRE_EXTINGUISH_MESSAGE_ID, Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_extinguish"));
+    });
+
+    private void maySpeak(int id) {
+        Component component = TALK_MESSAGES.get(id);
+        LivingEntity target = this.getTarget();
+        speak(component, target);
+    }
+
+    @Override
+    public MutableComponent getEntityChat(Component message) {
+        return Component.translatable("chat.type.text", this.getDisplayName(), message);
+    }
+
+    @Override
+    public void sendSystemMessage(@NotNull Component pComponent) {
+        super.sendSystemMessage(pComponent);
+    }
+
+    @Override
+    public boolean speak(Component component, @Nullable LivingEntity hearTarget) {
+        MutableComponent entityChat = getEntityChat(component);
+        boolean spoke = false;
+        if (hearTarget instanceof Player player) {
+            player.displayClientMessage(entityChat, false);
+            spoke = true;
+        } else {
+            sout(component);
+        }
+        return spoke;
+    }
+
+    @Override
+    public void sout(Component component) {
+        MutableComponent entityChat = getEntityChat(component);
+        List<Player> nearbyPlayers = this.level.getNearbyPlayers(TargetingConditions.DEFAULT.ignoreLineOfSight().ignoreInvisibilityTesting(), this, this.getBoundingBox().inflate(this.speakRange()));
+        for (Player player : nearbyPlayers) {
+            player.displayClientMessage(entityChat, false);
         }
     }
 

@@ -97,6 +97,7 @@ public final class ChangedAddonTags {
         public static final TagKey<EntityType<?>> CANT_SPAWN_AS_ALPHA_ENTITY = key("cant_spawn_as_alpha_entity");
         public static final TagKey<EntityType<?>> CANT_USE_GRAB = key("cant_use_grab");
         public static final TagKey<EntityType<?>> CAN_ROAR = key("can_roar");
+        public static final TagKey<EntityType<?>> HAS_BETTER_GROUND_PATHFIND = key("has_better_ground_pathfind");
 
         private static TagKey<EntityType<?>> key(String path) {
             return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), ChangedAddonMod.resourceLoc(path));

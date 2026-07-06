@@ -44,6 +44,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -325,6 +326,28 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         SetAttack(this);
         SetSpeed(this);
         this.crawlingSystem((float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f);
+    }
+
+    @Override
+    public boolean speak(Component component, @Nullable LivingEntity hearTarget) {
+        MutableComponent entityChat = getEntityChat(component);
+        boolean spoke = false;
+        if (hearTarget instanceof Player player) {
+            player.displayClientMessage(entityChat, false);
+            spoke = true;
+        } else {
+            sout(component);
+        }
+        return spoke;
+    }
+
+    @Override
+    public void sout(Component component) {
+        MutableComponent entityChat = getEntityChat(component);
+        List<Player> nearbyPlayers = this.level.getNearbyPlayers(TargetingConditions.DEFAULT.ignoreLineOfSight().ignoreInvisibilityTesting(), this, this.getBoundingBox().inflate(this.speakRange()));
+        for (Player player : nearbyPlayers) {
+            player.displayClientMessage(entityChat, false);
+        }
     }
 
     public void SetDefense(Experiment10BossEntity entity) {

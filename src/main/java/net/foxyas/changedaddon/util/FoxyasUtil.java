@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
@@ -64,6 +65,52 @@ public class FoxyasUtil {
                 center.offset(-radius, -radius, -radius),
                 center.offset(radius, radius, radius)
         ).filter(pos -> pos.distSqr(center) <= radius * radius);
+    }
+
+    public static Stream<BlockPos> betweenClosedStreamSphere(BlockPos pos1, BlockPos pos2, float troubleShoot) {
+        AABB boundingBox = new AABB(pos1, pos2);
+        Vec3 center = boundingBox.getCenter();
+
+        double horizontalRadius = boundingBox.getXsize() / 2.0;
+        double verticalRadius = boundingBox.getYsize() / 2.0;
+        double zRadius = boundingBox.getZsize() / 2.0;
+
+        return BlockPos.betweenClosedStream(boundingBox)
+                .filter(pos -> {
+                    double xi = pos.getX() - center.x;
+                    double yi = pos.getY() - center.y;
+                    double zi = pos.getZ() - center.z;
+
+                    double distanceSq = (xi * xi) / (horizontalRadius * horizontalRadius)
+                            + (yi * yi) / (verticalRadius * verticalRadius)
+                            + (zi * zi) / (zRadius * zRadius);
+
+                    return distanceSq <= troubleShoot;
+                })
+                .map(BlockPos::immutable);
+    }
+
+    public static Stream<BlockPos> betweenClosedStreamSphere(BlockPos pos1, BlockPos pos2) {
+        AABB boundingBox = new AABB(pos1, pos2);
+        Vec3 center = boundingBox.getCenter();
+
+        double horizontalRadius = boundingBox.getXsize() / 2.0;
+        double verticalRadius = boundingBox.getYsize() / 2.0;
+        double zRadius = boundingBox.getZsize() / 2.0;
+
+        return BlockPos.betweenClosedStream(boundingBox)
+                .filter(pos -> {
+                    double xi = pos.getX() - center.x;
+                    double yi = pos.getY() - center.y;
+                    double zi = pos.getZ() - center.z;
+
+                    double distanceSq = (xi * xi) / (horizontalRadius * horizontalRadius)
+                            + (yi * yi) / (verticalRadius * verticalRadius)
+                            + (zi * zi) / (zRadius * zRadius);
+
+                    return distanceSq <= 1;
+                })
+                .map(BlockPos::immutable);
     }
 
 
