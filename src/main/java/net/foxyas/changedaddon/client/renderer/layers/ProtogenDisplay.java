@@ -57,10 +57,10 @@ public class ProtogenDisplay<M extends AdvancedHumanoidModel<T>, T extends Chang
 
             // Renderiza apenas a cabeça do modelo
             if (isOnlyHead) {
-                this.model.getHead().render(poseStack, bufferSource.getBuffer(NormalDisplayRender), LightTexture.FULL_BRIGHT, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
+                this.model.getHead().render(poseStack, bufferSource.getBuffer(NormalDisplayRender), packedLight, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
                 this.model.getHead().render(poseStack, bufferSource.getBuffer(GlowEyeRender), LightTexture.FULL_BRIGHT, overlay, eyeColor.red(), eyeColor.green(), eyeColor.blue(), 1.0F);
             } else {
-                this.model.renderToBuffer(poseStack, bufferSource.getBuffer(NormalDisplayRender), LightTexture.FULL_BRIGHT, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
+                this.model.renderToBuffer(poseStack, bufferSource.getBuffer(NormalDisplayRender), packedLight, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
                 this.model.renderToBuffer(poseStack, bufferSource.getBuffer(GlowEyeRender), LightTexture.FULL_BRIGHT, overlay, eyeColor.red(), eyeColor.green(), eyeColor.blue(), 1.0F);
             }
         }
