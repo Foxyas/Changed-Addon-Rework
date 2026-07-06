@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -26,7 +27,7 @@ public class ProtogenDisplay<M extends AdvancedHumanoidModel<T>, T extends Chang
         super(parent);
         this.model = model;
         // RenderType Glow type
-        this.GlowEyeRender = RenderType.eyes(eyePart);
+        this.GlowEyeRender = RenderType.entityTranslucentEmissive(eyePart);
         this.GlowDisplayRender = RenderType.eyes(displayPart);
         // RenderType normal
         this.NormalEyeRender = RenderType.entityCutoutNoCull(eyePart);
@@ -56,11 +57,11 @@ public class ProtogenDisplay<M extends AdvancedHumanoidModel<T>, T extends Chang
 
             // Renderiza apenas a cabeça do modelo
             if (isOnlyHead) {
-                this.model.getHead().render(poseStack, bufferSource.getBuffer(NormalDisplayRender), packedLight, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
-                this.model.getHead().render(poseStack, bufferSource.getBuffer(GlowEyeRender), packedLight, overlay, eyeColor.red(), eyeColor.green(), eyeColor.blue(), 1.0F);
+                this.model.getHead().render(poseStack, bufferSource.getBuffer(NormalDisplayRender), LightTexture.FULL_BRIGHT, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
+                this.model.getHead().render(poseStack, bufferSource.getBuffer(GlowEyeRender), LightTexture.FULL_BRIGHT, overlay, eyeColor.red(), eyeColor.green(), eyeColor.blue(), 1.0F);
             } else {
-                this.model.renderToBuffer(poseStack, bufferSource.getBuffer(NormalDisplayRender), packedLight, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
-                this.model.renderToBuffer(poseStack, bufferSource.getBuffer(GlowEyeRender), packedLight, overlay, eyeColor.red(), eyeColor.green(), eyeColor.blue(), 1.0F);
+                this.model.renderToBuffer(poseStack, bufferSource.getBuffer(NormalDisplayRender), LightTexture.FULL_BRIGHT, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
+                this.model.renderToBuffer(poseStack, bufferSource.getBuffer(GlowEyeRender), LightTexture.FULL_BRIGHT, overlay, eyeColor.red(), eyeColor.green(), eyeColor.blue(), 1.0F);
             }
         }
     }

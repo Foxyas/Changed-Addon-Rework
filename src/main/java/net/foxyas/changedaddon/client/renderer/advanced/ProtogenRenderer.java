@@ -16,7 +16,7 @@ public class ProtogenRenderer extends AdvancedHumanoidRenderer<ProtogenEntity, P
     public ProtogenRenderer(EntityRendererProvider.Context context) {
         super(context, new ProtogenModel(context.bakeLayer(ProtogenModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new ProtogenDisplay<>(this, getModel(),
-                ChangedAddonMod.textureLoc("textures/entities/protogen/protogen_eyes_display"),
+                ChangedAddonMod.textureLoc("textures/entities/protogen/protogen_display_eyes"),
                 ChangedAddonMod.textureLoc("textures/entities/protogen/protogen_display")));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         this.addLayer(GasMaskLayer.forLargeSnouted(this, context.getModelSet()));
