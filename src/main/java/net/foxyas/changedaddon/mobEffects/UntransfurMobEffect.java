@@ -56,7 +56,7 @@ public class UntransfurMobEffect extends MobEffect {
                     return;
                 }
 
-                float damageToDeal = amplifier;
+                float damageToDeal = amplifier + 1;
 
                 if (currentHealth - damageToDeal <= 0) {
                     damageToDeal = currentHealth - 1.0F;
