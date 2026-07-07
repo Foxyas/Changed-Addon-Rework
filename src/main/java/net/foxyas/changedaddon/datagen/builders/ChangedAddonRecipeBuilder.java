@@ -37,6 +37,7 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
     private RecipeSerializer<?> type;
     private Optional<Float> progressSpeed = Optional.of(1f);
     private Optional<Float> nitrogenUsage = Optional.empty();
+    private Optional<Float> experience = Optional.empty();
 
     public ChangedAddonRecipeBuilder(RecipeSerializer<?> type, ItemLike pResult, int pCount) {
         this.result = new ItemStack(pResult, pCount);
@@ -126,7 +127,7 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
     }
 
     /**
-     * Adds a Recipe Serialized ["Type"].
+     * Adds a Recipe Serialized ["Speed"].
      */
     public ChangedAddonRecipeBuilder withSpeed(float speed) {
         this.progressSpeed = Optional.of(speed);
@@ -134,10 +135,18 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
     }
 
     /**
-     * Adds a Recipe Serialized ["Type"].
+     * Adds a Recipe Serialized ["NitrogenUsage"].
      */
     public ChangedAddonRecipeBuilder withNitrogenUsage(float nitrogenUsage) {
         this.nitrogenUsage = Optional.of(nitrogenUsage);
+        return this;
+    }
+
+    /**
+     * Adds a Recipe Serialized ["NitrogenUsage"].
+     */
+    public ChangedAddonRecipeBuilder withExperience(float experience) {
+        this.experience = Optional.of(experience);
         return this;
     }
 
@@ -169,7 +178,16 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
     public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, @NotNull ResourceLocation pRecipeId) {
         this.ensureValid(pRecipeId);
         this.advancement.parent(ResourceLocation.parse("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-        pFinishedRecipeConsumer.accept(new ChangedAddonRecipeBuilder.Result(this.type, pRecipeId, this.result, this.group == null ? "" : this.group, this.ingredients, this.progressSpeed, this.nitrogenUsage, this.advancement, ResourceLocation.fromNamespaceAndPath(pRecipeId.getNamespace(), "recipes/" + RecipeCategory.MISC.getFolderName() + "/" + pRecipeId.getPath())));
+        pFinishedRecipeConsumer.accept(new ChangedAddonRecipeBuilder.Result(this.type,
+                pRecipeId,
+                this.result,
+                this.group == null ? "" : this.group,
+                this.ingredients,
+                this.progressSpeed,
+                this.nitrogenUsage,
+                this.experience,
+                this.advancement,
+                ResourceLocation.fromNamespaceAndPath(pRecipeId.getNamespace(), "recipes/" + RecipeCategory.MISC.getFolderName() + "/" + pRecipeId.getPath())));
     }
 
     /**
@@ -191,6 +209,7 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
         private final List<Ingredient> ingredients;
         private final Optional<Float> progressSpeed;
         private final Optional<Float> nitrogenUsage;
+        private Optional<Float> experience;
         private final Advancement.Builder advancement;
         private final ResourceLocation advancementId;
         private final @NotNull RecipeSerializer<?> type;
@@ -205,15 +224,17 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
             this.type = type;
             this.progressSpeed = Optional.empty();
             this.nitrogenUsage = Optional.empty();
+            this.experience = Optional.empty();
         }
 
-        public Result(@NotNull RecipeSerializer<?> type, ResourceLocation pId, ItemStack pResult, String pGroup, List<Ingredient> pIngredients, Optional<Float> speed, Optional<Float> nitrogenUsage, Advancement.Builder pAdvancement, ResourceLocation pAdvancementId) {
+        public Result(@NotNull RecipeSerializer<?> type, ResourceLocation pId, ItemStack pResult, String pGroup, List<Ingredient> pIngredients, Optional<Float> speed, Optional<Float> nitrogenUsage, Optional<Float> experience, Advancement.Builder pAdvancement, ResourceLocation pAdvancementId) {
             this.id = pId;
             this.result = pResult;
             this.group = pGroup;
             this.ingredients = pIngredients;
             this.progressSpeed = speed;
             this.nitrogenUsage = nitrogenUsage;
+            this.experience = experience;
             this.advancement = pAdvancement;
             this.advancementId = pAdvancementId;
             this.type = type;
@@ -243,6 +264,7 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
             if (type == ChangedAddonRecipeTypes.CATALYZER_RECIPE.get()) {
                 nitrogenUsage.ifPresent(nitrogen -> pJson.addProperty("nitrogenUsage", nitrogen));
             }
+            experience.ifPresent(aFloat -> pJson.addProperty("experience", aFloat));
         }
 
         @Override

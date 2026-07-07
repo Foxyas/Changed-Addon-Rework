@@ -334,6 +334,11 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
         return 1f;
     }
 
+    public float getExperienceMultiplier() {
+        return 1f;
+    }
+
+
     public SimpleContainer getContainer() {
         return new SimpleContainer(this.stacks.toArray(new ItemStack[0]));
     }
@@ -397,7 +402,7 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
         for (Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
             pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent((recipe) -> {
                 list.add(recipe);
-                createExperience(pLevel, pPopVec, entry.getIntValue(), ((CatalyzerRecipe) recipe).getExperience());
+                createExperience(pLevel, pPopVec, entry.getIntValue(), ((CatalyzerRecipe) recipe).getExperience() * this.getExperienceMultiplier());
             });
         }
 

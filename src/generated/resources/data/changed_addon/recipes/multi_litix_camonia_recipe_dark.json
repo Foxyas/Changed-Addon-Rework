@@ -1,5 +1,6 @@
 {
   "type": "changed_addon:unifuser",
+  "experience": 2.0,
   "ingredients": [
     {
       "item": "changed_addon:litix_camonia"
