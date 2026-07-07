@@ -10,6 +10,7 @@ uniform float GameTime;
 uniform int EndPortalLayers;
 
 in vec4 texProj0;
+in vec4 vertexColor;
 in vec2 texCoord0; // <--- Recebe a coordenada vinda do Vertex Shader
 
 const vec3[] COLORS = vec3[](
@@ -71,5 +72,5 @@ void main() {
     }
     
     // Retorna o efeito do portal recortado no formato da asa
-    fragColor = vec4(color, 1.0);
+    fragColor = vec4(color * vertexColor.rgb, maskTex.a * vertexColor.a);
 }
