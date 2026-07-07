@@ -292,6 +292,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityDialogues("exp9.reaction.range_attacks.attack_at_distance", "§l§o§3GYÁVA VAGY! Csak a távolságra számíthatsz? TÉNYLEG SZÁMORÚ!!!");
         addEntityDialogues("exp9.reaction.range_attacks.attack_when_vulnerable", "§l§o§3GYÁVA VAGY! Akkor támadsz, amikor a legsebezhetőbb állapotban vagyok, ahelyett, hogy nyíltan beszélnél velem.");
         addEntityDialogues("exp9.reaction.fire_damage", "§l§o§3Gyufával küzdesz a viharral.... Nem rosszul számoltál – félreértettél.");
+        addEntityDialogues("exp9.reaction.fire_extinguish", "§3§l§oElég ebből a tűzből! Kezd már nagyon idegesíteni.");
         addEntityDialogues("exp10.pat.type_0", "§l§4Igen, VÉGET VETEK A KIBASZOTT ÉLETEDNEK");
         addEntityDialogues("exp10.pat.type_1", "§l§4Nem fogod sokáig megbánni – meghalsz érte.");
         addEntityDialogues("exp10.pat.type_2", "§l§4Érj meg újra, és gyorsan csinálom... neked.");
@@ -349,6 +350,7 @@ public class HULanguageProvider extends LanguageProvider {
         addDeathMessage("untransfur_fail", "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett", null, "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett, miközben vele harcolt: %2$s");
 
         addEffect(ChangedAddonMobEffects.UNTRANSFUR, "§7Visszatranszfur", "Átfedésben jeleníti meg a visszatranszfur folyamatát. A haladás felgyorsul alvás közben. Amikor befejeződött, a visszatranszfur érvénybe lép.");
+        add("effect.changed_addon." + ChangedAddonMobEffects.UNTRANSFUR.getId().getPath() + ".no_effect", "A hatás nem tűnik működőképesnek");
         addEffect(LATEX_SOLVENT, "Latexoldás", "Károsítja a latex alapú entitásokat. Minél erősebb a hatás, annál nagyobb a sebzés.");
         addEffect(LATEX_CONTAMINATION, "Latexszennyeződés", "Fokozatosan növeli a fertőzést a humanoid entitásokban. Minél magasabb a hatás szintje, annál gyorsabban terjed a fertőzés.");
         addEffect(TRANSFUR_DAMAGE_BOOST, "Transzfur erő", "Növeli a Changed entitások sebzését humanoid célpontok támadásakor. A magasabb szintek felerősítik a transzfur hatékonyságát.");
@@ -553,6 +555,7 @@ public class HULanguageProvider extends LanguageProvider {
 
         addItemFromId(LAETHIN);
         addItem(LAETHIN_SYRINGE, "Laethin fecskendő");
+        add("item.changed_addon.laethin.type", "Latex típus: %s");
         addItem(ALPHA_SERUM_SYRINGE, "Alfa szérummal teli fecskendő");
         addItem(LAETHINMINATOR, "Laethinminátor");
         addItem(FLAMETHROWER, "Lángszóró");
