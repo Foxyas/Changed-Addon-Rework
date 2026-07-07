@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTyp
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -34,11 +35,24 @@ public class LuminaraBeastWingsConditionalLayer<T extends LuminaraFlowerBeastEnt
             if (luminaraFlowerBeastEntity.isFlying() || luminaraFlowerBeastEntity.isFallFlying()) {
                 boolean hasElytra = luminaraFlowerBeastEntity.getItemBySlot(EquipmentSlot.CHEST).is(Items.ELYTRA);
                 if (!hasElytra) {
+                    // 1. Pega o buffer da base/outras partes e renderiza
                     VertexConsumer wingRootBuffer = bufferSource.getBuffer(RenderType.entityTranslucent(LuminaraFlowerBeastRenderer.WING_ROOT_TEXTURE));
-                    VertexConsumer wingGlowBuffer = bufferSource.getBuffer(ChangedAddonRenderTypes.dynamicEndPortal(LuminaraFlowerBeastRenderer.WING_GLOW_TEXTURE));
-
                     parentModel.renderToBuffer(poseStack, wingRootBuffer, packedLight, overlay, 1, 1, 1, 1.0F);
+
+                    // 2. FORÇA o Minecraft a desenhar o buffer translucido agora mesmo
+                    if (bufferSource instanceof BufferSource immediateBuffer) {
+                        immediateBuffer.endBatch(RenderType.entityTranslucent(LuminaraFlowerBeastRenderer.WING_ROOT_TEXTURE));
+                    }
+
+                    // 3. Pega o seu buffer de galáxia e desenha por cima
+                    VertexConsumer wingGlowBuffer = bufferSource.getBuffer(ChangedAddonRenderTypes.dynamicGalaxy(LuminaraFlowerBeastRenderer.WING_GLOW_TEXTURE));
                     parentModel.renderToBuffer(poseStack, wingGlowBuffer, packedLight, overlay, 1, 1, 1, 1.0F);
+
+//                    VertexConsumer wingRootBuffer = bufferSource.getBuffer(RenderType.entityTranslucent(LuminaraFlowerBeastRenderer.WING_ROOT_TEXTURE));
+//                    VertexConsumer wingGlowBuffer = bufferSource.getBuffer(RenderType.energySwirl(LuminaraFlowerBeastRenderer.WING_GLOW_TEXTURE, 0, 0));
+//
+//                    parentModel.renderToBuffer(poseStack, wingRootBuffer, packedLight, overlay, 1, 1, 1, 1.0F);
+//                    parentModel.renderToBuffer(poseStack, wingGlowBuffer, packedLight, overlay, 1, 1, 1, 1.0F);
                 }
             } else {
                 parentModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(LuminaraFlowerBeastRenderer.WING_TEXTURE)), packedLight, overlay, 1, 1, 1, 1.0F);

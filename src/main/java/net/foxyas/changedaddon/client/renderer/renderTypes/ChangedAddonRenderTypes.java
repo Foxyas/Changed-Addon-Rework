@@ -402,22 +402,22 @@ public final class ChangedAddonRenderTypes extends RenderType {
     });
 
     private static ShaderInstance DYNAMIC_GALAXY_SHADER;
-    public static final Function<ResourceLocation,RenderType> DYNAMIC_GALAXY = Util.memoize(texture -> {
+    public static final Function<ResourceLocation, RenderType> DYNAMIC_GALAXY = Util.memoize(texture -> {
         return RenderType.create(
-                ChangedAddonMod.resourceLocString("dynamic_galaxy"), // IT CAN BE NEW_ENTITY.
-                DefaultVertexFormat.POSITION_TEX, // Continua POSITION_TEX (já envia a UV0 automaticamente)
+                ChangedAddonMod.resourceLocString("dynamic_galaxy"),
+                DefaultVertexFormat.NEW_ENTITY, // <--- OBRIGATÓRIO PARA ENTIDADES (Contém Lightmap e Overlay)
                 VertexFormat.Mode.QUADS, 256, false, false,
                 RenderType.CompositeState.builder()
                         .setShaderState(new ShaderStateShard(() -> DYNAMIC_GALAXY_SHADER))
                         .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
-                                .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)   // Sampler0
-                                .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false) // Sampler1
-                                .add(texture, false, false) // Sampler2: PIXELS MASK
+                                .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
+                                .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false)
+                                .add(texture, false, false) // Sampler2: Sua textura de máscara (WING_GLOW_TEXTURE)
                                 .build())
                         .setWriteMaskState(COLOR_WRITE)
                         .setCullState(NO_CULL)
-                        .setDepthTestState(EQUAL_DEPTH_TEST)
-                        .setTransparencyState(GLINT_TRANSPARENCY)
+//                        .setDepthTestState(EQUAL_DEPTH_TEST)
+                        .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
                         .createCompositeState(false)
         );
     });
@@ -434,7 +434,7 @@ public final class ChangedAddonRenderTypes extends RenderType {
                 DefaultVertexFormat.POSITION_COLOR_TEX), shader -> TRANSLUCENT_OUTLINE_SHADER = shader);
         event.registerShader(new ShaderInstance(event.getResourceProvider(),
                 ChangedAddonMod.resourceLoc("dynamic_galaxy"),
-                DefaultVertexFormat.POSITION_COLOR_TEX), shader -> DYNAMIC_GALAXY_SHADER = shader);
+                DefaultVertexFormat.NEW_ENTITY), shader -> DYNAMIC_GALAXY_SHADER = shader); // <--- Ajustado aqui também!
     }
 
     @Nullable
