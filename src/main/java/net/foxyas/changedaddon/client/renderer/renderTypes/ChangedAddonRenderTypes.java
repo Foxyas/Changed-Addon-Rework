@@ -416,8 +416,7 @@ public final class ChangedAddonRenderTypes extends RenderType {
                                 .build())
                         .setWriteMaskState(COLOR_WRITE)
                         .setCullState(NO_CULL)
-//                        .setDepthTestState(EQUAL_DEPTH_TEST)
-                        .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                        .setTransparencyState(NO_TRANSPARENCY)
                         .createCompositeState(false)
         );
     });
