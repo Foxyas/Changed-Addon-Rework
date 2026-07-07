@@ -2,16 +2,16 @@
 
 #moj_import <matrix.glsl>
 
-uniform sampler2D Sampler0; // End Sky
-uniform sampler2D Sampler1; // End Portal
-uniform sampler2D Sampler2; // <--- Sua textura de máscara (adicionada via RenderType)
+uniform sampler2D Sampler0;// End Sky
+uniform sampler2D Sampler1;// End Portal
+uniform sampler2D Sampler2;// Your mask texture (added via RenderType)
 
 uniform float GameTime;
 uniform int EndPortalLayers;
 
 in vec4 texProj0;
 in vec4 vertexColor;
-in vec2 texCoord0; // <--- Recebe a coordenada vinda do Vertex Shader
+in vec2 texCoord0;// Receives the coordinate coming from the Vertex Shader
 
 const vec3[] COLORS = vec3[](
     vec3(0.022087, 0.098399, 0.110818),
@@ -57,20 +57,20 @@ mat4 end_portal_layer(float layer) {
 out vec4 fragColor;
 
 void main() {
-    // Coleta a cor/alpha da textura do modelo na posição atual
+    // Collects the color/alpha of the model's texture at the current position
     vec4 maskTex = texture(Sampler2, texCoord0);
 
-    // Se o pixel na textura da máscara for transparente, ignora o processamento
+    // If the pixel on the mask texture is transparent, skip processing
     if (maskTex.a < 0.1) {
         discard;
     }
 
-    // Renderização original do portal
+    // Original portal rendering
     vec3 color = textureProj(Sampler0, texProj0).rgb * COLORS[0];
     for (int i = 0; i < EndPortalLayers; i++) {
         color += textureProj(Sampler1, texProj0 * end_portal_layer(float(i + 1))).rgb * COLORS[i];
     }
-    
-    // Retorna o efeito do portal recortado no formato da asa
+
+    // Returns the portal effect clipped into the shape of the wing (incorporating vertexColor tinting)
     fragColor = vec4(color * vertexColor.rgb, maskTex.a * vertexColor.a);
 }

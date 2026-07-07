@@ -4,9 +4,9 @@
 
 in vec3 Position;
 in vec4 Color;
-in vec2 UV0;  // Coordenada da textura do modelo (Máscara)
-in ivec2 UV1; // Overlay Coords (A GPU joga o overlay de dano aqui)
-in ivec2 UV2; // Lightmap Coords (A iluminação do mundo vai aqui)
+in vec2 UV0;  // Texture coordinate of the model (Mask)
+in ivec2 UV1; // Overlay Coords (The GPU passes damage flash overlay here)
+in ivec2 UV2; // Lightmap Coords (The world illumination goes here)
 in vec3 Normal;
 
 uniform mat4 ModelViewMat;
@@ -20,5 +20,5 @@ void main() {
     gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
     texProj0 = projection_from_position(gl_Position);
     vertexColor = Color;
-    texCoord0 = UV0; // Enviando com sucesso a UV para o fragment shader
+    texCoord0 = UV0; // Successfully sending the UV to the fragment shader
 }
