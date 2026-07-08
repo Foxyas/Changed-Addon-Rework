@@ -155,6 +155,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(stack)
                 .requires(ChangedAddonTags.Items.AIR)
                 .withSpeed(0.5f)
+                .withExperience(2.0f)
                 .unlockedBy("has_litix_camonia", has(ChangedAddonItems.LITIX_CAMONIA.get()))
                 .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "multi_litix_camonia_recipe_white"));
         ItemStack black = LAETHIN.get().getDefaultInstance();
@@ -165,6 +166,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(stack)
                 .requires(ChangedAddonTags.Items.AIR)
                 .withSpeed(0.5f)
+                .withExperience(2.0f)
                 .unlockedBy("has_litix_camonia", has(ChangedAddonItems.LITIX_CAMONIA.get()))
                 .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "multi_litix_camonia_recipe_dark"));
 

@@ -10,5 +10,6 @@
     "item": "changed_addon:ammonia",
     "count": 1
   },
-  "progressSpeed": 0.5
+  "progressSpeed": 0.5,
+  "experience": 1
 }

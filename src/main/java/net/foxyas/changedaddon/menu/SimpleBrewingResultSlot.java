@@ -10,11 +10,13 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class SimpleBrewingResultSlot extends SlotItemHandler {
     private final Player player;
+    protected final Container container;
     private int removeCount;
 
-    public SimpleBrewingResultSlot(Player pPlayer, IItemHandler itemHandler, int pSlot, int pXPosition, int pYPosition) {
+    public SimpleBrewingResultSlot(Player pPlayer, Container container, IItemHandler itemHandler, int pSlot, int pXPosition, int pYPosition) {
         super(itemHandler, pSlot, pXPosition, pYPosition);
         this.player = pPlayer;
+        this.container = container;
     }
 
     /**

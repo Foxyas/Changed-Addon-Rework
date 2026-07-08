@@ -15,5 +15,6 @@
     "item": "changed_addon:laethin_syringe",
     "count": 1
   },
-  "progressSpeed": 0.25
+  "progressSpeed": 0.25,
+  "experience": 1
 }

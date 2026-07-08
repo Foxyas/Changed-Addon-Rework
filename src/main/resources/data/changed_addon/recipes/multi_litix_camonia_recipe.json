@@ -15,5 +15,6 @@
     "item": "changed_addon:litix_camonia",
     "count": 3
   },
-  "progressSpeed": 0.5
+  "progressSpeed": 0.5,
+  "experience": 1
 }

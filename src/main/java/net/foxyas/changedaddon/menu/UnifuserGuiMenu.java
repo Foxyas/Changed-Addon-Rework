@@ -80,7 +80,7 @@ public class UnifuserGuiMenu extends AbstractMenu {
         };
         this.syringeSlot = (SimpleItemHandlerInputSlot) addSlot(slot3);
 
-        SimpleBrewingResultSlot slot4 = new SimpleBrewingResultSlot(entity, internal, 3, 116, syringeSlot.y); // y35
+        SimpleBrewingResultSlot slot4 = new SimpleBrewingResultSlot(entity, unifuser, internal, 3, 116, syringeSlot.y); // y35
         this.outputSLot = (SimpleBrewingResultSlot) addSlot(slot4);
 
         menuInvSlots.addAll(List.of(topSlot, bottomSlot, syringeSlot));
@@ -122,22 +122,44 @@ public class UnifuserGuiMenu extends AbstractMenu {
     public @NotNull ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = slots.get(pIndex);
+
         if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            if (pIndex < 36) {
-                if (!this.moveItemStackTo(itemstack1, 36, this.slots.size() - 1, false)) {
+
+            // 1. Lógica de movimentação (Shift-Clique)
+            if (pIndex < 36) { // Se veio do inventário do jogador -> vai para os slots do bloco
+                if (!this.moveItemStackTo(itemstack1, 36, this.slots.size(), false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, 36, false)) {
-                return ItemStack.EMPTY;
+            } else { // Se veio dos slots do bloco -> vai para o inventário do jogador
+                if (!this.moveItemStackTo(itemstack1, 0, 36, false)) {
+                    return ItemStack.EMPTY;
+                }
             }
 
+            // 2. DISPARAR EVENTOS DE CRAFT (Apenas se a transferência acima deu certo)
+            // Isso deve rodar ANTES do itemstack1 ser zerado ou modificado pelo slot.set()
+            if (slot instanceof SimpleBrewingResultSlot resultSlot) {
+                itemstack1.getItem().onCraftedBy(itemstack1, pPlayer.level(), pPlayer);
+                resultSlot.onQuickCraft(itemstack1, itemstack);
+            }
+
+            // 3. Atualizar o estado do Slot de origem
             if (itemstack1.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
+
+            // 4. Verificação de segurança obrigatória do Minecraft
+            // Se o tamanho do pack não mudou nada, significa que não havia espaço para mover
+            if (itemstack1.getCount() == itemstack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            // 5. Notificar o Slot que o jogador efetivamente "retirou" o item dali
+            slot.onTake(pPlayer, itemstack1);
         }
 
         return itemstack;

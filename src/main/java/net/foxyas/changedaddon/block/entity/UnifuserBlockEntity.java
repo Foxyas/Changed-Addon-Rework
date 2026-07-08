@@ -227,6 +227,10 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
         return 1f;
     }
 
+    public float getExperienceMultiplier() {
+        return 1f;
+    }
+
     @Override
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
@@ -414,7 +418,7 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
         for (Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
             pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent((recipe) -> {
                 list.add(recipe);
-                createExperience(pLevel, pPopVec, entry.getIntValue(), ((UnifuserRecipe) recipe).getExperience());
+                createExperience(pLevel, pPopVec, entry.getIntValue(), ((UnifuserRecipe) recipe).getExperience() * this.getExperienceMultiplier());
             });
         }
 

@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -126,6 +128,9 @@ public class CatalyzerBlock extends HorizontalDirectionalBlock implements Entity
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CatalyzerBlockEntity be) {
                 Containers.dropContents(world, pos, be);
+                if (world instanceof ServerLevel serverLevel) {
+                    be.getRecipesToAwardAndPopExperience(serverLevel, Vec3.atCenterOf(pos));
+                }
                 world.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, world, pos, newState, isMoving);
