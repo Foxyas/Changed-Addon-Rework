@@ -35,6 +35,10 @@ public abstract class LanguageProvider extends net.minecraftforge.common.data.La
         add("trim_material" + "." + modid + "." + id, value);
     }
 
+    protected void addBuiltInResource(String id, String value) {
+        add("builtin_resources" + "." + modid + ":" + id, value);
+    }
+
     protected void addAdvancement(String key, String title, String description) {
         key = "advancements." + key;//TODO add modid eventually...
         //key = "advancements." + modid + "." + key;

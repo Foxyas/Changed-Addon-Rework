@@ -129,19 +129,7 @@ public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
                 EXPERIMENT_009_BOSS.getKey(), EXPERIMENT_10_BOSS.getKey(), EXPERIMENT_009.getKey(), EXPERIMENT_10.getKey(), VOID_FOX.getKey()
         );
 
-        List<ResourceKey<? extends TransfurVariant<? extends ChangedEntity>>> defaultRemovedFromAllVariantFunction = List.of(VOID_FOX.getKey(),
-                REYN.getKey(),
-                FENGQI_WOLF.getKey(),
-                EXPERIMENT_009.getKey(),
-                EXPERIMENT_10.getKey(),
-                EXPERIMENT_009_BOSS.getKey(),
-                EXPERIMENT_10_BOSS.getKey(),
-                LATEX_SNEP_FERAL_FORM.getKey(),
-                LUMINARCTIC_LEOPARD_MALE.getKey(),
-                LUMINARCTIC_LEOPARD_FEMALE.getKey()
-        );
-
-        List<ResourceKey<? extends TransfurVariant<? extends ChangedEntity>>> defaultRemovedFromSyringes = List.of(VOID_FOX.getKey(),
+        List<ResourceKey<? extends TransfurVariant<? extends ChangedEntity>>> defaultRemovedFromRandomVariantFunction = List.of(VOID_FOX.getKey(),
                 REYN.getKey(),
                 FENGQI_WOLF.getKey(),
                 EXPERIMENT_009.getKey(),
@@ -154,9 +142,18 @@ public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
                 LUMINARA_FLOWER_BEAST.getKey()
         );
 
+        List<ResourceKey<? extends TransfurVariant<? extends ChangedEntity>>> defaultRemovedFromDroppedSyringes = List.of(VOID_FOX.getKey(),
+                EXPERIMENT_009.getKey(),
+                EXPERIMENT_10.getKey(),
+                EXPERIMENT_009_BOSS.getKey(),
+                EXPERIMENT_10_BOSS.getKey(),
+                LUMINARCTIC_LEOPARD_MALE.getKey(),
+                LUMINARCTIC_LEOPARD_FEMALE.getKey()
+        );
+
         tag(ChangedAddonTags.TransfurVariants.BOSS_VARIANTS).add(bossVariants.toArray(ResourceKey[]::new));
-        tag(ChangedAddonTags.TransfurVariants.REMOVED_FROM_GROUNDED_SYRINGES).add(defaultRemovedFromSyringes.toArray(ResourceKey[]::new));
-        tag(ChangedAddonTags.TransfurVariants.REMOVED_FROM_RANDOM_VARIANT_FUNCTION).add(defaultRemovedFromAllVariantFunction.toArray(ResourceKey[]::new));
+        tag(ChangedAddonTags.TransfurVariants.REMOVED_FROM_GROUNDED_SYRINGES).add(defaultRemovedFromDroppedSyringes.toArray(ResourceKey[]::new));
+        tag(ChangedAddonTags.TransfurVariants.REMOVED_FROM_RANDOM_VARIANT_FUNCTION).add(defaultRemovedFromRandomVariantFunction.toArray(ResourceKey[]::new));
     }
 
     protected TagAppender<TransfurVariant<?>> addAllMatching(TagAppender<TransfurVariant<?>> tag, Predicate<TransfurVariant<?>> predicate) {

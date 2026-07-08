@@ -89,6 +89,20 @@ public interface IVariantExtraStats {
 
     }
 
+    /**
+     * @return How much heat the entity can insulate, this will be added with the armor insulation value
+     * */
+    default float getHeatInsulationScale() { //Casualties Cubed Mod Compatibility
+        return 0;
+    }
+
+    /**
+     * @return if the heat Insulation of the entity should follow the clamped rules
+     * */
+    default boolean isHeatInsulationClamped() { //Casualties Cubed Mod Compatibility
+        return true;
+    }
+
     enum FlyType {
         NONE,
         ONLY_FALL,

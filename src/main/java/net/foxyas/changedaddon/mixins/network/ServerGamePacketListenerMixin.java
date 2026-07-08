@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins;
+package net.foxyas.changedaddon.mixins.network;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;

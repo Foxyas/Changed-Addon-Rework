@@ -459,6 +459,36 @@ public class PlayerUtil {
         }
     }
 
+    /**
+     * Gets the BlockHitResult of what the player is looking at.
+     * * @param player The player entity.
+     * @param maxDistance The maximum reach distance (standard survival reach is ~4.5 to 5.0 blocks).
+     * @return The HitResult containing the block position and side hit, or null if nothing is in range.
+     */
+    public static BlockHitResult getBlockThatEntityIsLookingAt(Player player, double maxDistance) {
+        if (player == null || player.level() == null) {
+            return null;
+        }
+
+        // Get the player's eye position
+        Vec3 eyePosition = player.getEyePosition(1.0F);
+
+        // Get the direction the player is looking
+        Vec3 lookVector = player.getViewVector(1.0F);
+
+        // Calculate the end point of the raytrace based on max distance
+        Vec3 traceEnd = eyePosition.add(lookVector.x * maxDistance, lookVector.y * maxDistance, lookVector.z * maxDistance);
+
+        // Perform the raytrace (Collides with blocks, ignoring fluids by default)
+        return player.level().clip(new ClipContext(
+                eyePosition,
+                traceEnd,
+                ClipContext.Block.COLLIDER,
+                ClipContext.Fluid.NONE,
+                player
+        ));
+    }
+
 
     public static class GlobalEntityUtil {
         @Nullable

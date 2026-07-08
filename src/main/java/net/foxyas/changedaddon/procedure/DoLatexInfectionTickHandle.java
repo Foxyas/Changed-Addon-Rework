@@ -4,8 +4,11 @@ import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.network.ChangedAddonVariables.PlayerVariables;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.ai.ImmediateTransfurDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
@@ -13,6 +16,7 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
@@ -87,7 +91,8 @@ public class DoLatexInfectionTickHandle {
     }
 
     public static boolean getInfected(Player player) {
-        return player.getPersistentData().contains(NBT_INFECTED) && player.getPersistentData().getBoolean(NBT_INFECTED);
+        CompoundTag persistentData = player.getPersistentData();
+        return persistentData.contains(NBT_INFECTED) && persistentData.getBoolean(NBT_INFECTED);
     }
 
     private static void setLastVariant(Player player, TransfurVariant<?> variant) {
@@ -97,8 +102,9 @@ public class DoLatexInfectionTickHandle {
     }
 
     private static TransfurVariant<?> getLastVariant(Player player) {
-        if (player.getPersistentData().contains(NBT_LAST_VARIANT)) {
-            String id = player.getPersistentData().getString(NBT_LAST_VARIANT);
+        CompoundTag persistentData = player.getPersistentData();
+        if (persistentData.contains(NBT_LAST_VARIANT)) {
+            String id = persistentData.getString(NBT_LAST_VARIANT);
             return ChangedRegistry.TRANSFUR_VARIANT.get().getValue(ResourceLocation.parse(id));
         }
         return null;
@@ -106,8 +112,9 @@ public class DoLatexInfectionTickHandle {
 
     private static void clearTempData(Player player) {
         if (!player.level.isClientSide) {
-            player.getPersistentData().remove(NBT_INFECTED);
-            player.getPersistentData().remove(NBT_LAST_VARIANT);
+            CompoundTag persistentData = player.getPersistentData();
+            persistentData.remove(NBT_INFECTED);
+            persistentData.remove(NBT_LAST_VARIANT);
         }
     }
 
@@ -117,12 +124,12 @@ public class DoLatexInfectionTickHandle {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            run(event.player);
+            runDoInfectionTick(event.player);
         }
     }
 
     @SubscribeEvent
-    public static void onPlayerHit(ProcessTransfur.TransfurAttackEvent event) {
+    public static void onTransfurAttackPlayer(ProcessTransfur.TransfurAttackEvent event) {
         LivingEntity entity = event.target;
         if (!(entity instanceof Player player)) return;
 
@@ -141,7 +148,7 @@ public class DoLatexInfectionTickHandle {
     // ---------------------------------------------
     // Infection Tick
     // ---------------------------------------------
-    public static void run(Player player) {
+    public static void runDoInfectionTick(Player player) {
         if (player == null) return;
         if (ProcessTransfur.isPlayerTransfurred(player)) return;
 
@@ -150,10 +157,9 @@ public class DoLatexInfectionTickHandle {
             return;
         }
 
-        var playerVariables = player.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY)
-                .orElse(new ChangedAddonVariables.PlayerVariables());
+        PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(player);
 
-        int tickCounter = (int) playerVariables.LatexInfectionCooldown;
+        int tickCounter = playerVariables.latexInfectionTicks;
         float progress = ProcessTransfur.getPlayerTransfurProgress(player);
         float maxTolerance = (float) ProcessTransfur.getEntityTransfurTolerance(player);
         float mathNumber = getValueToApply(player.level(), player);
@@ -187,20 +193,27 @@ public class DoLatexInfectionTickHandle {
             if (tickCounter >= tickDelay) {
                 if (progress + mathNumber < maxTolerance * 0.998f) {
                     ProcessTransfur.setPlayerTransfurProgress(player, progress + mathNumber);
-                    playerVariables.LatexInfectionCooldown = 0;
+                    playerVariables.latexInfectionTicks = 0;
                 } else {
                     // Chegou ao máximo -> aplica transfur
                     TransfurVariant<?> variant = getLastVariant(player);
                     if (variant != null) {
-                        ProcessTransfur.transfur(player, player.level(), variant, true, TransfurContext.hazard(TransfurCause.GRAB_ABSORB));
+                        transfurPlayerSafe(player, variant);
                         clearTempData(player);
                     }
                 }
             } else {
-                playerVariables.LatexInfectionCooldown++;
+                playerVariables.latexInfectionTicks++;
             }
         } else if (!isSurvivalOrAdventure(player) && tickCounter != 0) {
-            playerVariables.LatexInfectionCooldown = 0;
+            playerVariables.latexInfectionTicks = 0;
         }
+    }
+
+    private static void transfurPlayerSafe(Player player, TransfurVariant<?> variant) {
+        TransfurContext context = TransfurContext.hazard(TransfurCause.GRAB_ABSORB);
+        IAbstractChangedEntity source = context.source() == null ? null : context.source().left().orElse(null);
+        ImmediateTransfurDecision<?> transfurDecision = ImmediateTransfurDecision.safe(variant, context.cause(), source);
+        ProcessTransfur.transfur(player, transfurDecision);
     }
 }

@@ -48,26 +48,11 @@ public abstract class DroppedSyringeBlockEntityMixin extends BlockEntity {
                 cir.setReturnValue(transfurVariant);
             }
         }
-
-        List<TransfurVariant<?>> variantsRemovedFromSyringes = ChangedAddon$getVariantsRemovedFromSyringes();
-        if (variantsRemovedFromSyringes.contains(this.variant)) {
-            List<TransfurVariant<?>> list = new ArrayList<>(TransfurVariant.getPublicTransfurVariants().toList());
-            list.removeIf(variantsRemovedFromSyringes::contains);
-            TransfurVariant<?> transfurVariant = list.get(this.level.getRandom().nextInt(list.size()));
-            if (transfurVariant == null) return;
-            this.variant = transfurVariant;
-            cir.setReturnValue(transfurVariant);
-        }
     }
 
     @Unique
     private List<TransfurVariant<?>> ChangedAddon$getBossVariants() {
         return ChangedAddonTransfurVariants.getBossVariants(level);
-    }
-
-    @Unique
-    private List<TransfurVariant<?>> ChangedAddon$getVariantsRemovedFromSyringes() {
-        return ChangedAddonTransfurVariants.getVariantsRemovedFromSyringes(level);
     }
 
     @Inject(method = "load", at = @At("HEAD"))

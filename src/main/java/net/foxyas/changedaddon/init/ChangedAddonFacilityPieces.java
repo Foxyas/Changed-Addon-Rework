@@ -20,8 +20,8 @@ import java.util.Set;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonFacilityPieces {
 
-    public static final ResourceLocation EXP_10_ROOM = ResourceLocation.parse("changed_addon:facilities/facility_rooms/exp10room");
-    public static final ResourceLocation EXP_009_ROOM = ResourceLocation.parse("changed_addon:facilities/facility_rooms/exp009room");
+    public static final ResourceLocation EXP_10_ROOM = ResourceLocation.parse("changed_addon:facilities/rooms/exp10room");
+    public static final ResourceLocation EXP_009_ROOM = ResourceLocation.parse("changed_addon:facilities/rooms/exp009room");
     public static final Set<ResourceLocation> BOSSES_ROOMS = Set.of(EXP_009_ROOM, EXP_10_ROOM);
 
     @SubscribeEvent
@@ -35,17 +35,54 @@ public class ChangedAddonFacilityPieces {
         Weight gardenContainmentSpawnWeight = Weight.of((int) (FacilityPieceCollectionBuilder.WEIGHT_COMMON * 1.5f));
         Weight closedMeteorInPoolSpawnWeight = Weight.of(9);
 
-        FacilityCorridorSection gardenContainment = new FacilityCorridorSection(ResourceLocation.parse("changed_addon:facilities/facility_hallways/garden_containment"), Optional.of(LootTables.HIGH_TIER_LAB));
-        FacilityCorridorSection darkLatexPlushyHallway = new FacilityCorridorSection(ResourceLocation.parse("changed_addon:facilities/facility_hallways/dark_latex_plushy_hallway"), Optional.of(LootTables.LOW_TIER_LAB));
-        FacilityCorridorSection closedMeteorInPool = new FacilityCorridorSection(ResourceLocation.parse("changed_addon:facilities/facility_hallways/closed_meteor_in_pool"), Optional.of(LootTables.HIGH_TIER_LAB));
+        FacilityCorridorSection gardenContainment = new FacilityCorridorSection(
+                ResourceLocation.parse("changed_addon:facilities/hallways/garden_containment"),
+                Optional.of(LootTables.HIGH_TIER_LAB));
 
-        ConfiguredFacilityPiece gardenContainmentFacilityPiece = new ConfiguredFacilityPiece(gardenContainment, gardenContainmentSpawnWeight, 1, 4, Set.of(ChangedFacilityZones.GREENHOUSE_ZONE.get(), ChangedFacilityZones.ENTRANCE_ZONE.get()), RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
-        ConfiguredFacilityPiece darkLatexPlushyHallwayFacilityPiece = new ConfiguredFacilityPiece(darkLatexPlushyHallway, Weight.of(FacilityPieceCollectionBuilder.WEIGHT_COMMON), 0, 2, Set.of(ChangedFacilityZones.ENTRANCE_ZONE.get()), RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
-        ConfiguredFacilityPiece closedMeteorInPoolFacilityPiece = new ConfiguredFacilityPiece(closedMeteorInPool, closedMeteorInPoolSpawnWeight, 0, 2, Set.of(ChangedFacilityZones.ENTRANCE_ZONE.get()), RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
+        FacilityCorridorSection darkLatexPlushyHallway = new FacilityCorridorSection(
+                ResourceLocation.parse("changed_addon:facilities/hallways/dark_latex_plushy_hallway"),
+                Optional.of(LootTables.LOW_TIER_LAB));
+
+        FacilityCorridorSection closedMeteorInPool = new FacilityCorridorSection(
+                ResourceLocation.parse("changed_addon:facilities/hallways/closed_meteor_in_pool"),
+                Optional.of(LootTables.HIGH_TIER_LAB));
+
+        FacilityCorridorSection luminaraTreeHallway = new FacilityCorridorSection(
+                ResourceLocation.parse("changed_addon:facilities/hallways/luminara_tree_hallway"),
+                Optional.of(LootTables.HIGH_TIER_LAB));
+
+        ConfiguredFacilityPiece gardenContainmentFacilityPiece = new ConfiguredFacilityPiece(gardenContainment,
+                gardenContainmentSpawnWeight,
+                1,
+                4,
+                Set.of(ChangedFacilityZones.GREENHOUSE_ZONE.get(), ChangedFacilityZones.ENTRANCE_ZONE.get()),
+                RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
+
+        ConfiguredFacilityPiece darkLatexPlushyHallwayFacilityPiece = new ConfiguredFacilityPiece(darkLatexPlushyHallway,
+                Weight.of(FacilityPieceCollectionBuilder.WEIGHT_COMMON),
+                0,
+                2,
+                Set.of(ChangedFacilityZones.ENTRANCE_ZONE.get()),
+                RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
+
+        ConfiguredFacilityPiece closedMeteorInPoolFacilityPiece = new ConfiguredFacilityPiece(closedMeteorInPool,
+                closedMeteorInPoolSpawnWeight,
+                0,
+                2,
+                Set.of(ChangedFacilityZones.ENTRANCE_ZONE.get()),
+                RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
+
+        ConfiguredFacilityPiece luminaraTreeHallwayFacilityPiece = new ConfiguredFacilityPiece(luminaraTreeHallway,
+                Weight.of(FacilityPieceCollectionBuilder.WEIGHT_RARE),
+                0,
+                2,
+                Set.of(ChangedFacilityZones.GREENHOUSE_ZONE.get(), ChangedFacilityZones.ENTRANCE_ZONE.get()),
+                RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
 
         builder.register(gardenContainmentFacilityPiece.setName(ChangedAddonMod.resourceLoc("garden_containment")));
         builder.register(darkLatexPlushyHallwayFacilityPiece.setName(ChangedAddonMod.resourceLoc("dark_latex_plushy_hallway")));
         builder.register(closedMeteorInPoolFacilityPiece.setName(ChangedAddonMod.resourceLoc("closed_meteor_in_pool")));
+        builder.register(luminaraTreeHallwayFacilityPiece.setName(ChangedAddonMod.resourceLoc("luminara_tree_hallway")));
     }
 
     public static void registerAddonRooms(FacilityPieceCollectionBuilder builder) {
@@ -58,27 +95,27 @@ public class ChangedAddonFacilityPieces {
                                 Optional.of(ResourceLocation.parse("changed_addon:chests/experiment_10_loot_op"))))
 
                 .register(ChangedAddonMod.resourceLoc("luminar_crystal_room"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
-                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/luminar_crystal_room"),
+                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/rooms/luminar_crystal_room"),
                                 Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))))
 
                 .register(ChangedAddonMod.resourceLoc("luminarctic_leopards_cave"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
-                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/luminarctic_leopards_cave"),
+                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/rooms/luminarctic_leopards_cave"),
                                 Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))))
 
                 .register(ChangedAddonMod.resourceLoc("alpha_cave_snow_leopard"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
-                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/alpha_cave_snow_leopard"),
+                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/rooms/alpha_cave_snow_leopard"),
                                 Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))))
 
                 .register(ChangedAddonMod.resourceLoc("alpha_cave_tiger_shark"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
-                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/alpha_cave_tiger_shark"),
+                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/rooms/alpha_cave_tiger_shark"),
                                 Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))))
 
                 .register(ChangedAddonMod.resourceLoc("archives_room"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
-                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/archives_room"),
+                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/rooms/archives_room"),
                                 Optional.empty()));
 
 //                .register(FacilityPieceCollectionBuilder.WEIGHT_COMMON,
-//                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/closed_meteor"),
+//                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/rooms/closed_meteor"),
 //                                ResourceLocation.parse("changed:chests/high_tier_lab")));
     }
 }

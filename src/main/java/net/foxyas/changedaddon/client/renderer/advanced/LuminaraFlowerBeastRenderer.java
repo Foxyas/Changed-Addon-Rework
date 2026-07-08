@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.EmissiveBodyLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +29,7 @@ public class LuminaraFlowerBeastRenderer extends AdvancedHumanoidRenderer<Lumina
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
         this.addLayer(new LuminaraBeastWingsConditionalLayer<>(this));
         this.addLayer(new EmissiveBodyLayer<>(this, GLOW_LAYER_TEXTURE));
-        //this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
+        this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
     }
 
     @Override

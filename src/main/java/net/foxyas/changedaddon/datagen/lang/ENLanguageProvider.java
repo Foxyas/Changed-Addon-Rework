@@ -323,7 +323,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addPatchouliDescriptions("lunar_rose.page1", "§f§lWhisper of the Lunar Bloom$(br)§r§oIn twilight’s hush, a flower concealed,§oA silent glow, its fate is sealed. §oBorn from a mirror that hides the light,§oAnd a frozen tear, both pure and bright. §oThrough hands unseen, they intertwine, §oIn crafted bond, their fates align. §oNo flame nor forge shall shape its form, §oYet under stars, it shall be born.");
         addPatchouliDescriptions("lunar_rose.page2", "§oSeek the unseen, let wisdom ignite, §oFor only the knowing shall glimpse its light.");
 
-        add(modid + ".latex_syringe.not_valid", "You hesitate. Something within warns you not to release what's inside.");
+        add(modid + ".latex_syringe.not_valid.bosses", "You hesitate. Something within warns you not to release what's inside.");
+        add(modid + ".latex_syringe.not_valid", "You hesitate. For some reason you don't want risk it leaving it placed on the ground.");
 
         add(modid + ".latex_totem.not_valid", "Totem reacted §cnegatively§r to your §bDNA§r");
         add(modid + ".latex_totem.tittle.text_1", "§o§n§l§3⚡ The Artifact Resonates ⚡");
@@ -751,5 +752,8 @@ public class ENLanguageProvider extends LanguageProvider {
 
         addTrimMaterial("iridium", "Iridium Material");
         addTrimMaterial("goo_core", "Goo Core Fragment Material");
+
+        addBuiltInResource("brute_grabby_entities", "Grabby Entities: Brute");
+        addBuiltInResource("grabby_entities", "Grabby Entities");
     }
 }
