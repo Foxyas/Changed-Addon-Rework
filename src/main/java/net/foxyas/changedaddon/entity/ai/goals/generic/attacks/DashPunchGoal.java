@@ -11,14 +11,18 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 
 import java.util.EnumSet;
+import java.util.List;
 
 public class DashPunchGoal extends Goal {
 
@@ -51,8 +55,11 @@ public class DashPunchGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (this.phase == Phase.IDLE) {
+        if (this.phase == Phase.IDLE && cooldown > 0) {
             return false;
+        }
+        if (this.phase != Phase.IDLE && target != null) {
+            return true;
         }
         return super.canContinueToUse();
     }
@@ -167,20 +174,54 @@ public class DashPunchGoal extends Goal {
         }
 
         // Aplica o movimento
-        Vec3 movement = direction.scale(0.45f);
+        Vec3 movement = direction.scale(0.85f);
 
-        mob.setDeltaMovement(movement.x, movement.y, movement.z);
+        mob.setDeltaMovement(movement.x, movement.y * 0, movement.z);
         mob.hasImpulse = true;
         mob.hurtMarked = true;
+        if (dashTicks > MAX_DASH_TICKS) {
+            stop();
+            return;
+        }
 
-        if (isDashReachingTarget() || dashTicks > MAX_DASH_TICKS) {
-            if (dashTicks > MAX_DASH_TICKS) stop();
+        if (isDasherReachingAnyEntity()) {
+            AABB boundingBox = mob.getBoundingBox().inflate(6);
+
+            Level level = mob.level();
+
+            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,
+                    boundingBox,
+                    EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(entity -> !entity.is(mob)).and((entity -> entity instanceof LivingEntity livingEntity && mob.canAttack(livingEntity)))
+            );
+
+            for (LivingEntity livingEntity : entities) {
+                if (livingEntity.is(target) && !isDasherReachingTarget()) {
+                    continue;
+                }
+                applyImpact(livingEntity);
+            }
+        }
+
+        if (isDasherReachingTarget()) {
             applyImpact();
         }
     }
 
-    public boolean isDashReachingTarget() {
-        return mob.getBoundingBox().inflate(6).intersects(target.getBoundingBox());
+    public boolean isDasherReachingTarget() {
+        return mob.getBoundingBox().inflate(3).intersects(target.getBoundingBox());
+    }
+
+    public boolean isDasherReachingAnyEntity() {
+        AABB boundingBox = mob.getBoundingBox().inflate(3);
+
+        Level level = mob.level();
+
+        List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,
+                boundingBox,
+                EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(entity -> !entity.is(mob)).and((entity -> entity instanceof LivingEntity livingEntity && mob.canAttack(livingEntity)))
+        );
+
+        return entities.stream().anyMatch(entity -> boundingBox.intersects(entity.getBoundingBox()));
     }
 
     protected void handleBlockBreaking() {
@@ -197,20 +238,74 @@ public class DashPunchGoal extends Goal {
     }
 
     protected void applyImpact() {
+        this.applyImpact(target);
+    }
+
+    protected void applyImpact(LivingEntity target) {
         DamageSource pSource = mob.damageSources().mobAttack(mob);
-        if (target.isDamageSourceBlocked(pSource)) {
-            target.hurt(pSource, 8.0F);
+        if (!target.isDamageSourceBlocked(pSource)) {
+            if (target.hurt(pSource, 8.0F)) {
+                onHitTarget(target);
+            }
+        } else {
+            onBlockedAttemptToHitTarget(target);
+            return;
         }
 
         Vec3 knock = target.position().subtract(mob.position());
         Vec3 knockDir = knock.lengthSqr() < 1.0E-4D ? Vec3.directionFromRotation(0, mob.getYRot()) : knock.normalize();
 
-        target.push(knockDir.x * 1.5, 0.4, knockDir.z * 1.5);
+        if (!target.hasImpulse) {
+            target.push(knockDir.x * 1.5, 0.025f, knockDir.z * 1.5);
+            target.hasImpulse = true;
+        }
 
         if (mob.level() instanceof ServerLevel server) {
             server.sendParticles(ParticleTypes.EXPLOSION, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
         }
         mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1.0F, 1.0F);
+    }
+
+    protected void onBlockedAttemptToHitTarget(LivingEntity target) {
+        if (mob.level() instanceof ServerLevel server) {
+            server.sendParticles(ParticleTypes.EXPLOSION, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
+        }
+        mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1.0F, 1.0F);
+
+        dashTicks = MAX_DASH_TICKS;
+        this.phase = Phase.IDLE;
+        stop();
+
+
+        Vec3 targetPos = target.position();
+        Vec3 mobPos = mob.position();
+        Vec3 relativeVec = mobPos.subtract(targetPos);
+        Vec3 direction = relativeVec.normalize();
+
+        // Aplica o movimento
+        Vec3 movement = direction.scale(1.25f).add(0f, 0.5f, 0f).multiply(1f, 1.25f, 1f);
+        mob.setDeltaMovement(movement.x, movement.y, movement.z);
+    }
+
+    protected void onHitTarget(LivingEntity target) {
+        if (mob.level() instanceof ServerLevel server) {
+            server.sendParticles(ParticleTypes.EXPLOSION, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
+        }
+        mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1.0F, 1.0F);
+
+        dashTicks = MAX_DASH_TICKS;
+        this.phase = Phase.IDLE;
+        stop();
+
+
+        Vec3 targetPos = target.position();
+        Vec3 mobPos = mob.position();
+        Vec3 relativeVec = mobPos.subtract(targetPos);
+        Vec3 direction = relativeVec.normalize();
+
+        // Aplica o movimento
+        Vec3 movement = direction.scale(1.25f).add(0f, 0.5f, 0f).multiply(1f, 1.25f, 1f);
+        mob.setDeltaMovement(movement.x, movement.y, movement.z);
     }
 
     @Override
@@ -224,6 +319,10 @@ public class DashPunchGoal extends Goal {
         return false; // Mantém o dash até o fim ou timeout
     }
 
+    @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
+    }
 
     protected enum Phase {
         IDLE,
