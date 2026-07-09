@@ -7,7 +7,6 @@ import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.packet.ClientboundOpenFTKCScreenPacket;
-import net.foxyas.changedaddon.procedure.SummonEntityProcedure;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -202,7 +201,7 @@ public class FightToKeepConsciousness {
     public static void failFTKC(ChangedAddonVariables.PlayerVariables vars, ServerPlayer player) {
         player.displayClientMessage(Component.translatable("changed_addon.fight_conscience.fail"), true);
 
-        SummonEntityProcedure.execute(player.level, player);
+        PlayerUtil.spawnPlayerTransfurAsChangedEntity(player.level, player);
         PlayerUtil.unTransfurPlayer(player);
 
         DamageSource source = ChangedAddonDamageSources.CONSCIENCE_LOSE.source(player.level());

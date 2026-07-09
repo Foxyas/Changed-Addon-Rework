@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.generic.attacks;
 
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -98,22 +99,20 @@ public class LeapSmashGoal extends Goal {
         BlockPos center = mob.blockPosition();
         int radius = 4;
 
-        for (BlockPos pos : BlockPos.betweenClosedStream(new AABB(center.below()).inflate(radius, 0, radius)).map(BlockPos::immutable).toList()) {
-            double dx = (center.getX() - pos.getX()) / (double) radius;
-            double dy = (center.getY() - pos.getY());
-            double dz = (center.getZ() - pos.getZ()) / (double) radius;
-            double distanceSq = dx * dx + dy * dy + dz * dz;
+        for (BlockPos pos : FoxyasUtil.betweenClosedStreamSphere(new AABB(center.below()).inflate(radius, 0, radius)).map(BlockPos::immutable).toList()) {
+//            double dx = (center.getX() - pos.getX()) / (double) radius;
+//            double dy = (center.getY() - pos.getY());
+//            double dz = (center.getZ() - pos.getZ()) / (double) radius;
+//            double distanceSq = dx * dx + dy * dy + dz * dz;
+//            if (distanceSq <= radius * radius)
 
-            if (distanceSq <= radius * radius) {
-                BlockState blockState = mob.level.getBlockState(pos);
-                mob.level.levelEvent(2001, pos, Block.getId(blockState));
-                // Server-side Break Effect
-                if (mob.level() instanceof ServerLevel serverLevel) {
-                    int breakerId = mob.getId();
-                    int stage = 5;
-                    serverLevel.destroyBlockProgress(breakerId, pos, stage);
-                }
-
+            BlockState blockState = mob.level.getBlockState(pos);
+            mob.level.levelEvent(2001, pos, Block.getId(blockState));
+            // Server-side Break Effect
+            if (mob.level() instanceof ServerLevel serverLevel) {
+                int breakerId = mob.getId();
+                int stage = 5;
+                serverLevel.destroyBlockProgress(breakerId, pos, stage);
             }
         }
 
@@ -134,6 +133,7 @@ public class LeapSmashGoal extends Goal {
         }
 
         mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1.5F, 0.8F);
+        wasInAir = false;
     }
 
     @Override
@@ -143,6 +143,10 @@ public class LeapSmashGoal extends Goal {
 
     @Override
     public void stop() {
+        if (mob.onGround() && wasInAir) { // Fail safe :D
+            performSmash();
+        }
+
         leapTicks = 0;
         wasInAir = false;
         cooldown = 40;

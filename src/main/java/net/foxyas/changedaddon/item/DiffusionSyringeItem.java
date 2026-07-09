@@ -1,8 +1,9 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.procedure.SummonEntityProcedure;
 import net.foxyas.changedaddon.util.PlayerUtil;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,8 +30,11 @@ public class DiffusionSyringeItem extends AbstractSyringeItem {
         if (!(entity instanceof Player player)) return;
 
         if (ProcessTransfur.isPlayerTransfurred(player)) {
-            SummonEntityProcedure.execute(level, player);
-            PlayerUtil.unTransfurPlayerAndPlaySound(player, !player.isCreative() && !player.isSpectator());
+            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (transfurVariant.is(ChangedTransfurVariants.DARK_LATEX_DOUBLE_YUFENG.get())) {
+                ProcessTransfur.changeTransfur(player, ChangedTransfurVariants.DARK_LATEX_YUFENG.get());
+            }
+            PlayerUtil.splitChangedEntityFromPlayer(level, player);
             player.displayClientMessage(Component.translatable("changed_addon.untransfur.diffusion"), true);
             return;
         }

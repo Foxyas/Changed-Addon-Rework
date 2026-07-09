@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -21,6 +22,8 @@ import java.util.EnumSet;
 
 public class DashPunchGoal extends Goal {
 
+    public static final int MAX_DASH_TICKS = 30;
+    public static final int MAX_CHARGE_TICKS = 40;
     protected final Mob mob;
     protected Phase phase = Phase.IDLE;
     protected int chargeTicks = 0;
@@ -43,7 +46,15 @@ public class DashPunchGoal extends Goal {
         // Fail-safe: Verificação de nulidade e estado da entidade
         if (target == null || !target.isAlive() || target.isRemoved()) return false;
 
-        return mob.distanceTo(target) < 16 && mob.onGround();
+        return mob.distanceTo(target) <= 16 && mob.onGround();
+    }
+
+    @Override
+    public boolean canContinueToUse() {
+        if (this.phase == Phase.IDLE) {
+            return false;
+        }
+        return super.canContinueToUse();
     }
 
     @Override
@@ -123,7 +134,7 @@ public class DashPunchGoal extends Goal {
             }
         }
 
-        if (chargeTicks >= 40) {
+        if (chargeTicks >= MAX_CHARGE_TICKS) {
             beginDash();
         }
     }
@@ -156,16 +167,20 @@ public class DashPunchGoal extends Goal {
         }
 
         // Aplica o movimento
-        Vec3 movement = mob.getDeltaMovement().add(direction.scale(0.2)); // Escala menor para controle
-        if (movement.length() > 0.8) movement = movement.normalize().scale(0.8); // Limita velocidade máxima
+        Vec3 movement = direction.scale(0.45f);
 
         mob.setDeltaMovement(movement.x, movement.y, movement.z);
+        mob.hasImpulse = true;
         mob.hurtMarked = true;
 
-        if (mob.distanceTo(target) < 2.0 || dashTicks > 30) {
-            if (mob.distanceTo(target) < 2.5) applyImpact();
-            stop();
+        if (isDashReachingTarget() || dashTicks > MAX_DASH_TICKS) {
+            if (dashTicks > MAX_DASH_TICKS) stop();
+            applyImpact();
         }
+    }
+
+    public boolean isDashReachingTarget() {
+        return mob.getBoundingBox().inflate(6).intersects(target.getBoundingBox());
     }
 
     protected void handleBlockBreaking() {
@@ -182,7 +197,10 @@ public class DashPunchGoal extends Goal {
     }
 
     protected void applyImpact() {
-        target.hurt(mob.damageSources().mobAttack(mob), 8.0F);
+        DamageSource pSource = mob.damageSources().mobAttack(mob);
+        if (target.isDamageSourceBlocked(pSource)) {
+            target.hurt(pSource, 8.0F);
+        }
 
         Vec3 knock = target.position().subtract(mob.position());
         Vec3 knockDir = knock.lengthSqr() < 1.0E-4D ? Vec3.directionFromRotation(0, mob.getYRot()) : knock.normalize();
