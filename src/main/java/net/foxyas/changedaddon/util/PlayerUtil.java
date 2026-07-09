@@ -4,6 +4,7 @@ import com.google.common.base.Predicates;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
+import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.simple.AbstractSnowFoxEntity;
 import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.event.UntransfurEvent;
@@ -33,6 +34,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
@@ -41,6 +44,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -149,10 +153,41 @@ public class PlayerUtil {
     }
 
     public static void unTransfurPlayerAndPlaySound(Player player, boolean shouldApplyEffects) {
-        unTransfurPlayer(player,shouldApplyEffects);
+        unTransfurPlayer(player, shouldApplyEffects);
         if (player.level() instanceof ServerLevel serverLevel) {
             serverLevel.playSound(null, player.getX(), player.getEyeY(), player.getZ(), ChangedAddonSoundEvents.UNTRANSFUR.get(), SoundSource.PLAYERS, 1, 1);
         }
+    }
+
+    public static void splitChangedEntityFromPlayer(Level world, Player player) {
+        spawnPlayerTransfurAsChangedEntity(world, player);
+        PlayerUtil.unTransfurPlayerAndPlaySound(player, !player.isCreative() && !player.isSpectator());
+    }
+
+
+    public static void spawnPlayerTransfurAsChangedEntity(Level world, Player player) {
+        if (player.level.isClientSide() || !(world instanceof ServerLevel level)) return;
+        TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (instance == null) return;
+
+        ChangedEntity fakeEntity = instance.getChangedEntity();
+
+        Entity entityToSpawn = fakeEntity.getType().create(level);
+        assert entityToSpawn != null;
+        entityToSpawn.moveTo(player.getX(), player.getY(), player.getZ(), 0, 0);
+        entityToSpawn.setYBodyRot(0);
+        entityToSpawn.setYHeadRot(0);
+
+        if (entityToSpawn instanceof Mob mob) {
+            ForgeEventFactory.onFinalizeSpawn(mob, level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+        }
+
+        if (fakeEntity instanceof IAlphaAbleEntity original && entityToSpawn instanceof IAlphaAbleEntity alphaAble) {
+            alphaAble.setAlpha(original.isAlpha());
+            alphaAble.setAlphaScale(original.alphaAdditionalScale());
+        }
+
+        world.addFreshEntity(entityToSpawn);
     }
 
     public static boolean isCatTransfur(Player player) {
@@ -462,6 +497,7 @@ public class PlayerUtil {
     /**
      * Gets the BlockHitResult of what the player is looking at.
      * * @param player The player entity.
+     *
      * @param maxDistance The maximum reach distance (standard survival reach is ~4.5 to 5.0 blocks).
      * @return The HitResult containing the block position and side hit, or null if nothing is in range.
      */

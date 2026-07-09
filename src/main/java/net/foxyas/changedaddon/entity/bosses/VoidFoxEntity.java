@@ -17,7 +17,11 @@ import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.projectile.AbstractVoidFoxParticleProjectile;
 import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
-import net.foxyas.changedaddon.init.*;
+import net.foxyas.changedaddon.init.ChangedAddonAbilities;
+import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.foxyas.changedaddon.item.FlamethrowerLike;
 import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -206,7 +210,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(MAX_DODGE_HEALTH, 200f);
+        this.entityData.define(MAX_DODGE_HEALTH, 0f);
         this.entityData.define(DODGE_HEALTH, getMaxDodgeHealth());
         this.entityData.define(IS_BOSS, false);
         this.entityData.define(WAS_BOSS, false);
@@ -723,7 +727,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float amount) {
-        boolean willHit = this.getDodgeHealth() - amount <= 0;
+        boolean willHit = !this.isBoss() || (this.getDodgeHealth() - amount <= 0);
 
         if (source.getEntity() instanceof AbstractVoidFoxParticleProjectile
                 || source.getDirectEntity() instanceof AbstractVoidFoxParticleProjectile) {
@@ -764,7 +768,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             }
 
             if (!willHit) {
-                this.setDodging(source.getEntity());
+                this.doDodge(source.getEntity());
                 this.hurtDodgeHealth(source, amount);
                 return false;
             } else {
@@ -782,7 +786,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             String id = ForgeRegistries.ENTITY_TYPES.getKey(source.getDirectEntity().getType()).toString();
             if (id.contains("bullet") || id.contains("gun")) {
                 this.RegisterDamage(amount);
-                this.setDodging(source.getEntity());
+                this.doDodge(source.getEntity());
                 return false;
             }
         }
@@ -868,9 +872,9 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
                 // Apply cooldown to the player's item
                 if (attacker instanceof Player player) {
-                    final Item laethinminator = ChangedAddonItems.LAETHINMINATOR.get();
-                    if (player.getUseItem().is(laethinminator)) {
-                        player.getCooldowns().addCooldown(laethinminator, 600);
+                    final Item item = player.getUseItem().getItem();
+                    if (item instanceof FlamethrowerLike) {
+                        player.getCooldowns().addCooldown(item, 600);
                         player.stopUsingItem();
                     }
                 }
@@ -883,9 +887,9 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     }
 
 
-    private void setDodging(Entity entity) {
+    private void doDodge(Entity entity) {
         if (entity != null) {
-            this.getLookControl().setLookAt(entity.getEyePosition());
+            this.getLookControl().setLookAt(entity, 180, 180);
         }
         this.getNavigation().stop();
         DodgeAbilityInstance.executeRandomDodgeAnimation(this);
@@ -1102,6 +1106,11 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor p_21434_, @NotNull DifficultyInstance p_21435_, @NotNull MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag tag) {
         if ((tag != null)) {
             setBoss(tag.getBoolean("isBoss"));
+        }
+
+        if (this.isBoss()) {
+            setMaxDodgeHealth(200);
+            setDodgeHealth(getMaxDodgeHealth());
         }
 
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, tag);

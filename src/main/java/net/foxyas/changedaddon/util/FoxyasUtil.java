@@ -113,6 +113,29 @@ public class FoxyasUtil {
                 .map(BlockPos::immutable);
     }
 
+    public static Stream<BlockPos> betweenClosedStreamSphere(AABB boundingBox, float troubleShoot) {
+        return betweenClosedStreamSphere(
+                new BlockPos(Mth.floor(boundingBox.minX),
+                        Mth.floor(boundingBox.minY),
+                        Mth.floor(boundingBox.minZ)),
+                new BlockPos(Mth.floor(boundingBox.maxX),
+                        Mth.floor(boundingBox.maxY),
+                        Mth.floor(boundingBox.maxZ)),
+                troubleShoot
+        );
+    }
+
+    public static Stream<BlockPos> betweenClosedStreamSphere(AABB boundingBox) {
+        return betweenClosedStreamSphere(
+                new BlockPos(Mth.floor(boundingBox.minX),
+                        Mth.floor(boundingBox.minY),
+                        Mth.floor(boundingBox.minZ)),
+                new BlockPos(Mth.floor(boundingBox.maxX),
+                        Mth.floor(boundingBox.maxY),
+                        Mth.floor(boundingBox.maxZ))
+        );
+    }
+
 
     public static Stream<BlockPos> betweenClosedStreamSphere(BlockPos center, int horizontalRadiusSphere, int verticalRadiusSphere) {
         List<BlockPos> blockPosList = new ArrayList<>();
