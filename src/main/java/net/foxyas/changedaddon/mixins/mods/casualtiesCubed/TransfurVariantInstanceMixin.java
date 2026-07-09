@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins.mods.prototypeMod;
+package net.foxyas.changedaddon.mixins.mods.casualtiesCubed;
 
 import net.foxyas.changedaddon.extension.RequiredMods;
 import net.foxyas.changedaddon.util.EntityUtil;

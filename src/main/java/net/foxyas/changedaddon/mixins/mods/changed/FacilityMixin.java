@@ -1,20 +1,15 @@
 package net.foxyas.changedaddon.mixins.mods.changed;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonFacilityPieces;
-import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.world.features.structures.Facility;
-import net.ltxprogrammer.changed.world.features.structures.StructurePiecesBuilderExtender;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilitySinglePiece;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -42,7 +37,7 @@ public class FacilityMixin {
                 ResourceLocation templateName = accessor.getTemplateName();
 
                 if (ChangedAddonFacilityPieces.BOSSES_ROOMS.contains(templateName)) {
-                    Changed.LOGGER.info("Generated facility with the {} piece, at ChunkPos {}", templateName, center);
+                    ChangedAddonMod.LOGGER.info("Generated facility with the {} piece, at ChunkPos {}", templateName, center);
                 }
             }
         }

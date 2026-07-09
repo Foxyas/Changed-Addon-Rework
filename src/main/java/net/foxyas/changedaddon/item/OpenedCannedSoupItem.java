@@ -41,7 +41,9 @@ public class OpenedCannedSoupItem extends AbstractCanItem implements IDrinkItem 
         ItemStack stack = event.getItemStack();
 
         if (stack.is(ChangedBlocks.CANNED_SOUP.get().asItem())) {
-            if (player.isShiftKeyDown()) {
+            if (player.isShiftKeyDown()
+            //        && PlayerUtil.getBlockThatEntityIsLookingAt(player, player.getBlockReach()).getType() == HitResult.Type.MISS
+            ) {
                 event.setCanceled(true);
 
                 if (!player.level.isClientSide) {

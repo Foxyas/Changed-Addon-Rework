@@ -101,6 +101,16 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
     }
 
     @Override
+    public float getShadeBrightness(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
+        return 1.0F;
+    }
+
+    @Override
+    public boolean propagatesSkylightDown(@NotNull BlockState pState, @NotNull BlockGetter pReader, @NotNull BlockPos pPos) {
+        return true;
+    }
+
+    @Override
     public void onPlace(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pOldState, boolean pIsMoving) {
         super.onPlace(pState, pLevel, pPos, pOldState, pIsMoving);
         pLevel.scheduleTick(pPos, this, 10);

@@ -79,7 +79,7 @@ public class ChangedAddonVariables {
         public int timeAfterVictoryOfFTK = 0;
         public int ticksFightingForConsciousness = 0;
 
-        public double LatexInfectionCooldown = 0.0;
+        public int latexInfectionTicks = 0;
         public double untransfurProgress = 0.0;
 
         public boolean showWarns = true;
@@ -107,7 +107,7 @@ public class ChangedAddonVariables {
             if (!wasDeath) {
                 other.consciousnessFightProgress = consciousnessFightProgress;
                 other.FTKCminigameType = FTKCminigameType;
-                other.LatexInfectionCooldown = LatexInfectionCooldown;
+                other.latexInfectionTicks = latexInfectionTicks;
                 other.isTransfuredBySafeMethod = isTransfuredBySafeMethod;
                 other.timeAfterVictoryOfFTK = timeAfterVictoryOfFTK;
                 other.ticksFightingForConsciousness = ticksFightingForConsciousness;
@@ -125,7 +125,7 @@ public class ChangedAddonVariables {
                 nbt.putBoolean("patCooldown", patCooldown);
             }
             nbt.putBoolean("areDarkLatex", areDarkLatex);
-            nbt.putDouble("LatexInfectionCooldown", LatexInfectionCooldown);
+            nbt.putInt("latexInfectionCooldown", latexInfectionTicks);
             nbt.putDouble("UntransfurProgress", untransfurProgress);
             nbt.putBoolean("Exp009TransfurAllowed", Exp009TransfurAllowed);
             nbt.putBoolean("Exp10TransfurAllowed", Exp10TransfurAllowed);
@@ -151,7 +151,7 @@ public class ChangedAddonVariables {
             actCooldown = nbt.getBoolean("actCooldown");
             patCooldown = nbt.getBoolean("patCooldown");
             areDarkLatex = nbt.getBoolean("areDarkLatex");
-            LatexInfectionCooldown = nbt.getDouble("LatexInfectionCooldown");
+            latexInfectionTicks = nbt.getInt("latexInfectionCooldown");
             untransfurProgress = nbt.getDouble("UntransfurProgress");
             Exp009TransfurAllowed = nbt.getBoolean("Exp009TransfurAllowed");
             Exp10TransfurAllowed = nbt.getBoolean("Exp10TransfurAllowed");
@@ -169,7 +169,7 @@ public class ChangedAddonVariables {
             actCooldown = other.actCooldown;
             patCooldown = other.patCooldown;
             areDarkLatex = other.areDarkLatex;
-            LatexInfectionCooldown = other.LatexInfectionCooldown;
+            latexInfectionTicks = other.latexInfectionTicks;
             untransfurProgress = other.untransfurProgress;
             Exp009TransfurAllowed = other.Exp009TransfurAllowed;
             Exp10TransfurAllowed = other.Exp10TransfurAllowed;

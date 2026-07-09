@@ -255,7 +255,7 @@ public class FightToKeepConsciousness {
         CIRCLE_HOVER(0.5f,
                 FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.CIRCLE_HOVER());
 
-        private int removalTicks;
+        private final int removalTicks;
         public final Supplier<Screen> screen;
         public final float progressAmount;
         @Nullable
