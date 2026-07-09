@@ -322,7 +322,8 @@ public class HULanguageProvider extends LanguageProvider {
         addPatchouliDescriptions("lunar_rose.page1", "§f§lA holdvirág suttogása$(br)§r§oA szürkület csendjében egy virág rejtőzik,§oCsendes ragyogás, sorsa megpecsételődött. §oA fényt elrejtő tükörből született,§oÉs egy fagyos könnyből, tiszta és ragyogó. §oLáthatatlan kezek által összefonódnak, §oKézműves kötelékben, sorsuk egybefonódik. §oSem láng, sem kovácsműhely nem formálja alakját, §oDe a csillagok alatt megszületik.");
         addPatchouliDescriptions("lunar_rose.page2", "§oKeresd a láthatatlant, hagyd, hogy a bölcsesség lángra gyúljon, §oMert csak a tudók pillanthatnak meg fényét.");  
         
-        add(modid + ".latex_syringe.not_valid", "Habozol. Valami benned figyelmeztet, hogy ne engedd el, ami benne van.");
+        add(modid + ".latex_syringe.not_valid.bosses", "Habozol. Valami benned figyelmeztet, hogy ne engedd el, ami benne van.");
+        add(modid + ".latex_syringe.not_valid", "Habozol. Valamiért nem akarod megkockáztatni, hogy a földön hagyd.");
 
         add(modid + ".latex_totem.not_valid", "Totem §cnegatívan§r reagált a §bDNS§r-edre");
         add(modid + ".latex_totem.tittle.text_1", "§o§n§l§3⚡ A műtárgy rezonál ⚡");
@@ -765,5 +766,8 @@ public class HULanguageProvider extends LanguageProvider {
 
         addTrimMaterial("iridium", "Irídiumból készült");
         addTrimMaterial("goo_core", "Ragacsmag-szilánkból készült");
+
+        addBuiltInResource("brute_grabby_entities", "Megragadó entitások: Brutális");
+        addBuiltInResource("grabby_entities", "Megragadó entitások");
     }
 }
