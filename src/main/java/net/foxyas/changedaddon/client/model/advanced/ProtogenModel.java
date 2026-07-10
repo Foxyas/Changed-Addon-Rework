@@ -96,7 +96,7 @@ public class ProtogenModel extends AdvancedHumanoidModel<ProtogenEntity> {
         PartDefinition metal_r1 = metal.addOrReplaceChild("metal_r1", CubeListBuilder.create().texOffs(57, 46).addBox(-3.5F, -4.048F, -0.6008F, 7.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -0.1998F, 0.0087F, 0.0873F, 0.0F, 0.0F));
 
         PartDefinition left_r1 = metal.addOrReplaceChild("left_r1", CubeListBuilder.create().texOffs(64, 78).addBox(0.1F, -1.3198F, -0.8855F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.01F))
-                .texOffs(56, 75).addBox(-7.1F, -1.3198F, -0.8855F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.01F)), PartPose.offsetAndRotation(3.0137F, -0.5694F, -0.8765F, -0.5672F, 0.0F, 0.0F));
+                .texOffs(56, 75).addBox(-7.1F, -1.3198F, -0.8855F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.01F)), PartPose.offsetAndRotation(3.0137F, -0.5694F, -0.4765F, -0.6981F, 0.0F, 0.0F));
 
         PartDefinition middle = visor.addOrReplaceChild("middle", CubeListBuilder.create(), PartPose.offset(-0.4817F, 1.0434F, -5.5829F));
 
