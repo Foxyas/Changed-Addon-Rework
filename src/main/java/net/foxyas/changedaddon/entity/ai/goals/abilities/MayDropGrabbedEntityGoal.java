@@ -9,7 +9,6 @@ import net.minecraft.world.damagesource.CombatEntry;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 public class MayDropGrabbedEntityGoal extends Goal {
@@ -18,7 +17,6 @@ public class MayDropGrabbedEntityGoal extends Goal {
 
     public MayDropGrabbedEntityGoal(IGrabberEntity grabber) {
         this.grabber = grabber;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     @Override

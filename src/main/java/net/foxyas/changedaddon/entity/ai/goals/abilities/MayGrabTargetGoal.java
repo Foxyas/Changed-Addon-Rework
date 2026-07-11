@@ -20,7 +20,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.PacketDistributor;
 
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -36,7 +35,6 @@ public class MayGrabTargetGoal extends Goal {
 
     public MayGrabTargetGoal(IGrabberEntity grabber) {
         this.grabber = grabber;
-        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     @Override

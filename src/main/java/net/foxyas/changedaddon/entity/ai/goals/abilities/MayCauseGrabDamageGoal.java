@@ -4,8 +4,6 @@ import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-import java.util.EnumSet;
-
 public class MayCauseGrabDamageGoal extends Goal {
 
     private final PathfinderMob mob;
@@ -16,7 +14,6 @@ public class MayCauseGrabDamageGoal extends Goal {
     public MayCauseGrabDamageGoal(IGrabberEntity grabber) {
         this.grabber = grabber;
         this.mob = grabber.asMob();
-        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.TARGET));
     }
 
     @Override

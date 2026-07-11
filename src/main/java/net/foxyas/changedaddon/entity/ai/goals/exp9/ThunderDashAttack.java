@@ -143,8 +143,8 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
-            Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection.normalize());
-            dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 180, 180);
+            Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection.normalize().scale(1.5f));
+            dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 360, 360);
             dasher.yBodyRot = dasher.getYRot();
 
             if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
