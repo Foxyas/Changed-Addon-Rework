@@ -35,8 +35,8 @@ public class LatexInfectionEvent {
             return;
         }
 
-        if (event.getSourceEntity() != target) {
-
+        if (event.getDecision().latexAssimilateVictimBehavior(player).willAssimilate()) {
+            return;
         }
 
         ChangedAddonVariables.ofPlayerSafe(player)

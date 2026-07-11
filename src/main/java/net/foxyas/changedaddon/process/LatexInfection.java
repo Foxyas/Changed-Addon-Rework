@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.process;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
@@ -18,17 +20,25 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.Optional;
 
 public class LatexInfection {
+
+    public static final @NotNull Codec<TransfurVariant<?>> TRANSFUR_VARIANT = ChangedRegistry.TRANSFUR_VARIANT.get().getCodec();
+    public static final Codec<LatexInfection> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.BOOL.fieldOf("isActive").forGetter(LatexInfection::isActive),
+            TRANSFUR_VARIANT.optionalFieldOf("infectionVariant").forGetter(LatexInfection::getInfectionVariantSafe)
+    ).apply(instance, (isActive, optionalTransfurVariant) -> new LatexInfection(isActive, optionalTransfurVariant.orElse(null))));
 
     private static final int HARD_TICK_DELAY = 40;
     private static final int NORMAL_TICK_DELAY = 60;
@@ -46,9 +56,8 @@ public class LatexInfection {
 
     public void tick(Player player) {
         if (player == null) return;
-        if (ProcessTransfur.isPlayerTransfurred(player)) return;
-
-        if (!player.level().getGameRules().getBoolean(ChangedAddonGameRules.DO_LATEX_INFECTION)) {
+        if (!player.level().getGameRules().getBoolean(ChangedAddonGameRules.DO_LATEX_INFECTION)
+                || ProcessTransfur.isPlayerTransfurred(player)) {
             if (!this.isDefault()) {
                 clearDataAndSync(player);
                 return;
@@ -116,19 +125,38 @@ public class LatexInfection {
         }
     }
 
-    public void save(CompoundTag tag) {
-        CompoundTag latexInfectionTag = new CompoundTag();
-        latexInfectionTag.putBoolean("isActive", active);
-        if (this.infectionVariant != null)
-            latexInfectionTag.putString("infectionVariant", ChangedRegistry.TRANSFUR_VARIANT.getKey(infectionVariant).toString());
+    public Codec<LatexInfection> getCodec() {
+        return CODEC;
+    }
 
-        tag.put("latexInfection", latexInfectionTag);
+    public void save(CompoundTag tag) {
+//        CompoundTag latexInfectionTag = new CompoundTag();
+//        latexInfectionTag.putBoolean("isActive", active);
+//        if (this.infectionVariant != null)
+//            latexInfectionTag.putString("infectionVariant", ChangedRegistry.TRANSFUR_VARIANT.getKey(infectionVariant).toString());
+//
+//        tag.put("latexInfection", latexInfectionTag);
+
+        CODEC.encodeStart(NbtOps.INSTANCE, this)
+                .resultOrPartial(errorMessage -> System.err.println("Failed to encode LatexInfection: " + errorMessage))
+                .ifPresent(encodedTag -> {
+                    if (encodedTag instanceof CompoundTag compound) {
+                        tag.put("latexInfection", compound);
+                    }
+                });
     }
 
     public void read(CompoundTag tag) {
-        CompoundTag latexInfectionTag = tag.getCompound("latexInfection");
-        this.setActive(latexInfectionTag.getBoolean("isActive"));
-        this.setInfectionVariant(ChangedRegistry.TRANSFUR_VARIANT.getValue(ResourceLocation.parse(latexInfectionTag.getString("infectionVariant"))));
+//        CompoundTag latexInfectionTag = tag.getCompound("latexInfection");
+//        this.setActive(latexInfectionTag.getBoolean("isActive"));
+//        this.setInfectionVariant(ChangedRegistry.TRANSFUR_VARIANT.getValue(ResourceLocation.parse(latexInfectionTag.getString("infectionVariant"))));
+        CODEC.parse(NbtOps.INSTANCE, tag.getCompound("latexInfection"))
+                .resultOrPartial(errorMessage -> System.err.println("Failed to parse LatexInfection: " + errorMessage))
+                .ifPresent(parsedInstance -> {
+                    // Apply the values from the newly parsed instance directly into this one
+                    this.setActive(parsedInstance.isActive());
+                    this.setInfectionVariant(parsedInstance.getInfectionVariant());
+                });
     }
 
     public LatexInfection fromTag(CompoundTag tag) {
