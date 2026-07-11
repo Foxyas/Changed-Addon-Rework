@@ -13,6 +13,7 @@ import net.ltxprogrammer.changed.entity.ai.AssimilationBehavior;
 import net.ltxprogrammer.changed.entity.ai.ImmediateTransfurDecision;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -55,8 +56,8 @@ public class LatexInfection {
     }
 
     public void tick(Player player) {
-        if (player == null) return;
-        if (!player.level().getGameRules().getBoolean(ChangedAddonGameRules.DO_LATEX_INFECTION)
+        if (player == null || player.level.isClientSide()) return;
+        if (!player.level.getGameRules().getBoolean(ChangedAddonGameRules.DO_LATEX_INFECTION)
                 || ProcessTransfur.isPlayerTransfurred(player)) {
             if (!this.isDefault()) {
                 clearDataAndSync(player);
@@ -97,8 +98,7 @@ public class LatexInfection {
             if (!isPlayerInfected(player)) return;
 
             if (tickCounter >= tickDelay) {
-                TransfurContext context = TransfurContext.hazard(TransfurCause.GRAB_ABSORB);
-                LatexAssimilationDecision<?> decision = LatexAssimilationDecision.strong(LatexAssimilationDecision.Method.ABSORPTION, infectionVariant, context, mathNumber);
+                LatexAssimilationDecision<?> decision = makeLatexAssimilationDecision(mathNumber);
                 AssimilationBehavior assimilationBehavior = decision.latexAssimilateVictimBehavior(player);
                 if (progress <= playerMaxTolerance * 0.85f) {
                     ProcessTransfur.setPlayerTransfurProgress(player, progress + mathNumber);
@@ -106,6 +106,12 @@ public class LatexInfection {
                     if (assimilationBehavior.willAssimilate()) {
                         clearDataAndSync(player);
                     }
+//                    if (assimilationBehavior.willAssimilate()) {
+//                        ProcessTransfur.transfur(player, ImmediateTransfurDecision.safe(infectionVariant, context.cause()));
+//                        clearDataAndSync(player);
+//                    } else {
+//                        ProcessTransfur.progressTransfur(player, decision);
+//                    }
                 }
                 this.latexInfectionTicksUntilDamage = 0;
             } else {
@@ -114,6 +120,28 @@ public class LatexInfection {
         } else if (!isSurvivalOrAdventure(player) && tickCounter != 0) {
             this.latexInfectionTicksUntilDamage = 0;
         }
+    }
+
+    public @NotNull LatexAssimilationDecision<?> makeLatexAssimilationDecision(float mathNumber) {
+        TransfurContext context = TransfurContext.hazard(TransfurCause.GRAB_ABSORB);
+        return LatexAssimilationDecision.strong(LatexAssimilationDecision.Method.ABSORPTION,
+                infectionVariant,
+                context,
+                mathNumber,
+                iAbstractChangedEntity -> {
+                    if (iAbstractChangedEntity.isPlayer()) {
+                        TransfurVariantInstance<?> transfurVariantInstance = iAbstractChangedEntity.getTransfurVariantInstance();
+                        if (transfurVariantInstance != null && iAbstractChangedEntity.getEntity() instanceof ServerPlayer serverPlayer) {
+                            transfurVariantInstance.willSurviveTransfur = true;
+//                            SyncTransfurPacket.Builder builderTf = new SyncTransfurPacket.Builder();
+//                            builderTf.addPlayer(serverPlayer, true);
+//                            if (builderTf.worthSending()) {
+//                                serverPlayer.connection.send(Changed.PACKET_HANDLER.toVanillaPacket(builderTf.build(), NetworkDirection.PLAY_TO_CLIENT));
+//                            }
+                        }
+                    }
+                }
+        );
     }
 
     public void onTransfurAttack(Player player, TransfurVariant<?> variant, TransfurContext context) {
