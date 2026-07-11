@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.process;
+package net.foxyas.changedaddon.variant;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -147,7 +147,7 @@ public class LatexInfection {
     public void onTransfurAttack(Player player, TransfurVariant<?> variant, TransfurContext context) {
         if (isPlayerInfected(player)) {
             setLastVariantAndSync(player, variant, context);
-        } else {
+        } else if (player.getRandom().nextFloat() <= ChangedAddonServerConfiguration.INFECTION_CHANCE.get()) {
             setPlayerInfectionToAndSync(player, true);
             setLastVariantAndSync(player, variant, context);
         }

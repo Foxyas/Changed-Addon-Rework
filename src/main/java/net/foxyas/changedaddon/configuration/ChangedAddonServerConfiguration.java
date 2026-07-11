@@ -15,6 +15,7 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> DEBUFFS;
     public static final ForgeConfigSpec.ConfigValue<Double> AGE_NEED;
     public static final ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_INFECT;
+    public static final ForgeConfigSpec.ConfigValue<Double> INFECTION_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> DL_COAT_AFFECT_ALL;
     public static final ForgeConfigSpec.ConfigValue<ChangedEntitySpawnDressedType> CHANGED_SPAWN_DRESS_MODE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_SECOND_ABILITY_USE;
@@ -53,6 +54,7 @@ public class ChangedAddonServerConfiguration {
         BUILDER.pop();
         BUILDER.push("Latex Infection");
         ALWAYS_INFECT = BUILDER.comment("Always Add Latex Infection").define("Always Cause Infect", false);
+        INFECTION_CHANCE = BUILDER.comment("Chance for a player get the Latex Infection after a transfur attack").define("Infection Chance", 1.0);
         BUILDER.pop();
         BUILDER.push("Beasts Behavior");
         DL_COAT_AFFECT_ALL = BUILDER.comment("When active, the Dark Latex Coat will affect all beasts").define("DL Coat Confuse All Creatures", true);

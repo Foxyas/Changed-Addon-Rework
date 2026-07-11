@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.network;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.process.LatexInfection;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness;
+import net.foxyas.changedaddon.variant.LatexInfection;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
