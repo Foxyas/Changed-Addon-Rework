@@ -30,11 +30,11 @@ import java.util.stream.Collectors;
 
 public class TransfurMe {
 
-    private static final SimpleCommandExceptionType NOT_LATEX_FORM = new SimpleCommandExceptionType(Component.translatable("command.changed.error.not_latex_form"));
+    static final SimpleCommandExceptionType NOT_LATEX_FORM = new SimpleCommandExceptionType(Component.translatable("command.changed.error.not_latex_form"));
     private static final SimpleCommandExceptionType NOT_CAUSE = new SimpleCommandExceptionType(Component.translatable("command.changed.error.not_cause"));
     private static final SimpleCommandExceptionType USED_BY_OTHER_MOD = new SimpleCommandExceptionType(Component.translatable("command.changed.error.used_by_other_mod"));
-    private static final SimpleCommandExceptionType NO_SPECIAL_FORM = new SimpleCommandExceptionType(Component.translatable("command.changed.error.no_special_form"));
-    private static final ResourceLocation RANDOM_VARIANT = Changed.modResource("random");
+    static final SimpleCommandExceptionType NO_SPECIAL_FORM = new SimpleCommandExceptionType(Component.translatable("command.changed.error.no_special_form"));
+    static final ResourceLocation RANDOM_VARIANT = Changed.modResource("random");
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralCommandNode<CommandSourceStack> transfurNode = dispatcher.register(Commands.literal("transfurme")

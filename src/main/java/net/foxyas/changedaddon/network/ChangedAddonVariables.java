@@ -81,7 +81,7 @@ public class ChangedAddonVariables {
         @Nullable
         public FightToKeepConsciousness.MinigameType FTKCminigameType = null;
 
-        public LatexInfection latexInfection = new LatexInfection(false, null);
+        public LatexInfection latexInfection = new LatexInfection();
 
         public float consciousnessFightProgress = 0;
         public boolean isTransfuredBySafeMethod = true;
