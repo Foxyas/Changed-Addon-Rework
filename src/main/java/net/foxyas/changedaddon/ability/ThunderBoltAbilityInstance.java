@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IScalableLightingBolt;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.util.PlayerUtil;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbility.UseType;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -28,7 +29,7 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
 
     public float charge = 0f;
 
-    public ThunderBoltAbilityInstance(ThunderBoltAbility ability, IAbstractChangedEntity entity) {
+    public ThunderBoltAbilityInstance(AbstractAbility<ThunderBoltAbilityInstance> ability, IAbstractChangedEntity entity) {
         super(ability, entity);
     }
 
