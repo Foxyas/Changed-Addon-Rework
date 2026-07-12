@@ -54,7 +54,7 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public UseType getUseType() {
-        return UseType.CHARGE_RELEASE;
+        return UseType.HOLD;
     }
 
     @Override
@@ -74,6 +74,17 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
     }
 
     @Override
+    public void tickIdle() {
+        super.tickIdle();
+        AbstractAbility.Controller controller = this.getController();
+        int holdTicks = controller.getHoldTicks();
+        boolean isHolding = holdTicks > 0;
+        if (isHolding && !controller.isCoolingDown()) {
+            ability.tickCharge(entity, holdTicks);
+        }
+    }
+
+    @Override
     public void stopUsing() {
 
     }
@@ -88,6 +99,10 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
     public void readData(CompoundTag tag) {
         super.readData(tag);
         charge = tag.getFloat("charge");
+    }
+
+    public boolean shouldApplyCooldown() {
+        return false;
     }
 
     public float getReachOfThunder() {
@@ -161,5 +176,4 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
             entity.swing(getSwingHand(entity), true);
         }
     }
-
 }
