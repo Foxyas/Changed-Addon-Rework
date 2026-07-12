@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock;
 import net.foxyas.changedaddon.command.*;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
+import net.foxyas.changedaddon.entity.advanced.LatexSnowFoxFoxyasEntity;
 import net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
@@ -72,7 +73,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import static net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal.hasValidAlphaSleepGoal;
 import static net.foxyas.changedaddon.event.TransfurEvents.resolveChangedEntity;
@@ -370,6 +373,8 @@ public class CommonEvent {
         tickUntransfur(player);
 
         triggerSwimRegret(player);
+
+        getFriendlyLatexAchievement(event);
     }
 
     @SubscribeEvent
@@ -580,6 +585,25 @@ public class CommonEvent {
                     CompoundTag tag = new CompoundTag();
                     tag.putInt("SlowSwimInWaterTicks", 0);
                     playerData.put("TransfurData", tag);
+                }
+            }
+        }
+    }
+
+    private static void getFriendlyLatexAchievement(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+        Level level = player.level;
+        if (player instanceof ServerPlayer sPlayer) {
+            Advancement adv = sPlayer.server.getAdvancements().getAdvancement(ChangedAddonMod.resourceLoc("gooey_friend"));
+            AdvancementProgress ap = sPlayer.getAdvancements().getOrStartProgress(Objects.requireNonNull(adv));
+
+            if (!ap.isDone()) {
+                final Vec3 center = new Vec3(player.getX(), player.getY(), player.getZ());
+                List<LatexSnowFoxFoxyasEntity> latexSnowFoxFoxyasEntities = level.getEntitiesOfClass(LatexSnowFoxFoxyasEntity.class, new AABB(center, center).inflate(2), e -> true)
+                        .stream().sorted(Comparator.comparingDouble(e -> e.distanceToSqr(center))).toList();
+
+                if (!latexSnowFoxFoxyasEntities.isEmpty()) {
+                    for (String s : ap.getRemainingCriteria()) sPlayer.getAdvancements().award(adv, s);
                 }
             }
         }

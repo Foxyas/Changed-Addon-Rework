@@ -25,6 +25,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
     private static final int MAX_CHARGE_TICKS = 60; // 3 seconds
     private static final int MAX_DASH_TICKS = 20;
+    private static final int FAIL_SAFE_TICKS = 120;
     private static final double DETECTION_DISTANCE = 3.5D;
     private static final double KNOCKBACK_MULTIPLIER = 1.5;
 
@@ -33,6 +34,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
     protected int dashingTickCounter = 0;
     protected int chargingTickCounter = 0;
+    protected int ticks = 0;
 
     protected Phase phase = Phase.IDLE;
     protected Vec3 dashDirection = Vec3.ZERO;
@@ -62,7 +64,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
     @Override
     public boolean isInterruptable() {
-        return false;
+        return ticks < FAIL_SAFE_TICKS;
     }
 
     @Override
@@ -105,6 +107,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
     @Override
     public void start() {
+        ticks = 0;
         chargingTickCounter = 0;
         dashingTickCounter = 0;
         dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
@@ -122,6 +125,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
     @Override
     public void tick() {
+        ticks++;
         switch (phase) {
             case IDLE -> {
                 return;
@@ -139,8 +143,8 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
-            Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection.normalize());
-            dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 180, 180);
+            Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection.normalize().scale(1.5f));
+            dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 360, 360);
             dasher.yBodyRot = dasher.getYRot();
 
             if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
@@ -212,6 +216,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
     @Override
     public void stop() {
         super.stop();
+        this.ticks = 0;
         this.dashingTickCounter = 0;
         this.chargingTickCounter = 0;
         this.phase = Phase.IDLE;

@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.network;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness;
+import net.foxyas.changedaddon.variant.LatexInfection;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -22,6 +23,8 @@ import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class ChangedAddonVariables {
 
     public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
@@ -32,6 +35,10 @@ public class ChangedAddonVariables {
      */
     public static @Nullable PlayerVariables of(@NotNull Player player) {
         return player.getCapability(PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
+    }
+
+    public static Optional<PlayerVariables> ofPlayerSafe(@NotNull Player player) {
+        return player.getCapability(PLAYER_VARIABLES_CAPABILITY).resolve();
     }
 
     public static @NotNull PlayerVariables ofOrDefault(@NotNull Player player) {
@@ -49,7 +56,7 @@ public class ChangedAddonVariables {
         private final LazyOptional<PlayerVariables> instance = LazyOptional.of(() -> playerVariables);
 
         @SubscribeEvent
-        public static void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {//For some reason only works with Entity
+        public static void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {//For some reason only works with <Entity>
             if (!(event.getObject() instanceof Player player) || player instanceof FakePlayer) return;
             event.addCapability(ChangedAddonMod.resourceLoc("player_variables"), new Provider());
         }
@@ -74,19 +81,19 @@ public class ChangedAddonVariables {
         @Nullable
         public FightToKeepConsciousness.MinigameType FTKCminigameType = null;
 
+        public LatexInfection latexInfection = new LatexInfection(false, null);
+
         public float consciousnessFightProgress = 0;
         public boolean isTransfuredBySafeMethod = true;
         public int timeAfterVictoryOfFTK = 0;
         public int ticksFightingForConsciousness = 0;
 
-        public int latexInfectionTicks = 0;
         public double untransfurProgress = 0.0;
 
         public boolean showWarns = true;
         public boolean resetTransfurAdvancements = false;
         public boolean actCooldown = false;
         public boolean patCooldown = false;
-        public boolean areDarkLatex = false;
         public boolean Exp009TransfurAllowed = false;
         public boolean Exp10TransfurAllowed = false;
 
@@ -99,7 +106,6 @@ public class ChangedAddonVariables {
 
         public void copyTo(PlayerVariables other, boolean wasDeath) {
             other.resetTransfurAdvancements = resetTransfurAdvancements;
-            other.areDarkLatex = areDarkLatex;
             other.untransfurProgress = untransfurProgress;
             other.Exp009TransfurAllowed = Exp009TransfurAllowed;
             other.Exp10TransfurAllowed = Exp10TransfurAllowed;
@@ -107,10 +113,10 @@ public class ChangedAddonVariables {
             if (!wasDeath) {
                 other.consciousnessFightProgress = consciousnessFightProgress;
                 other.FTKCminigameType = FTKCminigameType;
-                other.latexInfectionTicks = latexInfectionTicks;
                 other.isTransfuredBySafeMethod = isTransfuredBySafeMethod;
                 other.timeAfterVictoryOfFTK = timeAfterVictoryOfFTK;
                 other.ticksFightingForConsciousness = ticksFightingForConsciousness;
+                other.latexInfection = latexInfection;
             }
         }
 
@@ -124,8 +130,6 @@ public class ChangedAddonVariables {
                 nbt.putBoolean("actCooldown", actCooldown);
                 nbt.putBoolean("patCooldown", patCooldown);
             }
-            nbt.putBoolean("areDarkLatex", areDarkLatex);
-            nbt.putInt("latexInfectionCooldown", latexInfectionTicks);
             nbt.putDouble("UntransfurProgress", untransfurProgress);
             nbt.putBoolean("Exp009TransfurAllowed", Exp009TransfurAllowed);
             nbt.putBoolean("Exp10TransfurAllowed", Exp10TransfurAllowed);
@@ -133,6 +137,8 @@ public class ChangedAddonVariables {
             nbt.putBoolean("isTransfuredBySafeMethod", isTransfuredBySafeMethod);
             nbt.putInt("timeAfterVictoryOfFTK", timeAfterVictoryOfFTK);
             nbt.putInt("ticksFightingForConsciousness", ticksFightingForConsciousness);
+
+            latexInfection.save(nbt);
             return nbt;
         }
 
@@ -150,8 +156,6 @@ public class ChangedAddonVariables {
             resetTransfurAdvancements = nbt.getBoolean("resetTransfurAdvancements");
             actCooldown = nbt.getBoolean("actCooldown");
             patCooldown = nbt.getBoolean("patCooldown");
-            areDarkLatex = nbt.getBoolean("areDarkLatex");
-            latexInfectionTicks = nbt.getInt("latexInfectionCooldown");
             untransfurProgress = nbt.getDouble("UntransfurProgress");
             Exp009TransfurAllowed = nbt.getBoolean("Exp009TransfurAllowed");
             Exp10TransfurAllowed = nbt.getBoolean("Exp10TransfurAllowed");
@@ -159,6 +163,8 @@ public class ChangedAddonVariables {
             isTransfuredBySafeMethod = nbt.getBoolean("isTransfuredBySafeMethod");
             timeAfterVictoryOfFTK = nbt.getInt("timeAfterVictoryOfFTK");
             ticksFightingForConsciousness = nbt.getInt("ticksFightingForConsciousness");
+
+            latexInfection.read(nbt);
         }
 
         public void copyFrom(PlayerVariables other) {
@@ -168,8 +174,6 @@ public class ChangedAddonVariables {
             resetTransfurAdvancements = other.resetTransfurAdvancements;
             actCooldown = other.actCooldown;
             patCooldown = other.patCooldown;
-            areDarkLatex = other.areDarkLatex;
-            latexInfectionTicks = other.latexInfectionTicks;
             untransfurProgress = other.untransfurProgress;
             Exp009TransfurAllowed = other.Exp009TransfurAllowed;
             Exp10TransfurAllowed = other.Exp10TransfurAllowed;
@@ -177,6 +181,15 @@ public class ChangedAddonVariables {
             isTransfuredBySafeMethod = other.isTransfuredBySafeMethod;
             timeAfterVictoryOfFTK = other.timeAfterVictoryOfFTK;
             ticksFightingForConsciousness = other.ticksFightingForConsciousness;
+            latexInfection = other.latexInfection;
+        }
+
+        public LatexInfection getLatexInfection() {
+            return latexInfection;
+        }
+
+        public double getUntransfurProgress() {
+            return untransfurProgress;
         }
     }
 
