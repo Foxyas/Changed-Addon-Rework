@@ -1,9 +1,9 @@
 package net.foxyas.changedaddon.entity.api;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
-import net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoalBuilder;
+import net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -31,6 +31,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface IAlphaAbleEntity {
+
+    float DEFAULT_ALPHA_SIZE = 0.75f;
 
     interface CustomAlphaAttributes {
 
@@ -85,7 +87,7 @@ public interface IAlphaAbleEntity {
             return;
         }
 
-        float normalized = alphaScale / 0.75f;
+        float normalized = alphaScale / DEFAULT_ALPHA_SIZE;
 
         if (entity instanceof CustomAlphaAttributes alphaAttributes) {
             alphaAttributes.applyAlphaAttributesModifiers(entity, normalized);
@@ -224,13 +226,13 @@ public interface IAlphaAbleEntity {
     default float alphaAdditionalScale() {
         if (this instanceof ChangedEntity changedEntity) {
             SynchedEntityData entityData = changedEntity.getEntityData();
-            return entityData.hasItem(ALPHA_SCALE) ? entityData.get(ALPHA_SCALE) : 0.75f; // For future changes
+            return entityData.hasItem(ALPHA_SCALE) ? entityData.get(ALPHA_SCALE) : DEFAULT_ALPHA_SIZE; // For future changes
         }
         return 0f;
     }
 
     default float alphaScalePercent() {
-        return this.alphaAdditionalScale() / 0.75f;
+        return this.alphaAdditionalScale() / DEFAULT_ALPHA_SIZE;
     }
 
 }

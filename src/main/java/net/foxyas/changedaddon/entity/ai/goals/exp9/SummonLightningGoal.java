@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
+import net.foxyas.changedaddon.entity.api.IScalableLightingBolt;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.minecraft.Util;
@@ -67,10 +68,10 @@ public class SummonLightningGoal extends CastingAttackGoal implements IReactiveG
         setFlags(EnumSet.of(Flag.LOOK));
     }
 
-    public static void lightning(ServerLevel level, double x, double y, double z, float damage) {
+    public static void lightning(ServerLevel level, Vec3 strikePos, float damage, float size) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
         assert lightning != null;
-        lightning.moveTo(x, y, z);
+        lightning.moveTo(strikePos);
         List<BlockPos> conductiveBlocks = findConductiveBlocks(level, lightning.getOnPos(), 16);
         if (!conductiveBlocks.isEmpty()) {
             BlockPos random = Util.getRandom(conductiveBlocks, level.getRandom());
@@ -79,7 +80,22 @@ public class SummonLightningGoal extends CastingAttackGoal implements IReactiveG
         if (damage > 0) {
             lightning.setDamage(damage);
         } else lightning.setVisualOnly(true);
+        if (lightning instanceof IScalableLightingBolt lightingBolt) {
+            lightingBolt.setScale(size);
+        }
         level.addFreshEntity(lightning);
+    }
+
+    public static void lightning(ServerLevel level, double x, double y, double z, float damage, float size) {
+        lightning(level, new Vec3(x, y, z), damage, size);
+    }
+
+    public static void lightning(ServerLevel level, Vec3 strikePos, float damage) {
+        lightning(level, strikePos, damage, 1f);
+    }
+
+    public static void lightning(ServerLevel level, double x, double y, double z, float damage) {
+        lightning(level, new Vec3(x, y, z), damage, 1f);
     }
 
     protected static boolean isConductive(BlockState state) {

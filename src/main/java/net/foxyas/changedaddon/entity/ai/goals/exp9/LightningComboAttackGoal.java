@@ -174,7 +174,7 @@ public class LightningComboAttackGoal extends CastingAttackGoal {
         holder.teleportTo(attackPos.x, attackPos.y, attackPos.z);
         holder.swing(InteractionHand.MAIN_HAND);
 
-        SummonLightningGoal.lightning(level, attackPos.x, attackPos.y, attackPos.z, 1);
+        SummonLightningGoal.lightning(level, attackPos.x, attackPos.y, attackPos.z, 1f, 5);
         if (attacks == 0) {
             SummonLightningGoal.lightning(level, attackPos.x + 0.75, attackPos.y, attackPos.z + 0.75, 0);
             SummonLightningGoal.lightning(level, attackPos.x + 0.75, attackPos.y, attackPos.z - 0.75, 0);
