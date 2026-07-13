@@ -20,6 +20,7 @@ import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness.MinigameType;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.Changed;
+import net.ltxprogrammer.changed.command.CommandTransfur;
 import net.ltxprogrammer.changed.data.AccessorySlots;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
@@ -33,9 +34,11 @@ import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.world.LatexCoverState;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -356,6 +359,50 @@ public class ChangedAddonAdminCommand {
                                 .then(getFightToKeepConscience)
                         )
                 )
+                .then(Commands.literal("setPlayerLatexInfection")
+                        .then(Commands.argument("target", EntityArgument.player())
+                                .then(Commands.argument("active", BoolArgumentType.bool())
+                                        .then(Commands.argument("form", ResourceLocationArgument.id())
+                                                .suggests(CommandTransfur.SUGGEST_TRANSFUR_VARIANT)
+                                                .then(Commands.argument("shouldStallTransfurProgress", BoolArgumentType.bool())
+                                                        .executes(context -> {
+                                                            Player player = EntityArgument.getPlayer(context, "target");
+                                                            var vars = ChangedAddonVariables.ofOrDefault(player);
+
+                                                            ResourceLocation form = ResourceLocationArgument.getId(context, "form");
+                                                            if (form.equals(TransfurMe.RANDOM_VARIANT)) {
+                                                                form = Util.getRandom(TransfurVariant.getPublicTransfurVariants().collect(Collectors.toList()), player.getRandom()).getFormId();
+                                                            }
+
+                                                            ResourceLocation finalFormId;
+                                                            if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getFormId).anyMatch(form::equals)) {
+                                                                finalFormId = form;
+                                                            } else if (form.equals(TransfurVariant.SPECIAL_LATEX)) {
+                                                                finalFormId = Changed.modResource("special/form_" + player.getUUID());
+                                                                if (!ChangedRegistry.TRANSFUR_VARIANT.get().containsKey(finalFormId)) throw TransfurMe.NO_SPECIAL_FORM.create();
+                                                            } else {
+                                                                throw TransfurMe.NOT_LATEX_FORM.create();
+                                                            }
+
+                                                            vars.latexInfection.setActive(BoolArgumentType.getBool(context, "active"));
+                                                            vars.latexInfection.setInfectionVariant(ChangedRegistry.TRANSFUR_VARIANT.get().getValue(finalFormId));
+                                                            vars.latexInfection.setShouldStallTransfurProgress(BoolArgumentType.getBool(context, "shouldStallTransfurProgress"));
+
+                                                            vars.syncPlayerVariables(player);
+                                                            return 1;
+                                                        })
+                                                )
+                                        )
+                                )
+                        )
+                )
+                .then(Commands.literal("clearPlayerLatexInfection")
+                        .requires(CommandSourceStack::isPlayer)
+                        .executes(context -> clearPlayerLatexInfection(context.getSource().getPlayerOrException()))
+                        .then(Commands.argument("target", EntityArgument.player())
+                                .executes(context -> clearPlayerLatexInfection(EntityArgument.getPlayer(context, "target")))
+                        )
+                )
         );
 
         dispatcher.register(Commands.literal("alphaGeneHandle")
@@ -368,8 +415,11 @@ public class ChangedAddonAdminCommand {
         );
     }
 
-    private static int setMinigameType(CommandSourceStack commandSourceStack) {
-        return 0;
+    private static int clearPlayerLatexInfection(Player player) {
+        var vars = ChangedAddonVariables.ofOrDefault(player);
+        vars.latexInfection.restoreDefault();
+        vars.syncPlayerVariables(player);
+        return 1;
     }
 
     private static int untfImmunity(CommandSourceStack stack, Collection<ServerPlayer> targets, boolean value, UntransfurEvent.UntransfurType type) {
