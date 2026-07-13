@@ -24,6 +24,9 @@ public class DodgeType {
         }
     }
 
+    public void startUsing(DodgeAbilityInstance dodgeAbilityInstance) {
+    }
+
     public void tickIdle(DodgeAbilityInstance dodgeAbilityInstance) {
     }
 
@@ -37,5 +40,13 @@ public class DodgeType {
 
     public boolean willDodge(DodgeAbilityInstance dodgeAbilityInstance, Entity entity) {
         return dodgeAbilityInstance.canUse() && dodgeAbilityInstance.canKeepUsing() && dodgeAbilityInstance.isDodgeActive();
+    }
+
+    public boolean isSingleDodge(DodgeAbilityInstance dodgeAbilityInstance) {
+        return dodgeAbilityInstance.getMaxDodgeAmount() <= 1;
+    }
+
+    public boolean shouldDisplayDodgeAmount(DodgeAbilityInstance dodgeAbilityInstance) {
+        return !isSingleDodge(dodgeAbilityInstance);
     }
 }

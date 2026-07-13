@@ -18,6 +18,12 @@ public class CounterDodgeType extends DodgeType {
     }
 
     @Override
+    public void startUsing(DodgeAbilityInstance dodgeAbilityInstance) {
+        super.startUsing(dodgeAbilityInstance);
+        dodgeAbilityInstance.canDodgeTicks = 60;
+    }
+
+    @Override
     public void tickIdle(DodgeAbilityInstance dodgeAbilityInstance) {
         super.tickIdle(dodgeAbilityInstance);
         dodgeAbilityInstance.setDodgeActivate(dodgeAbilityInstance.getCanDodgeTicks() > 0);
@@ -32,16 +38,10 @@ public class CounterDodgeType extends DodgeType {
     @Override
     public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, LivingEntity dodger, Entity attacker, double distance, Vec3 dodgePosBehind, boolean causeExhaustion) {
         //dodgeAbilityInstance.dodgeAwayFromAttacker(dodger, attacker);
-        if (event != null) {
-            event.setCanceled(true);
-        }
     }
 
     @Override
     public void applyDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
-        if (event != null) {
-            event.setCanceled(true);
-        }
         dodgeAbilityInstance.applyDodgeAnimations(dodger);
         dodgeAbilityInstance.subDodgeAmount();
         if (dodger != null) {
@@ -65,5 +65,10 @@ public class CounterDodgeType extends DodgeType {
     @Override
     public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
         return true;
+    }
+
+    @Override
+    public boolean willDodge(DodgeAbilityInstance dodgeAbilityInstance, Entity entity) {
+        return super.willDodge(dodgeAbilityInstance, entity);
     }
 }

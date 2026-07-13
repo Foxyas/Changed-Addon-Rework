@@ -73,14 +73,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         }
 
         if (entity.getEntity() instanceof Player player && this.getController().getHoldTicks() == 0) {
-            if (player.level().isClientSide()) {
-                return;
-            }
-
-            if (this.dodgeType instanceof CounterDodgeType) {
-                this.canDodgeTicks = 60;
-                return;
-            }
+            this.dodgeType.startUsing(this);
 
             if (!ultraInstinct) {
                 player.displayClientMessage(
@@ -100,10 +93,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         }
 
         if (entity.getEntity() instanceof Player player) {
-            if (this.dodgeType instanceof CounterDodgeType) {
-                return;
-            }
-            if (!ultraInstinct) {
+            if (!ultraInstinct && this.dodgeType.shouldDisplayDodgeAmount(this)) {
                 player.displayClientMessage(
                         Component.translatable("ability.changed_addon.dodge.dodge_amount", getDodgeStaminaRatio()), true);
             }
