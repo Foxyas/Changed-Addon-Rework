@@ -14,8 +14,10 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -86,16 +88,17 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
     @Override
     public void tickIdle() {
         super.tickIdle();
-        if (this.charge > 0 && this.getController().getHoldTicks() <= 0) {
-            this.charge -= 0.025f;
-        }
         this.charge = Mth.clamp(charge, 0, 2);
     }
 
     @Override
     public void stopUsing() {
+        if (this.charge < 0.25f) {
+            return;
+        }
+
         float maxReach = getReachOfThunder();
-        float maxed = Math.max(this.charge, 0.25f);
+        float maxed = this.charge;
         summonLightBolt(entity, maxReach * maxed, getThunderSize() * maxed);
     }
 
@@ -111,10 +114,6 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
         charge = tag.getFloat("charge");
     }
 
-    public boolean shouldApplyCooldown() {
-        return charge > 0;
-    }
-
     protected void chargeAbility(IAbstractChangedEntity entity, int ticks) {
         LivingEntity livingEntity = entity.getEntity();
         Level level = livingEntity.level();
@@ -127,7 +126,7 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
                     level.playSound(null, livingEntity, SoundEvents.BEACON_AMBIENT, SoundSource.PLAYERS, 1, (float) ticks / chargeTime);
                 }
             }
-            charge = Mth.clamp((float) ticks / chargeTime, 0.1f, 2f);
+            charge = Mth.clamp((float) ticks / chargeTime, 0.25f, 2f);
         }
 
         entity.displayClientMessage(Component.literal("TICKS:" + ticks + " AND CHARGE:" + charge), true);
@@ -201,14 +200,63 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
                 lightingBolt.setThunderColor(transfurColor);
             }
             if (serverLevel.addFreshEntity(lightning)) {
+                lightning.tick();
+                for (Entity hitEntity : lightning.getHitEntities().toList()) {
+                    applyKnockBackToHitEntity(hitEntity, location, 5, Vec3.ZERO);
+                }
+
                 if (entity instanceof Player player) {
                     player.causeFoodExhaustion(0.5f);
                 }
                 entity.swing(getSwingHand(entity), true);
-                this.getController().applyCoolDown();
+                this.getController().forceCooldown(ability.getCoolDown(iAbstractChangedEntity));
                 this.charge = 0;
                 this.ability.setDirty(iAbstractChangedEntity);
             }
+        }
+    }
+
+    protected void applyKnockBackToHitEntity(Entity hitEntity, Vec3 sourcePos, float force, Vec3 extraMotion) {
+        // 1. Calculate the horizontal direction from the strike source to the hit entity
+        double xDiff = hitEntity.getX() - sourcePos.x;
+        double zDiff = hitEntity.getZ() - sourcePos.z;
+
+        // Normalize the vector so the knockback force remains consistent regardless of distance
+        double distance = Math.sqrt(xDiff * xDiff + zDiff * zDiff);
+        if (distance > 0.001) {
+            xDiff /= distance;
+            zDiff /= distance;
+
+            // Scale force down to match vanilla standards (5.0 is a very strong knockback)
+            float scaledForce = force * 0.2F;
+
+            if (hitEntity instanceof LivingEntity livingEntity) {
+                // Under the hood, Minecraft's knockback() subtracts the direction vector.
+                // Passing (source - target) results in the target being pushed AWAY from the source.
+                double xDirection = sourcePos.x - livingEntity.getX();
+                double zDirection = sourcePos.z - livingEntity.getZ();
+
+                livingEntity.knockback(scaledForce, xDirection, zDirection);
+
+                // Apply any extra custom motion (like extra upward lift)
+                if (extraMotion != Vec3.ZERO) {
+                    livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(extraMotion));
+                }
+
+                if (livingEntity instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                            serverPlayer.getId(),
+                            serverPlayer.getDeltaMovement())
+                    );
+                }
+            } else {
+                // Fallback for non-living entities (like items, armor stands, etc.)
+                Vec3 customMotion = new Vec3(xDiff * scaledForce, 0.2D, zDiff * scaledForce).add(extraMotion);
+                hitEntity.setDeltaMovement(hitEntity.getDeltaMovement().add(customMotion));
+            }
+
+            // Mark the entity as dirty so the server syncs the new velocity to the clients
+            hitEntity.hasImpulse = true;
         }
     }
 }

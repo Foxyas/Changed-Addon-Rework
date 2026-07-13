@@ -22,6 +22,7 @@ import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.*;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -648,7 +649,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
             case PHASE2 -> {
                 this.spawnThunderBolt(this.position());
-                this.knockbackNearbyEntities(this);
+                this.knockbackNearbyEntities(this, 2.5f);
             }
             case PHASE3 -> {
                 final BlockPos center = this.blockPosition();
@@ -660,7 +661,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                     DelayedTask.schedule(10, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 1.8f, bolts * 3));
                     DelayedTask.schedule(15, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 2.2f, bolts * 4));
                 }
-                this.knockbackNearbyEntities(this);
+                this.knockbackNearbyEntities(this, 5f);
             }
         }
     }
@@ -709,17 +710,21 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return this.getTarget() != null ? 0.98f : super.getWaterSlowDown();
     }
 
-    private void knockbackNearbyEntities(LivingEntity source) {
+    protected void knockbackNearbyEntities(LivingEntity source) {
         this.knockbackNearbyEntities(source, 5, Vec3.ZERO);
     }
 
-    private void knockbackNearbyEntities(LivingEntity source, float force, Vec3 extraMotion) {
+    protected void knockbackNearbyEntities(LivingEntity source, float force) {
+        this.knockbackNearbyEntities(source, force, Vec3.ZERO);
+    }
+
+    protected void knockbackNearbyEntities(LivingEntity source, float force, Vec3 extraMotion) {
         AABB attackArea = source.getBoundingBox().inflate(6);
         List<LivingEntity> nearby = source.level.getEntitiesOfClass(LivingEntity.class, attackArea);
 
         float xForce, zForce;
         for (LivingEntity target : nearby) {
-            if (target == source || !source.canAttack(target)) continue;
+            if (target == EntityUtil.maybeGetUnderlying(source) || !source.canAttack(target)) continue;
 
             xForce = Mth.sin(source.getYRot() * Mth.DEG_TO_RAD);
             zForce = -Mth.cos(source.getYRot() * Mth.DEG_TO_RAD);

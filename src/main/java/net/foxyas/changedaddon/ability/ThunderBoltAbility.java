@@ -48,8 +48,7 @@ public class ThunderBoltAbility extends AbstractAbility<ThunderBoltAbilityInstan
 
     @Override
     public boolean shouldApplyCoolDown(IAbstractChangedEntity entity) {
-        ThunderBoltAbilityInstance abilityInstance = entity.getAbilityInstance(this);
-        return abilityInstance != null && abilityInstance.shouldApplyCooldown();
+        return false;
     }
 
     @Override
