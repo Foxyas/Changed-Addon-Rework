@@ -7,7 +7,6 @@ import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class WeaveDodgeType extends DodgeType {
@@ -19,7 +18,7 @@ public class WeaveDodgeType extends DodgeType {
     }
 
     @Override
-    public boolean shouldPlayDodgeAnimation(LivingEntity dodger) {
+    public boolean willPlayDodgeAnimation(LivingEntity dodger) {
         if (EntityUtil.maybeGetOverlaying(dodger) instanceof ChangedEntity changedEntity) {
             return changedEntity.getEntityShape() != EntityShape.FERAL;
         } else if (dodger instanceof ChangedEntity changedEntity) {
@@ -29,14 +28,14 @@ public class WeaveDodgeType extends DodgeType {
     }
 
     @Override
-    public void runDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, @Nullable LivingAttackEvent event, boolean causeExhaustion) {
-        super.runDodgeEffects(dodgeAbilityInstance, levelAccessor, dodger, attacker, dodgeType, event, causeExhaustion);
-        dodgeAbilityInstance.executeDodgeParticles(levelAccessor, dodger, attacker);
-        dodgeAbilityInstance.executeDodgeAnimations(dodger);
+    public void applyDodgeEffects(DodgeAbilityInstance instance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
+        super.applyDodgeEffects(instance, levelAccessor, dodger, attacker, dodgeType, causeExhaustion);
+        instance.applyDodgeParticles(dodger, attacker);
+        instance.applyDodgeAnimations(dodger);
     }
 
     @Override
-    public boolean shouldApplyIframes(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, @Nullable LivingAttackEvent event, boolean causeExhaustion) {
+    public boolean willApplyIFrames(DodgeAbilityInstance instance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
         return true;
     }
 }

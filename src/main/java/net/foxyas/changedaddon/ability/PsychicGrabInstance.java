@@ -14,6 +14,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.UUID;
 
@@ -250,8 +252,46 @@ public class PsychicGrabInstance extends AbstractAbilityInstance {
     }
 
     @Override
+    public void acceptPayload(CompoundTag tag) {
+        super.acceptPayload(tag);
+        if (tag.contains("keyPressed")) {
+            addOffset(tag.getInt("keyPressed"), entity.getEntity());
+        }
+    }
+
+    @Override
     public AbstractAbility.UseType getUseType() {
         Entity target = getTarget(entity.getEntity().level());
         return (target != null) ? AbstractAbility.UseType.HOLD : AbstractAbility.UseType.INSTANT;
+    }
+
+    public void addOffset(int keyCode, LivingEntity livingEntity) {
+        double dx = 0, dy = 0, dz = 0;
+        boolean shift = livingEntity.isShiftKeyDown();
+
+        switch (keyCode) {
+            case GLFW.GLFW_KEY_UP -> {
+                dz = shift ? 0.5 : 0;
+                dy = shift ? 0 : 0.5;
+            }
+            case GLFW.GLFW_KEY_DOWN -> {
+                dz = shift ? -0.5 : 0;
+                dy = shift ? 0 : -0.5;
+            }
+            case GLFW.GLFW_KEY_LEFT -> dx = 0.5;
+            case GLFW.GLFW_KEY_RIGHT -> dx = -0.5;
+            default -> {
+                return;
+            }
+        }
+
+        IAbstractChangedEntity abstractChangedEntity = IAbstractChangedEntity.forEither(livingEntity);
+        if (abstractChangedEntity == null) return;
+        Vec3 newOffset = offset.add(dx, dy, dz);
+        this.offset = new Vec3(
+                Mth.clamp(newOffset.x, -3, 3),
+                Mth.clamp(newOffset.y, -3, 3),
+                Mth.clamp(newOffset.z, 0, 4)
+        );
     }
 }

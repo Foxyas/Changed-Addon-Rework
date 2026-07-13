@@ -94,8 +94,8 @@ public class CommonMod {
                 (packet, contextSupplier) -> ClientPacketHandler.handleSafeGrabSync(packet, contextSupplier),
                 NetworkDirection.PLAY_TO_CLIENT);
 
-        ChangedAddonMod.addNetworkMessage(KeyPressPacket.class, KeyPressPacket::encode,
-                KeyPressPacket::new, KeyPressPacket::handle);
+        ChangedAddonMod.addNetworkMessage(AbilityKeyPressPacket.class, AbilityKeyPressPacket::encode,
+                AbilityKeyPressPacket::new, AbilityKeyPressPacket::handle);
         ChangedAddonMod.addNetworkMessage(SyncTransfurVisionsPacket.class, SyncTransfurVisionsPacket::encode,
                 SyncTransfurVisionsPacket::new, SyncTransfurVisionsPacket::handle);
         ChangedAddonMod.addNetworkMessage(SyncUntransfurImmunityPacket.class,

@@ -7,7 +7,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class CounterDodgeType extends DodgeType {
@@ -19,7 +18,19 @@ public class CounterDodgeType extends DodgeType {
     }
 
     @Override
-    public void runDodge(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, LivingEntity dodger, Entity attacker, LivingAttackEvent event, double distance, Vec3 dodgePosBehind, boolean causeExhaustion) {
+    public void tickIdle(DodgeAbilityInstance dodgeAbilityInstance) {
+        super.tickIdle(dodgeAbilityInstance);
+        dodgeAbilityInstance.setDodgeActivate(dodgeAbilityInstance.getCanDodgeTicks() > 0);
+        if (dodgeAbilityInstance.getCanDodgeTicks() > 0) {
+            dodgeAbilityInstance.canDodgeTicks--;
+            if (dodgeAbilityInstance.canDodgeTicks <= 0) {
+                dodgeAbilityInstance.entity.getEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, true));
+            }
+        }
+    }
+
+    @Override
+    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, LivingEntity dodger, Entity attacker, double distance, Vec3 dodgePosBehind, boolean causeExhaustion) {
         //dodgeAbilityInstance.dodgeAwayFromAttacker(dodger, attacker);
         if (event != null) {
             event.setCanceled(true);
@@ -27,17 +38,17 @@ public class CounterDodgeType extends DodgeType {
     }
 
     @Override
-    public void runDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, @Nullable LivingAttackEvent event, boolean causeExhaustion) {
+    public void applyDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
         if (event != null) {
             event.setCanceled(true);
         }
-        dodgeAbilityInstance.executeDodgeAnimations(dodger);
+        dodgeAbilityInstance.applyDodgeAnimations(dodger);
         dodgeAbilityInstance.subDodgeAmount();
         if (dodger != null) {
             dodger.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, 2, true, true));
         }
 
-        if (this.shouldApplyIframes(dodgeAbilityInstance, levelAccessor, dodger, attacker, dodgeType, event, causeExhaustion) && dodger != null) {
+        if (this.willApplyIFrames(dodgeAbilityInstance, levelAccessor, dodger, attacker, dodgeType, causeExhaustion) && dodger != null) {
             dodger.invulnerableTime = 10;
             dodger.hurtDuration = (int) (20 * 0.25);
             dodger.hurtTime = dodger.hurtDuration;
@@ -47,12 +58,12 @@ public class CounterDodgeType extends DodgeType {
     }
 
     @Override
-    public boolean shouldPlayDodgeAnimation(LivingEntity dodger) {
+    public boolean willPlayDodgeAnimation(LivingEntity dodger) {
         return true;
     }
 
     @Override
-    public boolean shouldApplyIframes(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, @Nullable LivingAttackEvent event, boolean causeExhaustion) {
+    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
         return true;
     }
 }

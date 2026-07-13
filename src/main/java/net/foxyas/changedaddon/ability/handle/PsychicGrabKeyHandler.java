@@ -2,8 +2,12 @@ package net.foxyas.changedaddon.ability.handle;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.PsychicGrab;
-import net.foxyas.changedaddon.network.packet.KeyPressPacket;
+import net.foxyas.changedaddon.ability.PsychicGrabInstance;
+import net.foxyas.changedaddon.init.ChangedAddonAbilities;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,8 +18,21 @@ public class PsychicGrabKeyHandler {
 
     @SubscribeEvent
     public static void onKeyPressed(InputEvent.Key event) {
-        if (PsychicGrab.Keys.contains(event.getKey()) && Minecraft.getInstance().screen == null) {
-            ChangedAddonMod.PACKET_HANDLER.sendToServer(new KeyPressPacket(event.getKey()));
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        if (player == null) return;
+
+        int key = event.getKey();
+        if (PsychicGrab.Keys.contains(key) && minecraft.screen == null) {
+//            ChangedAddonMod.PACKET_HANDLER.sendToServer(new AbilityKeyPressPacket(event.getKey()));
+            ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
+                PsychicGrabInstance abilityInstance = variantInstance.getAbilityInstance(ChangedAddonAbilities.PSYCHIC_GRAB.get());
+                if (abilityInstance != null) {
+                    CompoundTag tag = new CompoundTag();
+                    tag.putInt("keyPressed", key);
+                    abilityInstance.sendPayload(tag);
+                }
+            }));
         }
     }
 }

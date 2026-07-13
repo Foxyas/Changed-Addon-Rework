@@ -10,7 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 public class TeleportDodgeType extends DodgeType {
 
@@ -21,8 +20,8 @@ public class TeleportDodgeType extends DodgeType {
     }
 
     @Override
-    public void runDodge(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, LivingEntity dodger, Entity attacker, LivingAttackEvent event, double distance, Vec3 dodgePosBehind, boolean causeExhaustion) {
-        super.runDodge(dodgeAbilityInstance, levelAccessor, dodger, attacker, event, distance, dodgePosBehind, causeExhaustion);
+    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, LivingEntity dodger, Entity attacker, double distance, Vec3 dodgePosBehind, boolean causeExhaustion) {
+        super.applyDodgeMovement(dodgeAbilityInstance, levelAccessor, dodger, attacker, distance, dodgePosBehind, causeExhaustion);
 
         if (distance > 2f) {
             randomOffsetTeleport(levelAccessor, dodger);
