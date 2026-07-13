@@ -89,13 +89,14 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
         if (this.charge > 0 && this.getController().getHoldTicks() <= 0) {
             this.charge -= 0.025f;
         }
-        this.charge = Mth.clamp(charge, 0, 1);
+        this.charge = Mth.clamp(charge, 0, 2);
     }
 
     @Override
     public void stopUsing() {
         float maxReach = getReachOfThunder();
-        summonLightBolt(entity, maxReach * Math.max(this.charge, 0.1f));
+        float maxed = Math.max(this.charge, 0.25f);
+        summonLightBolt(entity, maxReach * maxed, getThunderSize() * maxed);
     }
 
     @Override
@@ -126,10 +127,10 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
                     level.playSound(null, livingEntity, SoundEvents.BEACON_AMBIENT, SoundSource.PLAYERS, 1, (float) ticks / chargeTime);
                 }
             }
-            charge = (float) ticks / chargeTime;
+            charge = Mth.clamp((float) ticks / chargeTime, 0.1f, 2f);
         }
 
-//        entity.displayClientMessage(Component.literal("TICKS:" + ticks + " AND CHARGE:" + charge), true);
+        entity.displayClientMessage(Component.literal("TICKS:" + ticks + " AND CHARGE:" + charge), true);
     }
 
     public float getReachOfThunder() {
@@ -174,7 +175,7 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
         return isHandEmpty(entity, InteractionHand.MAIN_HAND) ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
     }
 
-    public void summonLightBolt(IAbstractChangedEntity iAbstractChangedEntity, float reach) {
+    public void summonLightBolt(IAbstractChangedEntity iAbstractChangedEntity, float reach, float size) {
         LivingEntity entity = iAbstractChangedEntity.getEntity();
         double range = Math.max(reach, 1.5);
         ClipContext clipContext = new ClipContext(entity.getEyePosition(1f),
@@ -194,7 +195,7 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
             lightning.moveTo(location);
             lightning.setVisualOnly(false);
             if (lightning instanceof IDynamicThunderBolt lightingBolt) {
-                lightingBolt.setScale(getThunderSize() * charge);
+                lightingBolt.setScale(size);
                 ChangedEntity changedEntity = iAbstractChangedEntity.getChangedEntity();
                 Color3 transfurColor = changedEntity.getTransfurColor(TransfurCause.DEFAULT);
                 lightingBolt.setThunderColor(transfurColor);
@@ -204,9 +205,9 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
                     player.causeFoodExhaustion(0.5f);
                 }
                 entity.swing(getSwingHand(entity), true);
+                this.getController().applyCoolDown();
                 this.charge = 0;
                 this.ability.setDirty(iAbstractChangedEntity);
-                this.getController().applyCoolDown();
             }
         }
     }
