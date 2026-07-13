@@ -38,21 +38,29 @@ public class LatexInfection {
     public static final @NotNull Codec<TransfurVariant<?>> TRANSFUR_VARIANT = ChangedRegistry.TRANSFUR_VARIANT.get().getCodec();
     public static final Codec<LatexInfection> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.BOOL.fieldOf("isActive").forGetter(LatexInfection::isActive),
-            TRANSFUR_VARIANT.optionalFieldOf("infectionVariant").forGetter(LatexInfection::getInfectionVariantSafe)
-    ).apply(instance, (isActive, optionalTransfurVariant) -> new LatexInfection(isActive, optionalTransfurVariant.orElse(null))));
+            TRANSFUR_VARIANT.optionalFieldOf("infectionVariant").forGetter(LatexInfection::getInfectionVariantSafe),
+            Codec.BOOL.fieldOf("shouldStallTransfurProgress").forGetter(LatexInfection::shouldStallTransfurProgress)
+    ).apply(instance, LatexInfection::new));
 
     private static final int HARD_TICK_DELAY = 40;
     private static final int NORMAL_TICK_DELAY = 60;
     private static final int EASY_TICK_DELAY = 100;
 
     public int latexInfectionTicksUntilDamage = 0;
-    public boolean active;
-    public TransfurVariant<?> infectionVariant;
+    public boolean active = false;
+    public TransfurVariant<?> infectionVariant = null;
+    public boolean shouldStallTransfurProgress = false;
 
-    public LatexInfection(boolean active, TransfurVariant<?> infectionVariant) {
-        super();
+    public LatexInfection() {}
+
+    private LatexInfection(boolean active, Optional<TransfurVariant<?>> infectionVariant, boolean shouldStallTransfurProgress) {
+        this(active, infectionVariant.orElse(null), shouldStallTransfurProgress);
+    }
+
+    public LatexInfection(boolean active, TransfurVariant<?> infectionVariant, boolean shouldStallTransfurProgress) {
         this.active = active;
         this.infectionVariant = infectionVariant;
+        this.shouldStallTransfurProgress = shouldStallTransfurProgress;
     }
 
     public void tick(Player player) {
@@ -184,6 +192,7 @@ public class LatexInfection {
                     // Apply the values from the newly parsed instance directly into this one
                     this.setActive(parsedInstance.isActive());
                     this.setInfectionVariant(parsedInstance.getInfectionVariant());
+                    setShouldStallTransfurProgress(parsedInstance.shouldStallTransfurProgress());
                 });
     }
 
@@ -192,13 +201,14 @@ public class LatexInfection {
         boolean isActive = latexInfectionTag.getBoolean("isActive");
         TransfurVariant<?> variant = latexInfectionTag.contains("infectionVariant") ?
                 ChangedRegistry.TRANSFUR_VARIANT.getValue(ResourceLocation.parse(latexInfectionTag.getString("infectionVariant"))) : null;
-        return new LatexInfection(isActive, variant);
+        return new LatexInfection(isActive, variant, latexInfectionTag.getBoolean("shouldStallTransfurProgress"));
     }
 
     public void restoreDefault() {
         this.latexInfectionTicksUntilDamage = 0;
         this.infectionVariant = null;
         this.active = false;
+        shouldStallTransfurProgress = false;
     }
 
     public boolean isDefault() {
@@ -231,6 +241,14 @@ public class LatexInfection {
 
     public Optional<TransfurVariant<?>> getInfectionVariantSafe() {
         return Optional.ofNullable(infectionVariant);
+    }
+
+    public boolean shouldStallTransfurProgress() {
+        return shouldStallTransfurProgress;
+    }
+
+    public void setShouldStallTransfurProgress(boolean shouldStallTransfurProgress) {
+        this.shouldStallTransfurProgress = shouldStallTransfurProgress;
     }
 
     public static void transfurPlayerSafe(Player player, TransfurVariant<?> variant) {
