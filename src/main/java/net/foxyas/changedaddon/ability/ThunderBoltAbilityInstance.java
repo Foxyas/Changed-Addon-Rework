@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.entity.api.IScalableLightingBolt;
+import net.foxyas.changedaddon.entity.api.IDynamicThunderBolt;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -9,11 +9,16 @@ import net.ltxprogrammer.changed.ability.AbstractAbility.UseType;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -21,6 +26,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -52,6 +58,10 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
         );
     }
 
+    public float getCharge() {
+        return charge;
+    }
+
     @Override
     public UseType getUseType() {
         return UseType.HOLD;
@@ -64,29 +74,28 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void startUsing() {
-        float maxReach = getReachOfThunder();
-        summonLightBolt(entity, maxReach * this.charge);
     }
 
     @Override
     public void tick() {
-
+        AbstractAbility.Controller controller = this.getController();
+        int holdTicks = controller.getHoldTicks();
+        chargeAbility(entity, holdTicks);
     }
 
     @Override
     public void tickIdle() {
         super.tickIdle();
-        AbstractAbility.Controller controller = this.getController();
-        int holdTicks = controller.getHoldTicks();
-        boolean isHolding = holdTicks > 0;
-        if (isHolding && !controller.isCoolingDown()) {
-            ability.tickCharge(entity, holdTicks);
+        if (this.charge > 0 && this.getController().getHoldTicks() <= 0) {
+            this.charge -= 0.025f;
         }
+        this.charge = Mth.clamp(charge, 0, 1);
     }
 
     @Override
     public void stopUsing() {
-
+        float maxReach = getReachOfThunder();
+        summonLightBolt(entity, maxReach * Math.max(this.charge, 0.1f));
     }
 
     @Override
@@ -102,7 +111,25 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
     }
 
     public boolean shouldApplyCooldown() {
-        return false;
+        return charge > 0;
+    }
+
+    protected void chargeAbility(IAbstractChangedEntity entity, int ticks) {
+        LivingEntity livingEntity = entity.getEntity();
+        Level level = livingEntity.level();
+        int chargeTime = ability.getChargeTime(entity);
+        if (chargeTime != 0) {
+            if (ticks <= chargeTime) {
+                if (ticks == chargeTime) {
+                    level.playSound(null, livingEntity, SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.PLAYERS, 1, (float) ticks / chargeTime);
+                } else {
+                    level.playSound(null, livingEntity, SoundEvents.BEACON_AMBIENT, SoundSource.PLAYERS, 1, (float) ticks / chargeTime);
+                }
+            }
+            charge = (float) ticks / chargeTime;
+        }
+
+//        entity.displayClientMessage(Component.literal("TICKS:" + ticks + " AND CHARGE:" + charge), true);
     }
 
     public float getReachOfThunder() {
@@ -166,14 +193,21 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
             assert lightning != null;
             lightning.moveTo(location);
             lightning.setVisualOnly(false);
-            if (lightning instanceof IScalableLightingBolt lightingBolt) {
-                lightingBolt.setScale(getThunderSize());
+            if (lightning instanceof IDynamicThunderBolt lightingBolt) {
+                lightingBolt.setScale(getThunderSize() * charge);
+                ChangedEntity changedEntity = iAbstractChangedEntity.getChangedEntity();
+                Color3 transfurColor = changedEntity.getTransfurColor(TransfurCause.DEFAULT);
+                lightingBolt.setThunderColor(transfurColor);
             }
-            serverLevel.addFreshEntity(lightning);
-            if (entity instanceof Player player) {
-                player.causeFoodExhaustion(0.5f);
+            if (serverLevel.addFreshEntity(lightning)) {
+                if (entity instanceof Player player) {
+                    player.causeFoodExhaustion(0.5f);
+                }
+                entity.swing(getSwingHand(entity), true);
+                this.charge = 0;
+                this.ability.setDirty(iAbstractChangedEntity);
+                this.getController().applyCoolDown();
             }
-            entity.swing(getSwingHand(entity), true);
         }
     }
 }

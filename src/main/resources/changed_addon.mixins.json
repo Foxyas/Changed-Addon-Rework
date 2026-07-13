@@ -33,7 +33,7 @@
     "entity.CombatTrackerAccessor",
     "entity.EntityMixin",
     "entity.ItemEntityMixin",
-    "entity.LightingBoltMixin",
+    "entity.LightningBoltMixin",
     "entity.LivingEntityAccessor",
     "entity.LivingEntityMixin",
     "entity.MobAccessor",

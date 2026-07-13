@@ -28,6 +28,16 @@ public class ThunderBoltAbility extends AbstractAbility<ThunderBoltAbilityInstan
     }
 
     @Override
+    public int getCoolDown(IAbstractChangedEntity entity) {
+        ThunderBoltAbilityInstance abilityInstance = entity.getAbilityInstance(this);
+        if (abilityInstance != null) {
+            float percent = 1 + abilityInstance.getCharge();
+            return (int) (20 * percent);
+        }
+        return super.getCoolDown(entity);
+    }
+
+    @Override
     public int getChargeTime(IAbstractChangedEntity entity) {
         TransfurVariant<?> variant = entity.getChangedEntity().getSelfVariant();
         if (variant == ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS.get()) {
@@ -48,7 +58,6 @@ public class ThunderBoltAbility extends AbstractAbility<ThunderBoltAbilityInstan
         ThunderBoltAbilityInstance abilityInstance = entity.getAbilityInstance(this);
         if (abilityInstance != null) {
             abilityInstance.charge = ticks;
-            this.setDirty(entity);
             LivingEntity livingEntity = entity.getEntity();
             int chargeTime = getChargeTime(entity);
             if (chargeTime != 0) {
