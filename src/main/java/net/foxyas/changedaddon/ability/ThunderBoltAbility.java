@@ -41,9 +41,9 @@ public class ThunderBoltAbility extends AbstractAbility<ThunderBoltAbilityInstan
     public int getChargeTime(IAbstractChangedEntity entity) {
         TransfurVariant<?> variant = entity.getChangedEntity().getSelfVariant();
         if (variant == ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS.get()) {
-            return 15;
+            return 40;
         }
-        return 20;
+        return 80;
     }
 
     @Override

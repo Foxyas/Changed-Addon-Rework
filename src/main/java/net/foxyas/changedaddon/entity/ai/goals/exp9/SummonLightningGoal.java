@@ -257,7 +257,7 @@ public class SummonLightningGoal extends CastingAttackGoal implements IReactiveG
         for (LivingEntity livingEntity : list) {
             Vec3 direction = livingEntity.position().subtract(strikePos).normalize();
 
-            float strength = 6f / (float) Math.sqrt(livingEntity.distanceToSqr(strikePos));
+            float strength = 6f / Math.max((float) Math.sqrt(livingEntity.distanceToSqr(strikePos)), 0.00001f);
 
             livingEntity.push(
                     direction.x * strength,

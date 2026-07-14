@@ -648,7 +648,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             case PHASE1 -> {
             }
             case PHASE2 -> {
-                this.spawnThunderBolt(this.position());
+                this.spawnVisualThunderBolt(this.position());
                 this.knockbackNearbyEntities(this, 2.5f);
             }
             case PHASE3 -> {
@@ -971,6 +971,16 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
         lightning.setCause(null);
         lightning.setDamage(6f);
+        this.level.addFreshEntity(lightning);
+        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
+    }
+
+    public void spawnVisualThunderBolt(Vec3 pos) {
+        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
+        if (lightning == null) return;
+
+        lightning.moveTo(pos.x(), pos.y(), pos.z());
+        lightning.setCause(null);
         this.level.addFreshEntity(lightning);
         ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
     }
