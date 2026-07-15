@@ -14,6 +14,8 @@ import net.minecraft.world.item.DyeableLeatherItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
+
 public class ColorUtil {
 
     private static final Object2IntMap<DyeColor> COLOR_CACHE = new Object2IntArrayMap<>();
@@ -66,6 +68,13 @@ public class ColorUtil {
         return (avgR << 16) | (avgG << 8) | avgB;
     }
 
+    public static Color3 getColor3FromColor(Color color) {
+        return new Color3(color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    public static Color getColorFromColor3(Color3 color) {
+        return new Color(color.red(), color.green(), color.blue());
+    }
 
     public static Color3 lerpTFColor(@NotNull Color3 start, @NotNull Color3 end, @Nullable Player player) {
         if (player == null) return start;

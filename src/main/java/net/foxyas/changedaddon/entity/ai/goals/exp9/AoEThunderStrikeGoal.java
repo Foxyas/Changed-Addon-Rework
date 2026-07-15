@@ -18,7 +18,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 
 public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactiveGoal.ICancelOnDamageGoal {
     public static final int FAIL_SAFE_TICKS = 200;
@@ -244,12 +244,13 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
     }
 
     public void applyKnockBack(LightningBolt lightning) {
-        var list = lightning.level
-                .getEntitiesOfClass(
-                        LivingEntity.class,
-                        getBoundingBoxFromLightningBolt(lightning).inflate(-6.5),
-                        (target) -> !target.is(lightning) && !target.is(experiment009) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(target)
-                );
+        var list = lightning.getHitEntities().map(e -> e instanceof LivingEntity livingEntity ? livingEntity : null).filter(Objects::nonNull).toList();
+//                lightning.level
+//                .getEntitiesOfClass(
+//                        LivingEntity.class,
+//                        getBoundingBoxFromLightningBolt(lightning),
+//                        (target) -> !target.is(lightning) && !target.is(experiment009) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(target)
+//                );
 
         for (LivingEntity livingEntity : list) {
             Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.25f).add(0, livingEntity.onGround() ? 0.25f : 0.05f, 0);
@@ -270,7 +271,7 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
     }
 
     public AABB getBoundingBoxFromLightningBolt(LightningBolt bolt) {
-        return new AABB(bolt.getX() - 15.0D, bolt.getY() - 15.0D, bolt.getZ() - 15.0D, bolt.getX() + 15.0D, bolt.getY() + 6.0D + 15.0D, bolt.getZ() + 15.0D);
+        return new AABB(bolt.getX() - 3.0D, bolt.getY() - 3.0D, bolt.getZ() - 3.0D, bolt.getX() + 3.0D, bolt.getY() + 6.0D + 3.0D, bolt.getZ() + 3.0D);
     }
 
     @Override

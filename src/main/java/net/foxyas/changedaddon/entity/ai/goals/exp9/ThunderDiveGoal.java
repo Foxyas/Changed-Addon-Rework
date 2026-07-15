@@ -167,7 +167,7 @@ public class ThunderDiveGoal extends Goal {
                     affectNearbyEntities(new Vec3(0, -Math.abs(diveSpeedY), 0));
                 }
 
-                mob.yBodyRot = mob.getYRot();
+                mob.setYBodyRot(mob.getYRot());
                 divingTicks++;
             }
         }

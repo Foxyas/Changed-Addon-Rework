@@ -157,7 +157,7 @@ public class DashPunchGoal extends Goal {
         dashTicks++;
         if (target.distanceTo(mob) > 0) {
             mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
-            mob.yBodyRot = mob.getYRot();
+            mob.setYBodyRot(mob.getYRot());
         }
 
         Vec3 targetPos = target.position();
