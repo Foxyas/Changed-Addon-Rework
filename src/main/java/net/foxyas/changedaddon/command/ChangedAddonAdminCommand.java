@@ -379,7 +379,8 @@ public class ChangedAddonAdminCommand {
                                                                 finalFormId = form;
                                                             } else if (form.equals(TransfurVariant.SPECIAL_LATEX)) {
                                                                 finalFormId = Changed.modResource("special/form_" + player.getUUID());
-                                                                if (!ChangedRegistry.TRANSFUR_VARIANT.get().containsKey(finalFormId)) throw TransfurMe.NO_SPECIAL_FORM.create();
+                                                                if (!ChangedRegistry.TRANSFUR_VARIANT.get().containsKey(finalFormId))
+                                                                    throw TransfurMe.NO_SPECIAL_FORM.create();
                                                             } else {
                                                                 throw TransfurMe.NOT_LATEX_FORM.create();
                                                             }
@@ -389,6 +390,7 @@ public class ChangedAddonAdminCommand {
                                                             vars.latexInfection.setShouldStallTransfurProgress(BoolArgumentType.getBool(context, "shouldStallTransfurProgress"));
 
                                                             vars.syncPlayerVariables(player);
+                                                            context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.setPlayerLatexInfection.set.success"), false);
                                                             return 1;
                                                         })
                                                 )
@@ -400,7 +402,13 @@ public class ChangedAddonAdminCommand {
                         .requires(CommandSourceStack::isPlayer)
                         .executes(context -> clearPlayerLatexInfection(context.getSource().getPlayerOrException()))
                         .then(Commands.argument("target", EntityArgument.player())
-                                .executes(context -> clearPlayerLatexInfection(EntityArgument.getPlayer(context, "target")))
+                                .executes(context -> {
+                                    int returnValue = clearPlayerLatexInfection(EntityArgument.getPlayer(context, "target"));
+                                    if (returnValue >= 1) {
+                                        context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.setPlayerLatexInfection.clear.success"), false);
+                                    }
+                                    return returnValue;
+                                })
                         )
                 )
         );

@@ -298,6 +298,8 @@
   "commands.changed_addon.ftkMinigame.reset.success": "FTKC state has been purged for %s target(s).",
   "commands.changed_addon.ftkMinigame.set.fail": "Command execution failed: No eligible transfur subjects identified in selection.",
   "commands.changed_addon.ftkMinigame.set.success": "FTKC parameters successfully initialized for %s target(s).",
+  "commands.changed_addon.setPlayerLatexInfection.clear.success": "Cleared player latex infection.",
+  "commands.changed_addon.setPlayerLatexInfection.set.success": "Set player latex infection.",
   "commands.changed_addon.ultra_instinct.disabled": "Ultra Instinct disabled for %s.",
   "commands.changed_addon.ultra_instinct.enabled": "Ultra Instinct enabled for %s.",
   "commands.changed_addon.ultra_instinct.fail": "%s cannot use Ultra Instinct.",

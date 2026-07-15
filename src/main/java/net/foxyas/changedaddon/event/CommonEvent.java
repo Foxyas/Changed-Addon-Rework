@@ -15,10 +15,13 @@ import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
+import net.foxyas.changedaddon.variant.IVariantExtraStats;
+import net.foxyas.changedaddon.variant.LatexInfection;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
@@ -30,6 +33,7 @@ import net.ltxprogrammer.changed.item.Syringe;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.process.TransfurEvents;
+import net.ltxprogrammer.changed.process.TransfurEvents.TickPlayerTransfurProgressEvent;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.commands.CommandBuildContext;
@@ -38,7 +42,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.VibrationParticleOption;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
@@ -124,12 +127,18 @@ public class CommonEvent {
         // Checa se o item é um arco ou besta
         if (item instanceof BowItem || item instanceof CrossbowItem) {
 
+            TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
             // Sua lógica para verificar se o player está transformado
-            if (ProcessTransfur.isPlayerTransfurred(player)) {
+            if (transfurVariantInstance != null) {
+                boolean isRestricted = false;
+                ChangedEntity changedEntity = transfurVariantInstance.getChangedEntity();
+                if (changedEntity instanceof IVariantExtraStats IVariantExtraStats && !IVariantExtraStats.canUseBows()) {
+                    isRestricted = true;
+                } else if (ChangedAddonServerConfiguration.STOP_TRANSFURRED_PLAYERS_USE_BOWS.get()) {
+                    isRestricted = true;
+                }
 
-                // Checa a config que criamos
-                if (ChangedAddonServerConfiguration.STOP_TRANSFURRED_PLAYERS_USE_BOWS.get()) {
-
+                if (isRestricted) {
                     // Cancela a ação de usar o item
                     event.setCanceled(true);
 
@@ -396,8 +405,9 @@ public class CommonEvent {
     }
 
     @SubscribeEvent
-    public static void onPlayerProgressTransfurTick(ProgressTransfurEvents.TickPlayerTransfurProgressEvent tickPlayerTransfurProgressEvent) {
+    public static void onPlayerProgressTransfurTick(TickPlayerTransfurProgressEvent tickPlayerTransfurProgressEvent) {
         tickInfectionAndRes(tickPlayerTransfurProgressEvent);
+        mayStallTransfurProgress(tickPlayerTransfurProgressEvent);
     }
 
     @SubscribeEvent
@@ -425,21 +435,23 @@ public class CommonEvent {
         }
     }
 
+    public static final String HOLDING_DARK_LATEX_MASK_TAG = "holdingDarkLatexMask";
+
     private static void maskTransfur(Player player, Level level) {
         int doTransfur = level.getLevelData().getGameRules().getInt(ChangedAddonGameRules.TICKS_TO_DARK_LATEX_MASK_TRANSFUR);
         if (doTransfur <= 0) return;
         if (player.isCreative() || player.isSpectator()) return;
 
-        if (!player.getPersistentData().contains("HoldingDarkLatexMask")) {
-            player.getPersistentData().putInt("HoldingDarkLatexMask", 0);
+        if (!player.getPersistentData().contains(HOLDING_DARK_LATEX_MASK_TAG)) {
+            player.getPersistentData().putInt(HOLDING_DARK_LATEX_MASK_TAG, 0);
         }
 
-        int maskHeldTimer = player.getPersistentData().getInt("HoldingDarkLatexMask");
+        int maskHeldTimer = player.getPersistentData().getInt(HOLDING_DARK_LATEX_MASK_TAG);
         if (ProcessTransfur.isPlayerTransfurred(player)) {
             if (maskHeldTimer > 0) {
-                player.getPersistentData().putInt("HoldingDarkLatexMask", maskHeldTimer - 1);
+                player.getPersistentData().putInt(HOLDING_DARK_LATEX_MASK_TAG, maskHeldTimer - 1);
             } else {
-                player.getPersistentData().remove("HoldingDarkLatexMask");
+                player.getPersistentData().remove(HOLDING_DARK_LATEX_MASK_TAG);
             }
             return;
         }
@@ -451,15 +463,15 @@ public class CommonEvent {
 
         if (maskHand == null) {
             if (maskHeldTimer > 0) {
-                player.getPersistentData().putDouble("HoldingDarkLatexMask", maskHeldTimer - 1);
+                player.getPersistentData().putDouble(HOLDING_DARK_LATEX_MASK_TAG, maskHeldTimer - 1);
             } else {
-                player.getPersistentData().remove("HoldingDarkLatexMask");
+                player.getPersistentData().remove(HOLDING_DARK_LATEX_MASK_TAG);
             }
             return;
         }
 
         if (maskHeldTimer < doTransfur) {
-            player.getPersistentData().putInt("HoldingDarkLatexMask", maskHeldTimer + 1);
+            player.getPersistentData().putInt(HOLDING_DARK_LATEX_MASK_TAG, maskHeldTimer + 1);
             return;
         }
 
@@ -475,17 +487,27 @@ public class CommonEvent {
             }
         }
 
-        player.getPersistentData().putInt("HoldingDarkLatexMask", 0);
-        player.getPersistentData().remove("HoldingDarkLatexMask");
+        player.getPersistentData().putInt(HOLDING_DARK_LATEX_MASK_TAG, 0);
+        player.getPersistentData().remove(HOLDING_DARK_LATEX_MASK_TAG);
     }
 
-    private static void tickInfectionAndRes(ProgressTransfurEvents.TickPlayerTransfurProgressEvent event) {
+    private static void mayStallTransfurProgress(TickPlayerTransfurProgressEvent event) {
+        Player player = event.getPlayer();
+        ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(player);
+        LatexInfection latexInfection = playerVariables.latexInfection;
+        if (latexInfection.shouldStallTransfurProgress()) {
+            event.setCanceled(true);
+        }
+    }
+
+    private static void tickInfectionAndRes(TickPlayerTransfurProgressEvent event) {
         Player player = event.getPlayer();
         if (ProcessTransfur.isPlayerTransfurred(player)) return;
 
         float progress = ProcessTransfur.getPlayerTransfurProgress(player);
         if (progress < 0) return;
-        float newProgress = progress;
+        float currentProgress = event.getCurrentProgress();
+        float newDeltaProgress = event.getDeltaProgress();
 
         float latexRes = (float) player.getAttributeValue(ChangedAddonAttributes.LATEX_RESISTANCE.get());
         float infection = (float) player.getAttributeValue(ChangedAddonAttributes.LATEX_INFECTION.get());
@@ -497,12 +519,12 @@ public class CommonEvent {
 
         // --- Resistance Wins
         if (resistanceWins) {
-            newProgress -= 0.5f * latexRes;
+            newDeltaProgress -= 0.5f * latexRes;
         }
 
         // --- Infection Wins
         else if (infectionWins) {
-            newProgress += progress * (infection / 50f);
+            newDeltaProgress += (infection / 10f);
 
             // Block the natural Tick
             event.setCanceled(true);
@@ -511,11 +533,26 @@ public class CommonEvent {
         if (player.tickCount % 20 == 0) { // only process after 1 second
             if (!player.isCreative() && !player.isSpectator()) {
 
-                newProgress = Mth.clamp(newProgress, 0f, tolerance * 0.998f);
+                // Se o novo progresso for atingir ou passar da tolerância
+                if (currentProgress + newDeltaProgress >= tolerance) {
+                    // Calcula exatamente quanto falta para chegar no limite
+                    float remainingToMax = tolerance - currentProgress;
 
-                // Apply only if there is chances
-                if (newProgress != progress) {
-                    ProcessTransfur.setPlayerTransfurProgress(player, newProgress);
+                    // Define o novo delta para preencher apenas 95% do espaço restante.
+                    // Isso cria uma "curva assintótica" (desacelera conforme chega perto)
+                    // e garante matematicamente que NUNCA vai encostar na tolerância.
+                    newDeltaProgress = remainingToMax * 0.95f;
+
+                    // Salvaguarda extrema para arredondamentos de float:
+                    // Se mesmo com o multiplicador o valor ainda somar ≥ tolerance, força um limite fixo
+                    if (currentProgress + newDeltaProgress >= tolerance) {
+                        newDeltaProgress = remainingToMax - 0.01f;
+                    }
+                }
+
+                event.setDeltaProgress(newDeltaProgress);
+                if (event.isCanceled()) {
+                    ProcessTransfur.setPlayerTransfurProgress(player, currentProgress + newDeltaProgress);
                 }
             }
         }

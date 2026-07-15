@@ -75,6 +75,11 @@ public interface IVariantExtraStats {
         return true;
     }
 
+    // Gun Mods Compatibility
+    default boolean canUseBows() {
+        return true;
+    }
+
     default int cutenessLevel() {
         if (this instanceof LivingEntity livingEntity) {
             MobEffectInstance effect = livingEntity.getEffect(ChangedAddonMobEffects.PACIFIED.get());

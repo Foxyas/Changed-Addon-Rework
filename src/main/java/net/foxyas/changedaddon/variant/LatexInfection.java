@@ -108,7 +108,7 @@ public class LatexInfection {
             if (tickCounter >= tickDelay) {
                 LatexAssimilationDecision<?> decision = makeLatexAssimilationDecision(mathNumber);
                 AssimilationBehavior assimilationBehavior = decision.latexAssimilateVictimBehavior(player);
-                if (progress <= playerMaxTolerance * 0.85f) {
+                if (progress <= playerMaxTolerance * 0.95f) {
                     ProcessTransfur.setPlayerTransfurProgress(player, progress + mathNumber);
                 } else if (ProcessTransfur.progressTransfur(player, decision)) {
                     if (assimilationBehavior.willAssimilate()) {
