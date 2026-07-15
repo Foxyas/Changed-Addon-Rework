@@ -83,6 +83,10 @@ public class PlayerUtil {
         return false;
     }
 
+    public static boolean isCuddleStateValidForBed(Player player) {
+        return canTurnCuddleModeOn(player);
+    }
+
     public static void transfurPlayer(Player player, String id, float progress) {
         ResourceLocation form = ResourceLocation.tryParse(id);
         TransfurVariant<?> latexVariant = form == null ? null : ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);

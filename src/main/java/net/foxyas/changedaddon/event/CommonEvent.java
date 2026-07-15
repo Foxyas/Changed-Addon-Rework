@@ -13,6 +13,7 @@ import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
@@ -41,6 +42,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.VibrationParticleOption;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
@@ -191,7 +193,14 @@ public class CommonEvent {
         Player sleeper = event.player;
         if (!sleeper.isSleeping()) return;
 
-        if (!ChangedAddonVariables.ofOrDefault(sleeper).isCuddling) return;
+        ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(sleeper);
+        if (!playerVariables.isCuddling) return;
+        if (!PlayerUtil.isCuddleStateValidForBed(sleeper)) {
+            playerVariables.isCuddling = false;
+            playerVariables.syncPlayerVariables(sleeper);
+            sleeper.displayClientMessage(Component.translatable("text.changed_addon.invalid_cuddle_state"), true);
+            return;
+        }
 
         LivingEntityDataExtensor ext = LivingEntityDataExtensor.ofEntity(sleeper);
         if (ext == null) return;

@@ -97,7 +97,7 @@ public class PatOverlay {
     }
 
     public static void renderPatIconOverlay(ForgeGui forgeGui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
-        if (!ChangedAddonClientConfiguration.PAT_OVERLAY.get()) return;
+        if (!ChangedAddonClientConfiguration.PAT_OVERLAY.get() || ChangedAddonKeyMappings.PAT_KEY.isUnbound()) return;
 
         double posX = ChangedAddonClientConfiguration.PAT_OVERLAY_X.get();
         double posY = screenHeight - ChangedAddonClientConfiguration.PAT_OVERLAY_Y.get();
