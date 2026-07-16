@@ -753,6 +753,8 @@ public class HULanguageProvider extends LanguageProvider {
         addCommand("ftkMinigame.get.hasnt", "Nem észlelhető aktív FTKC állapot a megadott alanynál.");
         addCommand("ftkMinigame.reset.success", "Az FTKC állapot törölve lett %s célpont esetében.");
         addCommand("ftkMinigame.reset.fail", "Parancs végrehajtása sikertelen: Nem azonosítottak alkalmas transzfur alanyokat a kiválasztás során.");
+        addCommand("setPlayerLatexInfection.set.success", "Be lett állítva a játékos latex fertőzése.");
+        addCommand("setPlayerLatexInfection.clear.success", "El lett távolítva a játékos latex fertőzése.");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Simogatások adva");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Simogatások fogadva");
@@ -762,6 +764,7 @@ public class HULanguageProvider extends LanguageProvider {
         add("warn.rei.not.supported.move.items.but.right.container", "Az elemek áthelyezése nem támogatott ennél a munkaállomásnál");
         addText("cuddle_button", "Ölelkezés elkezdése");
         addText("stop_cuddling", "Nyomd meg a %s gombot az ölelkezés befejezéséhez");
+        addText("invalid_cuddle_state", "Nem tudsz egyedül ölelkezni.");
         addText("confirm_vial_use", "Biztos vagy benne? (Használja guggolás közben a megerősítéshez)");
 
         addTrimMaterial("iridium", "Irídiumból készült");
