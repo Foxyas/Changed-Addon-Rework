@@ -739,6 +739,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addCommand("ftkMinigame.get.hasnt", "No active FTKC state detected for the specified subject.");
         addCommand("ftkMinigame.reset.success", "FTKC state has been purged for %s target(s).");
         addCommand("ftkMinigame.reset.fail", "Command execution failed: No eligible transfur subjects identified in selection.");
+        addCommand("setPlayerLatexInfection.set.success", "Set player latex infection.");
+        addCommand("setPlayerLatexInfection.clear.success", "Cleared player latex infection.");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Pats given");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Pats received");
@@ -748,6 +750,7 @@ public class ENLanguageProvider extends LanguageProvider {
         add("warn.rei.not.supported.move.items.but.right.container", "Move Items is not supported with this kind of workstation");
         addText("cuddle_button", "Start cuddling");
         addText("stop_cuddling", "Press %s to stop cuddling");
+        addText("invalid_cuddle_state", "You can't cuddle alone.");
         addText("confirm_vial_use", "Are you sure? (Use while crouching to confirm)");
 
         addTrimMaterial("iridium", "Iridium Material");

@@ -81,7 +81,8 @@ public class ChangedAddonVariables {
         @Nullable
         public FightToKeepConsciousness.MinigameType FTKCminigameType = null;
 
-        public LatexInfection latexInfection = new LatexInfection();
+        @NotNull
+        public LatexInfection latexInfection = new LatexInfection(); //It shouldn't be null, due serialization we need to keep this as a "defaultable" object.
 
         public float consciousnessFightProgress = 0;
         public boolean isTransfuredBySafeMethod = true;

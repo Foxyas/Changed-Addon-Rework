@@ -7,7 +7,6 @@ import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,14 +22,13 @@ public class PsychicGrabKeyHandler {
         if (player == null) return;
 
         int key = event.getKey();
+        int action = event.getAction();
+        int modifiers = event.getModifiers();
         if (PsychicGrab.Keys.contains(key) && minecraft.screen == null) {
-//            ChangedAddonMod.PACKET_HANDLER.sendToServer(new AbilityKeyPressPacket(event.getKey()));
             ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
                 PsychicGrabInstance abilityInstance = variantInstance.getAbilityInstance(ChangedAddonAbilities.PSYCHIC_GRAB.get());
                 if (abilityInstance != null) {
-                    CompoundTag tag = new CompoundTag();
-                    tag.putInt("keyPressed", key);
-                    abilityInstance.sendPayload(tag);
+                    abilityInstance.onClientKeyPressed(player, key, action, modifiers);
                 }
             }));
         }
