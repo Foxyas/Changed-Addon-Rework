@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.defaults;
 
-import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;
+import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
@@ -46,7 +46,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class AbstractUnfuseableChangedEntity extends ChangedEntity implements ICoatLikeEntity, CustomPatReaction {
+public abstract class AbstractUnfuseableChangedEntity extends ChangedEntity implements ICoatLikeEntity, ICustomPatReaction {
     protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractUnfuseableChangedEntity.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNER_UUID_ID = SynchedEntityData.defineId(AbstractUnfuseableChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     protected static final EntityDataAccessor<Boolean> UNFUSED_FROM_HOST = SynchedEntityData.defineId(AbstractUnfuseableChangedEntity.class, EntityDataSerializers.BOOLEAN);
@@ -274,13 +274,13 @@ public abstract class AbstractUnfuseableChangedEntity extends ChangedEntity impl
     }
 
     @Override
-    public void WhenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
-        CustomPatReaction.super.WhenPattedReactionSpecific(patter, hand, pattedLocation);
+    public void whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
+        ICustomPatReaction.super.whenPattedReactionSpecific(patter, hand, pattedLocation);
     }
 
     @Override
-    public void WhenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
-        CustomPatReaction.super.WhenPatEvent(patter, hand, patTarget);
+    public void whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
+        ICustomPatReaction.super.whenPatEvent(patter, hand, patTarget);
     }
 
     public boolean isTame() {

@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ExtraConditions;
+import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
@@ -20,7 +20,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -30,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BlueLizard extends AbstractBasicChangedEntity implements ExtraConditions.Climb, CustomPatReaction {
+public class BlueLizard extends AbstractBasicChangedEntity implements ExtraConditions.Climb, ICustomPatReaction {
 
     public BlueLizard(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.BLUE_LIZARD.get(), world);
@@ -105,8 +104,8 @@ public class BlueLizard extends AbstractBasicChangedEntity implements ExtraCondi
     }
 
     @Override
-    public void WhenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
-        CustomPatReaction.super.WhenPattedReactionSpecific(patter, hand, pattedLocation);
+    public void whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
+        ICustomPatReaction.super.whenPattedReactionSpecific(patter, hand, pattedLocation);
         this.level.playSound(null, this, ChangedAddonSoundEvents.GECKO_BEEP.get(), SoundSource.AMBIENT, 1, 1);
     }
 }

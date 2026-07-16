@@ -56,7 +56,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard implements ICoatLikeEntity, CustomPatReaction, ISafeChangedEntity, IDynamicRideOffsetEntity, ChangedEntityExtension {
+public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard implements ICoatLikeEntity, ICustomPatReaction, ISafeChangedEntity, IDynamicRideOffsetEntity, ChangedEntityExtension {
     protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNER_UUID_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     protected static final EntityDataAccessor<Boolean> UNFUSED_FROM_HOST = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.BOOLEAN);
@@ -350,7 +350,7 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
     }
 
     @Override
-    public void WhenPattedReactionSpecific(LivingEntity patterLiving, InteractionHand hand, Vec3 pattedLocation) {
+    public void whenPattedReactionSpecific(LivingEntity patterLiving, InteractionHand hand, Vec3 pattedLocation) {
         if (!(patterLiving instanceof Player patter)) {
             return;
         }
@@ -372,7 +372,7 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
     }
 
     @Override
-    public void WhenPatEvent(LivingEntity self, InteractionHand hand, LivingEntity patTarget) {
+    public void whenPatEvent(LivingEntity self, InteractionHand hand, LivingEntity patTarget) {
         if (self instanceof Player patter) {
             boolean isPlayerTransfur = ProcessTransfur.isPlayerTransfurred(patter);
             boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant(patter) != null

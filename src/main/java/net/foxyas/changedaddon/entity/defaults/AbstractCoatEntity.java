@@ -1,50 +1,33 @@
 package net.foxyas.changedaddon.entity.defaults;
 
-import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;
+import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ISafeChangedEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
-import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
-import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtTargetGoal;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.scores.Team;
 import net.minecraftforge.common.IExtensibleEnum;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-import java.util.UUID;
-
-public abstract class AbstractCoatEntity extends AbstractTamableLatexEntity implements ICoatLikeEntity, CustomPatReaction, ISafeChangedEntity {
+public abstract class AbstractCoatEntity extends AbstractTamableLatexEntity implements ICoatLikeEntity, ICustomPatReaction, ISafeChangedEntity {
     protected static final EntityDataAccessor<Boolean> UNFUSED_FROM_HOST = SynchedEntityData.defineId(AbstractCoatEntity.class, EntityDataSerializers.BOOLEAN);
 
     public AbstractCoatEntity(EntityType<? extends ChangedEntity> type, Level level) {
@@ -164,13 +147,13 @@ public abstract class AbstractCoatEntity extends AbstractTamableLatexEntity impl
     }
 
     @Override
-    public void WhenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
-        CustomPatReaction.super.WhenPattedReactionSpecific(patter, hand, pattedLocation);
+    public void whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
+        ICustomPatReaction.super.whenPattedReactionSpecific(patter, hand, pattedLocation);
     }
 
     @Override
-    public void WhenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
-        CustomPatReaction.super.WhenPatEvent(patter, hand, patTarget);
+    public void whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
+        ICustomPatReaction.super.whenPatEvent(patter, hand, patTarget);
     }
 
     //TameType Use Type

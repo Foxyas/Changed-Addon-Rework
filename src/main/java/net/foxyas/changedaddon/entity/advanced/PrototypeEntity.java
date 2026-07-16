@@ -3,13 +3,16 @@ package net.foxyas.changedaddon.entity.advanced;
 import net.foxyas.changedaddon.entity.ai.LatexAttackType;
 import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.ai.goals.prototype.*;
-import net.foxyas.changedaddon.entity.api.CustomPatReaction;
+import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
 import net.foxyas.changedaddon.entity.api.ItemHandlerHolder;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
 import net.foxyas.changedaddon.menu.PrototypeMenu;
 import net.foxyas.changedaddon.util.ColorUtil;
-import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.EyeStyle;
+import net.ltxprogrammer.changed.entity.TransfurCause;
+import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -56,7 +59,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implements MenuProvider, CustomPatReaction, IDynamicPawColor, ItemHandlerHolder {
+public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implements MenuProvider, ICustomPatReaction, IDynamicPawColor, ItemHandlerHolder {
 
     // Constants
     public static final int MAX_HARVEST_TIMES = 32;
@@ -164,8 +167,8 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
     }
 
     @Override
-    public void WhenPattedReaction(LivingEntity patter, InteractionHand hand) {
-        CustomPatReaction.super.WhenPattedReaction(patter, hand);
+    public void whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+        ICustomPatReaction.super.whenPattedReaction(patter, hand);
         if (patter.level().isClientSide) return;
         if (!(patter instanceof Player player)) {
             return;

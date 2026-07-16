@@ -66,7 +66,7 @@ public class ChangedAddonMod {
         ChangedAddonSoundEvents.SOUNDS.register(bus);
 
         ChangedAddonParticleTypes.REGISTRY.register(bus);
-        ChangedAddonVillagerProfessions.POI_TYPES.register(bus);
+        ChangedAddonPoiTypes.POI_TYPES.register(bus);
         ChangedAddonVillagerProfessions.PROFESSIONS.register(bus);
         ChangedAddonFluids.FLUID_TYPES.register(bus);
         ChangedAddonFluids.FLUIDS.register(bus);

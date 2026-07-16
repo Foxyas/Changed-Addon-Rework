@@ -16,9 +16,11 @@ import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
@@ -36,6 +38,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -98,6 +101,8 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
 
     @Shadow public abstract TransfurVariant<?> getSelfVariant();
 
+    @Shadow public abstract @Nullable Player getUnderlyingPlayer();
+
     @Override
     protected boolean shouldDespawnInPeaceful() {
         return !isPacified();
@@ -120,6 +125,22 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
 
         Optional<IAbstractChangedEntity> grabberSafe = GrabEntityAbility.getGrabberSafe(target);
         return grabberSafe.isPresent() && grabberSafe.get() instanceof IGrabberEntity changedEntity;
+    }
+
+    @Inject(at = @At("HEAD"), method = "variantTick", cancellable = true)
+    private void failSafePacified(Level level, CallbackInfo ci) {
+        if (level.isClientSide()) return;
+        Player player = getUnderlyingPlayer();
+        if (this.isPacified() && player != null) {
+            TransfurVariantInstance<?> tf = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (tf == null) return;
+            if (tf.getParent().transfurMode != TransfurMode.NONE) {
+                if (tf.transfurMode != TransfurMode.NONE) {
+                    tf.transfurMode = TransfurMode.NONE;
+                }
+            }
+            this.setPacified(false);
+        }
     }
 
     @Inject(at = @At("HEAD"), method = "targetSelectorTest", cancellable = true)

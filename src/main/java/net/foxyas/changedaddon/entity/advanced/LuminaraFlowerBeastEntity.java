@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.advanced;
 
-import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
+import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
@@ -62,7 +62,7 @@ import net.minecraftforge.network.PlayMessages;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity implements IVariantExtraStats, CustomPatReaction, PowderSnowWalkable, IDynamicRideOffsetEntity, IBestiaryEntityData {
+public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity implements IVariantExtraStats, ICustomPatReaction, PowderSnowWalkable, IDynamicRideOffsetEntity, IBestiaryEntityData {
 
     public static final CreatureDietsHandleProcedure.DietType LUMINARA_DIET = CreatureDietsHandleProcedure.DietType.create("LUMINARA", ChangedAddonTags.TransfurVariants.DRAGON_LIKE, ChangedAddonTags.Items.DRAGON_DIET, List.of(Items.CHORUS_FRUIT, ChangedItems.ORANGE.get()));
     private static final EntityDataAccessor<Boolean> AWAKENED = SynchedEntityData.defineId(LuminaraFlowerBeastEntity.class, EntityDataSerializers.BOOLEAN);
@@ -214,14 +214,14 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     }
 
     @Override
-    public void WhenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
+    public void whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
         if (patter.level().isClientSide()) return;
 
         patTarget.addEffect(getPatEffect(patter), patter);
     }
 
     @Override
-    public void WhenPattedReaction(LivingEntity patter, InteractionHand hand) {
+    public void whenPattedReaction(LivingEntity patter, InteractionHand hand) {
         if (patter.level().isClientSide()) return;
 
         patter.addEffect(getPatEffect(this), this);

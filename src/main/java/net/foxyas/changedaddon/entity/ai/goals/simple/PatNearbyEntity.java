@@ -1,11 +1,13 @@
 package net.foxyas.changedaddon.entity.ai.goals.simple;
 
+import net.foxyas.changedaddon.process.features.PatFeatureHandle;
 import net.foxyas.changedaddon.util.EntityUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.phys.AABB;
@@ -29,6 +31,10 @@ public class PatNearbyEntity extends Goal {
 
     @Override
     public boolean canUse() {
+        if (patCooldown > 0) {
+            patCooldown--;
+            return false;
+        }
         // Don't look for someone to pat if the mob is currently attacking someone
         if (this.mob.getTarget() != null) {
             return false;
@@ -53,7 +59,7 @@ public class PatNearbyEntity extends Goal {
         );
 
         // The goal can start if we successfully found a target
-        return this.target != null;
+        return this.target != null && mob.getRandom().nextFloat() <= 0.10f;
     }
 
     // Helper method to define what a "safe" entity is
@@ -73,7 +79,10 @@ public class PatNearbyEntity extends Goal {
     @Override
     public boolean canContinueToUse() {
         // Continue running the goal as long as the target is alive, and we haven't finished moving
-        return this.target != null && this.target.isAlive() && !this.mob.getNavigation().isDone();
+        PathNavigation pathNavigation = this.mob.getNavigation();
+        return this.target != null && this.target.isAlive()
+                && (pathNavigation.getPath() != null && pathNavigation.getPath().canReach())
+                && !pathNavigation.isDone();
     }
 
     @Override
@@ -104,13 +113,8 @@ public class PatNearbyEntity extends Goal {
 
             if (this.patCooldown <= 0) {
                 performPat(this.target);
-
-                // Set a cooldown (e.g., 40 ticks = 2 seconds) so it doesn't spam
-                this.patCooldown = 40;
-
-                // Optional: If you only want it to pat once and then wander off,
-                // uncomment the line below to end the goal after one pat:
-                // this.target = null;
+                this.patCooldown = 260;
+                this.target = null;
             }
         } else {
             // Keep updating the path if the target moves
@@ -124,13 +128,6 @@ public class PatNearbyEntity extends Goal {
     }
 
     private void performPat(LivingEntity target) {
-        // Add your custom logic here!
-        // This is where you play a sound, trigger an animation, or spawn particles.
-
-        // Example: Spawn breeding heart particles (Status 7) to show affection
-        this.mob.level().broadcastEntityEvent(this.mob, (byte) 7);
-
-        // Debug message to verify it works in the console
-        // System.out.println(this.mob.getName().getString() + " just patted " + target.getName().getString());
+        PatFeatureHandle.patEntity(mob, target, target.getUsedItemHand());
     }
 }

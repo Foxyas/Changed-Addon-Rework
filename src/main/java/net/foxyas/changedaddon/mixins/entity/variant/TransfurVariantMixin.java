@@ -21,7 +21,14 @@ public class TransfurVariantMixin {
         } else if (entity.getType().is(ChangedTags.EntityTypes.LATEX) && ChangedEntityExtension.of(entity).isPacified()) {
             return false;
         } else if (entity instanceof ISafeChangedEntity safeChanged) {
-            return safeChanged.shouldScareVillagers(entity, villager);
+            boolean flag = safeChanged.shouldScareVillagers(entity, villager);
+            if (flag && villager.isSleeping()) {
+                villager.stopSleeping();
+            }
+            return flag;
+        }
+        if (original && villager.isSleeping()) {
+            villager.stopSleeping();
         }
         return original;
     }

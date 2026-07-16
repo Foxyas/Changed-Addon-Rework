@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.client.model.animations.parameters.PatReactionAnimationParameters;
-import net.foxyas.changedaddon.entity.api.CustomPatReaction;
+import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAnimationEvents;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
@@ -17,12 +17,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
 
-public class MongooseEntity extends AbstractBasicChangedEntity implements CustomPatReaction {
+public class MongooseEntity extends AbstractBasicChangedEntity implements ICustomPatReaction {
 
     public MongooseEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
@@ -56,7 +55,7 @@ public class MongooseEntity extends AbstractBasicChangedEntity implements Custom
     }
 
     @Override
-    public void WhenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
+    public void whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
         ChangedAnimationEvents.broadcastEntityAnimation(this, ChangedAddonAnimationEvents.PAT_REACTION.get(), PatReactionAnimationParameters.INSTANCE);
     }
 }

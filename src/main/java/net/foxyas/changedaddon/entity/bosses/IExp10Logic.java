@@ -5,7 +5,7 @@ import net.foxyas.changedaddon.entity.api.*;
 import net.ltxprogrammer.changed.entity.GenderedEntity;
 import net.ltxprogrammer.changed.entity.PowderSnowWalkable;
 
-public interface IExp10Logic extends ISpeakableEntity, GenderedEntity, CustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity, IGrabberEntity.IConditionalGrabber, IAlphaAbleEntity.CustomAlphaAttributes, IDynamicBeltMovementEntity {
+public interface IExp10Logic extends ISpeakableEntity, GenderedEntity, ICustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity, IGrabberEntity.IConditionalGrabber, IAlphaAbleEntity.CustomAlphaAttributes, IDynamicBeltMovementEntity {
 
     @Override
     default boolean canBeTransportedByBelts(boolean defaultValue) {
