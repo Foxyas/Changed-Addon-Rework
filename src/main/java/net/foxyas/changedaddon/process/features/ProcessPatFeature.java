@@ -78,6 +78,12 @@ public class ProcessPatFeature {
             LivingEntity target = event.target;
 
             if (!(patter.level instanceof ServerLevel level)) return;
+
+            spawnEmote(patter, target, level);
+            if (target instanceof Player targetPlayer) {
+                targetPlayer.displayClientMessage(Component.translatable("key.changed_addon.pat_received", patter.getDisplayName().getString()), true);
+            }
+
             if (!(patter instanceof Player player)) return;
 
             if (target instanceof ChangedEntity changedEntity && !ProcessTransfur.isPlayerTransfurred(player)) {
@@ -93,12 +99,6 @@ public class ProcessPatFeature {
             }
 
             player.displayClientMessage(Component.translatable("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
-            if (target instanceof Player targetPlayer) {
-                targetPlayer.displayClientMessage(Component.translatable("key.changed_addon.pat_received", player.getDisplayName().getString()), true);
-            }
-
-            spawnEmote(player, target, level);
         }
     }
-
 }

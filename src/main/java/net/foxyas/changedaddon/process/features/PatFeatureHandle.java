@@ -167,6 +167,11 @@ public class PatFeatureHandle {
         Entity target = entityHitResult.getEntity();
         entity.swing(emptyHand);
 
+        if (target instanceof LivingEntity livingTarget) {//assume that target is always livingEntity or allow entity in the event?
+            ChangedAddonMod.postEvent(new ProcessPatFeature.GlobalPatReactionEvent(level, entity, emptyHand, livingTarget, entityHitResult.getLocation()));
+            return;
+        }
+
         if (level instanceof ServerLevel serverLevel && entity instanceof Player player) {
             player.displayClientMessage(Component.translatable("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
             serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);

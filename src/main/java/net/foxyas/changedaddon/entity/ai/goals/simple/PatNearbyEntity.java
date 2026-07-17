@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.ai.goals.simple;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.process.features.PatFeatureHandle;
 import net.foxyas.changedaddon.util.EntityUtil;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,8 +15,7 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.phys.AABB;
 
 import java.util.EnumSet;
-
-import static net.ltxprogrammer.changed.util.EntityUtil.maybeGetUnderlying;
+import java.util.Optional;
 
 public class PatNearbyEntity extends Goal {
 
@@ -72,10 +72,13 @@ public class PatNearbyEntity extends Goal {
         // If the entity recently hurt our mob, or our mob recently hurt it, it's not safe
         if (entity.getLastHurtByMob() == this.mob || this.mob.getLastHurtByMob() == entity) return false;
 
-        if (mob instanceof AbstractVillager villager && maybeGetUnderlying(entity) instanceof ChangedEntity changedEntity) {
-            boolean shouldScareVillager = TransfurVariant.shouldScareVillager(changedEntity, villager);
-            return !shouldScareVillager && EntityUtil.isCuteEnoughToReceivePatsFromVillagers(villager, changedEntity);
+        Optional<IAbstractChangedEntity> optional = IAbstractChangedEntity.forEitherSafe(entity);
+        if (mob instanceof AbstractVillager villager && optional.isPresent()) {
+            ChangedEntity cEntity = optional.get().getChangedEntity();
+            return !TransfurVariant.shouldScareVillager(cEntity, villager)
+                    && EntityUtil.isCuteEnoughToReceivePatsFromVillagers(villager, cEntity);
         }
+
         return entity.getType().is(ChangedAddonTags.EntityTypes.PATABLE);
     }
 
