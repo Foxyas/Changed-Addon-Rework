@@ -292,9 +292,11 @@ public abstract class AbstractVoidFoxParticleProjectile extends ParriableProject
             return;
         }
 
-        ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.3f, 0.3f, 0.3f, 1, 0.005f);
 
         // Partículas
+        if (tickCount % 10 == 0) {
+            ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 1, 0.005f);
+        }
     }
 
     public boolean isSmoothMotion() {
@@ -362,7 +364,7 @@ public abstract class AbstractVoidFoxParticleProjectile extends ParriableProject
 
     @Override
     protected boolean canHitEntity(@NotNull Entity entity) {
-        if (entity instanceof AbstractGenericParticleProjectile genericParticleProjectile) {
+        if (entity instanceof ParriableProjectile genericParticleProjectile) {
             if (genericParticleProjectile.getOwner() == this.getOwner()) {
                 return false;
             }

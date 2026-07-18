@@ -162,7 +162,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {
         super.onSyncedDataUpdated(pKey);
 
-        if (pKey == WAS_BOSS) {
+        if (pKey == WAS_BOSS || pKey == IS_BOSS) {
             refreshBossAttributes();
         }
     }
@@ -1123,6 +1123,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
         this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
         if (!wasBoss()) {
             this.setHealth(this.getMaxHealth());
+            this.setMaxDodgeHealth(125f);
             this.setDodgeHealth(this.getMaxDodgeHealth());
             setWasBoss(true);
             IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
@@ -1204,7 +1205,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     public static class EntityEvents {
 
         @SubscribeEvent
-        public static void WhenAttack(LivingAttackEvent event) {
+        public static void whenAttack(LivingAttackEvent event) {
             Entity source = event.getSource().getEntity();
             if (source instanceof VoidFoxEntity voidFoxEntity) {
                 voidFoxEntity.RegisterHit();
