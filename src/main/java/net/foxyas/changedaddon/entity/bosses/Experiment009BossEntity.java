@@ -70,6 +70,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -117,6 +118,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         setNoAi(false);
         setPersistenceRequired();
         this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
+        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -239,7 +242,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     protected void addAbilitiesGoals() {
-        this.goalSelector.addGoal(15, new ElectrifyNearbyWaterGoal(this, UniformFloat.of(2, 6)));
+        this.goalSelector.addGoal(20, new ExtinguishFireNearbyGoal(this) {
+            @Override
+            public void start() {
+                super.start();
+                Experiment009BossEntity.this.maySpeak(FIRE_EXTINGUISH_MESSAGE_ID);
+            }
+        });
         this.goalSelector.addGoal(20, new SimpleAntiFlyingAttack(this,
                 UniformInt.of(60, 100),
                 3,
@@ -247,15 +256,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 8f,
                 10));
         this.goalSelector.addGoal(10, new ThunderStorm(this, UniformInt.of(60, 100)));
+        this.goalSelector.addGoal(15, new ElectrifyNearbyWaterGoal(this, UniformFloat.of(2, 6)));
 
         //New AI
-        this.goalSelector.addGoal(5, new AoEThunderStrikeGoal(
-                this,
-                UniformInt.of(80, 120), //IntProvider -> cooldownProvider
-                UniformInt.of(4, 8), //IntProvider -> damageProvider
-                1.5f,
-                200));
-
+        this.goalSelector.addGoal(15, new ThunderDashAttack(this));
         this.goalSelector.addGoal(10, new ThunderDiveGoal(this,
                 UniformInt.of(60, 100), //IntProvider -> cooldownProvider
                 1.5f,
@@ -264,6 +268,14 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 0.5f,
                 4)
         );
+        this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
+        this.goalSelector.addGoal(5, new AoEThunderStrikeGoal(
+                this,
+                UniformInt.of(80, 120), //IntProvider -> cooldownProvider
+                UniformInt.of(4, 8), //IntProvider -> damageProvider
+                1.5f,
+                200));
+
 
         //Basically perfect, damn... well done 0senia0
         this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
@@ -280,11 +292,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 8,
                 UniformFloat.of(4, 8))); //FloatProvider -> damage
 
-        //this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
-        //        UniformInt.of(100, 150), //IntProvider -> cooldown
-        //        20,
-        //        UniformInt.of(60, 80), //IntProvider -> duration
-        //        UniformFloat.of(3, 5))); //FloatProvider -> damage
 
         this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
                 UniformInt.of(150, 200), //IntProvider -> cooldown,
@@ -293,15 +300,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 UniformFloat.of(6, 8)) //FloatProvider -> damage)
         );
 
-        this.goalSelector.addGoal(15, new ThunderDashAttack(this));
-        this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
-        this.goalSelector.addGoal(20, new ExtinguishFireNearbyGoal(this) {
-            @Override
-            public void start() {
-                super.start();
-                Experiment009BossEntity.this.maySpeak(FIRE_EXTINGUISH_MESSAGE_ID);
-            }
-        });
+        //this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
+        //        UniformInt.of(100, 150), //IntProvider -> cooldown
+        //        20,
+        //        UniformInt.of(60, 80), //IntProvider -> duration
+        //        UniformFloat.of(3, 5))); //FloatProvider -> damage
 //        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
     }
 
@@ -429,15 +432,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             shouldDodgeAndNegateDamage = true;
         }
 
-//        if (isProjectile && isVulnerableToProjectiles()) {
-//            shouldDodgeAndNegateDamage = false;
-//            this.goalSelector.getRunningGoals().map(WrappedGoal::getGoal).filter(goal -> goal instanceof AoEThunderStrikeGoal).forEach(goal -> {
-//                if (goal instanceof AoEThunderStrikeGoal aoEThunderStrikeGoal) {
-//                    aoEThunderStrikeGoal.setCanceled(true);
-//                }
-//            });
-//        }
-
         shouldTeleportAndNegateDamage = source.is(DamageTypes.IN_WALL);
         if (source.getEntity() instanceof Warden) {
             shouldDodgeAndNegateDamage = true;
@@ -447,9 +441,19 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             shouldTeleportAndNegateDamage = true;
         }
 
-        if (shouldTeleportAndNegateDamage || shouldDodgeAndNegateDamage) {
-            if (shouldTeleportAndNegateDamage) teleportToNearLivingEntity();
-            if (shouldDodgeAndNegateDamage) {
+        if (source.is(DamageTypeTags.IS_FIRE) && shouldTeleportAndNegateDamage) {
+            shouldTeleportAndNegateDamage = false;
+        }
+
+        if (shouldTeleportAndNegateDamage ^ shouldDodgeAndNegateDamage) {
+            if (shouldTeleportAndNegateDamage) {
+                if (!tryTeleportToNearLivingEntity()) {
+                    if (source.is(DamageTypes.THORNS) || source.is(DamageTypeTags.IS_FIRE)) amount = 0;
+                    maybeSendDamageReactionToPlayer(source);
+
+                    return super.hurt(source, amount);
+                }
+            } else {
                 if (source.getDirectEntity() != null && source.getDirectEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
                     double speed = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2.0f);
                     dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
@@ -470,13 +474,14 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return super.hurt(source, amount);
     }
 
-    private void teleportToNearLivingEntity() {
+    private boolean tryTeleportToNearLivingEntity() {
         List<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this)))).toList();
-        if (!entitiesOfClass.isEmpty()) {
-            teleport(this.getTarget() == null
-                    ? entitiesOfClass.get(0)
-                    : this.getTarget());
+        LivingEntity target = entitiesOfClass.stream().findFirst().orElse(this.getTarget());
+        if (target != null) {
+            teleportToTarget(target);
+            return true;
         }
+        return false;
     }
 
     public boolean isVulnerableToProjectiles() {
@@ -549,7 +554,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
-    public void teleport(LivingEntity target) {
+    public void teleportToTarget(LivingEntity target) {
         if (target == null || this.level().isClientSide) return;
 
         Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
@@ -585,6 +590,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
+
+        if (this.tickCount % 20 == 0) {
+            this.targetDataManager.resolveTarget();
+        }
 
         float maxHealth = this.getMaxHealth();
         float currentHealth = this.getHealth();

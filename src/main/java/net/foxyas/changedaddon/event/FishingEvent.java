@@ -5,10 +5,12 @@ import net.ltxprogrammer.changed.entity.beast.*;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -31,7 +33,7 @@ public class FishingEvent {
 
     private static final Random RANDOM = new Random();
 
-    public static Entity getRandomEntity(List<Entity> entities) {
+    public static LivingEntity getRandomEntity(List<LivingEntity> entities) {
         if (entities == null || entities.isEmpty()) {
             return null; // Retorna null se a lista for vazia ou nula
         }
@@ -39,19 +41,19 @@ public class FishingEvent {
         return entities.get(randomIndex);
     }
 
-    public static List<Entity> entityList(ServerLevel _level) {
+    public static List<LivingEntity> entityList(ServerLevel serverLevel) {
         return List.of(
-                new LatexTigerShark(ChangedEntities.LATEX_TIGER_SHARK.get(), _level),
-                new LatexSquidDogMale(ChangedEntities.LATEX_SQUID_DOG_MALE.get(), _level),
-                new LatexSquidDogFemale(ChangedEntities.LATEX_SQUID_DOG_FEMALE.get(), _level),
-                new BuffLatexSharkMale(ChangedEntities.LATEX_SHARK_MALE.get(), _level),
-                new BuffLatexSharkFemale(ChangedEntities.LATEX_SHARK_FEMALE.get(), _level),
-                new LatexMantaRayMale(ChangedEntities.LATEX_MANTA_RAY_MALE.get(), _level),
-                new LatexMantaRayFemale(ChangedEntities.LATEX_MANTA_RAY_FEMALE.get(), _level),
-                new LatexShark(ChangedEntities.LATEX_SHARK.get(), _level),
-                new LatexMermaidShark(ChangedEntities.LATEX_MERMAID_SHARK.get(), _level),
-                new LatexCrocodile(ChangedEntities.LATEX_CROCODILE.get(), _level),
-                new LatexOrca(ChangedEntities.LATEX_ORCA.get(), _level)
+                new LatexTigerShark(ChangedEntities.LATEX_TIGER_SHARK.get(), serverLevel),
+                new LatexSquidDogMale(ChangedEntities.LATEX_SQUID_DOG_MALE.get(), serverLevel),
+                new LatexSquidDogFemale(ChangedEntities.LATEX_SQUID_DOG_FEMALE.get(), serverLevel),
+                new BuffLatexSharkMale(ChangedEntities.LATEX_SHARK_MALE.get(), serverLevel),
+                new BuffLatexSharkFemale(ChangedEntities.LATEX_SHARK_FEMALE.get(), serverLevel),
+                new LatexMantaRayMale(ChangedEntities.LATEX_MANTA_RAY_MALE.get(), serverLevel),
+                new LatexMantaRayFemale(ChangedEntities.LATEX_MANTA_RAY_FEMALE.get(), serverLevel),
+                new LatexShark(ChangedEntities.LATEX_SHARK.get(), serverLevel),
+                new LatexMermaidShark(ChangedEntities.LATEX_MERMAID_SHARK.get(), serverLevel),
+                new LatexCrocodile(ChangedEntities.LATEX_CROCODILE.get(), serverLevel),
+                new LatexOrca(ChangedEntities.LATEX_ORCA.get(), serverLevel)
         );
     }
 
@@ -111,8 +113,8 @@ public class FishingEvent {
                         Entity entityToSpawn = getRandomEntity(entityList(_level));
                         if (entityToSpawn != null) {
                             entityToSpawn.moveTo(hookEntity.getX(), hookEntity.getY(), hookEntity.getZ(), 0, 0);
-                            entityToSpawn.setYBodyRot(0);
-                            entityToSpawn.setYHeadRot(0);
+                            entityToSpawn.lookAt(EntityAnchorArgument.Anchor.FEET, hookEntity.getEyePosition(0));
+                            entityToSpawn.setYBodyRot(entityToSpawn.getYHeadRot());
 
                             // Define a movimentação da entidade para se aproximar do jogador
                             entityToSpawn.setDeltaMovement(

@@ -42,6 +42,7 @@ import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
@@ -110,6 +111,11 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(defaultPlayerAttributes.getBaseValue(Attributes.ATTACK_KNOCKBACK));
         attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.35f);
         attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5F);
+    }
+
+    @Override
+    public float getPathfindingMalus(@NotNull BlockPathTypes pNodeType) {
+        return super.getPathfindingMalus(pNodeType);
     }
 
     @Override

@@ -75,6 +75,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
@@ -1104,15 +1105,6 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
     @Override
     public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor p_21434_, @NotNull DifficultyInstance p_21435_, @NotNull MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag tag) {
-        if ((tag != null)) {
-            setBoss(tag.getBoolean("isBoss"));
-        }
-
-        if (this.isBoss()) {
-            setMaxDodgeHealth(200);
-            setDodgeHealth(getMaxDodgeHealth());
-        }
-
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, tag);
     }
 
@@ -1209,7 +1201,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     }
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
-    public static class WhenAttackAEntity {
+    public static class EntityEvents {
 
         @SubscribeEvent
         public static void WhenAttack(LivingAttackEvent event) {
@@ -1232,6 +1224,20 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
                         })), true);
                     }
                 }
+            }
+        }
+
+        @SubscribeEvent
+        public static void onEntitySpawn(MobSpawnEvent.FinalizeSpawn spawnEvent) {
+            CompoundTag spawnTag = spawnEvent.getSpawnTag();
+            Mob entity = spawnEvent.getEntity();
+            if (!(entity instanceof VoidFoxEntity voidFoxEntity)) return;
+            boolean attributesApplied = voidFoxEntity.wasBoss();
+
+            if (spawnTag != null && spawnTag.contains("isBoss")) {
+                voidFoxEntity.setBoss(spawnTag.getBoolean("isBoss"));
+            } else if (voidFoxEntity.isBoss()) {
+                voidFoxEntity.refreshBossAttributes();
             }
         }
     }

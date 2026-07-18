@@ -479,10 +479,10 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
-    public static class WhenAttackAEntity {
+    public static class EntityEvents {
 
         @SubscribeEvent
-        public static void OnLuminarcticSpawn(MobSpawnEvent.FinalizeSpawn spawnEvent) {
+        public static void onLuminarcticSpawn(MobSpawnEvent.FinalizeSpawn spawnEvent) {
             CompoundTag spawnTag = spawnEvent.getSpawnTag();
             Mob entity = spawnEvent.getEntity();
             if (!(entity instanceof AbstractLuminarcticLeopard abstractLuminarcticLeopard)) return;
@@ -500,7 +500,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         }
 
         @SubscribeEvent
-        public static void WhenAttack(LivingHurtEvent event) {
+        public static void whenAttack(LivingHurtEvent event) {
             LivingEntity target = event.getEntity();
             Entity source = event.getSource().getEntity();
 

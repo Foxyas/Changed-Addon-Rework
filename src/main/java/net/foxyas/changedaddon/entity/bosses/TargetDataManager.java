@@ -54,6 +54,18 @@ public class TargetDataManager {
     }
 
     // Utility method to be called in your entity's readAdditionalSaveData
+    public void loadTarget(CompoundTag nbt) {
+        if (!nbt.contains("SavedTargetUUID")) {
+            return;
+        }
+
+        UUID_CODEC.parse(NbtOps.INSTANCE, nbt.get("SavedTargetUUID"))
+                .resultOrPartial(err -> LOGGER.error("Failed to read target UUID: {}", err))
+                .ifPresent(uuid -> {
+                    this.savedTargetUUID = uuid;
+                });
+    }
+
     public void loadAndResolveTarget(CompoundTag nbt) {
         if (!nbt.contains("SavedTargetUUID")) {
             return;
@@ -68,7 +80,7 @@ public class TargetDataManager {
     }
 
     // Resolves the real entity in the world or clears it if invalid
-    private void resolveTarget() {
+    public void resolveTarget() {
         if (this.savedTargetUUID == null) return;
 
         if (this.selfEntity.level() instanceof ServerLevel serverLevel) {
