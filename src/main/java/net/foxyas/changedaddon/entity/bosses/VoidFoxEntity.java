@@ -161,10 +161,6 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {
         super.onSyncedDataUpdated(pKey);
-
-        if (pKey == WAS_BOSS || pKey == IS_BOSS) {
-            refreshBossAttributes();
-        }
     }
 
     @Override
@@ -957,8 +953,6 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
         handleChanges();
 
-        if (level.isClientSide) return;
-
         if (ticksTakeDmgFromFire > 5) {
             ticksTakeDmgFromFire = 0;
             this.level().playSound(null, this.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
@@ -1013,6 +1007,13 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             }
 
         }
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        refreshBossAttributes();
+
         if (this.getDodgeHealth() > 0) {
             this.dodgeHealthBossBar.setVisible(true);
             //this.bossBar.setVisible(false);
@@ -1234,12 +1235,10 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             Mob entity = spawnEvent.getEntity();
             if (!(entity instanceof VoidFoxEntity voidFoxEntity)) return;
             boolean attributesApplied = voidFoxEntity.wasBoss();
-
             if (spawnTag != null && spawnTag.contains("isBoss")) {
                 voidFoxEntity.setBoss(spawnTag.getBoolean("isBoss"));
-            } else if (voidFoxEntity.isBoss()) {
-                voidFoxEntity.refreshBossAttributes();
             }
+            voidFoxEntity.refreshBossAttributes();
         }
     }
 }

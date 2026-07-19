@@ -51,9 +51,19 @@ public class ChangedAddonEntities {
     }
 
     public static @NotNull List<EntityType<?>> canUseExoskeleton() {
-        final List<EntityType<?>> ADDON_CHANGED_ENTITIES = getAddonHumanoidsChangedEntities();
-        ADDON_CHANGED_ENTITIES.remove(REYN.get());
-        return ADDON_CHANGED_ENTITIES;
+        final List<EntityType<?>> addonHumanoidsChangedEntities = getAddonHumanoidsChangedEntities();
+        addonHumanoidsChangedEntities.remove(DARK_LATEX_YUFENG_QUEEN.get());
+        return addonHumanoidsChangedEntities;
+    }
+
+    public static @NotNull List<EntityType<?>> getProtogensEntities() {
+        final List<EntityType<?>> entityTypes = new ArrayList<>();
+//        entityTypes.removeIf(entityType -> !ForgeRegistries.ENTITY_TYPES.getKey(entityType).getPath().contains("protogen"));
+        entityTypes.add(PROTOGEN_0SENIA0.get());
+        entityTypes.add(PROTOGEN.get());
+        entityTypes.add(BOREALIS_MALE.get());
+        entityTypes.add(BOREALIS_FEMALE.get());
+        return entityTypes;
     }
 
     @Contract(" -> new")
@@ -211,6 +221,13 @@ public class ChangedAddonEntities {
                     .setCustomClientFactory(LatexSnowFoxFemaleEntity::new)
                     .sized(0.7f, 1.93f));
 
+    public static final RegistryObject<EntityType<WhiteFoxEntity>> WHITE_FOX = registerOrganicChangedEntity("white_fox",
+            EntityType.Builder.<WhiteFoxEntity>of(WhiteFoxEntity::new, MobCategory.MONSTER)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setTrackingRange(64)
+                    .setUpdateInterval(3)
+                    .setCustomClientFactory(WhiteFoxEntity::new)
+                    .sized(0.7f, 1.93f));
 
     public static final RegistryObject<EntityType<DazedLatexEntity>> DAZED_LATEX = registerChangedEntity("latex_dazed",
             EntityType.Builder.of(DazedLatexEntity::new, MobCategory.MONSTER)
@@ -685,6 +702,7 @@ public class ChangedAddonEntities {
         event.put(PROTOTYPE.get(), PrototypeEntity.createAttributes().build());
         event.put(LATEX_SNOW_FOX_FOXYAS.get(), LatexSnowFoxFoxyasEntity.createAttributes().build());
         event.put(LATEX_SNOW_FOX_MALE.get(), LatexSnowFoxMaleEntity.createAttributes().build());
+        event.put(WHITE_FOX.get(), WhiteFoxEntity.createAttributes().build());
         event.put(LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleEntity.createAttributes().build());
         event.put(DAZED_LATEX.get(), DazedLatexEntity.createAttributes().build());
         event.put(BUFF_DAZED_LATEX.get(), BuffDazedLatexEntity.createAttributes().build());

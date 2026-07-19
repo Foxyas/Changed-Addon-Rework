@@ -7,9 +7,11 @@ import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
 import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.simple.LatexKaylaSharkEntity;
+import net.foxyas.changedaddon.entity.simple.WhiteFoxEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
@@ -37,9 +39,10 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
 
     @Override
     public void startUsing() {
-        if (entity.getChangedEntity() instanceof LatexSnepEntity latexSnepEntity) {
+        ChangedEntity changedEntity = entity.getChangedEntity();
+        if (changedEntity instanceof LatexSnepEntity latexSnepEntity) {
             latexSnepEntity.WantLoaf = !latexSnepEntity.WantLoaf;
-        } else if (entity.getChangedEntity() instanceof AbstractLuminarcticLeopard lumi) {
+        } else if (changedEntity instanceof AbstractLuminarcticLeopard lumi) {
             if (entity.isCrouching()) {
                 switch (lumi.getGlowStage()) {
                     case AbstractLuminarcticLeopard.GLOW_NONE ->
@@ -52,7 +55,7 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
             } else {
                 lumi.setActivatedAbility(!lumi.isActivatedAbility());
             }
-        } else if (entity.getChangedEntity() instanceof AvaliEntity avaliEntity) {
+        } else if (changedEntity instanceof AvaliEntity avaliEntity) {
             float scale = avaliEntity.getDimensionScale();
             if (scale <= AvaliEntity.SizeScaling.NORMAL.getScale()) {
                 avaliEntity.setDimensionScale(AvaliEntity.SizeScaling.TALL.getScale());
@@ -62,22 +65,25 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
             } else {
                 avaliEntity.setDimensionScale(AvaliEntity.SizeScaling.NORMAL.getScale());
             }
-        } else if (entity.getChangedEntity() instanceof LuminaraFlowerBeastEntity luminaraFlowerBeast) {
+        } else if (changedEntity instanceof LuminaraFlowerBeastEntity luminaraFlowerBeast) {
             if (!luminaraFlowerBeast.isHyperAwakened()) return;
             luminaraFlowerBeast.spawnParticles = !luminaraFlowerBeast.spawnParticles;
             entity.displayClientMessage(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.luminara_beast.action", luminaraFlowerBeast.spawnParticles), true);
-        } else if (entity.getChangedEntity() instanceof LatexKaylaSharkEntity latexKaylaSharkEntity) {
+        } else if (changedEntity instanceof LatexKaylaSharkEntity latexKaylaSharkEntity) {
             boolean value = !latexKaylaSharkEntity.getGlowingState();
             latexKaylaSharkEntity.setGlowingState(value);
             entity.displayClientMessage(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.glow_layer.action", value), true);
-        } else if (entity.getChangedEntity() instanceof Experiment009Entity experiment009) {
+        } else if (changedEntity instanceof Experiment009Entity experiment009) {
             boolean value = !experiment009.isPhase2();
             experiment009.setPhase2(value);
             entity.displayClientMessage(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.glow_layer.action", value), true);
-        } else if (entity.getChangedEntity() instanceof Experiment10Entity experiment10) {
+        } else if (changedEntity instanceof Experiment10Entity experiment10) {
             boolean value = !experiment10.isPhase2();
             experiment10.setPhase2(value);
             entity.displayClientMessage(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.glow_layer.action", value), true);
+        } else if (changedEntity instanceof WhiteFoxEntity whiteFoxEntity) {
+            whiteFoxEntity.setDisplayParticlesFade(!whiteFoxEntity.displayFadeParticles());
+            entity.displayClientMessage(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.white_fox.action", whiteFoxEntity.displayFadeParticles()), true);
         }
     }
 

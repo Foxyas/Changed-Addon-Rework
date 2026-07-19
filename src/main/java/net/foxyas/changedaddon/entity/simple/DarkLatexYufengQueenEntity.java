@@ -31,7 +31,7 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.Objects;
 
-public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements IVariantExtraStats, GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions {
+public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements IVariantExtraStats, GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions, IAlphaAbleEntity {
 
     protected final SimpleAbilityInstance summonPups;
 
@@ -117,7 +117,8 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
                 return false;
             }
 
-            if (changedEntity instanceof IAlphaAbleEntity targetAlpha && this instanceof IAlphaAbleEntity selfAlpha) {
+            var selfAlpha = this;
+            if (changedEntity instanceof IAlphaAbleEntity targetAlpha) {
                 if (targetAlpha.isAlpha() && !selfAlpha.isAlpha()) {
                     return false;
                 }
@@ -130,5 +131,43 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
         }
 
         return couldGrabEntity;
+    }
+
+    @Override
+    public boolean isAlpha() {
+        return true;
+    }
+
+    @Override
+    public float alphaAdditionalScale() {
+        return 0; // 0 is "use the normal size"
+    }
+
+    @Override
+    public void setAlpha(boolean alpha) {
+        if (!entityData.hasItem(IS_ALPHA)) {
+            return;
+        }
+
+        if (this.isAlpha() != alpha) {
+            this.getEntityData().set(IS_ALPHA, alpha);
+            this.refreshDimensions();
+            refreshAttributes(this);
+            refreshAttributesForHost(this);
+        }
+    }
+
+    @Override
+    public void setAlphaScale(float scale) {
+        if (!entityData.hasItem(ALPHA_SCALE)) {
+            return;
+        }
+
+        if (this.alphaAdditionalScale() != scale) {
+            this.getEntityData().set(ALPHA_SCALE, scale);
+            this.refreshDimensions();
+            refreshAttributes(this);
+            refreshAttributesForHost(this);
+        }
     }
 }

@@ -1,4 +1,7 @@
 {
+  "remove": [
+    "#changed_addon:protogens"
+  ],
   "values": [
     "changed_addon:avali",
     "changed_addon:avali_zergodmaster",
@@ -9,7 +12,6 @@
     "changed_addon:buff_latex_dazed",
     "changed_addon:crystal_gas_cat_female",
     "changed_addon:crystal_gas_cat_male",
-    "changed_addon:dark_latex_yufeng_queen",
     "changed_addon:exp_1_female",
     "changed_addon:exp_1_male",
     "changed_addon:exp_2_female",
@@ -56,6 +58,7 @@
     "changed_addon:snow_leopard_female_organic",
     "changed_addon:snow_leopard_male_organic",
     "changed_addon:void_fox",
+    "changed_addon:white_fox",
     "changed_addon:wolfy"
   ]
 }

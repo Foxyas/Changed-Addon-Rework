@@ -45,7 +45,7 @@ import java.util.Objects;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Experiment10Entity extends ChangedEntity implements GenderedEntity, IDynamicPawColor, PowderSnowWalkable, IAlphaAbleEntity.CustomAlphaAttributes {
+public class Experiment10Entity extends ChangedEntity implements GenderedEntity, IDynamicPawColor, PowderSnowWalkable, IAlphaAbleEntity.IOverrideAlphaAttributes {
 
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment10Entity.class, EntityDataSerializers.BOOLEAN);

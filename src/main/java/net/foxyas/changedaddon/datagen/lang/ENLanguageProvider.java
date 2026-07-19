@@ -210,6 +210,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAbility("custom_interaction.have_interaction.luminara_beast.extra", "Particles emission is currently set to %s");
         addAbility("custom_interaction.have_interaction.luminara_beast.action", "Particles emission has been set to %s");
         addAbility("custom_interaction.have_interaction.glow_layer.action", "The glowing state has been set to %s");
+        addAbility("custom_interaction.have_interaction.white_fox.action", "Particles emission has been set to %s");
         addAbility("dissolve", "Dissolve Ability");
         addAbility("dissolve.warn.too_far", "You are too far from the place to teleport there");
         addAbility("dissolve.warn.wrong_dimension", "i can't find warp in this dimension");
@@ -410,6 +411,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityFromId(LATEX_SNEP);
         addEntityType(LATEX_SNOW_FOX_FEMALE, "Female Latex Snow Fox");
         addEntityType(LATEX_SNOW_FOX_MALE, "Male Latex Snow Fox");
+        addEntityType(WHITE_FOX, "White Fox");
         addEntityType(LATEX_SNOW_FOX_FOXYAS, "Foxyas the Latex Snow Fox");
         addEntityType(SNOW_LEOPARD_PARTIAL, "Partial Snow Leopard");
         addEntityFromId(LATEX_SQUID_TIGER_SHARK);
@@ -632,6 +634,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItem(LATEX_SNEP_SPAWN_EGG, "Latex Animal Snow Leopard Spawn Egg");
         addItem(LATEX_SNOW_FOX_FEMALE_SPAWN_EGG, "Female Latex Snow Fox Spawn Egg");
         addItem(LATEX_SNOW_FOX_MALE_SPAWN_EGG, "Male Latex Snow Fox Spawn Egg");
+        addItem(WHITE_FOX_SPAWN_EGG, "White Fox Spawn Egg");
         addItem(FOXYAS_SPAWN_EGG, "Latex Snow Fox Foxyas Spawn Egg");
         addItem(PARTIAL_SNOW_LEOPARD_SPAWN_EGG, "Snow Leopard Partial Spawn Egg");
         addItemFromId(LATEX_SQUID_TIGER_SHARK_SPAWN_EGG);

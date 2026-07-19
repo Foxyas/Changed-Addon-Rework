@@ -7,7 +7,7 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.simple.LatexSnowFoxMaleEntity;
+import net.foxyas.changedaddon.entity.simple.WhiteFoxEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -20,9 +20,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class WhiteFoxModel extends AdvancedHumanoidModel<LatexSnowFoxMaleEntity> {
+public class WhiteFoxModel extends AdvancedHumanoidModel<WhiteFoxEntity> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = ChangedAddonMod.layerLocation(("snow_fox"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = ChangedAddonMod.layerLocation(("white_fox"), "main");
 
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
@@ -31,7 +31,7 @@ public class WhiteFoxModel extends AdvancedHumanoidModel<LatexSnowFoxMaleEntity>
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart Tail;
-    private final HumanoidAnimator<LatexSnowFoxMaleEntity, WhiteFoxModel> animator;
+    private final HumanoidAnimator<WhiteFoxEntity, WhiteFoxModel> animator;
 
     public WhiteFoxModel(ModelPart root) {
         super(root);
@@ -80,10 +80,11 @@ public class WhiteFoxModel extends AdvancedHumanoidModel<LatexSnowFoxMaleEntity>
 
         PartDefinition RightPad = RightFoot.addOrReplaceChild("RightPad", CubeListBuilder.create().texOffs(52, 32).addBox(-2.0F, 0.0F, -2.5F, 4.0F, 2.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 4.325F, -4.425F));
 
-        PartDefinition RightPawBeans = RightPad.addOrReplaceChild("RightPawBeans", CubeListBuilder.create().texOffs(19, 93).mirror().addBox(-2.0F, 9.475F, -0.375F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.075F)).mirror(false)
-                .texOffs(19, 89).mirror().addBox(-2.8F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
-                .texOffs(19, 87).mirror().addBox(-1.5F, 9.475F, -1.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
-                .texOffs(19, 91).mirror().addBox(-0.225F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false), PartPose.offset(1.0F, -8.5F, -0.05F));
+        PartDefinition RightPadBeans = RightPad.addOrReplaceChild("RightPadBeans", CubeListBuilder.create().texOffs(80, 27).mirror().addBox(-3.0F, 7.475F, -1.375F, 4.0F, 3.0F, 4.0F, new CubeDeformation(-1.0F)).mirror(false)
+                .texOffs(80, 9).mirror().addBox(-3.1F, 7.475F, -3.6F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.0F)).mirror(false)
+                .texOffs(80, 3).mirror().addBox(-1.9F, 7.475F, -3.6F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.0F)).mirror(false)
+                .texOffs(80, 15).mirror().addBox(-1.05F, 7.475F, -2.525F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.0F)).mirror(false)
+                .texOffs(80, 21).mirror().addBox(-3.95F, 7.475F, -2.525F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.0F)).mirror(false), PartPose.offset(1.0F, -7.4F, 0.55F));
 
         PartDefinition LeftLeg = partdefinition.addOrReplaceChild("LeftLeg", CubeListBuilder.create(), PartPose.offset(2.5F, 10.5F, 0.0F));
 
@@ -99,10 +100,11 @@ public class WhiteFoxModel extends AdvancedHumanoidModel<LatexSnowFoxMaleEntity>
 
         PartDefinition LeftPad = LeftFoot.addOrReplaceChild("LeftPad", CubeListBuilder.create().texOffs(24, 0).addBox(-2.0F, 0.0F, -2.5F, 4.0F, 2.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 4.325F, -4.425F));
 
-        PartDefinition LeftPawBeans = LeftPad.addOrReplaceChild("LeftPawBeans", CubeListBuilder.create().texOffs(11, 93).addBox(0.0F, 9.475F, -0.375F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.075F))
-                .texOffs(11, 89).addBox(1.8F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F))
-                .texOffs(11, 87).addBox(0.5F, 9.475F, -1.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F))
-                .texOffs(11, 91).addBox(-0.775F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)), PartPose.offset(-1.0F, -8.5F, -0.05F));
+        PartDefinition LeftPadBeans = LeftPad.addOrReplaceChild("LeftPadBeans", CubeListBuilder.create().texOffs(80, 58).addBox(-1.0F, 7.475F, -1.375F, 4.0F, 3.0F, 4.0F, new CubeDeformation(-1.0F))
+                .texOffs(80, 40).addBox(0.1F, 7.475F, -3.6F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.0F))
+                .texOffs(80, 34).addBox(-1.1F, 7.475F, -3.6F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.0F))
+                .texOffs(80, 46).addBox(-1.95F, 7.475F, -2.525F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.0F))
+                .texOffs(80, 52).addBox(0.95F, 7.475F, -2.525F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.0F)), PartPose.offset(-1.0F, -7.4F, 0.55F));
 
         PartDefinition Head = partdefinition.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F))
                 .texOffs(15, 32).addBox(-2.0F, -3.0F, -6.0F, 4.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
@@ -155,11 +157,6 @@ public class WhiteFoxModel extends AdvancedHumanoidModel<LatexSnowFoxMaleEntity>
 
         PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(16, 40).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, 1.5F, 0.0F));
 
-        PartDefinition RightArmPawBeans = RightArm.addOrReplaceChild("RightArmPawBeans", CubeListBuilder.create().texOffs(27, 93).mirror().addBox(-2.0F, 9.475F, -0.375F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.075F)).mirror(false)
-                .texOffs(27, 89).mirror().addBox(-2.8F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
-                .texOffs(27, 87).mirror().addBox(-1.5F, 9.475F, -1.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
-                .texOffs(27, 91).mirror().addBox(-0.225F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false), PartPose.offset(0.0F, -0.5F, 0.0F));
-
         PartDefinition RightArmFur = RightArm.addOrReplaceChild("RightArmFur", CubeListBuilder.create(), PartPose.offset(-2.0F, 7.5F, -2.4F));
 
         PartDefinition RightArmFur_r1 = RightArmFur.addOrReplaceChild("RightArmFur_r1", CubeListBuilder.create().texOffs(0, 91).addBox(-3.0F, -3.0F, 0.025F, 4.0F, 4.0F, 1.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(3.3F, 0.0F, 3.4F, 0.0F, -1.5708F, 0.0873F));
@@ -170,12 +167,19 @@ public class WhiteFoxModel extends AdvancedHumanoidModel<LatexSnowFoxMaleEntity>
 
         PartDefinition RightArmFur_r4 = RightArmFur.addOrReplaceChild("RightArmFur_r4", CubeListBuilder.create().texOffs(0, 76).mirror().addBox(-1.0F, -3.0F, 0.025F, 4.0F, 4.0F, 1.0F, new CubeDeformation(-0.25F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 0.1F, 0.0873F, 0.0F, 0.0F));
 
+        PartDefinition RightArmsBeans = RightArm.addOrReplaceChild("RightArmsBeans", CubeListBuilder.create().texOffs(80, 89).mirror().addBox(-2.0F, -1.3F, -0.57F, 4.0F, 3.0F, 4.0F, new CubeDeformation(-1.1F)).mirror(false)
+                .texOffs(80, 71).mirror().addBox(-2.0F, -1.3F, -2.295F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.1F)).mirror(false)
+                .texOffs(80, 65).mirror().addBox(-1.0F, -1.3F, -2.295F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.1F)).mirror(false)
+                .texOffs(80, 77).mirror().addBox(-0.15F, -1.3F, -1.42F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.1F)).mirror(false)
+                .texOffs(80, 83).mirror().addBox(-2.85F, -1.3F, -1.42F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.1F)).mirror(false), PartPose.offset(-1.0F, 9.475F, -0.555F));
+
         PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(0, 40).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(5.0F, 1.5F, 0.0F));
 
-        PartDefinition LeftArmPawBeans = LeftArm.addOrReplaceChild("LeftArmPawBeans", CubeListBuilder.create().texOffs(35, 93).addBox(0.0F, 9.475F, -0.375F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.075F))
-                .texOffs(35, 89).addBox(1.8F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F))
-                .texOffs(35, 87).addBox(0.5F, 9.475F, -1.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F))
-                .texOffs(35, 91).addBox(-0.775F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)), PartPose.offset(0.0F, -0.5F, 0.0F));
+        PartDefinition LeftArmsBeans = LeftArm.addOrReplaceChild("LeftArmsBeans", CubeListBuilder.create().texOffs(64, 89).addBox(-2.0F, -1.3F, -0.57F, 4.0F, 3.0F, 4.0F, new CubeDeformation(-1.1F))
+                .texOffs(64, 71).addBox(-1.0F, -1.3F, -2.295F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.1F))
+                .texOffs(64, 65).addBox(-2.0F, -1.3F, -2.295F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.1F))
+                .texOffs(64, 77).addBox(-2.85F, -1.3F, -1.42F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.1F))
+                .texOffs(64, 83).addBox(-0.15F, -1.3F, -1.42F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-1.1F)), PartPose.offset(1.0F, 9.475F, -0.555F));
 
         PartDefinition LeftArmFur = LeftArm.addOrReplaceChild("LeftArmFur", CubeListBuilder.create(), PartPose.offset(2.0F, 7.5F, -2.4F));
 
@@ -190,8 +194,9 @@ public class WhiteFoxModel extends AdvancedHumanoidModel<LatexSnowFoxMaleEntity>
         return LayerDefinition.create(meshdefinition, 96, 96);
     }
 
+
     @Override
-    public void prepareMobModel(@NotNull LatexSnowFoxMaleEntity p_162861, float p_102862, float p_102863, float p_102864_) {
+    public void prepareMobModel(@NotNull WhiteFoxEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         super.prepareMobModel(p_162861, p_102862, p_102863, p_102864_);
     }
 
@@ -203,13 +208,13 @@ public class WhiteFoxModel extends AdvancedHumanoidModel<LatexSnowFoxMaleEntity>
      }
   */
     @Override
-    public void setupHand(LatexSnowFoxMaleEntity entity) {
+    public void setupHand(WhiteFoxEntity entity) {
         animator.setupHand();
     }
 
 
     @Override
-    public void setupAnim(@NotNull LatexSnowFoxMaleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@NotNull WhiteFoxEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
@@ -241,7 +246,7 @@ public class WhiteFoxModel extends AdvancedHumanoidModel<LatexSnowFoxMaleEntity>
     }
 
     @Override
-    public HumanoidAnimator<LatexSnowFoxMaleEntity, WhiteFoxModel> getAnimator(LatexSnowFoxMaleEntity entity) {
+    public HumanoidAnimator<WhiteFoxEntity, WhiteFoxModel> getAnimator(WhiteFoxEntity entity) {
         return animator;
     }
 }

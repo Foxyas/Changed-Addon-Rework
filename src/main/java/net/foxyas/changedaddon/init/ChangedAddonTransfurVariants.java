@@ -76,6 +76,13 @@ public class ChangedAddonTransfurVariants {
                     .addAbility(ChangedAddonAbilities.CLAWS)
                     .scares(List.of(Creeper.class)));
 
+    public static final RegistryObject<TransfurVariant<WhiteFoxEntity>> WHITE_FOX = register("form_white_fox",
+            () -> TransfurVariant.Builder.of(ChangedAddonEntities.WHITE_FOX)
+                    .nightVision()
+                    .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION)
+                    .addAbility(ChangedAddonAbilities.CUSTOM_INTERACTION)
+                    .scares(Rabbit.class));
+
     public static final RegistryObject<TransfurVariant<LatexSnowFoxMaleEntity>> LATEX_SNOW_FOX_MALE = register("form_latex_snow_fox/male",
             () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_SNOW_FOX_MALE)
                     .nightVision()

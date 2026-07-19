@@ -308,7 +308,11 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Override
     public boolean isAlpha() {
         ChangedEntity self = (ChangedEntity) (Object) this;
-        return self.getEntityData().get(IS_ALPHA);
+        boolean originalValue = self.getEntityData().get(IS_ALPHA);
+        if (this instanceof IOverrideAlphaState IOverrideAlphaState) {
+            return IOverrideAlphaState.isConsiderateAlpha(originalValue);
+        }
+        return originalValue;
     }
 
     @Override

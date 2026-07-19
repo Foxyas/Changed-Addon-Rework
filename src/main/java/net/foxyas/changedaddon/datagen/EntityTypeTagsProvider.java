@@ -123,6 +123,8 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
         );
         tag(ChangedAddonTags.EntityTypes.HAS_BETTER_GROUND_PATHFIND);
 
-        tag(ChangedTags.EntityTypes.CAN_WEAR_EXOSKELETON).add(canUseExoskeleton().toArray(new EntityType[0]));
+        tag(ChangedAddonTags.EntityTypes.PROTOGENS).add(getProtogensEntities().toArray(new EntityType[0]));
+
+        tag(ChangedTags.EntityTypes.CAN_WEAR_EXOSKELETON).add(canUseExoskeleton().toArray(new EntityType[0])).remove(ChangedAddonTags.EntityTypes.PROTOGENS);
     }
 }
