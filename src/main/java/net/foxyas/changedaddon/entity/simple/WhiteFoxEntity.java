@@ -102,9 +102,9 @@ public class WhiteFoxEntity extends AbstractSnowFoxEntity {
 
                 EntityModelFadeParticleOptions particleOptions = ChangedAddonParticleTypes.entityModelFade(this, rgb, 1f);
                 serverLevel.sendParticles(particleOptions,
-                        this.getX() * 0.925,
+                        this.getX(),
                         this.getY() + 1.425f,
-                        this.getZ() * 0.925,
+                        this.getZ(),
                         0,
                         0,
                         0,
