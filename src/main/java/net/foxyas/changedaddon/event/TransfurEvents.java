@@ -2,18 +2,22 @@ package net.foxyas.changedaddon.event;
 
 import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
+import net.foxyas.changedaddon.entity.defaults.*;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.armor.HazardBodySuit;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.ILatexAssimilatedEntity;
 import net.ltxprogrammer.changed.data.AccessorySlots;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
+import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
@@ -34,7 +38,7 @@ import static net.ltxprogrammer.changed.process.TransfurEvents.*;
 public class TransfurEvents {
 
     @SubscribeEvent
-    public static void WhenTransfurred(ProcessTransfur.EntityVariantAssigned changedVariantEvent) {
+    public static void whenTransfurred(ProcessTransfur.EntityVariantAssigned changedVariantEvent) {
         TransfurVariant<?> variant = changedVariantEvent.originalVariant;
         if (variant == null) return;
 
@@ -52,7 +56,7 @@ public class TransfurEvents {
 
 
     @SubscribeEvent
-    public static void WhenTransfurredByAlpha(AssimilationDecisionEvent event) {
+    public static void whenTransfurredByAlpha(AssimilationDecisionEvent event) {
         event.appendTransfurListener(newEntity -> {
             if (newEntity == null) return;
 
@@ -76,7 +80,76 @@ public class TransfurEvents {
     }
 
     @SubscribeEvent
-    public static void HazardSuitTryAbsorbTarget(LatexAssimilationDecisionEvent event) {
+    public static void whenTransfurredByAlphaGeneric(LatexAssimilationDecisionEvent event) {
+        event.appendTransfurListener(newEntity -> {
+            LatexAssimilationDecision<?> decision = event.getDecision();
+            if (newEntity == null || decision.method() == LatexAssimilationDecision.Method.ABSORPTION) return;
+
+            TransfurContext context = decision.context();
+            Either<IAbstractChangedEntity, ILatexAssimilatedEntity> contextSource = context.source();
+            if (contextSource == null) return;
+
+            contextSource.ifLeft(source -> {
+                ChangedEntity newChangedEntity = newEntity.getChangedEntity();
+                if (!source.wantAbsorption() || context.cause() == TransfurCause.GRAB_REPLICATE) {
+                    if (source.isPlayer() && source.getEntity() instanceof Player player) {
+                        if (newChangedEntity instanceof TamableLatexEntity) {
+                            mayTameChangedEntity(player, newChangedEntity);
+                        }
+                    }
+                }
+            });
+        });
+    }
+
+    public static void mayTameChangedEntity(Player player, ChangedEntity newChangedEntity) {
+        if (newChangedEntity instanceof AbstractDarkLatexEntity entity) {
+            if (entity.getOwner() == null) {
+                entity.tame(player);
+            }
+        }
+        if (newChangedEntity instanceof AbstractCanTameSnepChangedEntity entity) {
+            if (entity.getOwner() == null) {
+                entity.tame(player);
+            }
+        }
+        if (newChangedEntity instanceof AbstractCanTameSnepChangedEntity entity) {
+            if (entity.getOwner() == null) {
+                entity.tame(player);
+            }
+        }
+        if (newChangedEntity instanceof AbstractExp2SnepChangedEntity entity) {
+            if (entity.getOwner() == null) {
+                entity.tame(player);
+            }
+        }
+        if (newChangedEntity instanceof AbstractTamableLatexEntity entity) {
+            if (entity.getOwner() == null) {
+                entity.tame(player);
+            }
+        }
+        if (newChangedEntity instanceof AbstractCanTameSnepChangedEntityFavors entity) {
+            if (entity.getOwner() == null) {
+                entity.tame(player);
+            }
+        }
+        if (newChangedEntity instanceof AbstractCanTameChangedEntityFavors entity) {
+            if (entity.getOwner() == null) {
+                entity.tame(player);
+            }
+        }
+        if (newChangedEntity instanceof AbstractExp2SnepChangedEntityFavors entity) {
+            if (entity.getOwner() == null) {
+                entity.tame(player);
+            }
+        }
+        if (newChangedEntity instanceof TamableLatexEntityWithTameFunction entity) {
+            entity.tameEntityForPlayer(player);
+        }
+    }
+
+    @SubscribeEvent
+    public static void hazardSuitTryAbsorbTarget(LatexAssimilationDecisionEvent event) {
         LatexAssimilationDecision<?> original = event.getOriginalDecision();
         if (original.method() != LatexAssimilationDecision.Method.ABSORPTION) return;
 
@@ -117,7 +190,7 @@ public class TransfurEvents {
     }
 
     @SubscribeEvent
-    public static void WhenKilledAfterTransfurredByAlpha(ReplaceEntityEvent event) {
+    public static void whenKilledAfterTransfurredByAlpha(ReplaceEntityEvent event) {
         LivingEntity toReplace = event.getEntityToReplace();
         ChangedEntity replacement = event.getReplacementEntity();
 
@@ -181,7 +254,7 @@ public class TransfurEvents {
     }
 
     @SubscribeEvent
-    public static void CancelUntransfur(UntransfurEvent untransfurEvent) {
+    public static void cancelUntransfur(UntransfurEvent untransfurEvent) {
         Player player = untransfurEvent.getPlayer();
         if (ProcessTransfur.getPlayerTransfurVariant(player) instanceof TransfurVariantInstanceExtensor ext) {
             untransfurEvent.setCanceled(ext.getUntransfurImmunity(untransfurEvent.untransfurType));

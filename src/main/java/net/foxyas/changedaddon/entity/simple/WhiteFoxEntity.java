@@ -7,9 +7,11 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -44,28 +46,7 @@ public class WhiteFoxEntity extends AbstractSnowFoxEntity {
     public void baseTick() {
         super.baseTick();
 
-        if (level.isClientSide()) {
-            if (this.displayFadeParticles()) {
-
-            }
-            double dX = Math.abs(this.getX() - this.xOld);
-            double dY = Math.abs(this.getZ() - this.zOld);
-            double dZ = Math.abs(this.getZ() - this.zOld);
-            float velocity = 0.003F;
-            if (dX >= velocity || dY >= velocity || dZ >= velocity) {
-                int rgb = getDynamicRainbowColorInt(tickCount, 0.05f);
-
-                EntityModelFadeParticleOptions particleOptions = ChangedAddonParticleTypes.entityModelFade(this, rgb, 1f);
-                level.addParticle(particleOptions,
-                        this.getX() * 0.925,
-                        this.getY() + 1.425f,
-                        this.getZ() * 0.925,
-                        0,
-                        0,
-                        0
-                );
-            }
-        }
+        mayAddFadeParticle(level);
     }
 
     @Override
@@ -85,6 +66,52 @@ public class WhiteFoxEntity extends AbstractSnowFoxEntity {
     @Override
     public void variantTick(Level level) {
         super.variantTick(level);
+        mayAddFadeParticle(level);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("displayFadeParticles", this.displayFadeParticles());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.setDisplayParticlesFade(tag.contains("displayFadeParticles") && tag.getBoolean("displayFadeParticles"));
+    }
+
+    @Override
+    public CompoundTag savePlayerVariantData() {
+        CompoundTag tag = super.savePlayerVariantData();
+        tag.putBoolean("displayFadeParticles", this.displayFadeParticles());
+        return tag;
+    }
+
+    @Override
+    public void readPlayerVariantData(CompoundTag tag) {
+        super.readPlayerVariantData(tag);
+        this.setDisplayParticlesFade(tag.contains("displayFadeParticles") && tag.getBoolean("displayFadeParticles"));
+    }
+
+
+    private void mayAddFadeParticle(Level level) {
+        if (level instanceof ServerLevel serverLevel) {
+            if (this.displayFadeParticles()) {
+                int rgb = getDynamicRainbowColorInt(tickCount, 0.05f);
+
+                EntityModelFadeParticleOptions particleOptions = ChangedAddonParticleTypes.entityModelFade(this, rgb, 1f);
+                serverLevel.sendParticles(particleOptions,
+                        this.getX() * 0.925,
+                        this.getY() + 1.425f,
+                        this.getZ() * 0.925,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1);
+            }
+        }
     }
 
     /**
