@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.simple;
 import net.foxyas.changedaddon.client.particle.EntityModelFadeParticleOptions;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
+import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -11,11 +12,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
 
 public class WhiteFoxEntity extends AbstractSnowFoxEntity {
@@ -45,8 +46,9 @@ public class WhiteFoxEntity extends AbstractSnowFoxEntity {
     @Override
     public void baseTick() {
         super.baseTick();
-
-        mayAddFadeParticle(level);
+        if (this.getUnderlyingPlayer() == null) {
+            mayAddFadeParticle(level);
+        }
     }
 
     @Override
@@ -96,35 +98,28 @@ public class WhiteFoxEntity extends AbstractSnowFoxEntity {
 
 
     private void mayAddFadeParticle(Level level) {
-        if (level instanceof ServerLevel serverLevel) {
-            if (this.displayFadeParticles()) {
-                int rgb = getDynamicRainbowColorInt(tickCount, 0.05f);
+        if (this.displayFadeParticles()) {
+            int rgb = getDynamicRainbowColor(this.tickCount, 0.05f);
 
-                EntityModelFadeParticleOptions particleOptions = ChangedAddonParticleTypes.entityModelFade(this, rgb, 1f);
-                serverLevel.sendParticles(particleOptions,
-                        this.getX(),
-                        this.getY() + 1.425f,
-                        this.getZ(),
-                        0,
-                        0,
-                        0,
-                        0,
-                        1);
-            }
+            EntityModelFadeParticleOptions particleOptions = ChangedAddonParticleTypes.entityModelFade(this.maybeGetUnderlying(), rgb, 1f);
+            Vec3 motionOrDelta = new Vec3(0, 0, 0);
+            Vec3 particlePos = getPosition(0).add(0, 1.425f, 0);
+            ParticlesUtil.sendParticles(level, particleOptions, particlePos, motionOrDelta, 0, 0.1f);
         }
     }
 
     /**
-     * Calculates a dynamic rainbow RGB integer based on a continuous float counter (FPS independent).
+     * Calculates a dynamic rainbow RGB integer based on a game tick counter.
+     * Adjust the multiplier (speed) to change the speed of the rainbow cycle.
      */
-    public int getDynamicRainbowColorInt(float ageInTicks, float speed) {
+    private int getDynamicRainbowColor(int ticks, float speed) {
         // Sine wave calculations shifted by 120 and 240 degrees for RGB mixing
-        int r = (int) (Math.sin(ageInTicks * speed + 0.0f) * 127 + 128);
-        int g = (int) (Math.sin(ageInTicks * speed + 2.0f * Math.PI / 3.0f) * 127 + 128);
-        int b = (int) (Math.sin(ageInTicks * speed + 4.0f * Math.PI / 3.0f) * 127 + 128);
+        int r = (int) (Math.sin(ticks * speed + 0.0f) * 127 + 128);
+        int g = (int) (Math.sin(ticks * speed + 2.0f * Math.PI / 3.0f) * 127 + 128);
+        int b = (int) (Math.sin(ticks * speed + 4.0f * Math.PI / 3.0f) * 127 + 128);
 
-        // Combine them into a packed 32-bit RGB integer
-        return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
+        // Explicitly include Alpha (0xFF) at the front for proper 32-bit ARGB alignment
+        return (0xFF << 24) | ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
