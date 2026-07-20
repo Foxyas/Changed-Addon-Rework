@@ -209,6 +209,7 @@ public class HULanguageProvider extends LanguageProvider {
         addAbility("custom_interaction.have_interaction.luminara_beast.extra", "Jelenlegi részecskekibocsátás: %s");
         addAbility("custom_interaction.have_interaction.luminara_beast.action", "Részecskekibocsátás átállítva %sra");
         addAbility("custom_interaction.have_interaction.glow_layer.action", "Ragyogó állapot %sra lett beállítva");
+        addAbility("custom_interaction.have_interaction.white_fox.action", "Részecskekibocsátás átállítva %sra");
         addAbility("dissolve", "Oldódás");
         addAbility("dissolve.warn.too_far", "Túl messze vagy a helytől, hogy oda teleportálj");
         addAbility("dissolve.warn.wrong_dimension", "Nem találok iszapot ebben a dimenzióban");
@@ -409,6 +410,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(LATEX_SNEP, "Feral latex hópárduc");
         addEntityType(LATEX_SNOW_FOX_FEMALE, "Nőstény latex sarki róka");
         addEntityType(LATEX_SNOW_FOX_MALE, "Hím latex sarki róka");
+        addEntityType(WHITE_FOX, "Fehér róka");
         addEntityType(LATEX_SNOW_FOX_FOXYAS, "Foxyas, a latex sarki róka");
         addEntityType(SNOW_LEOPARD_PARTIAL, "Részleges hópárduc");
         addEntityType(LATEX_SQUID_TIGER_SHARK, "Latex tintahal-tigriscápa");
@@ -646,6 +648,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(LATEX_SNEP_SPAWN_EGG, "Feral latex hópárducot idéző tojás");
         addItem(LATEX_SNOW_FOX_FEMALE_SPAWN_EGG, "Nőstény latex sarki rókát idéző tojás");
         addItem(LATEX_SNOW_FOX_MALE_SPAWN_EGG, "Hím latex sarki rókát idéző tojás");
+        addItem(WHITE_FOX_SPAWN_EGG, "Fehér rókát idéző tojás");
         addItem(FOXYAS_SPAWN_EGG, "Foxyas, a latex sarki rókát idéző tojás");
         addItem(PARTIAL_SNOW_LEOPARD_SPAWN_EGG, "Részleges hópárducot idéző tojás");
         addItem(LATEX_SQUID_TIGER_SHARK_SPAWN_EGG, "Latex tintahal-tigriscápát idéző tojás");
