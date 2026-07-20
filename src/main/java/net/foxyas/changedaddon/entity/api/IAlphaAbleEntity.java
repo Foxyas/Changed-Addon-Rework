@@ -34,9 +34,16 @@ public interface IAlphaAbleEntity {
 
     float DEFAULT_ALPHA_SIZE = 0.75f;
 
-    interface CustomAlphaAttributes {
+    interface IOverrideAlphaAttributes {
 
         void applyAlphaAttributesModifiers(LivingEntity entity, float normalized);
+    }
+
+    interface IOverrideAlphaState {
+
+        default boolean isConsiderateAlpha(boolean originalValue) {
+            return originalValue;
+        }
     }
 
     EntityDataAccessor<Boolean> IS_ALPHA = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.BOOLEAN);
@@ -89,7 +96,7 @@ public interface IAlphaAbleEntity {
 
         float normalized = alphaScale / DEFAULT_ALPHA_SIZE;
 
-        if (entity instanceof CustomAlphaAttributes alphaAttributes) {
+        if (entity instanceof IOverrideAlphaAttributes alphaAttributes) {
             alphaAttributes.applyAlphaAttributesModifiers(entity, normalized);
         } else applyGenericAlphaAttributesModifiers(entity, normalized);
 
@@ -162,9 +169,9 @@ public interface IAlphaAbleEntity {
 
     boolean isAlpha();
 
-    void setAlpha(boolean alphaGene);
+    default void setAlpha(boolean alphaGene) {};
 
-    void setAlphaScale(float scale);
+    default void setAlphaScale(float scale) {};
 
     default void refreshAttributes(ChangedEntity self) {
         if (self.isDeadOrDying()) return;

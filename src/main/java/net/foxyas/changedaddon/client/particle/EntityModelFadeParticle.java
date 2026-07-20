@@ -119,7 +119,6 @@ public class EntityModelFadeParticle extends Particle {
             return;
         AdvancedHumanoidModel<? super ChangedEntity> model = advancedHumanoidRenderer.getModel();
         ResourceLocation texture = advancedHumanoidRenderer.getTextureLocation(changedEntity);
-        VertexConsumer buffer = bufferSource.getBuffer(ChangedAddonRenderTypes.entityTranslucent(texture));
 
 
         if (!(model instanceof IPublicRootModel iPublicRootModel)) return;
@@ -186,7 +185,7 @@ public class EntityModelFadeParticle extends Particle {
         for (ModelPart modelPart : modelParts) {
             modelPart.loadPose(poses.get(modelPart));
         }
-        model.renderToBuffer(poseStack, buffer, Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
+        model.renderToBuffer(poseStack, bufferSource.getBuffer(ChangedAddonRenderTypes.entityTranslucent(texture, false)), Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
         if (advancedHumanoidRenderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
@@ -204,7 +203,6 @@ public class EntityModelFadeParticle extends Particle {
         if (!(rendererNormal instanceof LivingEntityRenderer<? super LivingEntity, ?> livingEntityRenderer)) return;
         EntityModel<? super LivingEntity> model = livingEntityRenderer.getModel();
         ResourceLocation texture = livingEntityRenderer.getTextureLocation(livingEntity);
-        VertexConsumer buffer = bufferSource.getBuffer(ChangedAddonRenderTypes.entityTranslucent(texture));
 
 
         if (!(model instanceof IPublicRootModel iPublicRootModel)) return;
@@ -268,7 +266,7 @@ public class EntityModelFadeParticle extends Particle {
         for (ModelPart modelPart : modelParts) {
             modelPart.loadPose(poses.get(modelPart));
         }
-        model.renderToBuffer(poseStack, buffer, Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
+        model.renderToBuffer(poseStack, bufferSource.getBuffer(ChangedAddonRenderTypes.entityTranslucent(texture, false)), Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
         if (livingEntityRenderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
