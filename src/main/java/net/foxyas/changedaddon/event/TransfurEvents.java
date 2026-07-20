@@ -90,11 +90,13 @@ public class TransfurEvents {
             if (contextSource == null) return;
 
             contextSource.ifLeft(source -> {
+                ChangedEntity sourceChangedEntity = source.getChangedEntity();
+                if (!(sourceChangedEntity instanceof IAlphaAbleEntity sourceAlpha && sourceAlpha.isAlpha())) return;
                 ChangedEntity newChangedEntity = newEntity.getChangedEntity();
                 if (!source.wantAbsorption() || context.cause() == TransfurCause.GRAB_REPLICATE) {
                     if (source.isPlayer() && source.getEntity() instanceof Player player) {
                         if (newChangedEntity instanceof TamableLatexEntity) {
-                            mayTameChangedEntity(player, newChangedEntity);
+                            mayTameChangedEntity(player, sourceChangedEntity, newChangedEntity);
                         }
                     }
                 }
@@ -102,13 +104,8 @@ public class TransfurEvents {
         });
     }
 
-    public static void mayTameChangedEntity(Player player, ChangedEntity newChangedEntity) {
+    public static void mayTameChangedEntity(Player player, ChangedEntity sourceChangedEntity, ChangedEntity newChangedEntity) {
         if (newChangedEntity instanceof AbstractDarkLatexEntity entity) {
-            if (entity.getOwner() == null) {
-                entity.tame(player);
-            }
-        }
-        if (newChangedEntity instanceof AbstractCanTameSnepChangedEntity entity) {
             if (entity.getOwner() == null) {
                 entity.tame(player);
             }
