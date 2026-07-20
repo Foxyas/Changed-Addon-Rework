@@ -102,9 +102,7 @@ public class WhiteFoxEntity extends AbstractSnowFoxEntity {
             int rgb = getDynamicRainbowColor(this.tickCount, 0.05f);
 
             EntityModelFadeParticleOptions particleOptions = ChangedAddonParticleTypes.entityModelFade(this.maybeGetUnderlying(), rgb, 0.25f);
-            Vec3 motionOrDelta = new Vec3(0, 0, 0);
-            Vec3 particlePos = getPosition(0).multiply(0.925f,1f,0.925f).add(0, 1.425f, 0);
-            ParticlesUtil.sendParticles(level, particleOptions, particlePos, motionOrDelta, 0, 0.1f);
+            ParticlesUtil.sendParticles(level, particleOptions, getPosition(0).add(0, 1.501f, 0), Vec3.ZERO, 0, 0.1f);
         }
     }
 

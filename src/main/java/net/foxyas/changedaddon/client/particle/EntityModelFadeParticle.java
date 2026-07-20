@@ -14,6 +14,7 @@ import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.Camera;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -90,6 +91,9 @@ public class EntityModelFadeParticle extends Particle {
 
     @Override
     public void render(@NotNull VertexConsumer consumer, @NotNull Camera camera, float partialTick) {
+        if (entity == Minecraft.getInstance().player && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
+                && entity.distanceToSqr(x, y, z) < 3) return;//ignore if too close
+
         Color fadeColor = new Color(color);
 
         Minecraft mc = Minecraft.getInstance();
@@ -101,7 +105,6 @@ public class EntityModelFadeParticle extends Particle {
                 this.y - camPos.y,
                 this.z - camPos.z
         );
-
 
         if (!(entity instanceof LivingEntity livingEntity)) return;
 
