@@ -8,6 +8,8 @@ import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTyp
 import net.foxyas.changedaddon.mixins.client.renderer.LivingEntityRendererAccessor;
 import net.ltxprogrammer.changed.client.ModelPartStem;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
+import net.ltxprogrammer.changed.client.renderer.layers.LatexHumanoidArmorLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.LatexItemInHandLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.EntityUtil;
@@ -24,6 +26,8 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
@@ -190,6 +194,9 @@ public class EntityModelFadeParticle extends Particle {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
                 for (RenderLayer<LivingEntity, EntityModel<LivingEntity>> layer : layers) {
+                    if (layer instanceof LatexHumanoidArmorLayer<?,?> || layer instanceof LatexItemInHandLayer<?,?>) {
+                        continue;
+                    }
                     layer.render(poseStack, bufferSource, Light, changedEntity, limbSwing, limbSwingAmount, partialTick, ageInTicks, netHeadYaw, headPitch);
                     //TODO: filter this so it don't render the "hold item" layers :>
                 }
@@ -271,6 +278,9 @@ public class EntityModelFadeParticle extends Particle {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
                 for (RenderLayer<LivingEntity, EntityModel<LivingEntity>> layer : layers) {
+                    if (layer instanceof HumanoidArmorLayer<?,?,?> || layer instanceof ItemInHandLayer<?,?>) {
+                        continue;
+                    }
                     layer.render(poseStack, bufferSource, Light, livingEntity, limbSwing, limbSwingAmount, partialTick, ageInTicks, netHeadYaw, headPitch);
                     //TODO: filter this so it don't render the "hold item" layers :>
                 }
