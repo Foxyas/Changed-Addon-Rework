@@ -344,6 +344,15 @@ public final class ChangedAddonRenderTypes extends RenderType {
                             .setOutputState(OUTLINE_TARGET)
                             .createCompositeState(IS_OUTLINE)));
 
+    private static final BiFunction<ResourceLocation, Boolean, RenderType> ENTITY_ADDITIVE_TRANSLUCENT = Util.memoize((p_286156_, p_286157_) -> {
+        RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder().setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER).setTextureState(new RenderStateShard.TextureStateShard(p_286156_, false, false)).setTransparencyState(RenderStateShard.ADDITIVE_TRANSPARENCY).setCullState(NO_CULL).setLightmapState(LIGHTMAP).setOverlayState(OVERLAY).createCompositeState(p_286157_);
+        return create(ChangedAddonMod.resourceLocString("entity_additive_translucent"), DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true, rendertype$compositestate);
+    });
+
+    public static RenderType entityAdditiveTranslucent(ResourceLocation pLocation, boolean pOutline) {
+        return ENTITY_ADDITIVE_TRANSLUCENT.apply(pLocation, pOutline);
+    }
+
     protected static final Function<Float, RenderStateShard.TransparencyStateShard> DYNAMIC_TRANSPARENCY = (alpha) -> new RenderStateShard.TransparencyStateShard(ChangedAddonMod.resourceLocString("dynamic_transparency"), () -> {
         RenderSystem.enableBlend();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);

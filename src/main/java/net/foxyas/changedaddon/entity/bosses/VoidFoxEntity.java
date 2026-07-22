@@ -724,7 +724,9 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float amount) {
-        boolean willHit = !this.isBoss() || (this.getDodgeHealth() - amount <= 0);
+        float currentDodgeHealth = this.getDodgeHealth();
+        float nextDodgeHealth = currentDodgeHealth - amount;
+        boolean willHit = !this.isBoss() || (nextDodgeHealth <= 0);
 
         if (source.getEntity() instanceof AbstractVoidFoxParticleProjectile
                 || source.getDirectEntity() instanceof AbstractVoidFoxParticleProjectile) {
@@ -769,8 +771,14 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
                 this.hurtDodgeHealth(source, amount);
                 return false;
             } else {
-                this.hurtDodgeHealth(source, amount);
-                if (getDodgeHealth() > 0) this.setDodgeHealth(0);
+                if (currentDodgeHealth > 0) {
+                    this.hurtDodgeHealth(source, amount);
+                }
+                if (currentDodgeHealth > 0 && nextDodgeHealth <= 0) {
+                    this.setDodgeHealth(0);
+                    this.RegisterDamage(amount);
+                    return super.hurt(source, 0);
+                }
                 this.RegisterDamage(amount);
                 //this.setDodging(source.getEntity());
                 return super.hurt(source, amount);

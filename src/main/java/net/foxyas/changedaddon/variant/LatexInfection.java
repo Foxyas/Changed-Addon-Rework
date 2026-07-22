@@ -51,7 +51,8 @@ public class LatexInfection {
     public TransfurVariant<?> infectionVariant = null;
     public boolean shouldStallTransfurProgress = false;
 
-    public LatexInfection() {}
+    public LatexInfection() {
+    }
 
     private LatexInfection(boolean active, Optional<TransfurVariant<?>> infectionVariant, boolean shouldStallTransfurProgress) {
         this(active, infectionVariant.orElse(null), shouldStallTransfurProgress);
@@ -77,7 +78,7 @@ public class LatexInfection {
         float progress = ProcessTransfur.getPlayerTransfurProgress(player);
         float playerMaxTolerance = (float) ProcessTransfur.getEntityTransfurTolerance(player);
         float mathNumber = getValueToApply(player.level(), player);
-        int tickDelay = getTickDelayForDifficulty(player.level(), player);
+        int tickDelay = getTickDelayForDifficulty(player);
 
         if (!isPlayerInfected(player)) {
             return;
@@ -102,14 +103,18 @@ public class LatexInfection {
         }
 
         // Infection ticking
-        if (isSurvivalOrAdventure(player) && player.level.getDifficulty() != Difficulty.PEACEFUL) {
+        if (isPlayerAffected(player) && player.level.getDifficulty() != Difficulty.PEACEFUL) {
             if (!isPlayerInfected(player)) return;
 
             if (tickCounter >= tickDelay) {
                 LatexAssimilationDecision<?> decision = makeLatexAssimilationDecision(mathNumber);
                 AssimilationBehavior assimilationBehavior = decision.latexAssimilateVictimBehavior(player);
                 if (progress <= playerMaxTolerance * 0.95f) {
-                    ProcessTransfur.setPlayerTransfurProgress(player, progress + mathNumber);
+                    float newProgress = progress + mathNumber;
+                    if (newProgress >= playerMaxTolerance) {
+                        newProgress = playerMaxTolerance * 0.99f;
+                    }
+                    ProcessTransfur.setPlayerTransfurProgress(player, newProgress);
                 } else if (ProcessTransfur.progressTransfur(player, decision)) {
                     if (assimilationBehavior.willAssimilate()) {
                         clearDataAndSync(player);
@@ -125,9 +130,13 @@ public class LatexInfection {
             } else {
                 this.latexInfectionTicksUntilDamage++;
             }
-        } else if (!isSurvivalOrAdventure(player) && tickCounter != 0) {
+        } else if (!isPlayerAffected(player) && tickCounter != 0) {
             this.latexInfectionTicksUntilDamage = 0;
         }
+    }
+
+    public boolean isPlayerAffected(Player player) {
+        return isSurvivalOrAdventure(player);
     }
 
     public @NotNull LatexAssimilationDecision<?> makeLatexAssimilationDecision(float mathNumber) {
@@ -274,8 +283,8 @@ public class LatexInfection {
         };
     }
 
-    public static int getTickDelayForDifficulty(Level world, Player host) {
-        return switch (world.getDifficulty()) {
+    public static int getTickDelayForDifficulty(Player host) {
+        return switch (host.level().getDifficulty()) {
             case EASY -> EASY_TICK_DELAY;
             case NORMAL -> NORMAL_TICK_DELAY;
             case HARD -> HARD_TICK_DELAY;
