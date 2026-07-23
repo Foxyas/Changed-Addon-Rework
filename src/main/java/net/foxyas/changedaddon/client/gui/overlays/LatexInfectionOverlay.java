@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.client.gui.overlays;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.variant.LatexInfection;
 import net.ltxprogrammer.changed.Changed;
@@ -65,8 +66,15 @@ public class LatexInfectionOverlay {
 
         // True Render Stuff
         gui.setupOverlayRenderState(true, false);
-        int xOffset = position != Position.HOTBAR_LEFT ? 8 : -8;
-        int yOffset = 8;
+        int xOffset;
+        if (!ChangedAddonClientConfiguration.RENDER_LATEX_INFECTION_ICONS_OUTSIDE.get()) {
+            xOffset = -4;
+            graphics.setColor(1.0f, 1.0f, 1.0f, 0.5f);
+        } else {
+            xOffset = position != Position.HOTBAR_LEFT ? 8 : -16;
+        }
+
+        int yOffset = 16;
         graphics.blit(INFECTION_DANGER_INDICATOR,
                 x + xOffset,
                 y + yOffset,
@@ -76,5 +84,7 @@ public class LatexInfectionOverlay {
                 16,
                 32,
                 32);
+
+        graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 }
