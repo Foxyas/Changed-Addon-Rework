@@ -3,11 +3,13 @@ package net.foxyas.changedaddon.entity.simple;
 import net.foxyas.changedaddon.client.particle.EntityModelFadeParticleOptions;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
+import net.foxyas.changedaddon.util.ColorUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -99,25 +101,33 @@ public class WhiteFoxEntity extends AbstractSnowFoxEntity {
 
     private void mayAddFadeParticle(Level level) {
         if (this.displayFadeParticles()) {
-            int rgb = getDynamicRainbowColor(this.tickCount, 0.05f);
+//            int rgb = getDynamicRainbowColor(this.tickCount, 0.05f);
+            int rgb = getGradientColorTicks(this.tickCount, 200);
 
             EntityModelFadeParticleOptions particleOptions = ChangedAddonParticleTypes.entityModelFade(this.maybeGetUnderlying(), rgb, 0.25f);
-            ParticlesUtil.sendParticles(level, particleOptions, getPosition(0).add(0, 1.501f, 0), Vec3.ZERO, 0, 0.1f);
+            ParticlesUtil.sendParticles(level, particleOptions, getPosition(0)
+                    //.add(0, 1.501f, 0)
+                    , Vec3.ZERO, 0, 0.1f);
         }
     }
 
     /**
-     * Calculates a dynamic rainbow RGB integer based on a game tick counter.
-     * Adjust the multiplier (speed) to change the speed of the rainbow cycle.
+     * Calculates a dynamic rainbow RGB integer using linear interpolation (lerp).
+     * Loops cleanly every 'maxDuration' ticks.
      */
-    private int getDynamicRainbowColor(int ticks, float speed) {
-        // Sine wave calculations shifted by 120 and 240 degrees for RGB mixing
-        int r = (int) (Math.sin(ticks * speed + 0.0f) * 127 + 128);
-        int g = (int) (Math.sin(ticks * speed + 2.0f * Math.PI / 3.0f) * 127 + 128);
-        int b = (int) (Math.sin(ticks * speed + 4.0f * Math.PI / 3.0f) * 127 + 128);
+    public int getGradientColorTicks(int ticks, int maxDuration) {
+        // 1. Normalize the current time into a looping 0.0 to 1.0 progress range
+        float progress = (ticks % maxDuration) / (float) maxDuration;
 
-        // Explicitly include Alpha (0xFF) at the front for proper 32-bit ARGB alignment
-        return (0xFF << 24) | ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
+        // Define the distinct anchor colors of your rainbow (Normalized R, G, B)
+        Color3[] colors = {
+                new Color3(0.5764706f, 0.8509804f, 0.9764706f),
+                Color3.parseHex("#c5cbf7"),
+                new Color3(0.9411765f, 0.76862746f, 0.9764706f),
+                new Color3(0.5764706f, 0.8509804f, 0.9764706f)
+        };
+
+        return ColorUtil.lerpTFColors(progress, colors).toInt();
     }
 
     public static AttributeSupplier.Builder createAttributes() {

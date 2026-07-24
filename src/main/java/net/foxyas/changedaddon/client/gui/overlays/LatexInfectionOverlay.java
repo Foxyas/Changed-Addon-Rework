@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.variant.LatexInfection;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.client.gui.TransfurProgressOverlay.Position;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -53,6 +54,8 @@ public class LatexInfectionOverlay {
             return;
         }
 
+        float dangerLevel = (float)((double) ProcessTransfur.getPlayerTransfurProgress(player) / ProcessTransfur.getEntityTransfurTolerance(player));
+
         graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         final Position position = Changed.config.client.transfurMeterPosition.get();
@@ -69,7 +72,9 @@ public class LatexInfectionOverlay {
         int xOffset;
         if (!ChangedAddonClientConfiguration.RENDER_LATEX_INFECTION_ICONS_OUTSIDE.get()) {
             xOffset = -4;
-            graphics.setColor(1.0f, 1.0f, 1.0f, 0.5f);
+            if (!(dangerLevel <= 0.1F)) {
+                graphics.setColor(1.0f, 1.0f, 1.0f, 0.5f);
+            }
         } else {
             xOffset = position != Position.HOTBAR_LEFT ? 8 : -16;
         }

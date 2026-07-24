@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.foxyas.changedaddon.client.renderer.api.LivingEntityRendererExtensor;
 import net.foxyas.changedaddon.client.renderer.layers.api.IDynamicRenderLayer;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
@@ -11,6 +12,7 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -19,6 +21,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,10 +33,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(LivingEntityRenderer.class)
-public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> extends EntityRenderer<T> implements RenderLayerParent<T, M> {
+public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> extends EntityRenderer<T> implements RenderLayerParent<T, M>, LivingEntityRendererExtensor<T, M> {
 
     @Unique
     private float defaultValue;
+
+    @Nullable
+    @Unique
+    private RenderType overridedRenderType = null;
 
     protected LivingEntityRendererMixin(EntityRendererProvider.Context pContext) {
         super(pContext);
@@ -45,6 +52,16 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     @Shadow
     @Final
     protected List<RenderLayer<T, M>> layers;
+
+    @Override
+    public void setOverrideRenderType(@Nullable RenderType renderType) {
+        this.overridedRenderType = renderType;
+    }
+
+    @Override
+    public @Nullable RenderType getOverrideRenderType() {
+        return overridedRenderType;
+    }
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void addExtraLayers(EntityRendererProvider.Context pContext, M pModel, float pShadowRadius, CallbackInfo ci) {
@@ -133,6 +150,13 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
             }
         }
         return location;
+    }
+
+    @WrapOperation(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;getRenderType(Lnet/minecraft/world/entity/LivingEntity;ZZZ)Lnet/minecraft/client/renderer/RenderType;"))
+    private RenderType getOverridedRenderType(LivingEntityRenderer<T, M> instance, T pLivingEntity, boolean pBodyVisible, boolean pTranslucent, boolean pGlowing, Operation<RenderType> original) {
+        if (this.overridedRenderType != null) {
+            return overridedRenderType;
+        } else return original.call(instance, pLivingEntity, pBodyVisible, pTranslucent, pGlowing);
     }
 
     @Unique

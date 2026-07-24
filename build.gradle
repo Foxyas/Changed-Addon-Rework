@@ -145,7 +145,7 @@ dependencies {
         changing = true
     }//Changed
 
-    implementation fg.deobf("net.zaharenko424.casualties_cubed:casualties_cubed-1.1.0-all:1.1.0")
+    implementation fg.deobf("net.zaharenko424.casualties_cubed:casualties_cubed-1.2.1-all:1.2.1")
 
 
     // JEI Mod.
