@@ -18,11 +18,11 @@ public interface LivingEntityRendererAccessor {
     <T extends LivingEntity, M extends EntityModel<T>> List<RenderLayer<T, M>> getLayers();
 
     @Invoker("getBob")
-    <T extends LivingEntity> float getBob(T pLivingBase, float pPartialTick);
+    <T extends LivingEntity> float callGetBob(T pLivingBase, float pPartialTick);
 
     @Invoker("setupRotations")
-    <T extends LivingEntity> void setupRotations(T pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks);
+    <T extends LivingEntity> void callSetupRotations(T pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks);
 
     @Invoker("scale")
-    <T extends LivingEntity> void scale(T pLivingEntity, PoseStack pPoseStack, float pPartialTickTime);
+    <T extends LivingEntity> void callScale(T pLivingEntity, PoseStack pPoseStack, float pPartialTickTime);
 }

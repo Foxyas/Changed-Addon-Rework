@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.mixins.client.renderer.LivingEntityRendererAccess
 import net.ltxprogrammer.changed.client.ModelPartStem;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.LatexElytraLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexHumanoidArmorLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexItemInHandLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -27,6 +28,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -191,7 +193,7 @@ public class EntityModelFadeParticle extends Particle {
         }
 
         if (advancedHumanoidRenderer instanceof LivingEntityRendererAccessor rendererAccessor) {
-            rendererAccessor.setupRotations(
+            rendererAccessor.callSetupRotations(
                     changedEntity,
                     poseStack,
                     frozenAgeInTicks,
@@ -199,7 +201,7 @@ public class EntityModelFadeParticle extends Particle {
                     partialTicks
             );
             poseStack.scale(-1.0F, -1.0F, 1.0F);
-            rendererAccessor.scale(changedEntity, poseStack, partialTicks);
+            rendererAccessor.callScale(changedEntity, poseStack, partialTicks);
             poseStack.translate(0.0F, -1.501F, 0.0F);
         }
 
@@ -223,7 +225,11 @@ public class EntityModelFadeParticle extends Particle {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
                 for (RenderLayer<LivingEntity, EntityModel<LivingEntity>> layer : layers) {
-                    if (layer instanceof LatexHumanoidArmorLayer<?, ?> || layer instanceof LatexItemInHandLayer<?, ?> || layer instanceof CustomEyesLayer<?, ?>) {
+                    if (layer instanceof LatexHumanoidArmorLayer<?, ?>
+                            || layer instanceof LatexItemInHandLayer<?, ?>
+                            || layer instanceof CustomEyesLayer<?, ?>
+                            || layer instanceof LatexElytraLayer<?, ?>
+                    ) {
 //                        if (layer instanceof LatexHumanoidArmorLayer armorLayer) {
 //
 //                            for (EquipmentSlot equipmentSlot: Arrays.stream(EquipmentSlot.values())
@@ -318,7 +324,7 @@ public class EntityModelFadeParticle extends Particle {
         }
 
         if (rendererNormal instanceof LivingEntityRendererAccessor rendererAccessor) {
-            rendererAccessor.setupRotations(
+            rendererAccessor.callSetupRotations(
                     livingEntity,
                     poseStack,
                     frozenAgeInTicks,
@@ -326,7 +332,7 @@ public class EntityModelFadeParticle extends Particle {
                     partialTicks
             );
             poseStack.scale(-1.0F, -1.0F, 1.0F);
-            rendererAccessor.scale(livingEntity, poseStack, partialTicks);
+            rendererAccessor.callScale(livingEntity, poseStack, partialTicks);
             poseStack.translate(0.0F, -1.501F, 0.0F);
         }
 
@@ -354,7 +360,10 @@ public class EntityModelFadeParticle extends Particle {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
                 for (RenderLayer<LivingEntity, EntityModel<LivingEntity>> layer : layers) {
-                    if (layer instanceof HumanoidArmorLayer<?, ?, ?> || layer instanceof ItemInHandLayer<?, ?>) {
+                    if (layer instanceof HumanoidArmorLayer<?, ?, ?>
+                            || layer instanceof ItemInHandLayer<?, ?>
+                            || layer instanceof ElytraLayer<?, ?>
+                    ) {
                         continue;
                     }
                     layer.render(poseStack, bufferSource, Light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);

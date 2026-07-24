@@ -10,4 +10,10 @@ public interface LivingEntityRendererExtensor<T extends LivingEntity, M extends 
     @Nullable RenderType getOverrideRenderType();
 
     void setOverrideRenderType(@Nullable RenderType renderType);
+
+//    float CA$getBob(T pLivingBase, float pPartialTick);
+//
+//    void CA$setupRotations(T pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks);
+//
+//    void CA$scale(T pLivingEntity, PoseStack pPoseStack, float pPartialTickTime);
 }

@@ -53,6 +53,12 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     @Final
     protected List<RenderLayer<T, M>> layers;
 
+    @Shadow protected abstract void setupRotations(T pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks);
+
+    @Shadow protected abstract float getBob(T pLivingBase, float pPartialTick);
+
+    @Shadow protected abstract void scale(T pLivingEntity, PoseStack pPoseStack, float pPartialTickTime);
+
     @Override
     public void setOverrideRenderType(@Nullable RenderType renderType) {
         this.overridedRenderType = renderType;
@@ -158,6 +164,21 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
             return overridedRenderType;
         } else return original.call(instance, pLivingEntity, pBodyVisible, pTranslucent, pGlowing);
     }
+
+//    @Override
+//    public void CA$setupRotations(T pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
+//        this.setupRotations(pEntityLiving, pPoseStack, pAgeInTicks, pRotationYaw, pPartialTicks);
+//    }
+//
+//    @Override
+//    public float CA$getBob(T pLivingBase, float pPartialTick) {
+//        return this.getBob(pLivingBase, pPartialTick);
+//    }
+//
+//    @Override
+//    public void CA$scale(T pLivingEntity, PoseStack pPoseStack, float pPartialTickTime) {
+//        this.scale(pLivingEntity, pPoseStack, pPartialTickTime);
+//    }
 
     @Unique
     private boolean changed_Addon_Rework$resourceExists(ResourceLocation loc) {
