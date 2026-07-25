@@ -12,7 +12,7 @@ import net.zaharenko424.casualties_cubed.limbs.PlayerHealthData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(value = PlayerHealthData.class, remap = false)
+@Mixin(value = PlayerHealthData.class, remap = true)
 @RequiredMods("casualties_cubed")
 public abstract class PlayerHealthDataMixin {
 
