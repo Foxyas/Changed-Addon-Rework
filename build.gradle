@@ -145,8 +145,8 @@ dependencies {
         changing = true
     }//Changed
 
-    implementation fg.deobf("net.zaharenko424.casualties_cubed:casualties_cubed-1.2.1-all:1.2.1")
-
+    //implementation fg.deobf("net.zaharenko424.casualties_cubed:casualties_cubed-1.2.1-all:1.2.1")
+    implementation fg.deobf("curse.maven:casualties-cubed-1539563:8389990")
 
     // JEI Mod.
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common-api:${jeiVersion}")
