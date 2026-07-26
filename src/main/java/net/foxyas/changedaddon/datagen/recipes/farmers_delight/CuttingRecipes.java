@@ -105,13 +105,28 @@ public class CuttingRecipes {
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(ChangedAddonItems.LUMINARA_BLOOM.get()),
                         SHEARS,
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        4)
+                        3)
                 .save(consumer, salvagingRecipe("luminara_bloom"));
         CuttingBoardRecipeBuilder.cuttingRecipe(
                         Ingredient.of(ChangedAddonItems.LUMINARA_SAPLING.get()),
                         SHEARS,
                         ChangedAddonItems.LUMINARA_BLOOM.get(),
-                        4
+                        1
+                )
+                .addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM.get(),
+                        0.85f,
+                        1
+                )
+                .addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM.get(),
+                        0.85f,
+                        1
+                )
+                .addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM.get(),
+                        0.85f,
+                        1
                 )
                 .addResultWithChance(
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
@@ -134,8 +149,18 @@ public class CuttingRecipes {
                         Ingredient.of(ChangedAddonItems.LUMINARA_LEAVES.get()),
                         SHEARS,
                         ChangedAddonItems.LUMINARA_BLOOM.get(),
-                        8,
+                        4,
                         0.9f
+                )
+                .addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM.get(),
+                        0.75f,
+                        1
+                )
+                .addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM.get(),
+                        0.75f,
+                        1
                 )
                 .addResultWithChance(
                         ChangedAddonItems.LUMINARA_SAPLING.get(),
@@ -150,7 +175,30 @@ public class CuttingRecipes {
                 .addResultWithChance(
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
                         0.25f,
-                        12
+                        2
+                )
+                .addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
+                        0.25f,
+                        2
+                )
+                .addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
+                        0.25f,
+                        2
+                )
+                .addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
+                        0.25f,
+                        2
+                ).addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
+                        0.25f,
+                        2
+                ).addResultWithChance(
+                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
+                        0.25f,
+                        2
                 )
                 .save(consumer, salvagingRecipe("luminara_leaves"));
     }

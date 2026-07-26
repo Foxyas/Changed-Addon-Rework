@@ -7,7 +7,18 @@
   ],
   "result": [
     {
-      "count": 4,
+      "item": "changed_addon:luminara_bloom"
+    },
+    {
+      "chance": 0.85,
+      "item": "changed_addon:luminara_bloom"
+    },
+    {
+      "chance": 0.85,
+      "item": "changed_addon:luminara_bloom"
+    },
+    {
+      "chance": 0.85,
       "item": "changed_addon:luminara_bloom"
     },
     {

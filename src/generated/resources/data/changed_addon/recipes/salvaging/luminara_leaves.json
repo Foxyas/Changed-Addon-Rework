@@ -8,7 +8,15 @@
   "result": [
     {
       "chance": 0.9,
-      "count": 8,
+      "count": 4,
+      "item": "changed_addon:luminara_bloom"
+    },
+    {
+      "chance": 0.75,
+      "item": "changed_addon:luminara_bloom"
+    },
+    {
+      "chance": 0.75,
       "item": "changed_addon:luminara_bloom"
     },
     {
@@ -22,7 +30,32 @@
     },
     {
       "chance": 0.25,
-      "count": 12,
+      "count": 2,
+      "item": "changed_addon:luminara_bloom_petals"
+    },
+    {
+      "chance": 0.25,
+      "count": 2,
+      "item": "changed_addon:luminara_bloom_petals"
+    },
+    {
+      "chance": 0.25,
+      "count": 2,
+      "item": "changed_addon:luminara_bloom_petals"
+    },
+    {
+      "chance": 0.25,
+      "count": 2,
+      "item": "changed_addon:luminara_bloom_petals"
+    },
+    {
+      "chance": 0.25,
+      "count": 2,
+      "item": "changed_addon:luminara_bloom_petals"
+    },
+    {
+      "chance": 0.25,
+      "count": 2,
       "item": "changed_addon:luminara_bloom_petals"
     }
   ],
