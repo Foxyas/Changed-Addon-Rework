@@ -189,7 +189,7 @@ public class SignalCatcherItem extends Item {
     public void releaseUsing(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull LivingEntity entity, int time) {
         if (!itemstack.getOrCreateTag().getBoolean("set")) {
             if (entity instanceof Player player && !player.level.isClientSide())
-                player.displayClientMessage(Component.literal("§o§bNo Location Found §l[Not Close Enough]"), false);
+                player.displayClientMessage(Component.translatable("text.changed_addon.item.signal_catcher.info.not_hold_enough"), false);
         }
     }
 
@@ -212,7 +212,7 @@ public class SignalCatcherItem extends Item {
             tooltip.add(Component.literal("Hold §b<Right Click>§r to scan a 32 block area"));
             tooltip.add(Component.literal("Hold §c<Shift + Right Click>§r to perform a Super scan and scan 120 block area"));
         }
-        tooltip.add(Component.literal(("§oCoords §l" + x + " " + y + " " + z)));
+        tooltip.add(Component.literal(("§oCords §l" + x + " " + y + " " + z)));
         if (stack.getOrCreateTag().getBoolean("set")) {
             tooltip.add(Component.literal(("§oDistance §l" + Math.round(distance))));
         }

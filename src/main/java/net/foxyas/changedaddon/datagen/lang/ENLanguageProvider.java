@@ -717,6 +717,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addText("rp.bow_and_crossbow_stop.no_grip_strength", "Your paws can't maintain a steady grip on the bow!");
         addText("rp.bow_and_crossbow_stop.crossbow_safety", "Your fingers are too thick to operate the crossbow's mechanism!");
         addText("rp.bow_and_crossbow_stop.clumsy_paws", "It's nearly impossible to nock an arrow with such clumsy paws!");
+        addText("item.signal_catcher.info.not_hold_enough", "No location found please scan the area fully and wait for the warning before releasing the button");
 
         addMessage("induction_coil_melt", "§4⚡ You brought metal to an electric fight. §cSuch Foolish Move. §6Your gear is melting from the heat!");
 

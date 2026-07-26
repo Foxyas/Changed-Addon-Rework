@@ -170,4 +170,9 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
             refreshAttributesForHost(this);
         }
     }
+
+    @Override
+    public float alphaScaleForRender() {
+        return 0.75f;
+    }
 }
