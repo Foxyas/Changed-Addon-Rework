@@ -24,6 +24,7 @@ public class ChangedAddonClientConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> DYNAMIC_ALPHA_CHECKER;
     public static final ForgeConfigSpec.ConfigValue<BossMusicHandler.FollowType> BOSS_MUSIC_LOCATION_TYPE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> SUIT_ANIM;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES;
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -64,6 +65,9 @@ public class ChangedAddonClientConfiguration {
 
         SUIT_ANIM = BUILDER.comment("Switches on/off the animation where held entity is rendered closer to grabber based on suit progress.")
                 .define("Suit Anim", true);
+
+        USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES = BUILDER.comment("Switches the render type for the Entity model fade particle, it can look a bit odd with some specific colors so use it as your taste.")
+                .define("additive transparency for entity model fade particle", false);
 
         SPEC = BUILDER.build();
     }

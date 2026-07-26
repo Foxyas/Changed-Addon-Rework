@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.model.api.IPublicRootModel;
 import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTypes;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.mixins.client.renderer.LivingEntityRendererAccessor;
 import net.ltxprogrammer.changed.client.ModelPartStem;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
@@ -188,7 +189,7 @@ public class EntityModelFadeParticle extends Particle {
             Direction direction = changedEntity.getBedOrientation();
             if (direction != null) {
                 float f4 = changedEntity.getEyeHeight(Pose.STANDING) - 0.1F;
-                poseStack.translate((float)(-direction.getStepX()) * f4, 0.0F, (float)(-direction.getStepZ()) * f4);
+                poseStack.translate((float) (-direction.getStepX()) * f4, 0.0F, (float) (-direction.getStepZ()) * f4);
             }
         }
 
@@ -220,7 +221,11 @@ public class EntityModelFadeParticle extends Particle {
         for (ModelPart modelPart : modelParts) {
             modelPart.loadPose(poses.get(modelPart));
         }
-        model.renderToBuffer(poseStack, bufferSource.getBuffer(ChangedAddonRenderTypes.entityAdditiveTranslucent(texture, false)), Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
+        model.renderToBuffer(poseStack, bufferSource.getBuffer(
+                ChangedAddonClientConfiguration.USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES.get() ?
+                        ChangedAddonRenderTypes.entityAdditiveTranslucent(texture, false) :
+                        ChangedAddonRenderTypes.entityTranslucent(texture, false)
+        ), Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
         if (advancedHumanoidRenderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
@@ -319,7 +324,7 @@ public class EntityModelFadeParticle extends Particle {
             Direction direction = livingEntity.getBedOrientation();
             if (direction != null) {
                 float f4 = livingEntity.getEyeHeight(Pose.STANDING) - 0.1F;
-                poseStack.translate((float)(-direction.getStepX()) * f4, 0.0F, (float)(-direction.getStepZ()) * f4);
+                poseStack.translate((float) (-direction.getStepX()) * f4, 0.0F, (float) (-direction.getStepZ()) * f4);
             }
         }
 
@@ -355,7 +360,11 @@ public class EntityModelFadeParticle extends Particle {
         for (ModelPart modelPart : modelParts) {
             modelPart.loadPose(poses.get(modelPart));
         }
-        model.renderToBuffer(poseStack, bufferSource.getBuffer(ChangedAddonRenderTypes.entityAdditiveTranslucent(texture, false)), Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
+        model.renderToBuffer(poseStack, bufferSource.getBuffer(
+                ChangedAddonClientConfiguration.USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES.get() ?
+                        ChangedAddonRenderTypes.entityAdditiveTranslucent(texture, false) :
+                        ChangedAddonRenderTypes.entityTranslucent(texture, false)
+        ), Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
         if (livingEntityRenderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
