@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.IDynamicInventoryRender;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -27,11 +28,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
 import java.util.Objects;
 
-public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements IVariantExtraStats, GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions, IAlphaAbleEntity {
+public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements IVariantExtraStats, GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions, IAlphaAbleEntity, IDynamicInventoryRender {
 
     protected final SimpleAbilityInstance summonPups;
 
@@ -172,7 +174,7 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     }
 
     @Override
-    public float alphaScaleForRender() {
-        return 0.75f;
+    public Vec3 getInventoryRenderScale() {
+        return new Vec3(0.75f, 0.75f, 0.75f);
     }
 }
