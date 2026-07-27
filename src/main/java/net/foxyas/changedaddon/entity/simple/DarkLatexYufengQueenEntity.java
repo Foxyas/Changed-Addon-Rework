@@ -2,7 +2,9 @@ package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.entity.ai.ChangedEntityFlyingMoveControl;
+import net.foxyas.changedaddon.entity.ai.goals.RandomLandingGoal;
 import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightGoal;
+import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightModeForAttackingGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicInventoryRender;
 import net.foxyas.changedaddon.entity.api.IFlyableChangedEntity;
@@ -232,7 +234,6 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
 
     @Override
     public void updateNavigationAndControl(boolean flying) {
-        boolean recomputePath = navigation.getPath() != null;
         if (flying) {
             this.moveControl = this.flyingMoveControl;
             this.navigation = createFlyNavigation(level);
@@ -241,10 +242,6 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
             this.moveControl = this.groundMoveControl;
             this.navigation = createNavigation(level);
             this.setNoGravity(false);
-        }
-
-        if (recomputePath && this.navigation.getPath() != null) {
-            this.navigation.recomputePath();
         }
     }
 
@@ -259,6 +256,8 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
         });
 
         this.goalSelector.addGoal(1, new ToggleFlightGoal<>(this));
+        this.goalSelector.addGoal(1, new ToggleFlightModeForAttackingGoal<>(this));
+        this.goalSelector.addGoal(1, new RandomLandingGoal<>(this));
     }
 
     @Override

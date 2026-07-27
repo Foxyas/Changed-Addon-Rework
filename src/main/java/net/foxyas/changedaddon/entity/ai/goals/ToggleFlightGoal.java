@@ -1,10 +1,10 @@
 package net.foxyas.changedaddon.entity.ai.goals;
 
 import net.foxyas.changedaddon.entity.api.IFlyableChangedEntity;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-public class ToggleFlightGoal<T extends LivingEntity & IFlyableChangedEntity> extends Goal {
+public class ToggleFlightGoal<T extends PathfinderMob & IFlyableChangedEntity> extends Goal {
     private final T entity;
 
     public ToggleFlightGoal(T entity) {
