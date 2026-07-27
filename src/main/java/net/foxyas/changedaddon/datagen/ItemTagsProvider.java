@@ -245,5 +245,8 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
         tag(ItemTags.BEACON_PAYMENT_ITEMS).add(
                 PAINITE.get(),
                 IRIDIUM.get());
+
+        tag(ChangedAddonTags.Items.UNTRANSFUR_AGENTS).add(ANTI_LATEX_BASE.get());
+        tag(ChangedAddonTags.Items.UNTRANSFUR_CATALYZERS).add(LUMINARA_BLOOM_PETALS.get(), LUMINARA_BLOOM.get(), LUMINARA_SAPLING.get());
     }
 }

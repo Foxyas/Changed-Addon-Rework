@@ -58,6 +58,9 @@ public final class ChangedAddonTags {
         public static final TagKey<Item> STABILIZER_TICKS = key("stabilizer_ticks");
         public static final TagKey<Item> MAKE_TRANSFUR_SAFE = key("transfur_safe_mode");
 
+        public static final TagKey<Item> UNTRANSFUR_AGENTS = key("untransfur_agents");
+        public static final TagKey<Item> UNTRANSFUR_CATALYZERS = key("untransfur_catalyzers");
+
         public static final TagKey<Item> AQUATIC_DIET = key("aquatic_diet_list");
         public static final TagKey<Item> SHARK_DIET = key("shark_diet_list");
         public static final TagKey<Item> CAT_DIET = key("cat_diet_list");
