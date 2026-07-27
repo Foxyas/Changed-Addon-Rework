@@ -13,7 +13,9 @@ public class ToggleFlightGoal<T extends PathfinderMob & IFlyableChangedEntity> e
 
     @Override
     public boolean canUse() {
-        // Example logic: Switch every few seconds, when low on health, or near a target
+        if (entity.getTarget() != null) {
+            return false; //There's no need to stop or start flying randomly if it has a target
+        }
         return this.entity.getRandom().nextInt(200) == 0;
     }
 
