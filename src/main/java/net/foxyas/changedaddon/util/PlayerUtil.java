@@ -4,7 +4,9 @@ import com.google.common.base.Predicates;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
+import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.foxyas.changedaddon.entity.simple.AbstractSnowFoxEntity;
 import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.event.UntransfurEvent;
@@ -141,6 +143,17 @@ public class PlayerUtil {
             }
 
             if (instance == null) return;
+
+            if (instance.isTemporaryFromSuit()) {
+                IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
+                if (grabber != null) {
+                    if (grabber.getEntity() instanceof TamableLatexEntityFavors favors) {
+                        favors.setFavor(LatexFavor.NONE);
+                    } else {
+                        GrabAbilityUtil.releaseEntity(player, grabber, false);
+                    }
+                }
+            }
 
             instance.unhookAll(player);
             ProcessTransfur.removePlayerTransfurVariant(player);

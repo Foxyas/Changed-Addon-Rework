@@ -2,6 +2,8 @@ package net.foxyas.changedaddon.util;
 
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,10 +44,20 @@ public class GrabAbilityUtil {
                                      GrabEntityAbilityInstance grabAbilityInstance,
                                      boolean applyDebuffs) {
         grabAbilityInstance.releaseEntity(applyDebuffs);
-        // manda packet de GRAB (tipo ARMS)
+        // manda packet de GRAB (tipo RELEASE)
         Changed.PACKET_HANDLER.send(
                 PacketDistributor.TRACKING_ENTITY.with(() -> grabber),
                 new GrabEntityPacket(grabber, target, GrabEntityPacket.GrabType.RELEASE)
         );
+    }
+
+
+    public static void releaseEntity(LivingEntity target,
+                                     IAbstractChangedEntity grabber,
+                                     boolean applyDebuffs) {
+        GrabEntityAbilityInstance abilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+        if (abilityInstance != null) {
+            releaseEntity(target, grabber.getEntity(), abilityInstance, applyDebuffs);
+        }
     }
 }
