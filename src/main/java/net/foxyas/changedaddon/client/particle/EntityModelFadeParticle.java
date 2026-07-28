@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.model.api.IPublicRootModel;
 import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTypes;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
+import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.mixins.client.renderer.LivingEntityRendererAccessor;
 import net.ltxprogrammer.changed.client.ModelPartStem;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
@@ -203,6 +204,13 @@ public class EntityModelFadeParticle extends Particle {
             );
             poseStack.scale(-1.0F, -1.0F, 1.0F);
             rendererAccessor.callScale(changedEntity, poseStack, partialTicks);
+            if (ChangedAddonClientConfiguration.ALPHA_COMPATIBILITY_MODE_RENDER.get()) {
+                if (changedEntity instanceof IAlphaAbleEntity alphaAbleEntity) {
+                    if (alphaAbleEntity.isAlpha()) {
+                        poseStack.scale(alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender());
+                    }
+                }
+            }
             poseStack.translate(0.0F, -1.501F, 0.0F);
         }
 
@@ -338,6 +346,13 @@ public class EntityModelFadeParticle extends Particle {
             );
             poseStack.scale(-1.0F, -1.0F, 1.0F);
             rendererAccessor.callScale(livingEntity, poseStack, partialTicks);
+            if (ChangedAddonClientConfiguration.ALPHA_COMPATIBILITY_MODE_RENDER.get()) {
+                if (livingEntity instanceof IAlphaAbleEntity alphaAbleEntity) {
+                    if (alphaAbleEntity.isAlpha()) {
+                        poseStack.scale(alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender());
+                    }
+                }
+            }
             poseStack.translate(0.0F, -1.501F, 0.0F);
         }
 

@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightGoal;
 import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightModeForAttackingGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicInventoryRender;
+import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.IFlyableChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
@@ -28,9 +29,11 @@ import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -47,7 +50,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements IVariantExtraStats,
-        GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions, IAlphaAbleEntity, IDynamicInventoryRender, IFlyableChangedEntity {
+        GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions, IAlphaAbleEntity, IDynamicInventoryRender, IFlyableChangedEntity, IDynamicRideOffsetEntity {
 
     protected final SimpleAbilityInstance summonPups;
 
@@ -90,7 +93,7 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
         Objects.requireNonNull(attributes.getInstance(Attributes.ARMOR)).setBaseValue(8F);
         Objects.requireNonNull(attributes.getInstance(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2F);
         Objects.requireNonNull(attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(0.6F);
-        Objects.requireNonNull(attributes.getInstance(Attributes.FLYING_SPEED)).setBaseValue(1.15f);
+        Objects.requireNonNull(attributes.getInstance(Attributes.FLYING_SPEED)).setBaseValue(10f);
     }
 
     @Override
@@ -118,6 +121,9 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
 
     @Override
     public float getFlyingSpeed() {
+        if (this.getUnderlyingPlayer() != null) {
+            return (float) this.getAttributeValue(Attributes.FLYING_SPEED);
+        }
         return super.getFlyingSpeed() * 1.5f;
     }
 
@@ -210,13 +216,40 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     }
 
     @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("isFlying")) {
+            setFlyingMode(tag.getBoolean("isFlying"));
+        }
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("isFlying", isFlyingMode());
+    }
+
+    @Override
+    public void travel(@NotNull Vec3 pTravelVector) {
+        super.travel(pTravelVector);
+    }
+
+    @Override
+    public double getPassengersRidingOffset() {
+        if (this.getPose() == Pose.STANDING || this.getPose() == Pose.CROUCHING) {
+            return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
+        }
+        return getTorsoYOffsetForFallFly(this);
+    }
+
+    @Override
     public boolean isFlying() {
         return super.isFlying();
     }
 
     @Override
     public boolean isFlyingMode() {
-        return isFlying();
+        return this.isFlying();
     }
 
     @Override

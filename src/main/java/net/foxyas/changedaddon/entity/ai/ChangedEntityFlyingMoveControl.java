@@ -7,10 +7,12 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 
 public class ChangedEntityFlyingMoveControl extends MoveControl {
    private final int maxTurn;
+   protected final ChangedEntity changedEntity;
    private final boolean hoversInPlace;
 
    public ChangedEntityFlyingMoveControl(ChangedEntity pMob, int pMaxTurn, boolean pHoversInPlace) {
       super(pMob);
+      this.changedEntity = pMob;
       this.maxTurn = pMaxTurn;
       this.hoversInPlace = pHoversInPlace;
    }
@@ -18,47 +20,47 @@ public class ChangedEntityFlyingMoveControl extends MoveControl {
    public void tick() {
       if (this.operation == MoveControl.Operation.MOVE_TO) {
          this.operation = MoveControl.Operation.WAIT;
-         this.mob.setNoGravity(true);
-         double d0 = this.wantedX - this.mob.getX();
-         double d1 = this.wantedY - this.mob.getY();
-         double d2 = this.wantedZ - this.mob.getZ();
-         double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-         if (d3 < (double)2.5000003E-7F) {
-            this.mob.setYya(0.0F);
-            this.mob.setZza(0.0F);
+         this.changedEntity.setNoGravity(true);
+         double dX = this.wantedX - this.changedEntity.getX();
+         double dY = this.wantedY - this.changedEntity.getY();
+         double dZ = this.wantedZ - this.changedEntity.getZ();
+         double dDistance = dX * dX + dY * dY + dZ * dZ;
+         if (dDistance < (double)2.5000003E-7F) {
+            this.changedEntity.setYya(0.0F);
+            this.changedEntity.setZza(0.0F);
             return;
          }
 
-         float f = (float)(Mth.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
-         this.mob.setYRot(this.rotlerp(this.mob.getYRot(), f, 90.0F));
+         float f = (float)(Mth.atan2(dZ, dX) * (double)(180F / (float)Math.PI)) - 90.0F;
+         this.changedEntity.setYRot(this.rotlerp(this.changedEntity.getYRot(), f, 90.0F));
          float f1;
-         if (this.mob.onGround()) {
-            f1 = (float)(this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
+         if (this.changedEntity.onGround()) {
+            f1 = (float)(this.speedModifier * this.changedEntity.getAttributeValue(Attributes.MOVEMENT_SPEED));
          } else {
             f1 = (float)(this.speedModifier * getMobFlySpeed());
          }
 
-         this.mob.setSpeed(f1);
-         double d4 = Math.sqrt(d0 * d0 + d2 * d2);
-         if (Math.abs(d1) > (double)1.0E-5F || Math.abs(d4) > (double)1.0E-5F) {
-            float f2 = (float)(-(Mth.atan2(d1, d4) * (double)(180F / (float)Math.PI)));
-            this.mob.setXRot(this.rotlerp(this.mob.getXRot(), f2, (float)this.maxTurn));
-            this.mob.setYya(d1 > 0.0D ? f1 : -f1);
+         this.changedEntity.setSpeed(f1 * 2);
+         double xzSpeedSqrt = Math.sqrt(dX * dX + dZ * dZ);
+         if (Math.abs(dY) > (double)1.0E-5F || Math.abs(xzSpeedSqrt) > (double)1.0E-5F) {
+            float f2 = (float)(-(Mth.atan2(dY, xzSpeedSqrt) * (double)(180F / (float)Math.PI)));
+            this.changedEntity.setXRot(this.rotlerp(this.changedEntity.getXRot(), f2, (float)this.maxTurn));
+            this.changedEntity.setYya(dY > 0.0D ? f1 : -f1);
          }
       } else {
          if (!this.hoversInPlace) {
-            this.mob.setNoGravity(false);
+            this.changedEntity.setNoGravity(false);
          }
 
-         this.mob.setYya(0.0F);
-         this.mob.setZza(0.0F);
+         this.changedEntity.setYya(0.0F);
+         this.changedEntity.setZza(0.0F);
       }
 
    }
 
    private double getMobFlySpeed() {
-      return this.mob.getAttribute(Attributes.FLYING_SPEED) != null ?
-              this.mob.getAttributeValue(Attributes.FLYING_SPEED) :
-              ((ChangedEntity) this.mob).getFlyingSpeed();
+      return this.changedEntity.getAttribute(Attributes.FLYING_SPEED) != null ?
+              this.changedEntity.getAttributeValue(Attributes.FLYING_SPEED) :
+              this.changedEntity.getFlyingSpeed();
    }
 }
