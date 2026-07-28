@@ -71,21 +71,9 @@ public interface IAlphaAbleEntity {
             Set<WrappedGoal> availableGoals = mob.goalSelector.getAvailableGoals();
             boolean flag = availableGoals.stream().map(WrappedGoal::getGoal).anyMatch(goal -> goal instanceof AlphaSleepGoal);
             if (flag && !isAlpha) {
-                mob.goalSelector.removeAllGoals(goal -> goal instanceof AlphaSleepGoal);
-                mob.goalSelector.removeAllGoals(goal -> goal instanceof AlphaLeapDiveGoal);
+                if (mob instanceof IAlphaAbleEntity iAlphaAbleEntity) iAlphaAbleEntity.removeAlphaGoals();
             } else if (!flag && isAlpha) {
-                mob.goalSelector.addGoal(10, new AlphaSleepGoal(mob, 6, (inter) -> inter >= 6, 1.5f, UniformInt.of(400, 800)));
-                mob.goalSelector.addGoal(10, new AlphaLeapDiveGoalBuilder(mob)
-                        .withCooldown(UniformInt.of(40, 80)) //IntProvider -> cooldownProvider
-                        .withFollowAscendMultiplier(new Vec3(0.25f, 0.25f, 0.25f))
-                        .withAscendInitialBoost(0.6)
-                        .withAscendSpeed(0.8f)
-                        .withAscendHoldY(2f)
-                        .withDiveSpeedMultiplier(new Vec3(1f, 1f, 1f))
-                        .withFailSafeTicks(60)
-                        .withRingRadius(4)
-                        .build()
-                );
+                if (mob instanceof IAlphaAbleEntity iAlphaAbleEntity) iAlphaAbleEntity.addAlphaGoals();
             }
         }
 
@@ -102,6 +90,32 @@ public interface IAlphaAbleEntity {
 
 
         entity.setHealth(entity.getMaxHealth());
+    }
+
+    default void addAlphaGoals() {
+        if (!(this instanceof PathfinderMob mob)) {
+            return;
+        }
+        mob.goalSelector.addGoal(10, new AlphaSleepGoal(mob, 6, (inter) -> inter >= 6, 1.5f, UniformInt.of(400, 800)));
+        mob.goalSelector.addGoal(10, new AlphaLeapDiveGoalBuilder(mob)
+                .withCooldown(UniformInt.of(40, 80)) //IntProvider -> cooldownProvider
+                .withFollowAscendMultiplier(new Vec3(0.25f, 0.25f, 0.25f))
+                .withAscendInitialBoost(0.6)
+                .withAscendSpeed(0.8f)
+                .withAscendHoldY(2f)
+                .withDiveSpeedMultiplier(new Vec3(1f, 1f, 1f))
+                .withFailSafeTicks(60)
+                .withRingRadius(4)
+                .build()
+        );
+    }
+
+    default void removeAlphaGoals() {
+        if (!(this instanceof PathfinderMob mob)) {
+            return;
+        }
+        mob.goalSelector.removeAllGoals(goal -> goal instanceof AlphaSleepGoal);
+        mob.goalSelector.removeAllGoals(goal -> goal instanceof AlphaLeapDiveGoal);
     }
 
     private static void applyGenericAlphaAttributesModifiers(LivingEntity entity, float normalized) {
@@ -169,9 +183,11 @@ public interface IAlphaAbleEntity {
 
     boolean isAlpha();
 
-    default void setAlpha(boolean alphaGene) {};
+    default void setAlpha(boolean alphaGene) {
+    }
 
-    default void setAlphaScale(float scale) {};
+    default void setAlphaScale(float scale) {
+    }
 
     default void refreshAttributes(ChangedEntity self) {
         if (self.isDeadOrDying()) return;

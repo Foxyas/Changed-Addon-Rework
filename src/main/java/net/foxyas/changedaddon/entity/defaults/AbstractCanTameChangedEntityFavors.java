@@ -100,7 +100,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
 
     @Override
     public <A extends AbstractAbilityInstance> A getAbilityInstance(AbstractAbility<A> ability) {
-        if (grabEntityAbilityInstance != null && ability == grabEntityAbilityInstance.ability)
+        if (this.getUnderlyingPlayer() == null && grabEntityAbilityInstance != null && ability == grabEntityAbilityInstance.ability)
             return (A) grabEntityAbilityInstance;
         return super.getAbilityInstance(ability);
     }

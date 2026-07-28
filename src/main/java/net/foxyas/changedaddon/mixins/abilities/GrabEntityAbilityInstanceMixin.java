@@ -234,27 +234,6 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         return this.canGrabEntity(livingEntity) || original;
     }
 
-//    @Inject(
-//            method = "releaseEntity",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/ltxprogrammer/changed/ability/IAbstractChangedEntity;getEntity()Lnet/minecraft/world/entity/LivingEntity;",
-//                    ordinal = 0
-//            )
-//    )
-//    private void beforeAttemptToSendPacket(CallbackInfo ci) {
-//        GrabEntityAbilityInstance self = getSelf();
-//        IAbstractChangedEntity entity = self.entity;
-//        if (!(entity.getEntity() instanceof Player) && grabbedEntity instanceof Player) {
-//            if (!grabbedEntity.level().isClientSide()) {
-//                Changed.PACKET_HANDLER.send(
-//                        PacketDistributor.TRACKING_ENTITY.with(entity::getEntity),
-//                        new GrabEntityPacket(entity.getEntity(), grabbedEntity, GrabEntityPacket.GrabType.RELEASE)
-//                );
-//            }
-//        }
-//    }
-
     @Override
     public boolean isAlreadySnuggled() {
         return snuggleCooldown > 0;

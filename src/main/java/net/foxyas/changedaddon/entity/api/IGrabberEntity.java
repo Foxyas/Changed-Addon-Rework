@@ -5,6 +5,7 @@ import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.minecraft.nbt.CompoundTag;
@@ -42,7 +43,9 @@ public interface IGrabberEntity {
     GrabEntityAbilityInstance getGrabAbilityInstance();
 
     default GrabEntityAbilityInstance createGrabAbility() {
-        if (this instanceof ChangedEntity changedEntity) {
+        if (this instanceof AbstractDarkLatexEntity abstractDarkLatexEntity) {
+            return abstractDarkLatexEntity.createGrabAbility();
+        } else if (this instanceof ChangedEntity changedEntity) {
             return new GrabEntityAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get(), IAbstractChangedEntity.forEntity(changedEntity));
         } else return null;
     }

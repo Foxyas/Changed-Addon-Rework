@@ -31,7 +31,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
@@ -102,7 +101,7 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
 
     @Override
     public <A extends AbstractAbilityInstance> A getAbilityInstance(AbstractAbility<A> ability) {
-        if (grabEntityAbilityInstance != null && ability == grabEntityAbilityInstance.ability)
+        if (this.getUnderlyingPlayer() == null && grabEntityAbilityInstance != null && ability == grabEntityAbilityInstance.ability)
             return (A) grabEntityAbilityInstance;
         return super.getAbilityInstance(ability);
     }

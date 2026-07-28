@@ -21,6 +21,11 @@ import java.util.List;
 public class ChangedEntityUtil {
 
 
+    public static void setFlying(ChangedEntity changedEntity, boolean value) {
+        changedEntity.setChangedEntityFlag(0, value);
+    }
+
+
     public static double getTorsoYOffset(ChangedEntity self) {
         float scale = self.getScale();
 

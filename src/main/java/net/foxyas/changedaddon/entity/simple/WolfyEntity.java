@@ -1,16 +1,10 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.entity.ai.goals.abilities.MayCauseGrabDamageGoal;
-import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoal;
-import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.init.*;
-import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
 import net.foxyas.changedaddon.util.TagKeyUtil;
 import net.foxyas.changedaddon.variant.ILavaSwimmableVariant;
-import net.ltxprogrammer.changed.ability.AbstractAbility;
-import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
-import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
@@ -29,7 +23,10 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -51,10 +48,9 @@ import java.util.Objects;
 
 import static net.foxyas.changedaddon.procedure.CreatureDietsHandleProcedure.DietType;
 
-public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmableVariant, IGrabberEntity {
+public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmableVariant, IOverrideGrabAbilityTargetConditions {
 
     public static final DietType WOLFY_DIET = DietType.create("WOLFY", ChangedAddonTags.TransfurVariants.WOLF_DIET, ChangedAddonTags.Items.WOLF_DIET, List.of(ChangedAddonItems.FOXTA.get(), ChangedItems.ORANGE.get()));
-    public GrabEntityAbilityInstance grabInstance = null;
 
     public WolfyEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.WOLFY.get(), world);
@@ -65,9 +61,9 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmable
         xpReward = 0;
         this.setAttributes(getAttributes());
         setPersistenceRequired();
-        this.grabInstance = this.createGrabAbility();
-
-        this.setCanUseGrab(true);
+        if (this instanceof IGrabberEntity grabber) {
+            grabber.setCanUseGrab(true);
+        }
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -177,32 +173,8 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmable
     }
 
     @Override
-    public boolean isAbleToGrab() {
-        return true;
-    }
-
-    @Override
-    public @Nullable GrabEntityAbilityInstance getGrabAbilityInstance() {
-        return super.getGrabAbility();
-    }
-
-    @Override
-    public LivingEntity getGrabbedEntity() {
-        return grabEntityAbilityInstance != null ? grabEntityAbilityInstance.grabbedEntity : null;
-    }
-
-    @Override
-    public PathfinderMob asMob() {
-        return this;
-    }
-
-    @Override
     protected void registerGoals() {
         super.registerGoals();
-        //this.goalSelector.addGoal(1, new GrabTargetGoal(this, 0.4f, false));
-        this.goalSelector.addGoal(10, new MayDropGrabbedEntityGoal(this));
-        this.goalSelector.addGoal(10, new MayGrabTargetGoal(this));
-        this.goalSelector.addGoal(10, new MayCauseGrabDamageGoal(this));
     }
 
     @Override
@@ -213,77 +185,21 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmable
     @Override
     public void baseTick() {
         super.baseTick();
-        this.mayTickGrabAbility();
     }
 
     @Override
-    protected void actuallyHurt(DamageSource pDamageSource, float pDamageAmount) {
-        mayDropGrabbedEntity(pDamageSource, pDamageAmount);
+    protected void actuallyHurt(@NotNull DamageSource pDamageSource, float pDamageAmount) {
         super.actuallyHurt(pDamageSource, pDamageAmount);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        this.saveGrabAbilityInTag(tag);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.readGrabAbilityInTag(tag);
-    }
-
-    @Override
-    public @Nullable GrabEntityAbilityInstance getGrabAbility() {
-        if (this.getUnderlyingPlayer() == null) {
-            return this.grabInstance;
-        }
-        return null;
-    }
-
-    @Override
-    public <A extends AbstractAbilityInstance> A getAbilityInstance(AbstractAbility<A> ability) {
-        if (this.getUnderlyingPlayer() != null) {
-            return super.getAbilityInstance(ability);
-        }
-
-        return (A) (this.grabInstance != null && ability == this.grabInstance.ability ? this.grabInstance : super.getAbilityInstance(ability));
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        if (!this.entityData.hasItem(GRAB_COOLDOWN)) {
-            entityData.define(GRAB_COOLDOWN, 0);
-        }
-    }
-
-    @Override
-    public int getGrabCooldown() {
-        return this.entityData.get(GRAB_COOLDOWN);
-    }
-
-    @Override
-    public void setGrabCooldown(int grabCooldown) {
-        GrabEntityAbilityInstance grabAbilityInstance = this.getGrabAbilityInstance();
-        if (grabAbilityInstance != null) {
-            AbstractAbility.Controller controller = grabAbilityInstance.getController();
-            controller.forceCooldown(grabCooldown);
-            if (controller instanceof AbilityControllerAccessor abilityControllerAccessor) {
-                this.entityData.set(GRAB_COOLDOWN, abilityControllerAccessor.getCooldownTicksRemaining());
-            }
-        }
-    }
-
-    @Override
-    public boolean canUseGrab() {
-        return this.entityData.get(CAN_USE_GRAB);
-    }
-
-    @Override
-    public void setCanUseGrab(boolean value) {
-        this.entityData.set(CAN_USE_GRAB, value);
     }
 
     public Color3 getDripColor() {
