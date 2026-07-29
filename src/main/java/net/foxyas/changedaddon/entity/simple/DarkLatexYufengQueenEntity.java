@@ -93,7 +93,7 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
         Objects.requireNonNull(attributes.getInstance(Attributes.ARMOR)).setBaseValue(8F);
         Objects.requireNonNull(attributes.getInstance(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2F);
         Objects.requireNonNull(attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(0.6F);
-        Objects.requireNonNull(attributes.getInstance(Attributes.FLYING_SPEED)).setBaseValue(10f);
+        Objects.requireNonNull(attributes.getInstance(Attributes.FLYING_SPEED)).setBaseValue(0.1);// player def 0.05
     }
 
     @Override
@@ -121,10 +121,7 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
 
     @Override
     public float getFlyingSpeed() {
-        if (this.getUnderlyingPlayer() != null) {
-            return (float) this.getAttributeValue(Attributes.FLYING_SPEED);
-        }
-        return super.getFlyingSpeed() * 1.5f;
+        return isFlying() ? (float) this.getAttributeValue(Attributes.FLYING_SPEED) : super.getFlyingSpeed() * 1.5f;
     }
 
     @Override

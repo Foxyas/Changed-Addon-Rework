@@ -37,7 +37,7 @@ public class ChangedEntityFlyingMoveControl extends MoveControl {
          if (this.changedEntity.onGround()) {
             f1 = (float)(this.speedModifier * this.changedEntity.getAttributeValue(Attributes.MOVEMENT_SPEED));
          } else {
-            f1 = (float)(this.speedModifier * getMobFlySpeed());
+            f1 = (float)(this.speedModifier * changedEntity.getFlyingSpeed() * 4);//multiplier here might need to be tweaked to get speed similar to tf player
          }
 
          this.changedEntity.setSpeed(f1 * 2);
@@ -56,11 +56,5 @@ public class ChangedEntityFlyingMoveControl extends MoveControl {
          this.changedEntity.setZza(0.0F);
       }
 
-   }
-
-   private double getMobFlySpeed() {
-      return this.changedEntity.getAttribute(Attributes.FLYING_SPEED) != null ?
-              this.changedEntity.getAttributeValue(Attributes.FLYING_SPEED) :
-              this.changedEntity.getFlyingSpeed();
    }
 }
