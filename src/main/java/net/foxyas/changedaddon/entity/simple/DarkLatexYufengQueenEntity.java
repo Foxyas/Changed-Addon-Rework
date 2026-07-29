@@ -5,10 +5,7 @@ import net.foxyas.changedaddon.entity.ai.ChangedEntityFlyingMoveControl;
 import net.foxyas.changedaddon.entity.ai.goals.RandomLandingGoal;
 import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightGoal;
 import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightModeForAttackingGoal;
-import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.entity.api.IDynamicInventoryRender;
-import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
-import net.foxyas.changedaddon.entity.api.IFlyableChangedEntity;
+import net.foxyas.changedaddon.entity.api.*;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -93,7 +90,7 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
         Objects.requireNonNull(attributes.getInstance(Attributes.ARMOR)).setBaseValue(8F);
         Objects.requireNonNull(attributes.getInstance(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2F);
         Objects.requireNonNull(attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(0.6F);
-        Objects.requireNonNull(attributes.getInstance(Attributes.FLYING_SPEED)).setBaseValue(0.1);// player def 0.05
+        Objects.requireNonNull(attributes.getInstance(Attributes.FLYING_SPEED)).setBaseValue(0.15F);// player def 0.05, 150% of 0.05 is 0.075, but for better npc movement we will use 0.15
     }
 
     @Override
@@ -121,12 +118,29 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
 
     @Override
     public float getFlyingSpeed() {
-        return isFlying() ? (float) this.getAttributeValue(Attributes.FLYING_SPEED) : super.getFlyingSpeed() * 1.5f;
+        if (this.getUnderlyingPlayer() != null) {
+            return super.getFlyingSpeed() * 1.5f; //150% of the default player fly speed. this check IS necessary, the variant of the player defines the "natural fly speed".
+        }
+
+        float flySpeedAttribute = (float) this.getAttributeValue(Attributes.FLYING_SPEED) * (this.isSprinting() ? 2 : 1);
+        return isFlyingMode() ? flySpeedAttribute : super.getFlyingSpeed() * 1.5f;
+    }
+
+    @Override
+    protected boolean isFlapping() {
+        return isFlyingMode();
     }
 
     @Override
     public void baseTick() {
         super.baseTick();
+        if (this instanceof IGrabberEntity grabberEntity) {
+            GrabEntityAbilityInstance grabAbilityInstance = grabberEntity.getGrabAbilityInstance();
+
+            if (grabAbilityInstance.grabbedEntity != null) {
+                this.setYya(0.25f); // Start to fly up to cause fall damage when the target break free of the grab
+            }
+        }
     }
 
     //    @Override
