@@ -84,9 +84,16 @@ public class RandomLandingGoal<T extends PathfinderMob & IFlyableChangedEntity> 
                 this.targetLandPos.y, 
                 this.targetLandPos.z, 1.0D
             );
+
+
+            // Ao encostar no chão, desliga o modo voo e encerra a Goal
+            double distance = this.entity.getY() - targetLandPos.y();
+            if (this.entity.onGround() || distance <= 0.25f) {
+                this.entity.setFlyingMode(false);
+                return;
+            }
         }
 
-        // Ao encostar no chão, desliga o modo voo e encerra a Goal
         if (this.entity.onGround()) {
             this.entity.setFlyingMode(false);
         }
