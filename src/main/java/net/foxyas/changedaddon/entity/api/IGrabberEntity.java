@@ -38,9 +38,15 @@ public interface IGrabberEntity {
 
     PathfinderMob asMob();
 
-    LivingEntity getGrabbedEntity();
+    default LivingEntity getGrabbedEntity() {
+        return this.getGrabAbilityInstance() != null ? this.getGrabAbilityInstance().grabbedEntity : null;
+    }
 
     GrabEntityAbilityInstance getGrabAbilityInstance();
+
+    default boolean isGrabbing() {
+        return this.getGrabbedEntity() != null;
+    }
 
     default GrabEntityAbilityInstance createGrabAbility() {
         if (this instanceof AbstractDarkLatexEntity abstractDarkLatexEntity) {

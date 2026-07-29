@@ -70,12 +70,12 @@ public interface IVariantExtraStats {
         return !this.getFlyType().canFly();
     }
 
-    // Gun Mods Compatibility
+    // Gun Mods Compatibility.
     default boolean canFireGuns() {
         return true;
     }
 
-    // Gun Mods Compatibility
+    // RP api method.
     default boolean canUseBows() {
         return true;
     }
