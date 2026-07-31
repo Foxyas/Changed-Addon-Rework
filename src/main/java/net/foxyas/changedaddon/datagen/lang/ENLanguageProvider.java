@@ -762,5 +762,7 @@ public class ENLanguageProvider extends LanguageProvider {
 
         addBuiltInResource("brute_grabby_entities", "Grabby Entities: Brute");
         addBuiltInResource("grabby_entities", "Grabby Entities");
+
+        addTooltip("latex_syringe.purified", "Purified");
     }
 }
