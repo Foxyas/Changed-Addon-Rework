@@ -1,50 +1,81 @@
 package net.foxyas.changedaddon.entity.defaults;
 
+import net.foxyas.changedaddon.entity.api.ISwimableEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.util.EntityUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.debug.PathfindingRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
+import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
-public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
+public abstract class AbstractSemiAquaticEntity extends ChangedEntity implements ISwimableEntity {
 
-    protected final WaterBoundPathNavigation waterNavigation;
-    protected final GroundPathNavigation groundNavigation;
-    private boolean wantsSurface;
-    private final float oldWaterCost;
+    protected final PathNavigation groundNavigation;
+    protected final AmphibiousPathNavigation waterNavigation;
+
+    protected boolean wantsSurface;
+    protected final float oldWaterCost;
+
+    // --- Two-tier surfacing thresholds (as a fraction of max air supply) ---
+    // "wants": casual preference, gets checked but won't interrupt combat.
+    protected static final float SURFACE_WANT_AIR_THRESHOLD = 0.5F;
+    // "needs": urgent, will interrupt everything (including combat) to breathe.
+    protected static final float SURFACE_NEED_AIR_THRESHOLD = 0.2F;
+    // Once in "needs" mode, air must climb back above this before it clears (hysteresis,
+    // prevents the entity from flip-flopping right at the threshold).
+    protected static final float SURFACE_NEED_RECOVER_THRESHOLD = 0.8F;
+
+    // true once the entity has crossed into "urgent" mode, cleared once it recovers enough air
+    protected boolean needsAirUrgently = false;
 
     protected AbstractSemiAquaticEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
         this.moveControl = new SwimableEntityMoveControl(this);
-        this.waterNavigation = new WaterBoundPathNavigation(this, level);
-        this.groundNavigation = new GroundPathNavigation(this, level);
-        this.groundNavigation.setCanOpenDoors(true);
-        this.groundNavigation.setCanFloat(true);
+        this.groundNavigation = createNavigation(level);
+        this.waterNavigation = createWaterNavigation(level);
+
         this.oldWaterCost = getPathfindingMalus(BlockPathTypes.WATER);
+        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+    }
+
+    @Override
+    protected @NotNull PathNavigation createNavigation(@NotNull Level pLevel) {
+        PathNavigation pathNavigation = super.createNavigation(pLevel);
+        if (pathNavigation instanceof GroundPathNavigation groundPathNavigation) {
+            groundPathNavigation.setCanOpenDoors(true);
+            groundPathNavigation.setCanFloat(true);
+        }
+        return pathNavigation;
+    }
+
+    protected @NotNull AmphibiousPathNavigation createWaterNavigation(Level level) {
+        return new AmphibiousPathNavigation(this, level);
     }
 
     /* =========================
@@ -73,7 +104,7 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
     }
 
     @Override
-    public MobType getMobType() {
+    public @NotNull MobType getMobType() {
         return MobType.UNDEFINED;
     }
 
@@ -99,53 +130,96 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(0, new EmergencyBreatheGoal(this, 0.6));
+//        this.goalSelector.addGoal(1, new SinkFromSurfaceGoal(this, 0.3));
+        this.goalSelector.addGoal(1, new RiseToSurfaceGoal(this, 0.3));
+        this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.4, 10));
+    }
 
-        this.goalSelector.addGoal(0, new FloatGoal(this) {
-            @Override
-            public boolean canUse() {
-                return super.canUse() && (!AbstractSemiAquaticEntity.this.wantsToSwim() || AbstractSemiAquaticEntity.this.wantsToSurface());
-            }
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        Path path = this.navigation.getPath();
+        if (path != null) {
+            Minecraft minecraft = Minecraft.getInstance();
+            PathfindingRenderer pathfindingRenderer = minecraft.debugRenderer.pathfindingRenderer;
+            pathfindingRenderer.addPath(getId(), path, 1f);
+        }
+    }
 
-            @Override
-            public void start() {
-                super.start();
-            }
-        });
-        //this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.8));
+    @Override
+    public void travel(@NotNull Vec3 pTravelVector) {
+        boolean animateSwim = this.isInWater() && this.canFitInWater(this.position());
+
+        if (this.isEffectiveAi() && animateSwim) {
+            this.moveRelative(0.01F, pTravelVector);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.9));
+        } else {
+            super.travel(pTravelVector);
+        }
     }
 
     @Override
     protected @Nullable Goal makeFloatGoal() {
-        return null;
+        return new FloatGoal(this) {
+            @Override
+            public boolean canUse() {
+                return super.canUse() || AbstractSemiAquaticEntity.this.needsToSurface();
+            }
+        };
     }
 
     /* =========================
        === SWIMMING LOGIC ======
        ========================= */
 
-    protected boolean needToRecoverBreath = false;
-
     protected boolean wantsToSwim() {
         LivingEntity target = this.getTarget();
-        if (needToRecoverBreath) {
-            this.needToRecoverBreath = !(this.getAirSupply() >= this.getMaxAirSupply() * 0.75f);
+
+        // Urgent need for air always wins — stop swimming around, surface instead.
+        if (this.needsToSurface()) {
             return false;
         }
 
-        // Quase se afogando → subir / nadar
-        if (this.getAirSupply() < this.getMaxAirSupply() * 0.25f && this.isUnderWater()) {
-            this.needToRecoverBreath = true;
-            return false;
-        }
-
-        // Target está na água → perseguir
+        // Target is in the water → chase it.
         return (target != null && target.isInWater()) || this.isUnderWater();
     }
 
+    /**
+     * Soft "I'd like to go to the surface" signal. This can be ignored while the
+     * entity is busy (e.g. mid-combat) — it's a preference, not an emergency.
+     */
     public boolean wantsToSurface() {
         LivingEntity target = this.getTarget();
 
-        return wantsSurface() || target == null || !this.isSwimming() || (this.getAirSupply() < this.getMaxAirSupply() * 0.25f && this.isUnderWater());
+        return wantsSurface()
+                || needsToSurface()
+                || target == null
+                || !this.isSwimming()
+                || (this.isUnderWater() && this.getAirSupply() < this.getMaxAirSupply() * SURFACE_WANT_AIR_THRESHOLD);
+    }
+
+    /**
+     * Hard "I NEED to go to the surface" signal. Air is critically low — this should
+     * override everything else, including chasing a target, or the entity will drown.
+     * Uses hysteresis: once triggered, stays true until air recovers well above the
+     * trigger point, so the entity doesn't dive right back down the moment it pokes
+     * its head out.
+     */
+    public boolean needsToSurface() {
+        if (!this.isUnderWater()) {
+            this.needsAirUrgently = false;
+            return false;
+        }
+
+        if (this.needsAirUrgently) {
+            this.needsAirUrgently = this.getAirSupply() < this.getMaxAirSupply() * SURFACE_NEED_RECOVER_THRESHOLD;
+        } else if (this.getAirSupply() < this.getMaxAirSupply() * SURFACE_NEED_AIR_THRESHOLD) {
+            this.needsAirUrgently = true;
+        }
+
+        return this.needsAirUrgently;
     }
 
     protected boolean canFitInWater(Vec3 pos) {
@@ -192,6 +266,11 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
         return BlockPos.betweenClosedStream(this.getDimensions(Pose.STANDING).makeBoundingBox(pos).inflate(-0.05)).filter((checkPos) -> checkPos.getY() > originalPos.getY()).allMatch((blockPos) -> this.level().getBlockState(blockPos).getFluidState().isEmpty());
     }
 
+    protected boolean isAirAtEyesWhenInPose(Vec3 pos, Pose pose) {
+        BlockPos originalPos = new BlockPos(Mth.floor(pos.x), Mth.floor(pos.y), Mth.floor(pos.z));
+        return BlockPos.betweenClosedStream(this.getDimensions(pose).makeBoundingBox(pos).inflate(-0.05)).filter((checkPos) -> checkPos.getY() > originalPos.getY()).allMatch((blockPos) -> this.level().getBlockState(blockPos).getFluidState().isEmpty());
+    }
+
     @Override
     public void updateSwimming() {
         updateSwimmingState();
@@ -200,25 +279,50 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
     protected void updateSwimmingState() {
         if (this.level.isClientSide) return;
 
-        boolean shouldSwim =
-                this.isInWater()
-                        && this.canFitInWater(this.position())
-                        && this.wantsToSwim();
+        boolean animateSwim = this.isInWater()
+                && this.canFitInWater(this.position());
+//                && this.wantsToSwim();
 
-        this.setMaxUpStep(shouldSwim ? 1.0F : 0.7F);
+        this.setMaxUpStep(this.isInWater() ? 1.05F : 0.7F);
 
-        if (wantsToSwim()) {
+        if (animateSwim || this.isInWater()) {
             this.setPathfindingMalus(BlockPathTypes.WATER, 0);
-        } else this.setPathfindingMalus(BlockPathTypes.WATER, oldWaterCost);
+        } else {
+            this.setPathfindingMalus(BlockPathTypes.WATER, oldWaterCost);
+        }
 
-        if (isEffectiveAi() && shouldSwim) {
-            this.navigation = this.waterNavigation;
+        if (isEffectiveAi() && animateSwim) {
             this.setSwimming(true);
             this.setPose(Pose.SWIMMING);
         } else {
-            this.navigation = this.groundNavigation;
             this.setSwimming(false);
             switchToSafePose();
+        }
+
+        if (!animateSwim || !wantsToSwim() || this.wantsToSurface() && this.isAirAtEyesWhenStanding(this.position())) {
+            this.setPose(Pose.STANDING);
+        } else {
+            this.setPose(Pose.SWIMMING);
+        }
+    }
+
+    @Override
+    public void setSwimming(boolean pSwimming) {
+        boolean oldSwimValue = this.isSwimming();
+        super.setSwimming(pSwimming);
+        if (oldSwimValue != pSwimming) {
+            updateNavigationAndControl(pSwimming);
+        }
+    }
+
+    @Override
+    public void updateNavigationAndControl(boolean swimming) {
+        if (swimming) {
+            this.navigation = this.waterNavigation;
+            this.setSwimming(true);
+        } else {
+            this.navigation = groundNavigation;
+            this.setSwimming(false);
         }
     }
 
@@ -252,10 +356,6 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
                 break;
             }
         }
-
-
-        // Aqui pos já está FORA da água,
-        // então a superfície é o Y anterior
         return pos.getY();
     }
 
@@ -266,9 +366,9 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
     public static class SwimableEntityMoveControl extends MoveControl {
         private final AbstractSemiAquaticEntity semiAquaticEntity;
 
-        public SwimableEntityMoveControl(AbstractSemiAquaticEntity p_32433_) {
-            super(p_32433_);
-            this.semiAquaticEntity = p_32433_;
+        public SwimableEntityMoveControl(AbstractSemiAquaticEntity semiAquaticEntity) {
+            super(semiAquaticEntity);
+            this.semiAquaticEntity = semiAquaticEntity;
         }
 
         public void tick() {
@@ -315,19 +415,137 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
         }
     }
 
-    public static class RiseToSurfaceGoal extends Goal {
+    /**
+     * Top-priority goal: fires only when the entity urgently NEEDS air.
+     * Unlike {@link RiseToSurfaceGoal}, this ignores whatever target/combat goal is
+     * running and forces the entity toward the surface immediately.
+     */
+    public static class EmergencyBreatheGoal extends Goal {
         private final AbstractSemiAquaticEntity mob;
         private final double speedModifier;
         private final Level level;
+
+        public EmergencyBreatheGoal(AbstractSemiAquaticEntity entity, double speed) {
+            this.mob = entity;
+            this.speedModifier = speed;
+            this.level = entity.level();
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            return this.mob.isInWater() && this.mob.needsToSurface();
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            // Keep pushing up until the hysteresis in needsToSurface() clears,
+            // or until we're no longer in water (e.g. we made it out).
+            return this.mob.isInWater() && this.mob.needsToSurface();
+        }
+
+        @Override
+        public void start() {
+            retarget();
+        }
+
+        @Override
+        public void tick() {
+            // Air pocket may have moved (current pushed the mob, etc.), so keep re-aiming up.
+            if (this.mob.getNavigation().isDone()) {
+                retarget();
+            }
+        }
+
+        private void retarget() {
+            double x = this.mob.getX();
+            double y = this.mob.getWaterSurfaceY(this.mob.blockPosition());
+            double z = this.mob.getZ();
+            this.mob.getNavigation().moveTo(x, y, z, this.speedModifier);
+        }
+
+        @Override
+        public boolean isInterruptable() {
+            // Never let a lower-priority goal (like re-acquiring a target) interrupt breathing.
+            return false;
+        }
+    }
+
+    public static class SinkFromSurfaceGoal extends Goal {
+        private final AbstractSemiAquaticEntity mob;
         private double wantedX;
         private double wantedY;
         private double wantedZ;
+        private final double speedModifier;
+        private final Level level;
+
+        public SinkFromSurfaceGoal(AbstractSemiAquaticEntity entity, double speed) {
+            this.mob = entity;
+            this.speedModifier = speed;
+            this.level = entity.level();
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        public boolean canUse() {
+            if (this.mob.getTarget() != null) {
+                return false;
+            } else if (!this.mob.isInWater()) {
+                return false;
+            } else if (this.mob.wantsToSurface()) {
+                return false;
+            } else if (!this.level.getBlockState(this.mob.blockPosition()).isAir()) {
+                return false;
+            } else if (!this.mob.canFitInWater(this.mob.position())) {
+                return false;
+            } else {
+                this.wantedX = this.mob.getX();
+                this.wantedY = this.mob.getY() - (double) 1.0F;
+                this.wantedZ = this.mob.getZ();
+                return true;
+            }
+        }
+
+        public boolean canContinueToUse() {
+            if (this.mob.getTarget() != null) {
+                return false;
+            } else {
+                return !this.mob.getNavigation().isDone();
+            }
+        }
+
+        public void start() {
+            this.mob.getNavigation().moveTo(this.wantedX, this.wantedY, this.wantedZ, this.speedModifier);
+        }
+
+        @javax.annotation.Nullable
+        private Vec3 getWaterPos() {
+            RandomSource random = this.mob.getRandom();
+            BlockPos blockpos = this.mob.blockPosition();
+
+            for (int i = 0; i < 10; ++i) {
+                BlockPos blockpos1 = blockpos.offset(random.nextInt(20) - 10, 2 - random.nextInt(8), random.nextInt(20) - 10);
+                if (this.level.getBlockState(blockpos1).is(Blocks.WATER)) {
+                    return Vec3.atBottomCenterOf(blockpos1);
+                }
+            }
+
+            return null;
+        }
+    }
+
+    public static class RiseToSurfaceGoal extends Goal {
+        private final AbstractSemiAquaticEntity mob;
+        private double wantedX;
+        private double wantedY;
+        private double wantedZ;
+        private final double speedModifier;
+        private final Level level;
 
         public RiseToSurfaceGoal(AbstractSemiAquaticEntity entity, double speed) {
             this.mob = entity;
             this.speedModifier = speed;
             this.level = entity.level();
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+            this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
         public boolean canUse() {
@@ -337,11 +555,11 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
                 return false;
             } else if (!this.mob.isInWater()) {
                 return false;
-            } else if (level.getBlockState(EntityUtil.getEyeBlock(mob)).isAir()) {
+            } else if (this.level.getBlockState(EntityUtil.getEyeBlock(this.mob)).isAir()) {
                 return false;
             } else {
                 this.wantedX = this.mob.getX();
-                this.wantedY = this.mob.getY() + 1.0;
+                this.wantedY = this.mob.getY() + (double) 1.0F;
                 this.wantedZ = this.mob.getZ();
                 return true;
             }
@@ -350,23 +568,16 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
         public boolean canContinueToUse() {
             if (this.mob.getTarget() != null) {
                 return false;
+            } else {
+                return !this.mob.getNavigation().isDone();
             }
-
-            return !this.mob.getNavigation().isDone();
-        }
-
-        @Override
-        public boolean requiresUpdateEveryTick() {
-            return true;
         }
 
         public void start() {
-            if (this.mob.isSwimming()) {
-                this.mob.getNavigation().moveTo(this.wantedX, this.wantedY, this.wantedZ, this.speedModifier);
-            }
+            this.mob.getNavigation().moveTo(this.wantedX, this.wantedY, this.wantedZ, this.speedModifier);
         }
 
-        @Nullable
+        @javax.annotation.Nullable
         private Vec3 getWaterPos() {
             RandomSource random = this.mob.getRandom();
             BlockPos blockpos = this.mob.blockPosition();
