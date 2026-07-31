@@ -13,6 +13,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.item.Syringe;
+import net.ltxprogrammer.changed.item.VariantHoldingBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -99,7 +100,7 @@ public class ClientEvent {
 
         showExtraTransfurInfo(event.getEntity(), stack, tooltip);
 
-        if (stack.is(ChangedItems.LATEX_SYRINGE.get())) {
+        if (stack.getItem() instanceof VariantHoldingBase) {
             if (stack.hasTag() && stack.getOrCreateTag().getBoolean("safe")) {
                 tooltip.set(3, Component.translatable("tooltip.changed_addon.latex_syringe.purified").withStyle(Style.EMPTY.applyFormats(ChatFormatting.ITALIC, ChatFormatting.YELLOW)));
             }
