@@ -13,6 +13,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.item.Syringe;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
@@ -20,6 +21,7 @@ import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -92,7 +94,16 @@ public class ClientEvent {
 
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
-        showExtraTransfurInfo(event.getEntity(), event.getItemStack(), event.getToolTip());
+        ItemStack stack = event.getItemStack();
+        List<Component> tooltip = event.getToolTip();
+
+        showExtraTransfurInfo(event.getEntity(), stack, tooltip);
+
+        if (stack.is(ChangedItems.LATEX_SYRINGE.get())) {
+            if (stack.hasTag() && stack.getOrCreateTag().getBoolean("safe")) {
+                tooltip.set(3, Component.translatable("tooltip.changed_addon.latex_syringe.purified").withStyle(Style.EMPTY.applyFormats(ChatFormatting.ITALIC, ChatFormatting.YELLOW)));
+            }
+        }
     }
 
     public static void showExtraTransfurInfo(@Nullable Player player, ItemStack itemstack, List<Component> tooltip) {
