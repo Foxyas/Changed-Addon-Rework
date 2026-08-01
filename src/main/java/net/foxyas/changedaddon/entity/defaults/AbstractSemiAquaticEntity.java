@@ -295,10 +295,10 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity implements
             switchToSafePose();
         }
 
-        if ((!shouldSwim || !wantsToSwim() || this.wantsToSurface()) && this.isAirAtEyesWhenStanding(this.position())) {
-            this.setPose(Pose.STANDING);
-        } else {
+        if (shouldSwim && !(this.wantsToSurface() && this.isAirAtEyesWhenStanding(this.position()))) {
             this.setPose(Pose.SWIMMING);
+        } else {
+            this.setPose(Pose.STANDING);
         }
     }
 
