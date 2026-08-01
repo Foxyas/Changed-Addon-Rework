@@ -66,7 +66,6 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity implements
         PathNavigation pathNavigation = super.createNavigation(pLevel);
         if (pathNavigation instanceof GroundPathNavigation groundPathNavigation) {
             groundPathNavigation.setCanOpenDoors(true);
-            groundPathNavigation.setCanFloat(true);
         }
         return pathNavigation;
     }
