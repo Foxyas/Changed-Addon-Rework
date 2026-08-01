@@ -12,4 +12,7 @@ public interface PathNavigationAccessor {
 
     @Accessor("isStuck")
     boolean isStuck();
+
+    @Accessor("speedModifier")
+    double getSpeedModifier();
 }
