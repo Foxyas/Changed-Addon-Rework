@@ -192,7 +192,7 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
             }
 
             if (animateSwim && !(this.wantsToSurface() && this.isAirAtEyesWhenStanding(this.position()))) {
-                if (navigation == waterNavigation) this.setPose(Pose.SWIMMING);
+                if (this.wantsToSwim()) this.setPose(Pose.SWIMMING);
             } else {
                 this.setPose(Pose.STANDING);
             }
