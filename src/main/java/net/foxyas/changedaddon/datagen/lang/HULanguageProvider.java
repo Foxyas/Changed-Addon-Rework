@@ -776,5 +776,7 @@ public class HULanguageProvider extends LanguageProvider {
 
         addBuiltInResource("brute_grabby_entities", "Megragadó entitások: Brutális");
         addBuiltInResource("grabby_entities", "Megragadó entitások");
+
+        addTooltip("latex_syringe.purified", "Tisztított");
     }
 }
