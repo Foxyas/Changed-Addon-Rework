@@ -50,7 +50,6 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
         this.waterNavigation = new WaterBoundPathNavigation(this, level);
         this.groundNavigation = new GroundPathNavigation(this, level);
         this.groundNavigation.setCanOpenDoors(true);
-        this.groundNavigation.setCanFloat(true);
     }
 
     @Override
