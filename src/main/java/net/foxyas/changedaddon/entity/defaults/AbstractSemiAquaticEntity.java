@@ -313,20 +313,38 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity implements
     }
 
     protected boolean shouldSwim() {
-        boolean swimmingIsIdeal = false;
-        Path path = this.getNavigation().getPath();
-        if (path != null) {
-            int nextNodeIndex = path.getNextNodeIndex();
-            var pos = path.getNode(Mth.clamp(nextNodeIndex, 0, path.getNodeCount())).asBlockPos();
-            boolean isWaterAtNextNode = this.level().isWaterAt(pos);
-            if (isWaterAtNextNode && this.isInWater()) {
-                swimmingIsIdeal = true;
-            }
+        if (!this.isInWater() || !this.canFitInWater(this.position())) {
+            // Fisicamente não dá pra nadar aqui — não importa quantos motivos existam.
+            return false;
         }
 
-        return this.isInWater()
-                && this.canFitInWater(this.position())
-                && (this.wantsToSwim() || swimmingIsIdeal);
+        return this.hasReasonToKeepSwimming();
+    }
+
+    /**
+     * Reúne todo motivo válido pra estar em modo natação, tanto pra COMEÇAR a nadar
+     * quanto pra CONTINUAR nadando. A entidade só deve parar de nadar quando nenhum
+     * destes for verdadeiro — evita que ela saia do modo natação no meio de uma
+     * emergência de ar, ou no meio de perseguir um alvo, só porque um motivo isolado
+     * piscou como falso por um tick.
+     */
+    protected boolean hasReasonToKeepSwimming() {
+        LivingEntity target = this.getTarget();
+
+        // Quer perseguir um alvo que está na água.
+        if (target != null && target.isInWater()) {
+            return true;
+        }
+
+        // Ainda está submersa e precisa OU quer respirar — isso exige continuar em
+        // modo natação até sair da água, senão perde a física de nado bem na hora
+        // que mais precisa dela (subindo pra respirar).
+        if (this.isUnderWater() && (this.needsToSurface() || this.wantsToSurface())) {
+            return true;
+        }
+
+        // Motivo genérico de IA (perseguir presa em água, etc.).
+        return this.wantsToSwim();
     }
 
     @Override
