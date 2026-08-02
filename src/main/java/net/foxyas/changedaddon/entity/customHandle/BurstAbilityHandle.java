@@ -18,7 +18,6 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 public class BurstAbilityHandle<T extends LivingEntity> {
 
@@ -176,16 +175,30 @@ public class BurstAbilityHandle<T extends LivingEntity> {
             return;
         }
 
+        // Damage WASN'T dealt by the correct target
+        if (sourceEntity != this.currentTarget) {
+            float damageRatio = amount / Math.max(mob.getHealth(), 1);
+            addBurstProgress(damageRatio * getMaxBurstProgress());
+        }
+    }
+
+    /**
+     * Should be called whenever the  deals damage to any entity.
+     *
+     * @param source       DamageSource.
+     * @param amount       Damage amount.
+     */
+    public void onDamageDealt(DamageSource source, float amount) {
+        Entity sourceEntity = source.getEntity();
+        if (this.currentTarget == null) {
+            return;
+        }
+
         long currentGameTime = mob.level().getGameTime();
 
         // CASE 1: Damage WAS dealt to the correct target
         if (sourceEntity == this.currentTarget) {
             this.lastHitGameTime = currentGameTime;
-        }
-        // CASE 2: Damage WAS NOT dealt to the intended target
-        else {
-            float damageRatio = amount / Math.max(mob.getHealth(), 1);
-            addBurstProgress(damageRatio * getMaxBurstProgress());
         }
     }
 
@@ -204,6 +217,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
             } else {
                 destroyBlocks(3);
             }
+            this.burstProgress = 0;
         }
 
         // Evasive check
@@ -213,11 +227,13 @@ public class BurstAbilityHandle<T extends LivingEntity> {
             } else {
                 applyEvasiveKnockback(5.0D, 1.25D);
             }
+            this.burstProgress = 0;
         }
 
         // General custom action handle
         if (this.customHandle != null) {
             this.customHandle.accept(this.mob, this);
+            this.burstProgress = 0;
         }
     }
 
@@ -233,7 +249,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
 
         BlockPos center = mob.blockPosition();
 
-        for (BlockPos pos : BlockPos.betweenClosed(center.offset(-radius, -radius, -radius), center.offset(radius, radius, radius))) {
+        for (BlockPos pos : BlockPos.betweenClosed(center.offset(-radius, 0, -radius), center.offset(radius, radius, radius))) {
             if (pos.distSqr(center) <= radius * radius) {
                 BlockState state = level.getBlockState(pos);
 

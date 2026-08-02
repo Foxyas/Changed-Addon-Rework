@@ -1221,6 +1221,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 target.hurtTime = 10;
                 target.hurtDuration = 10;
             }
+
+            if (boss.burstAbilityHandle != null) boss.burstAbilityHandle.onDamageDealt(event.getSource(), event.getAmount());
         }
 
         @SubscribeEvent

@@ -244,6 +244,10 @@ public class DashPunchGoal extends Goal {
     protected void applyImpact(LivingEntity target) {
         DamageSource pSource = mob.damageSources().mobAttack(mob);
         if (!target.isDamageSourceBlocked(pSource)) {
+            if (isTargetDoingCorrectSwingParry(target, pSource)) {
+                onParriedAttemptToHitTarget(target);
+                return;
+            }
             if (target.hurt(pSource, 8.0F)) {
                 onHitTarget(target);
             }
@@ -264,6 +268,66 @@ public class DashPunchGoal extends Goal {
             server.sendParticles(ParticleTypes.EXPLOSION, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
         }
         mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1.0F, 1.0F);
+    }
+
+    protected boolean isTargetDoingCorrectSwingParry(LivingEntity target, DamageSource damageSource) {
+        // 1. Checa se o alvo está executando um swing/ataque no momento
+        // target.swinging é verdadeiro enquanto a animação do braço acontece
+        if (!target.swinging) {
+            return false;
+        }
+
+        Vec3 sourcePosition = damageSource.getSourcePosition();
+        if (sourcePosition != null) {
+            // 2. Vetor para onde o jogador está olhando (visão)
+            Vec3 viewVector = target.getViewVector(1.0F);
+
+            // 3. Vetor que vai do JOGADOR para a FONTE do dano
+            Vec3 targetToSource = sourcePosition.subtract(target.getEyePosition());
+
+            // Se quiser ignorar a diferença de altura (parry 2D/horizontal):
+            // viewVector = new Vec3(viewVector.x, 0.0D, viewVector.z).normalize();
+            // targetToSource = new Vec3(targetToSource.x, 0.0D, targetToSource.z).normalize();
+
+            viewVector = viewVector.normalize();
+            targetToSource = targetToSource.normalize();
+
+            // 4. Produto escalar (dot product):
+            //  1.0 = olhando EXATAMENTE para a fonte
+            //  0.0 = olhando 90 graus para o lado
+            // -1.0 = olhando de costas para a fonte
+            double dotProduct = targetToSource.dot(viewVector);
+
+            // 0.5D equivale a um cone de ~60 graus de tolerância na frente do jogador (cos(60°) = 0.5)
+            // Se quiser exigir mais precisão, aumente para 0.7D7 (~45°) ou 0.866D (~30°)
+            double minParryThreshold = 0.5D;
+
+            return dotProduct >= minParryThreshold;
+        }
+
+        return false;
+    }
+
+    protected void onParriedAttemptToHitTarget(LivingEntity target) {
+        if (mob.level() instanceof ServerLevel server) {
+            server.sendParticles(ParticleTypes.FLASH, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
+        }
+        mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 1.0F);
+        mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
+
+        dashTicks = MAX_DASH_TICKS;
+        this.phase = Phase.IDLE;
+        stop();
+
+
+        Vec3 targetPos = target.position();
+        Vec3 mobPos = mob.position();
+        Vec3 relativeVec = mobPos.subtract(targetPos);
+        Vec3 direction = relativeVec.normalize();
+
+        // Aplica o movimento
+        Vec3 movement = direction.scale(1.25f).add(0f, 0.5f, 0f).multiply(2.75f, 1.25f, 2.75f);
+        mob.setDeltaMovement(movement.x, movement.y, movement.z);
     }
 
     protected void onBlockedAttemptToHitTarget(LivingEntity target) {

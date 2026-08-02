@@ -511,7 +511,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
 
         @SubscribeEvent
         public static void onBossDamagePlayer(LivingHurtEvent event) {
-            if (!(event.getSource().getEntity() instanceof Experiment10BossEntity)) return;
+            if (!(event.getSource().getEntity() instanceof Experiment10BossEntity source)) return;
             if (!(event.getEntity() instanceof Player target)) return;
 
             GearTier tier = getGearTier(target);
@@ -520,6 +520,8 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
                 case LOW, MID -> event.setAmount(event.getAmount());
                 case HIGH -> event.setAmount(event.getAmount() * 1.25F);
             }
+
+            if (source.burstAbilityHandle != null) source.burstAbilityHandle.onDamageDealt(event.getSource(), event.getAmount());
         }
 
         @SubscribeEvent
