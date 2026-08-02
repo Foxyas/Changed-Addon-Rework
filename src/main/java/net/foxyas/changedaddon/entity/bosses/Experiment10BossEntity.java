@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.ClawsComboAttackGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.ThrowWitherProjectileGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.WitherWave;
-import net.foxyas.changedaddon.entity.ai.goals.generic.BurstAttack;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.DashPunchGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.LeapSmashGoal;
@@ -184,8 +183,6 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
                 UniformInt.of(3, 6), //IntProvider -> attackCount,
                 UniformInt.of(20, 40), //IntProvider -> castDuration,
                 UniformFloat.of(6, 8))); //FloatProvider -> damage)
-
-        this.goalSelector.addGoal(6, new BurstAttack(this));
         this.goalSelector.addGoal(6, new WitherWave(this, UniformInt.of(60, 120)));
         this.goalSelector.addGoal(20, new SimpleAntiFlyingAttack(this,
                 UniformInt.of(60, 100),

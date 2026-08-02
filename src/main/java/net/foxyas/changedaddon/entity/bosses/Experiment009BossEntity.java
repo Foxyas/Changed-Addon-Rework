@@ -89,6 +89,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class Experiment009BossEntity extends Experiment009Entity implements IExp9Logic {
+    public static final float PHASE_3_HEALTH_RATIO = 0.4f;
+    public static final float PHASE_2_HEALTH_RATIO = 0.75f;
 
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
@@ -96,6 +98,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> CASTING_ATTACK =
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> CASTING_TICKS =
+            SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Exp9Phase> PHASE =
             SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
 //
@@ -164,6 +168,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         super.defineSynchedData();
         this.entityData.define(PHASE3, false);
         this.entityData.define(CASTING_ATTACK, false);
+        this.entityData.define(CASTING_TICKS, 0);
         this.entityData.define(PHASE, this.getPhase());
     }
 
@@ -175,6 +180,14 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     public void updateSwimming() {
         super.updateSwimming();
+    }
+
+    public int getCastingTicks() {
+        return this.entityData.get(CASTING_TICKS);
+    }
+
+    public void setCastingTicks(int value) {
+        this.entityData.set(CASTING_TICKS, value);
     }
 
     public boolean isCastingAttack() {
@@ -599,18 +612,18 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         float currentHealth = this.getHealth();
         float healthRatio = currentHealth / maxHealth;
 
-        if (healthRatio <= 0.4f) {
+        if (healthRatio <= PHASE_3_HEALTH_RATIO) {
 
-            float progress = healthRatio / 0.4f;
+            float progress = healthRatio / PHASE_3_HEALTH_RATIO;
             this.bossInfo.setProgress(progress);
 
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
             }
             this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.AQUA)));
-        } else if (healthRatio <= 0.75f) {
+        } else if (healthRatio <= PHASE_2_HEALTH_RATIO) {
 
-            float progress = (healthRatio - 0.4f) / (0.75f - 0.4f);
+            float progress = (healthRatio - PHASE_3_HEALTH_RATIO) / (PHASE_2_HEALTH_RATIO - PHASE_3_HEALTH_RATIO);
             this.bossInfo.setProgress(progress);
 
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6) {
@@ -619,7 +632,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.DARK_AQUA)));
         } else {
 
-            float progress = (healthRatio - 0.75f) / (1.0f - 0.75f);
+            float progress = (healthRatio - PHASE_2_HEALTH_RATIO) / (1.0f - PHASE_2_HEALTH_RATIO);
             this.bossInfo.setProgress(progress);
 
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.PROGRESS) {
@@ -640,12 +653,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         if (this.isPhase2()) {
             float ratio = this.computeHealthRatio();
-            if (currentHealth <= maxHealth * 0.4f && ratio >= 0.4f && !this.isPhase3()) {
+            if (currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO && ratio >= PHASE_3_HEALTH_RATIO && !this.isPhase3()) {
                 this.setPhase3(true);
                 this.onPhaseChange(this.getPhase());
                 level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 500, 0);
             }
-        } else if (this.getUnderlyingPlayer() == null && currentHealth <= maxHealth * 0.75f) {
+        } else if (this.getUnderlyingPlayer() == null && currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO) {
             this.setPhase2(true);
             this.onPhaseChange(this.getPhase());
             level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 500, 0);
@@ -772,8 +785,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             setPhase3(tag.getBoolean("isPhase3"));
         if (tag.contains("Bleeding"))
             shouldBleed = tag.getBoolean("Bleeding");
-        if (tag.contains("casting"))
-            this.setCastingAttack(tag.getBoolean("casting"));
+        if (tag.contains("castingAttack"))
+            this.setCastingAttack(tag.getBoolean("castingAttack"));
+        if (tag.contains("castingAttackTicks"))
+            this.setCastingTicks(tag.getInt("castingAttackTicks"));
         this.targetDataManager.loadAndResolveTarget(tag);
     }
 
@@ -877,12 +892,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 //            if (this.goalSelector.getRunningGoals().noneMatch(wrappedGoal -> wrappedGoal.getGoal() instanceof CastingAttackGoal) && this.targetSelector.getRunningGoals().noneMatch(wrappedGoal -> wrappedGoal.getGoal() instanceof CastingAttackGoal)) {
 //                this.setCastingAttack(false);
 //            }
-            if (this.getTarget() == null) {
+            this.setCastingTicks(this.getCastingTicks() + 1);
+            if (this.getTarget() == null || this.getCastingTicks() >= 200) {
                 this.setCastingAttack(false);
             }
         }
 
-        if (shouldBleed && (this.computeHealthRatio() / 0.4f) > 0.25f && this.tickCount % 4 == 0) {
+        if (shouldBleed && (this.computeHealthRatio() / PHASE_3_HEALTH_RATIO) > 0.25f && this.tickCount % 4 == 0) {
             this.setHealth(this.getHealth() - 0.25f);
         }
 
@@ -904,7 +920,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         if (this.isPhase2()) {
-            if (this.computeHealthRatio() <= 0.4f) {
+            if (this.computeHealthRatio() <= PHASE_3_HEALTH_RATIO) {
                 removeStatModifiers();
                 applyStatModifierAllOutPhase();
                 this.shouldBleed = true;
@@ -1163,7 +1179,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             GearTier tier = getGearTier(target);
 
             switch (tier) {
-                case LOW -> event.setAmount(event.getAmount() * 0.75F);
+                case LOW -> event.setAmount(event.getAmount() * PHASE_2_HEALTH_RATIO);
                 case MID -> event.setAmount(event.getAmount());
                 case HIGH -> event.setAmount(event.getAmount() * 1.25F);
             }

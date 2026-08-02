@@ -5,8 +5,6 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.util.EntityUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.debug.PathfindingRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
@@ -26,7 +24,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
@@ -69,7 +66,6 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity implements
         PathNavigation pathNavigation = super.createNavigation(pLevel);
         if (pathNavigation instanceof GroundPathNavigation groundPathNavigation) {
             groundPathNavigation.setCanOpenDoors(true);
-            groundPathNavigation.setCanFloat(true);
         }
         return pathNavigation;
     }
@@ -142,12 +138,6 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity implements
     @Override
     public void baseTick() {
         super.baseTick();
-        Path path = this.navigation.getPath();
-        if (path != null) {
-            Minecraft minecraft = Minecraft.getInstance();
-            PathfindingRenderer pathfindingRenderer = minecraft.debugRenderer.pathfindingRenderer;
-            pathfindingRenderer.addPath(getId(), path, 1f);
-        }
     }
 
     @Override
@@ -305,10 +295,10 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity implements
             switchToSafePose();
         }
 
-        if ((!shouldSwim || !wantsToSwim() || this.wantsToSurface()) && this.isAirAtEyesWhenStanding(this.position())) {
-            this.setPose(Pose.STANDING);
-        } else {
+        if (shouldSwim && !(this.wantsToSurface() && this.isAirAtEyesWhenStanding(this.position()))) {
             this.setPose(Pose.SWIMMING);
+        } else {
+            this.setPose(Pose.STANDING);
         }
     }
 

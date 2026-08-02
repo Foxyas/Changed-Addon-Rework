@@ -50,7 +50,6 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
         this.waterNavigation = new WaterBoundPathNavigation(this, level);
         this.groundNavigation = new GroundPathNavigation(this, level);
         this.groundNavigation.setCanOpenDoors(true);
-        this.groundNavigation.setCanFloat(true);
     }
 
     @Override
@@ -117,16 +116,16 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
         this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.4D, 10));
     }
 
-    public void travel(@NotNull Vec3 p_32394_) {
+    public void travel(@NotNull Vec3 pTravelVector) {
         boolean animateSwim = this.isInWater()
                 && this.canFitInWater(this.position());
 
         if (this.isEffectiveAi() && animateSwim) {
-            this.moveRelative(0.01F, p_32394_);
+            this.moveRelative(0.01F, pTravelVector);
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
         } else {
-            super.travel(p_32394_);
+            super.travel(pTravelVector);
         }
 
     }
@@ -193,7 +192,7 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
             }
 
             if (animateSwim && !(this.wantsToSurface() && this.isAirAtEyesWhenStanding(this.position()))) {
-                this.setPose(Pose.SWIMMING);
+                if (this.wantsToSwim()) this.setPose(Pose.SWIMMING);
             } else {
                 this.setPose(Pose.STANDING);
             }
@@ -203,7 +202,7 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
     public boolean wantsToSwim() {
         LivingEntity livingentity = this.getTarget();
         if (livingentity == null)
-            return true;
+            return false;
         if (livingentity.isInWater())
             return true;
         if (livingentity.isPassenger() && livingentity.getVehicle().isInWater())
@@ -213,14 +212,14 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
 
     public boolean wantsToSurface() {
         if (!this.canBreatheUnderwater() || this.canDrownInFluidType(ForgeMod.WATER_TYPE.get())) {
-            boolean hasEnoughAirSupply = this.getAirSupply() < this.getMaxAirSupply() * 0.5;
+            boolean hasEnoughAirSupply = this.getAirSupply() > this.getMaxAirSupply() * 0.5;
             if (!hasEnoughAirSupply && isUnderWater()) {
                 return true;
             }
 
 
             LivingEntity target = this.getTarget();
-            return target == null || target.isInWater();
+            return target == null || !target.isInWater();
         }
 
 
@@ -409,6 +408,11 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
+        @Override
+        public boolean isInterruptable() {
+            return false;
+        }
+
         public boolean canUse() {
             if (this.mob.getTarget() != null) {
                 return false;
@@ -428,6 +432,9 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
 
         public boolean canContinueToUse() {
             if (this.mob.getTarget() != null) {
+                if (!level.getBlockState(EntityUtil.getEyeBlock(mob)).isAir()) {
+                    return true;
+                }
                 return false;
             }
 

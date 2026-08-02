@@ -2,23 +2,28 @@ package net.foxyas.changedaddon.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
+import io.netty.buffer.Unpooled;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.world.LatexCoverState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.debug.PathfindingRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.OutgoingChatMessage;
+import net.minecraft.network.protocol.game.ClientboundCustomPayloadPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -26,11 +31,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
 
 import java.util.*;
@@ -39,6 +47,30 @@ import java.util.stream.Stream;
 import static net.foxyas.changedaddon.util.DynamicClipContext.IGNORE_TRANSLUCENT;
 
 public class FoxyasUtil {
+
+    @OnlyIn(Dist.CLIENT)
+    public static void sendPathToDebugRenderer(PathNavigation pathNavigation, LivingEntity mob) {
+        Path path = pathNavigation.getPath();
+        if (path != null) {
+            Minecraft minecraft = Minecraft.getInstance();
+            PathfindingRenderer pathfindingRenderer = minecraft.debugRenderer.pathfindingRenderer;
+            pathfindingRenderer.addPath(mob.getId(), path, 1f);
+        }
+    }
+
+    // Too lazy to test if this works lol...
+    public static void sendPathToDebugRendererServer(PathNavigation pathNavigation, LivingEntity mob) {
+        Path path = pathNavigation.getPath();
+        if (path != null) {
+            if (mob.level() instanceof ServerLevel serverLevel) {
+                FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+                buf.writeInt(mob.getId());
+                buf.writeFloat(1);
+                path.writeToStream(buf);
+                serverLevel.sendPacketToServer(new ClientboundCustomPayloadPacket(ClientboundCustomPayloadPacket.DEBUG_PATHFINDING_PACKET, buf));
+            }
+        }
+    }
 
     public static List<ItemStack> getAllItemsFromContainer(Container container) {
         List<ItemStack> items = new ArrayList<>();

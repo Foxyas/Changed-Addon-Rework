@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -119,16 +120,6 @@ public class CuttingRecipes {
                         1
                 )
                 .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM.get(),
-                        0.85f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM.get(),
-                        0.85f,
-                        1
-                )
-                .addResultWithChance(
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
                         0.85f,
                         1
@@ -136,11 +127,6 @@ public class CuttingRecipes {
                 .addResultWithChance(
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
                         0.65f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.35f,
                         1
                 )
                 .save(consumer, salvagingRecipe("luminara_sapling"));
@@ -153,14 +139,9 @@ public class CuttingRecipes {
                         0.9f
                 )
                 .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM.get(),
+                        Items.STICK,
                         0.75f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM.get(),
-                        0.75f,
-                        1
+                        4
                 )
                 .addResultWithChance(
                         ChangedAddonItems.LUMINARA_SAPLING.get(),
@@ -168,34 +149,6 @@ public class CuttingRecipes {
                         1
                 )
                 .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM.get(),
-                        0.85f,
-                        4
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.25f,
-                        2
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.25f,
-                        2
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.25f,
-                        2
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.25f,
-                        2
-                ).addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.25f,
-                        2
-                ).addResultWithChance(
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
                         0.25f,
                         2
