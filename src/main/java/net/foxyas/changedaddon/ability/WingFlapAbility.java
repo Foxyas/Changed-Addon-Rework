@@ -259,7 +259,7 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
             }
             if (player.isFallFlying() && !player.getAbilities().flying && readyToDash) {
                 this.readyToDash = false;
-                double speed = 2 * dashPower;
+                double speed = 0.25f * dashPower;
                 player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(speed, speed, speed)));
                 playFlapSound(player);
                 exhaustPlayer(player, 4F * dashPower);
