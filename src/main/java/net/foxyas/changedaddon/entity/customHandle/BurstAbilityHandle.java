@@ -32,6 +32,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
 
     protected boolean isDestructive;
     protected boolean isEvasive;
+    protected boolean useGameTimeInsteadOfEntityTicks;
     protected BiPredicate<BlockState, BlockPos> canDestroyBlock;
 
     @Nullable
@@ -47,7 +48,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
      * @param timeoutTicks             Time elapsed without hitting target (in ticks) to award progress.
      */
     public BurstAbilityHandle(T mob, BiFunction<T, BurstAbilityHandle<T>, Float> maxBurstProgressSupplier, int timeoutTicks) {
-        this(mob, maxBurstProgressSupplier, timeoutTicks, false, false, (state, pos) -> !state.isAir() && state.getDestroySpeed(mob.level(), pos) >= 0.0F, null, null, null);
+        this(mob, maxBurstProgressSupplier, timeoutTicks, false, false, false, (state, pos) -> !state.isAir() && state.getDestroySpeed(mob.level(), pos) >= 0.0F, null, null, null);
     }
 
     /**
@@ -58,6 +59,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
                               int timeoutTicks,
                               boolean isDestructive,
                               boolean isEvasive,
+                              boolean useGameTimeInsteadOfEntityTicks,
                               BiPredicate<BlockState, BlockPos> canDestroyBlock,
                               @Nullable BiConsumer<T, BurstAbilityHandle<T>> customDestructiveHandle,
                               @Nullable BiConsumer<T, BurstAbilityHandle<T>> customEvasiveHandle,
@@ -70,6 +72,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
         this.lastHitGameTime = mob.level().getGameTime();
         this.isDestructive = isDestructive;
         this.isEvasive = isEvasive;
+        this.useGameTimeInsteadOfEntityTicks = useGameTimeInsteadOfEntityTicks;
         this.canDestroyBlock = canDestroyBlock;
         this.customDestructiveHandle = customDestructiveHandle;
         this.customEvasiveHandle = customEvasiveHandle;
@@ -155,12 +158,20 @@ public class BurstAbilityHandle<T extends LivingEntity> {
             addBurstProgress(0.5f);
         }
 
-        // Check if the timeout threshold without hitting the target was reached
-        long elapsedTicks = currentGameTime - lastHitGameTime;
-        if (elapsedTicks >= timeoutTicks && mob.getCombatTracker().takingDamage) {
-            addBurstProgress(0.5f);
-            this.lastHitGameTime = currentGameTime;
+        if (useGameTimeInsteadOfEntityTicks) {
+            // Check if the timeout threshold without hitting the target was reached
+            long elapsedTicks = currentGameTime - lastHitGameTime;
+            if (elapsedTicks >= timeoutTicks && mob.getCombatTracker().takingDamage) {
+                addBurstProgress(0.5f);
+                this.lastHitGameTime = currentGameTime;
+            }
+        } else {
+            if (mob.getLastHurtMobTimestamp() >= timeoutTicks && mob.getCombatTracker().takingDamage) {
+                addBurstProgress(0.5f);
+            }
         }
+
+
     }
 
     /**
@@ -217,7 +228,6 @@ public class BurstAbilityHandle<T extends LivingEntity> {
             } else {
                 destroyBlocks(3);
             }
-            this.burstProgress = 0;
         }
 
         // Evasive check
@@ -227,14 +237,13 @@ public class BurstAbilityHandle<T extends LivingEntity> {
             } else {
                 applyEvasiveKnockback(5.0D, 1.25D);
             }
-            this.burstProgress = 0;
         }
 
         // General custom action handle
         if (this.customHandle != null) {
             this.customHandle.accept(this.mob, this);
-            this.burstProgress = 0;
         }
+        this.burstProgress = 0;
     }
 
     /**
@@ -354,6 +363,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
         private int timeoutTicks = 60;
         private boolean isDestructive = false;
         private boolean isEvasive = false;
+        private boolean useGameTimeInsteadOfEntityTicks = false;
         private BiPredicate<BlockState, BlockPos> canDestroyBlock;
 
         @Nullable
@@ -409,6 +419,16 @@ public class BurstAbilityHandle<T extends LivingEntity> {
             return this;
         }
 
+        public Builder<T> useGameTimeInsteadOfEntityTicks() {
+            this.useGameTimeInsteadOfEntityTicks = true;
+            return this;
+        }
+
+        public Builder<T> setUseGameTimeInsteadOfEntityTicks(boolean useGameTimeInsteadOfEntityTicks) {
+            this.useGameTimeInsteadOfEntityTicks = useGameTimeInsteadOfEntityTicks;
+            return this;
+        }
+
         public Builder<T> canDestroyBlock(BiPredicate<BlockState, BlockPos> predicate) {
             this.canDestroyBlock = predicate;
             return this;
@@ -452,6 +472,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
                     timeoutTicks,
                     isDestructive,
                     isEvasive,
+                    useGameTimeInsteadOfEntityTicks,
                     canDestroyBlock,
                     customDestructiveHandle,
                     customEvasiveHandle,

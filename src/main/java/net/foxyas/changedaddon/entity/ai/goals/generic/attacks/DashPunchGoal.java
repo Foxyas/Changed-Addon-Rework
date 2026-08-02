@@ -247,9 +247,10 @@ public class DashPunchGoal extends Goal {
             if (isTargetDoingCorrectSwingParry(target, pSource)) {
                 onParriedAttemptToHitTarget(target);
                 return;
-            }
-            if (target.hurt(pSource, 8.0F)) {
-                onHitTarget(target);
+            } else {
+                if (target.hurt(pSource, 8.0F)) {
+                    onHitTarget(target);
+                }
             }
         } else {
             onBlockedAttemptToHitTarget(target);
@@ -312,8 +313,8 @@ public class DashPunchGoal extends Goal {
         if (mob.level() instanceof ServerLevel server) {
             server.sendParticles(ParticleTypes.FLASH, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
         }
-        mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 1.0F);
-        mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
+        mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 1.0F);
+        mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
 
         dashTicks = MAX_DASH_TICKS;
         this.phase = Phase.IDLE;

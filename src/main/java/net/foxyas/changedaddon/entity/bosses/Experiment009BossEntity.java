@@ -227,6 +227,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     public void setCastingAttack(boolean value) {
         this.entityData.set(CASTING_ATTACK, value);
+        this.setCastingTicks(0);
     }
 
     protected void setAttributes(AttributeMap attributes) {

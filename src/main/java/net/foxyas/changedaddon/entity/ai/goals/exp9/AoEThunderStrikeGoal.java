@@ -124,6 +124,7 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
         //pathfinderMob.getNavigation().stop();
         if (experiment009 instanceof Experiment009BossEntity experiment009BossEntity) {
             experiment009BossEntity.setCastingAttack(true);
+            experiment009BossEntity.setCastingTicks(0);
         }
         if (tickCounter % 10 != 0) return;
         thunderStorm();
@@ -296,6 +297,7 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
         this.cooldown = cooldownProvider.sample(this.experiment009.getRandom());
         if (experiment009 instanceof Experiment009BossEntity experiment009BossEntity) {
             experiment009BossEntity.setCastingAttack(false);
+            experiment009BossEntity.setCastingTicks(0);
         }
         this.tickCounter = 0;
         this.setCanceledTo(false);
