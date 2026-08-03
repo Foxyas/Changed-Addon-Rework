@@ -287,12 +287,14 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     public void applyDodgeEffects(LevelAccessor level, @Nullable Entity attacker, LivingEntity dodger, boolean causeExhaustion) {
         if (!ultraInstinct) this.subDodgeAmount();
 
-        if (dodger instanceof Player player) {
-            if (ultraInstinct) {
+        if (ultraInstinct) {
+            applyDodgeAnimations(dodger);
+            if (dodger instanceof Player player) {
                 player.displayClientMessage(Component.translatable("ability.changed_addon.dodge.ultra_instinct"), true);
-                return;
             }
-
+            return;
+        }
+        if (dodger instanceof Player player) {
             player.displayClientMessage(Component.translatable("ability.changed_addon.dodge.dodge_amount_left", this.getDodgeStaminaRatio()), false);
             if (causeExhaustion) {
                 player.causeFoodExhaustion(8f);
