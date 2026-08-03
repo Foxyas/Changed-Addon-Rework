@@ -855,6 +855,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
+        tag.putBoolean("wasPhasedForPhase2", wasPhasedForPhase2);
+        tag.putBoolean("wasPhasedForPhase3", wasPhasedForPhase3);
         super.addAdditionalSaveData(tag);
         tag.putBoolean("isPhase3", isPhase3());
         tag.putBoolean("Bleeding", shouldBleed);
@@ -865,16 +867,21 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     public CompoundTag savePlayerVariantData() {
         CompoundTag tag = super.savePlayerVariantData();
-        tag.putBoolean("isPhase2", isPhase2());
+        tag.putBoolean("wasPhasedForPhase2", wasPhasedForPhase2);
+        tag.putBoolean("wasPhasedForPhase3", wasPhasedForPhase3);
         tag.putBoolean("isPhase3", isPhase3());
         return tag;
     }
 
     @Override
     public void readPlayerVariantData(CompoundTag tag) {
+        if (tag.contains("wasPhasedForPhase2")) {
+            wasPhasedForPhase2 = tag.getBoolean("wasPhasedForPhase2");
+        }
+        if (tag.contains("wasPhasedForPhase2")) {
+            wasPhasedForPhase3 = tag.getBoolean("wasPhasedForPhase3");
+        }
         super.readPlayerVariantData(tag);
-        if (tag.contains("isPhase2"))
-            setPhase2(tag.getBoolean("isPhase2"));
         if (tag.contains("isPhase3"))
             setPhase3(tag.getBoolean("isPhase3"));
     }
