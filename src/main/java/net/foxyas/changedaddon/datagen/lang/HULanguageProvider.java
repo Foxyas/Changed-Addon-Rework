@@ -731,6 +731,7 @@ public class HULanguageProvider extends LanguageProvider {
         addText("rp.bow_and_crossbow_stop.no_grip_strength", "A mancsaid nem tudják biztos fogást tartani az íjban!");
         addText("rp.bow_and_crossbow_stop.crossbow_safety", "Túl vastagok az ujjaid ahhoz, hogy a számszeríj mechanizmusát kezeld!");
         addText("rp.bow_and_crossbow_stop.clumsy_paws", "Ilyen ügyetlen mancsokkal szinte lehetetlen nyilat húzni!");
+        addText("item.signal_catcher.info.not_hold_enough", "Nem található hely. Kérjük, vizsgálja át teljesen a területet, és várja meg a figyelmeztetést, mielőtt elengedné a gombot.");
 
         addMessage("induction_coil_melt", "§4⚡ Fémet vittél egy elektromos harcba. §cMicsoda ostoba lépés. §6Olvad a felszerelésed a hőségtől!");
 
@@ -775,5 +776,7 @@ public class HULanguageProvider extends LanguageProvider {
 
         addBuiltInResource("brute_grabby_entities", "Megragadó entitások: Brutális");
         addBuiltInResource("grabby_entities", "Megragadó entitások");
+
+        addTooltip("latex_syringe.purified", "Tisztított");
     }
 }

@@ -728,6 +728,7 @@
   "text.changed_addon.cuddle_button": "Ölelkezés elkezdése",
   "text.changed_addon.display.hazard_body_suit.cant_have_helmet": "Mmph... Nyomja a fülem! Jobb, ha nem veszem fel.",
   "text.changed_addon.invalid_cuddle_state": "Nem tudsz egyedül ölelkezni.",
+  "text.changed_addon.item.signal_catcher.info.not_hold_enough": "Nem található hely. Kérjük, vizsgálja át teljesen a területet, és várja meg a figyelmeztetést, mielőtt elengedné a gombot.",
   "text.changed_addon.item.vial.wrong_use": "Ennek a tárgynak a használata ott nem fog működni.",
   "text.changed_addon.item.vial.wrong_use.hint": "Ennek a tárgynak a használata ott nem fog működni, próbáld meg élő forrásban alkalmazni.",
   "text.changed_addon.jumpStrength": "Ugrás erőssége = %s",
@@ -744,6 +745,7 @@
   "text.changed_addon.rp.guns_compatibility.paws_too_big": "Túl nagyok a mancsaid ahhoz, hogy beleférjenek a ravaszvédőbe!",
   "text.changed_addon.stop_cuddling": "Nyomd meg a %s gombot az ölelkezés befejezéséhez",
   "text.changed_addon.swim_speed": "Úszási sebesség = %s",
+  "tooltip.changed_addon.latex_syringe.purified": "Tisztított",
   "trim_material.changed_addon.goo_core": "Ragacsmag-szilánkból készült",
   "trim_material.changed_addon.iridium": "Irídiumból készült",
   "warn.rei.not.supported.move.items.but.right.container": "Az elemek áthelyezése nem támogatott ennél a munkaállomásnál"
