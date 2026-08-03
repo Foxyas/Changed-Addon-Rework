@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
 
@@ -263,6 +265,13 @@ public abstract class AbstractSwimmableChangedEntity extends ChangedEntity {
                 float f2 = Mth.lerp(0.125F, this.aquaticEntity.getSpeed(), f1);
                 this.aquaticEntity.setSpeed(f2 * 1.05f);
                 this.aquaticEntity.setDeltaMovement(this.aquaticEntity.getDeltaMovement().add((double) f2 * d0 * 0.005D, (double) f2 * d1 * 0.1D, (double) f2 * d2 * 0.005D));
+
+                BlockPos blockpos = this.mob.blockPosition();
+                BlockState blockstate = this.mob.level().getBlockState(blockpos);
+                VoxelShape voxelshape = blockstate.getCollisionShape(this.mob.level(), blockpos);
+                if (d2 > (double)this.mob.getStepHeight() && d0 * d0 + d1 * d1 < (double)Math.max(1.0F, this.mob.getBbWidth()) || !voxelshape.isEmpty() && this.mob.getY() < voxelshape.max(Direction.Axis.Y) + (double)blockpos.getY() && !blockstate.is(BlockTags.DOORS) && !blockstate.is(BlockTags.FENCES)) {
+                    this.mob.getJumpControl().jump();
+                }
             } else {
                 super.tick();
             }
