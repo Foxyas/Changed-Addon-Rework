@@ -1,8 +1,12 @@
 package net.foxyas.changedaddon.entity.customHandle;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -177,8 +181,8 @@ public class BurstAbilityHandle<T extends LivingEntity> {
     /**
      * Should be called whenever the  deals damage to any entity.
      *
-     * @param source       DamageSource.
-     * @param amount       Damage amount.
+     * @param source DamageSource.
+     * @param amount Damage amount.
      */
     public void onDamageTaken(DamageSource source, float amount) {
         Entity sourceEntity = source.getEntity();
@@ -196,8 +200,8 @@ public class BurstAbilityHandle<T extends LivingEntity> {
     /**
      * Should be called whenever the  deals damage to any entity.
      *
-     * @param source       DamageSource.
-     * @param amount       Damage amount.
+     * @param source DamageSource.
+     * @param amount Damage amount.
      */
     public void onDamageDealt(DamageSource source, float amount) {
         Entity sourceEntity = source.getEntity();
@@ -280,6 +284,11 @@ public class BurstAbilityHandle<T extends LivingEntity> {
 
         AABB area = mob.getBoundingBox().inflate(radius);
         List<LivingEntity> nearby = level.getEntitiesOfClass(LivingEntity.class, area, entity -> entity != mob && entity.isAlive());
+
+        level.playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 2.0F);
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.EXPLOSION, mob.getX(), mob.getEyeY(), mob.getZ(), 0, 0, 0, 0, 1);
+        }
 
         for (LivingEntity target : nearby) {
             Vec3 pushVec = target.position().subtract(mob.position()).normalize();

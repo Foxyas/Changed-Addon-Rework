@@ -11,6 +11,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -271,10 +273,26 @@ public class DashPunchGoal extends Goal {
         mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1.0F, 1.0F);
     }
 
+    public int getCurrentSwingDurationFor(LivingEntity self) {
+        if (MobEffectUtil.hasDigSpeed(self)) {
+            return 6 - (1 + MobEffectUtil.getDigSpeedAmplification(self));
+        } else {
+            return self.hasEffect(MobEffects.DIG_SLOWDOWN) ? 6 + (1 + self.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) * 2 : 6;
+        }
+    }
+
     protected boolean isTargetDoingCorrectSwingParry(LivingEntity target, DamageSource damageSource) {
+        return isTargetDoingCorrectSwingParry(target, damageSource, 0.5f, 0.5f);
+    }
+
+    protected boolean isTargetDoingCorrectSwingParry(LivingEntity target, DamageSource damageSource, float viewPrecision, float swingPrecision) {
         // 1. Checa se o alvo está executando um swing/ataque no momento
-        // target.swinging é verdadeiro enquanto a animação do braço acontece
-        if (!target.swinging) {
+        // swingPrecision entre 0.0f e 1.0f (ex: 0.5f = primeiros 50% do swing)
+        int maxDuration = getCurrentSwingDurationFor(target);
+        float allowedParryTicks = maxDuration * swingPrecision;
+
+        // Se o swingTime passou da janela permitida, falha o parry
+        if (!target.swinging || target.swingTime > allowedParryTicks) {
             return false;
         }
 
@@ -299,11 +317,7 @@ public class DashPunchGoal extends Goal {
             // -1.0 = olhando de costas para a fonte
             double dotProduct = targetToSource.dot(viewVector);
 
-            // 0.5D equivale a um cone de ~60 graus de tolerância na frente do jogador (cos(60°) = 0.5)
-            // Se quiser exigir mais precisão, aumente para 0.7D7 (~45°) ou 0.866D (~30°)
-            double minParryThreshold = 0.5D;
-
-            return dotProduct >= minParryThreshold;
+            return dotProduct >= viewPrecision;
         }
 
         return false;
@@ -311,7 +325,7 @@ public class DashPunchGoal extends Goal {
 
     protected void onParriedAttemptToHitTarget(LivingEntity target) {
         if (mob.level() instanceof ServerLevel server) {
-            server.sendParticles(ParticleTypes.FLASH, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
+            server.sendParticles(ParticleTypes.FLASH, mob.getX(), mob.getEyeY(), mob.getZ(), 5, 0.2, 0.2, 0.2, 0.25f);
         }
         mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 1.0F);
         mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
