@@ -42,13 +42,15 @@ public class ClawsAbility extends AbstractAbility<ClawsAbility.Data> {
         @Override
         public void startUsing() {
             if (!entity.getLevel().isClientSide()) {
-                activateClaws();
+                toggleClaws();
                 this.ability.setDirty(entity);
             }
         }
 
-        public void activateClaws() {
+        public void toggleClaws() {
             this.isActive = !this.isActive;
+            Component message = Component.translatable("ability.changed_addon.claws.desc.info.toggle" + (isActive ? ".on" : ".off"));
+            this.entity.displayClientMessage(message, true);
         }
 
         @Override
@@ -132,6 +134,10 @@ public class ClawsAbility extends AbstractAbility<ClawsAbility.Data> {
     public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
         Collection<Component> description = new ArrayList<>(super.getAbilityDescription(entity));
         description.add(Component.translatable("ability.changed_addon.claws.desc"));
+        Data data = entity.getAbilityInstance(this);
+        if (data != null) {
+            description.add(Component.translatable("ability.changed_addon.claws.desc.info." + (data.isActive ? "enabled" : "disabled")));
+        }
         return description;
     }
 

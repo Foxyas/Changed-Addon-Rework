@@ -8,6 +8,7 @@
     "abilities.AbilityControllerAccessor",
     "abilities.AbilityControllerMixin",
     "abilities.GrabEntityAbilityInstanceMixin",
+    "abilities.GrabEntityAbilityMixin",
     "abilities.GrabEntityPacketMixin",
     "abilities.SwitchGenderAbilityMixin",
     "blocks.BlockBehaviourMixin",

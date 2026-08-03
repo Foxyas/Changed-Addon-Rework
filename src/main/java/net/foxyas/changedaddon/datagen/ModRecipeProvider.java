@@ -11,11 +11,14 @@ import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.item.LaethinItem;
+import net.foxyas.changedaddon.util.ItemStackLoreUtil;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -23,6 +26,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
+import net.minecraftforge.common.crafting.PartialNBTIngredient;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
@@ -33,8 +37,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
-import static net.minecraft.world.item.Items.DIAMOND;
-import static net.minecraft.world.item.Items.TINTED_GLASS;
+import static net.minecraft.world.item.Items.*;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
 
@@ -183,6 +186,50 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                         getHasName(Items.BLAZE_ROD),
                         has(Items.BLAZE_ROD)
                 )
+                .save(recipeConsumer);
+
+        ItemStack safeSyringeStack = new ItemStack(ChangedItems.LATEX_SYRINGE.get());
+        CompoundTag tag = safeSyringeStack.getOrCreateTag();
+        tag.putBoolean("safe", true);
+        ItemStackLoreUtil.addLore(safeSyringeStack, Component.literal("THIS IS SUPPOSED TO BE SAFE"));
+
+        // EXP 10 Containment Vial
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EXP_10_CONTAINMENT_VIAL.get())
+                .pattern("012")
+                .pattern("345")
+                .pattern("678")
+                .define('0', NETHERITE_UPGRADE_SMITHING_TEMPLATE)
+                .define('1', EXP_10_LATEX_BASE.get())
+                .define('2', ChangedAddonTags.Items.GOOEY) // Assuming your tag is defined in ChangedAddonTags.Items
+                .define('3', GOO_CORE_FRAGMENT.get())
+                .define('4', Items.NETHER_STAR)
+                .define('5', Items.TOTEM_OF_UNDYING)
+                .define('6', PartialNBTIngredient.of(safeSyringeStack.getItem(), safeSyringeStack.getOrCreateTag()))
+                .define('7', BIOMASS.get())
+                .define('8', LUMINARA_BLOOM_PETALS.get())
+                .unlockedBy(getHasName(EXP_10_LATEX_BASE.get()), has(EXP_10_LATEX_BASE.get()))
+                .unlockedBy(getHasName(EXPERIMENT_10_DNA.get()), has(EXPERIMENT_10_DNA.get()))
+                .unlockedBy(getHasName(RED_LATEX_GOO.get()), has(RED_LATEX_GOO.get()))
+                .save(recipeConsumer);
+
+
+        // EXP 9 Containment Vial
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EXP_9_CONTAINMENT_VIAL.get())
+                .pattern("NAZ")
+                .pattern("LTP")
+                .pattern("UCD")
+                .define('N', BIOMASS.get())
+                .define('A', ChangedAddonTags.Items.GOOEY)
+                .define('Z', LUMINARA_BLOOM_PETALS.get())
+                .define('L', GOO_CORE_FRAGMENT.get())
+                .define('T', Items.TOTEM_OF_UNDYING)
+                .define('P', EXP_9_LATEX_BASE.get())
+                .define('U', PartialNBTIngredient.of(safeSyringeStack.getItem(), safeSyringeStack.getOrCreateTag()))
+                .define('C', Items.COPPER_BLOCK)
+                .define('D', Items.IRON_BLOCK)
+                .unlockedBy(getHasName(EXP_9_LATEX_BASE.get()), has(EXP_9_LATEX_BASE.get()))
+                .unlockedBy(getHasName(EXPERIMENT_009_DNA.get()), has(EXPERIMENT_009_DNA.get()))
+                .unlockedBy(getHasName(TRANSFUR_TOTEM.get()), has(TRANSFUR_TOTEM.get()))
                 .save(recipeConsumer);
 
         BasicCropRecipeProvider.buildRecipes(recipeConsumer);

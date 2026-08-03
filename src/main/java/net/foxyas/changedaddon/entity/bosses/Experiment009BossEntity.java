@@ -108,6 +108,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 //        return SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
 //    }
 
+    private boolean wasPhasedForPhase2 = false;
+    private boolean wasPhasedForPhase3 = false;
+
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private boolean shouldBleed;
     public final TargetDataManager targetDataManager;
@@ -706,10 +709,18 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             case PHASE1 -> {
             }
             case PHASE2 -> {
-                knockBackAndDoThunderBolt();
+                if (!wasPhasedForPhase2) {
+                    knockBackAndDoThunderBolt();
+                    wasPhasedForPhase2 = true;
+                    wasPhasedForPhase3 = false;
+                }
             }
             case PHASE3 -> {
-                knockbackAndDoThunderStorm();
+                if (!wasPhasedForPhase3) {
+                    knockbackAndDoThunderStorm();
+                    wasPhasedForPhase2 = true;
+                    wasPhasedForPhase3 = true;
+                }
             }
         }
     }
@@ -824,6 +835,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
+        if (tag.contains("wasPhasedForPhase2")) {
+            wasPhasedForPhase2 = tag.getBoolean("wasPhasedForPhase2");
+        }
+        if (tag.contains("wasPhasedForPhase2")) {
+            wasPhasedForPhase3 = tag.getBoolean("wasPhasedForPhase3");
+        }
         super.readAdditionalSaveData(tag);
         if (tag.contains("isPhase3"))
             setPhase3(tag.getBoolean("isPhase3"));
@@ -1059,6 +1076,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         lightning.moveTo(pos.x(), pos.y(), pos.z());
         lightning.setCause(null);
+        lightning.setVisualOnly(true);
         this.level.addFreshEntity(lightning);
         ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
     }

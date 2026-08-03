@@ -178,7 +178,7 @@
         {
           "type": "minecraft:item",
           "weight": 10,
-          "name": "minecraft:netherite_scrap",
+          "name": "changed_addon:painite",
           "functions": [
             {
               "function": "minecraft:set_count",

@@ -129,7 +129,7 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
             charge = Mth.clamp((float) ticks / chargeTime, 0.25f, 2f);
         }
 
-        entity.displayClientMessage(Component.literal("TICKS:" + ticks + " AND CHARGE:" + charge), true);
+//        entity.displayClientMessage(Component.literal("TICKS:" + ticks + " AND CHARGE:" + charge), true);
     }
 
     public float getReachOfThunder() {

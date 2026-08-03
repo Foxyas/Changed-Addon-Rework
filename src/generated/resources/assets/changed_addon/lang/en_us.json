@@ -1,4 +1,5 @@
 {
+  "ability.changed.grab_entity.desc.toggle_grab_safe_mode": "Press %s or %s to toggle friendly grab",
   "ability.changed_addon.advanced_hearing": "Advanced Hearing",
   "ability.changed_addon.carry": "Carry",
   "ability.changed_addon.claws": "Claws Ability",
@@ -461,7 +462,7 @@
   "gamerule.changed_addon:painiteGeneration.description": "Activate the generation of painite ore",
   "gamerule.changed_addon:tickToDarkLatexMaskTransfur": "Ticks Need to dark latex mask transfur",
   "gamerule.changed_addon:tickToDarkLatexMaskTransfur.description": "Set how much time in ticks the player need to hold the dark latex mask in hands to trigger it transfur damage, if is less or equal to 0 it will be considered as deactivated",
-  "gui.changed_addon.abilities_radial_screen.mouse.right_click": "Press Right Mouse Button to select the Second Ability",
+  "gui.changed_addon.abilities_radial_screen.mouse.right_click": "Press %s to select the Second Ability",
   "gui.changed_addon.catalyzer.nitrogen_usage": "ProgressSpeed is %1$s per tick and use %2$s of Nitrogen Power",
   "gui.changed_addon.catalyzer_gui.label_full": "Full",
   "gui.changed_addon.catalyzer_gui.tooltip.place_first_ingredient": "Place the first ingredient",

@@ -104,11 +104,46 @@ public class ClientEvent {
         if (stack.getItem() instanceof VariantHoldingBase) {
             if (stack.hasTag() && stack.getOrCreateTag().getBoolean("safe")) {
                 Component comp = Component.translatable("tooltip.changed_addon.latex_syringe.purified").withStyle(Style.EMPTY.applyFormats(ChatFormatting.ITALIC, ChatFormatting.YELLOW));
+
+//                boolean itAdded = false;
+//                for (int i = 0; i < tooltip.size(); i++) {
+//                    Component component = tooltip.get(i);
+//                    ResourceLocation registryName = ForgeRegistries.ITEMS.getKey(stack.getItem());
+//                    if (registryName == null) {
+//                        break;
+//                    }
+//
+//                    boolean contains = component.toString().contains(registryName.toString());
+//                    if (contains) {
+//                        // BEFORE ID
+//                        tooltip.add(i, comp);
+//                        itAdded = true;
+//                        break;
+//                    }
+//                }
+
+                int index;
                 if (tooltip.size() < 3) {
-                    tooltip.add(1, comp);
+                    index = 1;
                 } else if (stack.getItem() instanceof LatexTippedArrowItem) {
-                    tooltip.add(2, comp);
-                } else tooltip.add(tooltip.size() > 3 ? 3 : tooltip.size() - 1, comp);
+                    index = 2;
+                } else {
+                    index = tooltip.size() > 3 ? 3 : tooltip.size() - 1;
+                }
+
+                ResourceLocation loc = ResourceLocation.tryParse(stack.getOrCreateTag().getString("form"));
+                TransfurVariant<?> tf;
+                try {
+                    tf = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(loc);
+                } catch (Exception e) {
+                    tf = null;
+                }
+
+                if (loc == null || tf == null) {
+                    index -= 1;
+                }
+
+                tooltip.add(index, comp);
             }
         }
     }

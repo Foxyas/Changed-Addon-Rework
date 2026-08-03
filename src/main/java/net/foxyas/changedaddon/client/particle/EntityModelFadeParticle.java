@@ -9,10 +9,7 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.mixins.client.renderer.LivingEntityRendererAccessor;
 import net.ltxprogrammer.changed.client.ModelPartStem;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
-import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.LatexElytraLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.LatexHumanoidArmorLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.LatexItemInHandLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.*;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.EntityUtil;
@@ -242,6 +239,7 @@ public class EntityModelFadeParticle extends Particle {
                             || layer instanceof LatexItemInHandLayer<?, ?>
                             || layer instanceof CustomEyesLayer<?, ?>
                             || layer instanceof LatexElytraLayer<?, ?>
+                            || layer instanceof AccessoryLayer<?,?>
                     ) {
 //                        if (layer instanceof LatexHumanoidArmorLayer armorLayer) {
 //
@@ -387,6 +385,7 @@ public class EntityModelFadeParticle extends Particle {
                     if (layer instanceof HumanoidArmorLayer<?, ?, ?>
                             || layer instanceof ItemInHandLayer<?, ?>
                             || layer instanceof ElytraLayer<?, ?>
+                            || layer instanceof AccessoryLayer<?,?>
                     ) {
                         continue;
                     }

@@ -1,0 +1,44 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "changed_addon:gooey"
+    },
+    "C": {
+      "item": "minecraft:copper_block"
+    },
+    "D": {
+      "item": "minecraft:iron_block"
+    },
+    "L": {
+      "item": "changed_addon:goo_core_fragment"
+    },
+    "N": {
+      "item": "changed_addon:biomass"
+    },
+    "P": {
+      "item": "changed_addon:exp_9_latex_base"
+    },
+    "T": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "U": {
+      "type": "forge:partial_nbt",
+      "item": "changed:latex_syringe",
+      "nbt": "{display:{Lore:['{\"text\":\"THIS IS SUPPOSED TO BE SAFE\"}']},safe:1b}"
+    },
+    "Z": {
+      "item": "changed_addon:luminara_bloom_petals"
+    }
+  },
+  "pattern": [
+    "NAZ",
+    "LTP",
+    "UCD"
+  ],
+  "result": {
+    "item": "changed_addon:exp_9_containment_vial"
+  },
+  "show_notification": true
+}

@@ -6,9 +6,11 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
+import net.foxyas.changedaddon.ability.api.IWheelKeyPressHandler;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
 import net.foxyas.changedaddon.network.packet.SafeGrabSyncPacket;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -29,6 +31,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
+import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -44,7 +47,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Mixin(value = GrabEntityAbilityInstance.class, remap = false)
-public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInstance implements GrabEntityAbilityExtensor {
+public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInstance implements GrabEntityAbilityExtensor, IWheelKeyPressHandler {
 
     @Shadow
     public boolean suited;
@@ -334,5 +337,34 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
 
         return original;
+    }
+
+    @Override
+    public boolean isWheelKeyPressedValid(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
+        if (isMouse) {
+            boolean isKeyValid = keyPressed == GLFW.GLFW_MOUSE_BUTTON_RIGHT || keyPressed == GLFW.GLFW_MOUSE_BUTTON_MIDDLE;
+            return isKeyValid && action == GLFW.GLFW_PRESS;
+        }
+        return false;
+    }
+
+    @Override
+    public void onServerProcessWheelKeyPressed(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
+        if (isWheelKeyPressedValid(player, isMouse, keyPressed, action, modifiers)) {
+            this.setSafeMode(!this.isSafeMode());
+            if (!player.level().isClientSide()) {
+                player.displayClientMessage(Component.translatable("key.changed_addon.turn_off_transfur.grab_safe_mode", safeMode), true);
+            }
+        }
+    }
+
+    @Override
+    public boolean onClientWheelKeyPressed(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
+        if (isWheelKeyPressedValid(player, isMouse, keyPressed, action, modifiers)) {
+            this.setSafeMode(!this.isSafeMode());
+            ChangedAddonMod.PACKET_HANDLER.sendToServer(new AbilityWheelKeyPressPacket(keyPressed, action, modifiers, isMouse, ability));
+            return true;
+        }
+        return false;
     }
 }

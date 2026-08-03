@@ -1,7 +1,5 @@
 package net.foxyas.changedaddon.network.packet;
 
-import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
-import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -40,15 +38,15 @@ public record TurnOffTransfurPacket(int type, int pressedMs) {
                 }
             }
 
-            if (tf.getSelectedAbility() instanceof GrabEntityAbilityInstance grabEntityAbilityInstance) {
-                if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor abilityExtensor) {
-                    boolean safeMode = !abilityExtensor.isSafeMode();
-                    abilityExtensor.setSafeModeAuthoritative(safeMode);
-                    if (!player.level().isClientSide()) {
-                        player.displayClientMessage(Component.translatable("key.changed_addon.turn_off_transfur.grab_safe_mode", safeMode), false);
-                    }
-                }
-            }
+//            if (tf.getSelectedAbility() instanceof GrabEntityAbilityInstance grabEntityAbilityInstance) {
+//                if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor abilityExtensor) {
+//                    boolean safeMode = !abilityExtensor.isSafeMode();
+//                    abilityExtensor.setSafeModeAuthoritative(safeMode);
+//                    if (!player.level().isClientSide()) {
+//                        player.displayClientMessage(Component.translatable("key.changed_addon.turn_off_transfur.grab_safe_mode", safeMode), false);
+//                    }
+//                }
+//            }
         }
     }
 

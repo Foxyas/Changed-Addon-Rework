@@ -200,6 +200,10 @@ public class ENLanguageProvider extends LanguageProvider {
         addAbility("carry", "Carry");
         addAbility("claws", "Claws Ability");
         addAbility("claws.desc", "Activate your feline claws and unleash sweeping attacks with your §mhands§r Paws.");
+        addAbility("claws.desc.info.enabled", "Your claws are currently extended.");
+        addAbility("claws.desc.info.disabled", "Your claws are currently retracted.");
+        addAbility("claws.desc.info.toggle.on", "Extended your claws.");
+        addAbility("claws.desc.info.toggle.off", "Retracted your claws.");
         addAbility("custom_interaction", "Variant Custom Interaction ");
         addAbility("custom_interaction.have_interaction", "This Variant §aHave§r Custom Interactions");
         addAbility("custom_interaction.have_interaction.avali", "This variant includes a custom size-changing interaction.");
@@ -476,7 +480,9 @@ public class ENLanguageProvider extends LanguageProvider {
         addGui("unifuser_gui.tooltip.place_recipe_catalyst", "Place a Syringe with DNA");
         addGui("unifuser_gui.tooltip.place_first_ingredient", "Place the Powders or other ingredient");
         addGui("unifuser_gui.tooltip.place_second_ingredient", "Put the second ingredient");
-        addGui("abilities_radial_screen.mouse.right_click", "Press Right Mouse Button to select the Second Ability");
+        addGui("abilities_radial_screen.mouse.right_click", "Press %s to select the Second Ability");
+
+        add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Press %s or %s to toggle friendly grab");
 
         add("deathScreen.select_tf", "Respawn as a Transfur?");
         add("deathScreen.select_tf.hardcore", "Continue as a Transfur?");

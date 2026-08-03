@@ -133,6 +133,9 @@ public class CommonMod {
         ChangedAddonMod.addNetworkMessage(TurnOffTransfurPacket.class, TurnOffTransfurPacket::encode,
                 TurnOffTransfurPacket::new, TurnOffTransfurPacket::handler);
 
+        ChangedAddonMod.addNetworkMessage(ToggleSafeGrabPacket.class, ToggleSafeGrabPacket::encode,
+                ToggleSafeGrabPacket::new, ToggleSafeGrabPacket::handler);
+
         ChangedAddonMod.addNetworkMessage(InformantBlockGuiKeyPacket.class, InformantBlockGuiKeyPacket::encode,
                 InformantBlockGuiKeyPacket::new, InformantBlockGuiKeyPacket::handle);
 

@@ -1,0 +1,44 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "item": "minecraft:netherite_upgrade_smithing_template"
+    },
+    "1": {
+      "item": "changed_addon:exp_10_latex_base"
+    },
+    "2": {
+      "tag": "changed_addon:gooey"
+    },
+    "3": {
+      "item": "changed_addon:goo_core_fragment"
+    },
+    "4": {
+      "item": "minecraft:nether_star"
+    },
+    "5": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "6": {
+      "type": "forge:partial_nbt",
+      "item": "changed:latex_syringe",
+      "nbt": "{display:{Lore:['{\"text\":\"THIS IS SUPPOSED TO BE SAFE\"}']},safe:1b}"
+    },
+    "7": {
+      "item": "changed_addon:biomass"
+    },
+    "8": {
+      "item": "changed_addon:luminara_bloom_petals"
+    }
+  },
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "result": {
+    "item": "changed_addon:exp_10_containment_vial"
+  },
+  "show_notification": true
+}

@@ -10,6 +10,8 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -175,6 +177,7 @@ public class AbilityInstanceKeyHandler {
             AbstractAbilityInstance abilityInstance = variantInstance.getAbilityInstance(ability);
             if (abilityInstance instanceof IWheelKeyPressHandler iKeyPressHandler) {
                 if (iKeyPressHandler.onClientWheelKeyPressed(player, true, button, action, modifiers)) {
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
                     event.setCanceled(true);
                 }
             }

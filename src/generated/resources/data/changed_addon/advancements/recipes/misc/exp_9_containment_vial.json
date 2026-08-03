@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_exp_9_latex_base": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:exp_9_latex_base"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_experiment_009_dna": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:experiment_009_dna"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "changed_addon:exp_9_containment_vial"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_transfur_totem": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:transfur_totem"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_exp_9_latex_base",
+      "has_experiment_009_dna",
+      "has_transfur_totem",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "changed_addon:exp_9_containment_vial"
+    ]
+  },
+  "sends_telemetry_event": false
+}
