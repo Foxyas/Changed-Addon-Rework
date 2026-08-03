@@ -2,9 +2,11 @@ package net.foxyas.changedaddon.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
@@ -231,5 +233,59 @@ public class RenderUtil {
         vertex(builder, poseMatrix, normalMatrix, x, y, z + depth, fromColor, uvs.get(1).x, uvs.get(1).y);
         vertex(builder, poseMatrix, normalMatrix, x, y + height, z + depth, toColor, uvs.get(2).x, uvs.get(2).y);
         vertex(builder, poseMatrix, normalMatrix, x, y + height, z, toColor, uvs.get(3).x, uvs.get(3).y);
+    }
+
+    /**
+     * Renderiza uma barra de progresso circular.
+     *
+     * @param guiGraphics Instância do GuiGraphics do 1.20.1
+     * @param texture     ResourceLocation da textura (ex: textura da barra cheia)
+     * @param x           Centro X da barra na tela
+     * @param y           Centro Y da barra na tela
+     * @param radius      Raio da barra em pixels
+     * @param progress    Progresso de 0.0f a 1.0f (0% a 100%)
+     * @param segments    Número de segmentos para suavidade (ex: 32 a 64)
+     */
+    public static void drawCircularProgressBar(GuiGraphics guiGraphics, ResourceLocation texture, float x, float y, float radius, float progress, int segments) {
+        if (progress <= 0.0f) return;
+        if (progress > 1.0f) progress = 1.0f;
+
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, texture);
+        RenderSystem.enableBlend();
+
+        Matrix4f matrix = guiGraphics.pose().last().pose();
+        Tesselator tesselator = Tesselator.getInstance();
+        BufferBuilder buffer = tesselator.getBuilder();
+
+        // Inicia o desenho usando TRIANGLE_FAN
+        buffer.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_TEX);
+
+        // Vertice central (ponto de origem da pizza)
+        buffer.vertex(matrix, x, y, 0).uv(0.5f, 0.5f).endVertex();
+
+        // Ângulo total preenchido (em radianos)
+        // Começa no topo (-90 graus / -PI/2) e roda no sentido horário
+        float maxAngle = (float) (progress * 2 * Math.PI);
+        int currentSegments = Math.max(1, (int) (segments * progress));
+
+        for (int i = 0; i <= currentSegments; i++) {
+            float angle = (float) (-Math.PI / 2) + (maxAngle * i / currentSegments);
+            float cos = (float) Math.cos(angle);
+            float sin = (float) Math.sin(angle);
+
+            // Posição no HUD/Screen
+            float vx = x + cos * radius;
+            float vy = y + sin * radius;
+
+            // Mapeamento de UV (assumindo que o centro da textura circular é 0.5, 0.5)
+            float u = 0.5f + cos * 0.5f;
+            float v = 0.5f + sin * 0.5f;
+
+            buffer.vertex(matrix, vx, vy, 0).uv(u, v).endVertex();
+        }
+
+        tesselator.end();
+        RenderSystem.disableBlend();
     }
 }

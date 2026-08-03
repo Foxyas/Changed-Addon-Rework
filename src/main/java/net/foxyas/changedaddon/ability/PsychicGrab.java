@@ -10,15 +10,16 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Function;
 
 public class PsychicGrab extends AbstractAbility<PsychicGrabInstance> {
 
-    public static final Set<Integer> Keys = Set.of(
+    public static final Function<Boolean, Set<Integer>> Keys = isMouse -> isMouse ? Set.of(
             GLFW.GLFW_KEY_UP,
             GLFW.GLFW_KEY_DOWN,
             GLFW.GLFW_KEY_LEFT,
             GLFW.GLFW_KEY_RIGHT
-    );
+    ) : Set.of();
 
     public PsychicGrab() {
         super(PsychicGrabInstance::new);

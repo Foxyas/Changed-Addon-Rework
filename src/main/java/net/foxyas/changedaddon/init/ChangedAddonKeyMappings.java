@@ -5,7 +5,10 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.network.packet.*;
+import net.foxyas.changedaddon.network.packet.PatKeyPacket;
+import net.foxyas.changedaddon.network.packet.ServerboundSwitchCuddlePacket;
+import net.foxyas.changedaddon.network.packet.TurnOffTransfurPacket;
+import net.foxyas.changedaddon.network.packet.VariantSecondAbilityActivate;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.tutorial.ChangedTutorial;
@@ -29,6 +32,7 @@ public class ChangedAddonKeyMappings {
     private static final String addonKeyCategory = "key.categories.changed_addon";
 
     public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_UNKNOWN, addonKeyCategory) {
+        private long timePressed = 0;
         private boolean isDownOld = false;
 
         @Override
@@ -44,7 +48,13 @@ public class ChangedAddonKeyMappings {
                     } else {
                         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.of(player);
                         if (vars != null && vars.showWarns) {
-                            player.displayClientMessage(Component.translatable("changed_addon.when_not.transfur"), true);
+                            long currentTime = System.currentTimeMillis();
+
+                            // Check if 3000ms (3 seconds) have passed since the last warning
+                            if (currentTime - timePressed >= 3000) {
+                                player.displayClientMessage(Component.translatable("changed_addon.when_not.transfur"), true);
+                                timePressed = currentTime; // Update the timestamp only when the warning is sent
+                            }
                         }
                     }
                 }

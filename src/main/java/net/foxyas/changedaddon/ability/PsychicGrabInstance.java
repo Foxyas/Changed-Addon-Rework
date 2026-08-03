@@ -246,12 +246,12 @@ public class PsychicGrabInstance extends AbstractAbilityInstance implements IKey
     }
 
     @Override
-    public void onServerProcessKeyPressed(Player player, int keyPressed, int action, int modifiers) {
+    public void onServerProcessKeyPressed(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
         addOffset(keyPressed, modifiers == GLFW.GLFW_MOD_SHIFT, entity.getEntity());
     }
 
     @Override
-    public boolean isKeyPressedValid(Player player, int keyPressed, int action, int modifiers) {
-        return PsychicGrab.Keys.contains(keyPressed);
+    public boolean isKeyPressedValid(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
+        return PsychicGrab.Keys.apply(isMouse).contains(keyPressed);
     }
 }

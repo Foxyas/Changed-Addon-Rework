@@ -96,6 +96,9 @@ public class CommonMod {
 
         ChangedAddonMod.addNetworkMessage(AbilityKeyPressPacket.class, AbilityKeyPressPacket::encode,
                 AbilityKeyPressPacket::new, AbilityKeyPressPacket::handle);
+        ChangedAddonMod.addNetworkMessage(AbilityWheelKeyPressPacket.class, AbilityWheelKeyPressPacket::encode,
+                AbilityWheelKeyPressPacket::new, AbilityWheelKeyPressPacket::handle);
+
         ChangedAddonMod.addNetworkMessage(SyncTransfurVisionsPacket.class, SyncTransfurVisionsPacket::encode,
                 SyncTransfurVisionsPacket::new, SyncTransfurVisionsPacket::handle);
         ChangedAddonMod.addNetworkMessage(SyncUntransfurImmunityPacket.class,

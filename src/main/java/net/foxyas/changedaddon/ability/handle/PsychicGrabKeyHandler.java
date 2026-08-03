@@ -24,11 +24,30 @@ public class PsychicGrabKeyHandler {
         int key = event.getKey();
         int action = event.getAction();
         int modifiers = event.getModifiers();
-        if (PsychicGrab.Keys.contains(key) && minecraft.screen == null) {
+        if (PsychicGrab.Keys.apply(false).contains(key) && minecraft.screen == null) {
             ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
                 PsychicGrabInstance abilityInstance = variantInstance.getAbilityInstance(ChangedAddonAbilities.PSYCHIC_GRAB.get());
                 if (abilityInstance != null) {
-                    abilityInstance.onClientKeyPressed(player, key, action, modifiers);
+                    abilityInstance.onClientKeyPressed(player, false, key, action, modifiers);
+                }
+            }));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onMouseKeyPressed(InputEvent.MouseButton event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        if (player == null) return;
+
+        int button = event.getButton();
+        int action = event.getAction();
+        int modifiers = event.getModifiers();
+        if (PsychicGrab.Keys.apply(false).contains(button) && minecraft.screen == null) {
+            ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
+                PsychicGrabInstance abilityInstance = variantInstance.getAbilityInstance(ChangedAddonAbilities.PSYCHIC_GRAB.get());
+                if (abilityInstance != null) {
+                    abilityInstance.onClientKeyPressed(player, true, button, action, modifiers);
                 }
             }));
         }

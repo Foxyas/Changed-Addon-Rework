@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.network.packet;
 
-import net.foxyas.changedaddon.ability.api.IKeyPressHandler;
+import net.foxyas.changedaddon.ability.api.IWheelKeyPressHandler;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
@@ -14,14 +14,15 @@ import java.util.function.Supplier;
 
 /**
  * @param keyCode Pode ser o código da tecla (ex: GLFW.GLFW_KEY_LEFT)
+ * @param isMouse
  */
-public record AbilityKeyPressPacket(int keyCode, int action, int modifiers, boolean isMouse, AbstractAbility<?> ability) {
+public record AbilityWheelKeyPressPacket(int keyCode, int action, int modifiers, boolean isMouse, AbstractAbility<?> ability) {
 
-    public AbilityKeyPressPacket(FriendlyByteBuf buf) {
+    public AbilityWheelKeyPressPacket(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readInt(), buf.readInt(), buf.readBoolean(), ChangedRegistry.ABILITY.readRegistryObject(buf));
     }
 
-    public static void handle(AbilityKeyPressPacket msg, Supplier<NetworkEvent.Context> contextSupplier) {
+    public static void handle(AbilityWheelKeyPressPacket msg, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
@@ -34,8 +35,8 @@ public record AbilityKeyPressPacket(int keyCode, int action, int modifiers, bool
             AbstractAbility<?> ability = msg.ability();
             ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
                 AbstractAbilityInstance abilityInstance = variantInstance.getAbilityInstance(ability);
-                if (abilityInstance instanceof IKeyPressHandler iKeyPressHandler) {
-                    iKeyPressHandler.onServerProcessKeyPressed(player, isMouse, key, action, modifiers);
+                if (abilityInstance instanceof IWheelKeyPressHandler iKeyPressHandler) {
+                    iKeyPressHandler.onServerProcessWheelKeyPressed(player, isMouse, key, action, modifiers);
                 } else {
                     //Generic Fail safe because is a good practice
                     CompoundTag keyInput = new CompoundTag();

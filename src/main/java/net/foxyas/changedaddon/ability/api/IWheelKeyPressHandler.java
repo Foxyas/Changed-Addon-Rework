@@ -1,11 +1,11 @@
 package net.foxyas.changedaddon.ability.api;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.network.packet.AbilityKeyPressPacket;
+import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.minecraft.world.entity.player.Player;
 
-public interface IKeyPressHandler {
+public interface IWheelKeyPressHandler {
 
     /**
      * Called on the client side when the bound key is pressed.
@@ -15,13 +15,21 @@ public interface IKeyPressHandler {
      * @param keyPressed The key pressed on the moment.
      * @param action     The action of the key input
      * @param modifiers  The modifiers (shift, control, etc.)
+     * @return returns if the key send the packet to the server.
      */
-    default void onClientKeyPressed(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
-        if (!(this instanceof AbstractAbilityInstance self)) return;
+    default boolean onClientWheelKeyPressed(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
+        if (!(this instanceof AbstractAbilityInstance self))
+            return false;
 
-        if (isKeyPressedValid(player, isMouse, keyPressed, action, modifiers)) {
-            ChangedAddonMod.PACKET_HANDLER.sendToServer(new AbilityKeyPressPacket(keyPressed, action, modifiers, isMouse, self.ability));
+        if (isWheelKeyPressedValid(player, isMouse, keyPressed, action, modifiers)) {
+            ChangedAddonMod.PACKET_HANDLER.sendToServer(new AbilityWheelKeyPressPacket(keyPressed, action, modifiers, isMouse, self.ability));
+            return true;
         }
+        return false;
+    }
+
+    default boolean detectsScroll() {
+        return false;
     }
 
     /**
@@ -33,7 +41,7 @@ public interface IKeyPressHandler {
      * @param action     The action of the key input
      * @param modifiers  The modifiers (shift, control, etc.)
      */
-    void onServerProcessKeyPressed(Player player, boolean isMouse, int keyPressed, int action, int modifiers);
+    void onServerProcessWheelKeyPressed(Player player, boolean isMouse, int keyPressed, int action, int modifiers);
 
     /**
      * Bidirecional function it can be called on server and client sides with no problems
@@ -44,5 +52,5 @@ public interface IKeyPressHandler {
      * @param action     The action of the key input
      * @param modifiers  The modifiers (shift, control, etc.)
      */
-    boolean isKeyPressedValid(Player player, boolean isMouse, int keyPressed, int action, int modifiers);
+    boolean isWheelKeyPressedValid(Player player, boolean isMouse, int keyPressed, int action, int modifiers);
 }
