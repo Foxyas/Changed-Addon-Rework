@@ -9,6 +9,7 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.DashPunchGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.LeapSmashGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.ltxprogrammer.changed.entity.*;
@@ -70,6 +71,9 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
 
     public final TargetDataManager targetDataManager;
 
+    public final BurstAbilityHandle<Experiment10BossEntity> burstAbilityHandle;
+
+
     public Experiment10BossEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_10_BOSS.get(), world);
     }
@@ -81,6 +85,13 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         setNoAi(false);
         setPersistenceRequired();
         this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
+        burstAbilityHandle = new BurstAbilityHandle.Builder<>(this)
+                .setEvasive()
+                .setDestructive()
+                .canDestroyBlock((state, pos) -> !state.isAir() && state.getDestroySpeed(this.level, pos) >= 0.0F)
+                .maxProgress(this::getMaxBurstProgress)
+                .onEvasiveBurst(this::onEvasiveBurst)
+                .build();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -106,6 +117,18 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         if (score >= 40) return GearTier.HIGH;
         if (score >= 15) return GearTier.MID;
         return GearTier.LOW;
+    }
+
+    public BurstAbilityHandle<Experiment10BossEntity> getBurstAbilityHandle() {
+        return burstAbilityHandle;
+    }
+
+    public float getMaxBurstProgress(Experiment10BossEntity exp10, BurstAbilityHandle<Experiment10BossEntity> burst) {
+        return exp10.isPhase2() ? 75f : 150f;
+    }
+
+    public void onEvasiveBurst(Experiment10BossEntity exp10, BurstAbilityHandle<Experiment10BossEntity> burst) {
+        burst.applyEvasiveKnockback(5, 1.25D);
     }
 
     @Override
@@ -221,7 +244,19 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
 
         maybeSendDamageReactionToPlayer(source);
 
+        if (burstAbilityHandle != null) {
+            burstAbilityHandle.onDamageTaken(source, amount);
+        }
+
         return super.hurt(source, amount);
+    }
+
+    @Override
+    public void setTarget(@Nullable LivingEntity entity) {
+        super.setTarget(entity);
+        if (burstAbilityHandle != null) {
+            burstAbilityHandle.setTarget(entity);
+        }
     }
 
     @Override
@@ -323,6 +358,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         SetAttack(this);
         SetSpeed(this);
         this.crawlingSystem((float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f);
+        this.burstAbilityHandle.tick();
     }
 
     @Override
@@ -475,7 +511,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
 
         @SubscribeEvent
         public static void onBossDamagePlayer(LivingHurtEvent event) {
-            if (!(event.getSource().getEntity() instanceof Experiment10BossEntity)) return;
+            if (!(event.getSource().getEntity() instanceof Experiment10BossEntity source)) return;
             if (!(event.getEntity() instanceof Player target)) return;
 
             GearTier tier = getGearTier(target);
@@ -484,6 +520,8 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
                 case LOW, MID -> event.setAmount(event.getAmount());
                 case HIGH -> event.setAmount(event.getAmount() * 1.25F);
             }
+
+            if (source.burstAbilityHandle != null) source.burstAbilityHandle.onDamageDealt(event.getSource(), event.getAmount());
         }
 
         @SubscribeEvent

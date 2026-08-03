@@ -11,6 +11,7 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
@@ -111,6 +112,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     private boolean shouldBleed;
     public final TargetDataManager targetDataManager;
 
+    public final BurstAbilityHandle<Experiment009BossEntity> burstAbilityHandle;
+
     public Experiment009BossEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_009_BOSS.get(), world);
     }
@@ -124,6 +127,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
+        burstAbilityHandle = new BurstAbilityHandle.Builder<>(this)
+                .setEvasive()
+                .setDestructive()
+                .canDestroyBlock((state, pos) -> !state.isAir() && state.getDestroySpeed(this.level, pos) >= 0.0F)
+                .maxProgress(this::getMaxBurstProgress)
+                .onEvasiveBurst(this::onEvasiveBurst)
+                .build();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -149,6 +159,27 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (score >= 40) return GearTier.HIGH;
         if (score >= 15) return GearTier.MID;
         return GearTier.LOW;
+    }
+
+    public BurstAbilityHandle<Experiment009BossEntity> getBurstAbilityHandle() {
+        return burstAbilityHandle;
+    }
+
+    public float getMaxBurstProgress(Experiment009BossEntity exp9, BurstAbilityHandle<Experiment009BossEntity> burst) {
+        return switch (exp9.getPhase()) {
+            case PHASE1 -> 150f;
+            case PHASE2 -> 100f;
+            case PHASE3 -> 75f;
+            default -> 1f;
+        };
+    }
+
+    public void onEvasiveBurst(Experiment009BossEntity exp9, BurstAbilityHandle<Experiment009BossEntity> burst) {
+        switch (exp9.getPhase()) {
+            case PHASE1 -> burst.applyEvasiveKnockback(5.0D, 1.25D); //Generic Handle.
+            case PHASE2 -> this.knockBackAndDoThunderBolt();
+            case PHASE3 -> this.knockbackAndDoThunderStorm();
+        }
     }
 
     public DamageSource getThunderDmg() {
@@ -196,6 +227,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     public void setCastingAttack(boolean value) {
         this.entityData.set(CASTING_ATTACK, value);
+        this.setCastingTicks(0);
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -484,6 +516,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (source.is(DamageTypes.THORNS) || source.is(DamageTypeTags.IS_FIRE)) amount = 0;
         maybeSendDamageReactionToPlayer(source);
 
+        if (burstAbilityHandle != null) {
+            burstAbilityHandle.onDamageTaken(source, amount);
+        }
+
         return super.hurt(source, amount);
     }
 
@@ -670,22 +706,30 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             case PHASE1 -> {
             }
             case PHASE2 -> {
-                this.spawnVisualThunderBolt(this.position());
-                this.knockbackNearbyEntities(this, 2.5f);
+                knockBackAndDoThunderBolt();
             }
             case PHASE3 -> {
-                final BlockPos center = this.blockPosition();
-                final float ringRadius = 4;
-                final int bolts = 8;
-                if (this.level() instanceof ServerLevel serverLevel) {
-                    spawnThunderCircle(this, serverLevel, center, ringRadius, bolts);
-                    DelayedTask.schedule(5, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 1.4f, bolts * 2));
-                    DelayedTask.schedule(10, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 1.8f, bolts * 3));
-                    DelayedTask.schedule(15, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 2.2f, bolts * 4));
-                }
-                this.knockbackNearbyEntities(this, 5f);
+                knockbackAndDoThunderStorm();
             }
         }
+    }
+
+    private void knockBackAndDoThunderBolt() {
+        this.spawnVisualThunderBolt(this.position());
+        this.knockbackNearbyEntities(this, 2.5f);
+    }
+
+    public void knockbackAndDoThunderStorm() {
+        final BlockPos center = this.blockPosition();
+        final float ringRadius = 4;
+        final int bolts = 8;
+        if (this.level() instanceof ServerLevel serverLevel) {
+            spawnThunderCircle(this, serverLevel, center, ringRadius, bolts);
+            DelayedTask.schedule(5, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 1.4f, bolts * 2));
+            DelayedTask.schedule(10, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 1.8f, bolts * 3));
+            DelayedTask.schedule(15, () -> spawnThunderCircle(this, serverLevel, center, ringRadius * 2.2f, bolts * 4));
+        }
+        this.knockbackNearbyEntities(this, 5f);
     }
 
     public static void spawnThunderCircle(LivingEntity livingEntity, ServerLevel level, BlockPos center, float radius, int bolts) {
@@ -888,6 +932,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     public void baseTick() {
         super.baseTick();
         if (getUnderlyingPlayer() != null) return;
+        this.burstAbilityHandle.tick();
         if (this.isCastingAttack()) {
 //            if (this.goalSelector.getRunningGoals().noneMatch(wrappedGoal -> wrappedGoal.getGoal() instanceof CastingAttackGoal) && this.targetSelector.getRunningGoals().noneMatch(wrappedGoal -> wrappedGoal.getGoal() instanceof CastingAttackGoal)) {
 //                this.setCastingAttack(false);
@@ -935,6 +980,14 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         setSpeed(this);
         float speed = (float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f;
         this.crawlingSystem(speed);
+    }
+
+    @Override
+    public void setTarget(@javax.annotation.Nullable LivingEntity entity) {
+        super.setTarget(entity);
+        if (burstAbilityHandle != null) {
+            burstAbilityHandle.setTarget(entity);
+        }
     }
 
     @Override
@@ -1169,6 +1222,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 target.hurtTime = 10;
                 target.hurtDuration = 10;
             }
+
+            if (boss.burstAbilityHandle != null) boss.burstAbilityHandle.onDamageDealt(event.getSource(), event.getAmount());
         }
 
         @SubscribeEvent

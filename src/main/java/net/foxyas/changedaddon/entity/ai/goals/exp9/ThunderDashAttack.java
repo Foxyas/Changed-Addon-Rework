@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -167,8 +168,13 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
                     dasher.swing(InteractionHand.MAIN_HAND);
                     DamageSource pSource = dasher.level().damageSources().mobAttack(dasher);
                     if (!entity.isDamageSourceBlocked(pSource)) {
-                        entity.hurt(pSource, 6.0F);
-                        dasher.level().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
+                        if (isTargetDoingCorrectSwingParry(entity, pSource)) {
+                            onParriedAttemptToHitTarget(entity);
+                        } else {
+                            if (entity.hurt(pSource, 6.0F)) {
+                                dasher.level().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
+                            }
+                        }
                     } else {
                         dasher.level().playSound(null, entity, SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1, 1);
                     }
@@ -182,6 +188,62 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
                 }
             }
         }
+    }
+
+    protected void onParriedAttemptToHitTarget(LivingEntity target) {
+        Level level = dasher.level();
+        if (level instanceof ServerLevel server) {
+            server.sendParticles(ParticleTypes.FLASH, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
+        }
+        level.playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 1.0F);
+        level.playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
+
+        Vec3 targetPos = target.position();
+        Vec3 mobPos = dasher.position();
+        Vec3 relativeVec = targetPos.subtract(mobPos);
+        Vec3 direction = relativeVec.normalize();
+
+        // Aplica o movimento
+        Vec3 movement = direction.scale(1.25f).add(0f, 0.5f, 0f).multiply(0.75f, 1.25f, 0.75f);
+        target.setDeltaMovement(movement.x, movement.y, movement.z);
+    }
+
+    protected boolean isTargetDoingCorrectSwingParry(LivingEntity target, DamageSource damageSource) {
+        // 1. Checa se o alvo está executando um swing/ataque no momento
+        // target.swinging é verdadeiro enquanto a animação do braço acontece
+        if (!target.swinging) {
+            return false;
+        }
+
+        Vec3 sourcePosition = damageSource.getSourcePosition();
+        if (sourcePosition != null) {
+            // 2. Vetor para onde o jogador está olhando (visão)
+            Vec3 viewVector = target.getViewVector(1.0F);
+
+            // 3. Vetor que vai do JOGADOR para a FONTE do dano
+            Vec3 targetToSource = sourcePosition.subtract(target.getEyePosition());
+
+            // Se quiser ignorar a diferença de altura (parry 2D/horizontal):
+            // viewVector = new Vec3(viewVector.x, 0.0D, viewVector.z).normalize();
+            // targetToSource = new Vec3(targetToSource.x, 0.0D, targetToSource.z).normalize();
+
+            viewVector = viewVector.normalize();
+            targetToSource = targetToSource.normalize();
+
+            // 4. Produto escalar (dot product):
+            //  1.0 = olhando EXATAMENTE para a fonte
+            //  0.0 = olhando 90 graus para o lado
+            // -1.0 = olhando de costas para a fonte
+            double dotProduct = targetToSource.dot(viewVector);
+
+            // 0.5D equivale a um cone de ~60 graus de tolerância na frente do jogador (cos(60°) = 0.5)
+            // Se quiser exigir mais precisão, aumente para 0.7D7 (~45°) ou 0.866D (~30°)
+            double minParryThreshold = 0.5D;
+
+            return dotProduct >= minParryThreshold;
+        }
+
+        return false;
     }
 
     protected void handleCharging() {
@@ -205,6 +267,8 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
                 serverLevel.sendParticles(ParticleTypes.END_ROD, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.05f);
             }
+        } else {
+            onStartDashing();
         }
     }
 
