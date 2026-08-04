@@ -469,7 +469,6 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("informant_gui.label_empty", "?");
         addGui("informant_gui.tooltip_put_a_syringe_with_a_form", "Tegyen egy fecskendőt egy formával");
         addGui("informant_gui.tooltip_type_the_form", "Írjd be a forma azonosítóját");
-        
 
         addGui("transfur_sounds_gui.bark", "Ugat");
         addGui("transfur_sounds_gui.chatter", "Nyeffeg");
