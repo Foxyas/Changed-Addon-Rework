@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.advancements.critereon.HoldingItemsTrigger;
 import net.foxyas.changedaddon.advancements.critereon.UsedItemAmountTrigger;
 import net.foxyas.changedaddon.datagen.customData.AdvancementWriter;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
@@ -12,8 +13,10 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +28,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class AdvancementProvider extends net.minecraft.data.advancements.AdvancementProvider {
+@SuppressWarnings("deprecation")
+public class ModAdvancementProvider extends AdvancementProvider {
 
     public static final String[] ADDON_FORM_RECIPES = new String[]{
             "form_avali",
@@ -64,8 +68,8 @@ public class AdvancementProvider extends net.minecraft.data.advancements.Advance
     protected final ExistingFileHelper fileHelperIn;
     protected final CompletableFuture<HolderLookup.Provider> lookup;
 
-    public AdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup, ExistingFileHelper fileHelperIn) {
-        super(output, lookup, List.of(AdvancementProvider::generate));
+    public ModAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup, ExistingFileHelper fileHelperIn) {
+        super(output, lookup, List.of(ModAdvancementProvider::generate));
         this.lookup = lookup;
         this.fileHelperIn = fileHelperIn;
         this.output = output;
@@ -164,6 +168,7 @@ public class AdvancementProvider extends net.minecraft.data.advancements.Advance
         Advancement.Builder obtainAmmonia = Advancement.Builder.advancement();
         Advancement.Builder obtainCompressedAmmonia = Advancement.Builder.advancement();
         Advancement.Builder obtainAmmoniaParticles = Advancement.Builder.advancement();
+        Advancement.Builder hazyPurple = Advancement.Builder.advancement();
 
         obtainImpureAmmonia.parent(ADVANCEMENT_ROOT)
                 .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.IMPURE_AMMONIA.get()));
@@ -174,13 +179,38 @@ public class AdvancementProvider extends net.minecraft.data.advancements.Advance
         obtainAmmoniaParticles.parent(ADVANCEMENT_ROOT)
                 .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.AMMONIA_PARTICLE.get()));
 
+        ItemPredicate Exp10Dna = simpleItemPredicate(ChangedAddonItems.EXPERIMENT_10_DNA.get());
+        ItemPredicate Exp9Dna = simpleItemPredicate(ChangedAddonItems.EXPERIMENT_009_DNA.get());
+
+        hazyPurple = Advancement.Builder.advancement()
+                .parent(ChangedAddonMod.resourceLoc("kill_experiment_009"))
+                .display(
+                        Items.PURPLE_DYE, // Icon
+                        Component.translatable("advancements.hazy_purple.title"), // Title
+                        Component.translatable("advancements.hazy_purple.descr"), // Description
+                        null, // Background (null because it has a parent)
+                        FrameType.CHALLENGE, // Frame
+                        true, // show_toast
+                        true, // announce_to_chat
+                        true  // hidden
+                )
+                .rewards(AdvancementRewards.Builder.experience(10000))
+                .addCriterion("holding_items", HoldingItemsTrigger.Instance.holdingBoth(Exp9Dna, Exp10Dna, true));
+
         advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_impure_ammonia"), obtainImpureAmmonia);
         advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_ammonia"), obtainAmmonia);
         advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_compressed_ammonia"), obtainCompressedAmmonia);
         advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_ammonia_particles"), obtainAmmoniaParticles);
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("hazy_purple"), hazyPurple);
 
 
         return CompletableFuture.allOf(advancementWrite.completableFutureList.toArray(CompletableFuture[]::new));
+    }
+
+    protected static ItemPredicate simpleItemPredicate(ItemLike item) {
+        return ItemPredicate.Builder.item()
+                .of(item)
+                .build();
     }
 
     // ---------------------------------------------------------

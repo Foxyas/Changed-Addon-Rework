@@ -393,6 +393,8 @@ public class CommonEvent {
         triggerSwimRegret(player);
 
         getFriendlyLatexAchievement(event);
+
+        callHoldingItemsAchievementTrigger(event);
     }
 
     @SubscribeEvent
@@ -652,6 +654,12 @@ public class CommonEvent {
                     for (String s : ap.getRemainingCriteria()) sPlayer.getAdvancements().award(adv, s);
                 }
             }
+        }
+    }
+
+    private static void callHoldingItemsAchievementTrigger(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player) {
+            ChangedAddonCriteriaTriggers.HOLDING_ITEMS.trigger(player);
         }
     }
 }

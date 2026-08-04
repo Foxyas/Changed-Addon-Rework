@@ -1,0 +1,46 @@
+{
+  "parent": "changed_addon:kill_experiment_009",
+  "criteria": {
+    "holding_items": {
+      "conditions": {
+        "allow_reversed": true,
+        "main_hand": {
+          "items": [
+            "changed_addon:experiment_009_dna"
+          ]
+        },
+        "off_hand": {
+          "items": [
+            "changed_addon:experiment_10_dna"
+          ]
+        },
+        "operator": "AND"
+      },
+      "trigger": "changed_addon:holding_items"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.hazy_purple.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:purple_dye"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.hazy_purple.title"
+    }
+  },
+  "requirements": [
+    [
+      "holding_items"
+    ]
+  ],
+  "rewards": {
+    "experience": 10000
+  },
+  "sends_telemetry_event": true
+}

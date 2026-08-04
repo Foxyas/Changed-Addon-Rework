@@ -1,0 +1,55 @@
+{
+  "targets": [
+    "water",
+    "translucent",
+    "itemEntity",
+    "particles",
+    "clouds",
+    "weather",
+    "final",
+    "swapA",
+    "swapB",
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "blit",
+      "intarget": "minecraft:main",
+      "outtarget": "final"
+    },
+    {
+      "name": "changed_addon:bright_extraction",
+      "intarget": "final",
+      "outtarget": "swapA"
+    },
+    {
+      "name": "changed_addon:blur_h",
+      "intarget": "swapA",
+      "outtarget": "swapB"
+    },
+    {
+      "name": "changed_addon:blur_v",
+      "intarget": "swapB",
+      "outtarget": "swapA"
+    },
+    {
+      "name": "changed_addon:apply_bloom",
+      "intarget": "final",
+      "outtarget": "minecraft:main",
+      "auxtargets": [
+        {
+          "name": "BloomSampler",
+          "id": "swapA"
+        }
+      ],
+      "uniforms": [
+                { "name": "BloomIntensity", "values": [ 1.5 ] }
+		]
+    },
+    {
+      "name": "blit",
+      "intarget": "minecraft:main",
+      "outtarget": "swap"
+    }
+  ]
+}
