@@ -199,6 +199,10 @@ public class HULanguageProvider extends LanguageProvider {
         addAbility("carry", "Hordozás");
         addAbility("claws", "Karmolás");
         addAbility("claws.desc", "Aktiválja macskakarmait, és szabadítsa fel §mkezeivel§r mancsaival elsöprő támadásokat.");
+        addAbility("claws.desc.info.enabled", "A karmaid jelenleg ki vannak nyújtva.");
+        addAbility("claws.desc.info.disabled", "A karmaid jelenleg vissza vannak húzva.");
+        addAbility("claws.desc.info.toggle.on", "Kinyújtottad a karmaidat.");
+        addAbility("claws.desc.info.toggle.off", "Visszahúztad a karmaidat.");
         addAbility("custom_interaction", "Változat egyéni interakciói");
         addAbility("custom_interaction.have_interaction", "Ez a változat egyedi interakciókkal §arendelkezik§r");
         addAbility("custom_interaction.have_interaction.avali", "Ez a változat egy egyedi méretváltoztató interakciót tartalmaz.");
@@ -465,6 +469,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("informant_gui.label_empty", "?");
         addGui("informant_gui.tooltip_put_a_syringe_with_a_form", "Tegyen egy fecskendőt egy formával");
         addGui("informant_gui.tooltip_type_the_form", "Írjd be a forma azonosítóját");
+        
 
         addGui("transfur_sounds_gui.bark", "Ugat");
         addGui("transfur_sounds_gui.chatter", "Nyeffeg");
@@ -490,7 +495,9 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("unifuser_gui.tooltip.place_recipe_catalyst", "Helyezz ide egy DNS-sel töltött fecskendőt");
         addGui("unifuser_gui.tooltip.place_first_ingredient", "Helyezz ide a porokat vagy más hozzávalókat");
         addGui("unifuser_gui.tooltip.place_second_ingredient", "Tedd ide a második hozzávalót");
-        addGui("abilities_radial_screen.mouse.right_click", "Nyomd meg a jobb egérgombot a második képesség kiválasztásához");
+        addGui("abilities_radial_screen.mouse.right_click", "Nyomd meg a %s gombot a második képesség kiválasztásához");
+
+        add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Nyomja meg a %s vagy %s gombot a barátságos megragadás bekapcsolásához");
 
         add("deathScreen.select_tf", "Újraéledés transzfurként?");
         add("deathScreen.select_tf.hardcore", "Folytatás transzfurként?");
