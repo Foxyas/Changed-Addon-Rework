@@ -144,22 +144,30 @@ public class ThunderParticle extends Particle {
         float[] layers = { centerRadius, firstOutline, secondOutline, thirdOutline };
         float[] alphas = { 0.3f, 0.3f, 0.3f, 0.3f };
 
+        // Calculate the central axis vector of the bolt
+        Vec3 mainCenter = startRel.add(endRel).scale(0.5);
+        Vec3 halfSpan = endRel.subtract(startRel).scale(0.5);
+
         for (int l = 0; l < layers.length; l++) {
             float radius = layers[l];
             float alpha = alphas[l];
 
-            // Prevent coplanar depth fighting between nested tube walls:
-            // Apply a minor radial expansion offset per outer layer
-            float offsetMultiplier = 1.0f + (l * 0.005f);
-            Vec3 aScale = axisA.scale(radius * offsetMultiplier);
-            Vec3 bScale = axisB.scale(radius * offsetMultiplier);
+            Vec3 aScale = axisA.scale(radius);
+            Vec3 bScale = axisB.scale(radius);
+
+            int layer = (layers.length - 1) - l;
+            float factor = 1.0f - (layer * 0.005f);
+
+            // Correctly shorten the endpoints along the bolt line relative to mainCenter
+            Vec3 layerStart = mainCenter.subtract(halfSpan.scale(factor));
+            Vec3 layerEnd = mainCenter.add(halfSpan.scale(factor));
 
             for (int i = 0; i < segments; i++) {
-                Vec3 p1 = points[i];
-                Vec3 p2 = points[i + 1];
-
                 boolean isFirst = (i == 0);
                 boolean isLast = (i == segments - 1);
+
+                Vec3 p1 = isFirst ? layerStart : points[i];
+                Vec3 p2 = isLast ? layerEnd : points[i + 1];
 
                 renderTubeSegment(matrix, consumer, p1, p2, aScale, bScale, color.x(), color.y(), color.z(), alpha, isFirst, isLast);
             }
@@ -196,6 +204,33 @@ public class ThunderParticle extends Particle {
         if (renderEndCap) {
             drawQuad(matrix, consumer, end.add(c0), end.add(c1), end.add(c2), end.add(c3), r, g, b, alpha);
         }
+    }
+
+    private static void renderTaperedSegment(
+            Matrix4f matrix, VertexConsumer consumer,
+            Vec3 start, Vec3 end,
+            Vec3 axisAStart, Vec3 axisBStart,
+            Vec3 axisAEnd, Vec3 axisBEnd,
+            float r, float g, float b, float alpha) {
+
+        Vec3 s0 = axisAStart.add(axisBStart);
+        Vec3 s1 = axisAStart.reverse().add(axisBStart);
+        Vec3 s2 = axisAStart.reverse().add(axisBStart.reverse());
+        Vec3 s3 = axisAStart.add(axisBStart.reverse());
+
+        Vec3 e0 = axisAEnd.add(axisBEnd);
+        Vec3 e1 = axisAEnd.reverse().add(axisBEnd);
+        Vec3 e2 = axisAEnd.reverse().add(axisBEnd.reverse());
+        Vec3 e3 = axisAEnd.add(axisBEnd.reverse());
+
+        // Side 1
+        drawQuad(matrix, consumer, start.add(s0), start.add(s1), end.add(e1), end.add(e0), r, g, b, alpha);
+        // Side 2
+        drawQuad(matrix, consumer, start.add(s1), start.add(s2), end.add(e2), end.add(e1), r, g, b, alpha);
+        // Side 3
+        drawQuad(matrix, consumer, start.add(s2), start.add(s3), end.add(e3), end.add(e2), r, g, b, alpha);
+        // Side 4
+        drawQuad(matrix, consumer, start.add(s3), start.add(s0), end.add(e0), end.add(e3), r, g, b, alpha);
     }
 
     private static void drawQuad(Matrix4f matrix, VertexConsumer consumer, Vec3 p0, Vec3 p1, Vec3 p2, Vec3 p3, float r, float g, float b, float alpha) {
