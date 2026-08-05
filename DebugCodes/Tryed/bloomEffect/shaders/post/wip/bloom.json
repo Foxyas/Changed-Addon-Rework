@@ -1,0 +1,27 @@
+{
+  "targets": ["bloom_raw", "swapA", "swapB", "bloom_final"],
+  "passes": [
+    {
+      "name": "changed_addon:dynamic_bloom/blur_h",
+      "intarget": "bloom_raw",
+      "outtarget": "swapA"
+    },
+    {
+      "name": "changed_addon:dynamic_bloom/blur_v",
+      "intarget": "swapA",
+      "outtarget": "swapB"
+    },
+    {
+      "name": "changed_addon:dynamic_bloom/apply_bloom",
+      "intarget": "minecraft:main",
+      "outtarget": "bloom_final",
+      "auxtargets": [
+        { "name": "DiffuseSampler", "id": "minecraft:main" },
+        { "name": "BloomSampler",  "id": "swapB" }
+      ],
+      "uniforms": [
+        { "name": "BloomIntensity", "values": [ 1.5 ] }
+      ]
+    }
+  ]
+}

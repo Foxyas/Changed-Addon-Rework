@@ -14,4 +14,5 @@ public class ChangedAddonCriteriaTriggers {
     public static final SleepNextAPlushyTrigger SLEEP_NEXT_A_PLUSHY_TRIGGER = register(new SleepNextAPlushyTrigger());
     public static final UsedItemAmountTrigger USED_ITEM_AMOUNT_TRIGGER = register(new UsedItemAmountTrigger());
     public static final SimpleIDTrigger SIMPLE_ID_TRIGGER = register(new SimpleIDTrigger());
+    public static final HoldingItemsTrigger HOLDING_ITEMS = register(new HoldingItemsTrigger());
 }
