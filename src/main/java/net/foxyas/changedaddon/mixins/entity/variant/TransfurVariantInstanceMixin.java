@@ -95,22 +95,22 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         maySendDataUpdate();
     }
 
-    @Override
+    @Override @Deprecated
     public KeyStateTracker getSecondAbilityKey() {
         return secondAbilityKey;
     }
 
-    @Override
+    @Override @Deprecated
     public void setSecondAbilityKey(KeyStateTracker secondAbilityKey) {
         this.secondAbilityKey = secondAbilityKey;
     }
 
-    @Override
+    @Override @Deprecated
     public AbstractAbility<?> getSecondSelectedAbility() {
         return secondSelectedAbility;
     }
 
-    @Override
+    @Override @Deprecated
     public void setSecondSelectedAbility(AbstractAbility<?> secondSelectedAbility) {
         if (!abilityInstances.containsKey(secondSelectedAbility)) return;
 
@@ -126,17 +126,17 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         this.secondSelectedAbility = secondSelectedAbility;
     }
 
-    @Override
+    @Override @Deprecated
     public int getTicksSinceSecondAbilityActivity() {
         return ticksSinceSecondAbilityActivity;
     }
 
-    @Override
+    @Override @Deprecated
     public void resetTicksSinceSecondAbilityActivity() {
         this.ticksSinceSecondAbilityActivity = 0;
     }
 
-    @Override
+    @Override @Deprecated
     public AbstractAbilityInstance getSecondSelectedAbilityInstance() {
         return this.abilityInstances.get(this.secondSelectedAbility);
     }

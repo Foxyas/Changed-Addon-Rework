@@ -19,32 +19,30 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class ThunderParticle extends Particle {
+
     private final Vec3 targetPos;
-    private final Vec3 originPos;
     private final float speed;
     private final boolean rooted;
     private final Vector3f shake;
     private final Vector3f color;
     private final float sizeMultiplier;
     private final long seed;
+    private int index;
 
-    public ThunderParticle(ClientLevel level, double x, double y, double z, ThunderParticleOptions options) {
+    public ThunderParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, ThunderParticleOptions options) {
         super(level, x, y, z);
-        this.originPos = options.getStartPos();
-        this.targetPos = options.getEndPos();
         this.speed = options.getSpeed();
         this.rooted = options.isRooted();
         this.shake = options.getShake();
         this.color = options.getColor();
         this.sizeMultiplier = options.getSize();
         this.seed = level.random.nextLong();
+        this.index = options.getIndex();
 
-        double distance = originPos.distanceTo(targetPos);
+        targetPos = new Vec3(xSpeed, ySpeed, zSpeed);
+
+        double distance = getPos().distanceTo(targetPos);
         this.lifetime = Math.max(1, (int) (distance / Math.max(0.01f, speed)));
-
-        this.x = originPos.x;
-        this.y = originPos.y;
-        this.z = originPos.z;
 
         // Fix Culling: Expand bounding box to encompass the entire bolt span plus shake offsets
         updateBoundingBox();
@@ -52,7 +50,7 @@ public class ThunderParticle extends Particle {
 
     private void updateBoundingBox() {
         double margin = Math.max(shake.x(), Math.max(shake.y(), shake.z())) + sizeMultiplier * 0.5f + 1.0;
-        AABB box = new AABB(originPos, targetPos).inflate(margin);
+        AABB box = new AABB(getPos(), targetPos).inflate(margin);
         this.setBoundingBox(box);
     }
 
@@ -67,16 +65,18 @@ public class ThunderParticle extends Particle {
             return;
         }
 
+        index = (int) (8 * (((float) age /lifetime)/speed));
+
         if (!rooted) {
             float progress = (float) this.age / (float) this.lifetime;
-            Vec3 delta = targetPos.subtract(originPos).scale(progress);
-            Vec3 currentRoot = originPos.add(delta);
+            Vec3 delta = targetPos.subtract(getPos()).scale(progress);
+            Vec3 currentRoot = getPos().add(delta);
             this.x = currentRoot.x;
             this.y = currentRoot.y;
             this.z = currentRoot.z;
 
             // Recalculate bounding box if particle root moves
-            Vec3 currentEnd = currentRoot.add(targetPos.subtract(originPos));
+            Vec3 currentEnd = currentRoot.add(targetPos.subtract(getPos()));
             double margin = Math.max(shake.x(), Math.max(shake.y(), shake.z())) + sizeMultiplier * 0.5f + 1.0;
             this.setBoundingBox(new AABB(currentRoot, currentEnd).inflate(margin));
         }
@@ -96,7 +96,7 @@ public class ThunderParticle extends Particle {
         double curZ = this.zo + (this.z - this.zo) * partialTicks;
 
         Vec3 startWorld = new Vec3(curX, curY, curZ);
-        Vec3 endWorld = startWorld.add(targetPos.subtract(originPos));
+        Vec3 endWorld = startWorld.add(targetPos.subtract(getPos()));
 
         Vec3 startRel = startWorld.subtract(camPos);
         Vec3 endRel = endWorld.subtract(camPos);
@@ -106,7 +106,7 @@ public class ThunderParticle extends Particle {
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.lightning());
 
         RandomSource random = RandomSource.create(this.seed);
-        int segments = 8;
+        int segments = index;
         Vec3[] points = new Vec3[segments + 1];
         points[0] = startRel;
         points[segments] = endRel;
@@ -266,7 +266,7 @@ public class ThunderParticle extends Particle {
                 double ySpeed,
                 double zSpeed
         ) {
-            return new ThunderParticle(level, x, y, z, options);
+            return new ThunderParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, options);
         }
     }
 }

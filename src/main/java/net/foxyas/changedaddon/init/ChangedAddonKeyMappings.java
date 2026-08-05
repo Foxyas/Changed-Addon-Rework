@@ -95,6 +95,7 @@ public class ChangedAddonKeyMappings {
         }
     };
 
+    @Deprecated
     public static final KeyMapping USE_SECOND_ABILITY = new KeyMapping(
             "key.changed_addon.use_second_ability",
             KeyConflictContext.IN_GAME,

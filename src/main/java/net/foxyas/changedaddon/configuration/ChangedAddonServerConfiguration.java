@@ -18,6 +18,7 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Double> INFECTION_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> DL_COAT_AFFECT_ALL;
     public static final ForgeConfigSpec.ConfigValue<ChangedEntitySpawnDressedType> CHANGED_SPAWN_DRESS_MODE;
+    @Deprecated
     public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_SECOND_ABILITY_USE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_RESPAWN_AS_TRANSFUR;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ALLOWED_RESPAWN_TRANSFURS;

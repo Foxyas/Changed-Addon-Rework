@@ -20,7 +20,9 @@ import net.minecraftforge.network.PacketDistributor;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+@Deprecated
 public class VariantSecondAbilityActivate {
+
     final UUID uuid;
     final boolean keyDown;
     final AbstractAbility<?> ability;

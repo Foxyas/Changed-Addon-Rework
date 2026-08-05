@@ -12,18 +12,25 @@ import net.minecraft.world.entity.player.Player;
 
 public interface TransfurVariantInstanceExtensor {
 
+    @Deprecated
     AbstractAbility<?> getSecondSelectedAbility();
 
+    @Deprecated
     void setSecondSelectedAbility(AbstractAbility<?> ability);
 
+    @Deprecated
     int getTicksSinceSecondAbilityActivity();
 
+    @Deprecated
     void resetTicksSinceSecondAbilityActivity();
 
+    @Deprecated
     KeyStateTracker getSecondAbilityKey();
 
+    @Deprecated
     void setSecondAbilityKey(KeyStateTracker secondAbilityKey);
 
+    @Deprecated
     AbstractAbilityInstance getSecondSelectedAbilityInstance();
 
     boolean getUntransfurImmunity(UntransfurEvent.UntransfurType type);
