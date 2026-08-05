@@ -327,6 +327,21 @@ public final class ChangedAddonRenderTypes extends RenderType {
                 true,
                 rendertype$compositestate);
     });
+
+    private static final Function<ResourceLocation, RenderType> GLOW_ENTITY_DECAL = Util.memoize((p_286171_) -> {
+        RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder()
+                .setShaderState(RENDERTYPE_EYES_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(p_286171_, false, false))
+                .setTransparencyState(ADDITIVE_TRANSPARENCY)
+                .setWriteMaskState(COLOR_WRITE)
+                .setDepthTestState(EQUAL_DEPTH_TEST)
+                .setCullState(NO_CULL)
+                .setLightmapState(LIGHTMAP)
+                .setOverlayState(OVERLAY)
+                .createCompositeState(false);
+        return RenderType.create(ChangedAddonMod.resourceLocString("glow_entity_decal"), DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, false, false, rendertype$compositestate);
+    });
+
     private static ShaderInstance TRANSLUCENT_OUTLINE_SHADER;
     public static final BiFunction<ResourceLocation, RenderStateShard.CullStateShard, RenderType> OUTLINE_WITH_TRANSLUCENCY = Util.memoize((resourceLocation, cullStateShard) ->
             create(ChangedAddonMod.resourceLocString("outline_with_translucenty"),
@@ -552,6 +567,10 @@ public final class ChangedAddonRenderTypes extends RenderType {
 
     public static RenderType glowDynamic(ResourceLocation location, float alpha) {
         return GLOW_DYNAMIC.apply(location, alpha);
+    }
+
+    public static RenderType glowEntityDecal(ResourceLocation pLocation) {
+        return GLOW_ENTITY_DECAL.apply(pLocation);
     }
 
     public static class ParticleRenderTypes {

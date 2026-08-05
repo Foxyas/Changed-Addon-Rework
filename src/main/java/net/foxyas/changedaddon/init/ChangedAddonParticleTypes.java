@@ -20,6 +20,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -42,6 +43,37 @@ public class ChangedAddonParticleTypes {
     public static final RegistryObject<ParticleType<RibbonParticleOption>> RIBBON = register("ribbon", RibbonParticleOption.DESERIALIZER, RibbonParticleOption::codec);
     public static final RegistryObject<ParticleType<AgeableRibbonParticleOption>> AGEABLE_RIBBON = register("ageable_ribbon", AgeableRibbonParticleOption.DESERIALIZER, AgeableRibbonParticleOption::codec);
     public static final RegistryObject<ParticleType<MultiColorRibbonParticleOption>> MULTI_COLOR_RIBBON = register("multi_color_ribbon", MultiColorRibbonParticleOption.DESERIALIZER, MultiColorRibbonParticleOption::codec);
+    public static final RegistryObject<ParticleType<ThunderParticleOptions>> THUNDER_PARTICLE = register("thunder_bolt", ThunderParticleOptions.DESERIALIZER, ThunderParticleOptions::codec);
+
+    /**
+     * Creates a configured instance of {@link ThunderParticleOptions} for spawning custom lightning bolt particles.
+     *
+     * @param start  the starting position vector of the thunder bolt in world coordinates
+     * @param end    the target end position vector where the thunder bolt strikes or leads to
+     * @param speed  the propagation speed of the bolt along its segment path
+     * @param rooted {@code true} if the origin point remains fixed while rendering; {@code false} if the root follows moving nodes
+     * @param shake  a 3D vector (X, Y, Z) multiplier controlling the jitter and offset intensity along each axis
+     * @param color  an RGB color vector with values ranging from 0.0f to 1.0f
+     * @param size   the thickness scaling factor for the rendered lightning quads
+     * @return a fully configured {@link ThunderParticleOptions} instance ready to pass to particle spawning methods
+     */
+    public static ThunderParticleOptions thunderBolt(Vec3 start,
+                                                     Vec3 end,
+                                                     float speed,
+                                                     boolean rooted,
+                                                     Vector3f shake,
+                                                     Vector3f color,
+                                                     float size) {
+        return ThunderParticleOptionsBuilder.create()
+                .startPos(start)
+                .endPos(end)
+                .speed(speed)
+                .rooted(rooted)
+                .shake(shake)
+                .color(color)
+                .size(size)
+                .build();
+    }
 
     public static ThunderSparkOption thunderSpark(int lifespan) {
         return new ThunderSparkOption(THUNDER_SPARK.get(), lifespan);
@@ -102,6 +134,7 @@ public class ChangedAddonParticleTypes {
         event.registerSpriteSet(FALLING_LEAVES.get(), FallingLeafParticle.Provider::new);
 
         event.registerSpecial(ENTITY_MODEL_FADE.get(), new EntityModelFadeParticle.Provider());
+        event.registerSpecial(THUNDER_PARTICLE.get(), new ThunderParticle.Provider());
 
         event.registerSpecial(RIBBON.get(), new RibbonParticle.Provider());
         event.registerSpecial(AGEABLE_RIBBON.get(), new AgeableRibbonParticle.Provider());

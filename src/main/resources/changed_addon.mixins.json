@@ -99,6 +99,7 @@
     "client.HumanoidModelMixin",
     "client.MinecraftMixin",
     "client.MouseHandlerAccessor",
+    "client.ParticleEngineMixin",
     "client.PlayerModelMixin",
     "client.PlayerRendererMixin",
     "client.gui.InBedChatScreenMixin",
