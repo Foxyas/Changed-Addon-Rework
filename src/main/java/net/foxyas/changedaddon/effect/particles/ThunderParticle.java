@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.effect.particles;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
@@ -105,6 +106,7 @@ public class ThunderParticle extends Particle {
         PoseStack poseStack = new PoseStack();
         Matrix4f matrix = poseStack.last().pose();
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.lightning());
+        RenderSystem.disableCull();
 
         RandomSource random = RandomSource.create(this.seed);
         int segments = Math.max(1, (int) (8 * segmentsProgress));
@@ -182,6 +184,7 @@ public class ThunderParticle extends Particle {
                 renderTubeSegment(matrix, consumer, p1, p2, aScale, bScale, color.x(), color.y(), color.z(), alpha, isFirst, isLast);
             }
         }
+        RenderSystem.enableCull();
 
         bufferSource.endBatch(RenderType.lightning());
     }
@@ -248,6 +251,12 @@ public class ThunderParticle extends Particle {
         consumer.vertex(matrix, (float) p1.x, (float) p1.y, (float) p1.z).color(r, g, b, alpha).endVertex();
         consumer.vertex(matrix, (float) p2.x, (float) p2.y, (float) p2.z).color(r, g, b, alpha).endVertex();
         consumer.vertex(matrix, (float) p3.x, (float) p3.y, (float) p3.z).color(r, g, b, alpha).endVertex();
+
+        // Back face (Double-sided rendering if Cull state is active)
+        consumer.vertex(matrix, (float) p3.x, (float) p3.y, (float) p3.z).color(r, g, b, alpha).endVertex();
+        consumer.vertex(matrix, (float) p2.x, (float) p2.y, (float) p2.z).color(r, g, b, alpha).endVertex();
+        consumer.vertex(matrix, (float) p1.x, (float) p1.y, (float) p1.z).color(r, g, b, alpha).endVertex();
+        consumer.vertex(matrix, (float) p0.x, (float) p0.y, (float) p0.z).color(r, g, b, alpha).endVertex();
     }
 
     private static void renderQuad(Matrix4f matrix, VertexConsumer consumer, Vec3 start, Vec3 end, Vec3 normal, float r, float g, float b, float alpha) {

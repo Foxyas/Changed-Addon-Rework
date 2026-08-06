@@ -48,8 +48,6 @@ public class ChangedAddonParticleTypes {
     /**
      * Creates a configured instance of {@link ThunderParticleOptions} for spawning custom lightning bolt particles.
      *
-     * @param start  the starting position vector of the thunder bolt in world coordinates
-     * @param end    the target end position vector where the thunder bolt strikes or leads to
      * @param speed  the propagation speed of the bolt along its segment path
      * @param rooted {@code true} if the origin point remains fixed while rendering; {@code false} if the root follows moving nodes
      * @param shake  a 3D vector (X, Y, Z) multiplier controlling the jitter and offset intensity along each axis
@@ -57,16 +55,12 @@ public class ChangedAddonParticleTypes {
      * @param size   the thickness scaling factor for the rendered lightning quads
      * @return a fully configured {@link ThunderParticleOptions} instance ready to pass to particle spawning methods
      */
-    public static ThunderParticleOptions thunderBolt(Vec3 start,
-                                                     Vec3 end,
-                                                     float speed,
+    public static ThunderParticleOptions thunderBolt(float speed,
                                                      boolean rooted,
                                                      Vector3f shake,
                                                      Vector3f color,
                                                      float size) {
         return ThunderParticleOptionsBuilder.create()
-                .startPos(start)
-                .endPos(end)
                 .speed(speed)
                 .rooted(rooted)
                 .shake(shake)
