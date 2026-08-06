@@ -4,12 +4,12 @@ import org.joml.Vector3f;
 
 public class ThunderParticleOptionsBuilder {
 
+    private int lifeTime;
     private float speed = 1.0f;
     private boolean rooted = true;
     private Vector3f shake = new Vector3f(1.0f, 1.0f, 1.0f);
     private Vector3f color = new Vector3f(1.0f, 1.0f, 1.0f);
     private float size = 1.0f;
-    private int index;
 
     public static ThunderParticleOptionsBuilder create() {
         return new ThunderParticleOptionsBuilder();
@@ -50,12 +50,12 @@ public class ThunderParticleOptionsBuilder {
         return this;
     }
 
-    public ThunderParticleOptionsBuilder index(int index) {
-        this.index = index;
+    public ThunderParticleOptionsBuilder lifeTime(int lifeTime) {
+        this.lifeTime = lifeTime;
         return this;
     }
 
     public ThunderParticleOptions build() {
-        return new ThunderParticleOptions(speed, rooted, shake, color, size, index);
+        return new ThunderParticleOptions(lifeTime, speed, rooted, shake, color, size);
     }
 }

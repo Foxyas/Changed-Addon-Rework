@@ -27,7 +27,7 @@ public class ThunderParticle extends Particle {
     private final Vector3f color;
     private final float sizeMultiplier;
     private final long seed;
-    private int index;
+    private float segmentsProgress;
 
     public ThunderParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, ThunderParticleOptions options) {
         super(level, x, y, z);
@@ -37,12 +37,13 @@ public class ThunderParticle extends Particle {
         this.color = options.getColor();
         this.sizeMultiplier = options.getSize();
         this.seed = level.random.nextLong();
-        this.index = options.getIndex();
+        this.segmentsProgress = 0;
 
         targetPos = new Vec3(xSpeed, ySpeed, zSpeed);
 
-        double distance = getPos().distanceTo(targetPos);
-        this.lifetime = Math.max(1, (int) (distance / Math.max(0.01f, speed)));
+//        double distance = getPos().distanceTo(targetPos);
+//        (int) (distance / Math.max(0.01f, speed))
+        this.lifetime = Math.max(1, options.getLifeTime());
 
         // Fix Culling: Expand bounding box to encompass the entire bolt span plus shake offsets
         updateBoundingBox();
@@ -65,7 +66,7 @@ public class ThunderParticle extends Particle {
             return;
         }
 
-        index = (int) (8 * (((float) age /lifetime)/speed));
+        this.segmentsProgress = Math.min(1.0f, ((float) this.age / (float) this.lifetime) * this.speed);
 
         if (!rooted) {
             float progress = (float) this.age / (float) this.lifetime;
@@ -96,7 +97,7 @@ public class ThunderParticle extends Particle {
         double curZ = this.zo + (this.z - this.zo) * partialTicks;
 
         Vec3 startWorld = new Vec3(curX, curY, curZ);
-        Vec3 endWorld = startWorld.add(targetPos.subtract(getPos()));
+        Vec3 endWorld = startWorld.add(targetPos.subtract(getPos()).scale(segmentsProgress));
 
         Vec3 startRel = startWorld.subtract(camPos);
         Vec3 endRel = endWorld.subtract(camPos);
@@ -106,7 +107,7 @@ public class ThunderParticle extends Particle {
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.lightning());
 
         RandomSource random = RandomSource.create(this.seed);
-        int segments = index;
+        int segments = Math.max(1, (int) (8 * segmentsProgress));
         Vec3[] points = new Vec3[segments + 1];
         points[0] = startRel;
         points[segments] = endRel;
@@ -141,8 +142,8 @@ public class ThunderParticle extends Particle {
         float secondOutline = sizeMultiplier * 0.13f;
         float thirdOutline = sizeMultiplier * 0.18f;
 
-        float[] layers = { centerRadius, firstOutline, secondOutline, thirdOutline };
-        float[] alphas = { 0.3f, 0.3f, 0.3f, 0.3f };
+        float[] layers = {centerRadius, firstOutline, secondOutline, thirdOutline};
+        float[] alphas = {0.3f, 0.3f, 0.3f, 0.3f};
 
         // Calculate the central axis vector of the bolt
         Vec3 mainCenter = startRel.add(endRel).scale(0.5);
@@ -166,8 +167,17 @@ public class ThunderParticle extends Particle {
                 boolean isFirst = (i == 0);
                 boolean isLast = (i == segments - 1);
 
-                Vec3 p1 = isFirst ? layerStart : points[i];
-                Vec3 p2 = isLast ? layerEnd : points[i + 1];
+                Vec3 p1;
+                Vec3 p2;
+                if (segments == 1) {
+                    // Quando só tem 1 segmento, use layerStart e layerEnd diretamente sem p2 sobrescrever p1
+                    p1 = layerStart;
+                    p2 = layerEnd;
+                } else  {
+                    p1 = isFirst ? layerStart : points[i];
+                    p2 = isLast ? layerEnd : points[i + 1];
+                }
+
 
                 renderTubeSegment(matrix, consumer, p1, p2, aScale, bScale, color.x(), color.y(), color.z(), alpha, isFirst, isLast);
             }
