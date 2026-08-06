@@ -97,6 +97,9 @@ public final class ChangedAddonRenderTypes extends RenderType {
                     .setTextureState(BLOCK_SHEET_MIPPED)
                     .createCompositeState(true)
     );
+
+    private static final RenderType LIGHTNING_NO_CULL = create(ChangedAddonMod.resourceLocString("lightning_no_cull"), DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, true, RenderType.CompositeState.builder().setShaderState(RENDERTYPE_LIGHTNING_SHADER).setCullState(NO_CULL).setWriteMaskState(COLOR_DEPTH_WRITE).setTransparencyState(LIGHTNING_TRANSPARENCY).setOutputState(WEATHER_TARGET).createCompositeState(false));
+
     public static final BiFunction<ResourceLocation, RenderStateShard.CullStateShard, RenderType> OUTLINE_WITH_DEPTH = Util.memoize((resourceLocation, cullStateShard) ->
             create(ChangedAddonMod.resourceLocString("outline_with_deep_test"),
                     DefaultVertexFormat.POSITION_COLOR_TEX,
@@ -571,6 +574,10 @@ public final class ChangedAddonRenderTypes extends RenderType {
 
     public static RenderType glowEntityDecal(ResourceLocation pLocation) {
         return GLOW_ENTITY_DECAL.apply(pLocation);
+    }
+
+    public static RenderType lightningNoCull() {
+        return LIGHTNING_NO_CULL;
     }
 
     public static class ParticleRenderTypes {
