@@ -19,6 +19,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import java.util.Optional;
 
 
+@Deprecated
 public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInstance> {
 
     public static final int MAX_TICK_HOLD = 30;
