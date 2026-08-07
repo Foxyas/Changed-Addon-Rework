@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.effect.particles;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
@@ -106,7 +105,6 @@ public class ThunderParticle extends Particle {
         PoseStack poseStack = new PoseStack();
         Matrix4f matrix = poseStack.last().pose();
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.lightning());
-        RenderSystem.disableCull();
 
         RandomSource random = RandomSource.create(this.seed);
         int segments = Math.max(1, (int) (8 * segmentsProgress));
@@ -184,7 +182,6 @@ public class ThunderParticle extends Particle {
                 renderTubeSegment(matrix, consumer, p1, p2, aScale, bScale, color.x(), color.y(), color.z(), alpha, isFirst, isLast);
             }
         }
-        RenderSystem.enableCull();
 
         bufferSource.endBatch(RenderType.lightning());
     }
