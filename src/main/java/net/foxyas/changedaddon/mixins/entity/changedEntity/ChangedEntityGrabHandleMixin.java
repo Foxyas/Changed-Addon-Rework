@@ -82,7 +82,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         }
 
         if (canEntityGrab(type, level)) {
-            this.grabEntityAbilityInstance = this.createGrabAbility();
+            this.grabEntityAbilityInstance = this.createSimpleGrabAbility();
         }
     }
 
@@ -143,7 +143,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         super.baseTick();
         if (canEntityGrab(this.getType(), level)) {
             if (grabEntityAbilityInstance == null) {
-                this.grabEntityAbilityInstance = createGrabAbility(); // fail-safe
+                this.grabEntityAbilityInstance = createSimpleGrabAbility(); // fail-safe
                 return;
             }
             if (!this.level.isClientSide()) {

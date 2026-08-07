@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.api;
 
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -21,9 +22,19 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 
 public interface IGrabberEntity {
 
+    interface IHasGrabAbility {
+        @Nullable
+        GrabEntityAbilityInstance createGrabAbilityInstance(boolean isSafeByDefault);
+
+        @Nullable
+        default GrabEntityAbilityInstance mayGetGrabAbilityInstance() {
+            return this instanceof IGrabberEntity iGrabber ? iGrabber.getGrabAbilityInstance() : null;
+        }
+    }
 
     interface IGrabberCondition {
         boolean isAffectedByGrab();
@@ -44,16 +55,35 @@ public interface IGrabberEntity {
 
     GrabEntityAbilityInstance getGrabAbilityInstance();
 
+    void setGrabAbilityInstance(GrabEntityAbilityInstance instance);
+
     default boolean isGrabbing() {
         return this.getGrabbedEntity() != null;
     }
 
-    default GrabEntityAbilityInstance createGrabAbility() {
+    default GrabEntityAbilityInstance createGrabAbility(boolean isSafeByDefault) {
+        GrabEntityAbilityInstance instance = null;
         if (this instanceof AbstractDarkLatexEntity abstractDarkLatexEntity) {
-            return abstractDarkLatexEntity.createGrabAbility();
+            instance = abstractDarkLatexEntity.createGrabAbility();
+        } else if (this instanceof IHasGrabAbility iHasGrabAbility) {
+            instance = iHasGrabAbility.createGrabAbilityInstance(isSafeByDefault);
         } else if (this instanceof ChangedEntity changedEntity) {
-            return new GrabEntityAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get(), IAbstractChangedEntity.forEntity(changedEntity));
-        } else return null;
+            instance = new GrabEntityAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get(), IAbstractChangedEntity.forEntity(changedEntity));
+        }
+
+        if (instance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
+            grabEntityAbilityExtensor.setSafeMode(isSafeByDefault);
+        }
+
+        return instance;
+    }
+
+    default GrabEntityAbilityInstance createSimpleGrabAbility() {
+        return createGrabAbility(false);
+    }
+
+    default GrabEntityAbilityInstance createSafeGrabAbility() {
+        return createGrabAbility(true);
     }
 
     default boolean canUseGrab() {

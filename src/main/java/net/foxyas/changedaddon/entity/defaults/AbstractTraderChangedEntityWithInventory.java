@@ -144,9 +144,8 @@ public abstract class AbstractTraderChangedEntityWithInventory extends AbstractT
     @Override
     public @NotNull SlotAccess getSlot(int slot) {
         if (getEquipmentSlot(slot) == null) {
-            int invSlot = slot;
-            if (invSlot >= 0 && invSlot < this.inventory.getContainerSize()) {
-                return SlotAccess.forContainer(this.inventory, invSlot);
+            if (slot >= 0 && slot < this.inventory.getContainerSize()) {
+                return SlotAccess.forContainer(this.inventory, slot);
             }
         }
 

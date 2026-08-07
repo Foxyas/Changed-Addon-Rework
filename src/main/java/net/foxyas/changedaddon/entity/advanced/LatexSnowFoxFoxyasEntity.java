@@ -44,6 +44,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.common.crafting.PartialNBTIngredient;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
@@ -114,12 +115,43 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
             return;
         }
 
+        ItemStack offerResult = offer.getResult();
+        if (player.getInventory().hasAnyMatching((stack) -> {
+            var ingredient = PartialNBTIngredient.of(offerResult.getItem(), stack.getOrCreateTag());
+            return ingredient.test(stack);
+        })) {
+            player.getInventory().removeItem(offerResult);
+        }
+
         Ingredient[] ingredients = {offer.getCostA(), offer.getCostB()};
         for (Ingredient ingredient : ingredients) {
             for (ItemStack item : ingredient.getItems()) {
                 if (!player.addItem(item)) {
                     player.drop(item, true);
                 }
+            }
+        }
+    }
+
+    @Override
+    public void variantTick(Level level) {
+        super.variantTick(level);
+
+        Player player = this.getUnderlyingPlayer();
+        if (player == null) {
+            return;
+        }
+
+        CustomMerchantOffers merchantOffers = getOffers();
+        for (CustomMerchantOffer merchantOffer : merchantOffers) {
+            boolean hasAnyMatching = player.getInventory().hasAnyMatching((stack) -> {
+                var ingredient = PartialNBTIngredient.of(merchantOffer.getResult().getItem(), stack.getOrCreateTag());
+                return ingredient.test(stack);
+            });
+            if (!hasAnyMatching) {
+                merchantOffer.setToOutOfStock();
+            } else {
+                merchantOffer.resetUses();
             }
         }
     }
