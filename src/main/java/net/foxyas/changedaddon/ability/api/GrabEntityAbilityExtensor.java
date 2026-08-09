@@ -50,9 +50,9 @@ public interface GrabEntityAbilityExtensor {
 
     void setSnuggled(boolean value);
 
-    boolean isAlreadySnuggledTight();
+    boolean isSnugglingTight();
 
-    void setSnuggledTight(boolean value);
+    void setSnugglingTight(boolean value);
 
     default void runTightHug(@NotNull LivingEntity livingEntity) {
         if (grabber() instanceof Player player) {
@@ -63,7 +63,7 @@ public interface GrabEntityAbilityExtensor {
                     ChangedAddonCriteriaTriggers.GRAB_ENTITY_TRIGGER.trigger(serverPlayer, ProcessTransfur.getPlayerTransfurVariant(serverPlayer), "hug_tight");
                 }
                 player.level().playSound(null, player, ChangedAddonSoundEvents.PLUSHY_SOUND.get(), SoundSource.BLOCKS, 1, 1);
-                setSnuggledTight(true);
+                setSnugglingTight(true);
                 if (EntityUtil.maybeGetUnderlying(player) instanceof IVariantExtraStats iVariantExtraStats) {
                     iVariantExtraStats.onHugTarget(livingEntity, HugType.TIGHT);
                 }

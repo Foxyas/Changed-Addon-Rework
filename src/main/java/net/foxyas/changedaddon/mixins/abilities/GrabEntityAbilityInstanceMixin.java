@@ -70,7 +70,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Unique
     private int snuggleCooldown = 0;
     @Unique
-    private boolean alreadySnuggledTight = false;
+    private boolean isSnugglingTight = false;
 
     @Unique
     private boolean allowGrabTransfurred = false; // Default is false. it can be true using external code
@@ -94,14 +94,14 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Inject(method = "saveData", at = @At("TAIL"))
     private void injectCustomData(CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("safeMode", safeMode);
-        tag.putBoolean("alreadySnuggledTight", alreadySnuggledTight);
+        tag.putBoolean("alreadySnuggledTight", isSnugglingTight);
         tag.putBoolean("allowGrabTransfurred", allowGrabTransfurred);
     }
 
     @Inject(method = "readData", at = @At("TAIL"))
     private void readCustomData(CompoundTag tag, CallbackInfo ci) {
         if (tag.contains("safeMode")) safeMode = tag.getBoolean("safeMode");
-        if (tag.contains("alreadySnuggledTight")) alreadySnuggledTight = tag.getBoolean("alreadySnuggledTight");
+        if (tag.contains("alreadySnuggledTight")) isSnugglingTight = tag.getBoolean("alreadySnuggledTight");
         if (tag.contains("allowGrabTransfurred")) allowGrabTransfurred = tag.getBoolean("allowGrabTransfurred");
     }
 
@@ -147,7 +147,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Inject(method = "tickIdle", at = @At(value = "HEAD"), cancellable = true)
     private void tickIdleHook(CallbackInfo ci) {
         if (!isSafeMode()) return;
-        if (this.isAlreadySnuggledTight()) {
+        if (this.isSnugglingTight()) {
             // TODO: maybe make hugs heal targets?
         }
     }
@@ -218,13 +218,13 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             }
 
             if (grabbedEntity != null) {
-                if (!isAlreadySnuggledTight()) {
+                if (!isSnugglingTight()) {
                     this.runTightHug(this.grabbedEntity);
                 }
             }
 
         } else {
-            this.alreadySnuggledTight = false;
+            this.isSnugglingTight = false;
         }
     }
 
@@ -284,13 +284,13 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     }
 
     @Override
-    public boolean isAlreadySnuggledTight() {
-        return alreadySnuggledTight;
+    public boolean isSnugglingTight() {
+        return isSnugglingTight;
     }
 
     @Override
-    public void setSnuggledTight(boolean value) {
-        this.alreadySnuggledTight = value;
+    public void setSnugglingTight(boolean value) {
+        this.isSnugglingTight = value;
     }
 
     @Inject(method = "handleInstructions", at = @At("HEAD"), cancellable = true)

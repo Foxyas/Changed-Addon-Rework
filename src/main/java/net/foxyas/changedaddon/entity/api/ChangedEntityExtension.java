@@ -74,7 +74,7 @@ public interface ChangedEntityExtension {
 
     default boolean shouldAlwaysHoldInGrab(@Nullable LivingEntity grabbedEntity, GrabEntityAbilityInstance grabEntityAbilityInstance) {
         if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor entityAbilityExtensor) {
-            if (entityAbilityExtensor.isSafeMode()) {
+            if (entityAbilityExtensor.isSafeMode() && entityAbilityExtensor.isSnugglingTight()) {
                 if (grabbedEntity == null) {
                     return false;
                 }
