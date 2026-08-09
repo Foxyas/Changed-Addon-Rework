@@ -20,6 +20,8 @@ import org.joml.Vector3f;
 
 public class ThunderParticle extends Particle {
 
+    private static final int TOTAL_SEGMENTS = 8;
+
     private final Vec3 targetPos;
     private final float speed;
     private final boolean rooted;
@@ -66,7 +68,6 @@ public class ThunderParticle extends Particle {
             return;
         }
 
-        this.segmentsProgress = Math.min(1.0f, ((float) this.age / (float) this.lifetime) * this.speed);
 
         if (!rooted) {
             float progress = (float) this.age / (float) this.lifetime;
@@ -80,6 +81,9 @@ public class ThunderParticle extends Particle {
             Vec3 currentEnd = currentRoot.add(targetPos.subtract(getPos()));
             double margin = Math.max(shake.x(), Math.max(shake.y(), shake.z())) + sizeMultiplier * 0.5f + 1.0;
             this.setBoundingBox(new AABB(currentRoot, currentEnd).inflate(margin));
+            this.segmentsProgress += 0.25f * speed;
+        } else {
+            this.segmentsProgress = Math.min(1.0f, ((float) this.age / (float) this.lifetime) * this.speed);
         }
     }
 
@@ -97,31 +101,66 @@ public class ThunderParticle extends Particle {
         double curZ = this.zo + (this.z - this.zo) * partialTicks;
 
         Vec3 startWorld = new Vec3(curX, curY, curZ);
-        Vec3 endWorld = startWorld.add(targetPos.subtract(getPos()).scale(segmentsProgress));
+        // Full target endpoint (the bolt's final, complete length) — NOT scaled by segmentsProgress.
+        // We always generate points across the FULL span so the point cloud is stable; growth is
+        // handled purely by how many segments we choose to draw below.
+        Vec3 fullEndWorld = startWorld.add(targetPos.subtract(getPos()));
 
         Vec3 startRel = startWorld.subtract(camPos);
-        Vec3 endRel = endWorld.subtract(camPos);
+        Vec3 fullEndRel = fullEndWorld.subtract(camPos);
 
         PoseStack poseStack = new PoseStack();
         Matrix4f matrix = poseStack.last().pose();
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.lightning());
 
+        // Always build the same fixed number of points, over the FULL bolt length, using the SAME
+        // seed and SAME divisor every frame. This keeps every point's position perfectly stable
+        // across frames — nothing shifts as the bolt grows, so no tube ring can ever "jump" out
+        // from under an already-drawn cap.
         RandomSource random = RandomSource.create(this.seed);
-        int segments = Math.max(1, (int) (8 * segmentsProgress));
-        Vec3[] points = new Vec3[segments + 1];
-        points[0] = startRel;
-        points[segments] = endRel;
 
-        for (int i = 1; i < segments; i++) {
-            double subProgress = (double) i / segments;
-            Vec3 interp = startRel.lerp(endRel, subProgress);
+        if (segmentsProgress >= 1) {
+            int ticksBeforeReseed = 2;
+            long flashSeed = this.seed + (this.age / ticksBeforeReseed);
+            random = RandomSource.create(flashSeed);
+        }
+
+        Vec3[] fullPoints = new Vec3[TOTAL_SEGMENTS + 1];
+        fullPoints[0] = startRel;
+        fullPoints[TOTAL_SEGMENTS] = fullEndRel;
+
+        for (int i = 1; i < TOTAL_SEGMENTS; i++) {
+            double subProgress = (double) i / TOTAL_SEGMENTS;
+            Vec3 interp = startRel.lerp(fullEndRel, subProgress);
 
             double offX = (random.nextDouble() - 0.5D) * shake.x();
             double offY = (random.nextDouble() - 0.5D) * shake.y();
             double offZ = (random.nextDouble() - 0.5D) * shake.z();
 
-            points[i] = interp.add(offX, offY, offZ);
+            fullPoints[i] = interp.add(offX, offY, offZ);
         }
+
+        // Now decide how much of the fixed point cloud is actually visible this frame, based on
+        // growth progress. visibleSegments is how many whole rings (out of TOTAL_SEGMENTS) to draw;
+        // partialEnd is the exact point along the last partial ring, used as an interpolated "tip"
+        // so the bolt still grows smoothly instead of popping in whole segments at a time.
+        float exactSegments = TOTAL_SEGMENTS * segmentsProgress;
+        int visibleSegments = Math.max(1, (int) Math.ceil(exactSegments));
+        visibleSegments = Math.min(TOTAL_SEGMENTS, visibleSegments);
+
+        // Points actually used for rendering this frame: the same stable positions as fullPoints,
+        // except the very last one is replaced by an interpolated "growing tip" so the last segment
+        // animates smoothly rather than snapping straight to fullPoints[visibleSegments].
+        Vec3[] points = new Vec3[visibleSegments + 1];
+        System.arraycopy(fullPoints, 0, points, 0, visibleSegments); // stable prefix, unchanged positions
+        float tipFraction = Math.min(1.0f, exactSegments - (visibleSegments - 1));
+        Vec3 tipStart = fullPoints[visibleSegments - 1];
+        Vec3 tipEnd = fullPoints[visibleSegments];
+        points[visibleSegments] = tipStart.lerp(tipEnd, tipFraction);
+
+        int segments = visibleSegments;
+
+        Vec3 endRel = points[segments];
 
         Vec3 boltDir = endRel.subtract(startRel);
         if (boltDir.lengthSqr() < 1E-6) {
@@ -145,7 +184,7 @@ public class ThunderParticle extends Particle {
         float[] layers = {centerRadius, firstOutline, secondOutline, thirdOutline};
         float[] alphas = {0.3f, 0.3f, 0.3f, 0.3f};
 
-        // Calculate the central axis vector of the bolt
+        // Calculate the central axis vector of the bolt (over the currently-visible span only)
         Vec3 mainCenter = startRel.add(endRel).scale(0.5);
         Vec3 halfSpan = endRel.subtract(startRel).scale(0.5);
 
@@ -173,11 +212,10 @@ public class ThunderParticle extends Particle {
                     // Quando só tem 1 segmento, use layerStart e layerEnd diretamente sem p2 sobrescrever p1
                     p1 = layerStart;
                     p2 = layerEnd;
-                } else  {
+                } else {
                     p1 = isFirst ? layerStart : points[i];
                     p2 = isLast ? layerEnd : points[i + 1];
                 }
-
 
                 renderTubeSegment(matrix, consumer, p1, p2, aScale, bScale, color.x(), color.y(), color.z(), alpha, isFirst, isLast);
             }
@@ -250,10 +288,10 @@ public class ThunderParticle extends Particle {
         consumer.vertex(matrix, (float) p3.x, (float) p3.y, (float) p3.z).color(r, g, b, alpha).endVertex();
 
         // Back face (Double-sided rendering if Cull state is active)
-        consumer.vertex(matrix, (float) p3.x, (float) p3.y, (float) p3.z).color(r, g, b, alpha).endVertex();
-        consumer.vertex(matrix, (float) p2.x, (float) p2.y, (float) p2.z).color(r, g, b, alpha).endVertex();
-        consumer.vertex(matrix, (float) p1.x, (float) p1.y, (float) p1.z).color(r, g, b, alpha).endVertex();
-        consumer.vertex(matrix, (float) p0.x, (float) p0.y, (float) p0.z).color(r, g, b, alpha).endVertex();
+//        consumer.vertex(matrix, (float) p3.x, (float) p3.y, (float) p3.z).color(r, g, b, alpha).endVertex();
+//        consumer.vertex(matrix, (float) p2.x, (float) p2.y, (float) p2.z).color(r, g, b, alpha).endVertex();
+//        consumer.vertex(matrix, (float) p1.x, (float) p1.y, (float) p1.z).color(r, g, b, alpha).endVertex();
+//        consumer.vertex(matrix, (float) p0.x, (float) p0.y, (float) p0.z).color(r, g, b, alpha).endVertex();
     }
 
     private static void renderQuad(Matrix4f matrix, VertexConsumer consumer, Vec3 start, Vec3 end, Vec3 normal, float r, float g, float b, float alpha) {
