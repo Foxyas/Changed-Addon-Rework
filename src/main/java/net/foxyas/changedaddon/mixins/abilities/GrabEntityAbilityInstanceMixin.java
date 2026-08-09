@@ -201,6 +201,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 //    }
 
     @Deprecated(since = "since Changed 0.16.0, we gonna need to make other mixin to set \"canSuit\" to false ")
+    // Todo: move this logic to canSuit.
     @Inject(method = "tickIdle", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", remap = true, shift = At.Shift.BY), cancellable = true)
     private void cancelSuit(CallbackInfo ci) {
         if (!isSafeMode()) return;
