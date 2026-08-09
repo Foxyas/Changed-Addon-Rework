@@ -61,7 +61,10 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Shadow
     int instructionTicks;
 
+    @Shadow public boolean useDown;
+
     @Shadow public KeyReference currentEscapeKey;
+
     @Unique
     private boolean safeMode = false;
     @Unique
@@ -103,13 +106,13 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     }
 
     @Unique
-    private GrabEntityAbilityInstance getSelf() {
+    private GrabEntityAbilityInstance ChangedAddon$getSelf() {
         return (GrabEntityAbilityInstance) (Object) this;
     }
 
     @Override
     public LivingEntity grabber() {
-        return getSelf().entity.getEntity();
+        return ChangedAddon$getSelf().entity.getEntity();
     }
 
     @Override
@@ -165,20 +168,53 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (snuggleCooldown > 0) snuggleCooldown--;
     }
 
+    @Inject(method = "tickIdle", at = @At(value = "TAIL"), cancellable = true)
+    private void setGrabStrengthAtMaxIfGrabberCanAlwaysHold(CallbackInfo ci) {
+        if (ChangedAddon$getSelf().entity.getChangedEntity() instanceof ChangedEntityExtension changedEntityExtension
+                && changedEntityExtension.shouldAlwaysHoldInGrab(grabbedEntity, ChangedAddon$getSelf())) {
+            this.grabStrength = 1;
+        }
+    }
+
+//    Todo: Uncomment this stuff when 0.16.0 release;
+//    @ModifyReturnValue(method = "canSuit", at = @At("RETURN"))
+//    private boolean cancelSuit(boolean original) {
+//        if (this.isSafeMode()) {
+//            return false;
+//        } else {
+//            return original;
+//        }
+//    }
+//
+//    @Inject(method = "tickIdle",
+//            at = @At(
+//                    value = "FIELD",
+//                    target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;suitTransition:F",
+//                    ordinal = 2, opcode = Opcodes.GETFIELD,
+//                    shift = At.Shift.BY
+//            ))
+//    private void manuallyProgressSuit(CallbackInfo ci) {
+//        if (!isSafeMode()) return;
+//        if (useDown) {
+//            this.suitTransition += 0.075F;
+//        }
+//    }
+
+    @Deprecated(since = "since Changed 0.16.0, we gonna need to make other mixin to set \"canSuit\" to false ")
     @Inject(method = "tickIdle", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", remap = true, shift = At.Shift.BY), cancellable = true)
     private void cancelSuit(CallbackInfo ci) {
         if (!isSafeMode()) return;
         ci.cancel();
 
-        if (getSelf().getController().getHoldTicks() >= 2) {
+        if (ChangedAddon$getSelf().getController().getHoldTicks() >= 2) {
             this.suitTransition -= 0.25f;
         }
 
         if (this.suitTransition >= 3) {
             this.suitTransition = 3.0F;
             this.suited = false;
-            if (getSelf().entity.getChangedEntity() instanceof ChangedEntityExtension changedEntityExtension && changedEntityExtension.shouldAlwaysHoldGrab(grabbedEntity)) {
-                this.grabStrength = 1;
+            if (ChangedAddon$getSelf().entity.getChangedEntity() instanceof ChangedEntityExtension changedEntityExtension && changedEntityExtension.shouldAlwaysHoldInGrab(grabbedEntity, ChangedAddon$getSelf())) {
+                this.grabStrength = 1; //Todo: maybe remove this later?
             }
 
             if (grabbedEntity != null) {
@@ -262,11 +298,11 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (level.isClientSide() && this.isSafeMode()) {
             ci.cancel();
             if (this.instructionTicks == 180) {
-                getSelf().entity.displayClientMessage(Component.translatable("ability.changed_addon.grab_entity.extender.how_to_release", AbstractAbilityInstance.KeyReference.ABILITY.getName(level)), true);
+                ChangedAddon$getSelf().entity.displayClientMessage(Component.translatable("ability.changed_addon.grab_entity.extender.how_to_release", AbstractAbilityInstance.KeyReference.ABILITY.getName(level)), true);
             } else if (this.instructionTicks == 120) {
-                getSelf().entity.displayClientMessage(Component.translatable("ability.changed_addon.grab_entity.extender.how_to_hug", AbstractAbilityInstance.KeyReference.ATTACK.getName(level)), true);
+                ChangedAddon$getSelf().entity.displayClientMessage(Component.translatable("ability.changed_addon.grab_entity.extender.how_to_hug", AbstractAbilityInstance.KeyReference.ATTACK.getName(level)), true);
             } else if (this.instructionTicks == 60) {
-                getSelf().entity.displayClientMessage(Component.translatable("ability.changed_addon.grab_entity.extender.how_to_hug.tightly", AbstractAbilityInstance.KeyReference.USE.getName(level)), true);
+                ChangedAddon$getSelf().entity.displayClientMessage(Component.translatable("ability.changed_addon.grab_entity.extender.how_to_hug.tightly", AbstractAbilityInstance.KeyReference.USE.getName(level)), true);
             }
 
             if (this.instructionTicks > 0) {
