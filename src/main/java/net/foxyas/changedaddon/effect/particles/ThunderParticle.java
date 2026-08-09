@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.effect.particles;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTypes;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -9,7 +10,6 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -111,7 +111,7 @@ public class ThunderParticle extends Particle {
 
         PoseStack poseStack = new PoseStack();
         Matrix4f matrix = poseStack.last().pose();
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.lightning());
+        VertexConsumer consumer = bufferSource.getBuffer(ChangedAddonRenderTypes.lightningNoShort());
 
         // Always build the same fixed number of points, over the FULL bolt length, using the SAME
         // seed and SAME divisor every frame. This keeps every point's position perfectly stable
@@ -196,15 +196,23 @@ public class ThunderParticle extends Particle {
             Vec3 bScale = axisB.scale(radius);
 
             int layer = (layers.length - 1) - l;
-            float factor = 1.0f - (layer * 0.005f);
+            float factor = 1.0f - (layer * 0.025f);
 
             // Correctly shorten the endpoints along the bolt line relative to mainCenter
-            Vec3 layerStart = mainCenter.subtract(halfSpan.scale(factor));
-            Vec3 layerEnd = mainCenter.add(halfSpan.scale(factor));
-
             for (int i = 0; i < segments; i++) {
                 boolean isFirst = (i == 0);
                 boolean isLast = (i == segments - 1);
+
+                Vec3 layerStart = mainCenter.subtract(halfSpan);
+                Vec3 layerEnd = mainCenter.add(halfSpan);
+                if (isFirst) {
+                    layerStart = mainCenter.subtract(halfSpan.scale(factor));
+                }
+
+                if (isLast) {
+                    layerEnd = mainCenter.add(halfSpan.scale(factor));
+                }
+
 
                 Vec3 p1;
                 Vec3 p2;
@@ -221,7 +229,9 @@ public class ThunderParticle extends Particle {
             }
         }
 
-        bufferSource.endBatch(RenderType.lightning());
+        bufferSource.endBatch();
+//        bufferSource.endBatch(ChangedAddonRenderTypes.lightningNoCull());
+//        bufferSource.endBatch(ChangedAddonRenderTypes.lightning());
     }
 
     private static void renderTubeSegment(

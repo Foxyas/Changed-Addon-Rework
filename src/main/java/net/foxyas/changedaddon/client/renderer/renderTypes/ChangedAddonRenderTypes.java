@@ -38,7 +38,7 @@ import static net.minecraft.client.renderer.RenderType.OutlineProperty.IS_OUTLIN
 public final class ChangedAddonRenderTypes extends RenderType {
 
     public static final RenderType QUADS_WITH_TRANSPARENCY = RenderType.create(
-            ChangedAddonMod.resourceLocString("quads"),
+            ChangedAddonMod.resourceLocString("quads_with_transparency"),
             DefaultVertexFormat.BLOCK,
             VertexFormat.Mode.QUADS,
             2097152,
@@ -48,7 +48,7 @@ public final class ChangedAddonRenderTypes extends RenderType {
                     .setLightmapState(LIGHTMAP)
                     .setShaderState(RENDERTYPE_SOLID_SHADER)
                     .setTransparencyState(RenderStateShard.ADDITIVE_TRANSPARENCY)
-                    .setCullState(RenderStateShard.NO_CULL)
+                    .setCullState(RenderStateShard.CULL)
                     .setTextureState(BLOCK_SHEET_MIPPED)
                     .createCompositeState(true)
     );
@@ -78,7 +78,7 @@ public final class ChangedAddonRenderTypes extends RenderType {
                     .setLightmapState(LIGHTMAP)
                     .setShaderState(RENDERTYPE_SOLID_SHADER)
                     .setTransparencyState(RenderStateShard.NO_TRANSPARENCY)
-                    .setCullState(RenderStateShard.NO_CULL)
+                    .setCullState(RenderStateShard.CULL)
                     .setTextureState(BLOCK_SHEET_MIPPED)
                     .createCompositeState(true)
     );
@@ -99,6 +99,34 @@ public final class ChangedAddonRenderTypes extends RenderType {
     );
 
     private static final RenderType LIGHTNING_NO_CULL = create(ChangedAddonMod.resourceLocString("lightning_no_cull"), DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, true, RenderType.CompositeState.builder().setShaderState(RENDERTYPE_LIGHTNING_SHADER).setCullState(NO_CULL).setWriteMaskState(COLOR_DEPTH_WRITE).setTransparencyState(LIGHTNING_TRANSPARENCY).setOutputState(WEATHER_TARGET).createCompositeState(false));
+    private static final RenderType LIGHTNING_NO_SORT = create("lightning",
+            DefaultVertexFormat.POSITION_COLOR,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
+                    .setWriteMaskState(COLOR_DEPTH_WRITE)
+                    .setTransparencyState(LIGHTNING_TRANSPARENCY)
+                    .setOutputState(WEATHER_TARGET)
+                    .createCompositeState(false));
+
+    public static final RenderType LIGHTNING_TRANSLUCENT_TRANSPARENCY = create(
+            ChangedAddonMod.resourceLocString("lightning_translucent_transparency"),
+            DefaultVertexFormat.POSITION_COLOR,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            true,
+            RenderType.CompositeState.builder()
+                    .setShaderState(POSITION_COLOR_SHADER) // Use standard position-color shader
+                    .setWriteMaskState(COLOR_WRITE)        // Disable depth write so overlapping layers blend smoothly
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setCullState(NO_CULL)                 // Keep no cull to prevent missing faces
+                    .setOutputState(WEATHER_TARGET)
+                    .createCompositeState(false)
+    );
 
     public static final BiFunction<ResourceLocation, RenderStateShard.CullStateShard, RenderType> OUTLINE_WITH_DEPTH = Util.memoize((resourceLocation, cullStateShard) ->
             create(ChangedAddonMod.resourceLocString("outline_with_deep_test"),
@@ -578,6 +606,14 @@ public final class ChangedAddonRenderTypes extends RenderType {
 
     public static RenderType lightningNoCull() {
         return LIGHTNING_NO_CULL;
+    }
+
+    public static RenderType lightningTranslucentTransparency() {
+        return LIGHTNING_TRANSLUCENT_TRANSPARENCY;
+    }
+
+    public static RenderType lightningNoShort() {
+        return LIGHTNING_NO_SORT;
     }
 
     public static class ParticleRenderTypes {
