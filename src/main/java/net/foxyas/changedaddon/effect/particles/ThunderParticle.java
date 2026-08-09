@@ -230,8 +230,6 @@ public class ThunderParticle extends Particle {
         }
 
         bufferSource.endBatch();
-//        bufferSource.endBatch(ChangedAddonRenderTypes.lightningNoCull());
-//        bufferSource.endBatch(ChangedAddonRenderTypes.lightning());
     }
 
     private static void renderTubeSegment(
@@ -261,6 +259,51 @@ public class ThunderParticle extends Particle {
         }
         if (renderEndCap) {
             drawQuad(matrix, consumer, end.add(c0), end.add(c1), end.add(c2), end.add(c3), r, g, b, alpha);
+        }
+    }
+
+    private static void renderTubeSegmentWithBackFace(
+            Matrix4f matrix, VertexConsumer consumer,
+            Vec3 start, Vec3 end,
+            Vec3 axisA, Vec3 axisB,
+            float r, float g, float b, float alpha,
+            boolean renderStartCap, boolean renderEndCap) {
+
+        Vec3 c0 = axisA.add(axisB);
+        Vec3 c1 = axisA.reverse().add(axisB);
+        Vec3 c2 = axisA.reverse().add(axisB.reverse());
+        Vec3 c3 = axisA.add(axisB.reverse());
+
+        // --- SIDES (Front & Back Faces) ---
+        // Side 1
+        drawQuad(matrix, consumer, start.add(c0), start.add(c1), end.add(c1), end.add(c0), r, g, b, alpha);
+        drawQuad(matrix, consumer, end.add(c0), end.add(c1), start.add(c1), start.add(c0), r, g, b, alpha);
+
+        // Side 2
+        drawQuad(matrix, consumer, start.add(c1), start.add(c2), end.add(c2), end.add(c1), r, g, b, alpha);
+        drawQuad(matrix, consumer, end.add(c1), end.add(c2), start.add(c2), start.add(c1), r, g, b, alpha);
+
+        // Side 3
+        drawQuad(matrix, consumer, start.add(c2), start.add(c3), end.add(c3), end.add(c2), r, g, b, alpha);
+        drawQuad(matrix, consumer, end.add(c2), end.add(c3), start.add(c3), start.add(c2), r, g, b, alpha);
+
+        // Side 4
+        drawQuad(matrix, consumer, start.add(c3), start.add(c0), end.add(c0), end.add(c3), r, g, b, alpha);
+        drawQuad(matrix, consumer, end.add(c3), end.add(c0), start.add(c0), start.add(c3), r, g, b, alpha);
+
+        // --- END CAPS (Front & Back Faces) ---
+        if (renderStartCap) {
+            // Front face (facing outward from start)
+            drawQuad(matrix, consumer, start.add(c3), start.add(c2), start.add(c1), start.add(c0), r, g, b, alpha);
+            // Back face (facing inward)
+            drawQuad(matrix, consumer, start.add(c0), start.add(c1), start.add(c2), start.add(c3), r, g, b, alpha);
+        }
+
+        if (renderEndCap) {
+            // Front face (facing outward from end)
+            drawQuad(matrix, consumer, end.add(c0), end.add(c1), end.add(c2), end.add(c3), r, g, b, alpha);
+            // Back face (facing inward)
+            drawQuad(matrix, consumer, end.add(c3), end.add(c2), end.add(c1), end.add(c0), r, g, b, alpha);
         }
     }
 

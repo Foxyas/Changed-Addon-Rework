@@ -99,7 +99,7 @@ public final class ChangedAddonRenderTypes extends RenderType {
     );
 
     private static final RenderType LIGHTNING_NO_CULL = create(ChangedAddonMod.resourceLocString("lightning_no_cull"), DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, true, RenderType.CompositeState.builder().setShaderState(RENDERTYPE_LIGHTNING_SHADER).setCullState(NO_CULL).setWriteMaskState(COLOR_DEPTH_WRITE).setTransparencyState(LIGHTNING_TRANSPARENCY).setOutputState(WEATHER_TARGET).createCompositeState(false));
-    private static final RenderType LIGHTNING_NO_SORT = create("lightning",
+    private static final RenderType LIGHTNING_NO_SORT = create(ChangedAddonMod.resourceLocString("lightning_no_short"),
             DefaultVertexFormat.POSITION_COLOR,
             VertexFormat.Mode.QUADS,
             256,
