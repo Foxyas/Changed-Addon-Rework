@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -341,7 +343,10 @@ public class DashPunchGoal extends Goal {
         Vec3 direction = relativeVec.normalize();
 
         // Aplica o movimento
-        Vec3 movement = direction.scale(1.25f).add(0f, 0.5f, 0f).multiply(2.75f, 1.25f, 2.75f);
+        Vec3 movement = direction.scale(1.25f)
+                .multiply(1f, 0f, 1f)
+                .add(0f, 0.5f, 0f)
+                .scale(2.75f);
         mob.setDeltaMovement(movement.x, movement.y, movement.z);
     }
 
@@ -362,11 +367,17 @@ public class DashPunchGoal extends Goal {
         Vec3 direction = relativeVec.normalize();
 
         // Aplica o movimento
-        Vec3 movement = direction.scale(1.25f).add(0f, 0.5f, 0f).multiply(1f, 1.25f, 1f);
+        Vec3 movement = direction.scale(1.25f)
+                .multiply(1f, 0f, 1f)
+                .add(0f, 0.5f, 0f)
+                .multiply(1f, 1.25f, 1f);
         mob.setDeltaMovement(movement.x, movement.y, movement.z);
     }
 
     protected void onHitTarget(LivingEntity target) {
+        if (target instanceof Player player) {
+            player.displayClientMessage(Component.translatable("text.changed_addon.boss_attacks.isParryable"), true);
+        }
         if (mob.level() instanceof ServerLevel server) {
             server.sendParticles(ParticleTypes.EXPLOSION, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
         }
@@ -383,7 +394,10 @@ public class DashPunchGoal extends Goal {
         Vec3 direction = relativeVec.normalize();
 
         // Aplica o movimento
-        Vec3 movement = direction.scale(1.25f).add(0f, 0.5f, 0f).multiply(1f, 1.25f, 1f);
+        Vec3 movement = direction.scale(1.25f)
+                .multiply(1f, 0f, 1f)
+                .add(0f, 0.5f, 0f)
+                .multiply(1f, 1.25f, 1f);
         mob.setDeltaMovement(movement.x, movement.y, movement.z);
     }
 

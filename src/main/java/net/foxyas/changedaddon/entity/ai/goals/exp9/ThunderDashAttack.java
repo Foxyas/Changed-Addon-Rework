@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.ai.goals.exp9;
 import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -174,6 +175,9 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
                             onParriedAttemptToHitTarget(entity);
                         } else {
                             if (entity.hurt(pSource, 6.0F)) {
+                                if (entity instanceof Player player) {
+                                    player.displayClientMessage(Component.translatable("text.changed_addon.boss_attacks.isParryable"), true);
+                                }
                                 dasher.level().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
                             }
                         }
@@ -206,7 +210,10 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
         Vec3 direction = relativeVec.normalize();
 
         // Aplica o movimento
-        Vec3 movement = direction.scale(1.25f).add(0f, 0.5f, 0f).multiply(0.75f, 1.25f, 0.75f);
+        Vec3 movement = direction.scale(1.25f)
+                .multiply(1f, 0f, 1f)
+                .add(0f, 0.5f, 0f)
+                .scale(2.75f);
         target.setDeltaMovement(movement.x, movement.y, movement.z);
     }
 

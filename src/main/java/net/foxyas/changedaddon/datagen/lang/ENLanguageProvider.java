@@ -711,6 +711,9 @@ public class ENLanguageProvider extends LanguageProvider {
         addText("swim_speed", "Swim Speed = %s");
         addText("miningStrength", "Mining Strength: %s");
         addText("display.hazard_body_suit.cant_have_helmet", "Mmph... it’s squishing my ears! Better not wear it.");
+        addText("display.hazard_body_suit.tried_but_cant_have_helmet", "Mmph... it’s would squish my ears! Better not wear it.");
+
+        addText("boss_attacks.isParryable", "§oYou sense that you have the ability to successfully parry such an attack.§r");
 
         addText("item.vial.wrong_use", "Using this item in there will not work");
         addText("item.vial.wrong_use.hint", "Using this item in there will not work, try applying in a living source");

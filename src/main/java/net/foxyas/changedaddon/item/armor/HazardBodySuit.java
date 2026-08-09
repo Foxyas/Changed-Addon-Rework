@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.clothes.AccessoryItemExtension;
 import net.foxyas.changedaddon.util.ComponentUtil;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.data.AccessorySlotContext;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -83,7 +83,7 @@ public class HazardBodySuit extends ClothingItem implements AccessoryItemExtensi
             TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
             if (transfurVariant != null && !transfurVariant.is(ChangedTransfurVariants.LATEX_HUMAN.get())
                     && !transfurVariant.is(ChangedTransfurVariants.LATEX_HUMAN.get())) {
-                player.displayClientMessage(Component.translatable("text.changed_addon.display.hazard_body_suit.cant_have_helmet"), true);
+                player.displayClientMessage(Component.translatable("text.changed_addon.display.hazard_body_suit.tried_but_cant_have_helmet"), true);
                 canChange = false;
             }
         }
