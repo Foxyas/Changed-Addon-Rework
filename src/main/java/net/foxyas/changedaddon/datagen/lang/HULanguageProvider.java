@@ -724,7 +724,10 @@ public class HULanguageProvider extends LanguageProvider {
         addText("legs", "Lábak száma = %s");
         addText("swim_speed", "Úszási sebesség = %s");
         addText("miningStrength", "Bányászati erősség: %s");
-        addText("display.hazard_body_suit.cant_have_helmet", "Mmph... Nyomja a fülem! Jobb, ha nem veszem fel.");
+        addText("display.hazard_body_suit.cant_have_helmet", "Mmph... Nyomja a fülemet! Jobb, ha nem veszem fel.");
+        addText("display.hazard_body_suit.tried_but_cant_have_helmet", "Mmph... Nyomná a fülemet! Jobb, ha nem veszem fel.");
+
+        addText("boss_attacks.isParryable", "§oÚgy érzed, képes vagy sikeresen kivédeni egy ilyen támadást.§r");
 
         addText("item.vial.wrong_use", "Ennek a tárgynak a használata ott nem fog működni.");
         addText("item.vial.wrong_use.hint", "Ennek a tárgynak a használata ott nem fog működni, próbáld meg élő forrásban alkalmazni.");
