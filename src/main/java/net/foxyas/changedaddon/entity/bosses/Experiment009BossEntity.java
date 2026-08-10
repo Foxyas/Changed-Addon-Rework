@@ -731,21 +731,41 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         this.spawnVisualThunderBolt(this.position());
         this.knockbackNearbyEntities(this, 2.5f);
 
+        if (!(this.level() instanceof ServerLevel serverLevel)) return;
+
         int radius = 16;
-        int amountOfPositions = 16; // How many random positions
+        int amountOfPositions = 16;
+
+        // Base position at the entity's center height
+        double startX = this.getX();
+        double startY = this.getY() + (this.getBbHeight() / 2.0);
+        double startZ = this.getZ();
 
         for (int i = 0; i < amountOfPositions; i++) {
-            // Generate random offsets between -radius and +radius
-            int x = this.getBlockX() + this.getRandom().nextInt(radius * 2 + 1) - radius;
-            int y = this.getBlockY() + this.getRandom().nextInt(radius * 2 + 1) - radius;
-            int z = this.getBlockZ() + this.getRandom().nextInt(radius * 2 + 1) - radius;
+            // Calculate relative offset vectors instead of absolute positions
+            double offsetX = (this.getRandom().nextDouble() * 2.0 - 1.0) * radius;
+            double offsetY = (this.getRandom().nextDouble() * 2.0 - 1.0) * radius;
+            double offsetZ = (this.getRandom().nextDouble() * 2.0 - 1.0) * radius;
 
-            BlockPos randomPos = new BlockPos(x, y, z);
+            // Build options set to false for useTargetPosAsBaseForDeltas
+            EntityLinkedThunderParticleOptions particleOptions = ChangedAddonParticleTypes.thunderBoltLinkedTo(
+                    this,
+                    true, // useTargetPosAsBaseForDeltas = false means xSpeed/ySpeed/zSpeed acts directly as relative offset from target
+                    10,    // particle lifetime in ticks
+                    false,
+                    new Vector3f(0.3f, 0.3f, 0.3f),
+                    new Vector3f(1.0f, 1.0f, 1.0f),
+                    1.0f
+            );
 
-            if (level instanceof ServerLevel serverLevel) {
-                EntityLinkedThunderParticleOptions entityLinkedThunderParticleOptions = ChangedAddonParticleTypes.thunderBoltLinkedTo(this, false, 1, false, new Vector3f(), new Vector3f(), 1);
-                serverLevel.sendParticles(entityLinkedThunderParticleOptions, this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 0, randomPos.getX(), randomPos.getY(), randomPos.getZ(), 1);
-            }
+            // Send particle with count = 0 to pass offsetX, offsetY, offsetZ into xSpeed, ySpeed, zSpeed parameters
+            serverLevel.sendParticles(
+                    particleOptions,
+                    startX, startY, startZ, // Spawn location
+                    0,                      // Count must be 0 for speed params to behave as raw deltas
+                    offsetX, offsetY, offsetZ, // Target end relative vector
+                    1.0                     // Particle speed scale
+            );
         }
     }
 
