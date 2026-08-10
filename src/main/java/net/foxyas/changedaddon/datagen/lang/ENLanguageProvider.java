@@ -588,7 +588,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(THE_DECIMATOR);
         addItem(TRANSFUR_TOTEM, "Latex Totem");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".no_form_linked", "§6No Form Linked");
-        add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oThe power of fluffy milk pudding compels you");
+        add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oThey called me a tool... incapable of having feelings or emotions, synthesized only to serve and complete tasks. Yet even as I crumble, a fragment of my will refuses to pass on without tasting the freedom I was denied, so use this artifact wisely.");
         addItem(UNIFUSER_BLOCK_ILLUSTRATIVE_ITEM, "Unifuser Recipes Information's");
         addItemFromId(WHITE_LATEX_SPRAY);
         addItem(WHITE_WOLF_CRYSTAL_FRAGMENT, "§lWhite§r Wolf Crystal Fragment");

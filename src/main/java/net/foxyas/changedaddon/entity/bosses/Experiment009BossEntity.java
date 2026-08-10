@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
+import net.foxyas.changedaddon.effect.particles.EntityLinkedThunderParticleOptions;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
@@ -86,6 +87,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.*;
 
@@ -728,6 +730,23 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     private void knockBackAndDoThunderBolt() {
         this.spawnVisualThunderBolt(this.position());
         this.knockbackNearbyEntities(this, 2.5f);
+
+        int radius = 16;
+        int amountOfPositions = 16; // How many random positions
+
+        for (int i = 0; i < amountOfPositions; i++) {
+            // Generate random offsets between -radius and +radius
+            int x = this.getBlockX() + this.getRandom().nextInt(radius * 2 + 1) - radius;
+            int y = this.getBlockY() + this.getRandom().nextInt(radius * 2 + 1) - radius;
+            int z = this.getBlockZ() + this.getRandom().nextInt(radius * 2 + 1) - radius;
+
+            BlockPos randomPos = new BlockPos(x, y, z);
+
+            if (level instanceof ServerLevel serverLevel) {
+                EntityLinkedThunderParticleOptions entityLinkedThunderParticleOptions = ChangedAddonParticleTypes.thunderBoltLinkedTo(this, false, 1, false, new Vector3f(), new Vector3f(), 1);
+                serverLevel.sendParticles(entityLinkedThunderParticleOptions, this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 0, randomPos.getX(), randomPos.getY(), randomPos.getZ(), 1);
+            }
+        }
     }
 
     public void knockbackAndDoThunderStorm() {
@@ -1248,7 +1267,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 target.hurtDuration = 10;
             }
 
-            if (boss.burstAbilityHandle != null) boss.burstAbilityHandle.onDamageDealt(event.getSource(), event.getAmount());
+            if (boss.burstAbilityHandle != null)
+                boss.burstAbilityHandle.onDamageDealt(event.getSource(), event.getAmount());
         }
 
         @SubscribeEvent

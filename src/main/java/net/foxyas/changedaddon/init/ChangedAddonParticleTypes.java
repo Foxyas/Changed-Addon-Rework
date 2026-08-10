@@ -73,6 +73,8 @@ public class ChangedAddonParticleTypes {
     /**
      * Creates a configured instance of {@link EntityLinkedThunderParticleOptions} for spawning custom lightning bolt particles.
      *
+     * @param entity entity that the thunderbolt is linked
+     * @param shouldUseTargetPosAsBaseForDeltas  if it should use a "entity pos+delta vec" instead of "entity pos to delta vec pos"
      * @param speed  the propagation speed of the bolt along its segment path
      * @param rooted {@code true} if the origin point remains fixed while rendering; {@code false} if the root follows moving nodes
      * @param shake  a 3D vector (X, Y, Z) multiplier controlling the jitter and offset intensity along each axis
