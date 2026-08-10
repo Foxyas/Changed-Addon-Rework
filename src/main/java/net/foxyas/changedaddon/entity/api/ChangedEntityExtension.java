@@ -1,9 +1,11 @@
 package net.foxyas.changedaddon.entity.api;
 
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.item.clothes.DyeableClothingItem;
 import net.foxyas.changedaddon.util.PlayerUtil;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
 import net.ltxprogrammer.changed.data.AccessorySlots;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -70,11 +72,16 @@ public interface ChangedEntityExtension {
         return acceptedSpawnClothes;
     }
 
-    default boolean shouldAlwaysHoldGrab(@Nullable LivingEntity grabbedEntity) {
-        if (grabbedEntity == null) {
-            return false;
+    default boolean shouldAlwaysHoldInGrab(@Nullable LivingEntity grabbedEntity, GrabEntityAbilityInstance grabEntityAbilityInstance) {
+        if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor entityAbilityExtensor) {
+            if (entityAbilityExtensor.isSafeMode() && entityAbilityExtensor.isSnugglingTight()) {
+                if (grabbedEntity == null) {
+                    return false;
+                }
+                return !(grabbedEntity instanceof Player);
+            }
         }
-        return !(grabbedEntity instanceof Player);
+        return false;
     }
 
     default void setDefaultClothing(ChangedEntity changedEntity) {
