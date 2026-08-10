@@ -10,6 +10,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -25,11 +26,16 @@ public class ThunderParticle extends Particle {
     private final Vec3 targetPos;
     private final float speed;
     private final boolean rooted;
+    private final boolean staticBody;
     private final Vector3f shake;
     private final Vector3f color;
     private final float sizeMultiplier;
     private final long seed;
+
+    private final int bodyShakeFrequency;
+
     private float segmentsProgress;
+    private float retractProgress;
 
     public ThunderParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, ThunderParticleOptions options) {
         super(level, x, y, z);
@@ -40,14 +46,13 @@ public class ThunderParticle extends Particle {
         this.sizeMultiplier = options.getSize();
         this.seed = level.random.nextLong();
         this.segmentsProgress = 0;
+        this.retractProgress = 0;
+        this.bodyShakeFrequency = options.getBodyShakeFrequency();
+        this.staticBody = options.isStaticBody();
 
         targetPos = new Vec3(xSpeed, ySpeed, zSpeed);
-
-//        double distance = getPos().distanceTo(targetPos);
-//        (int) (distance / Math.max(0.01f, speed))
         this.lifetime = Math.max(1, options.getLifeTime());
 
-        // Fix Culling: Expand bounding box to encompass the entire bolt span plus shake offsets
         updateBoundingBox();
     }
 
@@ -68,22 +73,22 @@ public class ThunderParticle extends Particle {
             return;
         }
 
+        float halfLife = this.lifetime / 2.0f;
 
         if (!rooted) {
-            float progress = (float) this.age / (float) this.lifetime;
-            Vec3 delta = targetPos.subtract(getPos()).scale(progress);
-            Vec3 currentRoot = getPos().add(delta);
-            this.x = currentRoot.x;
-            this.y = currentRoot.y;
-            this.z = currentRoot.z;
+            // Phase 1: Growth (Age from 0 to halfLife)
+            this.segmentsProgress = Math.min(1.0f, (this.age / halfLife) * this.speed);
 
-            // Recalculate bounding box if particle root moves
-            Vec3 currentEnd = currentRoot.add(targetPos.subtract(getPos()));
-            double margin = Math.max(shake.x(), Math.max(shake.y(), shake.z())) + sizeMultiplier * 0.5f + 1.0;
-            this.setBoundingBox(new AABB(currentRoot, currentEnd).inflate(margin));
-            this.segmentsProgress += 0.25f * speed;
+            // Phase 2: Retraction (Age from halfLife to lifetime)
+            if (segmentsProgress >= 1) {
+                float retractAge = this.age - halfLife; // Resets age counter to 0 for the second half
+                this.retractProgress = Mth.clamp((retractAge / halfLife) * this.speed, 0, 1);
+            } else {
+                this.retractProgress = 0.0f;
+            }
         } else {
-            this.segmentsProgress = Math.min(1.0f, ((float) this.age / (float) this.lifetime) * this.speed);
+            this.segmentsProgress = Mth.clamp((this.age / (float) this.lifetime) * this.speed, 0, 1);
+            this.retractProgress = 0.0f;
         }
     }
 
@@ -94,6 +99,8 @@ public class ThunderParticle extends Particle {
     }
 
     public void renderLightingBolt(MultiBufferSource.BufferSource bufferSource, Camera camera, float partialTicks) {
+        if (!this.isAlive()) return;
+
         Vec3 camPos = camera.getPosition();
 
         double curX = this.xo + (this.x - this.xo) * partialTicks;
@@ -101,9 +108,6 @@ public class ThunderParticle extends Particle {
         double curZ = this.zo + (this.z - this.zo) * partialTicks;
 
         Vec3 startWorld = new Vec3(curX, curY, curZ);
-        // Full target endpoint (the bolt's final, complete length) — NOT scaled by segmentsProgress.
-        // We always generate points across the FULL span so the point cloud is stable; growth is
-        // handled purely by how many segments we choose to draw below.
         Vec3 fullEndWorld = startWorld.add(targetPos.subtract(getPos()));
 
         Vec3 startRel = startWorld.subtract(camPos);
@@ -113,15 +117,11 @@ public class ThunderParticle extends Particle {
         Matrix4f matrix = poseStack.last().pose();
         VertexConsumer consumer = bufferSource.getBuffer(ChangedAddonRenderTypes.lightningNoShort());
 
-        // Always build the same fixed number of points, over the FULL bolt length, using the SAME
-        // seed and SAME divisor every frame. This keeps every point's position perfectly stable
-        // across frames — nothing shifts as the bolt grows, so no tube ring can ever "jump" out
-        // from under an already-drawn cap.
         RandomSource random = RandomSource.create(this.seed);
 
-        if (segmentsProgress >= 1) {
-            int ticksBeforeReseed = 2;
-            long flashSeed = this.seed + (this.age / ticksBeforeReseed);
+        if (segmentsProgress >= 1 && !staticBody) {
+            int safeFreq = Math.max(1, this.bodyShakeFrequency);
+            long flashSeed = this.seed + (this.age / safeFreq);
             random = RandomSource.create(flashSeed);
         }
 
@@ -140,41 +140,55 @@ public class ThunderParticle extends Particle {
             fullPoints[i] = interp.add(offX, offY, offZ);
         }
 
-        // Now decide how much of the fixed point cloud is actually visible this frame, based on
-        // growth progress. visibleSegments is how many whole rings (out of TOTAL_SEGMENTS) to draw;
-        // partialEnd is the exact point along the last partial ring, used as an interpolated "tip"
-        // so the bolt still grows smoothly instead of popping in whole segments at a time.
-        float exactSegments = TOTAL_SEGMENTS * segmentsProgress;
-        int visibleSegments = Math.max(1, (int) Math.ceil(exactSegments));
-        visibleSegments = Math.min(TOTAL_SEGMENTS, visibleSegments);
+        // Determine segment bounds based on growth and retraction
+        float exactEndSegment = TOTAL_SEGMENTS * segmentsProgress;
+        float exactStartSegment = (!rooted && segmentsProgress >= 1.0f) ? (TOTAL_SEGMENTS * retractProgress) : 0.0f;
 
-        // Points actually used for rendering this frame: the same stable positions as fullPoints,
-        // except the very last one is replaced by an interpolated "growing tip" so the last segment
-        // animates smoothly rather than snapping straight to fullPoints[visibleSegments].
-        Vec3[] points = new Vec3[visibleSegments + 1];
-        System.arraycopy(fullPoints, 0, points, 0, visibleSegments); // stable prefix, unchanged positions
-        float tipFraction = Math.min(1.0f, exactSegments - (visibleSegments - 1));
-        Vec3 tipStart = fullPoints[visibleSegments - 1];
-        Vec3 tipEnd = fullPoints[visibleSegments];
-        points[visibleSegments] = tipStart.lerp(tipEnd, tipFraction);
+        int startSegIndex = Math.max(0, Math.min(TOTAL_SEGMENTS, (int) Math.floor(exactStartSegment)));
+        int endSegIndex = Math.max(1, Math.min(TOTAL_SEGMENTS, (int) Math.ceil(exactEndSegment)));
 
-        int segments = visibleSegments;
+        if (startSegIndex >= endSegIndex || exactStartSegment >= exactEndSegment) {
+            return; // Fully collapsed/retracted
+        }
 
-        Vec3 endRel = points[segments];
+        int activeSegmentCount = endSegIndex - startSegIndex;
+        Vec3[] points = new Vec3[activeSegmentCount + 1];
 
-        Vec3 boltDir = endRel.subtract(startRel);
-        if (boltDir.lengthSqr() < 1E-6) {
+        // Populate stable base positions
+        System.arraycopy(fullPoints, startSegIndex, points, 0, activeSegmentCount + 1);
+
+        // Retracting tail tip interpolation (shrinks away from root)
+        float startFraction = exactStartSegment - startSegIndex;
+        if (startFraction > 0.0f && startSegIndex < TOTAL_SEGMENTS) {
+            Vec3 pStart = fullPoints[startSegIndex];
+            Vec3 pNext = fullPoints[startSegIndex + 1];
+            points[0] = pStart.lerp(pNext, startFraction);
+        }
+
+        // Advancing front tip interpolation (grows toward target)
+        float endFraction = exactEndSegment - (endSegIndex - 1);
+        if (endFraction < 1.0f && (endSegIndex - 1) < TOTAL_SEGMENTS) {
+            Vec3 pPrev = fullPoints[endSegIndex - 1];
+            Vec3 pEnd = fullPoints[endSegIndex];
+            points[activeSegmentCount] = pPrev.lerp(pEnd, endFraction);
+        }
+
+        int segments = activeSegmentCount;
+
+        // --- FIX ROTATION ISSUE ---
+        // Compute primary orientation axis from the FULL bolt span rather than dynamic endpoints
+        Vec3 fullBoltDir = fullEndRel.subtract(startRel);
+        if (fullBoltDir.lengthSqr() < 1E-6) {
             return;
         }
-        boltDir = boltDir.normalize();
+        fullBoltDir = fullBoltDir.normalize();
 
-        // Fixed world-aligned cross-section to eliminate camera-facing vertex twisting
-        Vec3 axisA = boltDir.cross(new Vec3(0, 1, 0));
+        Vec3 axisA = fullBoltDir.cross(new Vec3(0, 1, 0));
         if (axisA.lengthSqr() < 1E-6) {
-            axisA = boltDir.cross(new Vec3(1, 0, 0));
+            axisA = fullBoltDir.cross(new Vec3(1, 0, 0));
         }
         axisA = axisA.normalize();
-        Vec3 axisB = boltDir.cross(axisA).normalize();
+        Vec3 axisB = fullBoltDir.cross(axisA).normalize();
 
         float centerRadius = sizeMultiplier * 0.03f;
         float firstOutline = sizeMultiplier * 0.08f;
@@ -183,10 +197,6 @@ public class ThunderParticle extends Particle {
 
         float[] layers = {centerRadius, firstOutline, secondOutline, thirdOutline};
         float[] alphas = {0.3f, 0.3f, 0.3f, 0.3f};
-
-        // Calculate the central axis vector of the bolt (over the currently-visible span only)
-        Vec3 mainCenter = startRel.add(endRel).scale(0.5);
-        Vec3 halfSpan = endRel.subtract(startRel).scale(0.5);
 
         for (int l = 0; l < layers.length; l++) {
             float radius = layers[l];
@@ -198,31 +208,24 @@ public class ThunderParticle extends Particle {
             int layer = (layers.length - 1) - l;
             float factor = 1.0f - (layer * 0.025f);
 
-            // Correctly shorten the endpoints along the bolt line relative to mainCenter
+            // --- FIX INNER TUBE ISSUE ---
+            // Uniform forward loop preserves correct winding order and layer scaling during retraction
             for (int i = 0; i < segments; i++) {
                 boolean isFirst = (i == 0);
                 boolean isLast = (i == segments - 1);
 
-                Vec3 layerStart = mainCenter.subtract(halfSpan);
-                Vec3 layerEnd = mainCenter.add(halfSpan);
+                Vec3 p1 = points[i];
+                Vec3 p2 = points[i + 1];
+
+                Vec3 segVec = p2.subtract(p1);
+                Vec3 segCenter = p1.add(p2).scale(0.5);
+                Vec3 segHalfSpan = segVec.scale(0.5);
+
                 if (isFirst) {
-                    layerStart = mainCenter.subtract(halfSpan.scale(factor));
+                    p1 = segCenter.subtract(segHalfSpan.scale(factor));
                 }
-
                 if (isLast) {
-                    layerEnd = mainCenter.add(halfSpan.scale(factor));
-                }
-
-
-                Vec3 p1;
-                Vec3 p2;
-                if (segments == 1) {
-                    // Quando só tem 1 segmento, use layerStart e layerEnd diretamente sem p2 sobrescrever p1
-                    p1 = layerStart;
-                    p2 = layerEnd;
-                } else {
-                    p1 = isFirst ? layerStart : points[i];
-                    p2 = isLast ? layerEnd : points[i + 1];
+                    p2 = segCenter.add(segHalfSpan.scale(factor));
                 }
 
                 renderTubeSegment(matrix, consumer, p1, p2, aScale, bScale, color.x(), color.y(), color.z(), alpha, isFirst, isLast);

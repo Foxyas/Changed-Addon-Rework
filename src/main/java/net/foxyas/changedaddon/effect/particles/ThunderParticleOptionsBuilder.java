@@ -5,11 +5,16 @@ import org.joml.Vector3f;
 public class ThunderParticleOptionsBuilder {
 
     private int lifeTime;
+    private int bodyShakeFrequency = 2;
+
     private float speed = 1.0f;
+    private float size = 1.0f;
+
     private boolean rooted = true;
+    private boolean staticBody = false;
+
     private Vector3f shake = new Vector3f(1.0f, 1.0f, 1.0f);
     private Vector3f color = new Vector3f(1.0f, 1.0f, 1.0f);
-    private float size = 1.0f;
 
     public static ThunderParticleOptionsBuilder create() {
         return new ThunderParticleOptionsBuilder();
@@ -55,7 +60,22 @@ public class ThunderParticleOptionsBuilder {
         return this;
     }
 
+    public ThunderParticleOptionsBuilder staticBody() {
+        this.staticBody = true;
+        return this;
+    }
+
+    public ThunderParticleOptionsBuilder shakingBody() {
+        this.staticBody = false;
+        return this;
+    }
+
+    public ThunderParticleOptionsBuilder bodyShakeFrequency(int bodyShakeFrequency) {
+        this.bodyShakeFrequency = bodyShakeFrequency;
+        return this;
+    }
+
     public ThunderParticleOptions build() {
-        return new ThunderParticleOptions(lifeTime, speed, rooted, shake, color, size);
+        return new ThunderParticleOptions(lifeTime, speed, rooted, staticBody, bodyShakeFrequency, shake, color, size);
     }
 }
