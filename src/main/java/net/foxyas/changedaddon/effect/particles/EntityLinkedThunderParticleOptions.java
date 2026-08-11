@@ -15,7 +15,7 @@ import org.joml.Vector3f;
 
 import java.util.Locale;
 
-public class ThunderParticleOptions implements ParticleOptions {
+public class EntityLinkedThunderParticleOptions implements ParticleOptions {
 
     protected final float speed;
     protected final float size;
@@ -29,7 +29,12 @@ public class ThunderParticleOptions implements ParticleOptions {
     protected final int lifeTime;
     protected final int bodyShakeFrequency;
 
-    public ThunderParticleOptions(
+    private final int targetId;
+    private final boolean useTargetPosAsBaseForDeltas;
+
+    public EntityLinkedThunderParticleOptions(
+            int targetId,
+            boolean useTargetPosAsBaseForDeltas,
             int lifeTime,
             float speed,
             boolean rooted,
@@ -39,6 +44,8 @@ public class ThunderParticleOptions implements ParticleOptions {
             Vector3f color,
             float size
     ) {
+        this.targetId = targetId;
+        this.useTargetPosAsBaseForDeltas = useTargetPosAsBaseForDeltas;
         this.lifeTime = lifeTime;
         this.speed = speed;
         this.rooted = rooted;
@@ -47,6 +54,14 @@ public class ThunderParticleOptions implements ParticleOptions {
         this.size = size;
         this.staticBody = staticBody;
         this.bodyShakeFrequency = bodyShakeFrequency;
+    }
+
+    public boolean shouldUseTargetPosAsBaseForDeltas() {
+        return useTargetPosAsBaseForDeltas;
+    }
+
+    public int getTargetId() {
+        return targetId;
     }
 
     public float getSpeed() {
@@ -82,26 +97,34 @@ public class ThunderParticleOptions implements ParticleOptions {
     }
 
     // CODEC for DataFixerUpper / Serialization
-    public static final Codec<ThunderParticleOptions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.INT.fieldOf("lifeTime").forGetter(ThunderParticleOptions::getLifeTime),
-            Codec.FLOAT.fieldOf("speed").forGetter(ThunderParticleOptions::getSpeed),
-            Codec.BOOL.fieldOf("rooted").forGetter(ThunderParticleOptions::isRooted),
-            Codec.BOOL.fieldOf("staticBody").forGetter(ThunderParticleOptions::isStaticBody),
-            Codec.INT.fieldOf("bodyShakeFrequency").forGetter(ThunderParticleOptions::getBodyShakeFrequency),
-            ExtraCodecs.VECTOR3F.fieldOf("shake").forGetter(ThunderParticleOptions::getShake),
-            ExtraCodecs.VECTOR3F.fieldOf("color").forGetter(ThunderParticleOptions::getColor),
-            Codec.FLOAT.fieldOf("size").forGetter(ThunderParticleOptions::getSize)
-    ).apply(instance, ThunderParticleOptions::new));
+    public static final Codec<EntityLinkedThunderParticleOptions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.INT.fieldOf("targetId").forGetter(EntityLinkedThunderParticleOptions::getTargetId),
+            Codec.BOOL.fieldOf("useTargetPosAsBaseForDeltas").forGetter(EntityLinkedThunderParticleOptions::shouldUseTargetPosAsBaseForDeltas),
+            Codec.INT.fieldOf("lifeTime").forGetter(EntityLinkedThunderParticleOptions::getLifeTime),
+            Codec.FLOAT.fieldOf("speed").forGetter(EntityLinkedThunderParticleOptions::getSpeed),
+            Codec.BOOL.fieldOf("rooted").forGetter(EntityLinkedThunderParticleOptions::isRooted),
+            Codec.BOOL.fieldOf("staticBody").forGetter(EntityLinkedThunderParticleOptions::isStaticBody),
+            Codec.INT.fieldOf("bodyShakeFrequency").forGetter(EntityLinkedThunderParticleOptions::getBodyShakeFrequency),
+            ExtraCodecs.VECTOR3F.fieldOf("shake").forGetter(EntityLinkedThunderParticleOptions::getShake),
+            ExtraCodecs.VECTOR3F.fieldOf("color").forGetter(EntityLinkedThunderParticleOptions::getColor),
+            Codec.FLOAT.fieldOf("size").forGetter(EntityLinkedThunderParticleOptions::getSize)
+    ).apply(instance, EntityLinkedThunderParticleOptions::new));
 
-    public static Codec<ThunderParticleOptions> codec(ParticleType<ThunderParticleOptions> type) {
+    public static Codec<EntityLinkedThunderParticleOptions> codec(ParticleType<EntityLinkedThunderParticleOptions> type) {
         return CODEC;
     }
 
     // DESERIALIZER for Commands and Network Reading
     @SuppressWarnings("deprecation")
-    public static final ParticleOptions.Deserializer<ThunderParticleOptions> DESERIALIZER = new ParticleOptions.Deserializer<>() {
+    public static final Deserializer<EntityLinkedThunderParticleOptions> DESERIALIZER = new Deserializer<>() {
         @Override
-        public @NotNull ThunderParticleOptions fromCommand(@NotNull ParticleType<ThunderParticleOptions> type, @NotNull StringReader reader) throws CommandSyntaxException {
+        public @NotNull EntityLinkedThunderParticleOptions fromCommand(@NotNull ParticleType<EntityLinkedThunderParticleOptions> type, @NotNull StringReader reader) throws CommandSyntaxException {
+            reader.expect(' ');
+            int targetId = reader.readInt();
+
+            reader.expect(' ');
+            boolean useTargetPosAsBaseForDeltas = reader.readBoolean();
+
             reader.expect(' ');
             int lifeTime = reader.readInt();
 
@@ -134,7 +157,9 @@ public class ThunderParticleOptions implements ParticleOptions {
             reader.expect(' ');
             float size = reader.readFloat();
 
-            return new ThunderParticleOptions(
+            return new EntityLinkedThunderParticleOptions(
+                    targetId,
+                    useTargetPosAsBaseForDeltas,
                     lifeTime,
                     speed,
                     rooted,
@@ -147,7 +172,9 @@ public class ThunderParticleOptions implements ParticleOptions {
         }
 
         @Override
-        public @NotNull ThunderParticleOptions fromNetwork(@NotNull ParticleType<ThunderParticleOptions> type, @NotNull FriendlyByteBuf buffer) {
+        public @NotNull EntityLinkedThunderParticleOptions fromNetwork(@NotNull ParticleType<EntityLinkedThunderParticleOptions> type, @NotNull FriendlyByteBuf buffer) {
+            int entityId = buffer.readVarInt();
+            boolean useTargetPosAsBaseForDeltas = buffer.readBoolean();
             int lifeTime = buffer.readVarInt();
             int bodyShakeFrequency = buffer.readInt();
             float speed = buffer.readFloat();
@@ -157,17 +184,19 @@ public class ThunderParticleOptions implements ParticleOptions {
             Vector3f color = new Vector3f(buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
             float size = buffer.readFloat();
 
-            return new ThunderParticleOptions(lifeTime, speed, rooted, staticBody, bodyShakeFrequency, shake, color, size);
+            return new EntityLinkedThunderParticleOptions(entityId, useTargetPosAsBaseForDeltas, lifeTime, speed, rooted, staticBody, bodyShakeFrequency, shake, color, size);
         }
     };
 
     @Override
     public ParticleType<?> getType() {
-        return ChangedAddonParticleTypes.THUNDER_PARTICLE.get();
+        return ChangedAddonParticleTypes.ENTITY_LINKED_THUNDER_PARTICLE.get();
     }
 
     @Override
     public void writeToNetwork(FriendlyByteBuf buffer) {
+        buffer.writeVarInt(targetId);
+        buffer.writeBoolean(useTargetPosAsBaseForDeltas);
         buffer.writeVarInt(lifeTime);
         buffer.writeInt(bodyShakeFrequency);
         buffer.writeFloat(speed);
@@ -180,9 +209,9 @@ public class ThunderParticleOptions implements ParticleOptions {
 
     @Override
     public @NotNull String writeToString() {
-        return String.format(Locale.ROOT, "%s %d %.2f %b %b %d %.2f %.2f %.2f %.2f %.2f %.2f %.2f",
+        return String.format(Locale.ROOT, "%s %d %b %d %.2f %b %b %d %.2f %.2f %.2f %.2f %.2f %.2f %.2f",
                 ForgeRegistries.PARTICLE_TYPES.getKey(getType()),
-                lifeTime, speed, rooted, staticBody, bodyShakeFrequency,
+                targetId, useTargetPosAsBaseForDeltas, lifeTime, speed, rooted, staticBody, bodyShakeFrequency,
                 shake.x(), shake.y(), shake.z(),
                 color.x(), color.y(), color.z(),
                 size

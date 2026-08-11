@@ -12,6 +12,7 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-public class ThunderParticle extends Particle {
+public class EntityLinkedThunderParticle extends Particle {
 
     private static final int TOTAL_SEGMENTS = 8;
 
@@ -33,12 +34,14 @@ public class ThunderParticle extends Particle {
     private final long seed;
 
     private final int bodyShakeFrequency;
+    private final Entity target;
 
     private float segmentsProgress;
     private float retractProgress;
 
-    public ThunderParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, ThunderParticleOptions options) {
+    public EntityLinkedThunderParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, EntityLinkedThunderParticleOptions options) {
         super(level, x, y, z);
+        this.target = level.getEntity(options.getTargetId());
         this.speed = options.getSpeed();
         this.rooted = options.isRooted();
         this.shake = options.getShake();
@@ -50,7 +53,7 @@ public class ThunderParticle extends Particle {
         this.bodyShakeFrequency = options.getBodyShakeFrequency();
         this.staticBody = options.isStaticBody();
 
-        targetPos = new Vec3(xSpeed, ySpeed, zSpeed);
+        targetPos = target != null && options.shouldUseTargetPosAsBaseForDeltas() ? target.position().add(new Vec3(xSpeed, ySpeed, zSpeed)) : new Vec3(xSpeed, ySpeed, zSpeed);
         this.lifetime = Math.max(1, options.getLifeTime());
 
         updateBoundingBox();
@@ -64,6 +67,7 @@ public class ThunderParticle extends Particle {
 
     @Override
     public void tick() {
+        if (target != null) this.setPos(target.getX(), target.getY(), target.getZ());
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
@@ -362,12 +366,12 @@ public class ThunderParticle extends Particle {
         return ParticleRenderType.CUSTOM;
     }
 
-    public static class Provider implements ParticleProvider<ThunderParticleOptions> {
+    public static class Provider implements ParticleProvider<EntityLinkedThunderParticleOptions> {
 
         @Nullable
         @Override
         public Particle createParticle(
-                @NotNull ThunderParticleOptions options,
+                @NotNull EntityLinkedThunderParticleOptions options,
                 @NotNull ClientLevel level,
                 double x,
                 double y,
@@ -376,7 +380,11 @@ public class ThunderParticle extends Particle {
                 double ySpeed,
                 double zSpeed
         ) {
-            return new ThunderParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, options);
+            Entity entity = level.getEntity(options.getTargetId());
+            if (entity != null) {
+                return new EntityLinkedThunderParticle(level, entity.getX(), entity.getY(), entity.getZ(), xSpeed, ySpeed, zSpeed, options);
+            }
+            return new EntityLinkedThunderParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, options);
         }
     }
 }

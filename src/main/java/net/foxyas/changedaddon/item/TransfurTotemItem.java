@@ -1,11 +1,14 @@
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
+import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.item.tooltip.TransfurTotemTooltipComponent;
 import net.foxyas.changedaddon.procedure.SummonDripParticlesProcedure;
 import net.foxyas.changedaddon.util.PlayerUtil;
+import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.block.WhiteLatexTransportInterface;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -14,6 +17,7 @@ import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.item.Syringe;
+import net.ltxprogrammer.changed.process.Pale;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.StackUtil;
 import net.minecraft.advancements.Advancement;
@@ -44,6 +48,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -54,6 +59,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class TransfurTotemItem extends Item {
 
@@ -73,16 +79,16 @@ public class TransfurTotemItem extends Item {
 
         String latexForm = latexFormRes.toString();
 
-        if (ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get() || latexForm.startsWith("changed:form")) {
+        if (ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get() || latexFormRes.getNamespace().equals(Changed.MODID)) {
             linkForm(level, player, itemstack, tf, latexForm);
             return true;
-        } else if (latexForm.startsWith("changed_addon:form")) {
+        } else if (latexFormRes.getNamespace().equals(ChangedAddonMod.MODID)) {
             cooldown(player, itemstack, 50);
             visualActivate(level, player, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR);
             player.displayClientMessage(Component.translatable("changed_addon.latex_totem.not_valid"), true);
             return true;
-        } else if (latexForm.startsWith("changed:special")) {
-            linkForm(level, player, itemstack, tf, "changed:form_light_latex_wolf");
+        } else if (latexForm.startsWith("changed:special") && TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getFormId).noneMatch(form -> form.equals(latexFormRes))) {
+            linkForm(level, player, itemstack, tf, ChangedTransfurVariants.FALLBACK_VARIANT.get().getFormId());
             return true;
         }
 
@@ -90,14 +96,21 @@ public class TransfurTotemItem extends Item {
     }
 
     private static void linkForm(Level level, Player player, ItemStack stack, TransfurVariantInstance<?> tf, String form) {
-        stack.getOrCreateTag().putString("form", form);
+        CompoundTag itemStackTag = stack.getOrCreateTag();
+        itemStackTag.putString("form", form);
+        itemStackTag.putBoolean("curedFromPale", Pale.getPaleExposure(player) < 0);
+
         CompoundTag variantData = tf.save();
         variantData.remove("previousAttributes");
         variantData.remove("newAttributes");
         variantData.remove("transfurProgressionO");
         variantData.remove("transfurProgression");
-        stack.getOrCreateTag().put("TransfurVariantData", variantData);
+        itemStackTag.put("TransfurVariantData", variantData);
         activateVisuals(level, player, stack, null, 100, SoundEvents.BEACON_ACTIVATE);
+    }
+
+    private static void linkForm(Level level, Player player, ItemStack stack, TransfurVariantInstance<?> tf, ResourceLocation form) {
+        linkForm(level, player, stack, tf, form.toString());
     }
 
     private static void cooldown(Player entity, ItemStack itemstack, int ticks) {
@@ -178,11 +191,11 @@ public class TransfurTotemItem extends Item {
             return;
         }
 
-        if (Screen.hasShiftDown() && !Screen.hasAltDown() && !Screen.hasControlDown())
+        if (Screen.hasShiftDown() && !Screen.hasAltDown() && !Screen.hasControlDown()) {
             tooltip.add(1, Component.literal(("§6Form=" + itemTag.getString("form"))));
-        else if (Screen.hasAltDown() && Screen.hasControlDown())
+        } else if (Screen.hasAltDown() && Screen.hasControlDown()) {
             tooltip.add(1, (Component.translatable("item.changed_addon.transfur_totem.desc_1")));
-        else {
+        } else {
             String ID = Syringe.getVariantDescriptionId(stack);
             tooltip.add(1, Component.literal(("§6(" + Component.translatable(ID).getString() + ")")));
         }
@@ -191,6 +204,11 @@ public class TransfurTotemItem extends Item {
     @Override
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack itemstack) {
         return UseAnim.BLOCK;
+    }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        super.initializeClient(consumer);
     }
 
     @Override
@@ -384,12 +402,14 @@ public class TransfurTotemItem extends Item {
         player.getCooldowns().addCooldown(itemstack.getItem(), 100);
         if (level.isClientSide()) Minecraft.getInstance().gameRenderer.displayItemActivation(itemstack);
 
-        if (entity instanceof ServerPlayer _player) {
+        if (entity instanceof ServerPlayer serverPlayer) {
             player.displayClientMessage(Component.literal("The totem you were carrying has been activated"), true);
+            ChangedAddonCriteriaTriggers.SIMPLE_ID_TRIGGER.trigger(serverPlayer, "untransfur.from:benign_latex");
 
-            Advancement advancement = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:transfur_totem_advancement_2"));
-            AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(advancement);
-            if (!_ap.isDone()) for (String s : _ap.getRemainingCriteria()) _player.getAdvancements().award(advancement, s);
+//            Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:transfur_totem_advancement_2"));
+//            AdvancementProgress advancementProgress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
+//            if (!advancementProgress.isDone())
+//                for (String s : advancementProgress.getRemainingCriteria()) serverPlayer.getAdvancements().award(advancement, s);
         }
     }
 

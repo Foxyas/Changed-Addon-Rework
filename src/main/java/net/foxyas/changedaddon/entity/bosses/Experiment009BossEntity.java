@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
+import net.foxyas.changedaddon.effect.particles.EntityLinkedThunderParticleOptions;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
@@ -86,6 +87,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.*;
 
@@ -728,6 +730,43 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     private void knockBackAndDoThunderBolt() {
         this.spawnVisualThunderBolt(this.position());
         this.knockbackNearbyEntities(this, 2.5f);
+
+        if (!(this.level() instanceof ServerLevel serverLevel)) return;
+
+        int radius = 16;
+        int amountOfPositions = 16;
+
+        // Base position at the entity's center height
+        double startX = this.getX();
+        double startY = this.getY() + (this.getBbHeight() / 2.0);
+        double startZ = this.getZ();
+
+        for (int i = 0; i < amountOfPositions; i++) {
+            // Calculate relative offset vectors instead of absolute positions
+            double offsetX = (this.getRandom().nextDouble() * 2.0 - 1.0) * radius;
+            double offsetY = (this.getRandom().nextDouble() * 2.0 - 1.0) * radius;
+            double offsetZ = (this.getRandom().nextDouble() * 2.0 - 1.0) * radius;
+
+            // Build options set to false for useTargetPosAsBaseForDeltas
+            EntityLinkedThunderParticleOptions particleOptions = ChangedAddonParticleTypes.thunderBoltLinkedTo(
+                    this,
+                    true, // useTargetPosAsBaseForDeltas = false means xSpeed/ySpeed/zSpeed acts directly as relative offset from target
+                    10,    // particle lifetime in ticks
+                    false,
+                    new Vector3f(0.3f, 0.3f, 0.3f),
+                    new Vector3f(1.0f, 1.0f, 1.0f),
+                    1.0f
+            );
+
+            // Send particle with count = 0 to pass offsetX, offsetY, offsetZ into xSpeed, ySpeed, zSpeed parameters
+            serverLevel.sendParticles(
+                    particleOptions,
+                    startX, startY, startZ, // Spawn location
+                    0,                      // Count must be 0 for speed params to behave as raw deltas
+                    offsetX, offsetY, offsetZ, // Target end relative vector
+                    1.0                     // Particle speed scale
+            );
+        }
     }
 
     public void knockbackAndDoThunderStorm() {
@@ -1248,7 +1287,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 target.hurtDuration = 10;
             }
 
-            if (boss.burstAbilityHandle != null) boss.burstAbilityHandle.onDamageDealt(event.getSource(), event.getAmount());
+            if (boss.burstAbilityHandle != null)
+                boss.burstAbilityHandle.onDamageDealt(event.getSource(), event.getAmount());
         }
 
         @SubscribeEvent

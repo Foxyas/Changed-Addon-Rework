@@ -16,7 +16,8 @@
   },
   "criteria": {
     "transfur_totem_advancement_2": {
-      "trigger": "minecraft:impossible"
+      "trigger": "changed_addon:simple_id_trigger",
+      "name": "untransfur.from:benign_latex"
     }
   },
   "rewards": {

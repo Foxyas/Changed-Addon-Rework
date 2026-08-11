@@ -44,6 +44,7 @@ public class ChangedAddonParticleTypes {
     public static final RegistryObject<ParticleType<AgeableRibbonParticleOption>> AGEABLE_RIBBON = register("ageable_ribbon", AgeableRibbonParticleOption.DESERIALIZER, AgeableRibbonParticleOption::codec);
     public static final RegistryObject<ParticleType<MultiColorRibbonParticleOption>> MULTI_COLOR_RIBBON = register("multi_color_ribbon", MultiColorRibbonParticleOption.DESERIALIZER, MultiColorRibbonParticleOption::codec);
     public static final RegistryObject<ParticleType<ThunderParticleOptions>> THUNDER_PARTICLE = register("thunder_bolt", ThunderParticleOptions.DESERIALIZER, ThunderParticleOptions::codec);
+    public static final RegistryObject<ParticleType<EntityLinkedThunderParticleOptions>> ENTITY_LINKED_THUNDER_PARTICLE = register("thunder_bolt_linked", EntityLinkedThunderParticleOptions.DESERIALIZER, EntityLinkedThunderParticleOptions::codec);
 
     /**
      * Creates a configured instance of {@link ThunderParticleOptions} for spawning custom lightning bolt particles.
@@ -67,6 +68,38 @@ public class ChangedAddonParticleTypes {
                 .color(color)
                 .size(size)
                 .build();
+    }
+
+    /**
+     * Creates a configured instance of {@link EntityLinkedThunderParticleOptions} for spawning custom lightning bolt particles.
+     *
+     * @param entity entity that the thunderbolt is linked
+     * @param shouldUseTargetPosAsBaseForDeltas  if it should use a "entity pos+delta vec" instead of "entity pos to delta vec pos"
+     * @param speed  the propagation speed of the bolt along its segment path
+     * @param rooted {@code true} if the origin point remains fixed while rendering; {@code false} if the root follows moving nodes
+     * @param shake  a 3D vector (X, Y, Z) multiplier controlling the jitter and offset intensity along each axis
+     * @param color  an RGB color vector with values ranging from 0.0f to 1.0f
+     * @param size   the thickness scaling factor for the rendered lightning quads
+     * @return a fully configured {@link EntityLinkedThunderParticleOptions} instance ready to pass to particle spawning methods
+     */
+    public static EntityLinkedThunderParticleOptions thunderBoltLinkedTo(
+            Entity entity,
+            boolean shouldUseTargetPosAsBaseForDeltas,
+            float speed,
+            boolean rooted,
+            Vector3f shake,
+            Vector3f color,
+            float size
+    ) {
+        return ThunderParticleOptionsBuilder.create()
+                .speed(speed)
+                .rooted(rooted)
+                .shake(shake)
+                .color(color)
+                .size(size)
+                .shouldUseTargetPosAsBaseForDeltas(shouldUseTargetPosAsBaseForDeltas)
+                .withTarget(entity)
+                .buildLinked();
     }
 
     public static ThunderSparkOption thunderSpark(int lifespan) {
@@ -129,6 +162,7 @@ public class ChangedAddonParticleTypes {
 
         event.registerSpecial(ENTITY_MODEL_FADE.get(), new EntityModelFadeParticle.Provider());
         event.registerSpecial(THUNDER_PARTICLE.get(), new ThunderParticle.Provider());
+        event.registerSpecial(ENTITY_LINKED_THUNDER_PARTICLE.get(), new EntityLinkedThunderParticle.Provider());
 
         event.registerSpecial(RIBBON.get(), new RibbonParticle.Provider());
         event.registerSpecial(AGEABLE_RIBBON.get(), new AgeableRibbonParticle.Provider());
