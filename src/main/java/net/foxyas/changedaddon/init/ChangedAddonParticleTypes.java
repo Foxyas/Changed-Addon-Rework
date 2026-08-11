@@ -60,12 +60,14 @@ public class ChangedAddonParticleTypes {
                                                      boolean rooted,
                                                      Vector3f shake,
                                                      Vector3f color,
+                                                     int lifetime,
                                                      float size) {
         return ThunderParticleOptionsBuilder.create()
                 .speed(speed)
                 .rooted(rooted)
                 .shake(shake)
                 .color(color)
+                .lifeTime(lifetime)
                 .size(size)
                 .build();
     }
@@ -89,6 +91,7 @@ public class ChangedAddonParticleTypes {
             boolean rooted,
             Vector3f shake,
             Vector3f color,
+            int lifetime,
             float size
     ) {
         return ThunderParticleOptionsBuilder.create()
@@ -96,6 +99,7 @@ public class ChangedAddonParticleTypes {
                 .rooted(rooted)
                 .shake(shake)
                 .color(color)
+                .lifeTime(lifetime)
                 .size(size)
                 .shouldUseTargetPosAsBaseForDeltas(shouldUseTargetPosAsBaseForDeltas)
                 .withTarget(entity)

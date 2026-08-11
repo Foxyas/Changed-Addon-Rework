@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
 import net.foxyas.changedaddon.effect.particles.EntityLinkedThunderParticleOptions;
+import net.foxyas.changedaddon.effect.particles.ThunderParticleOptions;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
@@ -727,8 +728,21 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
+    private void spawnThunderParticle() {
+        if (!(this.level() instanceof ServerLevel serverLevel)) return;
+
+        ThunderParticleOptions particleOptions = ChangedAddonParticleTypes.thunderBolt(10f, false, new Vector3f(0.3f, 0.3f, 0.3f), new Vector3f(1.0f, 1.0f, 1.0f), 50, 3.0f);
+        serverLevel.sendParticles(
+                particleOptions,
+                getX(), getY() + 16, getZ(), // Spawn location
+                0,                      // Count must be 0 for speed params to behave as raw deltas
+                getX(), getY(), getZ(), // Target end relative vector
+                1.0                     // Particle speed scale
+        );
+    }
+
     private void knockBackAndDoThunderBolt() {
-        this.spawnVisualThunderBolt(this.position());
+        spawnThunderParticle();
         this.knockbackNearbyEntities(this, 2.5f);
 
         if (!(this.level() instanceof ServerLevel serverLevel)) return;
@@ -751,10 +765,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             EntityLinkedThunderParticleOptions particleOptions = ChangedAddonParticleTypes.thunderBoltLinkedTo(
                     this,
                     true, // useTargetPosAsBaseForDeltas = false means xSpeed/ySpeed/zSpeed acts directly as relative offset from target
-                    10,    // particle lifetime in ticks
+                    1,
                     false,
                     new Vector3f(0.3f, 0.3f, 0.3f),
                     new Vector3f(1.0f, 1.0f, 1.0f),
+                    10,// particle lifetime in ticks
                     1.0f
             );
 
