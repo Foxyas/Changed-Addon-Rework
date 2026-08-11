@@ -602,7 +602,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(THE_DECIMATOR, "A pusztító");
         addItem(TRANSFUR_TOTEM, "Latex totem");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".no_form_linked", "§6Nincs csatolva forma");
-        add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oA bolyhos tejpuding ereje késztet rá");
+        add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oEszköznek neveztek... képtelen vagyok érzéseket vagy érzelmeket hordozni, csak a feladatok teljesítésére és szolgálatára szintetizáltam. Mégis, miközben morzsolok, akaratom egy darabka nem hajlandó továbbadni anélkül, hogy megízlelné a szabadságot, amit megtagadtak tőlem, ezért használd bölcsen ezt az ereklyét.");
         addItem(UNIFUSER_BLOCK_ILLUSTRATIVE_ITEM, "Unifúzor recept információk");
         addItem(WHITE_LATEX_SPRAY, "Fehér latex szpré");
         addItem(WHITE_WOLF_CRYSTAL_FRAGMENT, "§lFehér§r farkas kristályszilánk");
