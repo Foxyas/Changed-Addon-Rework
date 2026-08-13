@@ -7,10 +7,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.client.renderer.api.LivingEntityRendererExtensor;
 import net.foxyas.changedaddon.client.renderer.layers.api.IDynamicRenderLayer;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
+import net.foxyas.changedaddon.client.renderer.layers.player.PartialTransfurPartsRenderLayer;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -18,9 +20,11 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -73,6 +77,9 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     private void addExtraLayers(EntityRendererProvider.Context pContext, M pModel, float pShadowRadius, CallbackInfo ci) {
         LivingEntityRenderer<T, M> self = (LivingEntityRenderer<T, M>) (Object) this;
         this.addLayer(new SonarOutlineLayer<>(self));
+        if (self instanceof PlayerRenderer) {
+            this.addLayer(new PartialTransfurPartsRenderLayer<>(self));
+        }
         this.defaultValue = pShadowRadius;
     }
 
