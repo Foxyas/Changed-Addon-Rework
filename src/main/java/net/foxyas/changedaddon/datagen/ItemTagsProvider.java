@@ -169,7 +169,8 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 Items.PUFFERFISH,
                 Items.TROPICAL_FISH);
 
-        tag(ChangedAddonTags.Items.SHARK_DIET);
+        tag(ChangedAddonTags.Items.SHARK_DIET)
+                .addTag(ChangedAddonTags.Items.AQUATIC_DIET).remove(Items.DRIED_KELP);
 
         tag(ChangedAddonTags.Items.CAT_DIET).add(
                 Items.COD,
