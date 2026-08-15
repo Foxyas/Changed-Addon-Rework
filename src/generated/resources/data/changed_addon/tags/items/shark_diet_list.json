@@ -1,3 +1,8 @@
 {
-  "values": []
+  "remove": [
+    "minecraft:dried_kelp"
+  ],
+  "values": [
+    "#changed_addon:aquatic_diet_list"
+  ]
 }
