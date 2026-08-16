@@ -71,6 +71,8 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
                 SNOW_LEOPARD_PARTIAL.get(),
                 LATEX_SNEP.get());
 
+        tag(ChangedAddonTags.EntityTypes.ALPHA_BY_DEFAULT);
+
         tag(ChangedAddonTags.EntityTypes.CAN_CARRY).add(
                 EntityType.WANDERING_TRADER,
                 ChangedEntities.DARK_LATEX_WOLF_PUP.get(),
