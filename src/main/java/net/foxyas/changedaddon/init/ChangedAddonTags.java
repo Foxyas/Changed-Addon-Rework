@@ -85,6 +85,7 @@ public final class ChangedAddonTags {
 
     public static final class EntityTypes {
 
+        public static final TagKey<EntityType<?>> ALPHA_BY_DEFAULT = key("alpha_by_default");
         public static final TagKey<EntityType<?>> CAN_CARRY = key("can_carry");
         public static final TagKey<EntityType<?>> PATABLE = key("patable");
         public static final TagKey<EntityType<?>> DRAGON_ENTITIES = key("dragon_entities");
