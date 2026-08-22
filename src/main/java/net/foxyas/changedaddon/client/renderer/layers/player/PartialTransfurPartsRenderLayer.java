@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.client.renderer.layers.player;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.foxyas.changedaddon.process.DEBUG;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -54,12 +53,6 @@ public class PartialTransfurPartsRenderLayer<T extends LivingEntity, M extends E
         AdvancedHumanoidModel<ChangedEntity> model = renderer.getModel(displayEntity);
 
         pPoseStack.pushPose();
-//        pPoseStack.translate(0, -0.25f, 0);
-        if (player.isShiftKeyDown()) {
-            pPoseStack.translate(DEBUG.HeadPosX, 0.65f + DEBUG.HeadPosY, 0.35f + DEBUG.HeadPosZ);
-        } else {
-            pPoseStack.translate(DEBUG.HeadPosX, -0.25f + DEBUG.HeadPosY, DEBUG.HeadPosZ); // TODO: tweak this to look somehow good.
-        }
         model.prepareMobModel(displayEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
         model.setupAnim(displayEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
 
@@ -73,6 +66,8 @@ public class PartialTransfurPartsRenderLayer<T extends LivingEntity, M extends E
             }
         } catch (Exception ignored) {
         }
+
+        torso.translateAndRotate(pPoseStack);
 
         if (tail != null) {
             int overlay = LivingEntityRenderer.getOverlayCoords(pLivingEntity, 0.0F);
