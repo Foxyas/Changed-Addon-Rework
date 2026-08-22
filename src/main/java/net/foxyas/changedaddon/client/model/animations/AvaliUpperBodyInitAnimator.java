@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static net.foxyas.changedaddon.ability.WingFlapAbility.*;
 
+@SuppressWarnings("deprecation")
 public class AvaliUpperBodyInitAnimator<T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> extends AbstractUpperBodyAnimator<T, M> {
 
     public static final float BOB_AMPLITUDE = (float) Math.toRadians(4);
