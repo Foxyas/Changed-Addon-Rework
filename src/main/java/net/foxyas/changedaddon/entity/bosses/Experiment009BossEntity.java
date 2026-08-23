@@ -744,11 +744,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     private void knockBackAndDoThunderBolt() {
         spawnThunderParticle();
         this.knockbackNearbyEntities(this, 2.5f);
+        spawnThunderBoltsSpark(16, 16, 2f, 1f);
+    }
 
+    private void spawnThunderBoltsSpark(int radius, int amountOfPositions, float speed, float size) {
         if (!(this.level() instanceof ServerLevel serverLevel)) return;
-
-        int radius = 16;
-        int amountOfPositions = 16;
 
         // Base position at the entity's center height
         double startX = this.getX();
@@ -765,12 +765,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             EntityLinkedThunderParticleOptions particleOptions = ChangedAddonParticleTypes.thunderBoltLinkedTo(
                     this,
                     true, // useTargetPosAsBaseForDeltas = false means xSpeed/ySpeed/zSpeed acts directly as relative offset from target
-                    1,
+                    speed,
                     false,
                     new Vector3f(0.3f, 0.3f, 0.3f),
                     new Vector3f(1.0f, 1.0f, 1.0f),
                     10,// particle lifetime in ticks
-                    1.0f
+                    size
             );
 
             // Send particle with count = 0 to pass offsetX, offsetY, offsetZ into xSpeed, ySpeed, zSpeed parameters
@@ -898,8 +898,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         super.readAdditionalSaveData(tag);
         if (tag.contains("isPhase3"))
             setPhase3(tag.getBoolean("isPhase3"));
-        if (tag.contains("Bleeding"))
-            shouldBleed = tag.getBoolean("Bleeding");
+        if (tag.contains("isBleeding"))
+            shouldBleed = tag.getBoolean("isBleeding");
         if (tag.contains("castingAttack"))
             this.setCastingAttack(tag.getBoolean("castingAttack"));
         if (tag.contains("castingAttackTicks"))
@@ -913,7 +913,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         tag.putBoolean("wasPhasedForPhase3", wasPhasedForPhase3);
         super.addAdditionalSaveData(tag);
         tag.putBoolean("isPhase3", isPhase3());
-        tag.putBoolean("Bleeding", shouldBleed);
+        tag.putBoolean("isBleeding", shouldBleed);
         tag.putBoolean("casting", this.isCastingAttack());
         this.targetDataManager.saveTarget(tag);
     }
@@ -1021,8 +1021,14 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
         }
 
-        if (shouldBleed && (this.computeHealthRatio() / PHASE_3_HEALTH_RATIO) > 0.25f && this.tickCount % 4 == 0) {
-            this.setHealth(this.getHealth() - 0.25f);
+        if (shouldBleed && (this.computeHealthRatio() / PHASE_3_HEALTH_RATIO) > 0.25f) {
+            if (this.tickCount % 20 == 0) {
+                spawnThunderBoltsSpark(16, 16, 2f, 0.55f);
+            }
+
+            if (this.tickCount % 4 == 0 && (!hurtMarked && hurtTime <= 0)) {
+                this.setHealth(this.getHealth() - 0.25f);
+            }
         }
 
         RandomSource randomSource = this.getRandom();
