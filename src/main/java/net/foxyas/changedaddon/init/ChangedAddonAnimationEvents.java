@@ -1,12 +1,10 @@
 package net.foxyas.changedaddon.init;
 
 import com.mojang.serialization.Codec;
-import it.unimi.dsi.fastutil.ints.IntList;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
 import net.foxyas.changedaddon.client.model.animations.parameters.PatReactionAnimationParameters;
 import net.foxyas.changedaddon.network.packet.S2CPlayAnimationAfterParticleFade;
-import net.ltxprogrammer.changed.entity.animation.AnimationCategory;
 import net.ltxprogrammer.changed.entity.animation.AnimationEvent;
 import net.ltxprogrammer.changed.entity.animation.AnimationParameters;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
@@ -18,7 +16,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.util.List;
 
 public class ChangedAddonAnimationEvents {
 

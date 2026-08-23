@@ -5,7 +5,8 @@ import net.foxyas.changedaddon.datagen.ability_tree.AbilityTreeProviderImpl;
 import net.foxyas.changedaddon.datagen.compatibility.ModTrimMapsProvider;
 import net.foxyas.changedaddon.datagen.lang.ENLanguageProvider;
 import net.foxyas.changedaddon.datagen.lang.HULanguageProvider;
-import net.foxyas.changedaddon.datagen.patchouli.ModPatchouliBookProvider;
+import net.foxyas.changedaddon.datagen.patchouli.ENPatchouliBookProvider;
+import net.foxyas.changedaddon.datagen.patchouli.RUPatchouliBookProvider;
 import net.foxyas.changedaddon.datagen.worldgen.changed.facility.FacilityPieceProvider;
 import net.foxyas.changedaddon.datagen.worldgen.changed.facility_zone_spawns.FacilityZoneSpawnsProvider;
 import net.minecraft.core.HolderLookup;
@@ -51,7 +52,7 @@ public class GatherData {
         generator.addProvider(event.includeServer(), FacilityPieceProvider.getChangedAddonFacilitiesPieces(packOutput, existingFileHelper));
 
         generator.addProvider(true, new ModRecipeProvider(packOutput));
-
+        generator.addProvider(true, new TransfurVariantDietProvider(packOutput, existingFileHelper));
 
         generator.addProvider(true, new BlockModelProvider(packOutput, helper));
         generator.addProvider(true, new BlockStateProvider(packOutput, helper));
@@ -65,6 +66,8 @@ public class GatherData {
         generator.addProvider(true, new ENLanguageProvider(packOutput));
         generator.addProvider(true, new HULanguageProvider(packOutput));
 
-        generator.addProvider(true, new ModPatchouliBookProvider(packOutput));
+        generator.addProvider(true, new ENPatchouliBookProvider(packOutput));
+        generator.addProvider(true, new RUPatchouliBookProvider(packOutput));
+//        generator.addProvider(true, new ModAnimationAssociationsProvider(packOutput));
     }
 }

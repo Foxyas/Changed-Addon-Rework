@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.datagen;
 
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.JsonOps;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
@@ -29,7 +28,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class TransfurVariantDietProvider extends JsonCodecProvider<TransfurVariantDiet> {
@@ -63,7 +61,7 @@ public class TransfurVariantDietProvider extends JsonCodecProvider<TransfurVaria
         addDietWithHolders(map, "canine_diet",
                 List.of(
                         new VariantHolder(canineTag), // Usando a Tag #changedaddon:canines
-                        new VariantHolder(ChangedTransfurVariants.DARK_LATEX_PUP.get()) // Usando a variant diretamente
+                        new VariantHolder(ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get()) // Usando a variant diretamente
                 ),
                 List.of(
                         food(Items.COOKED_BEEF, 2.0f, 4.0f, 0.5f, new MobEffectInstance(MobEffects.REGENERATION, 100, 0)),
@@ -72,7 +70,7 @@ public class TransfurVariantDietProvider extends JsonCodecProvider<TransfurVaria
         );
     }
 
-    // --- Métodos Auxiliares ---
+    // --- Helper Methods ---
 
     protected void addDietWithHolders(Map<ResourceLocation, TransfurVariantDiet> map, String name, List<VariantHolder> holders, List<FoodDietEntry> foods) {
         map.put(ResourceLocation.fromNamespaceAndPath(this.modid, name), new TransfurVariantDiet(holders, foods));
@@ -80,30 +78,66 @@ public class TransfurVariantDietProvider extends JsonCodecProvider<TransfurVaria
 
     protected void addDiet(Map<ResourceLocation, TransfurVariantDiet> map, String name, List<TransfurVariant<?>> variants, List<FoodDietEntry> foods) {
         List<VariantHolder> holders = variants.stream()
-                .map(v -> new VariantHolder(Either.left(v)))
+                .map(VariantHolder::new)
                 .toList();
         addDietWithHolders(map, name, holders, foods);
     }
 
-    protected FoodDietEntry food(Ingredient ingredient, FloatProvider hunger, FloatProvider saturation, MobEffectInstance effect, boolean isSick) {
-        return new FoodDietEntry(ingredient, hunger, saturation, Optional.ofNullable(effect), isSick);
+    // Support List<Ingredient> directly
+    protected FoodDietEntry food(List<Ingredient> ingredients, FloatProvider hunger, FloatProvider saturation, List<MobEffectInstance> effects, boolean isSick) {
+        return new FoodDietEntry(ingredients, hunger, saturation, effects, isSick);
     }
 
+    protected FoodDietEntry food(List<Ingredient> ingredients, FloatProvider hunger, FloatProvider saturation, MobEffectInstance effect, boolean isSick) {
+        return food(ingredients, hunger, saturation, List.of(effect), isSick);
+    }
+
+    // Helper for Item varargs -> Converts items into a List of Ingredients
+    protected FoodDietEntry food(FloatProvider hunger, FloatProvider saturation, MobEffectInstance effect, boolean isSick, Item... items) {
+        List<Ingredient> ingredients = java.util.Arrays.stream(items)
+                .map(Ingredient::of)
+                .toList();
+        return food(ingredients, hunger, saturation, effect, isSick);
+    }
+
+    // Single/Multiple Item Food Helpers
     protected FoodDietEntry food(Item item, float minHunger, float maxHunger, float saturation, MobEffectInstance effect) {
         FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
-        return food(Ingredient.of(item), hunger, ConstantFloat.of(saturation), effect, false);
+        return food(List.of(Ingredient.of(item)), hunger, ConstantFloat.of(saturation), List.of(effect), false);
+    }
+
+    protected FoodDietEntry food(Item item, float minHunger, float maxHunger, float saturation, List<MobEffectInstance> effects) {
+        FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
+        return food(List.of(Ingredient.of(item)), hunger, ConstantFloat.of(saturation), effects, false);
+    }
+
+    protected FoodDietEntry food(Item item, float hunger, float saturation, MobEffectInstance mobEffectInstance) {
+        return food(item, hunger, hunger, saturation, List.of(mobEffectInstance));
     }
 
     protected FoodDietEntry food(Item item, float hunger, float saturation) {
-        return food(item, hunger, hunger, saturation, null);
+        return food(item, hunger, hunger, saturation, List.of());
     }
 
+    protected FoodDietEntry food(List<Item> items, float minHunger, float maxHunger, float saturation, MobEffectInstance effect) {
+        FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
+        List<Ingredient> ingredients = items.stream().map(Ingredient::of).toList();
+        return food(ingredients, hunger, ConstantFloat.of(saturation), effect, false);
+    }
+
+    // Sick Food Helpers
     protected FoodDietEntry sickFood(Item item, float minHunger, float maxHunger, float saturation) {
         FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
-        return food(Ingredient.of(item), hunger, ConstantFloat.of(saturation), null, true);
+        return food(List.of(Ingredient.of(item)), hunger, ConstantFloat.of(saturation), List.of(), true);
     }
 
     protected FoodDietEntry sickFood(Item item, float hunger, float saturation) {
         return sickFood(item, hunger, hunger, saturation);
+    }
+
+    protected FoodDietEntry sickFood(List<Item> items, float minHunger, float maxHunger, float saturation) {
+        FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
+        List<Ingredient> ingredients = items.stream().map(Ingredient::of).toList();
+        return food(ingredients, hunger, ConstantFloat.of(saturation), List.of(), true);
     }
 }

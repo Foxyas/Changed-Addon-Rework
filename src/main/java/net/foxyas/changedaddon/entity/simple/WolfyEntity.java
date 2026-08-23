@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.simple;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.init.*;
+import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
 import net.foxyas.changedaddon.util.TagKeyUtil;
 import net.foxyas.changedaddon.variant.ILavaSwimmableVariant;
 import net.ltxprogrammer.changed.entity.*;
@@ -20,6 +21,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffects;
@@ -31,6 +33,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.ForgeMod;
@@ -46,11 +49,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-import static net.foxyas.changedaddon.procedure.CreatureDietsHandleProcedure.DietType;
-
 public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmableVariant, IOverrideGrabAbilityTargetConditions {
 
-    public static final DietType WOLFY_DIET = DietType.create("WOLFY", ChangedAddonTags.TransfurVariants.WOLF_DIET, ChangedAddonTags.Items.WOLF_DIET, List.of(ChangedAddonItems.FOXTA.get(), ChangedItems.ORANGE.get()));
+    public static final FoodDietEntry WOLFY_DIET =
+            new FoodDietEntry(
+                    // Ingredient.of can accept a TagKey<Item> directly
+                    List.of(Ingredient.of(ChangedAddonTags.Items.WOLF_DIET),
+                            Ingredient.of(ChangedAddonItems.FOXTA.get(), ChangedItems.ORANGE.get())
+                    ),
+                    ConstantFloat.of(2.0f), // hungerBonus (replace with your FloatProvider)
+                    ConstantFloat.of(0.5f), // saturationBonus (replace with your FloatProvider)
+                    List.of(),              // mobEffect list (empty or add your effects)
+                    false                   // isSickType
+            );
 
     public WolfyEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.WOLFY.get(), world);
@@ -233,7 +244,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements ILavaSwimmable
     }
 
     @Override
-    public List<DietType> getExtraDietTypes() {
+    public List<FoodDietEntry> getExtraDietTypes() {
         return List.of(WOLFY_DIET);
     }
 

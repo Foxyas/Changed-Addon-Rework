@@ -12,10 +12,14 @@ public class ClientTransfurVariantDietManager {
         CLIENT_DIETS = diets;
     }
 
+    /**
+     * Returns ALL diets associated with a specific transfur variant.
+     */
     public static List<TransfurVariantDiet> getDietsForVariant(TransfurVariant<?> variant) {
         if (variant == null) return List.of();
+
         return CLIENT_DIETS.stream()
-            .filter(diet -> diet.variants().contains(variant))
-            .toList();
+                .filter(diet -> diet.matchesVariant(variant))
+                .toList();
     }
 }
