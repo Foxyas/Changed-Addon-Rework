@@ -101,6 +101,10 @@ public class CommonMod {
 
         ChangedAddonMod.addNetworkMessage(SyncTransfurVisionsPacket.class, SyncTransfurVisionsPacket::encode,
                 SyncTransfurVisionsPacket::new, SyncTransfurVisionsPacket::handle);
+
+        ChangedAddonMod.addNetworkMessage(SyncTransfurVariantDietsPacket.class, SyncTransfurVariantDietsPacket::encode,
+                SyncTransfurVariantDietsPacket::new, SyncTransfurVariantDietsPacket::handle);
+
         ChangedAddonMod.addNetworkMessage(SyncUntransfurImmunityPacket.class,
                 SyncUntransfurImmunityPacket::encode,
                 SyncUntransfurImmunityPacket::new,
