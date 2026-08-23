@@ -47,22 +47,26 @@ public class ClientCacheHandler {
                 continue;
             }
 
-            // Atualiza ou cria a entidade no cache
-            ChangedEntity entity = ENTITY_CACHE.compute(player, (p, existing) -> {
-                if (existing == null || existing.getSelfVariant() != variant) {
-                    ChangedEntity newEntity = variant.getEntityType().create(mc.level);
-                    if (newEntity != null) {
-                        newEntity.setNoAi(true);
+            try {
+                // Atualiza ou cria a entidade no cache
+                ChangedEntity entity = ENTITY_CACHE.compute(player, (p, existing) -> {
+                    if (existing == null || existing.getSelfVariant() != variant) {
+                        ChangedEntity newEntity = variant.getEntityType().create(mc.level);
+                        if (newEntity != null) {
+                            newEntity.setNoAi(true);
+                        }
+                        return newEntity;
                     }
-                    return newEntity;
-                }
-                return existing;
-            });
+                    return existing;
+                });
 
-            if (entity != null) {
-                // Sincroniza e avança o tick da variante/entidade no Client Tick
-                TransfurVariantInstance.syncEntityAndPlayer(entity, player);
-                entity.variantTick(mc.level);
+                if (entity != null) {
+                    // Sincroniza e avança o tick da variante/entidade no Client Tick
+                    TransfurVariantInstance.syncEntityAndPlayer(entity, player);
+                    entity.variantTick(mc.level);
+                }
+            } catch (Exception e) {
+                ENTITY_CACHE.remove(player);
             }
         }
     }
