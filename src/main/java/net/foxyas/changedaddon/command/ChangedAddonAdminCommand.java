@@ -460,7 +460,7 @@ public class ChangedAddonAdminCommand {
         vars.latexInfection.setShouldStallTransfurProgress(shouldStallTransfurProgress);
 
         vars.syncPlayerVariables(player);
-        context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.setPlayerLatexInfection.set.success"), false);
+        context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.setPlayerLatexInfection.set.success", isActive, finalFormId, shouldStallTransfurProgress), false);
         return 1;
     }
 

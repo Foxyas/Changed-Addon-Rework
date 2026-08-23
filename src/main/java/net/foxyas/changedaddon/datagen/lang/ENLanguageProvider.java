@@ -754,7 +754,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addCommand("ftkMinigame.get.hasnt", "No active FTKC state detected for the specified subject.");
         addCommand("ftkMinigame.reset.success", "FTKC state has been purged for %s target(s).");
         addCommand("ftkMinigame.reset.fail", "Command execution failed: No eligible transfur subjects identified in selection.");
-        addCommand("setPlayerLatexInfection.set.success", "Set player latex infection.");
+        addCommand("setPlayerLatexInfection.set.success", "Set player latex infection to form %2$s (Active: %1$s, Stall Transfur Progress: %3$s)");
         addCommand("setPlayerLatexInfection.clear.success", "Cleared player latex infection.");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Pats given");
