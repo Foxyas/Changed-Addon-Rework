@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.datagen.lang.ENLanguageProvider;
 import net.foxyas.changedaddon.datagen.lang.HULanguageProvider;
 import net.foxyas.changedaddon.datagen.patchouli.ENPatchouliBookProvider;
 import net.foxyas.changedaddon.datagen.patchouli.RUPatchouliBookProvider;
+import net.foxyas.changedaddon.datagen.patchouli.HUPatchouliBookProvider;
 import net.foxyas.changedaddon.datagen.worldgen.changed.facility.FacilityPieceProvider;
 import net.foxyas.changedaddon.datagen.worldgen.changed.facility_zone_spawns.FacilityZoneSpawnsProvider;
 import net.minecraft.core.HolderLookup;
@@ -68,6 +69,7 @@ public class GatherData {
 
         generator.addProvider(true, new ENPatchouliBookProvider(packOutput));
         generator.addProvider(true, new RUPatchouliBookProvider(packOutput));
+        generator.addProvider(true, new HUPatchouliBookProvider(packOutput));
 //        generator.addProvider(true, new ModAnimationAssociationsProvider(packOutput));
     }
 }
