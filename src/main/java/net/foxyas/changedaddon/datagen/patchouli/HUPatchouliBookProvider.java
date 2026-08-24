@@ -33,8 +33,8 @@ public class HUPatchouliBookProvider extends PatchouliBookProvider {
         // MAIN BOOK START \\
         BookBuilder book = createBookBuilder(
                 "guide_book",
-                "§bChanged Addon ismertető",
-                "Üdvözlünk a Changed Addon ismertetőjében!"
+                "§bChanged Addon Guide",
+                "Welcome to the Changed Addon guidebook!"
         );
         book.setCustomBookItem(ChangedAddonItems.CHANGED_BOOK.get().getDefaultInstance());
         book.setUseResourcePack(true);
