@@ -19,7 +19,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.List;
 
 public record FoodDietEntry(
-        Ingredient ingredient,
+        List<Ingredient> ingredients,
         FloatProvider hungerBonus,
         FloatProvider saturationBonus,
         List<MobEffectInstance> mobEffect,
@@ -27,13 +27,21 @@ public record FoodDietEntry(
 ) {
     public static final Codec<FoodDietEntry> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    ExtraCodecs.INGREDIENT_CODEC.fieldOf("ingredient").forGetter(FoodDietEntry::ingredient),
+                    ExtraCodecs.INGREDIENT_CODEC.listOf().fieldOf("ingredient").forGetter(FoodDietEntry::ingredients),
                     FloatProvider.CODEC.fieldOf("hungerBonus").forGetter(FoodDietEntry::hungerBonus),
                     FloatProvider.CODEC.fieldOf("saturationBonus").forGetter(FoodDietEntry::saturationBonus),
                     ExtraCodecs.MOB_EFFECT_CODEC.listOf().fieldOf("mobEffect").forGetter(FoodDietEntry::mobEffect),
                     Codec.BOOL.optionalFieldOf("isSickType", false).forGetter(FoodDietEntry::isSickType)
             ).apply(instance, FoodDietEntry::new)
     );
+
+    public FoodDietEntry(Ingredient ingredient,
+                         FloatProvider hungerBonus,
+                         FloatProvider saturationBonus,
+                         List<MobEffectInstance> mobEffect,
+                         boolean isSickType) {
+        this(List.of(ingredient), hungerBonus, saturationBonus, mobEffect, isSickType);
+    }
 
     /**
      * Applies hunger/saturation bonuses and any associated mob effects when an entity consumes this food item.

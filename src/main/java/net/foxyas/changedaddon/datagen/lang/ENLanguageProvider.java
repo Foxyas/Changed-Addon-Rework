@@ -324,6 +324,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addJeiDescriptions("pot_with_cammonia", "Grants enough Untransfur Effect to fully reverse your transformation when consumed.");
         addJeiDescriptions("luminara.riddle", "Where the world ends and the void devours all, \nthe beast must cast itself into the abyss. \nIn the silence where no flame dares burn, its soul is torn and remade. \nYet beware the breath of the dragon— \nfor those who fall touched by its venom do not merely evolve, \nbut awaken in Hyper radiance, burning brighter than the abyss itself.");
 
+        addPatchouliTitle("lunar_rose_poem", "Lunar Rose Poem");
+        addPatchouliTitle("riddles", "Changed Addon Riddles");
         addPatchouliDescriptions("riddles", "General information about the mod riddles.$(br)Solve the riddle, and something good you shall earn!$(br2)Use your mind, pay close attention,$(br)each clue holds a hint worth mention.");
         addPatchouliDescriptions("lunar_rose.page1", "§f§lWhisper of the Lunar Bloom$(br)§r§oIn twilight’s hush, a flower concealed,§oA silent glow, its fate is sealed. §oBorn from a mirror that hides the light,§oAnd a frozen tear, both pure and bright. §oThrough hands unseen, they intertwine, §oIn crafted bond, their fates align. §oNo flame nor forge shall shape its form, §oYet under stars, it shall be born.");
         addPatchouliDescriptions("lunar_rose.page2", "§oSeek the unseen, let wisdom ignite, §oFor only the knowing shall glimpse its light.");
@@ -752,7 +754,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addCommand("ftkMinigame.get.hasnt", "No active FTKC state detected for the specified subject.");
         addCommand("ftkMinigame.reset.success", "FTKC state has been purged for %s target(s).");
         addCommand("ftkMinigame.reset.fail", "Command execution failed: No eligible transfur subjects identified in selection.");
-        addCommand("setPlayerLatexInfection.set.success", "Set player latex infection.");
+        addCommand("setPlayerLatexInfection.set.success", "Set player latex infection to form %2$s (Active: %1$s, Stall Transfur Progress: %3$s)");
         addCommand("setPlayerLatexInfection.clear.success", "Cleared player latex infection.");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Pats given");

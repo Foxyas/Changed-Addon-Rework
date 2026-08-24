@@ -387,36 +387,26 @@ public class ChangedAddonAdminCommand {
                 .then(Commands.literal("setPlayerLatexInfection")
                         .then(Commands.argument("target", EntityArgument.player())
                                 .then(Commands.argument("active", BoolArgumentType.bool())
+                                        .executes(context -> {
+                                            Player player = EntityArgument.getPlayer(context, "target");
+                                            boolean isActive = BoolArgumentType.getBool(context, "active");
+                                            return setPlayerTransfurInfection(context, player, isActive, TransfurMe.RANDOM_VARIANT, false);
+                                        })
                                         .then(Commands.argument("form", ResourceLocationArgument.id())
+                                                .executes(context -> {
+                                                    Player player = EntityArgument.getPlayer(context, "target");
+                                                    boolean isActive = BoolArgumentType.getBool(context, "active");
+                                                    ResourceLocation form = ResourceLocationArgument.getId(context, "form");
+                                                    return setPlayerTransfurInfection(context, player, isActive, form, false);
+                                                })
                                                 .suggests(CommandTransfur.SUGGEST_TRANSFUR_VARIANT)
                                                 .then(Commands.argument("shouldStallTransfurProgress", BoolArgumentType.bool())
                                                         .executes(context -> {
                                                             Player player = EntityArgument.getPlayer(context, "target");
-                                                            var vars = ChangedAddonVariables.ofOrDefault(player);
-
+                                                            boolean shouldStallTransfurProgress = BoolArgumentType.getBool(context, "shouldStallTransfurProgress");
+                                                            boolean isActive = BoolArgumentType.getBool(context, "active");
                                                             ResourceLocation form = ResourceLocationArgument.getId(context, "form");
-                                                            if (form.equals(TransfurMe.RANDOM_VARIANT)) {
-                                                                form = Util.getRandom(TransfurVariant.getPublicTransfurVariants().collect(Collectors.toList()), player.getRandom()).getFormId();
-                                                            }
-
-                                                            ResourceLocation finalFormId;
-                                                            if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getFormId).anyMatch(form::equals)) {
-                                                                finalFormId = form;
-                                                            } else if (form.equals(TransfurVariant.SPECIAL_LATEX)) {
-                                                                finalFormId = Changed.modResource("special/form_" + player.getUUID());
-                                                                if (!ChangedRegistry.TRANSFUR_VARIANT.get().containsKey(finalFormId))
-                                                                    throw TransfurMe.NO_SPECIAL_FORM.create();
-                                                            } else {
-                                                                throw TransfurMe.NOT_LATEX_FORM.create();
-                                                            }
-
-                                                            vars.latexInfection.setActive(BoolArgumentType.getBool(context, "active"));
-                                                            vars.latexInfection.setInfectionVariant(ChangedRegistry.TRANSFUR_VARIANT.get().getValue(finalFormId));
-                                                            vars.latexInfection.setShouldStallTransfurProgress(BoolArgumentType.getBool(context, "shouldStallTransfurProgress"));
-
-                                                            vars.syncPlayerVariables(player);
-                                                            context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.setPlayerLatexInfection.set.success"), false);
-                                                            return 1;
+                                                            return setPlayerTransfurInfection(context, player, isActive, form, shouldStallTransfurProgress);
                                                         })
                                                 )
                                         )
@@ -446,6 +436,32 @@ public class ChangedAddonAdminCommand {
                 .requires(s -> s.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .redirect(mainCommand.getChild("FtkMinigame"))
         );
+    }
+
+    private static int setPlayerTransfurInfection(CommandContext<CommandSourceStack> context, Player player, boolean isActive, ResourceLocation form, boolean shouldStallTransfurProgress) throws CommandSyntaxException {
+        var vars = ChangedAddonVariables.ofOrDefault(player);
+        if (form.equals(TransfurMe.RANDOM_VARIANT)) {
+            form = Util.getRandom(TransfurVariant.getPublicTransfurVariants().collect(Collectors.toList()), player.getRandom()).getFormId();
+        }
+
+        ResourceLocation finalFormId;
+        if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getFormId).anyMatch(form::equals)) {
+            finalFormId = form;
+        } else if (form.equals(TransfurVariant.SPECIAL_LATEX)) {
+            finalFormId = Changed.modResource("special/form_" + player.getUUID());
+            if (!ChangedRegistry.TRANSFUR_VARIANT.get().containsKey(finalFormId))
+                throw TransfurMe.NO_SPECIAL_FORM.create();
+        } else {
+            throw TransfurMe.NOT_LATEX_FORM.create();
+        }
+
+        vars.latexInfection.setActive(isActive);
+        vars.latexInfection.setInfectionVariant(ChangedRegistry.TRANSFUR_VARIANT.get().getValue(finalFormId));
+        vars.latexInfection.setShouldStallTransfurProgress(shouldStallTransfurProgress);
+
+        vars.syncPlayerVariables(player);
+        context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.setPlayerLatexInfection.set.success", isActive, finalFormId, shouldStallTransfurProgress), false);
+        return 1;
     }
 
     private static int clearPlayerLatexInfection(Player player) {

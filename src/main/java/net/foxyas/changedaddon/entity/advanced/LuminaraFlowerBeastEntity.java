@@ -8,7 +8,7 @@ import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
-import net.foxyas.changedaddon.procedure.CreatureDietsHandleProcedure;
+import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.FoxyasUtil;
@@ -34,6 +34,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -51,6 +52,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -64,7 +66,25 @@ import java.util.List;
 
 public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity implements IVariantExtraStats, ICustomPatReaction, PowderSnowWalkable, IDynamicRideOffsetEntity, IBestiaryEntityData {
 
-    public static final CreatureDietsHandleProcedure.DietType LUMINARA_DIET = CreatureDietsHandleProcedure.DietType.create("LUMINARA", ChangedAddonTags.TransfurVariants.DRAGON_LIKE, ChangedAddonTags.Items.DRAGON_DIET, List.of(Items.CHORUS_FRUIT, ChangedItems.ORANGE.get()));
+    public static final List<FoodDietEntry> LUMINARA_DIET = List.of(
+            new FoodDietEntry(
+                    // Ingredient.of can accept a TagKey<Item> directly
+                    Ingredient.of(ChangedAddonTags.Items.DRAGON_DIET),
+                    ConstantFloat.of(2.0f), // hungerBonus (replace with your FloatProvider)
+                    ConstantFloat.of(0.5f), // saturationBonus (replace with your FloatProvider)
+                    List.of(),              // mobEffect list (empty or add your effects)
+                    false                   // isSickType
+            ),
+            new FoodDietEntry(
+                    // You can combine multiple explicit items into an Ingredient using Stream or multiple arguments
+                    Ingredient.of(Items.CHORUS_FRUIT, ChangedItems.ORANGE.get()),
+                    ConstantFloat.of(1.0f), // hungerBonus
+                    ConstantFloat.of(0.2f), // saturationBonus
+                    List.of(),              // mobEffect list
+                    false                   // isSickType
+            )
+    );
+
     private static final EntityDataAccessor<Boolean> AWAKENED = SynchedEntityData.defineId(LuminaraFlowerBeastEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HYPER_AWAKENED = SynchedEntityData.defineId(LuminaraFlowerBeastEntity.class, EntityDataSerializers.BOOLEAN);
     public boolean spawnParticles = true;
@@ -209,8 +229,8 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     }
 
     @Override
-    public List<CreatureDietsHandleProcedure.DietType> getExtraDietTypes() {
-        return List.of(LUMINARA_DIET);
+    public List<FoodDietEntry> getExtraDietTypes() {
+        return LUMINARA_DIET;
     }
 
     @Override

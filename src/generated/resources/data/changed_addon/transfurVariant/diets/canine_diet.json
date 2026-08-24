@@ -1,0 +1,40 @@
+{
+  "foods": [
+    {
+      "hungerBonus": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_exclusive": 4.0,
+          "min_inclusive": 2.0
+        }
+      },
+      "ingredient": [
+        {
+          "item": "minecraft:cooked_beef"
+        }
+      ],
+      "mobEffect": [
+        {
+          "duration": 100,
+          "id": "minecraft:regeneration"
+        }
+      ],
+      "saturationBonus": 0.5
+    },
+    {
+      "hungerBonus": 3.0,
+      "ingredient": [
+        {
+          "item": "minecraft:apple"
+        }
+      ],
+      "isSickType": true,
+      "mobEffect": [],
+      "saturationBonus": 1.0
+    }
+  ],
+  "variants": [
+    "#changed_addon:canines",
+    "changed:form_dark_latex_wolf_pup"
+  ]
+}

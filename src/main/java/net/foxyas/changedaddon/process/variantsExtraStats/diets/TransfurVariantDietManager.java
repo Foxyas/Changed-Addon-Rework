@@ -3,15 +3,13 @@ package net.foxyas.changedaddon.process.variantsExtraStats.diets;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
-import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
-import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -59,8 +57,10 @@ public class TransfurVariantDietManager extends SimpleJsonResourceReloadListener
 
         for (TransfurVariantDiet diet : diets) {
             for (FoodDietEntry foodDietEntry : diet.foods()) {
-                if (foodDietEntry.ingredient().test(foodStack)) {
-                    return Optional.of(foodDietEntry);
+                for (Ingredient ingredient : foodDietEntry.ingredients()) {
+                    if (ingredient.test(foodStack)) {
+                        return Optional.of(foodDietEntry);
+                    }
                 }
             }
         }
@@ -77,8 +77,10 @@ public class TransfurVariantDietManager extends SimpleJsonResourceReloadListener
 
         for (TransfurVariantDiet diet : diets) {
             for (FoodDietEntry foodDietEntry : diet.foods()) {
-                if (foodDietEntry.ingredient().test(foodStack)) {
-                    list.add(foodDietEntry);
+                for (Ingredient ingredient : foodDietEntry.ingredients()) {
+                    if (ingredient.test(foodStack)) {
+                        list.add(foodDietEntry);
+                    }
                 }
             }
         }

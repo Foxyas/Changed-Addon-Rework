@@ -6,16 +6,25 @@ import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.NotNull;
 import xyz.brassgoggledcoders.patchouliprovider.BookBuilder;
 import xyz.brassgoggledcoders.patchouliprovider.CategoryBuilder;
 import xyz.brassgoggledcoders.patchouliprovider.PatchouliBookProvider;
 
 import java.util.function.Consumer;
 
-public class ModPatchouliBookProvider extends PatchouliBookProvider {
+public class ENPatchouliBookProvider extends PatchouliBookProvider {
 
-    public ModPatchouliBookProvider(PackOutput packOutput) {
+    protected final String locate;
+
+    public ENPatchouliBookProvider(PackOutput packOutput) {
         super(packOutput, ChangedAddonMod.MODID, "en_us");
+        locate = "en_us";
+    }
+
+    @Override
+    public @NotNull String getName() {
+        return super.getName() + ":" + locate;
     }
 
     @Override
@@ -43,18 +52,18 @@ public class ModPatchouliBookProvider extends PatchouliBookProvider {
         ItemStack paper = Items.PAPER.getDefaultInstance();
         CategoryBuilder riddles = book.addCategory(
                 "riddles",
-                "Changed Addon Riddles",
-                "patchouli_descriptions.changed_addon.riddles",
+                "patchouli.title.changed_addon.riddles",
+                "patchouli.descriptions.changed_addon.riddles",
                 paper
         );
 
         riddles.addEntry(
                         "lunar_rose_poem",
-                        "Lunar Rose Poem",
+                        "patchouli.title.changed_addon.lunar_rose_poem",
                         lunarRose
                 )
-                .addSimpleTextPage("patchouli_descriptions.changed_addon.lunar_rose.page1")
-                .addSimpleTextPage("patchouli_descriptions.changed_addon.lunar_rose.page2");
+                .addSimpleTextPage("patchouli.descriptions.changed_addon.lunar_rose.page1")
+                .addSimpleTextPage("patchouli.descriptions.changed_addon.lunar_rose.page2");
         // RIDDLES CATEGORY END \\
 
         consumer.accept(book);
