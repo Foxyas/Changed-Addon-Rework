@@ -34,8 +34,8 @@ public class CreatureDietsHandleProcedure {
             return;
         }
 
-        TransfurVariantInstance<?> latexInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-        if (latexInstance == null) return;
+        TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (variantInstance == null) return;
 
         Level level = player.level();
 
@@ -43,11 +43,10 @@ public class CreatureDietsHandleProcedure {
 
         if (!level.getGameRules().getBoolean(ChangedAddonGameRules.CHANGED_ADDON_CREATURE_DIETS)) return;
 
-        ChangedEntity changedEntity = latexInstance.getChangedEntity();
-        TransfurVariant<?> variant = changedEntity.getSelfVariant();
+        ChangedEntity changedEntity = variantInstance.getChangedEntity();
 
         // Retrieve matching diet entries for the current variant and eaten item
-        List<FoodDietEntry> matchingEntries = TransfurVariantDietManager.getDietItemsFor(variant, item);
+        List<FoodDietEntry> matchingEntries = TransfurVariantDietManager.getDietItemsFor(variantInstance, item);
         if (matchingEntries.isEmpty()) return;
 
         // Apply effects for all matching diet objects
