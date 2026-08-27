@@ -5,42 +5,50 @@ import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantD
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkEvent;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class SyncTransfurVariantDietsPacket {
-    private final List<TransfurVariantDiet> diets;
+    private final Map<ResourceLocation, TransfurVariantDiet> diets;
 
-    public SyncTransfurVariantDietsPacket(List<TransfurVariantDiet> diets) {
+    public SyncTransfurVariantDietsPacket(Map<ResourceLocation, TransfurVariantDiet> diets) {
         this.diets = diets;
     }
 
     public SyncTransfurVariantDietsPacket(FriendlyByteBuf buf) {
         int size = buf.readVarInt();
-        this.diets = new ArrayList<>(size);
+        this.diets = new HashMap<>(size);
+
         for (int i = 0; i < size; i++) {
+            ResourceLocation id = buf.readResourceLocation();
             CompoundTag nbt = buf.readNbt();
-            TransfurVariantDiet.CODEC.parse(NbtOps.INSTANCE, nbt)
-                .result()
-                .ifPresent(this.diets::add);
+
+            if (nbt != null) {
+                TransfurVariantDiet.CODEC.parse(NbtOps.INSTANCE, nbt)
+                        .result()
+                        .ifPresent(diet -> this.diets.put(id, diet));
+            }
         }
     }
 
     public void encode(FriendlyByteBuf buf) {
         buf.writeVarInt(diets.size());
-        for (TransfurVariantDiet diet : diets) {
+
+        diets.forEach((id, diet) -> {
+            buf.writeResourceLocation(id);
             TransfurVariantDiet.CODEC.encodeStart(NbtOps.INSTANCE, diet)
-                .result()
-                .ifPresent(tag -> buf.writeNbt((CompoundTag) tag));
-        }
+                    .result()
+                    .ifPresent(tag -> buf.writeNbt((CompoundTag) tag));
+        });
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            // Client-side handling
+            // Client-side handling update
             ClientTransfurVariantDietManager.setClientDiets(this.diets);
         });
         ctx.get().setPacketHandled(true);

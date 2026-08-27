@@ -1,17 +1,16 @@
 package net.foxyas.changedaddon.datagen;
 
-import com.mojang.serialization.JsonOps;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurDiets;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDiet;
-import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDiet.VariantHolder;
+import net.foxyas.changedaddon.process.variantsExtraStats.diets.VariantHolder;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
-import net.minecraft.data.CachedOutput;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.FloatProvider;
@@ -21,44 +20,24 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.JsonCodecProvider;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
-public class TransfurVariantDietProvider extends JsonCodecProvider<TransfurVariantDiet> {
+public class TransfurVariantDietProvider {
 
-    public TransfurVariantDietProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(
-                output,
-                existingFileHelper,
-                ChangedAddonMod.MODID,
-                JsonOps.INSTANCE,
-                PackType.SERVER_DATA,
-                "transfurVariant/diets",
-                TransfurVariantDiet.CODEC,
-                new HashMap<>()
-        );
+    protected final String modid;
+
+    public TransfurVariantDietProvider(String modid) {
+        this.modid = modid;
     }
 
-    @Override
-    public @NotNull CompletableFuture<?> run(@NotNull CachedOutput cache) {
-        generateTransfurDiets(this.entries);
-        return super.run(cache);
-    }
-
-    protected void generateTransfurDiets(Map<ResourceLocation, TransfurVariantDiet> map) {
-        // Exemplo usando mistura de Variante Direta e Tag
+    public void bootstrap(BootstapContext<TransfurVariantDiet> context) {
         TagKey<TransfurVariant<?>> canineTag = TagKey.create(
                 ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                 ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, "canines")
         );
 
-        addDietWithHolders(map, "canine_diet",
+        addDietWithHolders(context, "canine_diet",
                 List.of(
                         new VariantHolder(canineTag), // Usando a Tag #changedaddon:canines
                         new VariantHolder(ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get()) // Usando a variant diretamente
@@ -72,15 +51,16 @@ public class TransfurVariantDietProvider extends JsonCodecProvider<TransfurVaria
 
     // --- Helper Methods ---
 
-    protected void addDietWithHolders(Map<ResourceLocation, TransfurVariantDiet> map, String name, List<VariantHolder> holders, List<FoodDietEntry> foods) {
-        map.put(ResourceLocation.fromNamespaceAndPath(this.modid, name), new TransfurVariantDiet(holders, foods));
+    protected void addDietWithHolders(BootstapContext<TransfurVariantDiet> context, String name, List<VariantHolder> holders, List<FoodDietEntry> foods) {
+        context.register(ResourceKey.create(ChangedAddonTransfurDiets.TRANSFUR_VARIANT_DIET_KEY, ResourceLocation.fromNamespaceAndPath(this.modid, name)),
+                new TransfurVariantDiet(holders, foods));
     }
 
-    protected void addDiet(Map<ResourceLocation, TransfurVariantDiet> map, String name, List<TransfurVariant<?>> variants, List<FoodDietEntry> foods) {
+    protected void addDiet(BootstapContext<TransfurVariantDiet> context, String name, List<TransfurVariant<?>> variants, List<FoodDietEntry> foods) {
         List<VariantHolder> holders = variants.stream()
                 .map(VariantHolder::new)
                 .toList();
-        addDietWithHolders(map, name, holders, foods);
+        addDietWithHolders(context, name, holders, foods);
     }
 
     // Support List<Ingredient> directly
