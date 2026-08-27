@@ -168,21 +168,13 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 Items.CHICKEN,
                 Items.COOKED_CHICKEN,
                 Items.PORKCHOP,
-                Items.COOKED_PORKCHOP);
+                Items.COOKED_PORKCHOP,
+                Items.MUTTON,
+                Items.COOKED_MUTTON);
 
         tag(ChangedAddonTags.Items.DRAGON_DIET).add(
-                Items.COD,
-                Items.COOKED_COD,
-                Items.SALMON,
-                Items.COOKED_SALMON,
-                Items.PUFFERFISH,
-                Items.TROPICAL_FISH,
-                Items.RABBIT,
-                Items.COOKED_RABBIT,
                 Items.BEEF,
                 Items.COOKED_BEEF,
-                Items.CHICKEN,
-                Items.COOKED_CHICKEN,
                 Items.PORKCHOP,
                 Items.COOKED_PORKCHOP,
                 Items.MUTTON,
@@ -200,9 +192,16 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 Items.PORKCHOP,
                 Items.COOKED_PORKCHOP,
                 Items.MUTTON,
-                Items.COOKED_MUTTON);
+                Items.COOKED_MUTTON,
+                Items.COD,
+                Items.COOKED_COD,
+                Items.SALMON,
+                Items.COOKED_SALMON,
+                Items.TROPICAL_FISH);
 
         tag(ChangedAddonTags.Items.SPECIAL_DIET).add(
+                ChangedItems.WHITE_LATEX_GOO.get(),
+                ChangedItems.DARK_LATEX_GOO.get(),
                 ChangedItems.ORANGE.get(),
                 FOXTA.get());
 
@@ -211,7 +210,8 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 Items.PUMPKIN_PIE,
                 Items.HONEY_BOTTLE,
                 Items.GLOW_BERRIES,
-                Items.SWEET_BERRIES);
+                Items.SWEET_BERRIES,
+                Items.CAKE);
 
         tag(ChangedAddonTags.Items.WOLF_DIET).add(
                 Items.RABBIT,
@@ -223,7 +223,10 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 Items.PORKCHOP,
                 Items.COOKED_PORKCHOP,
                 Items.MUTTON,
-                Items.COOKED_MUTTON);
+                Items.COOKED_MUTTON,
+                Items.SALMON,
+                Items.COOKED_SALMON,
+                Items.SWEET_BERRIES);
 
         tag(ItemTags.BEACON_PAYMENT_ITEMS).add(
                 PAINITE.get(),
