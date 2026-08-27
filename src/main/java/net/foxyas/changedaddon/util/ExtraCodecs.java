@@ -1,17 +1,19 @@
 package net.foxyas.changedaddon.util;
 
 import com.google.gson.JsonElement;
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
 
 public class ExtraCodecs {
 
@@ -55,4 +57,14 @@ public class ExtraCodecs {
                     Codec.BOOL.optionalFieldOf("visible", true).forGetter(MobEffectInstance::isVisible)
             ).apply(instance, MobEffectInstance::new)
     );
+
+    public static <T> Codec<List<T>> listOrSingle(Codec<T> codec) {
+        return Codec.either(
+                codec.listOf(),
+                codec
+        ).xmap(
+                either -> either.map(list -> list, List::of),
+                list -> list.size() == 1 ? Either.right(list.get(0)) : Either.left(list)
+        );
+    }
 }
