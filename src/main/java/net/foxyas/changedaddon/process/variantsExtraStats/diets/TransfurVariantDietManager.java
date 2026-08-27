@@ -3,9 +3,11 @@ package net.foxyas.changedaddon.process.variantsExtraStats.diets;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurDiets;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -20,10 +22,10 @@ public class TransfurVariantDietManager extends SimpleJsonResourceReloadListener
     private static final Gson GSON = new Gson();
 
     // Global list containing all registered diets loaded via JSON
-    private static final Map<ResourceLocation,TransfurVariantDiet> ALL_DIETS = new HashMap<>();
+    private static final Map<ResourceLocation, TransfurVariantDiet> ALL_DIETS = new HashMap<>();
 
     public TransfurVariantDietManager() {
-        super(GSON, "transfurVariant/diets");
+        super(GSON, "transfur_variant/diets");
     }
 
     @Override
@@ -33,7 +35,7 @@ public class TransfurVariantDietManager extends SimpleJsonResourceReloadListener
         object.forEach((location, jsonElement) -> {
             TransfurVariantDiet.CODEC.parse(JsonOps.INSTANCE, jsonElement)
                     .resultOrPartial(err -> System.err.println("Failed to load diet " + location + ": " + err))
-                    .ifPresent((transfurVariantDiet -> ALL_DIETS.put(location,transfurVariantDiet)));
+                    .ifPresent((transfurVariantDiet -> ALL_DIETS.put(location, transfurVariantDiet)));
         });
     }
 
@@ -42,8 +44,21 @@ public class TransfurVariantDietManager extends SimpleJsonResourceReloadListener
      */
     public static List<TransfurVariantDiet> getDietsForVariant(TransfurVariantInstance<?> variant) {
         if (variant == null || variant.getParent() == null) return List.of();
+        Registry<TransfurVariantDiet> registry = ChangedAddonTransfurDiets.registry(variant.getHost().level());
 
-        return ALL_DIETS.values().stream()
+        Map<ResourceLocation, TransfurVariantDiet> allDiets = ALL_DIETS;
+        Map<ResourceLocation, TransfurVariantDiet> levelRegistry = new HashMap<>();
+
+        for (TransfurVariantDiet transfurVariantDiet : registry.stream().toList()) {
+            ResourceLocation key = registry.getKey(transfurVariantDiet);
+            if (key != null) {
+                levelRegistry.put(key, transfurVariantDiet);
+            }
+        }
+
+        levelRegistry.forEach(allDiets::replace);
+
+        return allDiets.values().stream()
                 .filter(diet -> diet.matchesVariant(variant.getParent()))
                 .toList();
     }

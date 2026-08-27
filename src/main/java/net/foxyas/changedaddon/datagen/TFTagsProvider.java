@@ -70,12 +70,13 @@ public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
 
         addAllMatching(tag(ChangedAddonTags.TransfurVariants.DRAGON_LIKE), var -> var.getFormId().getPath().contains("dragon")).add(cast(LUMINARA_FLOWER_BEAST));
 
-        addAllMatching(tag(ChangedAddonTags.TransfurVariants.FOX_LIKE), var -> var.getFormId().getPath().contains("fox")).add(cast(EXP1_MALE),
-                cast(EXP1_FEMALE),
-                cast(EXPERIMENT_009),
-                cast(EXPERIMENT_009_BOSS),
-                cast(LATEX_KITSUNE_MALE),
-                cast(LATEX_KITSUNE_FEMALE));
+        addAllMatching(tag(ChangedAddonTags.TransfurVariants.FOX_LIKE), var -> var.getFormId().getPath().contains("fox"))
+                .add(cast(EXP1_MALE),
+                        cast(EXP1_FEMALE),
+                        cast(EXPERIMENT_009),
+                        cast(EXPERIMENT_009_BOSS),
+                        cast(LATEX_KITSUNE_MALE),
+                        cast(LATEX_KITSUNE_FEMALE));
 
         addAllMatching(tag(ChangedAddonTags.TransfurVariants.LEOPARD_LIKE), var -> var.getFormId().getPath().contains("leopard"))
                 .add(cast(ChangedTransfurVariants.LATEX_RED_PANDA),
@@ -99,31 +100,31 @@ public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
                 .add(cast(ChangedTransfurVariants.LATEX_STIGER));
 
 
-        tag(ChangedAddonTags.TransfurVariants.AQUATIC_DIET)
+        tag(ChangedAddonTags.TransfurVariants.HAS_AQUATIC_DIET)
                 .addTag(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE);
 
-        tag(ChangedAddonTags.TransfurVariants.SHARK_DIET)
+        tag(ChangedAddonTags.TransfurVariants.HAS_SHARK_DIET)
                 .addTag(ChangedAddonTags.TransfurVariants.SHARK_LIKE);
 
-        tag(ChangedAddonTags.TransfurVariants.CAT_DIET)
+        tag(ChangedAddonTags.TransfurVariants.HAS_FELINE_DIET)
                 .addTags(ChangedAddonTags.TransfurVariants.CAT_LIKE, ChangedAddonTags.TransfurVariants.LEOPARD_LIKE);
 
-        tag(ChangedAddonTags.TransfurVariants.DRAGON_DIET)
+        tag(ChangedAddonTags.TransfurVariants.HAS_DRACONIC_DIET)
                 .addTag(ChangedAddonTags.TransfurVariants.DRAGON_LIKE);
 
-        tag(ChangedAddonTags.TransfurVariants.FOX_DIET)
+        tag(ChangedAddonTags.TransfurVariants.HAS_FOX_DIET)
                 .addTag(ChangedAddonTags.TransfurVariants.FOX_LIKE);
 
-        tag(ChangedAddonTags.TransfurVariants.SPECIAL_DIET)
+        tag(ChangedAddonTags.TransfurVariants.HAS_SPECIAL_DIET)
                 .add(cast(EXP6), cast(WOLFY), cast(PURO_KIND_FEMALE), cast(PURO_KIND_MALE));
 
-        tag(ChangedAddonTags.TransfurVariants.SWEET_DIET)
+        tag(ChangedAddonTags.TransfurVariants.HAS_SWEET_DIET)
                 .add(cast(HAYDEN_FENNEC_FOX), cast(EXPERIMENT_009), cast(EXPERIMENT_009_BOSS));
 
-        tag(ChangedAddonTags.TransfurVariants.WOLF_DIET)
+        tag(ChangedAddonTags.TransfurVariants.HAS_CANINE_DIET)
                 .addTag(ChangedAddonTags.TransfurVariants.WOLF_LIKE).add(cast(BLUE_LIZARD));
 
-        tag(ChangedAddonTags.TransfurVariants.NO_DIET).add(cast(REYN));
+        tag(ChangedAddonTags.TransfurVariants.HAS_NO_DIET).add(cast(REYN));
 
         List<ResourceKey<? extends TransfurVariant<? extends ChangedEntity>>> bossVariants = List.of(
                 EXPERIMENT_009_BOSS.getKey(), EXPERIMENT_10_BOSS.getKey(), EXPERIMENT_009.getKey(), EXPERIMENT_10.getKey(), VOID_FOX.getKey()

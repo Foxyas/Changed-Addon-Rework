@@ -16,7 +16,7 @@ public class ModReloadListeners {
     @SubscribeEvent
     public static void onRegisterReloadListeners(AddReloadListenerEvent event) {
         event.addListener(new TransfurVisionReloadListener());
-        event.addListener(new TransfurVariantDietManager());
+//        event.addListener(new TransfurVariantDietManager());
     }
 
     @SubscribeEvent

@@ -128,16 +128,22 @@ public final class ChangedAddonTags {
         public static final TagKey<TransfurVariant<?>> SPIDER_LIKE = key("spider_like");
 
         // Transfur Diets
-        public static final TagKey<TransfurVariant<?>> AQUATIC_DIET = key("aquatic_diet");
-        public static final TagKey<TransfurVariant<?>> SHARK_DIET = key("shark_diet");
-        public static final TagKey<TransfurVariant<?>> CAT_DIET = key("cat_diet");
-        public static final TagKey<TransfurVariant<?>> DRAGON_DIET = key("dragon_diet");
-        public static final TagKey<TransfurVariant<?>> FOX_DIET = key("fox_diet");
-        public static final TagKey<TransfurVariant<?>> SPECIAL_DIET = key("special_diet");
-        public static final TagKey<TransfurVariant<?>> SWEET_DIET = key("sweet_tooth");
-        public static final TagKey<TransfurVariant<?>> WOLF_DIET = key("wolf_diet");
-        public static final TagKey<TransfurVariant<?>> NO_DIET = key("no_diet");
+        public static final TagKey<TransfurVariant<?>> HAS_CANINE_DIET = key("canine_diet");
+        public static final TagKey<TransfurVariant<?>> HAS_FOX_DIET = key("canines/fox_diet");
 
+        public static final TagKey<TransfurVariant<?>> HAS_FELINE_DIET = key("feline_diet");
+
+        public static final TagKey<TransfurVariant<?>> HAS_DRACONIC_DIET = key("draconic_diet");
+
+        public static final TagKey<TransfurVariant<?>> HAS_AQUATIC_DIET = key("aquatic_diet");
+        public static final TagKey<TransfurVariant<?>> HAS_SHARK_DIET = key("shark_diet");
+
+        public static final TagKey<TransfurVariant<?>> HAS_SWEET_DIET = key("sweet_tooth");
+        public static final TagKey<TransfurVariant<?>> HAS_SPECIAL_DIET = key("special_diet");
+
+        public static final TagKey<TransfurVariant<?>> HAS_NO_DIET = key("no_diet");
+
+        // Bosses and stuff.
         public static final TagKey<TransfurVariant<?>> BOSS_VARIANTS = key("boss_variants");
         public static final TagKey<TransfurVariant<?>> REMOVED_FROM_GROUNDED_SYRINGES = key("removed_from/grounded_syringes");
         public static final TagKey<TransfurVariant<?>> REMOVED_FROM_RANDOM_VARIANT_FUNCTION = key("removed_from/random_variant_function");

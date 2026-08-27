@@ -641,7 +641,7 @@ public class ChangedAddonTransfurVariants {
         return entity instanceof AquaticEntity ||
                 variant.is(ChangedAddonTags.TransfurVariants.SHARK_LIKE) ||
                 variant.is(ChangedAddonTags.TransfurVariants.AQUATIC_LIKE) ||
-                variant.is(ChangedAddonTags.TransfurVariants.AQUATIC_DIET);
+                variant.is(ChangedAddonTags.TransfurVariants.HAS_AQUATIC_DIET);
     }
 
     public static List<TransfurVariant<?>> getRemovedVariantsList(Level level) {
