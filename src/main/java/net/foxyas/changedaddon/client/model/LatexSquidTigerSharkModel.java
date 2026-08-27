@@ -8,6 +8,7 @@ import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmRideAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.DoubleArmBobAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.camera.SharkCameraSwimAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.upperbody.AbstractUpperBodyAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.SharkHeadInitAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.SharkHeadSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -17,6 +18,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 
@@ -392,8 +394,9 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
                         .addAnimator(new WolfHeadInitAnimator(head)).addAnimator(new ArmSwimAnimator(upperLeftArm, upperRightArm))
                         .addAnimator(new DoubleArmBobAnimator(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
                         .addAnimator(new ArmRideAnimator(upperLeftArm, upperRightArm));*/
-                animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad))
+                animator.addPreset(sharkBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad))
                         .addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addAnimator((HumanoidAnimator.Animator<T, M>) new SwimAnim(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
                         .addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle))
                         .addPreset(sharkTail(tail, tailJoints))
                         .addAnimator(new SharkHeadInitAnimator<>(head))
@@ -434,8 +437,9 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
                         .addAnimator(new WolfHeadInitAnimator(head)).addAnimator(new ArmSwimAnimator(upperLeftArm, upperRightArm))
                         .addAnimator(new DoubleArmBobAnimator(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
                         .addAnimator(new ArmRideAnimator(upperLeftArm, upperRightArm));*/
-                animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad))
+                animator.addPreset(sharkBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad))
                         .addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addAnimator((HumanoidAnimator.Animator<T, M>) new SwimAnim(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
                         .addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle))
                         //.addPreset(sharkTail(tail, tailJoints))
                         .addAnimator(new SharkHeadInitAnimator<>(head))
@@ -446,5 +450,45 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
             };
         }
 
+    }
+
+    static class SwimAnim <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> extends AbstractUpperBodyAnimator<T, M> {
+
+        private final ModelPart lowerLeftArm, lowerRightArm;
+
+        public SwimAnim(ModelPart head, ModelPart torso, ModelPart leftArm, ModelPart rightArm, ModelPart lowerLeftArm, ModelPart lowerRightArm) {
+            super(head, torso, leftArm, rightArm);
+            this.lowerLeftArm = lowerLeftArm;
+            this.lowerRightArm = lowerRightArm;
+        }
+
+        public HumanoidAnimator.AnimateStage preferredStage() {
+            return HumanoidAnimator.AnimateStage.SWIM;
+        }
+
+        public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+            float midSegmentSway = -0.2F * Mth.cos(limbSwing * 0.25F - ((float)Math.PI / 4F));
+            float armOffset = Mth.map(midSegmentSway, -0.35F, 0.35F, 2.0F, -2.0F);
+            ModelPart var10000 = this.torso;
+            var10000.x += Mth.lerp(this.core.swimAmount, 0.0F, armOffset * 1.5F);
+            this.torso.zRot = Mth.lerp(this.core.swimAmount, this.torso.zRot, midSegmentSway);
+            this.leftArm.zRot = (Mth.lerp(this.core.swimAmount, this.leftArm.zRot, midSegmentSway - 0.075F) - 0.25f);
+            lowerLeftArm.zRot = Mth.lerp(this.core.swimAmount, lowerLeftArm.zRot, midSegmentSway - 0.075F);
+            this.rightArm.zRot = (Mth.lerp(this.core.swimAmount, this.rightArm.zRot, midSegmentSway + 0.075F) + 0.25f);
+            lowerRightArm.zRot = Mth.lerp(this.core.swimAmount, lowerRightArm.zRot, midSegmentSway + 0.075F);
+            var10000 = this.leftArm;
+            var10000.x += Mth.lerp(this.core.swimAmount, 0.0F, armOffset * 1.5F);
+            var10000.y += Mth.lerp(this.core.swimAmount, 0.0F, -armOffset);
+
+            lowerLeftArm.x += Mth.lerp(this.core.swimAmount, 0.0F, armOffset * 1.5F);
+            lowerLeftArm.y += Mth.lerp(this.core.swimAmount, 0.0F, -armOffset);
+
+            var10000 = this.rightArm;
+            var10000.x += Mth.lerp(this.core.swimAmount, 0.0F, armOffset * 1.5F);
+            var10000.y += Mth.lerp(this.core.swimAmount, 0.0F, armOffset);
+
+            lowerRightArm.x += Mth.lerp(this.core.swimAmount, 0.0F, armOffset * 1.5F);
+            lowerRightArm.y += Mth.lerp(this.core.swimAmount, 0.0F, armOffset);
+        }
     }
 }
