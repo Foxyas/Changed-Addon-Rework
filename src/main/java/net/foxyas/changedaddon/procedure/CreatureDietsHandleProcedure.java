@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.procedure;
 
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.MobEffectHolder;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDiet;
@@ -56,10 +58,10 @@ public class CreatureDietsHandleProcedure {
 
             for (FoodDietEntry entry : matchingEntries) {
                 if (entry.shouldApplyEffects(player, item)) {
-                    entry.applyEffectsAfterEat(player, item); 
+                    entry.applyEffectsAfterEat(player, item);
 
                     // Track if this was beneficial (non-sick) food
-                    if (!entry.isSickFor(player)) { 
+                    if (!entry.isSickFor(player)) {
                         foundAnyGoodFoodMatch = true;
                     }
                 }
@@ -73,11 +75,35 @@ public class CreatureDietsHandleProcedure {
 
                 for (MobEffectHolder effectHolder : diet.offDietEffects()) {
                     // Evaluated using a dummy/empty FoodDietEntry for status checks
-                    if (effectHolder.shouldApplyEffect(player, null)) {
+                    if (effectHolder.shouldApplyEffect(player, null) && shouldApplySickEffects(player, variantInstance, item)) {
                         player.addEffect(new MobEffectInstance(effectHolder.mobEffectInstance()));
                     }
                 }
             }
         }
+    }
+
+
+    public static boolean shouldApplySickEffects(Player player, TransfurVariantInstance<?> latexInstance, ItemStack item) {
+        if (player == null || item.isEmpty()) {
+            return false;
+        }
+
+        if (latexInstance == null) {
+            return false;
+        }
+
+        // Do not process non-food items tagged as exempt
+        if (item.is(ChangedAddonTags.Items.NOT_FOOD)) {
+            return false;
+        }
+
+        // If debuffs are disabled in configuration, do not apply sickness effects
+        if (!ChangedAddonServerConfiguration.DEBUFFS.get()) {
+            return false;
+        }
+
+        // If the player has surpassed the adaptation age threshold, they are immune to diet sickness
+        return latexInstance.ageAsVariant < ChangedAddonServerConfiguration.AGE_NEED.get();
     }
 }
