@@ -7,11 +7,11 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 
 import java.util.List;
 
-public record TransfurVariantDiet(List<VariantHolder> variantHolders, List<FoodDietEntry> foods) {
+public record TransfurVariantDiet(List<TransfurVariantHolder> transfurVariantHolders, List<FoodDietEntry> foods) {
 
     public static final Codec<TransfurVariantDiet> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    ExtraCodecs.listOrSingle(VariantHolder.CODEC).fieldOf("variants").forGetter(TransfurVariantDiet::variantHolders),
+                    ExtraCodecs.listOrSingle(TransfurVariantHolder.CODEC).fieldOf("variants").forGetter(TransfurVariantDiet::transfurVariantHolders),
                     ExtraCodecs.listOrSingle(FoodDietEntry.CODEC).fieldOf("foods").forGetter(TransfurVariantDiet::foods)
             ).apply(instance, TransfurVariantDiet::new)
     );
@@ -21,7 +21,7 @@ public record TransfurVariantDiet(List<VariantHolder> variantHolders, List<FoodD
      */
     public boolean matchesVariant(TransfurVariant<?> variant) {
         if (variant == null) return false;
-        for (VariantHolder holder : variantHolders) {
+        for (TransfurVariantHolder holder : transfurVariantHolders) {
             if (holder.matches(variant)) {
                 return true;
             }

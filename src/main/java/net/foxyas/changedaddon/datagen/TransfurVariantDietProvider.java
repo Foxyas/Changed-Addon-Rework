@@ -3,8 +3,9 @@ package net.foxyas.changedaddon.datagen;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurDiets;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
+import net.foxyas.changedaddon.process.variantsExtraStats.diets.MobEffectHolder;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDiet;
-import net.foxyas.changedaddon.process.variantsExtraStats.diets.VariantHolder;
+import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantHolder;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -36,11 +37,11 @@ public class TransfurVariantDietProvider {
 
         addDietWithHolders(context, "canine_diet",
                 List.of(
-                        new VariantHolder(canineTag),
-                        new VariantHolder(ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get()) // Usando a variant diretamente
+                        new TransfurVariantHolder(canineTag),
+                        new TransfurVariantHolder(ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get()) // Usando a variant diretamente
                 ),
                 List.of(
-                        food(Items.COOKED_BEEF, 2.0f, 4.0f, 0.5f, new MobEffectInstance(MobEffects.REGENERATION, 100, 0)),
+                        food(Items.COOKED_BEEF, 2.0f, 4.0f, 0.5f, effect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0))),
                         sickFood(Items.APPLE, 3.0f, 1.0f)
                 )
         );
@@ -48,7 +49,7 @@ public class TransfurVariantDietProvider {
 
     // --- Helper Methods ---
 
-    protected void addDietWithHolders(BootstapContext<TransfurVariantDiet> context, String name, List<VariantHolder> holders, List<FoodDietEntry> foods) {
+    protected void addDietWithHolders(BootstapContext<TransfurVariantDiet> context, String name, List<TransfurVariantHolder> holders, List<FoodDietEntry> foods) {
         context.register(key(name), new TransfurVariantDiet(holders, foods));
     }
 
@@ -57,23 +58,23 @@ public class TransfurVariantDietProvider {
     }
 
     protected void addDiet(BootstapContext<TransfurVariantDiet> context, String name, List<TransfurVariant<?>> variants, List<FoodDietEntry> foods) {
-        List<VariantHolder> holders = variants.stream()
-                .map(VariantHolder::new)
+        List<TransfurVariantHolder> holders = variants.stream()
+                .map(TransfurVariantHolder::new)
                 .toList();
         addDietWithHolders(context, name, holders, foods);
     }
 
     // Support List<Ingredient> directly
-    protected FoodDietEntry food(List<Ingredient> ingredients, FloatProvider hunger, FloatProvider saturation, List<MobEffectInstance> effects, boolean isSick) {
+    protected FoodDietEntry food(List<Ingredient> ingredients, FloatProvider hunger, FloatProvider saturation, List<MobEffectHolder> effects, boolean isSick) {
         return new FoodDietEntry(ingredients, hunger, saturation, effects, isSick);
     }
 
-    protected FoodDietEntry food(List<Ingredient> ingredients, FloatProvider hunger, FloatProvider saturation, MobEffectInstance effect, boolean isSick) {
+    protected FoodDietEntry food(List<Ingredient> ingredients, FloatProvider hunger, FloatProvider saturation, MobEffectHolder effect, boolean isSick) {
         return food(ingredients, hunger, saturation, List.of(effect), isSick);
     }
 
     // Helper for Item varargs -> Converts items into a List of Ingredients
-    protected FoodDietEntry food(FloatProvider hunger, FloatProvider saturation, MobEffectInstance effect, boolean isSick, Item... items) {
+    protected FoodDietEntry food(FloatProvider hunger, FloatProvider saturation, MobEffectHolder effect, boolean isSick, Item... items) {
         List<Ingredient> ingredients = java.util.Arrays.stream(items)
                 .map(Ingredient::of)
                 .toList();
@@ -81,17 +82,17 @@ public class TransfurVariantDietProvider {
     }
 
     // Single/Multiple Item Food Helpers
-    protected FoodDietEntry food(Item item, float minHunger, float maxHunger, float saturation, MobEffectInstance effect) {
+    protected FoodDietEntry food(Item item, float minHunger, float maxHunger, float saturation, MobEffectHolder effect) {
         FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
         return food(List.of(Ingredient.of(item)), hunger, ConstantFloat.of(saturation), List.of(effect), false);
     }
 
-    protected FoodDietEntry food(Item item, float minHunger, float maxHunger, float saturation, List<MobEffectInstance> effects) {
+    protected FoodDietEntry food(Item item, float minHunger, float maxHunger, float saturation, List<MobEffectHolder> effects) {
         FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
         return food(List.of(Ingredient.of(item)), hunger, ConstantFloat.of(saturation), effects, false);
     }
 
-    protected FoodDietEntry food(Item item, float hunger, float saturation, MobEffectInstance mobEffectInstance) {
+    protected FoodDietEntry food(Item item, float hunger, float saturation, MobEffectHolder mobEffectInstance) {
         return food(item, hunger, hunger, saturation, List.of(mobEffectInstance));
     }
 
@@ -99,7 +100,7 @@ public class TransfurVariantDietProvider {
         return food(item, hunger, hunger, saturation, List.of());
     }
 
-    protected FoodDietEntry food(List<Item> items, float minHunger, float maxHunger, float saturation, MobEffectInstance effect) {
+    protected FoodDietEntry food(List<Item> items, float minHunger, float maxHunger, float saturation, MobEffectHolder effect) {
         FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
         List<Ingredient> ingredients = items.stream().map(Ingredient::of).toList();
         return food(ingredients, hunger, ConstantFloat.of(saturation), effect, false);
@@ -119,5 +120,65 @@ public class TransfurVariantDietProvider {
         FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
         List<Ingredient> ingredients = items.stream().map(Ingredient::of).toList();
         return food(ingredients, hunger, ConstantFloat.of(saturation), List.of(), true);
+    }
+
+    // ==========================================
+    // --- MOB EFFECT HOLDER HELPERS ---
+    // ==========================================
+
+    /**
+     * Creates a MobEffectHolder with 100% chance and ANY operation.
+     */
+    protected MobEffectHolder effect(MobEffectInstance effect) {
+        return new MobEffectHolder(effect, ConstantFloat.of(1.0f), MobEffectHolder.EffectOperation.ANY);
+    }
+
+    /**
+     * Creates a MobEffectHolder with a specified chance (0.0 to 1.0) and ANY operation.
+     */
+    protected MobEffectHolder effect(MobEffectInstance effect, float chance) {
+        return new MobEffectHolder(effect, ConstantFloat.of(chance), MobEffectHolder.EffectOperation.ANY);
+    }
+
+    /**
+     * Creates a MobEffectHolder with a chance provider and ANY operation.
+     */
+    protected MobEffectHolder effect(MobEffectInstance effect, FloatProvider chanceProvider) {
+        return new MobEffectHolder(effect, chanceProvider, MobEffectHolder.EffectOperation.ANY);
+    }
+
+    /**
+     * Creates a MobEffectHolder targeting GOOD diets (100% chance).
+     */
+    protected MobEffectHolder goodEffect(MobEffectInstance effect) {
+        return new MobEffectHolder(effect, ConstantFloat.of(1.0f), MobEffectHolder.EffectOperation.WHEN_GOOD_DIET);
+    }
+
+    /**
+     * Creates a MobEffectHolder targeting GOOD diets with a specified chance.
+     */
+    protected MobEffectHolder goodEffect(MobEffectInstance effect, float chance) {
+        return new MobEffectHolder(effect, ConstantFloat.of(chance), MobEffectHolder.EffectOperation.WHEN_GOOD_DIET);
+    }
+
+    /**
+     * Creates a MobEffectHolder targeting SICK/BAD diets (100% chance).
+     */
+    protected MobEffectHolder sickEffect(MobEffectInstance effect) {
+        return new MobEffectHolder(effect, ConstantFloat.of(1.0f), MobEffectHolder.EffectOperation.WHEN_SICK_DIET);
+    }
+
+    /**
+     * Creates a MobEffectHolder targeting SICK/BAD diets with a specified chance.
+     */
+    protected MobEffectHolder sickEffect(MobEffectInstance effect, float chance) {
+        return new MobEffectHolder(effect, ConstantFloat.of(chance), MobEffectHolder.EffectOperation.WHEN_SICK_DIET);
+    }
+
+    /**
+     * Creates a fully custom MobEffectHolder.
+     */
+    protected MobEffectHolder customEffect(MobEffectInstance effect, FloatProvider chanceProvider, MobEffectHolder.EffectOperation operation) {
+        return new MobEffectHolder(effect, chanceProvider, operation);
     }
 }

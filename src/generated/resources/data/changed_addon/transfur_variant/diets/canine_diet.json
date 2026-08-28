@@ -15,8 +15,11 @@
       ],
       "mobEffect": [
         {
-          "duration": 100,
-          "id": "minecraft:regeneration"
+          "chance": 1.0,
+          "effect": {
+            "duration": 100,
+            "id": "minecraft:regeneration"
+          }
         }
       ],
       "saturationBonus": 0.5
