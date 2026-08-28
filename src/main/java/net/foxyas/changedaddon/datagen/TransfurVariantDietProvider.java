@@ -1,12 +1,11 @@
 package net.foxyas.changedaddon.datagen;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurDiets;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDiet;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.VariantHolder;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -20,6 +19,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -32,14 +32,11 @@ public class TransfurVariantDietProvider {
     }
 
     public void bootstrap(BootstapContext<TransfurVariantDiet> context) {
-        TagKey<TransfurVariant<?>> canineTag = TagKey.create(
-                ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, "canines")
-        );
+        TagKey<TransfurVariant<?>> canineTag = ChangedAddonTags.TransfurVariants.HAS_CANINE_DIET;
 
         addDietWithHolders(context, "canine_diet",
                 List.of(
-                        new VariantHolder(canineTag), // Usando a Tag #changedaddon:canines
+                        new VariantHolder(canineTag),
                         new VariantHolder(ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get()) // Usando a variant diretamente
                 ),
                 List.of(
@@ -52,8 +49,11 @@ public class TransfurVariantDietProvider {
     // --- Helper Methods ---
 
     protected void addDietWithHolders(BootstapContext<TransfurVariantDiet> context, String name, List<VariantHolder> holders, List<FoodDietEntry> foods) {
-        context.register(ResourceKey.create(ChangedAddonTransfurDiets.TRANSFUR_VARIANT_DIET_KEY, ResourceLocation.fromNamespaceAndPath(this.modid, name)),
-                new TransfurVariantDiet(holders, foods));
+        context.register(key(name), new TransfurVariantDiet(holders, foods));
+    }
+
+    private @NotNull ResourceKey<TransfurVariantDiet> key(String name) {
+        return ResourceKey.create(ChangedAddonTransfurDiets.TRANSFUR_VARIANT_DIET_KEY, ResourceLocation.fromNamespaceAndPath(this.modid, name));
     }
 
     protected void addDiet(BootstapContext<TransfurVariantDiet> context, String name, List<TransfurVariant<?>> variants, List<FoodDietEntry> foods) {
