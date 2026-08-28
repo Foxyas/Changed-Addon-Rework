@@ -9,7 +9,7 @@
     },
     "ingredient": [
       {
-        "tag": "changed_addon:wolf_diet_list"
+        "tag": "changed_addon:special_diet_list"
       }
     ],
     "mobEffect": [
@@ -53,5 +53,5 @@
       }
     }
   ],
-  "variants": "#changed_addon:canine_diet"
+  "variants": "#changed_addon:special_diet"
 }

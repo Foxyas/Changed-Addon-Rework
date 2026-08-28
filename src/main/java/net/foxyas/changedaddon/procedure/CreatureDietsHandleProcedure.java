@@ -2,10 +2,12 @@ package net.foxyas.changedaddon.procedure;
 
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
+import net.foxyas.changedaddon.process.variantsExtraStats.diets.MobEffectHolder;
+import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDiet;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDietManager;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -35,21 +37,46 @@ public class CreatureDietsHandleProcedure {
         if (variantInstance == null) return;
 
         Level level = player.level();
-
         if (level.isClientSide) return;
 
         if (!level.getGameRules().getBoolean(ChangedAddonGameRules.CHANGED_ADDON_CREATURE_DIETS)) return;
 
-        ChangedEntity changedEntity = variantInstance.getChangedEntity();
+        // Retrieve all active diets matching the player's variant
+        List<TransfurVariantDiet> dietsForVariant = TransfurVariantDietManager.getDietsForVariant(variantInstance);
+        if (dietsForVariant.isEmpty()) return;
 
-        // Retrieve matching diet entries for the current variant and eaten item
-        List<FoodDietEntry> matchingEntries = TransfurVariantDietManager.getDietItemsFor(variantInstance, item);
-        if (matchingEntries.isEmpty()) return;
+        boolean foundAnyGoodFoodMatch = false;
 
-        // Apply effects for all matching diet objects
-        for (FoodDietEntry entry : matchingEntries) {
-            if (entry.shouldApplyEffects(player, item)) {
-                entry.applyEffectsAfterEat(player, item);
+        // Iterate through all diets for this variant
+        for (TransfurVariantDiet diet : dietsForVariant) {
+            // Find matching entries inside this diet for the eaten food item
+            List<FoodDietEntry> matchingEntries = diet.foods().stream()
+                    .filter(entry -> entry.ingredients().stream().anyMatch(ing -> ing.test(item)))
+                    .toList();
+
+            for (FoodDietEntry entry : matchingEntries) {
+                if (entry.shouldApplyEffects(player, item)) {
+                    entry.applyEffectsAfterEat(player, item); 
+
+                    // Track if this was beneficial (non-sick) food
+                    if (!entry.isSickFor(player)) { 
+                        foundAnyGoodFoodMatch = true;
+                    }
+                }
+            }
+        }
+
+        // If NONE of the matching diets contained a non-sick entry for this item
+        if (!foundAnyGoodFoodMatch) {
+            for (TransfurVariantDiet diet : dietsForVariant) {
+                if (diet.offDietEffects() == null || diet.offDietEffects().isEmpty()) continue;
+
+                for (MobEffectHolder effectHolder : diet.offDietEffects()) {
+                    // Evaluated using a dummy/empty FoodDietEntry for status checks
+                    if (effectHolder.shouldApplyEffect(player, null)) {
+                        player.addEffect(new MobEffectInstance(effectHolder.mobEffectInstance()));
+                    }
+                }
             }
         }
     }

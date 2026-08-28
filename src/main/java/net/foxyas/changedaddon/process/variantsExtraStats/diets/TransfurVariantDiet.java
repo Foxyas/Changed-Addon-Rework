@@ -5,19 +5,30 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxyas.changedaddon.util.ExtraCodecs;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public record TransfurVariantDiet(List<TransfurVariantHolder> transfurVariantHolders, List<FoodDietEntry> foods) {
+public record TransfurVariantDiet(
+        List<TransfurVariantHolder> transfurVariantHolders,
+        List<FoodDietEntry> foods,
+        List<MobEffectHolder> offDietEffects
+) {
+
+    public TransfurVariantDiet(List<TransfurVariantHolder> transfurVariantHolders,
+                               List<FoodDietEntry> foods) {
+        this(transfurVariantHolders, foods, List.of());
+    }
 
     public static final Codec<TransfurVariantDiet> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     ExtraCodecs.listOrSingle(TransfurVariantHolder.CODEC).fieldOf("variants").forGetter(TransfurVariantDiet::transfurVariantHolders),
-                    ExtraCodecs.listOrSingle(FoodDietEntry.CODEC).fieldOf("foods").forGetter(TransfurVariantDiet::foods)
+                    ExtraCodecs.listOrSingle(FoodDietEntry.CODEC).fieldOf("foods").forGetter(TransfurVariantDiet::foods),
+                    ExtraCodecs.listOrSingle(MobEffectHolder.CODEC).optionalFieldOf("offDietEffects", List.of()).forGetter(TransfurVariantDiet::offDietEffects)
             ).apply(instance, TransfurVariantDiet::new)
     );
 
     /**
-     * Verifica se uma variante bate com qualquer uma das entradas (ID individual ou Tag) contidas nesta dieta.
+     * Checks whether a transfur variant matches any entry (individual ID or tag) in this diet setup.
      */
     public boolean matchesVariant(TransfurVariant<?> variant) {
         if (variant == null) return false;

@@ -10,6 +10,7 @@ import net.minecraft.util.valueproviders.FloatProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiPredicate;
 
@@ -30,8 +31,18 @@ public record MobEffectHolder(
         livingEntity.addEffect(mobEffectInstance);
     }
 
-    public boolean shouldApplyEffect(LivingEntity livingEntity, FoodDietEntry foodDietEntry) {
-        if (livingEntity == null || foodDietEntry == null) return false;
+    public boolean shouldApplyEffect(LivingEntity livingEntity) {
+        if (livingEntity == null) return false;
+
+        // Standard chance check (0.0 to 1.0)
+        RandomSource randomSource = livingEntity.getRandom();
+        float chance = chanceProvider.sample(randomSource);
+        return randomSource.nextFloat() <= chance;
+    }
+
+    public boolean shouldApplyEffect(LivingEntity livingEntity, @Nullable FoodDietEntry foodDietEntry) {
+        if (livingEntity == null) return false;
+        if (foodDietEntry == null) return shouldApplyEffect(livingEntity);
 
         // Check if the operation condition matches the current diet entry state
         if (!operation.test(livingEntity, foodDietEntry)) {

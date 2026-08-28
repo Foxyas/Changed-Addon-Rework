@@ -22,6 +22,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TransfurVariantDietProvider {
@@ -33,16 +35,111 @@ public class TransfurVariantDietProvider {
     }
 
     public void bootstrap(BootstapContext<TransfurVariantDiet> context) {
-        TagKey<TransfurVariant<?>> canineTag = ChangedAddonTags.TransfurVariants.HAS_CANINE_DIET;
-
-        addDietWithHolders(context, "canine_diet",
+        addDietWithHoldersWithGenericOffDietEffect(context, "canine_diet",
                 List.of(
-                        new TransfurVariantHolder(canineTag),
-                        new TransfurVariantHolder(ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get()) // Usando a variant diretamente
+                        new TransfurVariantHolder(ChangedAddonTags.TransfurVariants.HAS_CANINE_DIET)
                 ),
                 List.of(
-                        food(Items.COOKED_BEEF, 2.0f, 4.0f, 0.5f, effect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0))),
-                        sickFood(Items.APPLE, 3.0f, 1.0f)
+                        food(Ingredient.of(ChangedAddonTags.Items.WOLF_DIET),
+                                2.0f,
+                                4.0f,
+                                0.5f,
+                                effect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0)))
+                )
+        );
+
+        addDietWithHoldersWithGenericOffDietEffect(context, "aquatic_diet",
+                List.of(
+                        new TransfurVariantHolder(ChangedAddonTags.TransfurVariants.HAS_AQUATIC_DIET)
+                ),
+                List.of(
+                        food(Ingredient.of(ChangedAddonTags.Items.AQUATIC_DIET),
+                                2.0f,
+                                4.0f,
+                                0.5f,
+                                effect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0)))
+                )
+        );
+
+        addDietWithHoldersWithGenericOffDietEffect(context, "shark_diet",
+                List.of(
+                        new TransfurVariantHolder(ChangedAddonTags.TransfurVariants.HAS_SHARK_DIET)
+                ),
+                List.of(
+                        food(Ingredient.of(ChangedAddonTags.Items.SHARK_DIET),
+                                2.0f,
+                                4.0f,
+                                0.5f,
+                                effect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0)))
+                )
+        );
+
+        addDietWithHoldersWithGenericOffDietEffect(context, "feline_diet",
+                List.of(
+                        new TransfurVariantHolder(ChangedAddonTags.TransfurVariants.HAS_FELINE_DIET)
+                ),
+                List.of(
+                        food(Ingredient.of(ChangedAddonTags.Items.CAT_DIET),
+                                2.0f,
+                                4.0f,
+                                0.5f,
+                                effect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0)))
+                )
+        );
+
+        addDietWithHoldersWithGenericOffDietEffect(context, "dragon_diet",
+                List.of(
+                        new TransfurVariantHolder(ChangedAddonTags.TransfurVariants.HAS_DRACONIC_DIET)
+                ),
+                List.of(
+                        food(Ingredient.of(ChangedAddonTags.Items.DRAGON_DIET),
+                                2.0f,
+                                4.0f,
+                                0.5f,
+                                effect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0)))
+                )
+        );
+
+        addDietWithHoldersWithGenericOffDietEffect(context, "fox_diet",
+                List.of(
+                        new TransfurVariantHolder(ChangedAddonTags.TransfurVariants.HAS_FOX_DIET)
+                ),
+                List.of(
+                        food(Ingredient.of(ChangedAddonTags.Items.FOX_DIET),
+                                2.0f,
+                                4.0f,
+                                0.5f,
+                                effect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0)))
+                )
+        );
+
+        addDietWithHoldersWithGenericOffDietEffect(context, "special_diet",
+                List.of(
+                        new TransfurVariantHolder(ChangedAddonTags.TransfurVariants.HAS_SPECIAL_DIET)
+                ),
+                List.of(
+                        food(Ingredient.of(ChangedAddonTags.Items.SPECIAL_DIET),
+                                2.0f,
+                                4.0f,
+                                0.5f,
+                                effect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0)))
+                )
+        );
+
+        addDietWithHoldersWithGenericOffDietEffect(context, "sweet_tooth",
+                List.of(
+                        new TransfurVariantHolder(ChangedAddonTags.TransfurVariants.HAS_SWEET_DIET)
+                ),
+                List.of(
+                        food(Ingredient.of(ChangedAddonTags.Items.SWEET_DIET),
+                                2.0f,
+                                4.0f,
+                                0.5f,
+                                List.of(
+                                        effect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0)),
+                                        effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 0))
+                                )
+                        )
                 )
         );
     }
@@ -51,6 +148,26 @@ public class TransfurVariantDietProvider {
 
     protected void addDietWithHolders(BootstapContext<TransfurVariantDiet> context, String name, List<TransfurVariantHolder> holders, List<FoodDietEntry> foods) {
         context.register(key(name), new TransfurVariantDiet(holders, foods));
+    }
+
+    protected void addDietWithHoldersWithGenericOffDietEffect(BootstapContext<TransfurVariantDiet> context, String name, List<TransfurVariantHolder> holders, List<FoodDietEntry> foods, MobEffectHolder... extraOffDietEffects) {
+        List<MobEffectHolder> offDietEffects = new ArrayList<>(List.of(
+                new MobEffectHolder(new MobEffectInstance(MobEffects.CONFUSION, 40, 0, true, false), ConstantFloat.of(0.85f), MobEffectHolder.EffectOperation.ANY),
+                new MobEffectHolder(new MobEffectInstance(MobEffects.HUNGER, 40, 2, true, false), ConstantFloat.of(0.75f), MobEffectHolder.EffectOperation.ANY),
+                new MobEffectHolder(new MobEffectInstance(MobEffects.POISON, 40, 0, true, false), ConstantFloat.of(0.25f), MobEffectHolder.EffectOperation.ANY)
+        ));
+
+        offDietEffects.addAll(Arrays.stream(extraOffDietEffects).toList());
+
+        context.register(key(name), new TransfurVariantDiet(holders,
+                        foods,
+                        offDietEffects
+                )
+        );
+    }
+
+    protected void addDietWithHolders(BootstapContext<TransfurVariantDiet> context, String name, List<TransfurVariantHolder> holders, List<FoodDietEntry> foods, List<MobEffectHolder> offDietEffects) {
+        context.register(key(name), new TransfurVariantDiet(holders, foods, offDietEffects));
     }
 
     private @NotNull ResourceKey<TransfurVariantDiet> key(String name) {
@@ -62,6 +179,13 @@ public class TransfurVariantDietProvider {
                 .map(TransfurVariantHolder::new)
                 .toList();
         addDietWithHolders(context, name, holders, foods);
+    }
+
+    protected void addDiet(BootstapContext<TransfurVariantDiet> context, String name, List<TransfurVariant<?>> variants, List<FoodDietEntry> foods, List<MobEffectHolder> offDietEffects) {
+        List<TransfurVariantHolder> holders = variants.stream()
+                .map(TransfurVariantHolder::new)
+                .toList();
+        addDietWithHolders(context, name, holders, foods, offDietEffects);
     }
 
     // Support List<Ingredient> directly
@@ -82,6 +206,16 @@ public class TransfurVariantDietProvider {
     }
 
     // Single/Multiple Item Food Helpers
+    protected FoodDietEntry food(Ingredient ingredients, float minHunger, float maxHunger, float saturation, MobEffectHolder effect) {
+        FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
+        return food(List.of(ingredients), hunger, ConstantFloat.of(saturation), List.of(effect), false);
+    }
+
+    protected FoodDietEntry food(Ingredient ingredients, float minHunger, float maxHunger, float saturation, List<MobEffectHolder> effects) {
+        FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
+        return food(List.of(ingredients), hunger, ConstantFloat.of(saturation), effects, false);
+    }
+
     protected FoodDietEntry food(Item item, float minHunger, float maxHunger, float saturation, MobEffectHolder effect) {
         FloatProvider hunger = minHunger == maxHunger ? ConstantFloat.of(minHunger) : UniformFloat.of(minHunger, maxHunger);
         return food(List.of(Ingredient.of(item)), hunger, ConstantFloat.of(saturation), List.of(effect), false);
