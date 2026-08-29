@@ -4,6 +4,8 @@ import com.mojang.serialization.JsonOps;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
@@ -22,6 +24,20 @@ public class CustomMerchantOffer {
     private final int maxUses;
     private int uses;
     private boolean shouldRewardExp = true;
+    private int specialPriceDiff;
+    private float discountMultiplier = 0.05f;
+
+    public CustomMerchantOffer(FriendlyByteBuf buf) {
+        costA = Ingredient.fromNetwork(buf);
+        result = buf.readItem();
+        if (buf.readBoolean()) {
+            costB = Ingredient.fromNetwork(buf);
+        } else costB = Ingredient.EMPTY;
+
+        uses = buf.readVarInt();
+        maxUses = buf.readVarInt();
+        specialPriceDiff = buf.readVarInt();
+    }
 
     public CustomMerchantOffer(CompoundTag tag) {
         costA = Ingredient.fromJson(NbtOps.INSTANCE.convertTo(JsonOps.COMPRESSED, tag.get("costA")));
@@ -38,22 +54,27 @@ public class CustomMerchantOffer {
         }
 
         if (tag.contains("shouldRewardExp")) shouldRewardExp = tag.getBoolean("shouldRewardExp");
+        discountMultiplier = tag.getFloat("priceMultiplier");
     }
 
     public CustomMerchantOffer(Ingredient costA, ItemStack result, int maxUses) {
-        this(costA, Ingredient.EMPTY, result, 0, maxUses);
+        this(costA, Ingredient.EMPTY, result, maxUses, 0.05f);
+    }
+
+    public CustomMerchantOffer(Ingredient costA, ItemStack result, int maxUses, float discountMultiplier) {
+        this(costA, Ingredient.EMPTY, result, maxUses, discountMultiplier);
     }
 
     public CustomMerchantOffer(Ingredient costA, Ingredient costB, ItemStack result, int maxUses) {
-        this(costA, costB, result, 0, maxUses);
+        this(costA, costB, result, maxUses, 0.05f);
     }
 
-    public CustomMerchantOffer(Ingredient costA, Ingredient costB, ItemStack result, int uses, int maxUses) {
+    public CustomMerchantOffer(Ingredient costA, Ingredient costB, ItemStack result, int maxUses, float discountMultiplier) {
         this.costA = costA;
         this.costB = costB;
         this.result = result;
-        this.uses = uses;
         this.maxUses = maxUses;
+        this.discountMultiplier = discountMultiplier;
     }
 
     public Ingredient getCostA() {
@@ -108,17 +129,16 @@ public class CustomMerchantOffer {
         return shouldRewardExp;
     }
 
-    public CompoundTag createTag() {
-        CompoundTag tag = new CompoundTag();
+    public void setSpecialPriceDiff(int value) {
+        specialPriceDiff = value;
+    }
 
-        tag.put("costA", JsonOps.COMPRESSED.convertTo(NbtOps.INSTANCE, costA.toJson()));
-        if (!costB.isEmpty()) tag.put("costB", JsonOps.COMPRESSED.convertTo(NbtOps.INSTANCE, costB.toJson()));
+    public float getDiscountMultiplier() {
+        return discountMultiplier;
+    }
 
-        tag.put("sell", result.save(new CompoundTag()));
-        tag.putInt("uses", uses);
-        tag.putInt("maxUses", maxUses);
-        tag.putBoolean("shouldRewardExp", shouldRewardExp);
-        return tag;
+    public int specialPriceCount(ItemStack required) {
+        return Mth.clamp(required.getCount() /*+ demand*/ + this.specialPriceDiff, 1, required.getMaxStackSize());
     }
 
     public boolean satisfiedBy(ItemStack playerOfferA, ItemStack playerOfferB) {
@@ -129,7 +149,7 @@ public class CustomMerchantOffer {
 
     private boolean testWithCount(Ingredient ingredient, ItemStack stack) {
         if (ingredient instanceof StrictNBTIngredient strict) {
-            return ingredient.test(stack) && strict.getItems()[0].getCount() <= stack.getCount();
+            return ingredient.test(stack) && specialPriceCount(strict.getItems()[0]) <= stack.getCount();
         }
 
         return ingredient.test(stack);
@@ -150,15 +170,43 @@ public class CustomMerchantOffer {
         if (!satisfiedBy(playerOfferA, playerOfferB)) return false;
 
         for (ItemStack stack : costA.getItems()) {
-            if (isRequiredItem(playerOfferA, stack)) playerOfferA.shrink(stack.getCount());
+            if (isRequiredItem(playerOfferA, stack)) playerOfferA.shrink(specialPriceCount(stack));
         }
 
         if (!costB.isEmpty()) {
             for (ItemStack stack : costB.getItems()) {
-                if (isRequiredItem(playerOfferB, stack)) playerOfferB.shrink(stack.getCount());
+                if (isRequiredItem(playerOfferB, stack)) playerOfferB.shrink(specialPriceCount(stack));
             }
         }
 
         return true;
+    }
+
+    public void writeToStream(FriendlyByteBuf buf) {
+        costA.toNetwork(buf);
+        buf.writeItem(result);
+
+        buf.writeBoolean(!costB.isEmpty());
+        if (!costB.isEmpty()) {
+            costB.toNetwork(buf);
+        }
+
+        buf.writeVarInt(uses);
+        buf.writeVarInt(maxUses);
+        buf.writeVarInt(specialPriceDiff);
+    }
+
+    public CompoundTag createTag() {
+        CompoundTag tag = new CompoundTag();
+
+        tag.put("costA", JsonOps.COMPRESSED.convertTo(NbtOps.INSTANCE, costA.toJson()));
+        if (!costB.isEmpty()) tag.put("costB", JsonOps.COMPRESSED.convertTo(NbtOps.INSTANCE, costB.toJson()));
+
+        tag.put("sell", result.save(new CompoundTag()));
+        tag.putInt("uses", uses);
+        tag.putInt("maxUses", maxUses);
+        tag.putBoolean("shouldRewardExp", shouldRewardExp);
+        tag.putFloat("priceMultiplier", discountMultiplier);
+        return tag;
     }
 }

@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -22,41 +21,15 @@ public class CustomMerchantOffers extends ArrayList<CustomMerchantOffer> {
         }
     }
 
-    public static CustomMerchantOffers createFromStream(FriendlyByteBuf buf) {
-        CustomMerchantOffers merchantoffers = new CustomMerchantOffers();
-        int i = buf.readByte() & 255;
-
-        for (int j = 0; j < i; ++j) {
-            Ingredient costA = Ingredient.fromNetwork(buf);
-            ItemStack result = buf.readItem();
-            Ingredient costB = Ingredient.EMPTY;
-            if (buf.readBoolean()) {
-                costB = Ingredient.fromNetwork(buf);
-            }
-
-            boolean flag = buf.readBoolean();
-            int k = buf.readVarInt();
-            int l = buf.readVarInt();
-            CustomMerchantOffer merchantoffer = new CustomMerchantOffer(costA, costB, result, k, l);
-            if (flag) {
-                merchantoffer.setToOutOfStock();
-            }
-
-            merchantoffers.add(merchantoffer);
-        }
-
-        return merchantoffers;
-    }
-
     @Nullable
     public CustomMerchantOffer getRecipeFor(ItemStack stackA, ItemStack stackB, int index) {
         if (index > 0 && index < size()) {
-            CustomMerchantOffer merchantoffer1 = get(index);
-            return merchantoffer1.satisfiedBy(stackA, stackB) ? merchantoffer1 : null;
+            CustomMerchantOffer offer = get(index);
+            return offer.satisfiedBy(stackA, stackB) ? offer : null;
         } else {
-            for (CustomMerchantOffer merchantoffer : this) {
-                if (merchantoffer.satisfiedBy(stackA, stackB)) {
-                    return merchantoffer;
+            for (CustomMerchantOffer offer : this) {
+                if (offer.satisfiedBy(stackA, stackB)) {
+                    return offer;
                 }
             }
 
@@ -64,21 +37,22 @@ public class CustomMerchantOffers extends ArrayList<CustomMerchantOffer> {
         }
     }
 
+    public static CustomMerchantOffers createFromStream(FriendlyByteBuf buf) {
+        CustomMerchantOffers offers = new CustomMerchantOffers();
+        int i = buf.readByte() & 255;
+
+        for (int j = 0; j < i; ++j) {
+            offers.add(new CustomMerchantOffer(buf));
+        }
+
+        return offers;
+    }
+
     public void writeToStream(FriendlyByteBuf buf) {
         buf.writeByte((byte) (this.size() & 255));
 
-        for (CustomMerchantOffer merchantoffer : this) {
-            merchantoffer.getCostA().toNetwork(buf);
-            buf.writeItem(merchantoffer.getResult());
-            Ingredient costB = merchantoffer.getCostB();
-            buf.writeBoolean(!costB.isEmpty());
-            if (!costB.isEmpty()) {
-                costB.toNetwork(buf);
-            }
-
-            buf.writeBoolean(merchantoffer.isOutOfStock());
-            buf.writeVarInt(merchantoffer.getUses());
-            buf.writeVarInt(merchantoffer.getMaxUses());
+        for (CustomMerchantOffer offer : this) {
+            offer.writeToStream(buf);
         }
     }
 

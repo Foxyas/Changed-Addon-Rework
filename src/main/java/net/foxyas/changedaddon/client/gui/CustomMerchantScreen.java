@@ -142,14 +142,12 @@ public class CustomMerchantScreen extends AbstractContainerScreen<CustomMerchant
 
                 ingredient = offer.getCostA();
                 cost = currentStack(ingredient);
-                pGuiGraphics.renderFakeItem(cost, l, j1);
-                pGuiGraphics.renderItemDecorations(font, cost, l, j1);
+                renderAndDecorateCost(pGuiGraphics, cost, cost.copyWithCount(offer.specialPriceCount(cost)), l, j1);
 
                 ingredient = offer.getCostB();
                 if (!ingredient.isEmpty()) {
                     cost = currentStack(ingredient);
-                    pGuiGraphics.renderFakeItem(cost, i + 5 + 35, j1);
-                    pGuiGraphics.renderItemDecorations(font, cost, i + 5 + 35, j1);
+                    renderAndDecorateCost(pGuiGraphics, cost, cost.copyWithCount(offer.specialPriceCount(cost)), i + 5 + 35, j1);
                 }
 
                 result = offer.getResult();
@@ -186,6 +184,25 @@ public class CustomMerchantScreen extends AbstractContainerScreen<CustomMerchant
         RenderSystem.enableDepthTest();
 
         renderTooltip(pGuiGraphics, mouseX, mouseY);
+    }
+
+    private void renderAndDecorateCost(GuiGraphics graphics, ItemStack base, ItemStack discounted, int x, int y) {
+        graphics.renderFakeItem(discounted, x, y);
+        if (base.getCount() == discounted.getCount()) {
+            graphics.renderItemDecorations(this.font, discounted, x, y);
+        } else {
+            graphics.renderItemDecorations(this.font, base, x, y);
+            // Forge: fixes Forge-8806, code for count rendering taken from GuiGraphics#renderGuiItemDecorations
+            graphics.pose().pushPose();
+            graphics.pose().translate(0.0F, 0.0F, 200.0F);
+            String count = String.valueOf(discounted.getCount());
+            font.drawInBatch(count, (float) (x + 14) + 19 - 2 - font.width(count), (float)y + 6 + 3, 0xFFFFFF, true, graphics.pose().last().pose(), graphics.bufferSource(), net.minecraft.client.gui.Font.DisplayMode.NORMAL, 0, 15728880, false);
+            graphics.pose().popPose();
+            graphics.pose().pushPose();
+            graphics.pose().translate(0.0F, 0.0F, 300.0F);
+            graphics.blit(VILLAGER_LOCATION, x + 7, y + 12, 0, 0.0F, 176.0F, 9, 2, 512, 256);
+            graphics.pose().popPose();
+        }
     }
 
     private void renderButtonArrows(GuiGraphics pGuiGraphics, CustomMerchantOffer pMerchantOffers, int pPosX, int pPosY) {
