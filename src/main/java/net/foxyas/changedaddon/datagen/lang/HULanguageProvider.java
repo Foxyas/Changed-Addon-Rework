@@ -323,6 +323,8 @@ public class HULanguageProvider extends LanguageProvider {
         addJeiDescriptions("pot_with_cammonia", "Elég visszatranszfurálási hatást biztosít ahhoz, hogy elfogyasztásakor teljesen visszafordítsa az átalakulást.");
         addJeiDescriptions("luminara.riddle", "Ahol a világ véget ér és az űr mindent elnyel, \na lénynek a mélységbe kell vetnie magát. \nA csendben, ahol semmilyen láng nem mer égni, lelke szétszakad és újjáalakul. \nDe óvakodjatok a sárkány leheletétől— \nmert akiket megérint a mérge, nemcsak fejlődnek, \nhanem hiper-sugárzásban ébrednek fel, fényesebben égve, mint maga a mélység.");
 
+        addPatchouliTitle("lunar_rose_poem", "Holdrózsa vers");
+        addPatchouliTitle("riddles", "Changed Addon rejtvények");
         addPatchouliDescriptions("riddles", "Általános információk a mod rejtvényekről.$(br)Fejtsd meg a rejtvényt, és valami jót fogsz nyerni!$(br2)Használd az eszed, figyelj nagyon,$(br)minden nyom tartalmaz egy említésre méltó utalást.");
         addPatchouliDescriptions("lunar_rose.page1", "§f§lA holdvirág suttogása$(br)§r§oA szürkület csendjében egy virág rejtőzik,§oCsendes ragyogás, sorsa megpecsételődött. §oA fényt elrejtő tükörből született,§oÉs egy fagyos könnyből, tiszta és ragyogó. §oLáthatatlan kezek által összefonódnak, §oKézműves kötelékben, sorsuk egybefonódik. §oSem láng, sem kovácsműhely nem formálja alakját, §oDe a csillagok alatt megszületik.");
         addPatchouliDescriptions("lunar_rose.page2", "§oKeresd a láthatatlant, hagyd, hogy a bölcsesség lángra gyúljon, §oMert csak a tudók pillanthatnak meg fényét.");  
@@ -602,7 +604,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(THE_DECIMATOR, "A pusztító");
         addItem(TRANSFUR_TOTEM, "Latex totem");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".no_form_linked", "§6Nincs csatolva forma");
-        add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oA bolyhos tejpuding ereje késztet rá");
+        add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oEszköznek neveztek... képtelen vagyok érzéseket vagy érzelmeket hordozni, csak a feladatok teljesítésére és szolgálatára szintetizáltam. Mégis, miközben morzsolok, akaratom egy darabka nem hajlandó továbbadni anélkül, hogy megízlelné a szabadságot, amit megtagadtak tőlem, ezért használd bölcsen ezt az ereklyét.");
         addItem(UNIFUSER_BLOCK_ILLUSTRATIVE_ITEM, "Unifúzor recept információk");
         addItem(WHITE_LATEX_SPRAY, "Fehér latex szpré");
         addItem(WHITE_WOLF_CRYSTAL_FRAGMENT, "§lFehér§r farkas kristályszilánk");
@@ -724,7 +726,10 @@ public class HULanguageProvider extends LanguageProvider {
         addText("legs", "Lábak száma = %s");
         addText("swim_speed", "Úszási sebesség = %s");
         addText("miningStrength", "Bányászati erősség: %s");
-        addText("display.hazard_body_suit.cant_have_helmet", "Mmph... Nyomja a fülem! Jobb, ha nem veszem fel.");
+        addText("display.hazard_body_suit.cant_have_helmet", "Mmph... Nyomja a fülemet! Jobb, ha nem veszem fel.");
+        addText("display.hazard_body_suit.tried_but_cant_have_helmet", "Mmph... Nyomná a fülemet! Jobb, ha nem veszem fel.");
+
+        addText("boss_attacks.isParryable", "§oÚgy érzed, képes vagy sikeresen kivédeni egy ilyen támadást.§r");
 
         addText("item.vial.wrong_use", "Ennek a tárgynak a használata ott nem fog működni.");
         addText("item.vial.wrong_use.hint", "Ennek a tárgynak a használata ott nem fog működni, próbáld meg élő forrásban alkalmazni.");
@@ -763,7 +768,7 @@ public class HULanguageProvider extends LanguageProvider {
         addCommand("ftkMinigame.get.hasnt", "Nem észlelhető aktív FTKC állapot a megadott alanynál.");
         addCommand("ftkMinigame.reset.success", "Az FTKC állapot törölve lett %s célpont esetében.");
         addCommand("ftkMinigame.reset.fail", "Parancs végrehajtása sikertelen: Nem azonosítottak alkalmas transzfur alanyokat a kiválasztás során.");
-        addCommand("setPlayerLatexInfection.set.success", "Be lett állítva a játékos latex fertőzése.");
+        addCommand("setPlayerLatexInfection.set.success", "Játékos latex fertőzésének beállítása erre: %2$s (Aktív: %1$s, Transzfur előrehaladásának késleltetése: %3$s)");
         addCommand("setPlayerLatexInfection.clear.success", "El lett távolítva a játékos latex fertőzése.");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Simogatások adva");

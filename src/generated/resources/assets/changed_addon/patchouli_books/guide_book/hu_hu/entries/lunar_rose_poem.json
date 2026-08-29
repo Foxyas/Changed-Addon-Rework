@@ -1,0 +1,15 @@
+{
+  "category": "changed_addon:riddles",
+  "icon": "changed_addon:lunar_rose",
+  "name": "patchouli.title.changed_addon.lunar_rose_poem",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "patchouli.descriptions.changed_addon.lunar_rose.page1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "patchouli.descriptions.changed_addon.lunar_rose.page2"
+    }
+  ]
+}
