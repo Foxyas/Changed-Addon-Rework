@@ -22,7 +22,7 @@ public record FoodDietEntry(
         List<Ingredient> ingredients,
         FloatProvider hungerBonus,
         FloatProvider saturationBonus,
-        List<MobEffectInstance> mobEffect,
+        List<MobEffectHolder> mobEffect,
         boolean isSickType
 ) {
     public static final Codec<FoodDietEntry> CODEC = RecordCodecBuilder.create(instance ->
@@ -30,7 +30,7 @@ public record FoodDietEntry(
                     ExtraCodecs.INGREDIENT_CODEC.listOf().fieldOf("ingredient").forGetter(FoodDietEntry::ingredients),
                     FloatProvider.CODEC.fieldOf("hungerBonus").forGetter(FoodDietEntry::hungerBonus),
                     FloatProvider.CODEC.fieldOf("saturationBonus").forGetter(FoodDietEntry::saturationBonus),
-                    ExtraCodecs.MOB_EFFECT_CODEC.listOf().fieldOf("mobEffect").forGetter(FoodDietEntry::mobEffect),
+                    MobEffectHolder.CODEC.listOf().fieldOf("mobEffect").forGetter(FoodDietEntry::mobEffect),
                     Codec.BOOL.optionalFieldOf("isSickType", false).forGetter(FoodDietEntry::isSickType)
             ).apply(instance, FoodDietEntry::new)
     );
@@ -38,7 +38,7 @@ public record FoodDietEntry(
     public FoodDietEntry(Ingredient ingredient,
                          FloatProvider hungerBonus,
                          FloatProvider saturationBonus,
-                         List<MobEffectInstance> mobEffect,
+                         List<MobEffectHolder> mobEffect,
                          boolean isSickType) {
         this(List.of(ingredient), hungerBonus, saturationBonus, mobEffect, isSickType);
     }
@@ -62,7 +62,11 @@ public record FoodDietEntry(
         }
 
         // Apply optional mob effect if present
-        mobEffect.forEach(effect -> livingEntity.addEffect(new MobEffectInstance(effect)));
+        for (MobEffectHolder mobEffectHolder : mobEffect()) {
+            if (mobEffectHolder.shouldApplyEffect(livingEntity, this)) {
+                mobEffectHolder.addEffect(livingEntity, this);
+            }
+        }
 
         // Play sound depending on whether the food is sick or beneficial
         float pitch = this.isSickFor(livingEntity) ? 0.5f : 1.5f;

@@ -8,29 +8,29 @@ import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 
-public record VariantHolder(Either<TransfurVariant<?>, TagKey<TransfurVariant<?>>> value) {
+public record TransfurVariantHolder(Either<TransfurVariant<?>, TagKey<TransfurVariant<?>>> value) {
 
-    public VariantHolder(TransfurVariant<?> variant) {
+    public TransfurVariantHolder(TransfurVariant<?> variant) {
         this(Either.left(variant));
     }
 
-    public VariantHolder(TagKey<TransfurVariant<?>> variantTag) {
+    public TransfurVariantHolder(TagKey<TransfurVariant<?>> variantTag) {
         this(Either.right(variantTag));
     }
 
-    public static final Codec<VariantHolder> CODEC = Codec.STRING.comapFlatMap(
+    public static final Codec<TransfurVariantHolder> CODEC = Codec.STRING.comapFlatMap(
             str -> {
                 if (str.startsWith("#")) {
                     ResourceLocation tagId = ResourceLocation.tryParse(str.substring(1));
                     if (tagId == null) return DataResult.error(() -> "Invalid Tag Location: " + str);
                     TagKey<TransfurVariant<?>> tagKey = TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(), tagId);
-                    return DataResult.success(new VariantHolder(Either.right(tagKey)));
+                    return DataResult.success(new TransfurVariantHolder(Either.right(tagKey)));
                 } else {
                     ResourceLocation id = ResourceLocation.tryParse(str);
                     if (id == null) return DataResult.error(() -> "Invalid Variant Location: " + str);
                     TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(id);
                     if (variant == null) return DataResult.error(() -> "Unknown TransfurVariant: " + id);
-                    return DataResult.success(new VariantHolder(Either.left(variant)));
+                    return DataResult.success(new TransfurVariantHolder(Either.left(variant)));
                 }
             },
             holder -> holder.value().map(

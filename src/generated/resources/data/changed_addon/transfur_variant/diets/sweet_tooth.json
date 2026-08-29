@@ -9,7 +9,7 @@
     },
     "ingredient": [
       {
-        "tag": "changed_addon:wolf_diet_list"
+        "tag": "changed_addon:sweet_tooth_list"
       }
     ],
     "mobEffect": [
@@ -18,6 +18,13 @@
         "effect": {
           "duration": 40,
           "id": "minecraft:regeneration"
+        }
+      },
+      {
+        "chance": 1.0,
+        "effect": {
+          "duration": 40,
+          "id": "minecraft:speed"
         }
       }
     ],
@@ -53,5 +60,5 @@
       }
     }
   ],
-  "variants": "#changed_addon:canine_diet"
+  "variants": "#changed_addon:sweet_tooth"
 }
