@@ -25,6 +25,7 @@ import org.vivecraft.common.utils.MathUtils;
 
 @Mixin(value = LatexElytraLayer.class)
 @RequiredMods("vivecraft")
+@Deprecated(forRemoval = true, since = "Changed:0.16.0")
 public abstract class LatexElytraLayerMixin<T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> extends RenderLayer<T, M> {
 
     @Unique

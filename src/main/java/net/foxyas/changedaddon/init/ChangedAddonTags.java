@@ -103,6 +103,7 @@ public final class ChangedAddonTags {
         public static final TagKey<EntityType<?>> CAN_ROAR = key("can_roar");
         public static final TagKey<EntityType<?>> HAS_BETTER_GROUND_PATHFIND = key("has_better_ground_pathfind");
         public static final TagKey<EntityType<?>> PROTOGENS = key("protogens");
+        public static final TagKey<EntityType<?>> CARDBOARD_BOX_HIDER = key("cardboard_box_hiders");
 
         private static TagKey<EntityType<?>> key(String path) {
             return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), ChangedAddonMod.resourceLoc(path));

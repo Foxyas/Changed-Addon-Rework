@@ -16,6 +16,7 @@ import org.vivecraft.client_vr.ClientDataHolderVR;
 
 @Mixin(value = AdvancedHumanoidRenderer.class, remap = false)
 @RequiredMods("vivecraft")
+@Deprecated(forRemoval = true, since = "Changed:0.16.0")
 public class AdvancedHumanoidRendererMixin<T extends ChangedEntity> {
 
     // Copied From VRPlayerRenderer$setupRotations

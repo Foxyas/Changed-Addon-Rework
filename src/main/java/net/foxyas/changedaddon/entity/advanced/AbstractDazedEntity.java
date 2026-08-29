@@ -117,12 +117,15 @@ public abstract class AbstractDazedEntity extends ChangedEntity {
         tag.putInt("ReplicationTimes", getReplicationTimes());
     }
 
-    @Override
     public float getEyeHeightMul() {
         if (this.isMorphed())
             return 0.4F;
         else
             return super.getEyeHeightMul();
+    }
+
+    public float getEyeHeightMul(Pose pose) {
+        return this.getEyeHeightMul();
     }
 
     @Override

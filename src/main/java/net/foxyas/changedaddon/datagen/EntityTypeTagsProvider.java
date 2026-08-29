@@ -128,5 +128,6 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
         tag(ChangedAddonTags.EntityTypes.PROTOGENS).add(getProtogensEntities().toArray(new EntityType[0]));
 
         tag(ChangedTags.EntityTypes.CAN_WEAR_EXOSKELETON).add(canUseExoskeleton().toArray(new EntityType[0])).remove(ChangedAddonTags.EntityTypes.PROTOGENS);
+        tag(ChangedAddonTags.EntityTypes.CARDBOARD_BOX_HIDER).add(LATEX_SNOW_LEOPARD_MALE.get(), LATEX_SNOW_LEOPARD_FEMALE.get(), LATEX_HYPNO_CAT.get());
     }
 }

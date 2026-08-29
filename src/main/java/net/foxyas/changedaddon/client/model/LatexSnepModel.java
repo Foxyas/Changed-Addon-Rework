@@ -63,7 +63,7 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> {
         this.TailQuaternary = this.TailTertiary.getChild("TailQuaternary");
         this.TailQuinternary = this.TailQuaternary.getChild("TailQuinternary");
 
-        this.animator = HumanoidAnimator.of(this)
+        this.animator = HumanoidAnimator.of(this).torsoLength(0.0F).legLength(8.0F)
                 .addPreset(AnimatorPresets.wolfTail(Tail, List.of(TailPrimary, TailSecondary, TailTertiary, TailQuaternary, TailQuinternary)));
 
 

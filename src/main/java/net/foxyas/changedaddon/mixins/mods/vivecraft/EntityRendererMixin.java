@@ -16,6 +16,7 @@ import org.vivecraft.client_vr.render.helpers.VREffectsHelper;
 
 @Mixin(EntityRenderer.class)
 @RequiredMods("vivecraft")
+@Deprecated(forRemoval = true, since = "Changed:0.16.0")
 public class EntityRendererMixin {
 
     @ModifyReturnValue(method = "getRenderOffset", at = @At("RETURN"))

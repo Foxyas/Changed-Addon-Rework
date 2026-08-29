@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.ai.advanced.AdvancedGroundPathNavigation;
+import net.foxyas.changedaddon.entity.ai.goals.simple.HideInABoxGoal;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.entity.simple.WolfyEntity;
@@ -14,7 +15,9 @@ import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
 import net.foxyas.changedaddon.util.TagKeyUtil;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.block.entity.CardboardBoxBlockEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.SeatEntity;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
@@ -23,8 +26,10 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -185,6 +190,10 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
         if (!(self instanceof WolfyEntity)) {
             this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ChangedEntity.class, true, this::targetSelectorTest));
         }
+
+        if (self.getType().is(ChangedAddonTags.EntityTypes.CARDBOARD_BOX_HIDER)) {
+            this.goalSelector.addGoal(10 , new HideInABoxGoal(this, UniformInt.of(600, 1200), UniformInt.of(600, 1200)));
+        }
     }
 
     @Unique
@@ -204,7 +213,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
     }
 
     @Inject(method = "targetSelectorTest", at = @At("HEAD"), cancellable = true)
-    private void CancelTarget(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
+    private void cancelTargetIfCoatedWithDarkLatexCoat(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
         ItemStack Head = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
         ItemStack Chest = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
         if (ChangedAddonServerConfiguration.DL_COAT_AFFECT_ALL.get()) {
@@ -226,6 +235,24 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
                 }
             }
         }
+    }
+
+    @Inject(method = "targetSelectorTest", at = @At("HEAD"), cancellable = true)
+    private void cancelTargetIfInABox(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
+        if (this.goalSelector.getAvailableGoals().stream().anyMatch(wg -> wg.getGoal() instanceof HideInABoxGoal)) {
+            if (this.getVehicle() instanceof SeatEntity seatEntity) {
+                if (seatEntity.shouldSeatedBeInvisible()) {
+                    BlockPos attachedBlockPos = seatEntity.getAttachedBlockPos();
+                    if (level.getBlockEntity(attachedBlockPos) instanceof CardboardBoxBlockEntity) {
+                        cir.setReturnValue(false);
+                    }
+                }
+            }
+        }
+
+//        if (this.targetSelector.getAvailableGoals().stream().anyMatch(wg -> wg.getGoal() instanceof HideInABoxGoal)) {
+//
+//        }
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))

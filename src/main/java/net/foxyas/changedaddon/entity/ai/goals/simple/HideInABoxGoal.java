@@ -1,10 +1,10 @@
 package net.foxyas.changedaddon.entity.ai.goals.simple;
 
-import net.foxyas.changedaddon.util.DelayedTask;
 import net.ltxprogrammer.changed.block.entity.CardboardBoxTallBlockEntity;
 import net.ltxprogrammer.changed.entity.SeatEntity;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -12,57 +12,69 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.EnumSet;
+import java.util.Optional;
 
 public class HideInABoxGoal extends Goal {
 
-    private static final int searchRange = 10;
-    private static final int maxInBoxTicks = 60 * 20;
+    private static final int SEARCH_RANGE = 10;
 
     protected final PathfinderMob holder;
+    protected final IntProvider searchCooldownProvider;
+    protected final IntProvider maxInBoxTicksProvider;
 
-    protected boolean lock;
+    protected int hideInBoxCooldown = 0;
     protected BlockPos boxPos;
     protected int noPathTimeout;
-    protected int inBox;
+    protected int inBoxTicks;
+    protected int targetInBoxTicks = 60 * 20;
 
-    public HideInABoxGoal(PathfinderMob holder) {
+    public HideInABoxGoal(PathfinderMob holder, IntProvider searchCooldownProvider, IntProvider maxInBoxTicksProvider) {
         this.holder = holder;
+        this.searchCooldownProvider = searchCooldownProvider;
+        this.maxInBoxTicksProvider = maxInBoxTicksProvider;
 
         setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     @Override
     public boolean canUse() {
-        if (lock) return false;
-
-        if (holder.getVehicle() instanceof SeatEntity seat) {//already in box?
-            inBox = 1;
-            boxPos = seat.blockPosition();//TODO test
-            return true;
+        if (hideInBoxCooldown > 0) {
+            hideInBoxCooldown--;
+            return false;
         }
 
-        return holder.getTarget() == null && inBox < maxInBoxTicks;
+        if (holder.getTarget() != null) {
+            return false;
+        }
+
+        if (boxPos == null) {
+            tryFindBox();
+        }
+
+        return boxPos != null;
     }
 
     @Override
     public boolean canContinueToUse() {
-        if (boxPos == null) {
-            lock = true;
-            new DelayedTask(200, () -> lock = false);
+        if (boxPos == null || holder.getTarget() != null) {
             return false;
         }
 
-        return holder.getTarget() == null && inBox < maxInBoxTicks;
+        return inBoxTicks < targetInBoxTicks;
     }
 
     @Override
     public void start() {
-        tryFindBox();
-        if (boxPos == null) return;
-
-        holder.getNavigation().moveTo(boxPos.getX() + 0.5, boxPos.getY(), boxPos.getZ() + 0.5, 0.25f);
+        if (boxPos == null) {
+            tryFindBox();
+        }
+        if (boxPos != null) {
+            holder.getNavigation().moveTo(boxPos.getX() + 0.5, boxPos.getY(), boxPos.getZ() + 0.5, 0.25f);
+            this.inBoxTicks = 0;
+        }
     }
 
     @Override
@@ -70,74 +82,105 @@ public class HideInABoxGoal extends Goal {
         return true;
     }
 
+    protected boolean isHidedInBox() {
+        return holder.getVehicle() instanceof SeatEntity && boxPos != null;
+    }
+
     @Override
     public void tick() {
         Level level = holder.level();
 
-        if (inBox > 0) {
-            inBox++;
-
-            if (!(holder.getVehicle() instanceof SeatEntity)) {//box destroyed?
-                boxPos = null;
-                return;
+        if (isHidedInBox()) {
+            // Prevent other code context from assigning a target while hiding inside the box
+            if (holder.getTarget() != null) {
+                holder.setTarget(null);
             }
 
+            inBoxTicks++;
+            if (!(holder.getVehicle() instanceof SeatEntity seatEntity) || seatEntity.isRemoved()) {
+                invalidateCurrentBox();
+            }
             return;
         }
 
         PathNavigation navigation = holder.getNavigation();
         if (boxPos == null || isBlockInvalid(level, boxPos, level.getBlockState(boxPos))) {
             tryFindBox();
-            if (boxPos == null) return;//cancel goal - no boxes
+            if (boxPos == null) return;
             navigation.moveTo(boxPos.getX() + 0.5, boxPos.getY(), boxPos.getZ() + 0.5, 0.25f);
         }
 
         holder.getLookControl().setLookAt(
                 boxPos.getX(), boxPos.getY(), boxPos.getZ(),
-                30.0F, // yaw change speed (degrees per tick)
-                30.0F  // pitch change speed
+                30.0F,
+                30.0F
         );
 
         if (holder.blockPosition().closerThan(boxPos, 2.5)) {
-            //get in box
             if (level.getBlockEntity(boxPos) instanceof CardboardBoxTallBlockEntity box) {
-                box.hideEntity(holder);
+                if (box.hideEntity(holder)) {
+                    this.targetInBoxTicks = maxInBoxTicksProvider.sample(holder.getRandom());
+                    this.inBoxTicks = 1;
+                    return;
+                }
             }
-
-            inBox = 1;//assume instanceof always true
-            return;
         }
 
         if (navigation.isStuck() || (navigation.getPath() != null && !navigation.getPath().canReach())) {
             noPathTimeout--;
-            if (noPathTimeout <= 0) {//No path, try again later
+            if (noPathTimeout <= 0) {
+                applySearchCooldown();
                 boxPos = null;
-            } else if (noPathTimeout % 25 == 0) navigation.recomputePath();
+            } else if (noPathTimeout % 25 == 0) {
+                navigation.recomputePath();
+            }
             return;
         }
 
         noPathTimeout = 100;
     }
 
-    protected void tryFindBox() {
-        BlockPos center = holder.blockPosition(), closestCrop = null;
-        float closestDist = searchRange * searchRange + .01f, dist;
-        Level level = holder.level();
-        for (BlockPos pos : BlockPos.betweenClosed(center.offset(-searchRange, -searchRange, -searchRange), center.offset(searchRange, searchRange, searchRange))) {
-            dist = (float) pos.distSqr(center);
-            if (dist >= closestDist || isBlockInvalid(level, pos, level.getBlockState(pos))) continue;
+    private void invalidateCurrentBox() {
+        boxPos = null;
+    }
 
+    protected void tryFindBox() {
+        Optional<BlockPos> nearestValidBox = getNearestValidBox();
+        if (nearestValidBox.isPresent()) {
+            boxPos = nearestValidBox.get();
+        } else {
+            boxPos = null;
+            applySearchCooldown();
+        }
+    }
+
+    protected void applySearchCooldown() {
+        this.hideInBoxCooldown = searchCooldownProvider.sample(holder.getRandom());
+    }
+
+    protected Optional<BlockPos> getNearestValidBox() {
+        BlockPos center = holder.blockPosition();
+        BlockPos closestBox = null;
+        float closestDist = SEARCH_RANGE * SEARCH_RANGE + .01f;
+        Level level = holder.level();
+
+        for (BlockPos pos : BlockPos.betweenClosed(center.offset(-SEARCH_RANGE, -SEARCH_RANGE, -SEARCH_RANGE), center.offset(SEARCH_RANGE, SEARCH_RANGE, SEARCH_RANGE))) {
+            float dist = (float) pos.distSqr(center);
+            if (dist >= closestDist || isBlockInvalid(level, pos, level.getBlockState(pos))) continue;
+            Path path = this.holder.getNavigation().createPath(pos, 0);
+            if (path == null) continue;
             closestDist = dist;
-            closestCrop = pos.immutable();
+            closestBox = pos.immutable();
         }
 
-        boxPos = closestCrop;
+        return Optional.ofNullable(closestBox);
     }
 
     protected boolean isBlockInvalid(Level level, BlockPos pos, BlockState state) {
         return !state.is(ChangedBlocks.CARDBOARD_BOX_TALL.get())
                 || state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) != DoubleBlockHalf.UPPER
-                || !(level.getBlockEntity(pos) instanceof CardboardBoxTallBlockEntity box) || box.getSeatedEntity() != null;
+                || !(level.getBlockEntity(pos) instanceof CardboardBoxTallBlockEntity box)
+                || box.getSeatedEntity() != null;
     }
 
     @Override
@@ -145,8 +188,10 @@ public class HideInABoxGoal extends Goal {
         holder.getNavigation().stop();
         boxPos = null;
         noPathTimeout = 100;
-        inBox = 0;
+        inBoxTicks = 0;
 
-        if (holder.getVehicle() instanceof SeatEntity) holder.stopRiding();
+        if (holder.getVehicle() instanceof SeatEntity) {
+            holder.stopRiding();
+        }
     }
 }

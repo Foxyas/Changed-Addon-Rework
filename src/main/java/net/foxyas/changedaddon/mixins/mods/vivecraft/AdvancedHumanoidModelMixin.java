@@ -27,6 +27,7 @@ import org.vivecraft.client.render.VRPlayerRenderer;
 
 @Mixin(value = AdvancedHumanoidModel.class, remap = false)
 @RequiredMods("vivecraft")
+@Deprecated(forRemoval = true, since = "Changed:0.16.0")
 public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extends PlayerModel<T> {
 
     @Shadow

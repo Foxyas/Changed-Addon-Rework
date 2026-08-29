@@ -22,7 +22,6 @@
     "mods.vivecraft.AdvancedHumanoidModelMixin",
     "mods.vivecraft.AdvancedHumanoidRendererMixin",
     "mods.vivecraft.AutoCalibrationMixin",
-    "mods.vivecraft.ChangedCompatibilityMixin",
     "mods.vivecraft.EntityRendererMixin",
     "mods.vivecraft.LatexElytraLayerMixin"
   ]
