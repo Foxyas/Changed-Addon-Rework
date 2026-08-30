@@ -45,8 +45,8 @@ public abstract class AbstractTraderChangedEntity extends ChangedEntity implemen
     protected Player tradingPlayer;
     protected CustomMerchantOffers offers = new CustomMerchantOffers();
     protected long nextOfferReset;
-    private final Object2IntMap<UUID> tradeValues = new Object2IntOpenHashMap<>();
-    private long nextTradeValuesDecay;
+    protected final Object2IntMap<UUID> tradeValues = new Object2IntOpenHashMap<>();
+    protected long nextTradeValuesDecay;
 
     protected AbstractTraderChangedEntity(EntityType<? extends AbstractTraderChangedEntity> type, Level level) {
         super(type, level);
@@ -87,7 +87,7 @@ public abstract class AbstractTraderChangedEntity extends ChangedEntity implemen
     protected void updatePersonalizedPrices(Player player) {
         int i = tradeValues.getOrDefault(player.getUUID(), 0);
         if (i != 0) {
-            for(CustomMerchantOffer offer : getOffers()) {
+            for (CustomMerchantOffer offer : getOffers()) {
                 offer.setSpecialPriceDiff(-Mth.floor(i * offer.getDiscountMultiplier()));
             }
         }

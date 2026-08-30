@@ -41,11 +41,11 @@ public abstract class CustomMerchantTemplate extends Mob implements CustomMercha
     private static final List<Function<CustomMerchantTemplate, CustomMerchantOffer>> sellOffers = List.of(
     );
 
-    private Player tradingPlayer;
-    private CustomMerchantOffers offers = new CustomMerchantOffers();
-    private long nextOfferReset;
-    private final Object2IntMap<UUID> tradeValues = new Object2IntOpenHashMap<>();
-    private long nextTradeValuesDecay;
+    protected Player tradingPlayer;
+    protected CustomMerchantOffers offers = new CustomMerchantOffers();
+    protected long nextOfferReset;
+    protected final Object2IntMap<UUID> tradeValues = new Object2IntOpenHashMap<>();
+    protected long nextTradeValuesDecay;
 
     private CustomMerchantTemplate(EntityType<? extends CustomMerchantTemplate> type, Level level) {
         super(type, level);
