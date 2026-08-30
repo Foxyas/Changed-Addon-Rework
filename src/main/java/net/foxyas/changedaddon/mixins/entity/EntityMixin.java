@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.mixins.entity;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
+import net.ltxprogrammer.changed.entity.SeatEntity;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,5 +20,38 @@ public class EntityMixin implements LivingEntityDataExtensor {
                 cir.setReturnValue(overrideIsInWater());
             }
         }
+    }
+
+    @ModifyReturnValue(method = "isPickable", at = @At("RETURN"))
+    private boolean stopPickableIfSittingInvisibleSeat(boolean original) {
+        var self = (Entity) (Object) this;
+        if (self.getVehicle() instanceof SeatEntity seatEntity) {
+            if (seatEntity.shouldSeatedBeInvisible()) {
+                return false;
+            }
+        }
+        return original;
+    }
+
+    @ModifyReturnValue(method = "canBeCollidedWith", at = @At("RETURN"))
+    private boolean stopCollisionIfSittingInvisibleSeat(boolean original) {
+        var self = (Entity) (Object) this;
+        if (self.getVehicle() instanceof SeatEntity seatEntity) {
+            if (seatEntity.shouldSeatedBeInvisible()) {
+                return false;
+            }
+        }
+        return original;
+    }
+
+    @ModifyReturnValue(method = "canBeHitByProjectile", at = @At("RETURN"))
+    private boolean stopCanBeHitByProjectileIfSittingInvisibleSeat(boolean original) {
+        var self = (Entity) (Object) this;
+        if (self.getVehicle() instanceof SeatEntity seatEntity) {
+            if (seatEntity.shouldSeatedBeInvisible()) {
+                return false;
+            }
+        }
+        return original;
     }
 }

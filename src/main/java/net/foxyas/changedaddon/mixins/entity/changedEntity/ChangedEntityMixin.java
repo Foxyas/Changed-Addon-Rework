@@ -192,7 +192,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
         }
 
         if (self.getType().is(ChangedAddonTags.EntityTypes.CARDBOARD_BOX_HIDER)) {
-            this.goalSelector.addGoal(10 , new HideInABoxGoal(this, UniformInt.of(600, 1200), UniformInt.of(600, 1200)));
+            this.goalSelector.addGoal(10 , new HideInABoxGoal(this, UniformInt.of(1200, 2400), UniformInt.of(600, 1200)));
         }
     }
 
@@ -249,10 +249,6 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
                 }
             }
         }
-
-//        if (this.targetSelector.getAvailableGoals().stream().anyMatch(wg -> wg.getGoal() instanceof HideInABoxGoal)) {
-//
-//        }
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))

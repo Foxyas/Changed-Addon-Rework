@@ -105,7 +105,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         ;
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_LEAVES.getId().getPath(), EMISSIVE_CUBE_ALL)
-                .renderType("minecraft:cutout")
+                .renderType("minecraft:cutout","minecraft:cutout")
                 .texture("all", "changed_addon:block/luminara_tree/luminara_leaves")
                 //.texture("all_glow", "changed_addon:block/luminara_tree/luminara_leaves_glow")
                 .texture("all_glow", "changed_addon:block/luminara_tree/empty")

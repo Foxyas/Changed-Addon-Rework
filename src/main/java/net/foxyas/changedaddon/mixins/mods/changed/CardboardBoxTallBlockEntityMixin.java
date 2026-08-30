@@ -14,10 +14,15 @@ public abstract class CardboardBoxTallBlockEntityMixin implements SeatableBlockE
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/block/entity/CardboardBoxTallBlockEntity;getSeatedEntity()Lnet/minecraft/world/entity/LivingEntity;", shift = At.Shift.BEFORE),
             method = "hideEntity", remap = false, cancellable = true)
-    private void ejectLatex(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (getSeatedEntity() instanceof ChangedEntity e) {
-            e.stopRiding();
+    private void ejectCurrentHiddenEntity(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity seatedEntity = getSeatedEntity();
+        if (seatedEntity != null) {
+            seatedEntity.stopRiding();
             cir.cancel();
         }
+//        if (seatedEntity instanceof ChangedEntity e) {
+//            e.stopRiding();
+//            cir.cancel();
+//        }
     }
 }

@@ -229,6 +229,12 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity implements
     }
 
     @Override
+    public double getMyRidingOffset() {
+        double defaultValue = super.getMyRidingOffset();
+        return 0.2f;
+    }
+
+    @Override
     public boolean canBeLeashed(@NotNull Player p_21418_) {
         return !this.isLeashed();
     }

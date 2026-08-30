@@ -186,13 +186,17 @@ public abstract class AbstractTraderChangedEntity extends ChangedEntity implemen
     public void notifyTrade(CustomMerchantOffer offer) {
         offer.increaseUses();
 
-        if (tradingPlayer != null) {
+        if (tradingPlayer != null && shouldChancePricesAfterTrades()) {
             tradeValues.mergeInt(tradingPlayer.getUUID(), 2, (old, new_) -> Math.min(25, old + new_));
         }
 
         if (offer.shouldRewardExp()) {
             level.addFreshEntity(new ExperienceOrb(level, getX(), getY() + 0.5D, getZ(), 3 + random.nextInt(4)));
         }
+    }
+
+    protected boolean shouldChancePricesAfterTrades() {
+        return false;
     }
 
     @Override
