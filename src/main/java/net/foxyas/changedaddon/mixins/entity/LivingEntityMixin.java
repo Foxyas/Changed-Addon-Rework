@@ -89,4 +89,15 @@ public abstract class LivingEntityMixin extends Entity implements IFallFlyAbleEn
         }
         return original;
     }
+
+    @ModifyReturnValue(method = "isPushable", at = @At("RETURN"))
+    private boolean stopPushableIfSittingInvisibleSeat(boolean original) {
+        var self = (LivingEntity) (Object) this;
+        if (self.getVehicle() instanceof SeatEntity seatEntity) {
+            if (seatEntity.shouldSeatedBeInvisible()) {
+                return false;
+            }
+        }
+        return original;
+    }
 }

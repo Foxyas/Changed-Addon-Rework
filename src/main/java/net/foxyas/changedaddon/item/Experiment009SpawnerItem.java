@@ -16,6 +16,7 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -37,6 +38,7 @@ public class Experiment009SpawnerItem extends AbstractSpawnerVial implements IBe
     @Override
     public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
         super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
+        if (pLevel.isClientSide()) return;
 
         if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(pEntity)) {
             return;
@@ -81,10 +83,17 @@ public class Experiment009SpawnerItem extends AbstractSpawnerVial implements IBe
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
         boolean returnValue = super.onEntityItemUpdate(stack, entity);
-        entity.setGlowingTag(true);
-        if (entity.lifespan == 6000) {
-            entity.lifespan = 10000;
+        if (!entity.level.isClientSide() && entity.tickCount % 5 == 0) {
+            entity.setGlowingTag(true);
+            if (entity.lifespan == 6000) {
+                entity.lifespan = 10000;
+            }
         }
         return returnValue;
+    }
+
+    @Override
+    public boolean onDroppedByPlayer(ItemStack item, Player player) {
+        return super.onDroppedByPlayer(item, player);
     }
 }

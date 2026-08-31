@@ -4,7 +4,6 @@ import com.google.common.collect.Iterables;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.procedure.SummonDripParticlesProcedure;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -79,8 +78,6 @@ public class UntransfurMobEffect extends MobEffect {
             return;
         }
 
-        SummonDripParticlesProcedure.execute(player);
-
         vars.untransfurProgress = 0;
         vars.syncPlayerVariables(entity);
 
@@ -91,7 +88,7 @@ public class UntransfurMobEffect extends MobEffect {
         });
 
         grandPlayerUntransfurAdvancement(player);
-        PlayerUtil.unTransfurPlayerAndPlaySound(player, !player.isCreative() && !player.isSpectator());
+        PlayerUtil.unTransfurPlayerAndSpawnParticles(player, !player.isCreative() && !player.isSpectator(), true);
     }
 
     public static void grandPlayerUntransfurAdvancement(Player player) {

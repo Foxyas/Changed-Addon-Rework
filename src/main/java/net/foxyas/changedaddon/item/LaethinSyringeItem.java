@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.item.api.IDynamicCreativeTab;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.procedure.SummonDripParticlesProcedure;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.item.SpecializedAnimations;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -76,8 +75,7 @@ public class LaethinSyringeItem extends AbstractSyringeItem implements Specializ
         }
 
         // Visual feedback
-        SummonDripParticlesProcedure.execute(player);
-        PlayerUtil.unTransfurPlayer(player);
+        PlayerUtil.unTransfurPlayerAndSpawnParticles(player);
 
         // Optional: Reset advancement
         if (playerVars.resetTransfurAdvancements && player instanceof ServerPlayer sp) {

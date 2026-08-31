@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.procedure.SummonDripParticlesProcedure;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedSounds;
@@ -47,8 +46,7 @@ public class SyringeWithLitixCammoniaItem extends AbstractSyringeItem {
             return;
         }
 
-        SummonDripParticlesProcedure.execute(player);
-        PlayerUtil.unTransfurPlayer(player);
+        PlayerUtil.unTransfurPlayerAndSpawnParticles(player);
 
         if (getVars(player).resetTransfurAdvancements && player instanceof ServerPlayer sp) {
             resetAdvancement(sp, "minecraft:changed/transfur");
