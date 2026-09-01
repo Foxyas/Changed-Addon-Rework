@@ -9,6 +9,7 @@ import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -87,7 +88,8 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
                 EntityType.FOX,
                 LATEX_SNOW_FOX_FOXYAS.get(),
                 PROTOTYPE.get(),
-                ERIK.get());
+                ERIK.get())
+                .addOptional(ResourceLocation.withDefaultNamespace("armadillo"));
 
         tag(ChangedAddonTags.EntityTypes.DRAGON_ENTITIES).add(
                 getCanGlideEntitiesArray()

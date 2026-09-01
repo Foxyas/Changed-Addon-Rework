@@ -21,8 +21,11 @@ import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
+import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.LatexCoverGetter;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -123,6 +126,30 @@ public class PlayerUtil {
                 abstractAbilityAbstractAbilityInstanceEntry.getKey().setDirty(entity);
             }
         }
+    }
+
+    public static void unTransfurPlayerAndSpawnParticles(Player player, boolean shouldApplyEffects, boolean playSound) {
+        TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (variant == null) return;
+
+        ChangedEntity fakeEntity = variant.getChangedEntity();
+        Color3 color3 = fakeEntity.getTransfurColor(TransfurCause.DEFAULT);
+        if (!(player.level instanceof ServerLevel serverLevel)) return;
+
+        if (!variant.getParent().getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
+            serverLevel.sendParticles(ChangedParticles.gas(color3), player.getX(), player.getY() + 1, player.getZ(), 40, 0.2, 0.5, 0.2, 0);
+        } else {
+            serverLevel.sendParticles(ChangedParticles.drippingLatex(color3), player.getX(), player.getY() + 1, player.getZ(), 40, 0.2, 0.5, 0.2, 0);
+        }
+        if (playSound) {
+            unTransfurPlayerAndPlaySound(player, shouldApplyEffects);
+        } else {
+            unTransfurPlayer(player, shouldApplyEffects);
+        }
+    }
+
+    public static void unTransfurPlayerAndSpawnParticles(Player player) {
+        unTransfurPlayerAndSpawnParticles(player, false, false);
     }
 
     public static void unTransfurPlayer(Player player) {

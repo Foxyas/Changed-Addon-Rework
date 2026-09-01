@@ -334,8 +334,8 @@ public class ENLanguageProvider extends LanguageProvider {
         add(modid + ".latex_syringe.not_valid", "You hesitate. For some reason you don't want risk it leaving it placed on the ground.");
 
         add(modid + ".latex_totem.not_valid", "Totem reacted §cnegatively§r to your §bDNA§r");
-        add(modid + ".latex_totem.tittle.text_1", "§o§n§l§3⚡ The Artifact Resonates ⚡");
-        add(modid + ".latex_totem.tittle.text_2", "§o§l§3Shielding your mind, Your consciousness is pulled back from the brink, refusing to let you fall into oblivion.");
+        add(modid + ".latex_totem.tittle.text_1", "§o§3\"Not yet...\"");
+        add(modid + ".latex_totem.tittle.text_2", "§o§7An unknown voice anchors your consciousness just as it begins to drift.");
 
         add("changed_addon.fight_conscience.success", "You §2Maintained!!! §rYour Conscience Good Job");
         add("changed_addon.fight_conscience.retry", "The creature fused with you claws at your mind, vying for control! Fight to keep your humanity!");

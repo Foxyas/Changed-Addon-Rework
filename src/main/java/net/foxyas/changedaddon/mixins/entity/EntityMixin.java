@@ -54,4 +54,15 @@ public class EntityMixin implements LivingEntityDataExtensor {
         }
         return original;
     }
+
+    @ModifyReturnValue(method = "isPushable", at = @At("RETURN"))
+    private boolean stopPushableIfSittingInvisibleSeat(boolean original) {
+        var self = (Entity) (Object) this;
+        if (self.getVehicle() instanceof SeatEntity seatEntity) {
+            if (seatEntity.shouldSeatedBeInvisible()) {
+                return false;
+            }
+        }
+        return original;
+    }
 }

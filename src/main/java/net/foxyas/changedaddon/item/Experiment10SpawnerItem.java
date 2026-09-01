@@ -39,6 +39,7 @@ public class Experiment10SpawnerItem extends AbstractSpawnerVial implements IBes
     @Override
     public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
         super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
+        if (pLevel.isClientSide()) return;
 
         if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(pEntity)) {
             return;
@@ -85,9 +86,11 @@ public class Experiment10SpawnerItem extends AbstractSpawnerVial implements IBes
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
         boolean returnValue = super.onEntityItemUpdate(stack, entity);
-        entity.setGlowingTag(true);
-        if (entity.lifespan == 6000) {
-            entity.lifespan = 10000;
+        if (!entity.level.isClientSide() && entity.tickCount % 5 == 0) {
+            entity.setGlowingTag(true);
+            if (entity.lifespan == 6000) {
+                entity.lifespan = 10000;
+            }
         }
         return returnValue;
     }

@@ -36,7 +36,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class LuminaraBloomFlowerBlock extends FlowerBlock implements BonemealableBlock {
 
@@ -84,13 +83,6 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
                     }
                 }
             }
-        }
-    }
-
-    public void tryToGrowIntoATree(@NotNull ServerLevel level, BlockPos pos) {
-        Stream<BlockPos> blockPoses = FoxyasUtil.betweenClosedStreamSphere(pos, 2, 1);
-        for (BlockPos blockPos : blockPoses.toList()) {
-
         }
     }
 

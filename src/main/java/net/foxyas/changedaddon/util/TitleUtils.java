@@ -36,6 +36,11 @@ public class TitleUtils {
         }
     }
 
+    public static void sendTitleAndReset(ServerPlayer player, Component title, Component subtitle, int fadeIn, int stay, int fadeOut) {
+        sendTitle(player, title, subtitle, fadeIn, stay, fadeOut);
+        resetTitle(player);
+    }
+
     /**
      * Clears the current title and resets timings to default values.
      * * @param player The target server player.
