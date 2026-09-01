@@ -333,8 +333,8 @@ public class HULanguageProvider extends LanguageProvider {
         add(modid + ".latex_syringe.not_valid", "Habozol. Valamiért nem akarod megkockáztatni, hogy a földön hagyd.");
 
         add(modid + ".latex_totem.not_valid", "Totem §cnegatívan§r reagált a §bDNS§r-edre");
-        add(modid + ".latex_totem.tittle.text_1", "§o§n§l§3⚡ A műtárgy rezonál ⚡");
-        add(modid + ".latex_totem.tittle.text_2", "§o§l§3Megvédve elmédet, eszméleted visszahúzódik a szakadék széléről, nem hagyva, hogy a feledésbe merülj.");
+        add(modid + ".latex_totem.tittle.text_1", "§o§3\"Még nem...\"");
+        add(modid + ".latex_totem.tittle.text_2", "§o§7Egy ismeretlen hang lehorgonyozza az eszméletedet, éppen amikor az sodródni kezd.");
 
         add("changed_addon.fight_conscience.success", "§2Megtartotta §reszméletét!!! Szép munka!");
         add("changed_addon.fight_conscience.retry", "A veled eggyé vált lény az elmédbe kapaszkodik, az irányításért verseng! Harcolj, hogy megőrizd emberséged!");
