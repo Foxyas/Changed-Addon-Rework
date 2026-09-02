@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Optional;
 import java.util.UUID;
 
+@Deprecated
 public interface TamableLatexEntityFavors extends TamableLatexEntity {
 
 

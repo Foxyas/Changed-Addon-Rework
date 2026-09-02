@@ -24,24 +24,26 @@ public class EntityLinkedThunderParticle extends Particle {
 
     private static final int TOTAL_SEGMENTS = 8;
 
-    private final Vec3 targetPos;
-    private final float speed;
-    private final boolean rooted;
-    private final boolean staticBody;
-    private final Vector3f shake;
-    private final Vector3f color;
-    private final float sizeMultiplier;
-    private final long seed;
+    protected Vector3f targetPositionOffset;
+    protected final Vec3 targetPos;
+    protected final float speed;
+    protected final boolean rooted;
+    protected final boolean staticBody;
+    protected final Vector3f shake;
+    protected final Vector3f color;
+    protected final float sizeMultiplier;
+    protected final long seed;
 
-    private final int bodyShakeFrequency;
-    private final Entity target;
+    protected final int bodyShakeFrequency;
+    protected final Entity target;
 
-    private float segmentsProgress;
-    private float retractProgress;
+    protected float segmentsProgress;
+    protected float retractProgress;
 
     public EntityLinkedThunderParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, EntityLinkedThunderParticleOptions options) {
         super(level, x, y, z);
         this.target = level.getEntity(options.getTargetId());
+        this.targetPositionOffset = options.entityPosOffset;
         this.speed = options.getSpeed();
         this.rooted = options.isRooted();
         this.shake = options.getShake();
@@ -67,7 +69,8 @@ public class EntityLinkedThunderParticle extends Particle {
 
     @Override
     public void tick() {
-        if (target != null) this.setPos(target.getX(), target.getY(), target.getZ());
+        if (target != null)
+            this.setPos(target.getX() + targetPositionOffset.x(), target.getY() + targetPositionOffset.z(), target.getZ() + targetPositionOffset.z());
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;

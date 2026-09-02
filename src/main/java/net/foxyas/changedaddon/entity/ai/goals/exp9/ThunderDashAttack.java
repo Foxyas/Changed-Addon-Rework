@@ -212,7 +212,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
         // Aplica o movimento
         Vec3 movement = direction.scale(1.25f)
                 .multiply(1f, 0f, 1f)
-                .add(0f, 0.5f, 0f)
+                .add(0f, 0.05f, 0f)
                 .scale(2.75f);
         target.setDeltaMovement(movement.x, movement.y, movement.z);
     }

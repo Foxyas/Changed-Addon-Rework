@@ -17,6 +17,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
+@Deprecated
 public class TamedLatexMenu extends AbstractContainerMenu implements UpdateableMenu {
     public final Player player;
     public TamableLatexEntityFavors iTamedLatex;

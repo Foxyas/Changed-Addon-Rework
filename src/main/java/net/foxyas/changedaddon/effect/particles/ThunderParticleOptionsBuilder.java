@@ -25,6 +25,7 @@ public class ThunderParticleOptionsBuilder {
 
     private Vector3f shake = new Vector3f(1.0f, 1.0f, 1.0f);
     private Vector3f color = new Vector3f(1.0f, 1.0f, 1.0f);
+    private Vector3f entityPosOffset = new Vector3f(0f, 0f, 0f);
 
     @Nullable
     private Entity target = null;
@@ -108,6 +109,12 @@ public class ThunderParticleOptionsBuilder {
         return this;
     }
 
+    public ThunderParticleOptionsBuilder withEntityPosOffset(Vector3f entityPosOffset) {
+        this.entityPosOffset = entityPosOffset;
+        return this;
+    }
+
+
     public ThunderParticleOptions build() {
         if (this.target != null) {
             LOGGER.info("Target of builder: \"{}\" is not null, didn't you mean to call ThunderParticleOptionsBuilder.buildLinked instead?", this.debugName);
@@ -120,6 +127,6 @@ public class ThunderParticleOptionsBuilder {
         if (this.target == null) {
             LOGGER.info("Target of builder: \"{}\" is null, didn't you mean to call ThunderParticleOptionsBuilder.build instead?", this.debugName);
         }
-        return new EntityLinkedThunderParticleOptions(target.getId(), shouldUseTargetPosAsBaseForDeltas, lifeTime, speed, rooted, staticBody, bodyShakeFrequency, shake, color, size);
+        return new EntityLinkedThunderParticleOptions(target.getId(), shouldUseTargetPosAsBaseForDeltas, entityPosOffset, lifeTime, speed, rooted, staticBody, bodyShakeFrequency, shake, color, size);
     }
 }

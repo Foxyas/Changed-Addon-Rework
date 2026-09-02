@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -18,6 +19,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -36,6 +40,19 @@ public abstract class AbstractSpawnerVial extends InteractableSpecialSpawnEggIte
     @Override
     public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player player, @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand) {
         return maySpawnOnInteractLivingEntity(stack, player, pInteractionTarget, pUsedHand, player.isCrouching());
+    }
+
+    public @NotNull InteractionResult simulateSpawnOnInteractLivingEntity(@NotNull ItemStack stack, @NotNull Player player, @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand, boolean confirmed) {
+        if (shouldSpawnInLivingInteraction()) {
+            if (pInteractionTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS) && !(pInteractionTarget instanceof Player)) {
+                if (!confirmed) {
+                    return InteractionResult.CONSUME_PARTIAL;
+                }
+                return InteractionResult.SUCCESS;
+            }
+        }
+
+        return InteractionResult.PASS;
     }
 
     public @NotNull InteractionResult maySpawnOnInteractLivingEntity(@NotNull ItemStack stack, @NotNull Player player, @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand, boolean confirmed) {
@@ -98,5 +115,29 @@ public abstract class AbstractSpawnerVial extends InteractableSpecialSpawnEggIte
         }
 
         return super.onFailInteractLivingEntity(pStack, pPlayer, pInteractionTarget, pUsedHand);
+    }
+
+    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
+    public static class EventHandle {
+        @SubscribeEvent
+        public static void onPlayerRightClickWithVial(PlayerInteractEvent.EntityInteract entityInteractEvent) {
+            Entity genericTarget = entityInteractEvent.getTarget();
+            Player player = entityInteractEvent.getEntity();
+
+            if (!(genericTarget instanceof LivingEntity target)) return;
+
+            InteractionHand usedItemHand = player.getUsedItemHand();
+            ItemStack itemInHand = player.getItemInHand(usedItemHand);
+            if (itemInHand.getItem() instanceof AbstractSpawnerVial abstractSpawnerVial) {
+                if (abstractSpawnerVial.shouldSpawnInLivingInteraction()) {
+                    InteractionResult interactionResult = abstractSpawnerVial.simulateSpawnOnInteractLivingEntity(itemInHand, player, target, usedItemHand, player.isCrouching());
+                    if (interactionResult.consumesAction()) {
+                        InteractionResult result = abstractSpawnerVial.maySpawnOnInteractLivingEntity(itemInHand, player, target, usedItemHand, player.isCrouching());
+                        entityInteractEvent.setCancellationResult(result);
+                        entityInteractEvent.setCanceled(true);
+                    }
+                }
+            }
+        }
     }
 }

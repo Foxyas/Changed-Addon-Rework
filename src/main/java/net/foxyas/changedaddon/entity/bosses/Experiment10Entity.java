@@ -28,6 +28,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -50,6 +52,8 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment10Entity.class, EntityDataSerializers.BOOLEAN);
 
+    public final GoalSelector passivesSelector;
+
     public Experiment10Entity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_10.get(), world);
     }
@@ -60,6 +64,10 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         xpReward = 160;
         setNoAi(false);
         setPersistenceRequired();
+        this.passivesSelector = new GoalSelector(world.getProfilerSupplier());
+        if (world != null && !world.isClientSide) {
+            this.registerPassives();
+        }
     }
 
     @Override
@@ -145,6 +153,23 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
 
         return super.getMeleeAttackRangeSqr(target);
     }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        addAbilityGoals();
+    }
+
+    protected void registerPassives() {
+        addPassivesGoals();
+    }
+
+    protected void addAbilityGoals() {
+    }
+
+    protected void addPassivesGoals() {
+    }
+
 
     public Color3 getHairColor(int i) {
         return Color3.getColor("#1f1f1f");
@@ -243,6 +268,32 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         }
 
         return super.hurt(source, amount);
+    }
+
+    @Override
+    public void customServerAiStep() {
+        super.customServerAiStep();
+
+        int i = level.getServer().getTickCount() + this.getId();
+        if (i % 2 != 0 && this.tickCount > 1) {
+            level.getProfiler().push("passivesSelector");
+            this.passivesSelector.tickRunningGoals(false);
+            level.getProfiler().pop();
+        } else {
+            level.getProfiler().push("passivesSelector");
+            this.passivesSelector.tick();
+            level.getProfiler().pop();
+        }
+    }
+
+    @Override
+    protected void updateControlFlags() {
+        super.updateControlFlags();
+        boolean hasMovementAndHeadControl = !(this.getControllingPassenger() instanceof Mob);
+        boolean canJump = !(this.getVehicle() instanceof Boat);
+        this.passivesSelector.setControlFlag(Goal.Flag.MOVE, hasMovementAndHeadControl);
+        this.passivesSelector.setControlFlag(Goal.Flag.JUMP, hasMovementAndHeadControl && canJump);
+        this.passivesSelector.setControlFlag(Goal.Flag.LOOK, hasMovementAndHeadControl);
     }
 
     @Override

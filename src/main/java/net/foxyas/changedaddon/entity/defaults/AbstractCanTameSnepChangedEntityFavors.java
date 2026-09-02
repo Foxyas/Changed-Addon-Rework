@@ -58,6 +58,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
+@Deprecated
 public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCanTameSnepChangedEntity implements TamableLatexEntityFavors {
     protected static final EntityDataAccessor<LatexTargetType> DATA_TARGET_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_TARGET_TYPE);
     protected static final EntityDataAccessor<LatexAttackType> DATA_ATTACK_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_TYPE);

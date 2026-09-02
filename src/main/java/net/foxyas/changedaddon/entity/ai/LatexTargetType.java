@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
+@Deprecated
 public enum LatexTargetType implements BiPredicate<TamableLatexEntityFavors, LivingEntity>, StringRepresentable {
     TRANSFURABLE_ENTITIES("transfurable_entities", (self, target) -> {
         if (target != self.getOwner() && self.getOwner() != null) {

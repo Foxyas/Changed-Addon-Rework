@@ -6,6 +6,7 @@ import net.minecraft.util.StringRepresentable;
 
 import java.util.Arrays;
 
+@Deprecated
 public enum LatexAttackCondition implements StringRepresentable {
     NEVER("never"),
     ALWAYS("always"),

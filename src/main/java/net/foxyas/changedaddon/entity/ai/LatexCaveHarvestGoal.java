@@ -27,6 +27,7 @@ import net.minecraftforge.common.Tags;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
+@Deprecated
 public class LatexCaveHarvestGoal extends MoveToBlockGoal {
     private static final int TIME_LIMIT_TO_PATHFIND = 5 * 20;
     private static final int ORE_CHECK_SEARCH_HORIZONTAL = 6;
