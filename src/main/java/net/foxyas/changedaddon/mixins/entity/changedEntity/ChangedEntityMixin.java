@@ -191,6 +191,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
             this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ChangedEntity.class, true, this::targetSelectorTest));
         }
 
+        // Todo: remove this next update
         if (self.getType().is(ChangedAddonTags.EntityTypes.CARDBOARD_BOX_HIDER)) {
             this.goalSelector.addGoal(10 , new HideInABoxGoal(this, UniformInt.of(1200, 2400), UniformInt.of(600, 1200)));
         }
