@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraftforge.network.PacketDistributor;
 
+@Deprecated
 public class LatexSuitOwnerGoal extends MeleeAttackGoal {
     protected final ChangedEntity entity;
     private final TamableLatexEntityFavors iEntity;

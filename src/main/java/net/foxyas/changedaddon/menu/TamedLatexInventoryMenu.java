@@ -24,6 +24,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class TamedLatexInventoryMenu extends AbstractContainerMenu {
     static final ResourceLocation[] TEXTURE_EMPTY_SLOTS = new ResourceLocation[]{
             InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS,

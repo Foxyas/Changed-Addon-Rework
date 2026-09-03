@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactiveGoal.ICancelOnDamageGoal {
-    public static final int FAIL_SAFE_TICKS = 200;
+    public static final int FAIL_SAFE_TICKS = 600;
     protected final IntProvider cooldownProvider;
     protected final Experiment009Entity experiment009;
     protected final IntProvider damageProvider;
@@ -76,6 +76,7 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
 
     @Override
     public void start() {
+        this.experiment009.invulnerableTime = 10;
         this.target = experiment009.getTarget();
         this.groundPos = experiment009.blockPosition();
         this.tickCounter = 0;
@@ -305,7 +306,7 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
 
     @Override
     public void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount) {
-        if (pDamageAmount >= 8) {
+        if (pDamageAmount >= 8 && tickCounter >= 10) {
             ICancelOnDamageGoal.super.onHurt(livingEntity, pDamageSource, pDamageAmount);
         }
     }

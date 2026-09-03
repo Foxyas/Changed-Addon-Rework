@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
@@ -29,12 +30,14 @@ public class EntityLinkedThunderParticleOptions implements ParticleOptions {
     protected final int lifeTime;
     protected final int bodyShakeFrequency;
 
-    private final int targetId;
-    private final boolean useTargetPosAsBaseForDeltas;
+    protected final int targetId;
+    protected final boolean useTargetPosAsBaseForDeltas;
+    protected final Vector3f entityPosOffset;
 
     public EntityLinkedThunderParticleOptions(
             int targetId,
             boolean useTargetPosAsBaseForDeltas,
+            Vector3f entityPosOffset,
             int lifeTime,
             float speed,
             boolean rooted,
@@ -46,6 +49,7 @@ public class EntityLinkedThunderParticleOptions implements ParticleOptions {
     ) {
         this.targetId = targetId;
         this.useTargetPosAsBaseForDeltas = useTargetPosAsBaseForDeltas;
+        this.entityPosOffset = entityPosOffset;
         this.lifeTime = lifeTime;
         this.speed = speed;
         this.rooted = rooted;
@@ -58,6 +62,10 @@ public class EntityLinkedThunderParticleOptions implements ParticleOptions {
 
     public boolean shouldUseTargetPosAsBaseForDeltas() {
         return useTargetPosAsBaseForDeltas;
+    }
+
+    public Vector3f getEntityPosOffset() {
+        return entityPosOffset;
     }
 
     public int getTargetId() {
@@ -100,6 +108,7 @@ public class EntityLinkedThunderParticleOptions implements ParticleOptions {
     public static final Codec<EntityLinkedThunderParticleOptions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("targetId").forGetter(EntityLinkedThunderParticleOptions::getTargetId),
             Codec.BOOL.fieldOf("useTargetPosAsBaseForDeltas").forGetter(EntityLinkedThunderParticleOptions::shouldUseTargetPosAsBaseForDeltas),
+            ExtraCodecs.VECTOR3F.fieldOf("entityPosOffset").forGetter(EntityLinkedThunderParticleOptions::getEntityPosOffset),
             Codec.INT.fieldOf("lifeTime").forGetter(EntityLinkedThunderParticleOptions::getLifeTime),
             Codec.FLOAT.fieldOf("speed").forGetter(EntityLinkedThunderParticleOptions::getSpeed),
             Codec.BOOL.fieldOf("rooted").forGetter(EntityLinkedThunderParticleOptions::isRooted),
@@ -124,6 +133,13 @@ public class EntityLinkedThunderParticleOptions implements ParticleOptions {
 
             reader.expect(' ');
             boolean useTargetPosAsBaseForDeltas = reader.readBoolean();
+
+            reader.expect(' ');
+            float entityPosOffsetX = reader.readFloat();
+            reader.expect(' ');
+            float entityPosOffsetY = reader.readFloat();
+            reader.expect(' ');
+            float entityPosOffsetZ = reader.readFloat();
 
             reader.expect(' ');
             int lifeTime = reader.readInt();
@@ -160,6 +176,7 @@ public class EntityLinkedThunderParticleOptions implements ParticleOptions {
             return new EntityLinkedThunderParticleOptions(
                     targetId,
                     useTargetPosAsBaseForDeltas,
+                    new Vector3f(entityPosOffsetX, entityPosOffsetY, entityPosOffsetZ),
                     lifeTime,
                     speed,
                     rooted,
@@ -175,6 +192,7 @@ public class EntityLinkedThunderParticleOptions implements ParticleOptions {
         public @NotNull EntityLinkedThunderParticleOptions fromNetwork(@NotNull ParticleType<EntityLinkedThunderParticleOptions> type, @NotNull FriendlyByteBuf buffer) {
             int entityId = buffer.readVarInt();
             boolean useTargetPosAsBaseForDeltas = buffer.readBoolean();
+            Vector3f entityPosOffset = new Vector3f(buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
             int lifeTime = buffer.readVarInt();
             int bodyShakeFrequency = buffer.readInt();
             float speed = buffer.readFloat();
@@ -184,7 +202,7 @@ public class EntityLinkedThunderParticleOptions implements ParticleOptions {
             Vector3f color = new Vector3f(buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
             float size = buffer.readFloat();
 
-            return new EntityLinkedThunderParticleOptions(entityId, useTargetPosAsBaseForDeltas, lifeTime, speed, rooted, staticBody, bodyShakeFrequency, shake, color, size);
+            return new EntityLinkedThunderParticleOptions(entityId, useTargetPosAsBaseForDeltas, entityPosOffset, lifeTime, speed, rooted, staticBody, bodyShakeFrequency, shake, color, size);
         }
     };
 
@@ -197,6 +215,7 @@ public class EntityLinkedThunderParticleOptions implements ParticleOptions {
     public void writeToNetwork(FriendlyByteBuf buffer) {
         buffer.writeVarInt(targetId);
         buffer.writeBoolean(useTargetPosAsBaseForDeltas);
+        buffer.writeFloat(entityPosOffset.x()).writeFloat(entityPosOffset.y()).writeFloat(entityPosOffset.z());
         buffer.writeVarInt(lifeTime);
         buffer.writeInt(bodyShakeFrequency);
         buffer.writeFloat(speed);

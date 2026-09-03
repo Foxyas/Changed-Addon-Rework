@@ -5,6 +5,7 @@ import net.minecraft.util.StringRepresentable;
 
 import java.util.Arrays;
 
+@Deprecated
 public enum LatexFavor implements StringRepresentable {
     NONE("none"),
     FISHING("fishing"),

@@ -101,7 +101,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         builder = builder.add(Attributes.MAX_HEALTH, 300);
         builder = builder.add(Attributes.ARMOR, 20);
         builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 256f);
         builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
         builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
         return builder;
@@ -197,27 +197,27 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         return super.getMeleeAttackRangeSqr(target);
     }
 
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
-
+    protected void addAbilityGoals() {
         this.goalSelector.addGoal(5, new ClawsComboAttackGoal(this, //PathfinderMob -> holder,
                 UniformInt.of(150, 200), //IntProvider -> cooldown,
                 UniformInt.of(3, 6), //IntProvider -> attackCount,
                 UniformInt.of(20, 40), //IntProvider -> castDuration,
                 UniformFloat.of(6, 8))); //FloatProvider -> damage)
         this.goalSelector.addGoal(6, new WitherWave(this, UniformInt.of(60, 120)));
-        this.goalSelector.addGoal(20, new SimpleAntiFlyingAttack(this,
+        this.goalSelector.addGoal(10, new LeapSmashGoal(this));
+        this.goalSelector.addGoal(15, new DashPunchGoal(this));
+        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
+        this.goalSelector.addGoal(10, new ThrowWitherProjectileGoal(this, UniformInt.of(60, 120), UniformInt.of(1, 8), 36));
+    }
+
+    protected void addPassivesGoals() {
+        this.passivesSelector.addGoal(20, new SimpleAntiFlyingAttack(this,
                 UniformInt.of(60, 100),
                 3,
                 32,
                 8f,
                 10));
-        this.goalSelector.addGoal(10, new LeapSmashGoal(this));
-        this.goalSelector.addGoal(15, new DashPunchGoal(this));
-        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
-        this.goalSelector.addGoal(10, new ThrowWitherProjectileGoal(this, UniformInt.of(60, 120), UniformInt.of(1, 8), 36));
-        this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
+        this.passivesSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
     }
 
     @Override

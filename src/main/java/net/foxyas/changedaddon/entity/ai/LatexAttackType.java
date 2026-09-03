@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
+@Deprecated
 public enum LatexAttackType implements BiPredicate<TamableLatexEntityFavors, LivingEntity>, StringRepresentable {
     ALWAYS_KILL("always_kill", (self, target) -> false),
     TRY_TRANSFUR("try_transfur", (self, target) -> {

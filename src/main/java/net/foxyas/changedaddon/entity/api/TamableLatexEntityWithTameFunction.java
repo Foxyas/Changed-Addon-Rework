@@ -4,6 +4,7 @@ import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
+@Deprecated
 public interface TamableLatexEntityWithTameFunction extends TamableLatexEntity {
 
     void tameEntityForPlayer(Player player);

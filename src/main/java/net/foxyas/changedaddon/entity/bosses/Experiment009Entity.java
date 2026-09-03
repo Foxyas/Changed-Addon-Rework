@@ -36,6 +36,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -60,6 +62,8 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     private static final EntityDataAccessor<Boolean> PHASE2 = SynchedEntityData.defineId(Experiment009Entity.class, EntityDataSerializers.BOOLEAN);
 
+    public final GoalSelector passiveSelector;
+
     public Experiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_009.get(), world);
     }
@@ -70,6 +74,10 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         xpReward = 160;
         setNoAi(false);
         setPersistenceRequired();
+        this.passiveSelector = new GoalSelector(world.getProfilerSupplier());
+        if (world != null && !world.isClientSide) {
+            this.registerPassives();
+        }
     }
 
     @Override
@@ -222,6 +230,13 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         super.registerGoals();
 
         addAbilitiesGoals();
+    }
+
+    protected void registerPassives() {
+        addPassiveGoals();
+    }
+
+    protected void addPassiveGoals() {
     }
 
     protected void addAbilitiesGoals() {
@@ -419,6 +434,27 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
+
+        int i = level.getServer().getTickCount() + this.getId();
+        if (i % 2 != 0 && this.tickCount > 1) {
+            level.getProfiler().push("passiveSelector");
+            this.passiveSelector.tickRunningGoals(false);
+            level.getProfiler().pop();
+        } else {
+            level.getProfiler().push("passiveSelector");
+            this.passiveSelector.tick();
+            level.getProfiler().pop();
+        }
+    }
+
+    @Override
+    protected void updateControlFlags() {
+        super.updateControlFlags();
+        boolean hasMovementAndHeadControl = !(this.getControllingPassenger() instanceof Mob);
+        boolean canJump = !(this.getVehicle() instanceof Boat);
+        this.passiveSelector.setControlFlag(Goal.Flag.MOVE, hasMovementAndHeadControl);
+        this.passiveSelector.setControlFlag(Goal.Flag.JUMP, hasMovementAndHeadControl && canJump);
+        this.passiveSelector.setControlFlag(Goal.Flag.LOOK, hasMovementAndHeadControl);
     }
 
     @Override

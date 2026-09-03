@@ -27,6 +27,7 @@ import net.minecraftforge.common.Tags;
 
 import java.util.stream.Stream;
 
+@Deprecated
 public class LatexFishingGoal extends MoveToBlockGoal {
     private static final int WATER_CHECK_SEARCH_HORIZONTAL = 8;
     private static final int WATER_CHECK_SEARCH_VERTICAL = 4;

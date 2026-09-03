@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 import java.util.function.Predicate;
 
+@Deprecated
 public class LatexInventory implements Container, Nameable {
     public static final int POP_TIME_DURATION = 5;
     public static final int INVENTORY_SIZE = 24;
