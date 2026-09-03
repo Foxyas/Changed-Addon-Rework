@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -86,8 +87,7 @@ public class TargetDataManager {
         if (this.selfEntity.level() instanceof ServerLevel serverLevel) {
             var entity = serverLevel.getEntity(this.savedTargetUUID);
 
-            if (entity instanceof LivingEntity livingTarget && livingTarget.isAlive()) {
-                // Success: Target found and perfectly valid
+            if (entity instanceof LivingEntity livingTarget && (selfEntity.canAttack(livingTarget) || selfEntity.canAttack(livingTarget, TargetingConditions.forCombat()))) {
                 this.selfEntity.setTarget(livingTarget);
             } else {
                 // Failure: The target became invalid for some reason (does not exist in the world or died)

@@ -380,6 +380,17 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         triggerOnHurtReactiveGoals(pDamageSource, pDamageAmount);
     }
 
+    @Override
+    public boolean isInvulnerableTo(@NotNull DamageSource pSource) {
+        if (pSource.is(DamageTypes.LIGHTNING_BOLT))
+            return true;
+        if (pSource.is(ChangedDamageSources.ELECTROCUTION.key())) {
+            return true;
+        }
+
+        return super.isInvulnerableTo(pSource);
+    }
+
     public void triggerOnHurtReactiveGoals(@NotNull DamageSource pDamageSource, float pDamageAmount) {
         this.goalSelector.getRunningGoals()
                 .map(WrappedGoal::getGoal)

@@ -114,6 +114,7 @@ public class ChangedAddonParticleTypes {
     ) {
         ThunderParticleOptionsBuilder builder = ThunderParticleOptionsBuilder.create()
                 .speed(speed)
+                .withEntityPosOffset(entityPosOffset)
                 .rooted(rooted)
                 .shake(shake)
                 .color(color)
