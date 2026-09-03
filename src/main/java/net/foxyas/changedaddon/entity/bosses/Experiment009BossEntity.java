@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -62,8 +63,11 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.monster.warden.AngerManagement;
 import net.minecraft.world.entity.monster.warden.Warden;
+import net.minecraft.world.entity.monster.warden.WardenAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -241,6 +245,32 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     private int getActiveAnger() {
         return this.angerManagement.getActiveAnger(this.getTarget());
+    }
+
+    public DynamicAngerManagement getAngerManagement() {
+        return this.angerManagement;
+    }
+
+    public void clearAnger(LivingEntity pEntity) {
+        this.angerManagement.clearAnger(pEntity);
+    }
+
+    public void increaseAngerAt(@Nullable LivingEntity pEntity) {
+        this.increaseAngerAt(pEntity, 35);
+    }
+
+    @VisibleForTesting
+    public void increaseAngerAt(@Nullable LivingEntity pEntity, int pOffset) {
+        if (!this.isNoAi() && this.targetSelectorTest(pEntity)) {
+            WardenAi.setDigCooldown(this);
+            boolean flag = !(this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null) instanceof Player);
+            int i = this.angerManagement.increaseAnger(pEntity, pOffset);
+        }
+
+    }
+
+    public Optional<LivingEntity> getEntityAngryAt() {
+        return this.getAngerLevel().isAngry() ? this.angerManagement.getActiveEntity() : Optional.empty();
     }
 
     @Override
