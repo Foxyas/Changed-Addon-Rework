@@ -178,7 +178,6 @@ public class ChangedAddonItems {
     public static final RegistryObject<BlockItem> WHITE_LATEX_COVER_ITEM = REGISTRY.register("white_latex_cover", () -> new BlockItem(ChangedAddonBlocks.WHITE_LATEX_COVER_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> WOLF_CRYSTAL_PILLAR = block(ChangedAddonBlocks.WOLF_CRYSTAL_PILLAR);
     // --- MOBS SPAWN EGGS ---
-    public static final RegistryObject<Item> ERIK_SPAWN_EGG = REGISTRY.register("erik_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.ERIK, -1, -1, new Item.Properties()));
     public static final RegistryObject<SpecialSpawnEggItem> SPAWNEGGOFFOXYAS = REGISTRY.register("spawneggoffoxyas", () -> new SpecialSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_FOXYAS, new Item.Properties()));
     // --- CHANGED ENTITIES SPAWN EGGS ---
     public static final RegistryObject<Item> PROTOTYPE_SPAWN_EGG = REGISTRY.register("prototype_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOTYPE, new Color(-5325833).getRGB(), new Color(-9306113).getRGB(), new Item.Properties()));

@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.init;
 import net.foxyas.changedaddon.client.renderer.*;
 import net.foxyas.changedaddon.client.renderer.advanced.*;
 import net.foxyas.changedaddon.client.renderer.basic.*;
-import net.foxyas.changedaddon.client.renderer.mobs.ErikRenderer;
 import net.foxyas.changedaddon.client.renderer.mobs.LatexSnowFoxFoxyasRenderer;
 import net.foxyas.changedaddon.client.renderer.projectiles.SimpleProjectileRenderer;
 import net.foxyas.changedaddon.client.renderer.projectiles.WitherSimpleProjectileRenderer;
@@ -82,7 +81,6 @@ public class ChangedAddonEntityRenderers {
 
         // --- MONSTER/MOB ENTITIES ---
         event.registerEntityRenderer(ChangedAddonEntities.PROTOTYPE.get(), PrototypeRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.ERIK.get(), ErikRenderer::new);
 
         // --- PROJECTILE ENTITIES ---
         event.registerEntityRenderer(ChangedAddonEntities.PARTICLE_PROJECTILE.get(),

@@ -54,9 +54,6 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
 
     @Override
     public void addTags(HolderLookup.@NotNull Provider pProvider) {
-        tag(ChangedTags.EntityTypes.HUMANOIDS).add(
-                ERIK.get());
-
         tag(ChangedAddonTags.EntityTypes.CAN_GRAB);
         tag(ChangedAddonTags.EntityTypes.CAN_GRAB_SUIT);
 
@@ -87,8 +84,7 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
                 EntityType.WOLF,
                 EntityType.FOX,
                 LATEX_SNOW_FOX_FOXYAS.get(),
-                PROTOTYPE.get(),
-                ERIK.get())
+                PROTOTYPE.get())
                 .addOptional(ResourceLocation.withDefaultNamespace("armadillo"));
 
         tag(ChangedAddonTags.EntityTypes.DRAGON_ENTITIES).add(
