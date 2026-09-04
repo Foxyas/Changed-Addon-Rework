@@ -23,7 +23,7 @@ public interface LivingEntityDataExtensor {
     default void setSleepCounter(int value) {
     }
 
-    default AnimationState getCustomAnimationState(int id) {
+    default AnimationState getCustomAnimationState(String id) {
         return null;
     }
 

@@ -1,7 +1,10 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
+import net.foxyas.changedaddon.effect.particles.EntityLinkedThunderParticleOptions;
 import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
+import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -21,11 +24,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
 import java.util.EnumSet;
 import java.util.List;
 
-public class ThunderDashAttack extends Goal implements IReactiveGoal {
+public class ThunderDashAttack extends Goal implements IReactiveGoal, IAbilityGoal {
 
     private static final int MAX_CHARGE_TICKS = 60; // 3 seconds
     private static final int MAX_DASH_TICKS = 20;
@@ -44,6 +48,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
     protected Vec3 dashDirection = Vec3.ZERO;
     protected float dashSpeed = 1.0f;
     protected float strength = 1.0f;
+    protected boolean finishDashing = false; // hardcoded
 
     public ThunderDashAttack(Experiment009BossEntity dasher) {
         this.dasher = dasher;
@@ -68,6 +73,9 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
     @Override
     public boolean isInterruptable() {
+        if (this.isDashing()) {
+            return dashingTickCounter >= MAX_DASH_TICKS * 0.75f;
+        }
         return ticks >= FAIL_SAFE_TICKS;
     }
 
@@ -87,6 +95,10 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
     @Override
     public boolean canContinueToUse() {
         if (this.phase == Phase.IDLE) {
+            return false;
+        }
+
+        if (finishDashing) {
             return false;
         }
 
@@ -142,7 +154,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
 
     protected void handleDashing() {
         dashingTickCounter++;
-        if (dashingTickCounter <= MAX_DASH_TICKS) {
+        if (dashingTickCounter < MAX_DASH_TICKS) {
             dasher.getNavigation().stop();
 
             // Aplica o movimento
@@ -193,6 +205,8 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
                     }
                 }
             }
+        } else {
+            this.finishDashing = true;
         }
     }
 
@@ -302,10 +316,18 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal {
     @Override
     public void stop() {
         super.stop();
+        onStopDashing();
         this.ticks = 0;
         this.dashingTickCounter = 0;
         this.chargingTickCounter = 0;
         this.phase = Phase.IDLE;
+        this.finishDashing = false;
+    }
+
+    protected void onStopDashing() {
+        if (dasher.spawnThunderBoltsSparkNearbyEntities(20, 8, true, 2, 10f, 0.25f)) {
+            dasher.playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 1, 1);
+        }
     }
 
     public void setStrength(float strength) {

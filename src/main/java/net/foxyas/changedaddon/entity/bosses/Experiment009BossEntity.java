@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -61,26 +62,27 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.monster.warden.AngerManagement;
 import net.minecraft.world.entity.monster.warden.Warden;
+import net.minecraft.world.entity.monster.warden.WardenAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -97,6 +99,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     public static final float PHASE_2_HEALTH_RATIO = 0.75f;
     public static final String KNOCKBACK_RESISTANCE_MODIFER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb739";
 
+    private static final EntityDataAccessor<Integer> CLIENT_ANGER_LEVEL = SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> PHASE3 =
@@ -110,17 +113,22 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     public static final String ATTACK_DAMAGE_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb736";
     public static final String ARMOR_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb737";
     public static final String ARMOR_TOUGHNESS_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb738";
+    public static final float PHASE_1_HEALTH_RATIO = 0.25f;
+
 //
 //    private static EntityDataAccessor<Exp9Phase> PHASE() {
 //        return SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
 //    }
 
-    private boolean wasPhasedForPhase2 = false;
-    private boolean wasPhasedForPhase3 = false;
+    protected final Map<Exp9Phase, List<Goal>> phaseGoals = new EnumMap<>(Exp9Phase.class);
+    private final DynamicAngerManagement angerManagement;
+    protected int maxCastingTicks = 200;
+    protected boolean wasPhasedForPhase2 = false;
+    protected boolean wasPhasedForPhase3 = false;
 
-    private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
-    private boolean shouldBleed;
-    public final TargetDataManager targetDataManager;
+    protected final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
+    protected boolean shouldBleed;
+//    public final TargetDataManager targetDataManager;
 
     public final BurstAbilityHandle<Experiment009BossEntity> burstAbilityHandle;
 
@@ -134,7 +142,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
-        this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
+        this.angerManagement = new DynamicAngerManagement(this::targetSelectorTest, new ArrayList<>());
+//        this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
         burstAbilityHandle = new BurstAbilityHandle.Builder<>(this)
@@ -144,6 +153,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 .maxProgress(this::getMaxBurstProgress)
                 .onEvasiveBurst(this::onEvasiveBurst)
                 .build();
+        registerDynamicPhaseGoals();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -218,6 +228,49 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         this.entityData.define(CASTING_ATTACK, false);
         this.entityData.define(CASTING_TICKS, 0);
         this.entityData.define(PHASE, this.getPhase());
+        this.entityData.define(CLIENT_ANGER_LEVEL, 0);
+    }
+
+    public int getClientAngerLevel() {
+        return this.entityData.get(CLIENT_ANGER_LEVEL);
+    }
+
+    private void syncClientAngerLevel() {
+        this.entityData.set(CLIENT_ANGER_LEVEL, this.getActiveAnger());
+    }
+
+    public AngerLevel getAngerLevel() {
+        return AngerLevel.byAnger(this.getActiveAnger());
+    }
+
+    private int getActiveAnger() {
+        return this.angerManagement.getActiveAnger(this.getTarget());
+    }
+
+    public DynamicAngerManagement getAngerManagement() {
+        return this.angerManagement;
+    }
+
+    public void clearAnger(LivingEntity pEntity) {
+        this.angerManagement.clearAnger(pEntity);
+    }
+
+    public void increaseAngerAt(@Nullable LivingEntity pEntity) {
+        this.increaseAngerAt(pEntity, 35);
+    }
+
+    @VisibleForTesting
+    public void increaseAngerAt(@Nullable LivingEntity pEntity, int pOffset) {
+        if (!this.isNoAi() && this.targetSelectorTest(pEntity)) {
+            WardenAi.setDigCooldown(this);
+            boolean flag = !(this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null) instanceof Player);
+            int i = this.angerManagement.increaseAnger(pEntity, pOffset);
+        }
+
+    }
+
+    public Optional<LivingEntity> getEntityAngryAt() {
+        return this.getAngerLevel().isAngry() ? this.angerManagement.getActiveEntity() : Optional.empty();
     }
 
     @Override
@@ -242,9 +295,40 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return this.entityData.get(CASTING_ATTACK);
     }
 
+    public boolean hasAirCastingAttackAnimation() {
+        BlockHitResult clip = level().clip(new ClipContext(
+                this.position(),
+                this.position().subtract(0, 32, 0),
+                ClipContext.Block.COLLIDER,
+                ClipContext.Fluid.NONE,
+                this
+        ));
+
+        float distanceToGround = (float) clip.getLocation().distanceTo(this.position());
+        boolean isFarFromGround = distanceToGround >= 1.0F || clip.getType() == HitResult.Type.MISS;
+
+        return this.isCastingAttack() && isFarFromGround;
+    }
+
     public void setCastingAttack(boolean value) {
         this.entityData.set(CASTING_ATTACK, value);
         this.setCastingTicks(0);
+    }
+
+    public void refreshCastingTicks() {
+        if (isCastingAttack()) {
+            this.setCastingTicks(0);
+        } else {
+            this.setCastingTicks(maxCastingTicks);
+        }
+    }
+
+    public void setMaxCastingTicks(int maxCastingTicks) {
+        this.maxCastingTicks = maxCastingTicks;
+    }
+
+    public int getMaxCastingTicks() {
+        return maxCastingTicks;
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -302,9 +386,18 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
+    public void refreshPhaseAIGoals() {
+        this.goalSelector.removeAllGoals(goal -> goal instanceof IAbilityGoal);
+        this.passiveSelector.removeAllGoals(goal -> true);
+
+        this.addAbilitiesGoals();
+        this.addPassiveGoals();
+    }
+
     @Override
     protected void addPassiveGoals() {
         super.addPassiveGoals();
+        this.passiveSelector.addGoal(10, new ThunderStorm(this, UniformInt.of(60, 100)));
         this.passiveSelector.addGoal(20, new ExtinguishFireNearbyGoal(this) {
             @Override
             public void start() {
@@ -323,50 +416,131 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         this.passiveSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
     }
 
+    protected void initPhaseGoals() {
+        // Phase 1 Goals (Base Abilities)
+        phaseGoals.put(Exp9Phase.PHASE1, List.of(
+                new ThunderDashAttack(this),
+                new ThunderDiveGoal(this, UniformInt.of(60, 100), 1.5f, 6f, 1f, 0.5f, 4),
+                new AoEThunderStrikeGoal(
+                        this,
+                        UniformInt.of(80, 120), //IntProvider -> cooldownProvider
+                        UniformInt.of(4, 8), //IntProvider -> damageProvider
+                        1.5f,
+                        200)
+        ));
+
+        // Phase 2 Goals
+        phaseGoals.put(Exp9Phase.PHASE2, List.of(
+                new ThunderDashAttack(this),
+                new SummonLightningGoal(this, //PathfinderMob -> holder,
+                        UniformInt.of(120, 240), //IntProvider -> cooldown,
+                        UniformInt.of(2, 4), //IntProvider -> lightningCount,
+                        UniformInt.of(80, 160), //IntProvider -> castDuration,
+                        UniformInt.of(80, 100), //IntProvider -> lightningDelay,
+                        UniformFloat.of(5, 12)),
+                new StaticDischargeGoal(this,
+                        UniformInt.of(75, 125),
+                        4,
+                        UniformInt.of(40, 80),
+                        8,
+                        UniformFloat.of(4, 8)),
+                new AoEThunderStrikeGoal(
+                        this,
+                        UniformInt.of(80, 120), //IntProvider -> cooldownProvider
+                        UniformInt.of(4, 8), //IntProvider -> damageProvider
+                        1.5f,
+                        200)
+        ));
+
+        // Phase 3 Goals
+        phaseGoals.put(Exp9Phase.PHASE3, List.of(
+                new ThunderDashAttack(this),
+                new ThunderDiveGoal(this,
+                        UniformInt.of(60, 100), //IntProvider -> cooldownProvider
+                        1.5f,
+                        6f,
+                        1f,
+                        0.5f,
+                        4),
+                new LightningComboAttackGoal(this,
+                        UniformInt.of(100, 140),
+                        UniformInt.of(4, 8),
+                        UniformInt.of(20, 40),
+                        UniformFloat.of(8, 12)),
+                new AoEThunderStrikeGoal(
+                        this,
+                        UniformInt.of(80, 120), //IntProvider -> cooldownProvider
+                        UniformInt.of(4, 8), //IntProvider -> damageProvider
+                        1.5f,
+                        200)
+        ));
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+    }
+
+    protected void registerDynamicPhaseGoals() {
+        initPhaseGoals();
+        List<Goal> goals = phaseGoals.get(getPhase());
+        if (goals != null) {
+            for (Goal goal : goals) {
+                this.goalSelector.addGoal(5, goal);
+            }
+        }
+    }
+
     @Override
     protected void addAbilitiesGoals() {
-        this.goalSelector.addGoal(10, new ThunderStorm(this, UniformInt.of(60, 100)));
-
-        //New AI
-        this.goalSelector.addGoal(15, new ThunderDashAttack(this));
-        this.goalSelector.addGoal(15, new ThunderDiveGoal(this,
-                UniformInt.of(60, 100), //IntProvider -> cooldownProvider
-                1.5f,
-                6f,
-                1f,
-                0.5f,
-                4)
-        );
-        this.goalSelector.addGoal(5, new AoEThunderStrikeGoal(
-                this,
-                UniformInt.of(80, 120), //IntProvider -> cooldownProvider
-                UniformInt.of(4, 8), //IntProvider -> damageProvider
-                1.5f,
-                200));
-
-
-        //Basically perfect, damn... well done 0senia0
-        this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
-                UniformInt.of(120, 240), //IntProvider -> cooldown,
-                UniformInt.of(2, 4), //IntProvider -> lightningCount,
-                UniformInt.of(80, 160), //IntProvider -> castDuration,
-                UniformInt.of(80, 100), //IntProvider -> lightningDelay,
-                UniformFloat.of(5, 12))); //FloatProvider -> damage
-
-        this.goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
-                UniformInt.of(75, 125), //IntProvider -> cooldown,
-                4,
-                UniformInt.of(40, 80), //IntProvider -> castDuration,
-                8,
-                UniformFloat.of(4, 8))); //FloatProvider -> damage
-
-
-        this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
-                UniformInt.of(150, 200), //IntProvider -> cooldown,
-                UniformInt.of(3, 6), //IntProvider -> attackCount,
-                UniformInt.of(20, 60), //IntProvider -> castDuration,
-                UniformFloat.of(6, 8)) //FloatProvider -> damage)
-        );
+        if (phaseGoals != null) {
+            List<Goal> goals = phaseGoals.get(getPhase());
+            if (goals != null) {
+                for (Goal goal : goals) {
+                    this.goalSelector.addGoal(5, goal);
+                }
+            }
+        }
+//        //New AI
+//        this.goalSelector.addGoal(15, new ThunderDashAttack(this));
+//        this.goalSelector.addGoal(15, new ThunderDiveGoal(this,
+//                UniformInt.of(60, 100), //IntProvider -> cooldownProvider
+//                1.5f,
+//                6f,
+//                1f,
+//                0.5f,
+//                4)
+//        );
+//        this.goalSelector.addGoal(5, new AoEThunderStrikeGoal(
+//                this,
+//                UniformInt.of(80, 120), //IntProvider -> cooldownProvider
+//                UniformInt.of(4, 8), //IntProvider -> damageProvider
+//                1.5f,
+//                200));
+//
+//
+//        //Basically perfect, damn... well done 0senia0
+//        this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
+//                UniformInt.of(120, 240), //IntProvider -> cooldown,
+//                UniformInt.of(2, 4), //IntProvider -> lightningCount,
+//                UniformInt.of(80, 160), //IntProvider -> castDuration,
+//                UniformInt.of(80, 100), //IntProvider -> lightningDelay,
+//                UniformFloat.of(5, 12))); //FloatProvider -> damage
+//
+//        this.goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
+//                UniformInt.of(75, 125), //IntProvider -> cooldown,
+//                4,
+//                UniformInt.of(40, 80), //IntProvider -> castDuration,
+//                8,
+//                UniformFloat.of(4, 8))); //FloatProvider -> damage
+//
+//
+//        this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
+//                UniformInt.of(150, 200), //IntProvider -> cooldown,
+//                UniformInt.of(3, 6), //IntProvider -> attackCount,
+//                UniformInt.of(20, 60), //IntProvider -> castDuration,
+//                UniformFloat.of(6, 8)) //FloatProvider -> damage)
+//        );
 
         //this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
         //        UniformInt.of(100, 150), //IntProvider -> cooldown
@@ -669,7 +843,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         super.customServerAiStep();
 
         if (this.tickCount % 20 == 0) {
-            this.targetDataManager.resolveTarget();
+//            this.targetDataManager.resolveTarget();
+
+            if (this.level() instanceof ServerLevel serverLevel) {
+                this.angerManagement.tick(serverLevel, this::targetSelectorTest);
+                this.syncClientAngerLevel();
+            }
         }
 
         float maxHealth = this.getMaxHealth();
@@ -696,7 +875,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.DARK_AQUA)));
         } else {
 
-            float progress = (healthRatio - PHASE_2_HEALTH_RATIO) / (1.0f - PHASE_2_HEALTH_RATIO);
+            float progress = (healthRatio - PHASE_2_HEALTH_RATIO) / (PHASE_1_HEALTH_RATIO);
             this.bossInfo.setProgress(progress);
 
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.PROGRESS) {
@@ -706,6 +885,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         // Formula used: progress = (value - minValueOfPhase) / (maxValueOfPhase - minValueOfPhase)
+        // PHASE_1_HEALTH_RATIO = maxValueOfPhase(1f) - minValueOfPhase(0.75f);
     }
 
     @Override
@@ -729,13 +909,20 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
+    public float getMaxHealthForCurrentPhase() {
+        float ratio = this.isPhase3() ? PHASE_3_HEALTH_RATIO : this.isPhase2() ? PHASE_2_HEALTH_RATIO : PHASE_1_HEALTH_RATIO;
+        return this.getMaxHealth() * ratio;
+    }
+
     protected void onPhaseChange(Exp9Phase phase) {
         switch (phase) {
             case PHASE1 -> {
+                refreshPhaseAIGoals();
                 removeStatModifiers();
             }
             case PHASE2 -> {
                 if (!wasPhasedForPhase2) {
+                    refreshPhaseAIGoals();
                     removeStatModifiers();
                     applyStatModifier(this, 1.5f);
                     knockBackAndDoThunderBolt();
@@ -745,6 +932,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
             case PHASE3 -> {
                 if (!wasPhasedForPhase3) {
+                    refreshPhaseAIGoals();
                     removeStatModifiers();
                     applyStatModifierAllOutPhase();
                     knockbackAndDoThunderStorm();
@@ -775,15 +963,15 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         spawnThunderBoltsSpark(16, 16, 2f, 1f);
     }
 
-    private void spawnThunderBoltsSpark(double radius, int amountOfPositions, float speed, float size) {
+    public void spawnThunderBoltsSpark(double radius, int amountOfPositions, float speed, float size) {
         spawnThunderBoltsSpark(10, radius, amountOfPositions, false, 0, speed, size);
     }
 
-    private void spawnThunderBoltsSpark(int particleAge, double radius, int amountOfPositions, float speed, float size) {
+    public void spawnThunderBoltsSpark(int particleAge, double radius, int amountOfPositions, float speed, float size) {
         spawnThunderBoltsSpark(particleAge, radius, amountOfPositions, false, 0, speed, size);
     }
 
-    private void spawnThunderBoltsSpark(int particleAge, double radius, int amountOfPositions, boolean shakyBody, int bodyShakeFrequency, float speed, float size) {
+    public void spawnThunderBoltsSpark(int particleAge, double radius, int amountOfPositions, boolean shakyBody, int bodyShakeFrequency, float speed, float size) {
         if (!(this.level() instanceof ServerLevel serverLevel)) return;
 
         // Base position at the entity's center height
@@ -821,6 +1009,49 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                     1.0                     // Particle speed scale
             );
         }
+    }
+
+    public boolean spawnThunderBoltsSparkNearbyEntities(int particleAge, double pushRadius, boolean shakyBody, int bodyShakeFrequency, float speed, float size) {
+        if (!(this.level() instanceof ServerLevel serverLevel)) return false;
+
+        // Base position at the entity's center height
+        double startX = this.getX();
+        float startYOffset = this.getBbHeight() / 2.0f;
+        double startY = this.getY() + startYOffset;
+        double startZ = this.getZ();
+
+        AABB pushBox = this.getBoundingBox().inflate(pushRadius);
+        List<LivingEntity> entities = serverLevel.getEntitiesOfClass(LivingEntity.class, pushBox, e -> !e.is(this) && e.isAlive() && (!e.isSpectator() && e.isPickable()));
+
+        for (LivingEntity entity : entities) {
+            double offsetX = entity.getEyePosition().x();
+            double offsetY = entity.getEyePosition().y();
+            double offsetZ = entity.getEyePosition().z();
+
+            EntityLinkedThunderParticleOptions particleOptions = ChangedAddonParticleTypes.thunderBoltLinkedTo(
+                    this,
+                    false, // useTargetPosAsBaseForDeltas = false means xSpeed/ySpeed/zSpeed acts directly as relative offset from target
+                    new Vector3f(0, startYOffset, 0),
+                    speed,
+                    false,
+                    shakyBody, bodyShakeFrequency,
+                    new Vector3f(0.3f, 0.3f, 0.3f),
+                    new Vector3f(1.0f, 1.0f, 1.0f),
+                    particleAge,// particle lifetime in ticks
+                    size
+            );
+
+            // Send particle with count = 0 to pass offsetX, offsetY, offsetZ into xSpeed, ySpeed, zSpeed parameters
+            serverLevel.sendParticles(
+                    particleOptions,
+                    startX, startY, startZ, // Spawn location
+                    0,                      // Count must be 0 for speed params to behave as raw deltas
+                    offsetX, offsetY, offsetZ, // Target end relative vector
+                    1.0                     // Particle speed scale
+            );
+        }
+
+        return !entities.isEmpty();
     }
 
     public void knockbackAndDoThunderStorm() {
@@ -943,7 +1174,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             this.setCastingAttack(tag.getBoolean("castingAttack"));
         if (tag.contains("castingAttackTicks"))
             this.setCastingTicks(tag.getInt("castingAttackTicks"));
-        this.targetDataManager.loadAndResolveTarget(tag);
+        if (tag.contains("maxCastingTicks"))
+            this.setMaxCastingTicks(tag.getInt("maxCastingTicks"));
+        this.angerManagement.load(tag);
+//        this.targetDataManager.loadAndResolveTarget(tag);
     }
 
     @Override
@@ -953,8 +1187,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         super.addAdditionalSaveData(tag);
         tag.putBoolean("isPhase3", isPhase3());
         tag.putBoolean("isBleeding", shouldBleed);
-        tag.putBoolean("casting", this.isCastingAttack());
-        this.targetDataManager.saveTarget(tag);
+        tag.putBoolean("castingAttack", this.isCastingAttack());
+        tag.putFloat("castingAttackTicks", this.getCastingTicks());
+        tag.putFloat("maxCastingTicks", this.getMaxCastingTicks());
+        this.angerManagement.save(tag);
+//        this.targetDataManager.saveTarget(tag);
     }
 
     @Override
@@ -1055,7 +1292,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 //                this.setCastingAttack(false);
 //            }
             this.setCastingTicks(this.getCastingTicks() + 1);
-            if (this.getTarget() == null || this.getCastingTicks() >= 200) {
+            if (this.getTarget() == null || this.getCastingTicks() >= maxCastingTicks) {
                 this.setCastingAttack(false);
             }
         }
@@ -1063,7 +1300,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (shouldBleed) {
             if (this.computeHealthRatio() / PHASE_3_HEALTH_RATIO > 0.25f) {
                 if (this.tickCount % 20 == 0) {
-                    spawnThunderBoltsSpark(20, 2.5f, 16, true, 2, 4f, 0.25f);
+                    spawnThunderBoltsSpark(20, 2.5f, 16, true, 2, 10f, 0.25f);
                 }
             }
 

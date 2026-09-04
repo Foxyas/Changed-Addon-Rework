@@ -22,7 +22,7 @@ import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.Random;
 
-public class InductionCoilGoal extends Goal {
+public class InductionCoilGoal extends Goal implements IAbilityGoal{
 
     protected final PathfinderMob holder;
     protected final IntProvider cooldownProvider;

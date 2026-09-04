@@ -19,6 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 import java.util.Optional;
 
+@Deprecated
 public class HideInABoxGoal extends Goal {
 
     private static final int SEARCH_RANGE = 10;

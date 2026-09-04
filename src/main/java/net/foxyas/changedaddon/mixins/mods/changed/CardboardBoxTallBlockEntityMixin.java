@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = CardboardBoxTallBlockEntity.class)
+@Deprecated
 public abstract class CardboardBoxTallBlockEntityMixin implements SeatableBlockEntity {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/block/entity/CardboardBoxTallBlockEntity;getSeatedEntity()Lnet/minecraft/world/entity/LivingEntity;", shift = At.Shift.BEFORE),

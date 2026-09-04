@@ -24,7 +24,7 @@ import java.util.EnumSet;
 
 import static net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity.spawnThunderCircle;
 
-public class ThunderDiveGoal extends Goal {
+public class ThunderDiveGoal extends Goal implements IAbilityGoal {
 
     private static final int FAILSAFE_DIVING = 120;
 

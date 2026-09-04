@@ -69,8 +69,12 @@ public class EntityLinkedThunderParticle extends Particle {
 
     @Override
     public void tick() {
-        if (target != null)
-            this.setPos(target.getX() + targetPositionOffset.x(), target.getY() + targetPositionOffset.z(), target.getZ() + targetPositionOffset.z());
+        if (target != null) {
+            double pX = target.getX() + targetPositionOffset.x();
+            double pY = target.getY() + targetPositionOffset.y();
+            double pZ = target.getZ() + targetPositionOffset.z();
+            this.setPos(pX, pY, pZ);
+        }
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
@@ -385,7 +389,9 @@ public class EntityLinkedThunderParticle extends Particle {
         ) {
             Entity entity = level.getEntity(options.getTargetId());
             if (entity != null) {
-                return new EntityLinkedThunderParticle(level, entity.getX(), entity.getY(), entity.getZ(), xSpeed, ySpeed, zSpeed, options);
+                EntityLinkedThunderParticle entityLinkedThunderParticle = new EntityLinkedThunderParticle(level, entity.getX(), entity.getY(), entity.getZ(), xSpeed, ySpeed, zSpeed, options);
+                entityLinkedThunderParticle.targetPositionOffset = options.getEntityPosOffset();
+                return entityLinkedThunderParticle;
             }
             return new EntityLinkedThunderParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, options);
         }

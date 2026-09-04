@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.datagen;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -8,7 +7,6 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SpriteSourceProvider;
 
 import java.util.List;
-import java.util.Map;
 
 public class AtlasProvider extends SpriteSourceProvider {
     public AtlasProvider(PackOutput output, ExistingFileHelper helper) {

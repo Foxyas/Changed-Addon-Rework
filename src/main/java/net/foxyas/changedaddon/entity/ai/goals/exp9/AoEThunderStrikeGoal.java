@@ -37,7 +37,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
 
-public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactiveGoal.ICancelOnDamageGoal {
+public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactiveGoal.ICancelOnDamageGoal, IAbilityGoal {
     public static final int FAIL_SAFE_TICKS = 600;
     protected final IntProvider cooldownProvider;
     protected final Experiment009Entity experiment009;
@@ -306,7 +306,10 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
 
     @Override
     public void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount) {
-        if (pDamageAmount >= 8 && tickCounter >= 10) {
+        if (pDamageAmount >= 8 && tickCounter >= 10 && experiment009.hurtTime > 0) {
+            if (pDamageSource.getDirectEntity() instanceof LightningBolt) {
+                return;
+            }
             ICancelOnDamageGoal.super.onHurt(livingEntity, pDamageSource, pDamageAmount);
         }
     }
