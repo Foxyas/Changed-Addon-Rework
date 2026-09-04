@@ -12,6 +12,7 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.network.ChangedAddonVariables.PlayerVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
@@ -191,7 +192,7 @@ public class CommonEvent {
         Player sleeper = event.player;
         if (!sleeper.isSleeping()) return;
 
-        ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(sleeper);
+        PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(sleeper);
         if (!playerVariables.isCuddling) return;
         if (!PlayerUtil.isCuddleStateValidForBed(sleeper)) {
             playerVariables.isCuddling = false;
@@ -377,16 +378,17 @@ public class CommonEvent {
     public static void clonePlayer(PlayerEvent.Clone event) {
         Player originalPl = event.getOriginal();
         originalPl.reviveCaps();
-        ChangedAddonVariables.PlayerVariables original = ChangedAddonVariables.ofOrDefault(originalPl);
+        PlayerVariables original = ChangedAddonVariables.ofOrDefault(originalPl);
         originalPl.invalidateCaps();
 
-        ChangedAddonVariables.PlayerVariables clone = ChangedAddonVariables.ofOrDefault(event.getEntity());
+        PlayerVariables clone = ChangedAddonVariables.ofOrDefault(event.getEntity());
         original.copyTo(clone, event.isWasDeath());
     }
     //
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        tickPlayerVariables(event.player);
         if (event.phase != TickEvent.Phase.END) return;
 
         Player player = event.player;
@@ -443,6 +445,10 @@ public class CommonEvent {
         if (source.getEntity() instanceof Player player) {
             player.awardStat(ChangedAddonStatRegistry.ENTITY_TRANSFURRED.get());
         }
+    }
+
+    private static void tickPlayerVariables(Player player) {
+        ChangedAddonVariables.ofPlayerSafe(player).ifPresent(PlayerVariables::tickCooldowns);
     }
 
     private static void cleanAlphaAttributes(Player player) {
@@ -512,7 +518,7 @@ public class CommonEvent {
 
     private static void mayStallTransfurProgress(TickPlayerTransfurProgressEvent event) {
         Player player = event.getPlayer();
-        ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(player);
+        PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(player);
         LatexInfection latexInfection = playerVariables.latexInfection;
         if (latexInfection.shouldStallTransfurProgress()) {
             event.setCanceled(true);
@@ -579,7 +585,7 @@ public class CommonEvent {
 
 
     private static void tickUntransfur(Player player) {
-        ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.of(player);
+        PlayerVariables vars = ChangedAddonVariables.of(player);
         if (vars == null) return;
 
         if (!player.hasEffect(ChangedAddonMobEffects.UNTRANSFUR.get())) {

@@ -255,7 +255,7 @@ public class TransfurSoundsGuiScreen extends Screen {
     }
 
     protected boolean isNotOnCooldown() {
-        return !ChangedAddonVariables.ofOrDefault(player).actCooldown;
+        return !ChangedAddonVariables.ofOrDefault(player).isActInCooldown();
     }
 
     protected boolean isApexPredator() {

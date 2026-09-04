@@ -407,10 +407,14 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     @Override
+    public boolean canBeHitByProjectile() {
+        return super.canBeHitByProjectile();
+    }
+
+    @Override
     public boolean hurt(@NotNull DamageSource source, float amount) {
         this.AbilitiesTicksCooldown -= (0.05f * amount);
 
-        // Imune a projéteis
         if (source.getDirectEntity() instanceof ThrowableItemProjectile throwableItemProjectile) {
             if (this.isBoss()) {
                 Entity attacker = throwableItemProjectile.getOwner() != null ? throwableItemProjectile.getOwner() : source.getEntity();
@@ -418,8 +422,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             }
         }
         if (source.is(DamageTypeTags.IS_PROJECTILE) && source.getDirectEntity() instanceof AbstractArrow abstractArrow && abstractArrow.getPierceLevel() <= 0 && this.isBoss()) {
-            // Animação de esquiva e "ignorar" o dano
-
             Entity attacker = source.getDirectEntity() != null ? source.getDirectEntity() : source.getEntity();
             playDodge(attacker);
             return false;
@@ -431,7 +433,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             return super.hurt(source, amount);
         }
 
-        // Dano de fogo ou explosão extremamente reduzido
         if (this.isBoss() && (source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_EXPLOSION))) {
             if (source.is(DamageTypeTags.IS_FIRE)) {
                 return super.hurt(source, amount * 0.75f);
@@ -439,10 +440,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             return super.hurt(source, amount * 0.25f);
         }
 
-        // Obtém entidade causadora do dano (direta ou indireta)
         Entity attacker = source.getDirectEntity() != null ? source.getDirectEntity() : source.getEntity();
 
-        // Dano sem atacante direto ou indireto
         if (attacker == null && this.isBoss()) {
             if (source.is(ChangedAddonDamageSources.LATEX_SOLVENT.key())) {
                 return super.hurt(source, amount * 1.25f);
@@ -460,22 +459,21 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                 return super.hurt(source, amount * 1.25f);
             }
 
-            // Caso contrário, reduz o dano e aplica lógica de esquiva
+            double livingEntityAttackSpeed = livingEntity.getAttribute(Attributes.ATTACK_SPEED) != null ? livingEntity.getAttributeValue(Attributes.ATTACK_SPEED) : Attributes.ATTACK_SPEED.getDefaultValue();
+            boolean targetHasFastAttackSpeed = livingEntityAttackSpeed >= 4.5D; // Haste 1 makes the player able to attack with they hand.
+
             float reducedAmount = amount / 6f;
-            if (reducedAmount > 2f) {
+            if (reducedAmount > 2f || targetHasFastAttackSpeed) {
                 if (reducedAmount < 4f) {
                     playDodge(attacker);
                 }
                 return super.hurt(source, Math.max(1, reducedAmount));
             } else {
-                // Animação de esquiva e "ignorar" o dano
-
                 playDodge(attacker);
                 return false;
             }
         }
 
-        // Caso nada acima se aplique, recebe dano normalmente
         return super.hurt(source, amount);
     }
 

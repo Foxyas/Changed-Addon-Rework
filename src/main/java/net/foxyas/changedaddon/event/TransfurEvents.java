@@ -46,10 +46,10 @@ public class TransfurEvents {
         if (!entity.level.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR))
             return;
 
-        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS) && !getVarsIfPlayerOrDef(entity).Exp009TransfurAllowed) {
+        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS) && !getVarsIfPlayerOrDef(entity).exp009BossTransfurPermission) {
             changedVariantEvent.variant = ChangedAddonTransfurVariants.EXPERIMENT_009.get();
         }
-        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS) && !getVarsIfPlayerOrDef(entity).Exp10TransfurAllowed) {
+        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS) && !getVarsIfPlayerOrDef(entity).exp10BossTransfurPermission) {
             changedVariantEvent.variant = ChangedAddonTransfurVariants.EXPERIMENT_10.get();
         }
     }

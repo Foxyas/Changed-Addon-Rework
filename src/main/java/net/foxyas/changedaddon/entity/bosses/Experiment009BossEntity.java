@@ -65,7 +65,6 @@ import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.monster.warden.AngerManagement;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.monster.warden.WardenAi;
 import net.minecraft.world.entity.player.Player;
@@ -611,7 +610,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (instance == null) return;
 
         if (playerInControl.level().getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
-            if (!ChangedAddonVariables.ofOrDefault(playerInControl).Exp009TransfurAllowed) {
+            if (!ChangedAddonVariables.ofOrDefault(playerInControl).exp009BossTransfurPermission) {
                 ProcessTransfur.setPlayerTransfurVariant(playerInControl, ChangedAddonTransfurVariants.EXPERIMENT_009.get(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1, false);
             }
         }

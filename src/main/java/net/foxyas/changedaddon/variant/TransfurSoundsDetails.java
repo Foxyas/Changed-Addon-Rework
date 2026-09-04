@@ -33,7 +33,7 @@ public class TransfurSoundsDetails {
             return;
         }
 
-        if (ChangedAddonVariables.nonNullOf(player).actCooldown) {
+        if (ChangedAddonVariables.nonNullOf(player).isActInCooldown()) {
             if (warnPlayer) {
                 player.sendSystemMessage(
                         Component.literal("You're too exhausted to do that.")
@@ -185,13 +185,8 @@ public class TransfurSoundsDetails {
             );
 
             ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
-            vars.actCooldown = true;
+            vars.actCooldown = getCooldown();
             vars.syncPlayerVariables(player);
-
-            DelayedTask.schedule(getCooldown(), () -> {
-                vars.actCooldown = false;
-                vars.syncPlayerVariables(player);
-            });
         }
 
         public int getCooldown() {

@@ -21,7 +21,7 @@ public class TransfursExtraSoundDetailsProcedure {
         ChangedAddonVariables.PlayerVariables vars =
                 ChangedAddonVariables.nonNullOf(player);
 
-        if (vars.actCooldown) return;
+        if (vars.isActInCooldown()) return;
 
         for (TransfurSoundAction action : TransfurSoundAction.values()) {
 
