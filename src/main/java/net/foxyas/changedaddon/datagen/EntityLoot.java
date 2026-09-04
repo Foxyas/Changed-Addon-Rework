@@ -1,19 +1,19 @@
 package net.foxyas.changedaddon.datagen;
 
+import com.mojang.datafixers.util.Pair;
 import net.foxyas.changedaddon.init.ChangedAddonItems; // Update with your actual registry classes
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurDiets;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedItems;
-import net.ltxprogrammer.changed.item.loot.RandomVariantFunction;
 import net.ltxprogrammer.changed.item.loot.SetVariantFunction;
 import net.minecraft.advancements.critereon.EntityFlagsPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
@@ -34,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static net.foxyas.changedaddon.init.ChangedAddonEntities.EntitiesWithLoot;
@@ -41,16 +42,25 @@ import static net.minecraft.world.level.storage.loot.LootPool.lootPool;
 
 public class EntityLoot extends EntityLootSubProvider {
 
+    public final List<EntityType<?>> entityTypes = new ArrayList<>();
+
     public EntityLoot() {
         super(FeatureFlags.REGISTRY.allFlags());
     }
 
     @Override
     public void generate() {
+        EntitiesWithLoot.forEach((supplierBuilderPair -> add(supplierBuilderPair.getFirst().get(), supplierBuilderPair.getSecond().get())));
+
         this.add(ChangedAddonEntities.LUMINARCTIC_LEOPARD_FEMALE.get(), createLuminarcticLeopardTable(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_FEMALE));
         this.add(ChangedAddonEntities.LUMINARCTIC_LEOPARD_MALE.get(), createLuminarcticLeopardTable(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_MALE));
+    }
 
-        EntitiesWithLoot.forEach((supplierBuilderPair -> add(supplierBuilderPair.getFirst().get(), supplierBuilderPair.getSecond().get())));
+    @Override
+    protected void add(@NotNull EntityType<?> pEntityType, @NotNull ResourceLocation pLootTableLocation, LootTable.@NotNull Builder pBuilder) {
+        boolean containsInRegistry = EntitiesWithLoot.stream().map(Pair::getFirst).map(Supplier::get).toList().contains(pEntityType);
+        if (!containsInRegistry) this.entityTypes.add(pEntityType);
+        super.add(pEntityType, pLootTableLocation, pBuilder);
     }
 
     /**
@@ -116,7 +126,7 @@ public class EntityLoot extends EntityLootSubProvider {
 
     @Override
     protected @NotNull Stream<EntityType<?>> getKnownEntityTypes() {
-        List<EntityType<?>> list = new ArrayList<>();
+        List<EntityType<?>> list = entityTypes;
         EntitiesWithLoot.forEach((supplierBuilderPair) -> list.add(supplierBuilderPair.getFirst().get()));
         return list.stream();
     }
