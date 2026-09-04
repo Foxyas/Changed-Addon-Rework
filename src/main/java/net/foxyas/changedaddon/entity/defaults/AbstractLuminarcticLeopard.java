@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.defaults;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.block.LuminarCrystalSmall;
+import net.foxyas.changedaddon.enchantment.LatexSolventEnchantment;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
@@ -372,7 +373,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         tag.putInt("GlowStage", this.getGlowStage());
         tag.putBoolean("isBoss", this.isBoss());
         tag.putBoolean("wasBoss", this.wasBoss);
-        //tag.putInt("DEVATTACKTESTTICK", DEVATTACKTESTTICK);
     }
 
 
@@ -453,9 +453,10 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         }
 
         if (attacker instanceof LivingEntity livingEntity && this.isBoss()) {
-            if (livingEntity.getAttribute(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get()) != null && livingEntity.getAttributeValue(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get()) >= 1) {
-                return super.hurt(source, amount * 1.25f);
-            } else if (source.getMsgId().contains("latex_solvent")) {
+            if (LatexSolventEnchantment.getLatexSolventLevelOfEntity(livingEntity) >= 1
+                    || source.typeHolder().is(ChangedAddonTags.DamageTypes.IS_LATEX_SOLVENT)
+                    || source.getMsgId().contains("latex_solvent") // Fail safe
+            ) {
                 return super.hurt(source, amount * 1.25f);
             }
 
@@ -465,7 +466,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                 if (reducedAmount < 4f) {
                     playDodge(attacker);
                 }
-                return super.hurt(source, reducedAmount);
+                return super.hurt(source, Math.max(1, reducedAmount));
             } else {
                 // Animação de esquiva e "ignorar" o dano
 
