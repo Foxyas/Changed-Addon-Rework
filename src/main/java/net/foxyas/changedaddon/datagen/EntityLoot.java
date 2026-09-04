@@ -70,8 +70,6 @@ public class EntityLoot extends EntityLootSubProvider {
         CompoundTag isBossTag = new CompoundTag();
         isBossTag.putBoolean("isBoss", true);
 
-        isBossTag.putBoolean("isBoss", false);
-
         SetVariantFunction.Builder variantBuilder = new SetVariantFunction.Builder();
         return LootTable.lootTable()
                 // Pool 1: Salmon (Smelted if on fire)
@@ -105,7 +103,7 @@ public class EntityLoot extends EntityLootSubProvider {
                 // Pool 9: Luminar Crystal Shard
                 .withPool(pool(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get(), 1, 9, 1, 3))
                 // Pool 10: Hearted Crystal
-                .withPool(pool(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get(), 0, 1, 1, 3).when(
+                .withPool(pool(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get(), 0, 1, 1, 1).when(
                                 LootItemEntityPropertyCondition.hasProperties(
                                         LootContext.EntityTarget.THIS,
                                         EntityPredicate.Builder.entity().nbt(new NbtPredicate(isBossTag)).build())

@@ -151,9 +151,15 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     }
 
     public void refreshBossAttributes() {
-        if (!wasBoss() && isBoss()) {
+//        if (!wasBoss() && isBoss()) {
+//            handleBoss();
+//        } else if (wasBoss() && !isBoss()) {
+//            handleNonBoss();
+//        }
+
+        if (isBoss()) {
             handleBoss();
-        } else if (wasBoss() && !isBoss()) {
+        } else {
             handleNonBoss();
         }
     }
@@ -161,6 +167,9 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {
         super.onSyncedDataUpdated(pKey);
+        if (pKey == IS_BOSS) {
+            refreshBossAttributes();
+        }
     }
 
     @Override
@@ -631,8 +640,9 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
+        setBoss(tag.getBoolean("isBoss"));
 
+        super.readAdditionalSaveData(tag);
         if (tag.contains("dodgeHealth")) this.setDodgeHealth(tag.getFloat("dodgeHealth"));
         if (tag.contains("maxDodgeHealth")) this.setMaxDodgeHealth(tag.getFloat("maxDodgeHealth"));
 
@@ -652,9 +662,6 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             if (attackTag.contains("timeUsedAttack4")) this.timesUsedAttack4 = attackTag.getInt("timeUsedAttack4");
             //if (attackTag.contains("timeUsedAttack5")) this.timesUsedAttack5 = attackTag.getInt("timeUsedAttack5");
         }
-
-        setBoss(tag.getBoolean("isBoss"));
-        if (tag.contains("wasBoss")) this.setWasBoss(tag.getBoolean("wasBoss"));
     }
 
     @Override
@@ -1020,7 +1027,6 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        refreshBossAttributes();
 
         if (this.getDodgeHealth() > 0) {
             this.dodgeHealthBossBar.setVisible(true);
@@ -1130,22 +1136,19 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
         this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
         this.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(2);
         this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-        if (!wasBoss()) {
-            this.setHealth(this.getMaxHealth());
-            this.setMaxDodgeHealth(125f);
-            this.setDodgeHealth(this.getMaxDodgeHealth());
-            setWasBoss(true);
-            IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
-        }
+
+        this.setHealth(this.getMaxHealth());
+        this.setMaxDodgeHealth(125f);
+        this.setDodgeHealth(this.getMaxDodgeHealth());
+        IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
     }
 
     public void handleNonBoss() {
         this.setAttributes(this.getAttributes());
-        if (!wasBoss()) return;
-
-        this.setHealth(this.getMaxHealth());
         this.setMaxDodgeHealth(3);
-        setWasBoss(false);
+
+        if (this.getHealth() > this.getMaxHealth()) this.setHealth(this.getMaxHealth());
+        if (this.getDodgeHealth() > this.getMaxDodgeHealth()) this.setDodgeHealth(this.getMaxDodgeHealth());
         IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
     }
 

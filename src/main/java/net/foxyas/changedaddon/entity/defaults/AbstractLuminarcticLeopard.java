@@ -39,13 +39,11 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -53,7 +51,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -231,12 +228,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     @Override
     public void variantTick(Level level) {
         super.variantTick(level);
-
-        if (this.isBoss() && !wasBoss) {
-            handleBoss();
-        } else if (!this.isBoss() && wasBoss) {
-            handleNonBoss();
-        }
     }
 
     @Override
@@ -255,12 +246,20 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     @Override
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {
+        super.onSyncedDataUpdated(pKey);
+        if (pKey == IS_BOSS) {
+            if (this.isBoss()) {
+                handleBoss();
+            } else {
+                handleNonBoss();
+            }
+        }
+    }
+
+    @Override
     public void baseTick() {
         super.baseTick();
-        if (this.isBoss() && !wasBoss) {
-            handleBoss();
-        }
-
         if (this.getUnderlyingPlayer() == null) {
             if (!this.isNoAi()) {
                 if (this.isBoss()) {
@@ -338,6 +337,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
+        setBoss(tag.getBoolean("isBoss"));
+        this.wasBoss = tag.getBoolean("wasBoss");
+//        this.wasBoss = tag.getBoolean("wasBoss");
         super.readAdditionalSaveData(tag);
         if (tag.contains("ActivatedAbility")) {
             this.setActivatedAbility(tag.getBoolean("ActivatedAbility"));
@@ -357,9 +359,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         if (tag.contains("GlowStage")) {
             this.setGlowStage(tag.getInt("GlowStage"));
         }
-
-        setBoss(tag.getBoolean("isBoss"));
-        this.wasBoss = tag.getBoolean("wasBoss");
     }
 
     @Override
@@ -382,7 +381,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(17.5f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(10f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2.5f);
-        this.setHealth(500f);
+        this.setHealth(getMaxHealth());
         //this.setAbsorptionAmount(75f);
         this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
         IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
@@ -391,6 +390,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     public void handleNonBoss() {
         wasBoss = false;
         this.setAttributes(this.getAttributes());
+        if (this.getHealth() > this.getMaxHealth()) {
+            this.setHealth(this.getMaxHealth());
+        }
         IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
     }
 
@@ -460,7 +462,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             }
 
             double livingEntityAttackSpeed = livingEntity.getAttribute(Attributes.ATTACK_SPEED) != null ? livingEntity.getAttributeValue(Attributes.ATTACK_SPEED) : Attributes.ATTACK_SPEED.getDefaultValue();
-            boolean targetHasFastAttackSpeed = livingEntityAttackSpeed >= 4.5D; // Haste 1 makes the player able to attack with they hand.
+            boolean targetHasFastAttackSpeed = livingEntityAttackSpeed >= 4.4D; // Haste 1 makes the player able to attack with they hand.
 
             float reducedAmount = amount / 6f;
             if (reducedAmount > 2f || targetHasFastAttackSpeed) {
@@ -486,6 +488,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             Mob entity = spawnEvent.getEntity();
             if (!(entity instanceof AbstractLuminarcticLeopard abstractLuminarcticLeopard)) return;
             boolean attributesApplied = abstractLuminarcticLeopard.wasBoss;
+            if (spawnTag != null) {
+                attributesApplied |= (spawnTag.contains("wasBoss") && spawnTag.getBoolean("wasBoss"));
+            }
 
             if (spawnTag != null && spawnTag.contains("isBoss") && spawnTag.getBoolean("isBoss")) {
                 if (!attributesApplied) {
@@ -524,25 +529,25 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             }
         }
 
-        @SubscribeEvent
-        public static void onEntityDrop(LivingDropsEvent event) {
-            LivingEntity entity = event.getEntity();
-            Level level = entity.level;
-
-            // Verifica se é um mob específico, por exemplo, um Luminarctic Leopard
-            if (entity instanceof AbstractLuminarcticLeopard leopard) {
-                // Verifica se tem a NBT isBoss = 1b
-                if (leopard.isBoss()) {
-                    // Cria o item que será dropado
-                    ItemStack item = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get());
-
-                    // Cria o drop
-                    ItemEntity drop = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), item);
-
-                    // Adiciona à lista de drops
-                    event.getDrops().add(drop);
-                }
-            }
-        }
+//        @SubscribeEvent
+//        public static void onEntityDrop(LivingDropsEvent event) {
+//            LivingEntity entity = event.getEntity();
+//            Level level = entity.level;
+//
+//            // Verifica se é um mob específico, por exemplo, um Luminarctic Leopard
+//            if (entity instanceof AbstractLuminarcticLeopard leopard) {
+//                // Verifica se tem a NBT isBoss = 1b
+//                if (leopard.isBoss()) {
+//                    // Cria o item que será dropado
+//                    ItemStack item = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get());
+//
+//                    // Cria o drop
+//                    ItemEntity drop = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), item);
+//
+//                    // Adiciona à lista de drops
+//                    event.getDrops().add(drop);
+//                }
+//            }
+//        }
     }
 }

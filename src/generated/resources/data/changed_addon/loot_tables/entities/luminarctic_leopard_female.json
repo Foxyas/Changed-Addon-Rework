@@ -319,7 +319,7 @@
           "condition": "minecraft:entity_properties",
           "entity": "this",
           "predicate": {
-            "nbt": "{isBoss:0b}"
+            "nbt": "{isBoss:1b}"
           }
         }
       ],
