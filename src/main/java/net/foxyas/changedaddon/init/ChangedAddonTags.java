@@ -104,6 +104,7 @@ public final class ChangedAddonTags {
         public static final TagKey<EntityType<?>> HAS_BETTER_GROUND_PATHFIND = key("has_better_ground_pathfind");
         public static final TagKey<EntityType<?>> PROTOGENS = key("protogens");
         public static final TagKey<EntityType<?>> CARDBOARD_BOX_HIDER = key("cardboard_box_hiders");
+        public static final TagKey<EntityType<?>> PROJECTILES_BYPASSES_DODGE = key("projectiles/bypasses_dodge");
 
         private static TagKey<EntityType<?>> key(String path) {
             return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), ChangedAddonMod.resourceLoc(path));
@@ -158,6 +159,7 @@ public final class ChangedAddonTags {
     public static class DamageTypes {
 
         public static final TagKey<DamageType> IS_LATEX_SOLVENT = key("is_latex_solvent");
+        public static final TagKey<DamageType> BYPASSES_DODGE = key("bypasses_dodge");
 
         private static TagKey<DamageType> key(String path) {
             return TagKey.create(Registries.DAMAGE_TYPE, ChangedAddonMod.resourceLoc(path));

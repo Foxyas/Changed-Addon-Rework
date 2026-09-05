@@ -1,12 +1,13 @@
 package net.foxyas.changedaddon.ability.handle.dodgeTypes;
 
+import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.ltxprogrammer.changed.util.EntityUtil;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.entity.projectile.Projectile;
 import org.jetbrains.annotations.Nullable;
 
 public class WeaveDodgeType extends DodgeType {
@@ -28,14 +29,19 @@ public class WeaveDodgeType extends DodgeType {
     }
 
     @Override
-    public void applyDodgeEffects(DodgeAbilityInstance instance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
-        super.applyDodgeEffects(instance, levelAccessor, dodger, attacker, dodgeType, causeExhaustion);
-        instance.applyDodgeParticles(dodger, attacker);
-        instance.applyDodgeAnimations(dodger);
+    public void applyDodgeEffects(DodgeAbilityInstance instance, @Nullable LivingEntity dodger, Either<DamageSource, Projectile> source, boolean causeExhaustion) {
+        super.applyDodgeEffects(instance, dodger, source, causeExhaustion);
+        instance.applyDodgeParticles(source);
+        instance.applyDodgeAnimations(source);
     }
 
     @Override
-    public boolean willApplyIFrames(DodgeAbilityInstance instance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
+    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
         return true;
+    }
+
+    @Override
+    public float getDodgeUsageWithoutContext(DodgeAbilityInstance dodgeAbilityInstance) {
+        return 0.1f;
     }
 }
