@@ -222,8 +222,8 @@ public class HULanguageProvider extends LanguageProvider {
         addAbility("dodge.dodge_amount_left", "Kitartás: %1$s");
         addAbility("dodge.ultra_instinct", "§b§oTúlzott ösztön§r");
         addAbility("dodge.ultra_instinct.activated", "§b§oAz ösztöneid tökéletesre élesednek — olyan gyorsnak érzed magad, mint egy isten.§r");
-        addAbility("dash", "Iramodás");
-        addAbility("dash.desc", "Lehetővé teszi a játékos számára, hogy iramodjon");
+        addAbility("dash", "Előrelövelés");
+        addAbility("dash.desc", "Lehetővé teszi a játékos számára, hogy löveljen előre");
         addAbility("leap", "Szökkenés");
         addAbility("pollen_carry", "Virágporszállítás");
         addAbility("pollen_carry.description", "Lehetővé teszi virágpor gyűjtését és szétterítését a közeli növényekre, elősegítve a növekedésüket.");
