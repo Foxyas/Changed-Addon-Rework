@@ -387,7 +387,6 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(PINK_CYAN_SKUNK, "Rózsaszín-türkizkék borz");
         addEntityType(DAZED_LATEX, "Dazed latex");
         addEntityType(BUFF_DAZED_LATEX, "Izmos dazed latex");
-        addEntityFromId(ERIK);
         addEntityType(EXP_1_FEMALE, "Nőstény 1-es kísérlet");
         addEntityType(EXP_1_MALE, "Hím 1-es kísérlet");
         addEntityType(EXP_2_FEMALE, "Nőstény 2-es kísérlet");
@@ -632,7 +631,6 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(BUNY_SPAWN_EGG, "Bnuyidéző tojás");
         addItem(CRYSTAL_GAS_CAT_FEMALE_SPAWN_EGG, "Nőstény kristály gáz macskát idéző tojás");
         addItem(CRYSTAL_GAS_CAT_MALE_SPAWN_EGG, "Hím kristály gáz macskát idéző tojás");
-        addItem(ERIK_SPAWN_EGG, "Erikidéző tojás");
         addItem(EXP1_FEMALE_SPAWN_EGG, "Nőstény 1-es kísérletet idéző tojás");
         addItem(EXP1_MALE_SPAWN_EGG, "Hím 1-es kísérletet idéző tojás");
         addItem(EXP2_FEMALE_SPAWN_EGG, "Nőstény 2-es kísérletet idéző tojás");

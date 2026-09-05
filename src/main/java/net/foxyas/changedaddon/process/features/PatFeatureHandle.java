@@ -40,7 +40,7 @@ public class PatFeatureHandle {
         if (player == null || player.isSpectator() || !canPlayerPat(player)) return;
 
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.of(player);
-        if (vars != null && vars.patCooldown) return;
+        if (vars != null && vars.isPatInCooldown()) return;
 
         InteractionHand emptyHand = getEmptyHand(player);
         if (emptyHand == null) return;
@@ -206,11 +206,7 @@ public class PatFeatureHandle {
         player.awardStat(ChangedAddonStatRegistry.PATS_GIVEN.get());
 
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
-        vars.patCooldown = true;
+        vars.patCooldown = 5;
         vars.syncPlayerVariables(player);
-        DelayedTask.schedule(5, () -> {
-            vars.patCooldown = false;
-            vars.syncPlayerVariables(player);
-        });
     }
 }

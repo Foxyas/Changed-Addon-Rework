@@ -29,7 +29,7 @@ public record TransfurSoundsGuiButtonPacket(int actionId) {
         ChangedAddonVariables.PlayerVariables vars =
                 ChangedAddonVariables.ofOrDefault(player);
 
-        if (vars.actCooldown) return;
+        if (vars.isActInCooldown()) return;
 
         TransfurSoundAction action = getAction(actionId);
         if (action == null) return;

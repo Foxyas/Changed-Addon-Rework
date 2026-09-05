@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Pair;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.advanced.*;
 import net.foxyas.changedaddon.entity.bosses.*;
-import net.foxyas.changedaddon.entity.mobs.ErikEntity;
 import net.foxyas.changedaddon.entity.partials.SnowLeopardPartialEntity;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
 import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
@@ -676,15 +675,6 @@ public class ChangedAddonEntities {
                     .setCustomClientFactory(LatexBorderCollieEntity::new)
                     .sized(0.7f, 1.93f));
 
-    // --- MONSTER/MOB ENTITIES ---
-    public static final RegistryObject<EntityType<ErikEntity>> ERIK = registerMob("erik",
-            EntityType.Builder.<ErikEntity>of(ErikEntity::new, MobCategory.MONSTER)
-                    .setShouldReceiveVelocityUpdates(true)
-                    .setTrackingRange(64)
-                    .setUpdateInterval(3)
-                    .setCustomClientFactory(ErikEntity::new)
-                    .sized(0.6f, 1.8f));
-
     @SubscribeEvent
     public static void registerAttributes(@NotNull EntityAttributeCreationEvent event) {
 
@@ -717,7 +707,6 @@ public class ChangedAddonEntities {
         event.put(EXP_2_MALE.get(), Exp2MaleEntity.createAttributes().build());
         event.put(EXP_2_FEMALE.get(), Exp2FemaleEntity.createAttributes().build());
         event.put(WOLFY.get(), WolfyEntity.createAttributes().build());
-        event.put(ERIK.get(), ErikEntity.createAttributes().build());
         event.put(EXP_6.get(), Exp6Entity.createAttributes().build());
         event.put(REYN.get(), ReynEntity.createAttributes().build());
         event.put(EXPERIMENT_009_BOSS.get(), Experiment009BossEntity.createAttributes().build());

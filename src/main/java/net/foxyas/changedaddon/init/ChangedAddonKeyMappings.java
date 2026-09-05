@@ -88,7 +88,7 @@ public class ChangedAddonKeyMappings {
             if (player == null || player.isDeadOrDying()) return;
 
             ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(Minecraft.getInstance().player);
-            if (vars.patCooldown) return;
+            if (vars.isPatInCooldown()) return;
 
             ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(0, 0));
             PatKeyPacket.pressAction(Minecraft.getInstance().player, 0);

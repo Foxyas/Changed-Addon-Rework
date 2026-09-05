@@ -43,11 +43,11 @@ public class TheDecimatorItem extends Item {
         super(new Item.Properties().durability(1025));
     }
 
-    private float AttackDamage() {
+    private float attackDamage() {
         return -2f + 15f;
     }
 
-    private float AttackSpeed() {
+    private float attackSpeed() {
         return -4f + 0.8f;
     }
 
@@ -91,6 +91,24 @@ public class TheDecimatorItem extends Item {
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity target) {
         if (player.getAttackStrengthScale(0.0f) >= 0.9 && player.onGround()) {
+            if (player.isSprinting()) {
+                if (player.isSprinting() && player.getAttackStrengthScale(0f) >= 0.9f) {
+                    Vec3 knockback = player.position().subtract(target.position()).normalize();
+                    float pStrength = 2f;
+                    if (target instanceof LivingEntity livingEntity) {
+                        livingEntity.knockback(pStrength, knockback.x, knockback.z);
+                    } else {
+                        Vec3 targetDeltaMovement = target.getDeltaMovement();
+                        Vec3 motion = new Vec3(
+                                targetDeltaMovement.x / 2.0D - knockback.x,
+                                target.onGround() ? Math.min(0.4D, targetDeltaMovement.y / 2.0D + pStrength) : targetDeltaMovement.y,
+                                targetDeltaMovement.z / 2.0D - knockback.z
+                        );
+                        target.push(motion.x, motion.y, motion.z);
+                    }
+                    target.hurt(player.level().damageSources().mobAttack(player), attackDamage() * 0.25f);
+                }
+            }
             // ⚔ Área de efeito: Raio de 1.5 blocos ao redor do alvo
             double radius = 1.25;
             AABB attackArea = target.getBoundingBox().inflate(radius, 0.25, radius);
@@ -196,8 +214,8 @@ public class TheDecimatorItem extends Item {
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.putAll(super.getAttributeModifiers(equipmentSlot, stack));
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", AttackDamage(), AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", AttackSpeed(), AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", attackDamage(), AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeed(), AttributeModifier.Operation.ADDITION));
         builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(BASE_ATTACK_REACH_UUID, "Tool modifier", 0.5f, AttributeModifier.Operation.ADDITION));
         builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(BASE_ATTACK_REACH_UUID, "Tool modifier", 0.5f, AttributeModifier.Operation.ADDITION));
         return builder.build();

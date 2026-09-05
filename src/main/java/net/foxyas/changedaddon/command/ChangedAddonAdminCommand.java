@@ -223,7 +223,7 @@ public class ChangedAddonAdminCommand {
                                             ChangedAddonVariables.PlayerVariables vars = target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
                                             if (vars == null) return 0;
 
-                                            ctx.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.Exp009TransfurAllowed ? " has Exp009Transfur permission" : " has no Exp009Transfur permission")), false);
+                                            ctx.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.exp009BossTransfurPermission ? " has Exp009Transfur permission" : " has no Exp009Transfur permission")), false);
                                             return Command.SINGLE_SUCCESS;
                                         })
                                         .then(Commands.argument("player", EntityArgument.player())
@@ -233,7 +233,7 @@ public class ChangedAddonAdminCommand {
                                                     ChangedAddonVariables.PlayerVariables vars = target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
                                                     if (vars == null) return 0;
 
-                                                    arguments.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.Exp009TransfurAllowed ? " has Exp009Transfur permission" : " has no Exp009Transfur permission")), false);
+                                                    arguments.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.exp009BossTransfurPermission ? " has Exp009Transfur permission" : " has no Exp009Transfur permission")), false);
                                                     return Command.SINGLE_SUCCESS;
                                                 })
                                         )
@@ -248,7 +248,7 @@ public class ChangedAddonAdminCommand {
                                                             arguments.getSource().sendSuccess(() -> Component.literal(("The Exp009Transfur Perm of the " + target.getDisplayName().getString() + " was set to " + val)), true);
 
                                                             target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).ifPresent(capability -> {
-                                                                capability.Exp009TransfurAllowed = val;
+                                                                capability.exp009BossTransfurPermission = val;
                                                                 capability.syncPlayerVariables(target);
                                                             });
 
@@ -268,7 +268,7 @@ public class ChangedAddonAdminCommand {
                                             ChangedAddonVariables.PlayerVariables vars = target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
                                             if (vars == null) return 0;
 
-                                            arguments.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.Exp10TransfurAllowed ? " has Exp10Transfur permission" : " has no Exp10Transfur permission")), false);
+                                            arguments.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.exp10BossTransfurPermission ? " has Exp10Transfur permission" : " has no Exp10Transfur permission")), false);
                                             return Command.SINGLE_SUCCESS;
                                         })
                                         .then(Commands.argument("player", EntityArgument.player())
@@ -278,7 +278,7 @@ public class ChangedAddonAdminCommand {
                                                     ChangedAddonVariables.PlayerVariables vars = target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
                                                     if (vars == null) return 0;
 
-                                                    arguments.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.Exp10TransfurAllowed ? " has Exp10Transfur permission" : " has no Exp10Transfur permission")), false);
+                                                    arguments.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.exp10BossTransfurPermission ? " has Exp10Transfur permission" : " has no Exp10Transfur permission")), false);
                                                     return Command.SINGLE_SUCCESS;
                                                 })
                                         )
@@ -293,7 +293,7 @@ public class ChangedAddonAdminCommand {
                                                             arguments.getSource().sendSuccess(() -> Component.literal(("The Exp10Transfur Perm of the " + target.getDisplayName().getString() + " was set to " + val)), true);
 
                                                             target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).ifPresent(capability -> {
-                                                                capability.Exp10TransfurAllowed = val;
+                                                                capability.exp10BossTransfurPermission = val;
                                                                 capability.syncPlayerVariables(target);
                                                             });
 

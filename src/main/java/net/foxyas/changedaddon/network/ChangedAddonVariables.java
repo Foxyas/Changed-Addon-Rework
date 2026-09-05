@@ -93,12 +93,21 @@ public class ChangedAddonVariables {
 
         public boolean showWarns = true;
         public boolean resetTransfurAdvancements = false;
-        public boolean actCooldown = false;
-        public boolean patCooldown = false;
-        public boolean Exp009TransfurAllowed = false;
-        public boolean Exp10TransfurAllowed = false;
+        public int actCooldown = 0;
+        public int patCooldown = 0;
+        public boolean exp009BossTransfurPermission = false;
+        public boolean exp10BossTransfurPermission = false;
 
         public boolean isCuddling = false;
+
+        public void tickCooldowns() {
+            if (actCooldown > 0) {
+                actCooldown--;
+            }
+            if (patCooldown > 0) {
+                patCooldown--;
+            }
+        }
 
         public void syncPlayerVariables(Entity entity) {
             if (entity instanceof ServerPlayer serverPlayer)
@@ -108,8 +117,8 @@ public class ChangedAddonVariables {
         public void copyTo(PlayerVariables other, boolean wasDeath) {
             other.resetTransfurAdvancements = resetTransfurAdvancements;
             other.untransfurProgress = untransfurProgress;
-            other.Exp009TransfurAllowed = Exp009TransfurAllowed;
-            other.Exp10TransfurAllowed = Exp10TransfurAllowed;
+            other.exp009BossTransfurPermission = exp009BossTransfurPermission;
+            other.exp10BossTransfurPermission = exp10BossTransfurPermission;
             other.isCuddling = isCuddling;
             if (!wasDeath) {
                 other.consciousnessFightProgress = consciousnessFightProgress;
@@ -128,12 +137,12 @@ public class ChangedAddonVariables {
             nbt.putByte("FTKCminigameType", FTKCminigameType != null ? (byte) FTKCminigameType.ordinal() : -1);
             nbt.putBoolean("resetTransfurAdvancements", resetTransfurAdvancements);
             if (forSync) {
-                nbt.putBoolean("actCooldown", actCooldown);
-                nbt.putBoolean("patCooldown", patCooldown);
+                nbt.putInt("actCooldown", actCooldown);
+                nbt.putInt("patCooldown", patCooldown);
             }
             nbt.putDouble("UntransfurProgress", untransfurProgress);
-            nbt.putBoolean("Exp009TransfurAllowed", Exp009TransfurAllowed);
-            nbt.putBoolean("Exp10TransfurAllowed", Exp10TransfurAllowed);
+            nbt.putBoolean("Exp009TransfurAllowed", exp009BossTransfurPermission);
+            nbt.putBoolean("Exp10TransfurAllowed", exp10BossTransfurPermission);
             nbt.putBoolean("isCuddling", isCuddling);
             nbt.putBoolean("isTransfuredBySafeMethod", isTransfuredBySafeMethod);
             nbt.putInt("timeAfterVictoryOfFTK", timeAfterVictoryOfFTK);
@@ -155,11 +164,11 @@ public class ChangedAddonVariables {
             } else FTKCminigameType = null;
 
             resetTransfurAdvancements = nbt.getBoolean("resetTransfurAdvancements");
-            actCooldown = nbt.getBoolean("actCooldown");
-            patCooldown = nbt.getBoolean("patCooldown");
+            actCooldown = nbt.getInt("actCooldown");
+            patCooldown = nbt.getInt("patCooldown");
             untransfurProgress = nbt.getDouble("UntransfurProgress");
-            Exp009TransfurAllowed = nbt.getBoolean("Exp009TransfurAllowed");
-            Exp10TransfurAllowed = nbt.getBoolean("Exp10TransfurAllowed");
+            exp009BossTransfurPermission = nbt.getBoolean("Exp009TransfurAllowed");
+            exp10BossTransfurPermission = nbt.getBoolean("Exp10TransfurAllowed");
             isCuddling = nbt.getBoolean("isCuddling");
             isTransfuredBySafeMethod = nbt.getBoolean("isTransfuredBySafeMethod");
             timeAfterVictoryOfFTK = nbt.getInt("timeAfterVictoryOfFTK");
@@ -176,8 +185,8 @@ public class ChangedAddonVariables {
             actCooldown = other.actCooldown;
             patCooldown = other.patCooldown;
             untransfurProgress = other.untransfurProgress;
-            Exp009TransfurAllowed = other.Exp009TransfurAllowed;
-            Exp10TransfurAllowed = other.Exp10TransfurAllowed;
+            exp009BossTransfurPermission = other.exp009BossTransfurPermission;
+            exp10BossTransfurPermission = other.exp10BossTransfurPermission;
             isCuddling = other.isCuddling;
             isTransfuredBySafeMethod = other.isTransfuredBySafeMethod;
             timeAfterVictoryOfFTK = other.timeAfterVictoryOfFTK;
@@ -191,6 +200,42 @@ public class ChangedAddonVariables {
 
         public double getUntransfurProgress() {
             return untransfurProgress;
+        }
+
+        public int getPatCooldownTicks() {
+            return this.patCooldown;
+        }
+
+        public int getActCooldownTicks() {
+            return actCooldown;
+        }
+
+        public boolean isActInCooldown() {
+            return this.actCooldown > 0;
+        }
+
+        public boolean isPatInCooldown() {
+            return this.actCooldown > 0;
+        }
+
+        public boolean isCuddling() {
+            return isCuddling;
+        }
+
+        public boolean has10BossTransfurPermission() {
+            return exp10BossTransfurPermission;
+        }
+
+        public boolean hasExp009BossTransfurPermission() {
+            return exp009BossTransfurPermission;
+        }
+
+        public boolean isTransfuredBySafeMethod() {
+            return isTransfuredBySafeMethod;
+        }
+
+        public boolean shouldResetTransfurAdvancements() {
+            return resetTransfurAdvancements;
         }
     }
 
