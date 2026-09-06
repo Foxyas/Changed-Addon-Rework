@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.ability.handle;
 
+import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.ability.DodgeAbility;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -25,7 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Mod.EventBusSubscriber
-public class DodgeAbilityHandle {
+public class DodgeAbilityEventHandle {
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
@@ -44,21 +45,18 @@ public class DodgeAbilityHandle {
                 List<AbstractAbility<?>> dodgeAbilities = ChangedRegistry.ABILITY.get().getValues().stream().filter((abstractAbility -> abstractAbility instanceof DodgeAbility)).toList();
                 if (dodgeAbilities.isEmpty()) return;
                 for (AbstractAbility<?> ability : dodgeAbilities) {
-                    if (!(ability instanceof DodgeAbility dodgeAbility)) continue;
-                    DodgeAbilityInstance dodgeAbilityInstance = changedEntity.getAbilityInstance(dodgeAbility);
-                    if (dodgeAbilityInstance == null) continue;
-                    if (dodgeAbilityInstance.projectilesImmuneTicks > 0)
+                    if (!(ability instanceof DodgeAbility) || !(changedEntity.getAbilityInstance(ability) instanceof DodgeAbilityInstance dodgeAbilityInstance)) {
+                        continue;
+                    }
+                    if (dodgeAbilityInstance.projectilesImmuneTicks > 0) event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
+                    if (dodgeAbilityInstance.willDodge(Either.right(projectile))) {
                         event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
-
-                    if (dodgeAbilityInstance.willDodge(projectile)) {
-                        event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
-                        dodgeAbilityInstance.applyDodgeEffects(changedEntity, attacker);
-                        dodgeAbilityInstance.applyDodgeMovement(changedEntity, attacker);
+                        dodgeAbilityInstance.applyDodgeEffects(Either.right(projectile));
+                        dodgeAbilityInstance.applyDodgeMovement(Either.right(projectile), true);
                         break;
                     }
                     return;
                 }
-
             }
 
             if (pTarget instanceof Player player) {
@@ -67,19 +65,18 @@ public class DodgeAbilityHandle {
                     List<Map.Entry<AbstractAbility<?>, AbstractAbilityInstance>> dodgeAbilityInstances = instance.abilityInstances.entrySet().stream().filter((entrySet) -> (entrySet.getKey() instanceof DodgeAbility && entrySet.getValue() instanceof DodgeAbilityInstance)).toList();
                     if (!dodgeAbilityInstances.isEmpty()) {
                         for (Map.Entry<AbstractAbility<?>, AbstractAbilityInstance> dodgeAbilities : dodgeAbilityInstances) {
-                            AbstractAbility<?> key = dodgeAbilities.getKey();
-                            AbstractAbilityInstance value = dodgeAbilities.getValue();
-                            if (key instanceof DodgeAbility && value instanceof DodgeAbilityInstance dodgeInstance) {
-                                if (dodgeInstance.projectilesImmuneTicks > 0) {
-                                    event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
-                                }
+                            AbstractAbility<?> ability = dodgeAbilities.getKey();
+                            AbstractAbilityInstance abilityInstance = dodgeAbilities.getValue();
+                            if (!(ability instanceof DodgeAbility) || !(abilityInstance instanceof DodgeAbilityInstance dodgeAbilityInstance)) {
+                                continue;
+                            }
+                            if (dodgeAbilityInstance.projectilesImmuneTicks > 0) event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
+                            if (dodgeAbilityInstance.willDodge(Either.right(projectile))) {
+                                event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
 
-                                if (dodgeInstance.willDodge(projectile)) {
-                                    event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
-                                    dodgeInstance.applyDodgeEffects(player, attacker);
-                                    dodgeInstance.applyDodgeMovement(player, attacker);
-                                    break;
-                                }
+                                dodgeAbilityInstance.applyDodgeEffects(Either.right(projectile));
+                                dodgeAbilityInstance.applyDodgeMovement(Either.right(projectile), true);
+                                break;
                             }
                         }
                     }
@@ -109,18 +106,18 @@ public class DodgeAbilityHandle {
                 if (dodgeAbilities.isEmpty()) return;
                 for (AbstractAbility<?> ability : dodgeAbilities) {
                     if (!(ability instanceof DodgeAbility dodgeAbility)) continue;
-                    DodgeAbilityInstance dodgeInstance = dodger.getAbilityInstance(dodgeAbility);
-                    if (dodgeInstance == null) continue;
+                    DodgeAbilityInstance dodgeAbilityInstance = dodger.getAbilityInstance(dodgeAbility);
+                    if (dodgeAbilityInstance == null) continue;
 
-                    if (dodgeInstance.getDodgeAmount() <= 0) {
-                        dodgeInstance.getController().deactivateAbility();
+                    if (dodgeAbilityInstance.getDodgeStamina() <= 0) {
+                        dodgeAbilityInstance.getController().deactivateAbility();
                         continue;
                     }
 
-                    if (dodgeInstance.willDodge(attacker)) {
+                    if (dodgeAbilityInstance.willDodge(Either.left(damageSource))) {
                         event.setCanceled(true);
-                        dodgeInstance.applyDodgeEffects(dodger.level, attacker, dodger);
-                        dodgeInstance.applyDodgeMovement(dodger.level, attacker, dodger, true);
+                        dodgeAbilityInstance.applyDodgeEffects(Either.left(damageSource));
+                        dodgeAbilityInstance.applyDodgeMovement(Either.left(damageSource), true);
                         break;
                     }
                     return;
@@ -136,17 +133,17 @@ public class DodgeAbilityHandle {
                         for (Map.Entry<AbstractAbility<?>, AbstractAbilityInstance> dodgeAbilities : dodgeAbilityInstances) {
                             AbstractAbility<?> key = dodgeAbilities.getKey();
                             AbstractAbilityInstance value = dodgeAbilities.getValue();
-                            if (key instanceof DodgeAbility && value instanceof DodgeAbilityInstance dodgeInstance) {
+                            if (key instanceof DodgeAbility && value instanceof DodgeAbilityInstance dodgeAbilityInstance) {
 
-                                if (dodgeInstance.getDodgeAmount() <= 0) {
-                                    dodgeInstance.getController().deactivateAbility();
+                                if (dodgeAbilityInstance.getDodgeStamina() <= 0) {
+                                    dodgeAbilityInstance.getController().deactivateAbility();
                                     continue;
                                 }
 
-                                if (dodgeInstance.willDodge(attacker)) {
+                                if (dodgeAbilityInstance.willDodge(Either.left(damageSource))) {
                                     event.setCanceled(true);
-                                    dodgeInstance.applyDodgeEffects(dodger.level, attacker, dodger);
-                                    dodgeInstance.applyDodgeMovement(dodger.level, attacker, dodger, true);
+                                    dodgeAbilityInstance.applyDodgeEffects(Either.left(damageSource));
+                                    dodgeAbilityInstance.applyDodgeMovement(Either.left(damageSource), true);
                                     break;
                                 }
                             }

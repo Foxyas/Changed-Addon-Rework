@@ -1,12 +1,13 @@
 package net.foxyas.changedaddon.ability.handle.dodgeTypes;
 
+import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import org.jetbrains.annotations.Nullable;
 
 public class CounterDodgeType extends DodgeType {
@@ -36,24 +37,29 @@ public class CounterDodgeType extends DodgeType {
     }
 
     @Override
-    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, LivingEntity dodger, Entity attacker, double distance, Vec3 dodgePosBehind, boolean causeExhaustion) {
+    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
         //dodgeAbilityInstance.dodgeAwayFromAttacker(dodger, attacker);
     }
 
     @Override
-    public void applyDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
-        dodgeAbilityInstance.applyDodgeAnimations(dodger);
-        dodgeAbilityInstance.subDodgeAmount();
+    public void applyDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+        dodgeAbilityInstance.applyDodgeAnimations(sourceProjectileEither);
+        dodgeAbilityInstance.subDodgeStamina();
         if (dodger != null) {
             dodger.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, 2, true, true));
         }
 
-        if (this.willApplyIFrames(dodgeAbilityInstance, levelAccessor, dodger, attacker, dodgeType, causeExhaustion) && dodger != null) {
+        if (this.willApplyIFrames(dodgeAbilityInstance, dodger, sourceProjectileEither, causeExhaustion) && dodger != null) {
             dodger.invulnerableTime = 10;
             dodger.hurtDuration = (int) (20 * 0.25);
             dodger.hurtTime = dodger.hurtDuration;
             dodger.hurtMarked = false;
             dodgeAbilityInstance.projectilesImmuneTicks = 30;
+            if (dodger instanceof Player player) {
+                if (causeExhaustion) {
+                    player.causeFoodExhaustion(8f);
+                }
+            }
         }
     }
 
@@ -63,12 +69,7 @@ public class CounterDodgeType extends DodgeType {
     }
 
     @Override
-    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, LevelAccessor levelAccessor, @Nullable LivingEntity dodger, @Nullable Entity attacker, DodgeType dodgeType, boolean causeExhaustion) {
+    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
         return true;
-    }
-
-    @Override
-    public boolean willDodge(DodgeAbilityInstance dodgeAbilityInstance, Entity entity) {
-        return super.willDodge(dodgeAbilityInstance, entity);
     }
 }
