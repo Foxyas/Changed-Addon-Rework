@@ -213,93 +213,113 @@ public class ChangedAddonAdminCommand {
                         )
                 )
                 .then(Commands.literal("allowPlayerBossTransfurVariant")
-                        .then(Commands.literal("Exp9")
+                        .then(Commands.argument("variant", ResourceLocationArgument.id())
+                                .suggests(CommandTransfur.SUGGEST_TRANSFUR_VARIANT)
                                 .then(Commands.literal("get")
+                                        // Get self
                                         .executes(ctx -> {
-                                            if (!ctx.getSource().isPlayer()) {
-                                                return 0;
-                                            }
+                                            if (!ctx.getSource().isPlayer()) return 0;
                                             ServerPlayer target = ctx.getSource().getPlayerOrException();
-                                            ChangedAddonVariables.PlayerVariables vars = target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
-                                            if (vars == null) return 0;
+                                            ResourceLocation variantId = ResourceLocationArgument.getId(ctx, "variant");
+                                            TransfurVariant<?> variant = variantId.equals(TransfurMe.RANDOM_VARIANT) ? Util.getRandom(TransfurVariant.getPublicTransfurVariants().collect(Collectors.toList()), target.getRandom()) : ChangedRegistry.TRANSFUR_VARIANT.getValue(variantId);
 
-                                            ctx.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.exp009BossTransfurPermission ? " has Exp009Transfur permission" : " has no Exp009Transfur permission")), false);
-                                            return Command.SINGLE_SUCCESS;
+                                            if (variant == null) {
+                                                throw TransfurMe.NOT_LATEX_FORM.create();
+                                            }
+
+                                            return getPermissionResponse(ctx.getSource(), target, variant);
                                         })
+                                        // Get target player
                                         .then(Commands.argument("player", EntityArgument.player())
-                                                .executes(arguments -> {
-                                                    Player target = EntityArgument.getPlayer(arguments, "player");
+                                                .executes(ctx -> {
+                                                    ServerPlayer target = EntityArgument.getPlayer(ctx, "player");
+                                                    ResourceLocation variantId = ResourceLocationArgument.getId(ctx, "variant");
+                                                    TransfurVariant<?> variant = variantId.equals(TransfurMe.RANDOM_VARIANT) ? Util.getRandom(TransfurVariant.getPublicTransfurVariants().collect(Collectors.toList()), target.getRandom()) : ChangedRegistry.TRANSFUR_VARIANT.getValue(variantId);
 
-                                                    ChangedAddonVariables.PlayerVariables vars = target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
-                                                    if (vars == null) return 0;
+                                                    if (variant == null) {
+                                                        throw TransfurMe.NOT_LATEX_FORM.create();
+                                                    }
 
-                                                    arguments.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.exp009BossTransfurPermission ? " has Exp009Transfur permission" : " has no Exp009Transfur permission")), false);
-                                                    return Command.SINGLE_SUCCESS;
+                                                    return getPermissionResponse(ctx.getSource(), target, variant);
                                                 })
                                         )
                                 )
                                 .then(Commands.literal("set")
                                         .then(Commands.argument("target", EntityArgument.player())
                                                 .then(Commands.argument("set", BoolArgumentType.bool())
-                                                        .executes(arguments -> {
-                                                            Player target = EntityArgument.getPlayer(arguments, "target");
-                                                            boolean val = BoolArgumentType.getBool(arguments, "set");
+                                                        .executes(ctx -> {
+                                                            ServerPlayer target = EntityArgument.getPlayer(ctx, "target");
+                                                            ResourceLocation variantId = ResourceLocationArgument.getId(ctx, "variant");
+                                                            TransfurVariant<?> variant = variantId.equals(TransfurMe.RANDOM_VARIANT) ? Util.getRandom(TransfurVariant.getPublicTransfurVariants().collect(Collectors.toList()), target.getRandom()) : ChangedRegistry.TRANSFUR_VARIANT.getValue(variantId);
 
-                                                            arguments.getSource().sendSuccess(() -> Component.literal(("The Exp009Transfur Perm of the " + target.getDisplayName().getString() + " was set to " + val)), true);
+                                                            if (variant == null) {
+                                                                throw TransfurMe.NOT_LATEX_FORM.create();
+                                                            }
 
-                                                            target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).ifPresent(capability -> {
-                                                                capability.exp009BossTransfurPermission = val;
-                                                                capability.syncPlayerVariables(target);
+                                                            boolean val = BoolArgumentType.getBool(ctx, "set");
+
+                                                            target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).ifPresent(vars -> {
+                                                                vars.transfurPermissions.permissionMap.put(variant, val);
+                                                                vars.syncPlayerVariables(target);
                                                             });
+
+                                                            ctx.getSource().sendSuccess(() -> Component.literal(
+                                                                    "Permission for " + variant.getFormId() + " on " + target.getDisplayName().getString() + " set to " + val
+                                                            ), true);
 
                                                             return Command.SINGLE_SUCCESS;
                                                         })
                                                 )
                                         )
                                 )
-                        )
-                        .then(Commands.literal("Exp10")
-                                .then(Commands.literal("get")
-                                        .executes(arguments -> {
-                                            if (!arguments.getSource().isPlayer()) {
+                                // Reset option: removes the entry from the map entirely
+                                .then(Commands.literal("reset")
+                                        // Reset Self
+                                        .executes(ctx -> {
+                                            if (!ctx.getSource().isPlayer()) return 0;
+                                            ServerPlayer target = ctx.getSource().getPlayerOrException();
+                                            ResourceLocation variantId = ResourceLocationArgument.getId(ctx, "variant");
+                                            TransfurVariant<?> variant = variantId.equals(TransfurMe.RANDOM_VARIANT) ? Util.getRandom(TransfurVariant.getPublicTransfurVariants().collect(Collectors.toList()), target.getRandom()) : ChangedRegistry.TRANSFUR_VARIANT.getValue(variantId);
+
+                                            if (variant == null) {
+                                                ctx.getSource().sendFailure(Component.literal("Unknown transfur variant: " + variantId));
                                                 return 0;
                                             }
-                                            ServerPlayer target = arguments.getSource().getPlayerOrException();
-                                            ChangedAddonVariables.PlayerVariables vars = target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
-                                            if (vars == null) return 0;
 
-                                            arguments.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.exp10BossTransfurPermission ? " has Exp10Transfur permission" : " has no Exp10Transfur permission")), false);
+                                            target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).ifPresent(vars -> {
+                                                vars.transfurPermissions.permissionMap.remove(variant);
+                                                vars.syncPlayerVariables(target);
+                                            });
+
+                                            ctx.getSource().sendSuccess(() -> Component.literal(
+                                                    "Reset permission entry for " + variant.getFormId() + " on " + target.getDisplayName().getString()
+                                            ), true);
+
                                             return Command.SINGLE_SUCCESS;
                                         })
-                                        .then(Commands.argument("player", EntityArgument.player())
-                                                .executes(arguments -> {
-                                                    Player target = EntityArgument.getPlayer(arguments, "player");
+                                        // Reset Target
+                                        .then(Commands.argument("target", EntityArgument.player())
+                                                .executes(ctx -> {
+                                                    ServerPlayer target = EntityArgument.getPlayer(ctx, "target");
+                                                    ResourceLocation variantId = ResourceLocationArgument.getId(ctx, "variant");
+                                                    TransfurVariant<?> variant = variantId.equals(TransfurMe.RANDOM_VARIANT) ? Util.getRandom(TransfurVariant.getPublicTransfurVariants().collect(Collectors.toList()), target.getRandom()) : ChangedRegistry.TRANSFUR_VARIANT.getValue(variantId);
 
-                                                    ChangedAddonVariables.PlayerVariables vars = target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
-                                                    if (vars == null) return 0;
+                                                    if (variant == null) {
+                                                        ctx.getSource().sendFailure(Component.literal("Unknown transfur variant: " + variantId));
+                                                        return 0;
+                                                    }
 
-                                                    arguments.getSource().sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (vars.exp10BossTransfurPermission ? " has Exp10Transfur permission" : " has no Exp10Transfur permission")), false);
+                                                    target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).ifPresent(vars -> {
+                                                        vars.transfurPermissions.permissionMap.remove(variant);
+                                                        vars.syncPlayerVariables(target);
+                                                    });
+
+                                                    ctx.getSource().sendSuccess(() -> Component.literal(
+                                                            "Reset permission entry for " + variant.getFormId() + " on " + target.getDisplayName().getString()
+                                                    ), true);
+
                                                     return Command.SINGLE_SUCCESS;
                                                 })
-                                        )
-                                )
-                                .then(Commands.literal("set")
-                                        .then(Commands.argument("target", EntityArgument.player())
-                                                .then(Commands.argument("set", BoolArgumentType.bool())
-                                                        .executes(arguments -> {
-                                                            Player target = EntityArgument.getPlayer(arguments, "target");
-                                                            boolean val = BoolArgumentType.getBool(arguments, "set");
-
-                                                            arguments.getSource().sendSuccess(() -> Component.literal(("The Exp10Transfur Perm of the " + target.getDisplayName().getString() + " was set to " + val)), true);
-
-                                                            target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).ifPresent(capability -> {
-                                                                capability.exp10BossTransfurPermission = val;
-                                                                capability.syncPlayerVariables(target);
-                                                            });
-
-                                                            return Command.SINGLE_SUCCESS;
-                                                        })
-                                                )
                                         )
                                 )
                         )
@@ -436,6 +456,22 @@ public class ChangedAddonAdminCommand {
                 .requires(s -> s.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .redirect(mainCommand.getChild("FtkMinigame"))
         );
+    }
+
+    private static int getPermissionResponse(CommandSourceStack source, ServerPlayer target, TransfurVariant<?> variant) {
+        ChangedAddonVariables.PlayerVariables vars = target.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
+        if (vars == null) return 0;
+
+        Boolean perm = vars.transfurPermissions.permissionMap.get(variant);
+        String variantName = variant.getFormId() != null ? variant.getFormId().toString() : "Variant";
+
+        if (perm == null) {
+            source.sendSuccess(() -> Component.literal(target.getDisplayName().getString() + " has no explicit permission set for " + variantName + " (Default)"), false);
+        } else {
+            source.sendSuccess(() -> Component.literal(target.getDisplayName().getString() + (perm ? " has " : " does not have ") + "permission for " + variantName), false);
+        }
+
+        return Command.SINGLE_SUCCESS;
     }
 
     private static int setPlayerTransfurInfection(CommandContext<CommandSourceStack> context, Player player, boolean isActive, ResourceLocation form, boolean shouldStallTransfurProgress) throws CommandSyntaxException {

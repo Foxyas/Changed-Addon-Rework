@@ -1,8 +1,14 @@
 package net.foxyas.changedaddon.network;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness;
 import net.foxyas.changedaddon.variant.LatexInfection;
+import net.foxyas.changedaddon.variant.TransfurVariantsInfo.TransfurPermissions;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
+import net.minecraft.Util;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -23,6 +29,7 @@ import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 public class ChangedAddonVariables {
@@ -84,6 +91,16 @@ public class ChangedAddonVariables {
         @NotNull
         public LatexInfection latexInfection = new LatexInfection(); //It shouldn't be null, due serialization we need to keep this as a "defaultable" object.
 
+        @NotNull
+        //It shouldn't be null, due serialization we need to keep this as a "defaultable" object.
+        public TransfurPermissions transfurPermissions = new TransfurPermissions().withDefaultValuesOf(
+                Util.make(new HashMap<>(), map -> {
+                            map.put(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS.get(), false);
+                            map.put(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get(), false);
+                        }
+                )
+        );
+
         public float consciousnessFightProgress = 0;
         public boolean isTransfuredBySafeMethod = true;
         public int timeAfterVictoryOfFTK = 0;
@@ -141,13 +158,12 @@ public class ChangedAddonVariables {
                 nbt.putInt("patCooldown", patCooldown);
             }
             nbt.putDouble("UntransfurProgress", untransfurProgress);
-            nbt.putBoolean("Exp009TransfurAllowed", exp009BossTransfurPermission);
-            nbt.putBoolean("Exp10TransfurAllowed", exp10BossTransfurPermission);
             nbt.putBoolean("isCuddling", isCuddling);
             nbt.putBoolean("isTransfuredBySafeMethod", isTransfuredBySafeMethod);
             nbt.putInt("timeAfterVictoryOfFTK", timeAfterVictoryOfFTK);
             nbt.putInt("ticksFightingForConsciousness", ticksFightingForConsciousness);
 
+            transfurPermissions.save(nbt);
             latexInfection.save(nbt);
             return nbt;
         }
@@ -174,6 +190,7 @@ public class ChangedAddonVariables {
             timeAfterVictoryOfFTK = nbt.getInt("timeAfterVictoryOfFTK");
             ticksFightingForConsciousness = nbt.getInt("ticksFightingForConsciousness");
 
+            transfurPermissions.read(nbt);
             latexInfection.read(nbt);
         }
 
@@ -192,6 +209,7 @@ public class ChangedAddonVariables {
             timeAfterVictoryOfFTK = other.timeAfterVictoryOfFTK;
             ticksFightingForConsciousness = other.ticksFightingForConsciousness;
             latexInfection = other.latexInfection;
+            transfurPermissions = other.transfurPermissions;
         }
 
         public LatexInfection getLatexInfection() {
@@ -236,6 +254,14 @@ public class ChangedAddonVariables {
 
         public boolean shouldResetTransfurAdvancements() {
             return resetTransfurAdvancements;
+        }
+
+        public boolean hasPermissionToBe(TransfurVariantInstance<?> transfurVariantInstance) {
+            return this.transfurPermissions.hasPermission(transfurVariantInstance);
+        }
+
+        public boolean hasPermissionToBe(TransfurVariant<?> transfurVariant) {
+            return this.transfurPermissions.hasPermission(transfurVariant);
         }
     }
 

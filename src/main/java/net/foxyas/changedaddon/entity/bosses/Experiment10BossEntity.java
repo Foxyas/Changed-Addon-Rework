@@ -141,7 +141,9 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         if (instance == null) return;
 
         if (playerInControl.level().getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
-            if (!ChangedAddonVariables.ofOrDefault(playerInControl).exp10BossTransfurPermission) {
+            if (!ChangedAddonVariables.ofPlayerSafe(playerInControl)
+                    .map(playerVariables -> playerVariables.transfurPermissions.hasPermission(this.getSelfVariant()))
+                    .orElse(false)) {
                 ProcessTransfur.setPlayerTransfurVariant(playerInControl, ChangedAddonTransfurVariants.EXPERIMENT_10.get(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1, false);
             }
         }
