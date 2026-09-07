@@ -73,7 +73,7 @@ public class ProcessTransfurMixin {
 //        TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
 //        TransfurVariant<?> transfurVariant = null;
 //        if (transfurVariantInstance != null) transfurVariant = transfurVariantInstance.getParent();
-//        UntransfurEvent untransfurEvent = new UntransfurEvent(player, transfurVariant, UntransfurEvent.UntransfurType.SURVIVAL);
+//        UntransfurEvent untransfurEvent = new UntransfurEvent(player, transfurVariant, UntransfurReason.SURVIVAL);
 //        if (ChangedAddonMod.postEvent(untransfurEvent)) {
 //            if (untransfurEvent.newVariant != null) {
 //                ProcessTransfur.setPlayerTransfurVariant(player, untransfurEvent.newVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), 1, false);

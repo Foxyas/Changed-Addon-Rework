@@ -9,7 +9,6 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.foxyas.changedaddon.entity.simple.AbstractSnowFoxEntity;
 import net.foxyas.changedaddon.event.TransfurEvents;
-import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.*;
@@ -25,6 +24,7 @@ import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.process.TransfurEvents.UntransfurPlayerEvent;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.LatexCoverGetter;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -58,6 +58,8 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import static net.ltxprogrammer.changed.process.TransfurEvents.*;
 
 public class PlayerUtil {
 
@@ -156,20 +158,17 @@ public class PlayerUtil {
         if (player.level.isClientSide()) return;
 
         ProcessTransfur.ifPlayerTransfurred(player, (instance) -> {
-            TransfurVariant<?> transfurVariant = null;
-            if (instance != null) transfurVariant = instance.getParent();
-            UntransfurEvent untransfurEvent = new UntransfurEvent(player, transfurVariant, UntransfurEvent.UntransfurType.SURVIVAL);
+            UntransfurPlayerEvent untransfurEvent = new UntransfurPlayerEvent(player, instance, null) {};
             if (ChangedAddonMod.postEvent(untransfurEvent)) {
-                if (untransfurEvent.newVariant != null) {
-                    ProcessTransfur.setPlayerTransfurVariant(player, untransfurEvent.newVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), 1, false);
+                TransfurVariant<?> nextVariant = untransfurEvent.getNextVariant();
+                if (nextVariant != null) {
+                    ProcessTransfur.setPlayerTransfurVariant(player, nextVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), 1, false);
                     return;
                 }
 
                 player.displayClientMessage(Component.translatable("changed_addon.untransfur.fail"), true);
                 return;
             }
-
-            if (instance == null) return;
 
             if (instance.isTemporaryFromSuit()) {
                 IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
@@ -183,8 +182,9 @@ public class PlayerUtil {
             }
 
             instance.unhookAll(player);
-            ProcessTransfur.removePlayerTransfurVariant(player);
-            ProcessTransfur.setPlayerTransfurProgress(player, 0.0f);
+            finalizeUntransfurPlayerEvent(untransfurEvent);
+//            ProcessTransfur.removePlayerTransfurVariant(player);
+//            ProcessTransfur.setPlayerTransfurProgress(player, 0.0f);
         });
     }
 

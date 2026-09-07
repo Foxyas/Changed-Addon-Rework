@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.armor.HazardBodySuit;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.process.UntransfurReason;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.ILatexAssimilatedEntity;
@@ -23,6 +24,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -261,8 +263,35 @@ public class TransfurEvents {
     public static void cancelUntransfur(UntransfurEvent untransfurEvent) {
         Player player = untransfurEvent.getPlayer();
         if (ProcessTransfur.getPlayerTransfurVariant(player) instanceof TransfurVariantInstanceExtensor ext) {
-            untransfurEvent.setCanceled(ext.getUntransfurImmunity(untransfurEvent.untransfurType));
+            untransfurEvent.setCanceled(ext.getUntransfurImmunity(untransfurEvent.untransfurReason));
         }
+    }
+
+    @SubscribeEvent
+    public static void cancelUntransfur(UntransfurPlayerEvent untransfurEvent) {
+        if (untransfurEvent instanceof UntransfurPlayerByCommandEvent commandEvent) return; // let the cancelUntransfurByCommand handle it.
+
+        Player player = untransfurEvent.getPlayer();
+        TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (variantInstance instanceof TransfurVariantInstanceExtensor ext) {
+
+            untransfurEvent.setCanceled(ext.getUntransfurImmunity(UntransfurReason.SURVIVAL));
+        }
+    }
+
+    @SubscribeEvent
+    public static void cancelUntransfurByCommand(UntransfurPlayerByCommandEvent untransfurEvent) {
+        Player player = untransfurEvent.getPlayer();
+        if (ProcessTransfur.getPlayerTransfurVariant(player) instanceof TransfurVariantInstanceExtensor ext) {
+            untransfurEvent.setCanceled(ext.getUntransfurImmunity(UntransfurReason.COMMAND));
+            if (untransfurEvent.isCanceled()) {
+                displayUntransfurCommandFailText(player);
+            }
+        }
+    }
+
+    private static void displayUntransfurCommandFailText(Player player) {
+        player.displayClientMessage(Component.translatable("changed_addon.untransfur.fail"), true);
     }
 
     public static ChangedAddonVariables.PlayerVariables getVarsIfPlayerOrDef(LivingEntity entity) {

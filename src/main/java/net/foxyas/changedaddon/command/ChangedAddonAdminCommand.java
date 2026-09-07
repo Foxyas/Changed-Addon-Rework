@@ -17,6 +17,7 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.process.UntransfurReason;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness.MinigameType;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.Changed;
@@ -67,9 +68,9 @@ public class ChangedAddonAdminCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         ArgumentBuilder<CommandSourceStack, ?> untfImmunity = Commands.argument("target", EntityArgument.players())
                 .then(Commands.argument("value", BoolArgumentType.bool())
-                        .executes(context -> untfImmunity(context.getSource(), EntityArgument.getPlayers(context, "target"), BoolArgumentType.getBool(context, "value"), UntransfurEvent.UntransfurType.SURVIVAL))
-                        .then(Commands.argument("type", EnumArgument.enumArgument(UntransfurEvent.UntransfurType.class))
-                                .executes(context -> untfImmunity(context.getSource(), EntityArgument.getPlayers(context, "target"), BoolArgumentType.getBool(context, "value"), context.getArgument("type", UntransfurEvent.UntransfurType.class)))
+                        .executes(context -> untfImmunity(context.getSource(), EntityArgument.getPlayers(context, "target"), BoolArgumentType.getBool(context, "value"), UntransfurReason.SURVIVAL))
+                        .then(Commands.argument("type", EnumArgument.enumArgument(UntransfurReason.class))
+                                .executes(context -> untfImmunity(context.getSource(), EntityArgument.getPlayers(context, "target"), BoolArgumentType.getBool(context, "value"), context.getArgument("type", UntransfurReason.class)))
                         )
                 );
 
@@ -507,7 +508,7 @@ public class ChangedAddonAdminCommand {
         return 1;
     }
 
-    private static int untfImmunity(CommandSourceStack stack, Collection<ServerPlayer> targets, boolean value, UntransfurEvent.UntransfurType type) {
+    private static int untfImmunity(CommandSourceStack stack, Collection<ServerPlayer> targets, boolean value, UntransfurReason type) {
         for (ServerPlayer player : targets) {
             TransfurVariantInstance<?> inst = ProcessTransfur.getPlayerTransfurVariant(player);
             if (inst instanceof TransfurVariantInstanceExtensor ext) {

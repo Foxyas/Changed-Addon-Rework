@@ -11,7 +11,7 @@ public class CommandTransfurMixin {
 //        TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
 //        TransfurVariant<?> transfurVariant = null;
 //        if (transfurVariantInstance != null) transfurVariant = transfurVariantInstance.getParent();
-//        UntransfurEvent untransfurEvent = new UntransfurEvent(player, transfurVariant, UntransfurEvent.UntransfurType.COMMAND);
+//        UntransfurEvent untransfurEvent = new UntransfurEvent(player, transfurVariant, UntransfurReason.COMMAND);
 //        if (ChangedAddonMod.postEvent(untransfurEvent)) {
 //            if (untransfurEvent.newVariant != null) {
 //                ProcessTransfur.setPlayerTransfurVariant(player, untransfurEvent.newVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), 1, false);
