@@ -43,13 +43,20 @@ public class TransfurEvents {
         if (variant == null) return;
 
         LivingEntity entity = changedVariantEvent.livingEntity;
+        if (entity.level().isClientSide()) return;
+
         if (!entity.level.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR))
             return;
 
-        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS) && !getVarsIfPlayerOrDef(entity).exp009BossTransfurPermission) {
+        if (!(entity instanceof Player player)) {
+            return;
+        }
+        if (ChangedAddonVariables.ofPlayerSafe(player).isEmpty()) return;
+
+        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS) && !getVarsIfPlayerOrDef(entity).hasPermissionToBe(variant)) {
             changedVariantEvent.variant = ChangedAddonTransfurVariants.EXPERIMENT_009.get();
         }
-        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS) && !getVarsIfPlayerOrDef(entity).exp10BossTransfurPermission) {
+        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS) && !getVarsIfPlayerOrDef(entity).hasPermissionToBe(variant)) {
             changedVariantEvent.variant = ChangedAddonTransfurVariants.EXPERIMENT_10.get();
         }
     }

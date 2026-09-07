@@ -17,6 +17,7 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.network.ChangedAddonVariables.PlayerVariables;
 import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.FoxyasUtil;
@@ -610,7 +611,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (instance == null) return;
 
         if (playerInControl.level().getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
-            if (!ChangedAddonVariables.ofOrDefault(playerInControl).exp009BossTransfurPermission) {
+            if (!ChangedAddonVariables.ofPlayerSafe(playerInControl)
+                    .map(playerVariables -> playerVariables.transfurPermissions.hasPermission(this.getSelfVariant()))
+                    .orElse(false)) {
                 ProcessTransfur.setPlayerTransfurVariant(playerInControl, ChangedAddonTransfurVariants.EXPERIMENT_009.get(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1, false);
             }
         }
