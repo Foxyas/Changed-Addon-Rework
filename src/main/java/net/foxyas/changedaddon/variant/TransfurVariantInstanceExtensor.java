@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.variant;
 import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.network.packet.SyncAllUntransfurImmunityPacket;
 import net.foxyas.changedaddon.network.packet.utils.PacketsUtils;
+import net.foxyas.changedaddon.process.UntransfurReason;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -33,9 +34,9 @@ public interface TransfurVariantInstanceExtensor {
     @Deprecated
     AbstractAbilityInstance getSecondSelectedAbilityInstance();
 
-    boolean getUntransfurImmunity(UntransfurEvent.UntransfurType type);
+    boolean getUntransfurImmunity(UntransfurReason type);
 
-    void setUntransfurImmunity(UntransfurEvent.UntransfurType type, boolean value);
+    void setUntransfurImmunity(UntransfurReason type, boolean value);
 
     default void maySendDataUpdate() {
         if (!(this instanceof TransfurVariantInstance<?> variantInstance)) {
@@ -47,8 +48,8 @@ public interface TransfurVariantInstanceExtensor {
 
         if (!player.level().isClientSide) {
             if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
-                boolean untransfurImmunitySurvival = this.getUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL);
-                boolean untransfurImmunityCommand = this.getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND);
+                boolean untransfurImmunitySurvival = this.getUntransfurImmunity(UntransfurReason.SURVIVAL);
+                boolean untransfurImmunityCommand = this.getUntransfurImmunity(UntransfurReason.COMMAND);
                 PacketsUtils.sendToPlayer(new SyncAllUntransfurImmunityPacket(serverPlayer.getId(), untransfurImmunityCommand, untransfurImmunitySurvival), serverPlayer);
 
                 // TODO: maybe Change this to be just the packet below instead of a custom one?

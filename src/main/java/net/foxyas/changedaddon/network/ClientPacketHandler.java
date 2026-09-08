@@ -2,9 +2,9 @@ package net.foxyas.changedaddon.network;
 
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
-import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.network.packet.*;
+import net.foxyas.changedaddon.process.UntransfurReason;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -111,8 +111,8 @@ public class ClientPacketHandler {
                     boolean survivalImmunity = packet.survivalImmunity;
                     boolean commandImmunity = packet.commandImmunity;
 
-                    extensor.setUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL, survivalImmunity);
-                    extensor.setUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND, commandImmunity);
+                    extensor.setUntransfurImmunity(UntransfurReason.SURVIVAL, survivalImmunity);
+                    extensor.setUntransfurImmunity(UntransfurReason.COMMAND, commandImmunity);
                 }
             }
         });

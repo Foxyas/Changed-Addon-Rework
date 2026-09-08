@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
+import net.foxyas.changedaddon.process.UntransfurReason;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -84,14 +84,14 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     }
 
     @Override
-    public boolean getUntransfurImmunity(UntransfurEvent.UntransfurType type) {
-        return type == UntransfurEvent.UntransfurType.SURVIVAL ? untransfurImmunity : untransfurImmunityCommand;
+    public boolean getUntransfurImmunity(UntransfurReason type) {
+        return type == UntransfurReason.SURVIVAL ? untransfurImmunity : untransfurImmunityCommand;
     }
 
     @Override
-    public void setUntransfurImmunity(UntransfurEvent.UntransfurType type, boolean value) {
-        if (type == UntransfurEvent.UntransfurType.SURVIVAL) untransfurImmunity = value;
-        if (type == UntransfurEvent.UntransfurType.COMMAND) untransfurImmunityCommand = value;
+    public void setUntransfurImmunity(UntransfurReason type, boolean value) {
+        if (type == UntransfurReason.SURVIVAL) untransfurImmunity = value;
+        if (type == UntransfurReason.COMMAND) untransfurImmunityCommand = value;
         maySendDataUpdate();
     }
 
@@ -238,9 +238,9 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
             stats.saveExtraData(returnValue);
         }
 
-        returnValue.putBoolean("untransfurImmunity", getUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL));
-        if (!getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND)) {
-            returnValue.putBoolean("untransfurImmunityCommand", getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND));
+        returnValue.putBoolean("untransfurImmunity", getUntransfurImmunity(UntransfurReason.SURVIVAL));
+        if (!getUntransfurImmunity(UntransfurReason.COMMAND)) {
+            returnValue.putBoolean("untransfurImmunityCommand", getUntransfurImmunity(UntransfurReason.COMMAND));
         }
     }
 
@@ -251,8 +251,8 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         }
 
         if (tag.contains("untransfurImmunity"))
-            setUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL, tag.getBoolean("untransfurImmunity"));
+            setUntransfurImmunity(UntransfurReason.SURVIVAL, tag.getBoolean("untransfurImmunity"));
         if (tag.contains("untransfurImmunityCommand"))
-            setUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND, tag.getBoolean("untransfurImmunityCommand"));
+            setUntransfurImmunity(UntransfurReason.COMMAND, tag.getBoolean("untransfurImmunityCommand"));
     }
 }
