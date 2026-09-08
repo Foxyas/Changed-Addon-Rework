@@ -18,7 +18,7 @@ import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.projectile.AbstractVoidFoxParticleProjectile;
 import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
 import net.foxyas.changedaddon.init.*;
-import net.foxyas.changedaddon.item.FlamethrowerLike;
+import net.foxyas.changedaddon.item.AbstractFlamethrowerItem;
 import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -901,7 +901,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
                 // Apply cooldown to the player's item
                 if (attacker instanceof Player player) {
                     final Item item = player.getUseItem().getItem();
-                    if (item instanceof FlamethrowerLike) {
+                    if (item instanceof AbstractFlamethrowerItem) {
                         player.getCooldowns().addCooldown(item, 600);
                         player.stopUsingItem();
                     }

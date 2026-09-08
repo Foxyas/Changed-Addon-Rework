@@ -24,7 +24,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
-public class LaethinminatorItem extends FlamethrowerLike {
+public class LaethinminatorItem extends AbstractFlamethrowerItem {
 
     public LaethinminatorItem() {
         super(new Item.Properties()
