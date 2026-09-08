@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.mixins.world;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

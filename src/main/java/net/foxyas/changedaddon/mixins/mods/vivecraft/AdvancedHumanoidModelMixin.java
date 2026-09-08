@@ -1,9 +1,9 @@
 package net.foxyas.changedaddon.mixins.mods.vivecraft;
 
+import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.entity.beast.LatexBenignOrca;
 import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.ltxprogrammer.changed.init.ChangedTags;

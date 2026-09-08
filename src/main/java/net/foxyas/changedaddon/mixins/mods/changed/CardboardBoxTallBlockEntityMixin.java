@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.mixins.mods.changed;
 
 import net.ltxprogrammer.changed.block.entity.CardboardBoxTallBlockEntity;
 import net.ltxprogrammer.changed.block.entity.SeatableBlockEntity;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

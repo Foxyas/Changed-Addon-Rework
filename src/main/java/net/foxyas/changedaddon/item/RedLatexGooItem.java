@@ -12,7 +12,7 @@ import java.util.List;
 
 public class RedLatexGooItem extends Item {
     public RedLatexGooItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64).fireResistant().rarity(Rarity.RARE));
     }
 

@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class OrangeWolfCrystalFragmentItem extends Item {
 
     public OrangeWolfCrystalFragmentItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64).rarity(Rarity.COMMON));
     }
 

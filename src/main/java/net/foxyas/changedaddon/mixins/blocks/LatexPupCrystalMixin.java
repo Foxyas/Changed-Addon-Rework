@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.util.LevelUtil;
 import net.ltxprogrammer.changed.block.LatexPupCrystal;
-import net.ltxprogrammer.changed.block.WhiteLatexPillar;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;

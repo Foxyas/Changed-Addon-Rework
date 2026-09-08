@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 public class OpenedCannedSoupItem extends AbstractCanItem implements IDrinkItem {
 
     public OpenedCannedSoupItem() {
-        super(new Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Properties()
 
                 .food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).alwaysEat().build()));
     }
@@ -42,7 +42,7 @@ public class OpenedCannedSoupItem extends AbstractCanItem implements IDrinkItem 
 
         if (stack.is(ChangedBlocks.CANNED_SOUP.get().asItem())) {
             if (player.isShiftKeyDown()
-            //        && PlayerUtil.getBlockThatEntityIsLookingAt(player, player.getBlockReach()).getType() == HitResult.Type.MISS
+                //        && PlayerUtil.getBlockThatEntityIsLookingAt(player, player.getBlockReach()).getType() == HitResult.Type.MISS
             ) {
                 event.setCanceled(true);
 

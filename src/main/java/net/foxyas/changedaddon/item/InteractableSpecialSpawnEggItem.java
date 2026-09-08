@@ -15,7 +15,8 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
-///is this even needed? the only direct use is {@link AbstractSpawnerVial}
+
+/// is this even needed? the only direct use is {@link AbstractSpawnerVial}
 public abstract class InteractableSpecialSpawnEggItem extends SpecialSpawnEggItem {
 
     protected final Supplier<? extends TransfurVariant<?>> transfurVariant;

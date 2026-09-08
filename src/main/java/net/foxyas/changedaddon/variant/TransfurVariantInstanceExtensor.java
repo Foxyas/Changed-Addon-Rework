@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.variant;
 
-import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.network.packet.SyncAllUntransfurImmunityPacket;
 import net.foxyas.changedaddon.network.packet.utils.PacketsUtils;
 import net.foxyas.changedaddon.process.UntransfurReason;

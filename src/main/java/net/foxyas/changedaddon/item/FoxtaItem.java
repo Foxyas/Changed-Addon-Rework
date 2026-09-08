@@ -2,8 +2,8 @@ package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.item.api.IDrinkItem;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.item.api.IDrinkItem;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 
-public class FoxtaItem extends BlockItem implements SpecializedItemRendering , IDrinkItem {
+public class FoxtaItem extends BlockItem implements SpecializedItemRendering, IDrinkItem {
 
     private static final Cacheable<ResourceLocation> GUIMODEL =
             Cacheable.of(() -> DistExecutor.unsafeCallWhenOn(
@@ -58,7 +58,7 @@ public class FoxtaItem extends BlockItem implements SpecializedItemRendering , I
 
     public FoxtaItem() {
         super(ChangedAddonBlocks.FOXTA_CAN.get(), new Item.Properties()
-                ////.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+                //
 
                 .stacksTo(64)
                 .rarity(Rarity.RARE)

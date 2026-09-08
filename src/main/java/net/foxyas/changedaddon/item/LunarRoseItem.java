@@ -41,47 +41,49 @@ public class LunarRoseItem extends ArmorItem {
 
     public LunarRoseItem() {
         super(new ArmorMaterial() {
-            @Override
-            public int getDurabilityForType(Type pType) {
-                return 1100;
-            }
+                  @Override
+                  public int getDurabilityForType(Type pType) {
+                      return 1100;
+                  }
 
-            @Override
-            public int getDefenseForType(Type pType) {
-                return 0;
-            }
+                  @Override
+                  public int getDefenseForType(Type pType) {
+                      return 0;
+                  }
 
-            @Override
-            public int getEnchantmentValue() {
-                return 100;
-            }
+                  @Override
+                  public int getEnchantmentValue() {
+                      return 100;
+                  }
 
-            @Override
-            public @NotNull SoundEvent getEquipSound() {
-                return SoundEvents.ARMOR_EQUIP_LEATHER;
-            }
+                  @Override
+                  public @NotNull SoundEvent getEquipSound() {
+                      return SoundEvents.ARMOR_EQUIP_LEATHER;
+                  }
 
-            @Override
-            public @NotNull Ingredient getRepairIngredient() {
-                return Ingredient.of();
-            }
+                  @Override
+                  public @NotNull Ingredient getRepairIngredient() {
+                      return Ingredient.of();
+                  }
 
-            @Override
-            public @NotNull String getName() {
-                return "lunar_rose";
-            }
+                  @Override
+                  public @NotNull String getName() {
+                      return "lunar_rose";
+                  }
 
-            @Override
-            public float getToughness() {
-                return 0f;
-            }
+                  @Override
+                  public float getToughness() {
+                      return 0f;
+                  }
 
-            @Override
-            public float getKnockbackResistance() {
-                return 0f;
-            }
-        }, Type.HELMET, new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
-                .fireResistant().durability(-1));
+                  @Override
+                  public float getKnockbackResistance() {
+                      return 0f;
+                  }
+              },
+                Type.HELMET,
+                new Item.Properties()
+                        .fireResistant().durability(-1));
     }
 
     @Override

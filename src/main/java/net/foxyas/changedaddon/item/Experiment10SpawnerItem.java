@@ -32,7 +32,7 @@ import java.util.List;
 public class Experiment10SpawnerItem extends AbstractSpawnerVial implements IBestiaryItemData {
 
     public Experiment10SpawnerItem() {
-        super(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS, ChangedAddonEntities.EXPERIMENT_10_BOSS, new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS, ChangedAddonEntities.EXPERIMENT_10_BOSS, new Item.Properties()
                 .stacksTo(4).fireResistant().rarity(Rarity.RARE));
     }
 

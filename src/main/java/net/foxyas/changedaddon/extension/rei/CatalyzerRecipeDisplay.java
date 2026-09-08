@@ -2,10 +2,9 @@ package net.foxyas.changedaddon.extension.rei;
 
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.foxyas.changedaddon.recipe.CatalyzerRecipe;
-import net.minecraft.world.item.ItemStack;
+
 import java.util.Collections;
 import java.util.Optional;
 

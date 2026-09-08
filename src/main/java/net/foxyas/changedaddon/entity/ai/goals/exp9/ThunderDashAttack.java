@@ -1,10 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
-import net.foxyas.changedaddon.effect.particles.EntityLinkedThunderParticleOptions;
 import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
-import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -24,7 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 
 import java.util.EnumSet;
 import java.util.List;

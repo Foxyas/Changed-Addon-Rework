@@ -13,7 +13,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import java.util.List;
 
 import static net.foxyas.changedaddon.init.ChangedAddonFeatures.Configured.*;
-import static net.foxyas.changedaddon.init.ChangedAddonFeatures.Configured.IRIDIUM_ORE_BURIED;
 import static net.minecraft.data.worldgen.features.FeatureUtils.register;
 
 public class OreFeatures {

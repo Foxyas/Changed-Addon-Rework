@@ -24,7 +24,7 @@ public class LuminaraBloomPetalsItem extends Item {
 
     public LuminaraBloomPetalsItem() {
         super(new Properties()
-                //.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+
                 .rarity(Rarity.UNCOMMON)
                 .food(new FoodProperties.Builder()
                         .saturationMod(1)

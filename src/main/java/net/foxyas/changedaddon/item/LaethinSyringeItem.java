@@ -31,7 +31,7 @@ import static net.foxyas.changedaddon.item.LaethinItem.setLaethinTypeForStack;
 public class LaethinSyringeItem extends AbstractSyringeItem implements SpecializedAnimations, IDynamicCreativeTab {
 
     public LaethinSyringeItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64)
                 .rarity(Rarity.RARE)
         );

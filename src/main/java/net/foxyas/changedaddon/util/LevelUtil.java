@@ -1,27 +1,13 @@
 package net.foxyas.changedaddon.util;
 
-import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidType;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Comparator;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 // CREDITS TO LTX. THIS CODE IS JUST A BACKPORT OF HIS.
 public class LevelUtil {

@@ -1,12 +1,8 @@
 package net.foxyas.changedaddon.entity.ai.goals.generic;
 
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
 
 import java.util.EnumSet;
 

@@ -39,7 +39,7 @@ public class LaethinItem extends Item implements IDynamicCreativeTab {
     }
 
     public LaethinItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64).rarity(Rarity.RARE));
     }
 

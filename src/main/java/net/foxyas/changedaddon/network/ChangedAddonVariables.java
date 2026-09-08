@@ -7,7 +7,6 @@ import net.foxyas.changedaddon.variant.LatexInfection;
 import net.foxyas.changedaddon.variant.TransfurVariantsInfo.TransfurPermissions;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.Util;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

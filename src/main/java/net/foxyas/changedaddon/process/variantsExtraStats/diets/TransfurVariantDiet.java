@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxyas.changedaddon.util.ExtraCodecs;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public record TransfurVariantDiet(

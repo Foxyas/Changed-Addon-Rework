@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.util.PlayerUtil;
-import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.*;
 import net.ltxprogrammer.changed.entity.beast.WhiteLatexCentaur;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;

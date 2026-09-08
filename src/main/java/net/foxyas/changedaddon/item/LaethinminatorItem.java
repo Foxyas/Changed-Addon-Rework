@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class LaethinminatorItem extends FlamethrowerLike {
 
     public LaethinminatorItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .durability(320).rarity(Rarity.UNCOMMON));
     }
 

@@ -7,18 +7,15 @@ import net.foxyas.changedaddon.process.variantsExtraStats.diets.MobEffectHolder;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDiet;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantHolder;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.FloatProvider;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 

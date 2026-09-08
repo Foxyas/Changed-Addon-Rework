@@ -8,8 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
 
-import java.awt.*;
-
 public class StopCuddlingHint {
 
     public static final String ID = "stop_cuddling_hint";
