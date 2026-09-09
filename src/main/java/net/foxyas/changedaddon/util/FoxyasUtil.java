@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import io.netty.buffer.Unpooled;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
+import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
 import net.ltxprogrammer.changed.world.LatexCoverState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -89,6 +90,16 @@ public class FoxyasUtil {
         OutgoingChatMessage chatMessage = new OutgoingChatMessage.Disguised(chatComponent);
         ChatType.Bound bound = ChatType.bind(ChatType.CHAT, talker);
         player.sendChatMessage(chatMessage, filtered, bound);
+    }
+
+    public static List<Direction> getActiveFacesOfLatexCoverState(LatexCoverState finalUpdatedState) {
+        List<Direction> remainFaces = new ArrayList<>();
+        SpreadingLatexType.FACES.forEach((direction, faceProperty) -> {
+            if (finalUpdatedState.getValue(faceProperty)) {
+                remainFaces.add(direction);
+            }
+        });
+        return remainFaces;
     }
 
 
