@@ -7,7 +7,7 @@ import net.minecraft.world.item.RecordItem;
 
 public class MeaninglessStrafeMusicDiscItem extends RecordItem {
     public MeaninglessStrafeMusicDiscItem() {
-        super(15, ChangedAddonSoundEvents.EXP9_THEME, new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(15, ChangedAddonSoundEvents.EXP9_THEME, new Item.Properties()
                 .stacksTo(1).rarity(Rarity.RARE), 20 * 120);
     }
 }

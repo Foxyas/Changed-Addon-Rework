@@ -38,9 +38,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class FlamethrowerLike extends Item implements SpecializedAnimations {
+public abstract class AbstractFlamethrowerItem extends Item implements SpecializedAnimations {
 
-    public FlamethrowerLike(Properties pProperties) {
+    public AbstractFlamethrowerItem(Properties pProperties) {
         super(pProperties);
     }
 

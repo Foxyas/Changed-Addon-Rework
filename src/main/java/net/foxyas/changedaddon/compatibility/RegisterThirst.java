@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.compatibility;
 
 import dev.ghen.thirst.foundation.common.event.RegisterThirstValueEvent;
-import dev.ghen.thirst.foundation.config.ItemSettingsConfig;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraftforge.common.MinecraftForge;

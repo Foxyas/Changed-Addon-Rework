@@ -3,7 +3,11 @@ package net.foxyas.changedaddon.item;
 import net.foxyas.changedaddon.event.LatexTypePlayerEvent;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
+import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
+import net.ltxprogrammer.changed.init.ChangedLatexTypes;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.world.LatexCoverState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,15 +17,16 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,6 +35,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -39,7 +45,7 @@ public class SprayItem extends Item {
 
     public SprayItem(Supplier<LatexType> latexType) {
         super(new Item.Properties()
-                //.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB).durability(64).rarity(Rarity.COMMON)
+                .durability(64).rarity(Rarity.COMMON)
         );
         this.latexType = latexType;
     }
@@ -53,27 +59,78 @@ public class SprayItem extends Item {
     public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
         Player player = context.getPlayer();
         if (player == null) return InteractionResult.PASS;
+        if (player.level().isClientSide()) return InteractionResult.SUCCESS;
 
         ItemStack stack = context.getItemInHand();
         player.getCooldowns().addCooldown(stack.getItem(), 20);
 
-        BlockPos origin = context.getClickedPos();
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+//        BlockPos origin = context.getClickedPos();
+//        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+
+        Direction clickedFace = context.getClickedFace();
 
         Level level = player.level;
-        pos.set(origin);
-        BlockState bs = level.getBlockState(pos);
-        if (LatexCoverState.getAt(level, pos).getType() != latexType.get())
-            LatexCoverState.setAtAndUpdate(level, pos, latexType.get().defaultCoverState());
+//        pos.set(origin);
 
-        for (Direction dir : Direction.values()) {
-            pos.set(origin).move(dir);
-            bs = level.getBlockState(pos);
-            if (LatexCoverState.getAt(level, pos).getType() != latexType.get())
-                LatexCoverState.setAtAndUpdate(level, pos, latexType.get().defaultCoverState());
+        int affectedBlocks = 0;
+
+        if (latexType.get() == ChangedLatexTypes.NONE.get()) {
+            BlockPos clickedOriginPos = context.getClickedPos().mutable();
+            List<BlockPos> clickedPoses = new ArrayList<>(List.of(clickedOriginPos));
+            for (Direction direction : Direction.values()) {
+                clickedPoses.add(clickedOriginPos.relative(direction));
+            }
+
+            for (BlockPos pos : clickedPoses) {
+                LatexCoverState latexCoverState = LatexCoverState.getAt(level, pos);
+                if (!latexCoverState.isAir()) {
+                    BooleanProperty faceProp = SpreadingLatexType.FACES.get(clickedFace.getOpposite());
+
+                    for (Direction direction : Direction.values()) {
+                        clickedPoses.add(clickedOriginPos.relative(direction));
+                    }
+
+                    LatexCoverState.setAtAndUpdate(level, pos, latexCoverState.setValue(faceProp, false));
+
+                    for (Direction dir : Direction.values()) {
+                        latexCoverState = LatexCoverState.getAt(level, pos.relative(dir));
+
+                        if (!latexCoverState.isAir())
+                            LatexCoverState.setAtAndUpdate(level, pos, latexCoverState.setValue(faceProp, false));
+                    }
+                }
+            }
+
+//            LatexCoverState latexCoverState = LatexCoverState.getAt(level, pos);
+//            if (!latexCoverState.isAir()) {
+//                BooleanProperty faceProp = SpreadingLatexType.FACES.get(clickedFace.getOpposite());
+//                LatexCoverState.setAtAndUpdate(level, pos, latexCoverState.setValue(faceProp, false));
+//
+//                for (Direction dir : Direction.values()) {
+//                    pos.set(origin).move(dir);
+//                    latexCoverState = LatexCoverState.getAt(level, pos);
+//
+//                    if (!latexCoverState.isAir())
+//                        LatexCoverState.setAtAndUpdate(level, pos, latexCoverState.setValue(faceProp, false));
+//                }
+//            }
+        } else {
+            BlockPos clickedOriginPos = context.getClickedPos();
+            List<BlockPos> clickedPoses = new ArrayList<>(List.of(clickedOriginPos));
+            for (Direction direction : Direction.values()) {
+                clickedPoses.add(clickedOriginPos.relative(direction));
+            }
+            for (BlockPos clickedPos : clickedPoses) {
+                BlockState clickedState = context.getLevel().getBlockState(clickedPos);
+                if (clickedState.is(ChangedTags.Blocks.DENY_LATEX_COVER)) {
+                    return InteractionResult.FAIL;
+                } else {
+                    affectedBlocks += applyGooOnBlock(context, clickedPos, clickedState) ? 1 : 0;
+                }
+            }
         }
 
-        if (!player.isCreative() && EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) == 0) {
+        if (affectedBlocks > 0 && (!player.isCreative() && EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) == 0)) {
             if (stack.hurt(1, player.getRandom(), player instanceof ServerPlayer sPlayer ? sPlayer : null)) {
                 stack.shrink(1);
                 stack.setDamageValue(0);
@@ -85,9 +142,52 @@ public class SprayItem extends Item {
         return InteractionResult.SUCCESS;
     }
 
+    ///
+    /// @param context      Self explanatory.
+    /// @param clickedPos   Self explanatory.
+    /// @param clickedState Self explanatory.
+    /// @return true if it applied any goo on any block.
+    protected boolean applyGooOnBlock(@NotNull UseOnContext context, BlockPos clickedPos, BlockState clickedState) {
+        BlockPos positionToCover = clickedState.isFaceSturdy(context.getLevel(), clickedPos, context.getClickedFace(), SupportType.FULL) ? clickedPos.relative(context.getClickedFace()) : clickedPos;
+        BlockState originalState = context.getLevel().getBlockState(positionToCover);
+        if (SpreadingLatexType.canExistOnSurface(context.getLevel(), positionToCover, originalState, positionToCover, originalState, context.getClickedFace())) {
+            return false;
+        } else {
+            LatexCoverState originalCover = LatexCoverState.getAt(context.getLevel(), positionToCover);
+            SpreadingLatexType spreadingLatexType = (SpreadingLatexType) this.latexType.get();
+            SpreadingLatexType.CoveringBlockEvent event = new SpreadingLatexType.CoveringBlockEvent(spreadingLatexType, originalState, originalState, spreadingLatexType.spreadState(context.getLevel(), positionToCover, spreadingLatexType.sourceCoverState()), positionToCover, context.getLevel());
+            spreadingLatexType.defaultCoverBehavior(event);
+            if (Changed.postModEvent(event)) {
+                return false;
+            } else if (event.originalState == event.getPlannedState() && event.plannedCoverState == originalCover) {
+                return false;
+            } else {
+                context.getLevel().setBlockAndUpdate(event.blockPos, event.getPlannedState());
+                LatexCoverState.setAtAndUpdate(context.getLevel(), event.blockPos, event.plannedCoverState);
+                SoundType soundType = event.plannedCoverState.getSoundType(context.getLevel(), event.blockPos, context.getPlayer());
+                if (soundType != null) {
+                    context.getLevel().playSound(context.getPlayer(), event.blockPos, soundType.getPlaceSound(), SoundSource.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
+                }
+
+                event.getPostProcess().accept(context.getLevel(), positionToCover);
+                return true;
+            }
+        }
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, @NotNull TooltipFlag pIsAdvanced) {
         tooltip.add(Component.literal(stack.getMaxDamage() - stack.getDamageValue() + "/" + stack.getMaxDamage() + " Uses"));
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment == Enchantments.INFINITY_ARROWS || super.canApplyAtEnchantingTable(stack, enchantment);
+    }
+
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return super.isBookEnchantable(stack, book);
     }
 
     @Mod.EventBusSubscriber

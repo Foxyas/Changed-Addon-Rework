@@ -7,7 +7,6 @@ import net.foxyas.changedaddon.client.renderer.layers.Exp10EmissiveBodyLayer;
 import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.EmissiveBodyLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexFemaleCatModel;

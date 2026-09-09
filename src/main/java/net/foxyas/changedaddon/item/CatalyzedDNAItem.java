@@ -5,7 +5,7 @@ import net.minecraft.world.item.Rarity;
 
 public class CatalyzedDNAItem extends Item {
     public CatalyzedDNAItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(1).rarity(Rarity.RARE));
     }
 }

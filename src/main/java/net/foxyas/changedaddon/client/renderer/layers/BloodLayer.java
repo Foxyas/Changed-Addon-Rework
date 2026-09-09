@@ -6,7 +6,6 @@ import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.renderer.LightTexture;

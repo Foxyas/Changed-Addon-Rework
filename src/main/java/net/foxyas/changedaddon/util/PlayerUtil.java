@@ -59,7 +59,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static net.ltxprogrammer.changed.process.TransfurEvents.*;
+import static net.ltxprogrammer.changed.process.TransfurEvents.finalizeUntransfurPlayerEvent;
 
 public class PlayerUtil {
 

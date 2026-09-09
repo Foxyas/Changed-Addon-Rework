@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 

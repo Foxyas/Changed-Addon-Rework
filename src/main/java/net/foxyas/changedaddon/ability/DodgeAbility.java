@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.ability.handle.dodgeTypes.DodgeType;
 import net.foxyas.changedaddon.ability.handle.dodgeTypes.CounterDodgeType;
+import net.foxyas.changedaddon.ability.handle.dodgeTypes.DodgeType;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.network.chat.Component;

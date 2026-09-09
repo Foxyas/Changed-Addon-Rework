@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FlamethrowerItem extends FlamethrowerLike {
+public class FlamethrowerItem extends AbstractFlamethrowerItem {
 
     public FlamethrowerItem() {
         super(new Properties().durability(320).rarity(Rarity.UNCOMMON));

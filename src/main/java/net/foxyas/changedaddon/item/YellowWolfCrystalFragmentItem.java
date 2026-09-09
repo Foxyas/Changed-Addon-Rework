@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class YellowWolfCrystalFragmentItem extends Item {
     public YellowWolfCrystalFragmentItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64).rarity(Rarity.COMMON));
     }
 

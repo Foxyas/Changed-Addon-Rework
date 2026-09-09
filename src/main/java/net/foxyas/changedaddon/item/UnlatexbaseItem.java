@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UnlatexbaseItem extends Item {
     public UnlatexbaseItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64).rarity(Rarity.COMMON));
     }
 

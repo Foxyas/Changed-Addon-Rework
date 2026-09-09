@@ -39,6 +39,7 @@ public class DiffusionSyringeItem extends AbstractSyringeItem {
             return;
         }
 
-        if (ChangedAddonVariables.ofOrDefault(player).showWarns) player.displayClientMessage(Component.translatable("changed_addon.untransfur.no_effect"), true);
+        if (ChangedAddonVariables.ofOrDefault(player).showWarns)
+            player.displayClientMessage(Component.translatable("changed_addon.untransfur.no_effect"), true);
     }
 }

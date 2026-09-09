@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.variant;
 
 import com.google.common.base.Suppliers;
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedRegistry;

@@ -1,28 +1,18 @@
 package net.foxyas.changedaddon.network.packet;
 
-import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
-import net.ltxprogrammer.changed.client.animations.AnimationAssociations;
 import net.ltxprogrammer.changed.entity.animation.AnimationCategory;
 import net.ltxprogrammer.changed.entity.animation.AnimationEvent;
 import net.ltxprogrammer.changed.entity.animation.AnimationParameters;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkEvent;
 
 import javax.annotation.Nullable;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.*;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public class S2CPlayAnimationAfterParticleFade<T extends AnimationParameters> {
     public final int entityId;

@@ -34,7 +34,7 @@ public class ChangedAddonMod {
 
     public static final Logger LOGGER = LogManager.getLogger(ChangedAddonMod.class);
     public static final String MODID = "changed_addon";
-    private static final String PROTOCOL_VERSION = "1";
+    private static final String PROTOCOL_VERSION = "2.9.9";
     public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(ChangedAddonMod.resourceLoc("network"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
     public static ChangedAddonDataFixer dataFixer;
     private static int messageID = 0;

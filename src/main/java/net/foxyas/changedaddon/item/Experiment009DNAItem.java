@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Experiment009DNAItem extends Item implements ICustomGlowingOutline {
     public Experiment009DNAItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64).fireResistant().rarity(Rarity.RARE));
     }
 

@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.variant;
 
 import com.google.common.collect.Sets;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.network.chat.Component;

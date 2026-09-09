@@ -25,7 +25,7 @@ public class IridiumItem extends Item {
     private static Map<Block, Block> CONVERSION;
 
     public IridiumItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64).fireResistant().rarity(Rarity.UNCOMMON));
     }
 

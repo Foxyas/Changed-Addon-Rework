@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.client.renderer.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
@@ -13,10 +12,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
 public class Exp10EmissiveBodyLayer<M extends AdvancedHumanoidModel<T>, T extends Experiment10Entity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {

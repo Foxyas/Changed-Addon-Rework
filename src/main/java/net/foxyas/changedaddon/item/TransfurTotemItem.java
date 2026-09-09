@@ -68,7 +68,7 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
     public static final AttributeModifier TOTEM_BUFF_ARMOR = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba753"), "transfur_stats", 6, AttributeModifier.Operation.ADDITION);
 
     public TransfurTotemItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(1).fireResistant().rarity(Rarity.RARE));
     }
 
@@ -267,7 +267,8 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
                 return InteractionResultHolder.consume(stack);
             }
 
-            if (isTransfurred) return tryLinkForm(level, player, stack) ? InteractionResultHolder.consume(stack) : InteractionResultHolder.pass(stack);
+            if (isTransfurred)
+                return tryLinkForm(level, player, stack) ? InteractionResultHolder.consume(stack) : InteractionResultHolder.pass(stack);
             return InteractionResultHolder.pass(stack);
         }
 
@@ -421,7 +422,8 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
     }
 
     @Override
-    public void fillItemList(Predicate<TransfurVariant<?>> predicate, CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {}
+    public void fillItemList(Predicate<TransfurVariant<?>> predicate, CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
+    }
 
     @Mod.EventBusSubscriber
     public static class EventHandler {

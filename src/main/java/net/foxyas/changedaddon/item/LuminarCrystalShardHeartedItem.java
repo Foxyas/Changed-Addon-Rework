@@ -5,7 +5,7 @@ import net.minecraft.world.item.Rarity;
 
 public class LuminarCrystalShardHeartedItem extends Item {
     public LuminarCrystalShardHeartedItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64).rarity(Rarity.RARE));
     }
 }

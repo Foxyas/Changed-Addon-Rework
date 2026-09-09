@@ -43,7 +43,7 @@ public class KeycardItem extends Item implements ColorHolder {
     }
 
     public KeycardItem() {
-        super(new Properties().stacksTo(1));  //.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Properties().stacksTo(1));
     }
 
     public static void setCode(ItemStack stack, byte @Nullable [] code) {

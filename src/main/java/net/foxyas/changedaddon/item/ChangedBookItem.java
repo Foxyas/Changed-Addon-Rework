@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChangedBookItem extends Item {
     public ChangedBookItem() {
-        super(new Item.Properties().stacksTo(1)//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties().stacksTo(1)
                 .rarity(Rarity.RARE));
     }
 

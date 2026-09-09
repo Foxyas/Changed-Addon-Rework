@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp10;
 
-import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoal;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.PathfinderMob;

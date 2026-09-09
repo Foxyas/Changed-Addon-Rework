@@ -14,7 +14,6 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.process.UntransfurReason;

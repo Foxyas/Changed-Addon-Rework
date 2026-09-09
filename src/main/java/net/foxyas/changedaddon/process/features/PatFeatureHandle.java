@@ -8,7 +8,6 @@ import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonStatRegistry;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;

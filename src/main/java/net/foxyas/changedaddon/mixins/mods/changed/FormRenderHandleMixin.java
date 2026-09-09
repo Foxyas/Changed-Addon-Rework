@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.mixins.mods.changed;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;

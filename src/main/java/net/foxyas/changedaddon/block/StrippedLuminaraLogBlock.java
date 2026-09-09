@@ -1,9 +1,6 @@
 package net.foxyas.changedaddon.block;
 
-import net.foxyas.changedaddon.block.interfaces.IStrippableLog;
-import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;

@@ -14,8 +14,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.zaharenko424.cmrs.client.gui.LayoutHelper;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
@@ -25,7 +23,6 @@ import org.joml.Vector3f;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 

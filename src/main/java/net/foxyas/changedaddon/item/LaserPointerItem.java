@@ -48,7 +48,7 @@ public class LaserPointerItem extends Item implements SpecializedAnimations, Col
     };
 
     public LaserPointerItem() {
-        super(new Properties().stacksTo(1)//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Properties().stacksTo(1)
         );
     }
 

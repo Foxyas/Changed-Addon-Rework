@@ -38,7 +38,7 @@ public class CrystalAddagerGreenItem extends SwordItem {
                   public @NotNull Ingredient getRepairIngredient() {
                       return Ingredient.of();
                   }
-              }, 3, -2.4f, new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+              }, 3, -2.4f, new Item.Properties()
         );
     }
 

@@ -1,12 +1,10 @@
 package net.foxyas.changedaddon.network.packet;
 
-import net.foxyas.changedaddon.block.UnifuserBlock;
 import net.foxyas.changedaddon.block.entity.CatalyzerBlockEntity;
 import net.foxyas.changedaddon.block.entity.UnifuserBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;

@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class EmptySprayItem extends Item {
 
     public EmptySprayItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(1).rarity(Rarity.COMMON));
     }
 
