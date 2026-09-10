@@ -27,10 +27,12 @@ public abstract class GrabEntityAbilityMixin extends AbstractAbility<GrabEntityA
         ArrayList<Component> description = new ArrayList<>(baseDescription);
 
         // 1. Get the Key instances for mouse buttons
+        InputConstants.Key shift = InputConstants.Type.KEYSYM.getOrCreate(InputConstants.KEY_LSHIFT);
         InputConstants.Key mouseRightClick = InputConstants.Type.MOUSE.getOrCreate(InputConstants.MOUSE_BUTTON_RIGHT);
         InputConstants.Key middleMouseButton = InputConstants.Type.MOUSE.getOrCreate(InputConstants.MOUSE_BUTTON_MIDDLE);
 
         // 2. Get their translated Component representations
+        Component shiftName = shift.getDisplayName();
         Component rightClickName = mouseRightClick.getDisplayName();
         Component middleButtonName = middleMouseButton.getDisplayName();
 
@@ -43,6 +45,7 @@ public abstract class GrabEntityAbilityMixin extends AbstractAbility<GrabEntityA
 
         description.add(Component.translatable(
                 "ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode",
+                shiftName,
                 rightClickName,
                 middleButtonName
         ));

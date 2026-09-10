@@ -40,8 +40,8 @@ public interface IGrabberEntity {
     }
 
     interface ICanChokePlayers {
-        default void doChokeDamage(LivingEntity target, DamageSource source, float amount) {
-            target.hurt(source, amount);
+        default boolean doChokeDamage(LivingEntity target, DamageSource source, float amount) {
+            return target.hurt(source, amount);
         }
 
         default DamageSource getChokeDamageSource(Level level) {

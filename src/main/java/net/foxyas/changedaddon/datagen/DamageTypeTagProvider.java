@@ -20,5 +20,8 @@ public class DamageTypeTagProvider extends DamageTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NotNull Provider lookup) {
         tag(ChangedAddonTags.DamageTypes.IS_LATEX_SOLVENT).add(ChangedAddonDamageSources.LATEX_SOLVENT.key());
+        tag(ChangedAddonTags.DamageTypes.BYPASSES_DODGE);
+        tag(ChangedAddonTags.DamageTypes.HIDE_ON_DEATH);
+        tag(ChangedAddonTags.DamageTypes.HIDE_ON_DEATH_BY_GRAB_SUITED).add(ChangedAddonDamageSources.CHOKE.key());
     }
 }

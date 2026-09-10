@@ -12,6 +12,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
+import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
 import net.foxyas.changedaddon.network.packet.ExtraGrabDataSyncPacket;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -22,10 +23,14 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedDamageSources;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -75,6 +80,12 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     public RandomSource escapeKeyRandom;
     @Shadow
     public KeyReference lastEscapeKey;
+    @Shadow
+    public boolean attackDown;
+
+    @Shadow
+    public abstract void releaseEntity(boolean applyDebuffs);
+
     @Unique
     private boolean safeMode = false;
     @Unique
@@ -412,7 +423,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             at = @At("RETURN")
     )
     private LatexAssimilationDecision<?> makeLatexAssimilationNullIfChokeModeOn(LatexAssimilationDecision<?> original) {
-        if (this.isTransfurDamageMode()) {
+        if (!this.isTransfurDamageMode()) {
             return null;
         } else return original;
     }
@@ -427,21 +438,52 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             ),
             cancellable = true
     )
-    private void doChokeDamageIfNull(
+    private void handleChokeDamage(
             CallbackInfo ci,
             @Local(name = "assimilationDecision") LatexAssimilationDecision<?> assimilationDecision
     ) {
         if (assimilationDecision == null) {
             if (grabbedEntity == null) return;
             LivingEntity grabber = entity.getEntity();
-            if (grabber instanceof IGrabberEntity.ICanChokePlayers canChokePlayers) {
-                float grabberStrength = (float) grabber.getAttributeValue(Attributes.ATTACK_DAMAGE);
-                float damageAmount = grabberStrength * (this.suited ? 1.25f : 0.85f);
-                canChokePlayers.doChokeDamage(grabbedEntity,
-                        canChokePlayers.getChokeDamageSource(grabber.level()),
-                        damageAmount
-                );
+            float grabberStrength = (float) grabber.getAttributeValue(Attributes.ATTACK_DAMAGE);
+            float damageAmount = grabberStrength * (this.suited ? 1.25f : 0.85f);
+            if (this.attackDown && this.useDown && this.suited) {
+                tryCausingChokeDamage(grabber, damageAmount);
                 ci.cancel();
+            }
+
+            if (this.attackDown && !this.suited) {
+                tryCausingChokeDamage(grabber, damageAmount);
+                ci.cancel();
+            }
+        }
+    }
+
+    private void tryCausingChokeDamage(LivingEntity grabber, float damageAmount) {
+        Consumer<LivingEntity> afterDamage = (livingEntity) -> {
+            grabber.level().playSound(null, grabbedEntity.getX(), grabbedEntity.getY(), grabbedEntity.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 0.55f);
+            if (grabbedEntity.isDeadOrDying()) {
+                this.releaseEntity(false);
+            }
+        };
+
+        if (grabbedEntity == null) return;
+        DamageSource source = ChangedAddonDamageSources.CHOKE.source(grabber);
+
+        if (this.suited) {
+            grabbedEntity.setInvisible(true);
+            source = ChangedDamageSources.ABSORB.source(grabber.level().registryAccess(), grabber);
+        }
+
+        if (grabber instanceof IGrabberEntity.ICanChokePlayers canChokePlayers) {
+            source = canChokePlayers.getChokeDamageSource(grabber.level());
+
+            if (canChokePlayers.doChokeDamage(grabbedEntity, source, damageAmount)) {
+                afterDamage.accept(grabbedEntity);
+            }
+        } else {
+            if (grabbedEntity.hurt(source, damageAmount)) {
+                afterDamage.accept(grabbedEntity);
             }
         }
     }
@@ -464,7 +506,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             if (isShiftDown) {
                 this.setTransfurDamageMode(!this.isTransfurDamageMode());
                 if (!player.level().isClientSide()) {
-                    player.displayClientMessage(Component.translatable("key.changed_addon.turn_off_transfur.grab_transfur_damage_mode", safeMode), true);
+                    player.displayClientMessage(Component.translatable("key.changed_addon.turn_off_transfur.grab_transfur_damage_mode", transfurDamageMode), true);
                 }
             } else {
                 this.setSafeMode(!this.isSafeMode());

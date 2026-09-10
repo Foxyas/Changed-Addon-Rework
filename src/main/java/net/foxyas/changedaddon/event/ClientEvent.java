@@ -5,16 +5,22 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.ChangedAdditionsModConflictWarningScreen;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
 import net.foxyas.changedaddon.command.ChangedAddonClientCommands;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.process.sounds.BossMusicHandler;
+import net.foxyas.changedaddon.util.GrabAbilityUtil;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.item.LatexTippedArrowItem;
 import net.ltxprogrammer.changed.item.Syringe;
 import net.ltxprogrammer.changed.item.VariantHoldingBase;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -25,10 +31,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -75,6 +85,28 @@ public class ClientEvent {
 //            ChangedAddonMod.LOGGER.info("Loaded emissive block models in {} ms", System.currentTimeMillis() - time);
 //        }
 //    }
+
+    @SubscribeEvent
+    public void onRenderEntityPre(RenderLivingEvent.Pre<?, ?> event) {
+        LivingEntity livingEntity = EntityUtil.maybeGetUnderlying(event.getEntity());
+        if (livingEntity == null) {
+            return;
+        }
+
+        DamageSource lastDamageSource = livingEntity.getLastDamageSource();
+        if (livingEntity.isDeadOrDying() && lastDamageSource != null) {
+            if (lastDamageSource.is(ChangedAddonTags.DamageTypes.HIDE_ON_DEATH)) {
+                event.setCanceled(true);
+            } else if (lastDamageSource.is(ChangedAddonTags.DamageTypes.HIDE_ON_DEATH_BY_GRAB_SUITED)) {
+                IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(livingEntity);
+                if (grabber != null && grabber.getAbilityInstanceSafe(ChangedAbilities.GRAB_ENTITY_ABILITY.get())
+                        .map(grabEntityAbilityInstance -> grabEntityAbilityInstance.suited)
+                        .orElse(false)) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
 
 
     @SubscribeEvent

@@ -1,6 +1,6 @@
 {
   "ability.changed.grab_entity.desc.toggle_grab_safe_mode": "Press %s or %s to toggle friendly grab",
-  "ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode": "Press %s or %s to toggle transfur damage grab",
+  "ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode": "Press %s + %s or %s to toggle transfur damage grab",
   "ability.changed_addon.advanced_hearing": "Advanced Hearing",
   "ability.changed_addon.carry": "Carry",
   "ability.changed_addon.claws": "Claws Ability",
