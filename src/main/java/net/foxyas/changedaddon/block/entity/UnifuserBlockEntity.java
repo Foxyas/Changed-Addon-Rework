@@ -143,7 +143,7 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
             boolean canOutput = handler.insertItem(3, result.copy(), true).isEmpty();
 
             if (canOutput) {
-                NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(unifuser.getContainer());
+                NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(unifuser.asSimpleContainer());
 
                 // Consumir inputs
                 handler.extractItem(0, 1, false);
@@ -351,11 +351,12 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
     @Override
     public void setRemoved() {
         super.setRemoved();
-        for (LazyOptional<? extends IItemHandler> handler : itemHandler)
+        for (LazyOptional<? extends IItemHandler> handler : itemHandler) {
             handler.invalidate();
+        }
     }
 
-    public SimpleContainer getContainer() {
+    public SimpleContainer asSimpleContainer() {
         return new SimpleContainer(this.stacks.toArray(new ItemStack[0]));
     }
 

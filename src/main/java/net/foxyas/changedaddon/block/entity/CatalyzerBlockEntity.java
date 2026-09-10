@@ -126,7 +126,7 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
                 ItemStack output = recipe.getResultItem(level.registryAccess());
 
                 if (handler.insertItem(1, output.copy(), true).isEmpty()) {
-                    NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(catalyzer.getContainer());
+                    NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(catalyzer.asSimpleContainer());
                     handler.extractItem(0, 1, false);
 
                     // Recolocar os itens remanescentes de volta nos slots corretos
@@ -339,7 +339,7 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
     }
 
 
-    public SimpleContainer getContainer() {
+    public SimpleContainer asSimpleContainer() {
         return new SimpleContainer(this.stacks.toArray(new ItemStack[0]));
     }
 
