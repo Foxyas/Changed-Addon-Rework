@@ -472,7 +472,6 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
         if (this.suited) {
             grabbedEntity.setInvisible(true);
-            source = ChangedDamageSources.ABSORB.source(grabber.level().registryAccess(), grabber);
         }
 
         if (grabber instanceof IGrabberEntity.ICanChokePlayers canChokePlayers) {
