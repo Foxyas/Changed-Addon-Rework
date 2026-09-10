@@ -23,6 +23,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -66,6 +67,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     public abstract LivingEntity maybeGetUnderlying();
 
     @Inject(at = @At("TAIL"), method = "<init>", cancellable = true)
+    // Todo: Remove This in 0.16.0
     private void initHook(EntityType<? extends Monster> type, Level level, CallbackInfo ci) {
         if (ChangedAddonServerConfiguration.CAN_GRABBY_ENTITIES_SPAWN.get()) {
             if (this.getSelfVariant() != null) {
@@ -111,6 +113,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         return this;
     }
 
+    // Todo: Remove This in 0.16.0
     @Inject(at = @At("TAIL"), method = "registerGoals", remap = true, cancellable = true)
     private void goalsHook(CallbackInfo ci) {
         ChangedEntity self = (ChangedEntity) (Object) this;
@@ -124,6 +127,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 
     @Override
     public boolean canEntityGrab(EntityType<?> selfType, Level level) {
+        // Todo: Remove This in 0.16.0
         ChangedEntity self = (ChangedEntity) (Object) this;
         if (self instanceof IGrabberCondition iGrabberCondition && !iGrabberCondition.isAffectedByGrab()) {
             return false;
@@ -141,6 +145,8 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Override
     public void baseTick() {
         super.baseTick();
+
+        // Todo: Remove This in 0.16.0
         if (canEntityGrab(this.getType(), level)) {
             if (grabEntityAbilityInstance == null) {
                 this.grabEntityAbilityInstance = createSimpleGrabAbility(); // fail-safe
@@ -158,16 +164,32 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         if (self.getDimensions(self.getPose()).makeBoundingBox(self.position()) != self.getBoundingBox()) {
             this.refreshDimensions();
         }
+//        Todo: Uncomment this if REALLY needed. check LivingEntityChangedEntityMixin$changedEntityOnSyncedDataUpdatedHook for details.
+//        if (self instanceof IAlphaAbleEntity iAlphaAbleEntity) {
+//            if (iAlphaAbleEntity.isAlpha() && !appliedAlphaAttributes) {
+//                refreshAttributes(self);
+//                appliedAlphaAttributes = true;
+//            } else if (!iAlphaAbleEntity.isAlpha() && appliedAlphaAttributes) {
+//                refreshAttributes(self);
+//                appliedAlphaAttributes = false;
+//            }
+//        }
+    }
 
-        if (self instanceof IAlphaAbleEntity iAlphaAbleEntity) {
-            if (iAlphaAbleEntity.isAlpha() && !appliedAlphaAttributes) {
-                refreshAttributes(self);
-                appliedAlphaAttributes = true;
-            } else if (!iAlphaAbleEntity.isAlpha() && appliedAlphaAttributes) {
-                refreshAttributes(self);
-                appliedAlphaAttributes = false;
-            }
-        }
+    @Inject(method = "variantTick", at = @At("HEAD"), remap = false, cancellable = true)
+    private void variantTickHook(CallbackInfo ci) {
+//        Todo: Uncomment this if REALLY needed. check LivingEntityChangedEntityMixin$changedEntityOnSyncedDataUpdatedHook for details.
+//        ChangedEntity self = (ChangedEntity) (Object) this;
+//
+//        if (self instanceof IAlphaAbleEntity iAlphaAbleEntity) {
+//            if (iAlphaAbleEntity.isAlpha() && !appliedAlphaAttributesForHost) {
+//                refreshAttributesForHost(self);
+//                appliedAlphaAttributesForHost = true;
+//            } else if (!iAlphaAbleEntity.isAlpha() && appliedAlphaAttributesForHost) {
+//                refreshAttributesForHost(self);
+//                appliedAlphaAttributesForHost = false;
+//            }
+//        }
     }
 
     @Inject(method = "tick", at = @At("HEAD"), remap = true, cancellable = true)
@@ -181,22 +203,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
                 if (behemothHead.leftHand instanceof IAlphaAbleEntity alphaAbleEntity) {
                     alphaAbleEntity.setAlpha(iAlphaAbleEntity.isAlpha());
                 }
-            }
-        }
-    }
-
-
-    @Inject(method = "variantTick", at = @At("HEAD"), remap = false, cancellable = true)
-    private void variantTickHook(CallbackInfo ci) {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-
-        if (self instanceof IAlphaAbleEntity iAlphaAbleEntity) {
-            if (iAlphaAbleEntity.isAlpha() && !appliedAlphaAttributesForHost) {
-                refreshAttributesForHost(self);
-                appliedAlphaAttributesForHost = true;
-            } else if (!iAlphaAbleEntity.isAlpha() && appliedAlphaAttributesForHost) {
-                refreshAttributesForHost(self);
-                appliedAlphaAttributesForHost = false;
             }
         }
     }
@@ -286,7 +292,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 
         return this.canUseGrab() || isAlpha();
     }
-
 
 
     @Inject(method = "copyTraitsFrom", at = @At("TAIL"))

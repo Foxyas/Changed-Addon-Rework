@@ -484,6 +484,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addGui("abilities_radial_screen.mouse.right_click", "Press %s to select the Second Ability");
 
         add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Press %s or %s to toggle friendly grab");
+        add("ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode", "Press %s or %s to toggle transfur damage grab");
 
         add("deathScreen.select_tf", "Respawn as a Transfur?");
         add("deathScreen.select_tf.hardcore", "Continue as a Transfur?");
@@ -677,8 +678,9 @@ public class ENLanguageProvider extends LanguageProvider {
         add("key.changed_addon.pat_message", "You pat %s");
         add("key.changed_addon.pat_received", "%s pat You");
         addKey(TURN_OFF_TRANSFUR, "Turn Off Transfur");
-        add("key.changed_addon.turn_off_transfur.grab_safe_mode", "You set the Friendly Grab to %s");
-        add("key.changed_addon.turn_off_transfur.safe_mode", "You set the Transfur Attack to %s");
+        add("key.changed_addon.turn_off_transfur.grab_safe_mode", "Set Friendly Grab to %s");
+        add("key.changed_addon.turn_off_transfur.grab_transfur_damage_mode", "Set Grab Transfur Damage to %s");
+        add("key.changed_addon.turn_off_transfur.safe_mode", "Set Transfur Attack to %s");
         addKey(USE_SECOND_ABILITY, "Use Second Variant Ability");
         addKey(CUDDLE_KEY, "Switch cuddle mode");
         addKey(CUDDLE_KEY, "set", "Cuddle mode is set to %s");

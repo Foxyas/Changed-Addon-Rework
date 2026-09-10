@@ -1,5 +1,6 @@
 {
   "ability.changed.grab_entity.desc.toggle_grab_safe_mode": "Press %s or %s to toggle friendly grab",
+  "ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode": "Press %s or %s to toggle transfur damage grab",
   "ability.changed_addon.advanced_hearing": "Advanced Hearing",
   "ability.changed_addon.carry": "Carry",
   "ability.changed_addon.claws": "Claws Ability",
@@ -689,8 +690,9 @@
   "key.changed_addon.pat_message": "You pat %s",
   "key.changed_addon.pat_received": "%s pat You",
   "key.changed_addon.turn_off_transfur": "Turn Off Transfur",
-  "key.changed_addon.turn_off_transfur.grab_safe_mode": "You set the Friendly Grab to %s",
-  "key.changed_addon.turn_off_transfur.safe_mode": "You set the Transfur Attack to %s",
+  "key.changed_addon.turn_off_transfur.grab_safe_mode": "Set Friendly Grab to %s",
+  "key.changed_addon.turn_off_transfur.grab_transfur_damage_mode": "Set Grab Transfur Damage to %s",
+  "key.changed_addon.turn_off_transfur.safe_mode": "Set Transfur Attack to %s",
   "key.changed_addon.use_second_ability": "Use Second Variant Ability",
   "message.changed_addon.induction_coil_melt": "§4⚡ You brought metal to an electric fight. §cSuch Foolish Move. §6Your gear is melting from the heat!",
   "painting.changed_addon.fighting_exp9_pov.author": "@Smoopa",

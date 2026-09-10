@@ -41,6 +41,12 @@ public abstract class GrabEntityAbilityMixin extends AbstractAbility<GrabEntityA
                 middleButtonName
         ));
 
+        description.add(Component.translatable(
+                "ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode",
+                rightClickName,
+                middleButtonName
+        ));
+
         return description;
     }
 }

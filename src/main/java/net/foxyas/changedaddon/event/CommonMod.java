@@ -89,8 +89,8 @@ public class CommonMod {
     private static void addPackets() {
         CHANGED_ADDON_PACKETS.registerPackets();
 
-        ChangedAddonMod.addNetworkMessage(SafeGrabSyncPacket.class, SafeGrabSyncPacket::write,
-                SafeGrabSyncPacket::new,
+        ChangedAddonMod.addNetworkMessage(ExtraGrabDataSyncPacket.class, ExtraGrabDataSyncPacket::write,
+                ExtraGrabDataSyncPacket::new,
                 (packet, contextSupplier) -> ClientPacketHandler.handleSafeGrabSync(packet, contextSupplier),
                 NetworkDirection.PLAY_TO_CLIENT);
 

@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.mixins.abilities;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -10,8 +11,9 @@ import net.foxyas.changedaddon.ability.api.IWheelKeyPressHandler;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
-import net.foxyas.changedaddon.network.packet.SafeGrabSyncPacket;
+import net.foxyas.changedaddon.network.packet.ExtraGrabDataSyncPacket;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -23,8 +25,10 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -61,16 +65,25 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Shadow
     int instructionTicks;
 
-    @Shadow public boolean useDown;
+    @Shadow
+    public boolean useDown;
 
-    @Shadow public KeyReference currentEscapeKey;
+    @Shadow
+    public KeyReference currentEscapeKey;
 
+    @Shadow
+    public RandomSource escapeKeyRandom;
+    @Shadow
+    public KeyReference lastEscapeKey;
     @Unique
     private boolean safeMode = false;
     @Unique
     private int snuggleCooldown = 0;
     @Unique
     private boolean isSnugglingTight = false;
+
+    @Unique
+    private boolean transfurDamageMode = true;
 
     @Unique
     private boolean allowGrabTransfurred = false; // Default is false. it can be true using external code
@@ -96,6 +109,9 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         tag.putBoolean("safeMode", safeMode);
         tag.putBoolean("alreadySnuggledTight", isSnugglingTight);
         tag.putBoolean("allowGrabTransfurred", allowGrabTransfurred);
+        if (!transfurDamageMode) { // don't put tag if the value is a default.
+            tag.putBoolean("transfurDamageMode", transfurDamageMode);
+        }
     }
 
     @Inject(method = "readData", at = @At("TAIL"))
@@ -103,6 +119,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (tag.contains("safeMode")) safeMode = tag.getBoolean("safeMode");
         if (tag.contains("alreadySnuggledTight")) isSnugglingTight = tag.getBoolean("alreadySnuggledTight");
         if (tag.contains("allowGrabTransfurred")) allowGrabTransfurred = tag.getBoolean("allowGrabTransfurred");
+        if (tag.contains("transfurDamageMode")) transfurDamageMode = tag.getBoolean("transfurDamageMode");
     }
 
     @Unique
@@ -131,8 +148,21 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             return;
 
         this.safeMode = safeMode;
-        if (!entity.getLevel().isClientSide)
-            ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(entity::getEntity), new SafeGrabSyncPacket(entity.getEntity().getId(), safeMode));
+        if (!entity.getLevel().isClientSide) {
+            CompoundTag data = new CompoundTag();
+            data.putBoolean("safeMode", safeMode);
+            ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(entity::getEntity), new ExtraGrabDataSyncPacket(entity.getEntity().getId(), data));
+        }
+    }
+
+    @Override
+    public void setTransfurDamageMode(boolean transfurDamageMode) {
+        this.transfurDamageMode = transfurDamageMode;
+    }
+
+    @Override
+    public boolean isTransfurDamageMode() {
+        return transfurDamageMode;
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;releaseEntity(Z)V", ordinal = 1))
@@ -376,6 +406,46 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         return original;
     }
 
+
+    @ModifyReturnValue(
+            method = "makeAssimilationDecision",
+            at = @At("RETURN")
+    )
+    private LatexAssimilationDecision<?> makeLatexAssimilationNullIfChokeModeOn(LatexAssimilationDecision<?> original) {
+        if (this.isTransfurDamageMode()) {
+            return null;
+        } else return original;
+    }
+
+    @Inject(
+            method = "tickIdle",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;makeAssimilationDecision()Lnet/ltxprogrammer/changed/entity/ai/LatexAssimilationDecision;",
+                    shift = At.Shift.BY,
+                    by = 2 // Shifts past the call AND the local variable storage opcode
+            ),
+            cancellable = true
+    )
+    private void doChokeDamageIfNull(
+            CallbackInfo ci,
+            @Local(name = "assimilationDecision") LatexAssimilationDecision<?> assimilationDecision
+    ) {
+        if (assimilationDecision == null) {
+            if (grabbedEntity == null) return;
+            LivingEntity grabber = entity.getEntity();
+            if (grabber instanceof IGrabberEntity.ICanChokePlayers canChokePlayers) {
+                float grabberStrength = (float) grabber.getAttributeValue(Attributes.ATTACK_DAMAGE);
+                float damageAmount = grabberStrength * (this.suited ? 1.25f : 0.85f);
+                canChokePlayers.doChokeDamage(grabbedEntity,
+                        canChokePlayers.getChokeDamageSource(grabber.level()),
+                        damageAmount
+                );
+                ci.cancel();
+            }
+        }
+    }
+
     @Override
     public boolean isWheelKeyPressedValid(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
         if (isMouse) {
@@ -388,9 +458,19 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Override
     public void onServerProcessWheelKeyPressed(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
         if (isWheelKeyPressedValid(player, isMouse, keyPressed, action, modifiers)) {
-            this.setSafeMode(!this.isSafeMode());
-            if (!player.level().isClientSide()) {
-                player.displayClientMessage(Component.translatable("key.changed_addon.turn_off_transfur.grab_safe_mode", safeMode), true);
+            // Bitwise check ensures holding Caps/Num Lock won't break Shift detection
+            boolean isShiftDown = (modifiers & GLFW.GLFW_MOD_SHIFT) != 0;
+
+            if (isShiftDown) {
+                this.setTransfurDamageMode(!this.isTransfurDamageMode());
+                if (!player.level().isClientSide()) {
+                    player.displayClientMessage(Component.translatable("key.changed_addon.turn_off_transfur.grab_transfur_damage_mode", safeMode), true);
+                }
+            } else {
+                this.setSafeMode(!this.isSafeMode());
+                if (!player.level().isClientSide()) {
+                    player.displayClientMessage(Component.translatable("key.changed_addon.turn_off_transfur.grab_safe_mode", safeMode), true);
+                }
             }
         }
     }
@@ -398,7 +478,14 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Override
     public boolean onClientWheelKeyPressed(Player player, boolean isMouse, int keyPressed, int action, int modifiers) {
         if (isWheelKeyPressedValid(player, isMouse, keyPressed, action, modifiers)) {
-            this.setSafeMode(!this.isSafeMode());
+            // Bitwise check ensures holding Caps/Num Lock won't break Shift detection
+            boolean isShiftDown = (modifiers & GLFW.GLFW_MOD_SHIFT) != 0;
+
+            if (isShiftDown) {
+                this.setTransfurDamageMode(!this.isTransfurDamageMode());
+            } else {
+                this.setSafeMode(!this.isSafeMode());
+            }
             ChangedAddonMod.PACKET_HANDLER.sendToServer(new AbilityWheelKeyPressPacket(keyPressed, action, modifiers, isMouse, ability));
             return true;
         }

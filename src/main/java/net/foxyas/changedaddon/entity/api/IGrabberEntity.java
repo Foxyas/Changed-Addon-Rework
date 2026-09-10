@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.api;
 
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
+import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -24,6 +25,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
+@Deprecated
+// Todo: remove/tweak this class since 0.16.0 will let any changed entity able to have a grabAbilityInstance
 public interface IGrabberEntity {
 
     interface IHasGrabAbility {
@@ -33,6 +36,16 @@ public interface IGrabberEntity {
         @Nullable
         default GrabEntityAbilityInstance mayGetGrabAbilityInstance() {
             return this instanceof IGrabberEntity iGrabber ? iGrabber.getGrabAbilityInstance() : null;
+        }
+    }
+
+    interface ICanChokePlayers {
+        default void doChokeDamage(LivingEntity target, DamageSource source, float amount) {
+            target.hurt(source, amount);
+        }
+
+        default DamageSource getChokeDamageSource(Level level) {
+            return ChangedAddonDamageSources.CHOKE.source(level);
         }
     }
 
