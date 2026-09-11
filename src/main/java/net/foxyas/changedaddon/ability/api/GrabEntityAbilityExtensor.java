@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.ability.api;
 
+import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
+import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -9,10 +11,14 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Consumer;
 
 public interface GrabEntityAbilityExtensor {
 
@@ -98,6 +104,42 @@ public interface GrabEntityAbilityExtensor {
             return true;
         }
         return livingTarget instanceof ChangedEntity && allowGrabTransfurred();
+    }
+
+    default void tryCausingChokeDamage(LivingEntity grabber, float damageAmount) {
+        if (!(this instanceof GrabEntityAbilityInstance instance)) {
+            return;
+        }
+
+        LivingEntity grabbedEntity = instance.grabbedEntity;
+        Consumer<LivingEntity> afterDamage = (livingEntity) -> {
+            grabber.level().playSound(null, grabbedEntity.getX(), grabbedEntity.getY(), grabbedEntity.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 0.55f);
+            if (grabbedEntity.isDeadOrDying()) {
+                if (instance.suited) {
+                    grabbedEntity.setInvisible(true);
+                }
+                instance.releaseEntity(false);
+            }
+        };
+
+        if (grabbedEntity == null) return;
+        DamageSource source = ChangedAddonDamageSources.CHOKE.source(grabber, net.foxyas.changedaddon.util.EntityUtil.getMouthPosition(grabbedEntity));
+
+        if (instance.suited) {
+            source = ChangedAddonDamageSources.CONSTRICTION.source(grabber);
+        }
+
+        if (grabber instanceof IGrabberEntity.ICanChokePlayers canChokePlayers) {
+            source = canChokePlayers.getChokeDamageSource(grabber.level());
+
+            if (canChokePlayers.doChokeDamage(grabbedEntity, source, damageAmount)) {
+                afterDamage.accept(grabbedEntity);
+            }
+        } else {
+            if (grabbedEntity.hurt(source, damageAmount)) {
+                afterDamage.accept(grabbedEntity);
+            }
+        }
     }
 
     interface IOverrideGrabAbilityTargetConditions {

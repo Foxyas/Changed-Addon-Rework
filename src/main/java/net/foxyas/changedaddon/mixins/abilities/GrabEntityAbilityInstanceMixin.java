@@ -24,7 +24,6 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedDamageSources;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -284,12 +283,12 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @WrapOperation(method = "suitEntity", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;setPlayerTransfurVariant(Lnet/minecraft/world/entity/player/Player;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;Lnet/ltxprogrammer/changed/entity/TransfurContext;FZLjava/util/function/Consumer;)Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;"))
     private TransfurVariantInstance<?> syncAlphaGene(Player player, TransfurVariant<?> ogVariant, TransfurContext context, float progress, boolean temporaryFromSuit, Consumer<TransfurVariantInstance<?>> consumer, Operation<TransfurVariantInstance<?>> original) {
         if (this.entity.getChangedEntity() instanceof IAlphaAbleEntity alphaSource) {
-            return ProcessTransfur.setPlayerTransfurVariant(player, ogVariant, context, progress, temporaryFromSuit, (transfurVariantInstance) -> {
+            return ProcessTransfur.setPlayerTransfurVariant(player, ogVariant, context, progress, temporaryFromSuit, consumer.andThen((transfurVariantInstance) -> {
                 if (transfurVariantInstance.getChangedEntity() instanceof IAlphaAbleEntity alphaTarget) {
                     alphaTarget.setAlpha(alphaSource.isAlpha());
                     alphaTarget.setAlphaScale(alphaSource.alphaAdditionalScale());
                 }
-            });
+            }));
         }
         return original.call(player, ogVariant, context, progress, temporaryFromSuit, consumer);
     }
@@ -470,10 +469,14 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         }
     }
 
-    private void tryCausingChokeDamage(LivingEntity grabber, float damageAmount) {
+    @Override
+    public void tryCausingChokeDamage(LivingEntity grabber, float damageAmount) {
         Consumer<LivingEntity> afterDamage = (livingEntity) -> {
             grabber.level().playSound(null, grabbedEntity.getX(), grabbedEntity.getY(), grabbedEntity.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 0.55f);
             if (grabbedEntity.isDeadOrDying()) {
+                if (this.suited) {
+                    grabbedEntity.setInvisible(true);
+                }
                 this.releaseEntity(false);
             }
         };
@@ -482,7 +485,6 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         DamageSource source = ChangedAddonDamageSources.CHOKE.source(grabber, EntityUtil.getMouthPosition(grabbedEntity));
 
         if (this.suited) {
-            grabbedEntity.setInvisible(true);
             source = ChangedAddonDamageSources.CONSTRICTION.source(grabber);
         }
 
