@@ -28,6 +28,8 @@ public interface GrabEntityAbilityExtensor {
 
     void setTransfurDamageMode(boolean normalDamageMode);
 
+    boolean isGrabbedUnableToBreath();
+
     LivingEntity grabber();
 
     default void runHug(@NotNull LivingEntity livingEntity) {

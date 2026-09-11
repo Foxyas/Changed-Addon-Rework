@@ -134,6 +134,16 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (tag.contains("transfurDamageMode")) transfurDamageMode = tag.getBoolean("transfurDamageMode");
     }
 
+    @Override
+    public boolean isGrabbedUnableToBreath() {
+        if (this.grabbedEntity != null && !this.transfurDamageMode) {
+            return useDown && !suited;
+        }
+
+
+        return this.isSafeMode() && isSnugglingTight();
+    }
+
     @Unique
     private GrabEntityAbilityInstance ChangedAddon$getSelf() {
         return (GrabEntityAbilityInstance) (Object) this;
