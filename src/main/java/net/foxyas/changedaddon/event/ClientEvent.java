@@ -97,13 +97,6 @@ public class ClientEvent {
         if (livingEntity.isDeadOrDying() && lastDamageSource != null) {
             if (lastDamageSource.is(ChangedAddonTags.DamageTypes.HIDE_ON_DEATH)) {
                 event.setCanceled(true);
-            } else if (lastDamageSource.is(ChangedAddonTags.DamageTypes.HIDE_ON_DEATH_BY_GRAB_SUITED)) {
-                IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(livingEntity);
-                if (grabber != null && grabber.getAbilityInstanceSafe(ChangedAbilities.GRAB_ENTITY_ABILITY.get())
-                        .map(grabEntityAbilityInstance -> grabEntityAbilityInstance.suited)
-                        .orElse(false)) {
-                    event.setCanceled(true);
-                }
             }
         }
     }

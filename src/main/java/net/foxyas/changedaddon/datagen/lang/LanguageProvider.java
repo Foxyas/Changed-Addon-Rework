@@ -4,6 +4,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -113,6 +114,13 @@ public abstract class LanguageProvider extends net.minecraftforge.common.data.La
 
     protected void addContainer(String key, String value) {
         add("container." + modid + "." + key, value);
+    }
+
+    protected void addDeathMessage(DamageType damageSource, String generic, @Nullable String item, @Nullable String player) {
+        String key = "death.attack." + damageSource.msgId();
+        add(key, generic);
+        if (item != null) add(key + ".item", item);
+        if (player != null) add(key + ".player", player);
     }
 
     protected void addDeathMessage(String damageSource, String generic, @Nullable String item, @Nullable String player) {

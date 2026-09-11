@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -27,6 +28,17 @@ public class EntityUtil {
         }
 
         return cutenessLevel;
+    }
+
+    public static Vec3 getMouthPosition(LivingEntity livingEntity) {
+        return getMouthPosition(livingEntity, 0.05f);
+    }
+
+    public static Vec3 getMouthPosition(LivingEntity livingEntity, float neckSize) {
+        Vec3 view = livingEntity.getLookAngle();
+        Vec3 eyePosition = livingEntity.getEyePosition();
+        return eyePosition.subtract(0, 0.25, 0).add(view.scale(neckSize));
+        // Just for details.
     }
 
     public static boolean isCuteEnoughToReceivePatsFromVillagers(AbstractVillager villager, LivingEntity target) {

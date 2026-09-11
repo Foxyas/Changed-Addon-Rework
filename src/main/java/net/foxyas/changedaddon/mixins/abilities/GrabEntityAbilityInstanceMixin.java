@@ -15,6 +15,7 @@ import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
 import net.foxyas.changedaddon.network.packet.ExtraGrabDataSyncPacket;
+import net.foxyas.changedaddon.util.EntityUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -468,10 +469,11 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         };
 
         if (grabbedEntity == null) return;
-        DamageSource source = ChangedAddonDamageSources.CHOKE.source(grabber);
+        DamageSource source = ChangedAddonDamageSources.CHOKE.source(grabber, EntityUtil.getMouthPosition(grabbedEntity));
 
         if (this.suited) {
             grabbedEntity.setInvisible(true);
+            source = ChangedAddonDamageSources.CONSTRICTION.source(grabber);
         }
 
         if (grabber instanceof IGrabberEntity.ICanChokePlayers canChokePlayers) {

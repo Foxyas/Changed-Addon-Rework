@@ -7,7 +7,6 @@ import net.foxyas.changedaddon.datagen.worldgen.PlacedFeatureProvider;
 import net.foxyas.changedaddon.datagen.worldgen.StructureProvider;
 import net.foxyas.changedaddon.datagen.worldgen.template_pool.DazedMeteorPools;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
-import net.foxyas.changedaddon.init.ChangedAddonDamageSources.DamageHolder;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurDiets;
 import net.foxyas.changedaddon.world.features.processors.OffSetSpawnProcessor;
 import net.minecraft.core.HolderLookup;
@@ -28,7 +27,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -57,9 +55,9 @@ public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
     }
 
     private static void damageType(BootstapContext<DamageType> context) {
-        ChangedAddonDamageSources.DAMAGE_TYPES_MAP.forEach(((damageHolder, damageType) -> {
+        ChangedAddonDamageSources.DAMAGE_TYPES_MAP.forEach(((damageTypeHolder, damageType) -> {
             if (damageType == null) return;
-            context.register(damageHolder.key(), damageType);
+            context.register(damageTypeHolder.key(), damageType);
         }));
 
         context.register(ChangedAddonDamageSources.LATEX_SOLVENT.key(), new DamageType("latex_solvent", DamageScaling.NEVER, 0.1f));
