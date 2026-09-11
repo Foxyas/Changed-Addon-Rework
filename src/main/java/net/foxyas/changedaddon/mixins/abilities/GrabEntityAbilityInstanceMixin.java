@@ -433,7 +433,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             at = @At("RETURN")
     )
     private LatexAssimilationDecision<?> makeLatexAssimilationNullIfChokeModeOn(LatexAssimilationDecision<?> original) {
-        if (!this.isTransfurDamageMode()) {
+        if (!this.isTransfurDamageMode() && !isSafeMode()) {
             return null;
         } else return original;
     }
