@@ -484,7 +484,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addGui("abilities_radial_screen.mouse.right_click", "Press %s to select the Second Ability");
 
         add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Press %s or %s to toggle friendly grab");
-        add("ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode", "Press %s or %s to toggle transfur damage grab");
+        add("ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode", "Press %s + %s or %s to toggle transfur damage grab");
 
         add("deathScreen.select_tf", "Respawn as a Transfur?");
         add("deathScreen.select_tf.hardcore", "Continue as a Transfur?");

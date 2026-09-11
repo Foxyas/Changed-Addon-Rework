@@ -498,7 +498,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("abilities_radial_screen.mouse.right_click", "Nyomd meg a %s gombot a második képesség kiválasztásához");
 
         add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Nyomja meg a %s vagy a %s gombot a barátságos megragadás kapcsolásához");
-        add("ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode", "Nyomd meg a %s vagy a %s gombot a megragadáskori transzfur sebzés kapcsolásához");
+        add("ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode", "Nyomd meg a %s billentyűt és közben a %s vagy %s gombot a megragadáskori transzfur sebzés kapcsolásához");
 
         add("deathScreen.select_tf", "Újraéledés transzfurként?");
         add("deathScreen.select_tf.hardcore", "Folytatás transzfurként?");
