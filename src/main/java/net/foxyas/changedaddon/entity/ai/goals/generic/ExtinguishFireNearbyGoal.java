@@ -31,7 +31,7 @@ public class ExtinguishFireNearbyGoal extends Goal {
     public ExtinguishFireNearbyGoal(PathfinderMob pathfinderMob) {
         this.mob = pathfinderMob;
         // Permite que outras IAs de movimento ou olhar rodem junto se necessário,
-        // mas interrompe se a entidade precisar dar prioridade a outra meta.
+        // mas interrompe se a entidade precisar de prioridade a outra meta.
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
@@ -131,13 +131,13 @@ public class ExtinguishFireNearbyGoal extends Goal {
     public void tick() {
         this.executionTicks++;
 
-        // Faz a entidade dar o giro de 360 graus completo dividindo o ângulo pelo tempo de execução
+//        // Faz a entidade dar o giro de 360 graus completo dividindo o ângulo pelo tempo de execução
         float progress = (float) this.executionTicks / (float) DURATION;
-        float targetYaw = mob.getYRot() + (360.0F / DURATION);
-
-        mob.setYRot(targetYaw);
-        mob.setYBodyRot(targetYaw);
-        mob.setYHeadRot(targetYaw);
+//        float targetYaw = mob.getYRot() + (360.0F / DURATION);
+//
+//        mob.setYRot(targetYaw);
+//        mob.setYBodyRot(targetYaw);
+//        mob.setYHeadRot(targetYaw);
     }
 
     @Override

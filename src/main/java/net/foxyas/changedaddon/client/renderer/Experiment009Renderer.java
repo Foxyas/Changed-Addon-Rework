@@ -19,7 +19,9 @@ public class Experiment009Renderer extends AdvancedHumanoidRenderer<Experiment00
         super(context, new Experiment009Model(context.bakeLayer(Experiment009Model.LAYER_LOCATION)),
                 ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
-        this.addLayer(new Exp9EmissiveBodyLayer<>(this, ChangedAddonMod.textureLoc("textures/entities/experiment_9/experiment_009_glow_layer")));
+        this.addLayer(new Exp9EmissiveBodyLayer<>(this,
+                ChangedAddonMod.textureLoc("textures/entities/experiment_9/experiment_009_glow_layer"),
+                ChangedAddonMod.textureLoc("textures/entities/experiment_9/experiment_009_glow_layer2")));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#8dcfff")), CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#8dcfff")), CustomEyesLayer::noRender, CustomEyesLayer::noRender));
     }

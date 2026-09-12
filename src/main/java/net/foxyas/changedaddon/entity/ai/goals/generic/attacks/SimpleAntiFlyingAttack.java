@@ -13,9 +13,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -62,18 +64,62 @@ public class SimpleAntiFlyingAttack extends Goal {
     @Override
     public boolean canUse() {
         this.target = attacker.getTarget();
-        if (cooldown > 0) {
-            cooldown--;
+
+        // Basic null and cooldown checks
+        if (this.target == null) {
             return false;
         }
-        if (target instanceof Player player) {
-            if (player.isCreative() || player.isSpectator()) {
-                return false;
-            }
-            return player.getAbilities().flying && attacker.distanceTo(player) <= maxRange;
+
+        if (this.cooldown > 0) {
+            this.cooldown--;
+            return false;
         }
-        return target != null && !target.onGround() &&
-                attacker.distanceTo(target) >= minRange && attacker.distanceTo(target) <= maxRange;
+
+        // Reject non-vulnerable players early
+        if (this.target instanceof Player player && (player.isCreative() || player.isSpectator())) {
+            return false;
+        }
+
+        // Distance check
+        double distance = this.attacker.distanceTo(this.target);
+        if (distance < this.minRange || distance > this.maxRange) {
+            return false;
+        }
+
+        // Check if the target itself or its vehicle is flying
+        return isTargetFlying(this.target);
+    }
+
+    /**
+     * Helper method to evaluate all flying conditions for a target entity.
+     */
+    private boolean isTargetFlying(LivingEntity target) {
+        // 1. Check if the target is riding a flying vehicle
+        Entity vehicle = target.getVehicle();
+        if (vehicle != null) {
+            if (vehicle instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying()) {
+                return true;
+            }
+            if (vehicle instanceof FlyingMob flyingMob && !flyingMob.onGround()) {
+                return true;
+            }
+            if (vehicle instanceof LivingEntity livingVehicle && livingVehicle.isFallFlying()) {
+                return true;
+            }
+        }
+
+        // 2. Check if player target is creative/spectator flying
+        if (target instanceof Player player && player.getAbilities().flying) {
+            return true;
+        }
+
+        // 3. Check if target is Elytra gliding
+        if (target.isFallFlying()) {
+            return true;
+        }
+
+        // 4. Fallback: Target is airborne (not on ground or in water/climbing)
+        return !target.onGround() && !target.isInWater() && !target.onClimbable();
     }
 
     @Override

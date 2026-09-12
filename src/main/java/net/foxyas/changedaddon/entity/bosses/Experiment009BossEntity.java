@@ -126,7 +126,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     protected boolean wasPhasedForPhase3 = false;
 
     protected final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
-    protected boolean shouldBleed;
+    protected boolean shouldBleed = false;
 //    public final TargetDataManager targetDataManager;
 
     public final BurstAbilityHandle<Experiment009BossEntity> burstAbilityHandle;
@@ -261,9 +261,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @VisibleForTesting
     public void increaseAngerAt(@Nullable LivingEntity pEntity, int pOffset) {
         if (!this.isNoAi() && this.targetSelectorTest(pEntity)) {
-            WardenAi.setDigCooldown(this);
-            boolean flag = !(this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null) instanceof Player);
+            boolean flag = !(this.getTarget() instanceof Player);
             int i = this.angerManagement.increaseAnger(pEntity, pOffset);
+            if (pEntity instanceof Player && flag && AngerLevel.byAnger(i).isAngry()) {
+                this.setTarget(null);
+            }
         }
 
     }
@@ -844,8 +846,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         super.customServerAiStep();
 
         if (this.tickCount % 20 == 0) {
-//            this.targetDataManager.resolveTarget();
-
             if (this.level() instanceof ServerLevel serverLevel) {
                 this.angerManagement.tick(serverLevel, this::targetSelectorTest);
                 this.syncClientAngerLevel();
@@ -896,17 +896,34 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         float currentHealth = this.getHealth();
         float maxHealth = this.getMaxHealth();
 
+        if (this.getUnderlyingPlayer() != null) {
+            return;
+        }
+
+        if (pDamageSource.getEntity() instanceof LivingEntity livingEntity) {
+            increaseAngerAt(livingEntity);
+        }
+
+
+        if (this.isPhase3() && !isBleeding()) {
+            this.setBleeding(this.getRandom().nextFloat() >= 0.65f);
+            if (this.isBleeding()) {
+                level.playSound(null, this.blockPosition().above(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1.25f, 0.55f);
+            }
+        }
+
         if (this.isPhase2()) {
             float ratio = this.computeHealthRatio();
-            if (currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO && ratio >= PHASE_3_HEALTH_RATIO && !this.isPhase3()) {
+            boolean hasPhase3HealthRatio = currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO || ratio <= PHASE_3_HEALTH_RATIO;
+            if (hasPhase3HealthRatio && !this.isPhase3()) {
                 this.setPhase3(true);
                 this.onPhaseChange(this.getPhase());
-                level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 500, 0);
+                level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
             }
-        } else if (this.getUnderlyingPlayer() == null && currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO) {
+        } else if (currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO) {
             this.setPhase2(true);
             this.onPhaseChange(this.getPhase());
-            level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 500, 0);
+            level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
         }
     }
 
@@ -947,7 +964,15 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     private void spawnThunderParticle() {
         if (!(this.level() instanceof ServerLevel serverLevel)) return;
 
-        ThunderParticleOptions particleOptions = ChangedAddonParticleTypes.thunderBolt(4f, false, true, 2, new Vector3f(0.3f, 0.3f, 0.3f), new Vector3f(1.0f, 1.0f, 1.0f), 20, 4.0f);
+        ThunderParticleOptions particleOptions = ChangedAddonParticleTypes
+                .thunderBolt(2.5f,
+                        true,
+                        true,
+                        10,
+                        new Vector3f(0.3f, 0.3f, 0.3f),
+                        new Vector3f(1.0f, 1.0f, 1.0f),
+                        20,
+                        4.0f);
         serverLevel.sendParticles(
                 particleOptions,
                 getX(), getY() + 16, getZ(), // Spawn location
@@ -961,7 +986,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         spawnThunderParticle();
         playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 4, 1);
         this.knockbackNearbyEntities(this, 2.5f);
-        spawnThunderBoltsSpark(16, 16, 2f, 1f);
+        spawnThunderBoltsSpark(16, 8, 5f, 1f);
     }
 
     public void spawnThunderBoltsSpark(double radius, int amountOfPositions, float speed, float size) {
@@ -1222,6 +1247,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return isPhase2() || isPhase3();
     }
 
+    public void setBleeding(boolean bleeding) {
+        this.shouldBleed = bleeding;
+    }
+
     public boolean isBleeding() {
         return shouldBleed;
     }
@@ -1310,26 +1339,35 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
         }
 
-        RandomSource randomSource = this.getRandom();
-        if (randomSource.nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
-            if (this.isPhase2()) {
-                if (this.shouldBleed) {
-                    ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
-                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
-                } else {
-                    if (randomSource.nextFloat() > 0.95) {
-                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
+        int delay = this.isPhase3() ? 5 : this.isPhase2() ? 10 : 20;
+        if (this.tickCount % delay == 0) {
+            RandomSource randomSource = this.getRandom();
+            // Lower health = higher chance to spawn particles (e.g., 5% chance at full health, up to 95% at 5% health)
+            float missingHealthRatio = 1.0f - Math.min(0.95f, computeHealthRatio());
+            if (randomSource.nextFloat() < missingHealthRatio) {
+                Vec3 spawnPos = this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0);
+
+                if (this.isPhase2()) {
+                    if (this.shouldBleed) {
+                        // High intensity, but reduced particle count
+                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, spawnPos, 0.2f, 0.2f, 0.2f, 3, 0.01f);
+                        ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), spawnPos, 0.2f, 0.2f, 0.2f, 2, 0.05f);
+                    } else {
+                        // Moderate intensity
+                        if (randomSource.nextFloat() < 0.20f) { // 20% chance instead of nested checks
+                            ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, spawnPos, 0.15f, 0.15f, 0.15f, 2, 0.01f);
+                        }
+                        ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), spawnPos, 0.2f, 0.2f, 0.2f, 2, 0.05f);
                     }
-                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.25f, 0.25f, 0.25f, 10, 1);
+                } else {
+                    // Phase 1: Subtle atmospheric effect
+                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), spawnPos, 0.15f, 0.15f, 0.15f, 1, 0.02f);
                 }
-            } else {
-                ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition(0).subtract(0, randomSource.nextFloat() * this.getEyeHeight(), 0), 0.25f, 0.25f, 0.25f, 5, 1);
             }
         }
 
-        if (this.isPhase2()) {
+        if (this.isPhase2() && this.isPhase3()) {
             if (this.computeHealthRatio() <= PHASE_3_HEALTH_RATIO) {
-                this.shouldBleed = true;
                 setPhase3(true);
             }
         }

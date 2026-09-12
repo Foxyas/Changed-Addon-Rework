@@ -29,7 +29,7 @@ public class ThunderSparkParticle extends TextureSheetParticle {
         this.xd = dx * 1;
         this.yd = dy * 1;
         this.zd = dz * 1;
-        this.delay = 2 * sparkData.getEnergyCharge();
+        this.delay = sparkData.getEnergyCharge() == 0 ? 2 : 2 * sparkData.getEnergyCharge();
 
         this.setSpriteFromAge(spriteSet);
     }
@@ -40,10 +40,6 @@ public class ThunderSparkParticle extends TextureSheetParticle {
         this.yo = this.y;
         this.zo = this.z;
 
-        // Adiciona um pequeno valor aleatório para gerar movimento "levemente aleatório"
-        //this.xd += (this.random.nextDouble() - 0.5) * 0.02; // Pequena variação em X
-        //this.yd += (this.random.nextDouble() - 0.5) * 0.02; // Pequena variação em Y
-        //this.zd += (this.random.nextDouble() - 0.5) * 0.02; // Pequena variação em Z
         this.x += ((this.random.nextDouble() - 0.5) * 0.02) * this.xd; // Pequena variação em X
         this.y += ((this.random.nextDouble() - 0.5) * 0.02) * this.yd; // Pequena variação em Y
         this.z += ((this.random.nextDouble() - 0.5) * 0.02) * this.zd; // Pequena variação em Z
@@ -51,15 +47,16 @@ public class ThunderSparkParticle extends TextureSheetParticle {
         if (this.age++ >= this.lifetime) {
             this.remove();
         } else {
-            int delay = this.delay; // Define um delay antes de mudar o sprite
-            int spriteIndex = (this.age / delay) % 9; // Alterna baseado no delay
-            this.setSprite(this.spriteSet.get(spriteIndex, 9));
-            alpha = 1 - ((float) age / lifetime);
+            int currentFrame = (this.age / this.delay);
+            this.setSprite(this.spriteSet.get(currentFrame % 9, 9)); // Only use this if your particle JSON strictly has 9 textures
+
+            // Fade out opacity smoothly over lifetime
+            this.alpha = 1.0f - ((float) this.age / (float) this.lifetime);
         }
     }
 
     @Override
-    public int getLightColor(float p_105562_) {
+    public int getLightColor(float pPartialTick) {
         return 15728880;
     }
 
@@ -71,8 +68,8 @@ public class ThunderSparkParticle extends TextureSheetParticle {
     public static class Provider implements ParticleProvider<ThunderSparkOption> {
         protected final SpriteSet sprite;
 
-        public Provider(SpriteSet p_106394_) {
-            this.sprite = p_106394_;
+        public Provider(SpriteSet spriteSet) {
+            this.sprite = spriteSet;
         }
 
         @Nullable
