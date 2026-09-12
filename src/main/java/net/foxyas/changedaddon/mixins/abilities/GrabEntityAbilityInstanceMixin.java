@@ -15,6 +15,7 @@ import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
 import net.foxyas.changedaddon.network.packet.ExtraGrabDataSyncPacket;
+import net.foxyas.changedaddon.util.EntityUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -23,7 +24,6 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedDamageSources;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -55,6 +55,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+@SuppressWarnings("AddedMixinMembersNamePattern")
 @Mixin(value = GrabEntityAbilityInstance.class, remap = false)
 public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInstance implements GrabEntityAbilityExtensor, IWheelKeyPressHandler {
 
@@ -133,6 +134,16 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (tag.contains("transfurDamageMode")) transfurDamageMode = tag.getBoolean("transfurDamageMode");
     }
 
+    @Override
+    public boolean isGrabbedUnableToBreath() {
+        if (this.grabbedEntity != null && !this.transfurDamageMode) {
+            return useDown && !suited;
+        }
+
+
+        return this.isSafeMode() && isSnugglingTight();
+    }
+
     @Unique
     private GrabEntityAbilityInstance ChangedAddon$getSelf() {
         return (GrabEntityAbilityInstance) (Object) this;
@@ -177,12 +188,12 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;releaseEntity(Z)V", ordinal = 1))
-    private void stopDebuffsIfFriendlyMode(GrabEntityAbilityInstance instance, boolean debuffs, Operation<Void> original) {
+    private void stopDebuffsIfFriendlyMode(GrabEntityAbilityInstance instance, boolean applyDebuffs, Operation<Void> original) {
         if (this.isSafeMode()) {
             original.call(instance, false);
             return;
         }
-        original.call(instance, debuffs);
+        original.call(instance, applyDebuffs);
     }
 
     @Inject(method = "tickIdle", at = @At(value = "HEAD"), cancellable = true)
@@ -271,16 +282,16 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     }
 
     @WrapOperation(method = "suitEntity", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;setPlayerTransfurVariant(Lnet/minecraft/world/entity/player/Player;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;Lnet/ltxprogrammer/changed/entity/TransfurContext;FZLjava/util/function/Consumer;)Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;"))
-    private TransfurVariantInstance<?> syncAlphaGene(Player player, TransfurVariant<?> ogVariant, TransfurContext context, float progress, boolean temporaryFromSuit, Consumer<TransfurVariantInstance<?>> consumer, Operation<TransfurVariantInstance<?>> original) {
+    private TransfurVariantInstance<?> syncAlphaGene(Player player, TransfurVariant<?> ogVariant, TransfurContext context, float progress, boolean temporaryFromSuit, Consumer<TransfurVariantInstance<?>> preProcess, Operation<TransfurVariantInstance<?>> original) {
         if (this.entity.getChangedEntity() instanceof IAlphaAbleEntity alphaSource) {
-            return ProcessTransfur.setPlayerTransfurVariant(player, ogVariant, context, progress, temporaryFromSuit, (transfurVariantInstance) -> {
+            return ProcessTransfur.setPlayerTransfurVariant(player, ogVariant, context, progress, temporaryFromSuit, preProcess.andThen((transfurVariantInstance) -> {
                 if (transfurVariantInstance.getChangedEntity() instanceof IAlphaAbleEntity alphaTarget) {
                     alphaTarget.setAlpha(alphaSource.isAlpha());
                     alphaTarget.setAlphaScale(alphaSource.alphaAdditionalScale());
                 }
-            });
+            }));
         }
-        return original.call(player, ogVariant, context, progress, temporaryFromSuit, consumer);
+        return original.call(player, ogVariant, context, progress, temporaryFromSuit, preProcess);
     }
 
 
@@ -303,9 +314,9 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
     @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;isPlayerTransfurred(Lnet/minecraft/world/entity/player/Player;)Z"),
             method = "getHoveredEntity")
-    private boolean allowTfedGrab(boolean original, @Local(name = "targetPlayer") Player player) {
+    private boolean allowTfedGrab(boolean original, @Local(name = "targetPlayer") Player targetPlayer) {
 
-        return !this.canGrabEntity(player) && original;
+        return !this.canGrabEntity(targetPlayer) && original;
     }
 
     @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;is(Lnet/minecraft/tags/TagKey;)Z", remap = true),
@@ -364,7 +375,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
                     target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;progressTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/ai/LatexAssimilationDecision;)Z"
             )
     )
-    private boolean changedAddon$disableProgressTransfur(LivingEntity livingEntity, LatexAssimilationDecision<?> decision, Operation<Boolean> original) {
+    private boolean changedAddon$disableProgressTransfur(LivingEntity entity, LatexAssimilationDecision<?> decision, Operation<Boolean> original) {
         if (safeMode && grabbedEntity != null) {
             // Safe mode -> nunca aplica transfur
             if (!isAlreadySnuggled()) {
@@ -373,7 +384,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             return false;
         }
         // comportamento normal
-        return original.call(livingEntity, decision);
+        return original.call(entity, decision);
     }
 
 
@@ -381,7 +392,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
      * Modify the computed keyStrength value during escape handling.
      * You can adjust or completely override it here.
      *
-     * @param original The computed keyStrength value
+     * @param keyStrength The computed keyStrength value
      * @return The modified keyStrength
      */
     @ModifyVariable(
@@ -392,7 +403,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             ),
             name = "keyStrength"
     )
-    private float changedaddon$modifyKeyStrength(float original) {
+    private float changedaddon$modifyKeyStrength(float keyStrength) {
         if (this.grabbedEntity != null) {
             float analogicPercent = 0;
 
@@ -407,14 +418,14 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             }
 
             if (analogicPercent > 0) {
-                return original * (1 + analogicPercent);
+                return keyStrength * (1 + analogicPercent);
             } else {
-                return original;
+                return keyStrength;
             }
         }
 
 
-        return original;
+        return keyStrength;
     }
 
 
@@ -423,7 +434,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             at = @At("RETURN")
     )
     private LatexAssimilationDecision<?> makeLatexAssimilationNullIfChokeModeOn(LatexAssimilationDecision<?> original) {
-        if (!this.isTransfurDamageMode()) {
+        if (!this.isTransfurDamageMode() && !isSafeMode()) {
             return null;
         } else return original;
     }
@@ -459,19 +470,23 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         }
     }
 
-    private void tryCausingChokeDamage(LivingEntity grabber, float damageAmount) {
+    @Override
+    public void tryCausingChokeDamage(LivingEntity grabber, float damageAmount) {
         Consumer<LivingEntity> afterDamage = (livingEntity) -> {
             grabber.level().playSound(null, grabbedEntity.getX(), grabbedEntity.getY(), grabbedEntity.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 0.55f);
             if (grabbedEntity.isDeadOrDying()) {
+                if (this.suited) {
+                    grabbedEntity.setInvisible(true);
+                }
                 this.releaseEntity(false);
             }
         };
 
         if (grabbedEntity == null) return;
-        DamageSource source = ChangedAddonDamageSources.CHOKE.source(grabber);
+        DamageSource source = ChangedAddonDamageSources.CHOKE.source(grabber, EntityUtil.getMouthPosition(grabbedEntity));
 
         if (this.suited) {
-            grabbedEntity.setInvisible(true);
+            source = ChangedAddonDamageSources.CONSTRICTION.source(grabber);
         }
 
         if (grabber instanceof IGrabberEntity.ICanChokePlayers canChokePlayers) {

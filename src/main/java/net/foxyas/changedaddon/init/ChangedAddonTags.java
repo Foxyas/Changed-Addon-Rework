@@ -161,7 +161,6 @@ public final class ChangedAddonTags {
         public static final TagKey<DamageType> IS_LATEX_SOLVENT = key("is_latex_solvent");
         public static final TagKey<DamageType> BYPASSES_DODGE = key("bypasses_dodge");
         public static final TagKey<DamageType> HIDE_ON_DEATH = key("hide_on_death");
-        public static final TagKey<DamageType> HIDE_ON_DEATH_BY_GRAB_SUITED = key("hide_on_death/grab_suited");
 
         private static TagKey<DamageType> key(String path) {
             return TagKey.create(Registries.DAMAGE_TYPE, ChangedAddonMod.resourceLoc(path));

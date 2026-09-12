@@ -352,11 +352,18 @@ public class ENLanguageProvider extends LanguageProvider {
         add("changed_addon.warn.cant_carry", "You try to lift %1$s, but it's far too heavy.");
         add("changed_addon.when_not.transfur", "You aren't a latex creature");
 
-        addDeathMessage("OverDose", "%1$s get a §4OverDose§r", null, "%1$s get a §4OverDose§r while fighting with %2$s");
         addDeathMessage("assimilation", "%1$s was assimilated", null, "%1$s was assimilated by %2$s");
         addDeathMessage("conscience_lose", "%1$s lost their consciousness", null, "%1$s lost their consciousness by %2$s");
         addDeathMessage("latex_solvent", "%1$s was dissolved", null, "%1$s was dissolved by %2$s");
         addDeathMessage("untransfur_fail", "%1$s dies when the untransfurmation attempt fails", null, "%1$s dies for a fail untransfurmation attempt while fighting %2$s");
+        addDeathMessage(ChangedAddonDamageSources.CHOKE.damageType(),
+                "%1$s was choked to death",
+                "%1$s was choked to death by %2$s using %3$s",
+                "%1$s was choked to death by %2$s");
+        addDeathMessage(ChangedAddonDamageSources.CONSTRICTION.damageType(),
+                "%1$s was squeezed to death",
+                "%1$s was squeezed to death by %2$s using %3$s",
+                "%1$s was squeezed to death by %2$s");
 
         addEffect(ChangedAddonMobEffects.UNTRANSFUR, "§7Untransfur", "Displays untransfur progress via overlay. Progress speeds up when sleeping. When complete, the untransfur is applied.");
         add("effect.changed_addon." + ChangedAddonMobEffects.UNTRANSFUR.getId().getPath() + ".no_effect", "The effect doesn't seem to be working");

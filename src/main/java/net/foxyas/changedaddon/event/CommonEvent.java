@@ -21,6 +21,7 @@ import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.foxyas.changedaddon.variant.LatexInfection;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.Changed;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -66,6 +67,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.VanillaGameEvent;
+import net.minecraftforge.event.entity.living.LivingBreatheEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -92,6 +94,21 @@ public class CommonEvent {
     //    @SubscribeEvent
     //    public static void addCustomDefaultAnimators(HumanoidAnimator.GatherAnimatorsEvent<ChangedEntity, AdvancedHumanoidModel<ChangedEntity>> event) {
     //    }
+
+    @SubscribeEvent
+    public static void makeEntitiesUnableToBreathWhenBeingChoked(LivingBreatheEvent event) {
+        LivingEntity entity = event.getEntity();
+        IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(entity);
+        if (grabber != null) {
+            GrabEntityAbilityInstance instance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (instance instanceof GrabEntityAbilityExtensor extensor) {
+                boolean grabbedUnableToBreath = extensor.isGrabbedUnableToBreath();
+                if (grabbedUnableToBreath) {
+                    event.setCanBreathe(false);
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void makeAlphaNotDespawnWhenPatted(GlobalPatReactionEvent event) {
