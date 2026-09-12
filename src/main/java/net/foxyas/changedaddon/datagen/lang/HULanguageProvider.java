@@ -356,6 +356,14 @@ public class HULanguageProvider extends LanguageProvider {
         addDeathMessage("conscience_lose", "%1$s elvesztette eszméletét", null, "%2$s által %1$s elvesztette eszméletét");
         addDeathMessage("latex_solvent", "%1$s feloldódott", null, "%2$s feloldotta %1$s játékost");
         addDeathMessage("untransfur_fail", "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett", null, "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett, miközben vele harcolt: %2$s");
+        addDeathMessage(ChangedAddonDamageSources.CHOKE.damageType(),
+                "%1$s játékost halálra fojtották",
+                "%2$s fojtotta halálra %1$s játékost, %3$s segítségével",
+                "%2$s fojtotta halálra %1$s játékost");
+        addDeathMessage(ChangedAddonDamageSources.CONSTRICTION.damageType(),
+                "%1$s játékost halálra szorították",
+                "%2$s halálra szorította %1$s játékost, %3$s segítségével",
+                "%2$s halálra szorította %1$s játékost");
 
         addEffect(ChangedAddonMobEffects.UNTRANSFUR, "§7Visszatranszfur", "Átfedésben jeleníti meg a visszatranszfur folyamatát. A haladás felgyorsul alvás közben. Amikor befejeződött, a visszatranszfur érvénybe lép.");
         add("effect.changed_addon." + ChangedAddonMobEffects.UNTRANSFUR.getId().getPath() + ".no_effect", "A hatás nem tűnik működőképesnek");
