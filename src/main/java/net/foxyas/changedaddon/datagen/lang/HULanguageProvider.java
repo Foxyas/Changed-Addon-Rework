@@ -356,6 +356,14 @@ public class HULanguageProvider extends LanguageProvider {
         addDeathMessage("conscience_lose", "%1$s elvesztette eszméletét", null, "%2$s által %1$s elvesztette eszméletét");
         addDeathMessage("latex_solvent", "%1$s feloldódott", null, "%2$s feloldotta %1$s játékost");
         addDeathMessage("untransfur_fail", "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett", null, "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett, miközben vele harcolt: %2$s");
+        addDeathMessage(ChangedAddonDamageSources.CHOKE.damageType(),
+                "%1$s játékost halálra fojtották",
+                "%2$s fojtotta halálra %1$s játékost, %3$s segítségével",
+                "%2$s fojtotta halálra %1$s játékost");
+        addDeathMessage(ChangedAddonDamageSources.CONSTRICTION.damageType(),
+                "%1$s játékost halálra szorították",
+                "%2$s halálra szorította %1$s játékost, %3$s segítségével",
+                "%2$s halálra szorította %1$s játékost");
 
         addEffect(ChangedAddonMobEffects.UNTRANSFUR, "§7Visszatranszfur", "Átfedésben jeleníti meg a visszatranszfur folyamatát. A haladás felgyorsul alvás közben. Amikor befejeződött, a visszatranszfur érvénybe lép.");
         add("effect.changed_addon." + ChangedAddonMobEffects.UNTRANSFUR.getId().getPath() + ".no_effect", "A hatás nem tűnik működőképesnek");
@@ -497,7 +505,8 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("unifuser_gui.tooltip.place_second_ingredient", "Tedd ide a második hozzávalót");
         addGui("abilities_radial_screen.mouse.right_click", "Nyomd meg a %s gombot a második képesség kiválasztásához");
 
-        add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Nyomja meg a %s vagy %s gombot a barátságos megragadás bekapcsolásához");
+        add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Nyomja meg a %s vagy a %s gombot a barátságos megragadás kapcsolásához");
+        add("ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode", "Nyomd meg a %s billentyűt és közben a %s vagy %s gombot a megragadáskori transzfur sebzés kapcsolásához");
 
         add("deathScreen.select_tf", "Újraéledés transzfurként?");
         add("deathScreen.select_tf.hardcore", "Folytatás transzfurként?");
@@ -691,8 +700,9 @@ public class HULanguageProvider extends LanguageProvider {
         add("key.changed_addon.pat_message", "Simogatod %s entitást");
         add("key.changed_addon.pat_received", "%s téged simogat");
         addKey(TURN_OFF_TRANSFUR, "Transzfur kikapcsolása");
-        add("key.changed_addon.turn_off_transfur.grab_safe_mode", "Barátságos megragadás beállítva: %s");
-        add("key.changed_addon.turn_off_transfur.safe_mode", "Transzfur támadás beállítva: %s");
+        add("key.changed_addon.turn_off_transfur.grab_safe_mode", "Barátságos megragadás beállítása erre: %s");
+        add("key.changed_addon.turn_off_transfur.grab_transfur_damage_mode", "Megragadáskori transzfur sebzés beállítása erre: %s");
+        add("key.changed_addon.turn_off_transfur.safe_mode", "Transzfur támadás beállítása erre: %s");
         addKey(USE_SECOND_ABILITY, "Változat második képességének használata");
         addKey(CUDDLE_KEY, "Ölelkezési mód váltása");
         addKey(CUDDLE_KEY, "set", "Ölelkezési mód beállítása: %s");
