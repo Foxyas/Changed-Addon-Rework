@@ -1,9 +1,6 @@
 package net.foxyas.changedaddon.datagen;
 
-import net.foxyas.changedaddon.block.LuminarCrystalLarge;
-import net.foxyas.changedaddon.block.LuminarCrystalSmall;
-import net.foxyas.changedaddon.block.MultifaceBlock;
-import net.foxyas.changedaddon.block.StackableCanBlock;
+import net.foxyas.changedaddon.block.*;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.ltxprogrammer.changed.init.ChangedItems;
@@ -145,6 +142,8 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
         coverBlockDropSelfOrOther(WHITE_LATEX_COVER_BLOCK.get(), ChangedItems.WHITE_LATEX_GOO.get());
 
         add(LUMINARA_LEAVES.get(), (block) -> createLeavesWithFruitDrops(block, LUMINARA_SAPLING.get(), LUMINARA_BLOOM.get().asItem(), NORMAL_LEAVES_SAPLING_CHANCES));
+        add(LUMINARA_PETALS.get(), createPetalsDrops(LUMINARA_PETALS.get()));
+        luminaraLichen();
         dropSelf(LUMINARA_SAPLING.get());
         dropSelf(LUMINARA_LOG.get());
         dropSelf(STRIPPED_LUMINARA_LOG.get());
@@ -167,6 +166,22 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
 
     protected void dropSelf(RegistryObject<? extends Block> block) {
         dropSelf(block.get());
+    }
+
+    protected void luminaraLichen() {
+        Block block = LUMINARA_LICHEN.get();
+
+        var builder = LootItem.lootTableItem(block);
+
+        for (Direction direction : Direction.values()) {
+            for (int i = 1; i < 5; i++) {
+                builder.apply(SetItemCountFunction.setCount(ConstantValue.exactly(i), true).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LuminaraLichen.PROPERTY_BY_DIRECTION.get(direction), i))));
+            }
+        }
+
+        builder.apply(SetItemCountFunction.setCount(ConstantValue.exactly(-1), true));
+
+        add(block, LootTable.lootTable().withPool(LootPool.lootPool().add(this.applyExplosionDecay(block, builder))));
     }
 
     /**
