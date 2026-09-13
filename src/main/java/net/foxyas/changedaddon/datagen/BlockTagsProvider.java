@@ -35,7 +35,7 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
         tag(BlockTags.FLOWER_POTS).add(POTTED_LUMINARA_SAPLING.get(), POTTED_LUMINARA_BLOOM.get());
         tag(BlockTags.LEAVES).add(LUMINARA_LEAVES.get());
         tag(BlockTags.SAPLINGS).add(LUMINARA_SAPLING.get());
-        tag(BlockTags.MINEABLE_WITH_HOE).add(LUMINARA_LEAVES.get());
+        tag(BlockTags.MINEABLE_WITH_HOE).add(LUMINARA_LEAVES.get(), LUMINARA_PETALS.get());
         tag(BlockTags.OVERWORLD_NATURAL_LOGS).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get());
         tag(BlockTags.LOGS_THAT_BURN).add(LUMINARA_LOG.get(), STRIPPED_LUMINARA_LOG.get(), LUMINARA_WOOD.get(), STRIPPED_LUMINARA_WOOD.get());
         tag(BlockTags.PLANKS).add(LUMINARA_PLANKS.get());
@@ -115,5 +115,9 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
                 YELLOW_WOLF_CRYSTAL_SMALL.get(), BLUE_WOLF_CRYSTAL_SMALL.get(), ORANGE_WOLF_CRYSTAL_SMALL.get(),
                 WHITE_WOLF_CRYSTAL_SMALL.get(), GOO_CORE.get(), WOLF_CRYSTAL_PILLAR.get());
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(DARK_LATEX_PUDDLE.get(), DORMANT_DARK_LATEX.get(), DORMANT_WHITE_LATEX.get());
+
+        tag(BlockTags.FLOWERS).add(LUMINARA_PETALS.get());
+        tag(BlockTags.INSIDE_STEP_SOUND_BLOCKS).add(LUMINARA_PETALS.get(), LUMINARA_LICHEN.get());
+        tag(BlockTags.SWORD_EFFICIENT).add(LUMINARA_PETALS.get(), LUMINARA_LICHEN.get());
     }
 }

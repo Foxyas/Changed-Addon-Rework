@@ -193,6 +193,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addBlockFromId(ChangedAddonBlocks.LUMINARA_BUTTON);
         addBlockFromId(ChangedAddonBlocks.LUMINARA_PRESSURE_PLATE);
         addBlockFromId(ChangedAddonBlocks.LUMINARA_LEAVES);
+        addBlockFromId(ChangedAddonBlocks.LUMINARA_PETALS);
+        addBlockFromId(ChangedAddonBlocks.LUMINARA_LICHEN);
         addBlockFromId(ChangedAddonBlocks.LUMINARA_SAPLING);
         addBlock(POTTED_LUMINARA_SAPLING, "Flower Pot with Luminara Sapling");
 

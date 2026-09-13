@@ -56,6 +56,8 @@ public class ChangedAddonItems {
     public static final RegistryObject<BlockItem> LUMINARA_BUTTON = block(ChangedAddonBlocks.LUMINARA_BUTTON);
     public static final RegistryObject<BlockItem> LUMINARA_PRESSURE_PLATE = block(ChangedAddonBlocks.LUMINARA_PRESSURE_PLATE);
     public static final RegistryObject<Item> LUMINARA_LEAVES = block(ChangedAddonBlocks.LUMINARA_LEAVES, new Item.Properties());
+    public static final RegistryObject<BlockItem> LUMINARA_PETALS = block(ChangedAddonBlocks.LUMINARA_PETALS);
+    public static final RegistryObject<BlockItem> LUMINARA_LICHEN = block(ChangedAddonBlocks.LUMINARA_LICHEN);
     public static final RegistryObject<BlockItem> LUMINARA_SAPLING = block(ChangedAddonBlocks.LUMINARA_SAPLING);
     public static final RegistryObject<Item> BIOMASS = REGISTRY.register("biomass", BiomassItem::new);
     public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", UnlatexbaseItem::new);
