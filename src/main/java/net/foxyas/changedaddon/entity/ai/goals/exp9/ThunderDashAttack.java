@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectUtil;
@@ -34,6 +35,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal, IAbilityGo
     private static final double KNOCKBACK_MULTIPLIER = 1.5;
 
     protected final Experiment009BossEntity dasher;
+    protected final IntProvider cooldownProvider;
     protected LivingEntity target;
 
     protected int dashingTickCounter = 0;
@@ -45,9 +47,11 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal, IAbilityGo
     protected float dashSpeed = 1.0f;
     protected float strength = 1.0f;
     protected boolean finishDashing = false; // hardcoded
+    protected int cooldownTicks = 0;
 
-    public ThunderDashAttack(Experiment009BossEntity dasher) {
+    public ThunderDashAttack(Experiment009BossEntity dasher, IntProvider cooldownProvider) {
         this.dasher = dasher;
+        this.cooldownProvider = cooldownProvider;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
@@ -82,10 +86,15 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal, IAbilityGo
 
     @Override
     public boolean canUse() {
+        if (this.onCooldown()) return false;
         this.target = dasher.getTarget();
         if (target == null || target.isRemoved() && target.isDeadOrDying()) return false;
         if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         return target != null && target.isAlive() && target.distanceTo(dasher) >= 3.5f;
+    }
+
+    protected boolean onCooldown() {
+        return this.cooldownTicks > 0;
     }
 
     @Override
@@ -318,6 +327,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal, IAbilityGo
         this.chargingTickCounter = 0;
         this.phase = Phase.IDLE;
         this.finishDashing = false;
+        this.cooldownTicks = cooldownProvider.sample(dasher.getRandom());
     }
 
     protected void onStopDashing() {

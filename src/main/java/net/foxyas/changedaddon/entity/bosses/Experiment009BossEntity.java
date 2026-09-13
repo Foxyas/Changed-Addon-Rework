@@ -421,7 +421,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     protected void initPhaseGoals() {
         // Phase 1 Goals (Base Abilities)
         phaseGoals.put(Exp9Phase.PHASE1, List.of(
-                new ThunderDashAttack(this),
+                new ThunderDashAttack(this, UniformInt.of(200, 500)),
                 new ThunderDiveGoal(this, UniformInt.of(60, 100), 1.5f, 6f, 1f, 0.5f, 4),
                 new AoEThunderStrikeGoal(
                         this,
@@ -433,7 +433,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         // Phase 2 Goals
         phaseGoals.put(Exp9Phase.PHASE2, List.of(
-                new ThunderDashAttack(this),
+                new ThunderDashAttack(this, UniformInt.of(300, 700)),
                 new SummonLightningGoal(this, //PathfinderMob -> holder,
                         UniformInt.of(120, 240), //IntProvider -> cooldown,
                         UniformInt.of(2, 4), //IntProvider -> lightningCount,
@@ -456,7 +456,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         // Phase 3 Goals
         phaseGoals.put(Exp9Phase.PHASE3, List.of(
-                new ThunderDashAttack(this),
+                new ThunderDashAttack(this, UniformInt.of(200, 400)),
                 new ThunderDiveGoal(this,
                         UniformInt.of(60, 100), //IntProvider -> cooldownProvider
                         1.5f,
