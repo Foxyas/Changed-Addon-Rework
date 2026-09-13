@@ -34,7 +34,7 @@ public class AvoidEntityGoalMixin {
         if (this.mob instanceof Ocelot || this.mob instanceof Cat) {
             if (toAvoid != null && toAvoid instanceof Player player) {
                 if (ProcessTransfur.getPlayerTransfurVariant(player) != null) {
-                    if (ProcessTransfur.getPlayerTransfurVariant(player).is(ChangedAddonTransfurVariants.LATEX_SNEP.get())) {
+                    if (ProcessTransfur.getPlayerTransfurVariant(player).is(ChangedAddonTransfurVariants.LATEX_SNEP_FERAL.get())) {
                         // Cancela a IA de evitar o jogador
                         cir.setReturnValue(false);
                     } else if (ProcessTransfur.getPlayerTransfurVariant(player).getParent().is(ChangedAddonTags.TransfurVariants.CAT_LIKE)

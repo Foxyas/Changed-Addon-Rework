@@ -1,11 +1,13 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.entity.simple.FoxtaFoxyEntity;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.api.IDrinkItem;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Cacheable;
@@ -90,7 +92,11 @@ public class FoxtaItem extends BlockItem implements SpecializedItemRendering, ID
     public @NotNull ItemStack finishUsingItem(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull LivingEntity entity) {
         ItemStack retval = super.finishUsingItem(itemstack, world, entity);
         if (entity.getRandom().nextFloat() <= 0.001f) {
-            ProcessTransfur.progressTransfur(entity, 15, ChangedAddonTransfurVariants.FOXTA_FOXY.get(), TransfurContext.hazard(TransfurCause.FACE_HAZARD));
+            LatexAssimilationDecision<FoxtaFoxyEntity> strong = LatexAssimilationDecision.strong(LatexAssimilationDecision.Method.ABSORPTION,
+                    ChangedAddonTransfurVariants.FOXTA_FOXY.get(),
+                    TransfurContext.hazard(TransfurCause.FACE_HAZARD),
+                    15f);
+            ProcessTransfur.progressTransfur(entity, strong);
         }
         return retval;
     }

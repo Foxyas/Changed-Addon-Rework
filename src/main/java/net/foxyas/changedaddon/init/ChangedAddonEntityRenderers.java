@@ -41,7 +41,7 @@ public class ChangedAddonEntityRenderers {
         event.registerEntityRenderer(ChangedAddonEntities.EXPERIMENT_10_BOSS.get(), Experiment10BossRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.EXP_1_MALE.get(), Exp1MaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.EXP_1_FEMALE.get(), Exp1FemaleRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.LATEX_SNEP.get(), LatexSnepRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.LATEX_FERAL_SNEP.get(), LatexSnepFeralRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.LUMINARCTIC_LEOPARD_MALE.get(), LuminarcticLeopardMaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.LUMINARCTIC_LEOPARD_FEMALE.get(), LuminarcticLeopardFemaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.LATEX_SQUID_TIGER_SHARK.get(), LatexSquidTigerSharkRenderer::new);

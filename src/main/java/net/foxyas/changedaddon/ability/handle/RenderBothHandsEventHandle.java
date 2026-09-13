@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.mojang.math.Axis.*;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class RenderHandsEventHandle {
+public class RenderBothHandsEventHandle {
 
 
     /**

@@ -74,6 +74,10 @@ public interface IGrabberEntity {
         return this.getGrabbedEntity() != null;
     }
 
+    default GrabEntityAbilityInstance createGrabAbility() {
+        return createGrabAbility(false);
+    }
+
     default GrabEntityAbilityInstance createGrabAbility(boolean isSafeByDefault) {
         GrabEntityAbilityInstance instance = null;
         if (this instanceof AbstractDarkLatexEntity abstractDarkLatexEntity) {

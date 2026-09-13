@@ -350,12 +350,12 @@ public class ChangedAddonEntities {
                     .setCustomClientFactory(Experiment10BossEntity::new)
                     .sized(0.7f, 1.93f));
 
-    public static final RegistryObject<EntityType<LatexSnepEntity>> LATEX_SNEP = registerChangedEntity("latex_snep",
-            EntityType.Builder.<LatexSnepEntity>of(LatexSnepEntity::new, MobCategory.MONSTER)
+    public static final RegistryObject<EntityType<LatexSnepFeralEntity>> LATEX_FERAL_SNEP = registerChangedEntity("latex_snep_feral",
+            EntityType.Builder.<LatexSnepFeralEntity>of(LatexSnepFeralEntity::new, MobCategory.MONSTER)
                     .setShouldReceiveVelocityUpdates(true)
                     .setTrackingRange(64)
                     .setUpdateInterval(3)
-                    .setCustomClientFactory(LatexSnepEntity::new)
+                    .setCustomClientFactory(LatexSnepFeralEntity::new)
                     .sized(0.6f, 0.7f), false);
 
     public static final RegistryObject<EntityType<LuminarcticLeopardMaleEntity>> LUMINARCTIC_LEOPARD_MALE = registerChangedEntity("luminarctic_leopard_male",
@@ -713,7 +713,7 @@ public class ChangedAddonEntities {
         event.put(EXPERIMENT_10_BOSS.get(), Experiment10BossEntity.createAttributes().build());
         event.put(EXP_1_MALE.get(), Exp1MaleEntity.createAttributes().build());
         event.put(EXP_1_FEMALE.get(), Exp1FemaleEntity.createAttributes().build());
-        event.put(LATEX_SNEP.get(), LatexSnepEntity.createAttributes().build());
+        event.put(LATEX_FERAL_SNEP.get(), LatexSnepFeralEntity.createAttributes().build());
         event.put(LUMINARCTIC_LEOPARD_MALE.get(), LuminarcticLeopardMaleEntity.createAttributes().build());
         event.put(LUMINARCTIC_LEOPARD_FEMALE.get(), LuminarcticLeopardFemaleEntity.createAttributes().build());
         event.put(LATEX_SQUID_TIGER_SHARK.get(), LatexSquidTigerSharkEntity.createAttributes().build());

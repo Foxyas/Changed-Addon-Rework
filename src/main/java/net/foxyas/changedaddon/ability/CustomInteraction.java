@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
-import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexSnepFeralEntity;
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -40,7 +40,7 @@ public class CustomInteraction extends AbstractAbility<CustomInteractionInstance
     @Override
     public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
         ArrayList<Component> description = new ArrayList<>(super.getAbilityDescription(entity));
-        if (entity.getChangedEntity() instanceof LatexSnepEntity) {
+        if (entity.getChangedEntity() instanceof LatexSnepFeralEntity) {
             description.add(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.latex_snep"));
         } else if (entity.getChangedEntity() instanceof AvaliEntity avaliEntity) {
             description.add(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.avali"));
@@ -62,7 +62,7 @@ public class CustomInteraction extends AbstractAbility<CustomInteractionInstance
     @Nullable
     @Override
     public Component getSelectedDisplayText(IAbstractChangedEntity entity) {
-        if (entity.getChangedEntity() instanceof LatexSnepEntity || entity.getChangedEntity() instanceof AbstractLuminarcticLeopard) {
+        if (entity.getChangedEntity() instanceof LatexSnepFeralEntity || entity.getChangedEntity() instanceof AbstractLuminarcticLeopard) {
             return Component.translatable("ability.changed_addon.custom_interaction.have_interaction");
         }
         if (entity.getChangedEntity() instanceof AvaliEntity) {

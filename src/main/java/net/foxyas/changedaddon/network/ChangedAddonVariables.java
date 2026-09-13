@@ -232,7 +232,7 @@ public class ChangedAddonVariables {
         }
 
         public boolean isPatInCooldown() {
-            return this.actCooldown > 0;
+            return this.patCooldown > 0;
         }
 
         public boolean isCuddling() {

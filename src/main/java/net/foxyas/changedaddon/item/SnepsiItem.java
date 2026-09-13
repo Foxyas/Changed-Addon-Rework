@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.item.api.IDrinkItem;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Cacheable;
@@ -86,16 +87,7 @@ public class SnepsiItem extends BlockItem implements SpecializedItemRendering, I
 
         // Distância percorrida no ar
         String form = itemstack.getOrCreateTag().getString("form");
-        TransfurVariant<?> var = switch (form) {
-            case "changed_addon:form_latex_snow_leopard_partial" ->
-                    ChangedAddonTransfurVariants.SNOW_LEOPARD_PARTIAL.get();
-            case "changed_addon:form_exp2/male" -> ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant();
-            case "changed_addon:form_exp2/female" -> ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant();
-            case "changed_addon:form_exp6" -> ChangedAddonTransfurVariants.EXP6.get();
-            case "changed_addon:form_latex_snep" -> ChangedAddonTransfurVariants.LATEX_SNEP.get();
-            default ->
-                    sPlayer.getRandom().nextFloat() <= 0.001f ? ChangedAddonTransfurVariants.SNEPSI_LEOPARD.get() : ChangedAddonTransfurVariants.SNOW_LEOPARD_PARTIAL.get();
-        };
+        TransfurVariant<?> var = !form.isEmpty() ? ChangedRegistry.TRANSFUR_VARIANT.getValue(ResourceLocation.parse(form)) : sPlayer.getRandom().nextFloat() <= 0.001f ? ChangedAddonTransfurVariants.SNEPSI_LEOPARD.get() : ChangedAddonTransfurVariants.SNOW_LEOPARD_PARTIAL.get();;
 
         ProcessTransfur.progressTransfur(sPlayer, 15, var, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
         return retval;

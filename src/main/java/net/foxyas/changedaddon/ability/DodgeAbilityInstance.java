@@ -353,17 +353,17 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
             Vec3 motionOrDelta = new Vec3(0, 1, 0);
             switch (randomValue) {
                 case 0 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
                 case 1 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
                 case 2 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
                 case 3 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
                 case 4 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
                 case 5 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
             }
         }
     }
@@ -376,17 +376,17 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
             Vec3 motionOrDelta = new Vec3(0, 1, 0);
             switch (randomValue) {
                 case 0 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
                 case 1 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
                 case 2 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
                 case 3 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
                 case 4 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
                 case 5 ->
-                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
+                        ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
                 //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
             }
         }
@@ -445,17 +445,17 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         Vec3 motionOrDelta = new Vec3(0, 1, 0);
         switch (randomValue) {
             case 0 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
             case 1 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
             case 2 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
             case 3 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
             case 4 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
             case 5 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
             //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
         }
     }
@@ -467,17 +467,17 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         Vec3 motionOrDelta = new Vec3(0, 1, 0);
         switch (randomValue) {
             case 0 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
             case 1 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
             case 2 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
             case 3 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
             case 4 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
             case 5 ->
-                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
+                    ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, 5, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
             //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
         }
     }

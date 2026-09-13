@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
-import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexSnepFeralEntity;
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
 import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
 import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
@@ -40,8 +40,8 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
     @Override
     public void startUsing() {
         ChangedEntity changedEntity = entity.getChangedEntity();
-        if (changedEntity instanceof LatexSnepEntity latexSnepEntity) {
-            latexSnepEntity.WantLoaf = !latexSnepEntity.WantLoaf;
+        if (changedEntity instanceof LatexSnepFeralEntity latexSnepFeralEntity) {
+            latexSnepFeralEntity.WantLoaf = !latexSnepFeralEntity.WantLoaf;
         } else if (changedEntity instanceof AbstractLuminarcticLeopard lumi) {
             if (entity.isCrouching()) {
                 switch (lumi.getGlowStage()) {

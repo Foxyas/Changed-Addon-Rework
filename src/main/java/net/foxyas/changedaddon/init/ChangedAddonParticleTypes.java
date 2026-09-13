@@ -168,7 +168,11 @@ public class ChangedAddonParticleTypes {
     }
 
     public static EntityModelFadeParticleOptions entityModelFade(Entity target, int color, float duration) {
-        return new EntityModelFadeParticleOptions(target.getId(), color, duration);
+        return new EntityModelFadeParticleOptions(target.getId(), color, duration, 1);
+    }
+
+    public static EntityModelFadeParticleOptions entityModelFade(Entity target, int color, float duration, int modelSnapshots) {
+        return new EntityModelFadeParticleOptions(target.getId(), color, duration, modelSnapshots);
     }
 
     private static <T extends ParticleOptions> RegistryObject<ParticleType<T>> register(String name, ParticleOptions.Deserializer<T> dec, final Function<ParticleType<T>, Codec<T>> fn) {

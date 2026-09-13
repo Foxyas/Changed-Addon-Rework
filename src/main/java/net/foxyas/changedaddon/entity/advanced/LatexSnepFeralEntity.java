@@ -39,16 +39,16 @@ import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
-public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity implements IDynamicPawColor {
+public class LatexSnepFeralEntity extends AbstractCanTameSnepChangedEntity implements IDynamicPawColor {
 
     public boolean WantLoaf = false; //Lol the cat don't WANT LOAF!
     public Gender gender = Gender.MALE;
 
-    public LatexSnepEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonEntities.LATEX_SNEP.get(), world);
+    public LatexSnepFeralEntity(PlayMessages.SpawnEntity packet, Level world) {
+        this(ChangedAddonEntities.LATEX_FERAL_SNEP.get(), world);
     }
 
-    public LatexSnepEntity(EntityType<LatexSnepEntity> type, Level world) {
+    public LatexSnepFeralEntity(EntityType<LatexSnepFeralEntity> type, Level world) {
         super(type, world);
         xpReward = 0;
         this.setAttributes(this.getAttributes());
@@ -88,7 +88,7 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity implements
 
     @Override
     public TransfurVariant<?> getSelfVariant() {
-        return ChangedAddonTransfurVariants.LATEX_SNEP.get();
+        return ChangedAddonTransfurVariants.LATEX_SNEP_FERAL.get();
     }
 
     public boolean WantToLoaf() {
