@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.datagen;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.LuminarCrystalLarge;
 import net.foxyas.changedaddon.block.LuminaraLogBlock;
+import net.foxyas.changedaddon.block.LuminaraPetalsBlock;
 import net.foxyas.changedaddon.block.StackableCanBlock;
 import net.foxyas.changedaddon.block.advanced.TimedKeypadBlock;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
@@ -141,6 +142,26 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         getVariantBuilder(LUMINARA_SAPLING.get()).forAllStates(state -> model);
 
         largeLuminarCrystalAnimatedWithItem();
+        luminaraPetalsBlock(LUMINARA_PETALS);
+    }
+
+    private void luminaraPetalsBlock(RegistryObject<? extends PinkPetalsBlock> block) {
+        getVariantBuilder(block.get()).forAllStates(state -> {
+            int amount = state.getValue(PinkPetalsBlock.AMOUNT);
+            boolean glowing = state.getValue(LuminaraPetalsBlock.GLOWING);
+            Direction facing = state.getValue(PinkPetalsBlock.FACING);
+
+            // Define o sufixo do modelo baseado na quantidade e na propriedade 'glowing'
+            String modelName = "luminara_petals_" + amount + (glowing ? "_glowing" : "");
+            ModelFile modelFile = models().getExistingFile(blockLoc(ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, modelName)));
+
+            int yRot = (int) facing.toYRot();
+
+            return ConfiguredModel.builder()
+                    .modelFile(modelFile)
+                    .rotationY(yRot)
+                    .build();
+        });
     }
 
     protected void hangingSign(RegistryObject<? extends CeilingHangingSignBlock> sign, RegistryObject<? extends WallHangingSignBlock> wall, ResourceLocation tex) {
