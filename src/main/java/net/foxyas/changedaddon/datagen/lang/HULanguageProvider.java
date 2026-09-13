@@ -412,7 +412,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(LATEX_KITSUNE_MALE, "Hím latex kicune");
         addEntityType(PURO_KIND_FEMALE, "Nőstény Puro-féle");
         addEntityType(PURO_KIND_MALE, "Hím Puro-féle");
-        addEntityType(LATEX_SNEP, "Feral latex hópárduc");
+        addEntityType(LATEX_FERAL_SNEP, "Feral latex hópárduc");
         addEntityType(LATEX_SNOW_FOX_FEMALE, "Nőstény latex sarki róka");
         addEntityType(LATEX_SNOW_FOX_MALE, "Hím latex sarki róka");
         addEntityType(WHITE_FOX, "Fehér róka");
@@ -651,7 +651,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(LATEX_KAYLA_SHARK_SPAWN_EGG, "Latex Kayla cápát idéző tojás");
         addItem(LATEX_KITSUNE_FEMALE_SPAWN_EGG, "Nőstény latex kicunét idéző tojás");
         addItem(LATEX_KITSUNE_MALE_SPAWN_EGG, "Hím latex kicunét idéző tojás");
-        addItem(LATEX_SNEP_SPAWN_EGG, "Feral latex hópárducot idéző tojás");
+        addItem(LATEX_FERAL_SNEP_SPAWN_EGG, "Feral latex hópárducot idéző tojás");
         addItem(LATEX_SNOW_FOX_FEMALE_SPAWN_EGG, "Nőstény latex sarki rókát idéző tojás");
         addItem(LATEX_SNOW_FOX_MALE_SPAWN_EGG, "Hím latex sarki rókát idéző tojás");
         addItem(WHITE_FOX_SPAWN_EGG, "Fehér rókát idéző tojás");

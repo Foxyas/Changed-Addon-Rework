@@ -398,12 +398,15 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @ModifyVariable(
             method = "lambda$handleEscape$10",
             at = @At(
-                    value = "STORE",
-                    ordinal = 0 // ordinal 0 = first float stored in that method
+                    value = "STORE" /*,
+                    ordinal = 0 // ordinal 0 = first float stored in that method*/
             ),
             name = "keyStrength"
     )
-    private float changedaddon$modifyKeyStrength(float keyStrength) {
+    private float changedaddon$modifyKeyStrength(float keyStrength,
+                                                 @Local(argsOnly = true) float entityGrabStrengthDecay,
+                                                 @Local(name = "trustStrength") float trustStrength
+    ) {
         if (this.grabbedEntity != null) {
             float analogicPercent = 0;
 
@@ -412,13 +415,13 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             for (EquipmentSlot slot : armorSlots) {
                 ItemStack itemBySlot = this.grabbedEntity.getItemBySlot(slot);
                 int enchantmentLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.THORNS, itemBySlot);
-                if (enchantmentLevel > 0) {
-                    analogicPercent += (float) enchantmentLevel / Enchantments.THORNS.getMaxLevel();
-                }
+                if (enchantmentLevel <= 0) continue;
+
+                analogicPercent += (float) enchantmentLevel / Enchantments.THORNS.getMaxLevel();
             }
 
             if (analogicPercent > 0) {
-                return keyStrength * (1 + analogicPercent);
+                return (entityGrabStrengthDecay * (1 + analogicPercent)) * trustStrength;
             } else {
                 return keyStrength;
             }

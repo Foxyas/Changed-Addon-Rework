@@ -166,8 +166,8 @@ public class ChangedAddonTransfurVariants {
                     .nightVision()
                     .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION));
 
-    public static final RegistryObject<TransfurVariant<LatexSnepEntity>> LATEX_SNEP = register("form_latex_snep",
-            () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_SNEP)
+    public static final RegistryObject<TransfurVariant<LatexSnepFeralEntity>> LATEX_SNEP_FERAL = register("form_latex_snep_feral",
+            () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_FERAL_SNEP)
                     .transfurMode(TransfurMode.NONE)
                     .breatheMode(TransfurVariant.BreatheMode.NORMAL)
                     .addAbility(ChangedAddonAbilities.CLAWS)
@@ -179,8 +179,8 @@ public class ChangedAddonTransfurVariants {
                     .nightVision()
                     .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION));
 
-    public static final RegistryObject<TransfurVariant<LatexSnepEntity>> LATEX_SNEP_FERAL_FORM = register("form_latex_snep_feral",
-            () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_SNEP)
+    public static final RegistryObject<TransfurVariant<LatexSnepFeralEntity>> LATEX_SNEP_FERAL_FORM = register("form_latex_snep_feral_form",
+            () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_FERAL_SNEP)
                     .transfurMode(TransfurMode.NONE)
                     .breatheMode(TransfurVariant.BreatheMode.NORMAL)
                     .addAbility(ChangedAddonAbilities.CLAWS)

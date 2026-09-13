@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexSnepFeralEntity;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -45,7 +45,7 @@ public class LeapAbility extends SimpleAbility {
             motionX = -Math.sin(Math.toRadians(player.getYRot())) * 0.15;
             motionY = targetY * 0.8F;
             motionZ = Math.cos(Math.toRadians(player.getYRot())) * 0.15;
-            float multiplier = (iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP.get()
+            float multiplier = (iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL.get()
                     || iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() ? 1.3F : 1) + IAlphaAbleEntity.getEntityAlphaScale(iAbstractChangedEntity.getChangedEntity());
 
             player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY * multiplier, motionZ));
@@ -113,7 +113,7 @@ public class LeapAbility extends SimpleAbility {
 
     @Override
     public UseType getUseType(IAbstractChangedEntity entity) {
-        if (entity.getChangedEntity() instanceof LatexSnepEntity) {
+        if (entity.getChangedEntity() instanceof LatexSnepFeralEntity) {
             return UseType.INSTANT;
         }
         return UseType.CHARGE_RELEASE;

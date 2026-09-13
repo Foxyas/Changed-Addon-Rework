@@ -40,6 +40,7 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         basicSpawnEgg(LATEX_KAYLA_SHARK_SPAWN_EGG);
         basicSpawnEgg(LATEX_BORDER_COLLIE_SPAWN_EGG);
         basicSpawnEgg(BUFF_DAZED_LATEX_SPAWN_EGG);
+        basicSpawnEgg(LATEX_FERAL_SNEP_SPAWN_EGG);
 
         basicSpawnEgg(AVALI_ZERGODMASTER_SPAWN_EGG);
         basicSpawnEgg(WHITE_FOX_SPAWN_EGG);

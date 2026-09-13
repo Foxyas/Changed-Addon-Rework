@@ -88,7 +88,7 @@ public class EntityLinkedThunderParticle extends Particle {
 
         if (!rooted) {
             // Phase 1: Growth (Age from 0 to halfLife)
-            this.segmentsProgress = Math.min(1.0f, (this.age / halfLife) * this.speed);
+            this.segmentsProgress = speed >= this.lifetime ? 1f : Math.min(1.0f, (this.age / halfLife) * this.speed);
 
             // Phase 2: Retraction (Age from halfLife to lifetime)
             if (segmentsProgress >= 1) {
@@ -98,7 +98,7 @@ public class EntityLinkedThunderParticle extends Particle {
                 this.retractProgress = 0.0f;
             }
         } else {
-            this.segmentsProgress = Mth.clamp((this.age / (float) this.lifetime) * this.speed, 0, 1);
+            this.segmentsProgress = speed >= this.lifetime ? 1f : Mth.clamp((this.age / (float) this.lifetime) * this.speed, 0, 1);
             this.retractProgress = 0.0f;
         }
     }

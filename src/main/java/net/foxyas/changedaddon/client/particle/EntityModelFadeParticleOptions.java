@@ -10,7 +10,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import org.jetbrains.annotations.NotNull;
 
-public record EntityModelFadeParticleOptions(int targetId, int color, float duration) implements ParticleOptions {
+public record EntityModelFadeParticleOptions(int targetId, int color, float duration, int modelSnapshots) implements ParticleOptions {
 
     public static final Deserializer<EntityModelFadeParticleOptions> DESERIALIZER = new Deserializer() {
         @Override
@@ -21,12 +21,14 @@ public record EntityModelFadeParticleOptions(int targetId, int color, float dura
             int color = reader.readInt();
             reader.expect(' ');
             float fadeSpeed = reader.readFloat();
-            return new EntityModelFadeParticleOptions(targetInt, color, fadeSpeed);
+            reader.expect(' ');
+            int modelSnapshots = reader.readInt();
+            return new EntityModelFadeParticleOptions(targetInt, color, fadeSpeed, modelSnapshots);
         }
 
         @Override
         public ParticleOptions fromNetwork(@NotNull ParticleType pParticleType, @NotNull FriendlyByteBuf buf) {
-            return new EntityModelFadeParticleOptions(buf.readInt(), buf.readInt(), buf.readFloat());
+            return new EntityModelFadeParticleOptions(buf.readInt(), buf.readInt(), buf.readFloat(), buf.readInt());
         }
     };
 
@@ -34,7 +36,8 @@ public record EntityModelFadeParticleOptions(int targetId, int color, float dura
             instance.group(
                     Codec.INT.fieldOf("target").forGetter(EntityModelFadeParticleOptions::targetId),
                     Codec.INT.fieldOf("color").forGetter(EntityModelFadeParticleOptions::color),
-                    Codec.FLOAT.fieldOf("duration").forGetter(EntityModelFadeParticleOptions::duration)
+                    Codec.FLOAT.fieldOf("duration").forGetter(EntityModelFadeParticleOptions::duration),
+                    Codec.INT.optionalFieldOf("modelSnapshots", 1).forGetter(EntityModelFadeParticleOptions::modelSnapshots)
             ).apply(instance, EntityModelFadeParticleOptions::new));
 
     public static Codec<EntityModelFadeParticleOptions> codec(ParticleType<EntityModelFadeParticleOptions> type) {
@@ -51,6 +54,7 @@ public record EntityModelFadeParticleOptions(int targetId, int color, float dura
         buf.writeInt(targetId);
         buf.writeInt(color);
         buf.writeFloat(duration);
+        buf.writeInt(modelSnapshots);
     }
 
     @Override

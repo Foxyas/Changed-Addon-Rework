@@ -63,7 +63,7 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
             if (this.OldVariant == null
                     && Instance != null) {
                 if (Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get()
-                        && Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP.get()) {
+                        && Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP_FERAL.get()) {
                     setOldVariant(entity.getSelfVariant());
                 }
             } else if (Instance != null) {
@@ -155,7 +155,7 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     }
 
     private TransfurVariant<?> determineNextVariant(TransfurVariant<?> currentVariant) {
-        if (currentVariant == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() || currentVariant == ChangedAddonTransfurVariants.LATEX_SNEP.get()) {
+        if (currentVariant == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() || currentVariant == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL.get()) {
             return this.OldVariant != null ? this.OldVariant : ChangedAddonTransfurVariants.Gendered.ORGANIC_SNOW_LEOPARD.getRandomVariant(RandomSource.create());
         } else {
             return ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get();

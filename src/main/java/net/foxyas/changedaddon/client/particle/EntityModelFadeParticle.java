@@ -43,41 +43,32 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EntityModelFadeParticle extends Particle {
 
     private final Entity entity;
     private final int color;
-    protected boolean snapshotTaken;
-    protected float frozenLimbSwing;
-    protected float frozenLimbSwingAmount;
-    protected int frozenAgeInTicks;
-    protected float frozenNetHeadYaw;
-    protected float frozenHeadPitch;
-    protected float frozenBodyYaw;
-    protected float frozenXRot;
-    protected LivingEntity frozenEntity;
-    protected HashMap<ModelPart, PartPose> poses = new HashMap<>();
-    private float frozenModelRot;
+    private final int targetSnapshots;
+    private final List<ModelSnapshot> snapshots = new ArrayList<>();
 
-//    protected boolean armorSnapshotTaken;
-//    protected HashMap<ModelPart, PartPose> armorPoses = new HashMap<>();
+    private int snapshotInterval = 1; // Capture frequency (in ticks)
+    private int ticksSinceLastSnapshot = 0;
 
     public EntityModelFadeParticle(
             ClientLevel level,
             double x, double y, double z,
             Entity entity,
-            int color,
-            float duration) {
+            @NotNull EntityModelFadeParticleOptions options) {
         super(level, x, y, z);
         this.entity = entity;
-        this.color = color;
-
-        this.lifetime = (int) (20 * duration);
+        this.color = options.color();
+        this.lifetime = (int) (20 * options.duration());
+        this.targetSnapshots = Math.max(1, options.modelSnapshots());
         this.gravity = 0f;
     }
 
@@ -88,100 +79,159 @@ public class EntityModelFadeParticle extends Particle {
     @Override
     public void tick() {
         super.tick();
-        this.alpha = 1 - ((float) this.getAge() / this.getLifetime());
+        this.alpha = 1.0f - ((float) this.age / (float) this.lifetime);
+
+        if (this.entity instanceof LivingEntity livingEntity && snapshots.size() < targetSnapshots) {
+            ticksSinceLastSnapshot++;
+            if (ticksSinceLastSnapshot >= snapshotInterval) {
+                ticksSinceLastSnapshot = 0;
+                captureSnapshot(livingEntity);
+            }
+        }
     }
 
-    public int getAge() {
-        return this.age;
+    private void captureSnapshot(LivingEntity livingEntity) {
+        LivingEntity targetEntity = EntityUtil.maybeGetOverlaying(livingEntity);
+        if (targetEntity == null) targetEntity = livingEntity;
+
+        if (targetEntity instanceof ChangedEntity changedEntity) {
+            captureTransfurSnapshot(changedEntity);
+        } else {
+            captureHumanoidSnapshot(targetEntity);
+        }
+    }
+
+    private void captureTransfurSnapshot(ChangedEntity changedEntity) {
+        EntityRenderer<? super ChangedEntity> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(changedEntity);
+        if (!(renderer instanceof AdvancedHumanoidRenderer<? super ChangedEntity, ?> advancedHumanoidRenderer)) return;
+
+        AdvancedHumanoidModel<? super ChangedEntity> model = advancedHumanoidRenderer.getModel();
+        if (!(model instanceof IPublicRootModel publicRoot)) return;
+        if (publicRoot.getModelRoot() == null) return;
+
+        List<ModelPart> modelParts = new ArrayList<>(model.getRootLevelLimbs().toList());
+        for (ModelPartStem stem : model.getAllParts().toList()) {
+            modelParts.addAll(stem.stem);
+        }
+
+        float partialTicks = 1.0f;
+        float limbSwing = changedEntity.walkAnimation.position();
+        float limbSwingAmount = changedEntity.walkAnimation.speed();
+        float ageInTicks = changedEntity.tickCount;
+        float netHeadYaw = Mth.lerp(partialTicks, changedEntity.yHeadRotO, changedEntity.yHeadRot) -
+                Mth.lerp(partialTicks, changedEntity.yBodyRotO, changedEntity.yBodyRot);
+        float headPitch = changedEntity.getXRot();
+
+        model.prepareMobModel(changedEntity, limbSwing, limbSwingAmount, partialTicks);
+        model.setupAnim(changedEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+
+        ModelSnapshot snapshot = new ModelSnapshot(
+                changedEntity.position(),
+                changedEntity.yBodyRot,
+                changedEntity.tickCount,
+                limbSwing,
+                limbSwingAmount,
+                netHeadYaw,
+                headPitch,
+                1.0f - ((float) snapshots.size() / (float) targetSnapshots)
+        );
+
+        for (ModelPart part : modelParts) {
+            snapshot.poses.put(part, part.storePose());
+        }
+
+        snapshots.add(snapshot);
+    }
+
+    private void captureHumanoidSnapshot(LivingEntity livingEntity) {
+        EntityRenderer<? super LivingEntity> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(livingEntity);
+        if (!(renderer instanceof LivingEntityRenderer<? super LivingEntity, ?> livingRenderer)) return;
+
+        EntityModel<? super LivingEntity> model = livingRenderer.getModel();
+        if (!(model instanceof IPublicRootModel publicRoot)) return;
+        ModelPart root = publicRoot.getModelRoot();
+        if (root == null) return;
+
+        List<ModelPart> modelParts = root.getAllParts().toList();
+
+        float partialTicks = 1.0f;
+        float limbSwing = livingEntity.walkAnimation.position();
+        float limbSwingAmount = livingEntity.walkAnimation.speed();
+        float ageInTicks = livingEntity.tickCount;
+        float netHeadYaw = Mth.lerp(partialTicks, livingEntity.yHeadRotO, livingEntity.yHeadRot) -
+                Mth.lerp(partialTicks, livingEntity.yBodyRotO, livingEntity.yBodyRot);
+        float headPitch = livingEntity.getXRot();
+
+        model.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
+        model.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+
+        ModelSnapshot snapshot = new ModelSnapshot(
+                livingEntity.position(),
+                livingEntity.yBodyRot,
+                livingEntity.tickCount,
+                limbSwing,
+                limbSwingAmount,
+                netHeadYaw,
+                headPitch,
+                1.0f - ((float) snapshots.size() / (float) targetSnapshots)
+        );
+
+        for (ModelPart part : modelParts) {
+            snapshot.poses.put(part, part.storePose());
+        }
+
+        snapshots.add(snapshot);
     }
 
     @Override
     public void render(@NotNull VertexConsumer consumer, @NotNull Camera camera, float partialTick) {
-        if (entity == Minecraft.getInstance().player && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
-                && entity.distanceToSqr(x, y, z) < 3) return;//ignore if too close
+        if (snapshots.isEmpty()) return;
+        if (entity == Minecraft.getInstance().player
+                && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
+                && entity.distanceToSqr(x, y, z) < 3) return;
 
         Color fadeColor = new Color(color);
-
         Minecraft mc = Minecraft.getInstance();
         MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
-        PoseStack poseStack = new PoseStack();
         Vec3 camPos = camera.getPosition();
-        poseStack.translate(
-                this.x - camPos.x,
-                this.y - camPos.y,
-                this.z - camPos.z
-        );
 
         if (!(entity instanceof LivingEntity livingEntity)) return;
 
-        if (frozenEntity == null) frozenEntity = EntityUtil.maybeGetOverlaying(livingEntity);
+        LivingEntity frozenEntity = EntityUtil.maybeGetOverlaying(livingEntity);
+        if (frozenEntity == null) frozenEntity = livingEntity;
 
-        if (frozenEntity instanceof ChangedEntity frozenChangedEntity) {
-            renderTransfur(partialTick, frozenChangedEntity, bufferSource, poseStack, fadeColor);
-        } else {
-            renderHumanoid(partialTick, frozenEntity, bufferSource, poseStack, fadeColor);
+        for (ModelSnapshot snapshot : snapshots) {
+            PoseStack poseStack = new PoseStack();
+            poseStack.translate(
+                    snapshot.position.x - camPos.x,
+                    snapshot.position.y - camPos.y,
+                    snapshot.position.z - camPos.z
+            );
+
+            if (frozenEntity instanceof ChangedEntity changedEntity) {
+                renderTransfurSnapshot(snapshot, partialTick, changedEntity, bufferSource, poseStack, fadeColor);
+            } else {
+                renderHumanoidSnapshot(snapshot, partialTick, frozenEntity, bufferSource, poseStack, fadeColor);
+            }
         }
 
-        poseStack.popPose();
         bufferSource.endBatch();
     }
 
-    protected void renderTransfur(float partialTicks, ChangedEntity changedEntity, MultiBufferSource.BufferSource bufferSource, PoseStack poseStack, Color fadeColor) {
+    protected void renderTransfurSnapshot(ModelSnapshot snapshot, float partialTicks, ChangedEntity changedEntity, MultiBufferSource.BufferSource bufferSource, PoseStack poseStack, Color fadeColor) {
         EntityRenderer<? super ChangedEntity> rendererNormal = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(changedEntity);
-        if (!(rendererNormal instanceof AdvancedHumanoidRenderer<? super ChangedEntity, ?> advancedHumanoidRenderer))
-            return;
+        if (!(rendererNormal instanceof AdvancedHumanoidRenderer<? super ChangedEntity, ?> advancedHumanoidRenderer)) return;
+
         AdvancedHumanoidModel<? super ChangedEntity> model = advancedHumanoidRenderer.getModel();
         ResourceLocation texture = advancedHumanoidRenderer.getTextureLocation(changedEntity);
 
+        if (!(model instanceof IPublicRootModel publicRoot)) return;
+        if (publicRoot.getModelRoot() == null) return;
 
-        if (!(model instanceof IPublicRootModel iPublicRootModel)) return;
-        ModelPart modelRoot = iPublicRootModel.getModelRoot();
-        if (modelRoot == null) return;
         List<ModelPart> modelParts = new ArrayList<>(model.getRootLevelLimbs().toList());
-        List<ModelPartStem> allParts = model.getAllParts().toList();
-        for (ModelPartStem allPart : allParts) {
+        for (ModelPartStem allPart : model.getAllParts().toList()) {
             modelParts.addAll(allPart.stem);
         }
-        //modelParts.addAll(allParts.stream().map(ModelPartStem::getLeaf).toList());
-        //modelParts.addAll(allParts.stream().map(ModelPartStem::getRoot).toList());
-
-
-        if (!snapshotTaken) {
-            frozenModelRot = Mth.lerp(partialTicks, changedEntity.yBodyRotO, changedEntity.yBodyRot);
-            frozenLimbSwing = changedEntity.walkAnimation.position();
-            frozenLimbSwingAmount = changedEntity.walkAnimation.speed();
-            frozenAgeInTicks = changedEntity.tickCount;
-
-            frozenNetHeadYaw = Mth.lerp(partialTicks, changedEntity.yHeadRotO, changedEntity.yHeadRot) -
-                    Mth.lerp(partialTicks, changedEntity.yBodyRotO, changedEntity.yBodyRot);
-
-            frozenHeadPitch = changedEntity.getXRot();
-            frozenBodyYaw = changedEntity.yBodyRot;
-            frozenXRot = changedEntity.getXRot();
-
-            float limbSwing = frozenLimbSwing;
-            float limbSwingAmount = frozenLimbSwingAmount;
-            float ageInTicks = frozenAgeInTicks;
-            float netHeadYaw = frozenNetHeadYaw;
-            float headPitch = frozenHeadPitch;
-
-            model.prepareMobModel(changedEntity, limbSwing, limbSwingAmount, partialTicks);
-            model.setupAnim(changedEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-
-            for (ModelPart modelPart : modelParts) {
-                poses.putIfAbsent(modelPart, modelPart.storePose());
-            }
-
-            snapshotTaken = true;
-            return;
-        }
-
-
-//        // Rotação do corpo (igual renderer normal)
-//        poseStack.mulPose(Axis.YP.rotationDegrees(-frozenModelRot));
-//
-//        // Rotação X real da entity
-//        poseStack.mulPose(Axis.XP.rotationDegrees(180));
 
         if (changedEntity.hasPose(Pose.SLEEPING)) {
             Direction direction = changedEntity.getBedOrientation();
@@ -192,20 +242,13 @@ public class EntityModelFadeParticle extends Particle {
         }
 
         if (advancedHumanoidRenderer instanceof LivingEntityRendererAccessor rendererAccessor) {
-            rendererAccessor.callSetupRotations(
-                    changedEntity,
-                    poseStack,
-                    frozenAgeInTicks,
-                    frozenModelRot,
-                    partialTicks
-            );
+            rendererAccessor.callSetupRotations(changedEntity, poseStack, snapshot.frozenAgeInTicks, snapshot.bodyYaw, partialTicks);
             poseStack.scale(-1.0F, -1.0F, 1.0F);
             rendererAccessor.callScale(changedEntity, poseStack, partialTicks);
+
             if (ChangedAddonClientConfiguration.ALPHA_COMPATIBILITY_MODE_RENDER.get()) {
-                if (changedEntity instanceof IAlphaAbleEntity alphaAbleEntity) {
-                    if (alphaAbleEntity.isAlpha()) {
-                        poseStack.scale(alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender());
-                    }
+                if (changedEntity instanceof IAlphaAbleEntity alphaAbleEntity && alphaAbleEntity.isAlpha()) {
+                    poseStack.scale(alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender());
                 }
             }
             poseStack.translate(0.0F, -1.501F, 0.0F);
@@ -213,24 +256,32 @@ public class EntityModelFadeParticle extends Particle {
 
         poseStack.pushPose();
 
-        float limbSwing = frozenLimbSwing;
-        float limbSwingAmount = frozenLimbSwingAmount;
-        float ageInTicks = frozenAgeInTicks;
-        float netHeadYaw = frozenNetHeadYaw;
-        float headPitch = frozenHeadPitch;
-
-        int blockLight = changedEntity.level.getBrightness(LightLayer.BLOCK, changedEntity.blockPosition());
-        int skyLight = changedEntity.level.getBrightness(LightLayer.SKY, changedEntity.blockPosition());
-        int Light = LightTexture.pack(blockLight, skyLight);
+        int blockLight = changedEntity.level().getBrightness(LightLayer.BLOCK, changedEntity.blockPosition());
+        int skyLight = changedEntity.level().getBrightness(LightLayer.SKY, changedEntity.blockPosition());
+        int light = LightTexture.pack(blockLight, skyLight);
 
         for (ModelPart modelPart : modelParts) {
-            modelPart.loadPose(poses.get(modelPart));
+            PartPose pose = snapshot.poses.get(modelPart);
+            if (pose != null) modelPart.loadPose(pose);
         }
-        model.renderToBuffer(poseStack, bufferSource.getBuffer(
-                ChangedAddonClientConfiguration.USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES.get() ?
-                        ChangedAddonRenderTypes.entityAdditiveTranslucent(texture, false) :
-                        ChangedAddonRenderTypes.entityTranslucent(texture, false)
-        ), Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
+
+        float renderAlpha = this.alpha * snapshot.alphaMultiplier;
+
+        model.renderToBuffer(
+                poseStack,
+                bufferSource.getBuffer(
+                        ChangedAddonClientConfiguration.USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES.get() ?
+                                ChangedAddonRenderTypes.entityAdditiveTranslucent(texture, false) :
+                                ChangedAddonRenderTypes.entityTranslucent(texture, false)
+                ),
+                light,
+                OverlayTexture.NO_OVERLAY,
+                fadeColor.getRed() / 255f,
+                fadeColor.getGreen() / 255f,
+                fadeColor.getBlue() / 255f,
+                renderAlpha
+        );
+
         if (advancedHumanoidRenderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
@@ -239,92 +290,30 @@ public class EntityModelFadeParticle extends Particle {
                             || layer instanceof LatexItemInHandLayer<?, ?>
                             || layer instanceof CustomEyesLayer<?, ?>
                             || layer instanceof LatexElytraLayer<?, ?>
-                            || layer instanceof AccessoryLayer<?,?>
-                    ) {
-//                        if (layer instanceof LatexHumanoidArmorLayer armorLayer) {
-//
-//                            for (EquipmentSlot equipmentSlot: Arrays.stream(EquipmentSlot.values())
-//                                    .filter(equipmentSlot -> equipmentSlot.getType() == EquipmentSlot.Type.ARMOR).toList()) {
-//                                LatexHumanoidArmorModel<? super ChangedEntity, ?> armorModel = armorLayer.getArmorModel(changedEntity, EquipmentSlot.CHEST);
-//
-//                                if (!(armorModel instanceof IPublicRootModel armorModelAccessor)) return;
-//                                ModelPart armorModelRoot = armorModelAccessor.getModelRoot();
-//                                if (armorModelRoot == null) return;
-//                                List<ModelPart> armorModelParts = new ArrayList<>(model.getRootLevelLimbs().toList());
-//                                List<ModelPartStem> armorAllParts = armorModel.getAllParts().toList();
-//                                for (ModelPartStem allPart : armorAllParts) {
-//                                    armorModelParts.addAll(allPart.stem);
-//                                }
-//
-//                                armorModel.prepareMobModel(changedEntity, limbSwing, limbSwingAmount, partialTicks);
-//                                armorModel.setupAnim(changedEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-//
-//                                for (ModelPart modelPart : armorModelParts) {
-//                                    armorPoses.putIfAbsent(modelPart, modelPart.storePose());
-//                                }
-//
-//                            }
-//                        }
-
-
+                            || layer instanceof AccessoryLayer<?, ?>) {
                         continue;
                     }
-                    layer.render(poseStack, bufferSource, Light, changedEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
-                    //TODO: filter this so it don't render the "hold item" layers :>
+                    layer.render(poseStack, bufferSource, light, changedEntity, snapshot.limbSwing, snapshot.limbSwingAmount, partialTicks, snapshot.frozenAgeInTicks, snapshot.netHeadYaw, snapshot.headPitch);
                 }
             }
         }
+
+        poseStack.popPose();
         modelParts.forEach(ModelPart::resetPose);
     }
 
-    protected void renderHumanoid(float partialTicks, LivingEntity livingEntity, MultiBufferSource.BufferSource bufferSource, PoseStack poseStack, Color fadeColor) {
+    protected void renderHumanoidSnapshot(ModelSnapshot snapshot, float partialTicks, LivingEntity livingEntity, MultiBufferSource.BufferSource bufferSource, PoseStack poseStack, Color fadeColor) {
         EntityRenderer<? super LivingEntity> rendererNormal = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
         if (!(rendererNormal instanceof LivingEntityRenderer<? super LivingEntity, ?> livingEntityRenderer)) return;
+
         EntityModel<? super LivingEntity> model = livingEntityRenderer.getModel();
         ResourceLocation texture = livingEntityRenderer.getTextureLocation(livingEntity);
 
-
-        if (!(model instanceof IPublicRootModel iPublicRootModel)) return;
-        ModelPart modelRoot = iPublicRootModel.getModelRoot();
+        if (!(model instanceof IPublicRootModel publicRoot)) return;
+        ModelPart modelRoot = publicRoot.getModelRoot();
         if (modelRoot == null) return;
+
         List<ModelPart> modelParts = modelRoot.getAllParts().toList();
-
-        if (!snapshotTaken) {
-            frozenModelRot = Mth.lerp(partialTicks, livingEntity.yBodyRotO, livingEntity.yBodyRot);
-            frozenLimbSwing = livingEntity.walkAnimation.position();
-            frozenLimbSwingAmount = livingEntity.walkAnimation.speed();
-            frozenAgeInTicks = livingEntity.tickCount;
-
-            frozenNetHeadYaw = Mth.lerp(partialTicks, livingEntity.yHeadRotO, livingEntity.yHeadRot) -
-                    Mth.lerp(partialTicks, livingEntity.yBodyRotO, livingEntity.yBodyRot);
-
-            frozenHeadPitch = livingEntity.getXRot();
-            frozenBodyYaw = livingEntity.yBodyRot;
-            frozenXRot = livingEntity.getXRot();
-
-            float limbSwing = frozenLimbSwing;
-            float limbSwingAmount = frozenLimbSwingAmount;
-            float ageInTicks = frozenAgeInTicks;
-            float netHeadYaw = frozenNetHeadYaw;
-            float headPitch = frozenHeadPitch;
-
-            model.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
-            model.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-
-            for (ModelPart modelPart : modelParts) {
-                poses.putIfAbsent(modelPart, modelPart.storePose());
-            }
-
-            snapshotTaken = true;
-            return;
-        }
-
-
-        //        // Rotação do corpo (igual renderer normal)
-//        poseStack.mulPose(Axis.YP.rotationDegrees(-frozenModelRot));
-//
-//        // Rotação X real da entity
-//        poseStack.mulPose(Axis.XP.rotationDegrees(180));
 
         if (livingEntity.hasPose(Pose.SLEEPING)) {
             Direction direction = livingEntity.getBedOrientation();
@@ -335,20 +324,13 @@ public class EntityModelFadeParticle extends Particle {
         }
 
         if (rendererNormal instanceof LivingEntityRendererAccessor rendererAccessor) {
-            rendererAccessor.callSetupRotations(
-                    livingEntity,
-                    poseStack,
-                    frozenAgeInTicks,
-                    frozenModelRot,
-                    partialTicks
-            );
+            rendererAccessor.callSetupRotations(livingEntity, poseStack, snapshot.frozenAgeInTicks, snapshot.bodyYaw, partialTicks);
             poseStack.scale(-1.0F, -1.0F, 1.0F);
             rendererAccessor.callScale(livingEntity, poseStack, partialTicks);
+
             if (ChangedAddonClientConfiguration.ALPHA_COMPATIBILITY_MODE_RENDER.get()) {
-                if (livingEntity instanceof IAlphaAbleEntity alphaAbleEntity) {
-                    if (alphaAbleEntity.isAlpha()) {
-                        poseStack.scale(alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender());
-                    }
+                if (livingEntity instanceof IAlphaAbleEntity alphaAbleEntity && alphaAbleEntity.isAlpha()) {
+                    poseStack.scale(alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender(), alphaAbleEntity.alphaScaleForRender());
                 }
             }
             poseStack.translate(0.0F, -1.501F, 0.0F);
@@ -356,28 +338,32 @@ public class EntityModelFadeParticle extends Particle {
 
         poseStack.pushPose();
 
-        float limbSwing = frozenLimbSwing;
-        float limbSwingAmount = frozenLimbSwingAmount;
-        float ageInTicks = frozenAgeInTicks;
-        float netHeadYaw = frozenNetHeadYaw;
-        float headPitch = frozenHeadPitch;
-
-        //model.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
-        //model.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-
-
-        int blockLight = livingEntity.level.getBrightness(LightLayer.BLOCK, livingEntity.blockPosition());
-        int skyLight = livingEntity.level.getBrightness(LightLayer.SKY, livingEntity.blockPosition());
-        int Light = LightTexture.pack(blockLight, skyLight);
+        int blockLight = livingEntity.level().getBrightness(LightLayer.BLOCK, livingEntity.blockPosition());
+        int skyLight = livingEntity.level().getBrightness(LightLayer.SKY, livingEntity.blockPosition());
+        int light = LightTexture.pack(blockLight, skyLight);
 
         for (ModelPart modelPart : modelParts) {
-            modelPart.loadPose(poses.get(modelPart));
+            PartPose pose = snapshot.poses.get(modelPart);
+            if (pose != null) modelPart.loadPose(pose);
         }
-        model.renderToBuffer(poseStack, bufferSource.getBuffer(
-                ChangedAddonClientConfiguration.USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES.get() ?
-                        ChangedAddonRenderTypes.entityAdditiveTranslucent(texture, false) :
-                        ChangedAddonRenderTypes.entityTranslucent(texture, false)
-        ), Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
+
+        float renderAlpha = this.alpha * snapshot.alphaMultiplier;
+
+        model.renderToBuffer(
+                poseStack,
+                bufferSource.getBuffer(
+                        ChangedAddonClientConfiguration.USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES.get() ?
+                                ChangedAddonRenderTypes.entityAdditiveTranslucent(texture, false) :
+                                ChangedAddonRenderTypes.entityTranslucent(texture, false)
+                ),
+                light,
+                OverlayTexture.NO_OVERLAY,
+                fadeColor.getRed() / 255f,
+                fadeColor.getGreen() / 255f,
+                fadeColor.getBlue() / 255f,
+                renderAlpha
+        );
+
         if (livingEntityRenderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
@@ -385,15 +371,15 @@ public class EntityModelFadeParticle extends Particle {
                     if (layer instanceof HumanoidArmorLayer<?, ?, ?>
                             || layer instanceof ItemInHandLayer<?, ?>
                             || layer instanceof ElytraLayer<?, ?>
-                            || layer instanceof AccessoryLayer<?,?>
-                    ) {
+                            || layer instanceof AccessoryLayer<?, ?>) {
                         continue;
                     }
-                    layer.render(poseStack, bufferSource, Light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
-                    //TODO: filter this so it don't render the "hold item" layers :>
+                    layer.render(poseStack, bufferSource, light, livingEntity, snapshot.limbSwing, snapshot.limbSwingAmount, partialTicks, snapshot.frozenAgeInTicks, snapshot.netHeadYaw, snapshot.headPitch);
                 }
             }
         }
+
+        poseStack.popPose();
         modelParts.forEach(ModelPart::resetPose);
     }
 
@@ -402,12 +388,35 @@ public class EntityModelFadeParticle extends Particle {
         return ParticleRenderType.CUSTOM;
     }
 
+    /* ========================= SNAPSHOT CONTAINER ========================= */
+
+    protected static class ModelSnapshot {
+        protected final Map<ModelPart, PartPose> poses = new HashMap<>();
+        protected final Vec3 position;
+        protected final float bodyYaw;
+        protected final int frozenAgeInTicks;
+        protected final float limbSwing;
+        protected final float limbSwingAmount;
+        protected final float netHeadYaw;
+        protected final float headPitch;
+        protected final float alphaMultiplier;
+
+        public ModelSnapshot(Vec3 position, float bodyYaw, int frozenAgeInTicks, float limbSwing, float limbSwingAmount, float netHeadYaw, float headPitch, float alphaMultiplier) {
+            this.position = position;
+            this.bodyYaw = bodyYaw;
+            this.frozenAgeInTicks = frozenAgeInTicks;
+            this.limbSwing = limbSwing;
+            this.limbSwingAmount = limbSwingAmount;
+            this.netHeadYaw = netHeadYaw;
+            this.headPitch = headPitch;
+            this.alphaMultiplier = alphaMultiplier;
+        }
+    }
 
     /* ========================= PROVIDER ========================= */
 
     public static class Provider implements ParticleProvider<EntityModelFadeParticleOptions> {
-        public Provider() {
-        }
+        public Provider() {}
 
         @Override
         public @Nullable Particle createParticle(
@@ -416,7 +425,7 @@ public class EntityModelFadeParticle extends Particle {
                 double x, double y, double z,
                 double xs, double ys, double zs
         ) {
-            EntityModelFadeParticle entityModelFadeParticle = new EntityModelFadeParticle(level, x, y, z, level.getEntity(options.targetId()), options.color(), options.duration());
+            EntityModelFadeParticle entityModelFadeParticle = new EntityModelFadeParticle(level, x, y, z, level.getEntity(options.targetId()), options);
             entityModelFadeParticle.setParticleSpeed(xs, ys, zs);
             return entityModelFadeParticle;
         }

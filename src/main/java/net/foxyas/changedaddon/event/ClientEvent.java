@@ -1,20 +1,20 @@
 package net.foxyas.changedaddon.event;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.math.Axis;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.ChangedAdditionsModConflictWarningScreen;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
 import net.foxyas.changedaddon.command.ChangedAddonClientCommands;
+import net.foxyas.changedaddon.init.ChangedAddonKeyMappings;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.process.features.ClientPatState;
 import net.foxyas.changedaddon.process.sounds.BossMusicHandler;
-import net.foxyas.changedaddon.util.GrabAbilityUtil;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
-import net.ltxprogrammer.changed.ability.GrabEntityAbility;
-import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.item.LatexTippedArrowItem;
@@ -22,28 +22,35 @@ import net.ltxprogrammer.changed.item.Syringe;
 import net.ltxprogrammer.changed.item.VariantHoldingBase;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -60,6 +67,48 @@ public class ClientEvent {
             if (changedAdditionsLoaded && !changedAdditionsWarningScreenShowed) {
                 event.setNewScreen(new ChangedAdditionsModConflictWarningScreen());
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void animateHandForPatting(RenderHandEvent event) {
+        if (ModList.get().isLoaded("changed_synergy")) return;
+
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null || player.level() == null) return;
+
+        KeyMapping patKey = ChangedAddonKeyMappings.PAT_KEY;
+        boolean patting = ClientPatState.patting;
+
+        if (patting && event.getHand() == InteractionHand.MAIN_HAND) {
+            // Suppress default vanilla swing
+            if (patKey.isDown()) {
+                player.attackAnim = 0.0f;
+                player.oAttackAnim = 0.0f;
+                player.swinging = false;
+                player.swingTime = -1;
+            }
+
+            PoseStack poseStack = event.getPoseStack();
+            float partialTick = event.getPartialTick();
+            float patSpeed = Math.max(0.01F, ClientPatState.patSpeed);
+
+            // Base cycle duration (12 ticks at standard 1.0 speed)
+            float baseCycleTicks = 12.0F;
+
+            // Smooth phase calculation using the accumulator + partial tick interpolation
+            float elapsed = ClientPatState.animTicks + (partialTick * patSpeed);
+            float phase = (elapsed % baseCycleTicks) / baseCycleTicks;
+
+            // Waveform calculations
+            float sweep = Mth.sin(phase * (float) Math.PI * 2.0F);
+            float lift = 0.5F - 0.5F * Mth.cos(phase * (float) Math.PI * 2.0F);
+
+            // Matrix transformations
+            poseStack.translate(0.036F * sweep, -0.012F * lift, -0.04F * lift);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-3.0F * lift));
+            poseStack.mulPose(Axis.YP.rotationDegrees(2.2F * sweep));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(6.0F * sweep));
         }
     }
 
@@ -116,6 +165,7 @@ public class ClientEvent {
         if (event.phase == TickEvent.Phase.END && minecraft.level != null) {
             BossMusicHandler.tick(minecraft.level);
             SonarOutlineLayer.SonarClientState.tick();
+            ClientPatState.clientTick();
         }
     }
 

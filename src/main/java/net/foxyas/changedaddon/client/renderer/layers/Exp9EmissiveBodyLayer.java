@@ -35,13 +35,15 @@ public class Exp9EmissiveBodyLayer<M extends AdvancedHumanoidModel<T>, T extends
             return;
         }
 
-        if (entity.isPhase2()) {
-            super.render(poseStack, multiBufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
-        } else if (entity instanceof Experiment009BossEntity experiment009BossEntity && experiment009BossEntity.isPhase3()) {
+        if (entity instanceof Experiment009BossEntity experiment009BossEntity && experiment009BossEntity.isPhase3()) {
             VertexConsumer vertexconsumer = multiBufferSource.getBuffer(this.renderType2);
             this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            return;
         }
 
+        if (entity.isPhase2()) {
+            super.render(poseStack, multiBufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
+        }
     }
 
     public @NotNull RenderType renderType() {

@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.mixins.mods.firstPerson;
 
 import dev.tr7zw.firstperson.LogicHandler;
-import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexSnepFeralEntity;
 import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
@@ -40,7 +40,7 @@ public abstract class LogicHandleMixin {
     @Unique
     private boolean isSnep(Entity entity) {
         return ProcessTransfur.getPlayerTransfurVariantSafe(EntityUtil.playerOrNull(entity))
-                .map(variant -> variant.getChangedEntity() instanceof LatexSnepEntity)
+                .map(variant -> variant.getChangedEntity() instanceof LatexSnepFeralEntity)
                 .orElse(false);
     }
 }

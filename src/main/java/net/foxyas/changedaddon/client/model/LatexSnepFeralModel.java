@@ -4,7 +4,7 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexSnepFeralEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> {
+public class LatexSnepFeralModel extends AdvancedHumanoidModel<LatexSnepFeralEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = ChangedAddonMod.layerLocation("latex_snep", "main");
     // Grupo principal: Animal e corpo
 
@@ -47,9 +47,9 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> {
     // Pernas: Traseira esquerda
     private final ModelPart LegBackLeft;
 
-    private final HumanoidAnimator<LatexSnepEntity, LatexSnepModel> animator;
+    private final HumanoidAnimator<LatexSnepFeralEntity, LatexSnepFeralModel> animator;
 
-    public LatexSnepModel(ModelPart root) {
+    public LatexSnepFeralModel(ModelPart root) {
         super(root);
 
         this.Animal = root.getChild("Animal");
@@ -253,7 +253,7 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> {
     }
 
     @Override
-    public void prepareMobModel(@NotNull LatexSnepEntity entity, float limbSwing, float limbSwingAmount, float partialTicks) {
+    public void prepareMobModel(@NotNull LatexSnepFeralEntity entity, float limbSwing, float limbSwingAmount, float partialTicks) {
         int entityTickCount = entity.tickCount;
 
         super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
@@ -347,13 +347,13 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> {
     }
 
     @Override
-    public void setupHand(LatexSnepEntity entity) {
+    public void setupHand(LatexSnepFeralEntity entity) {
         animator.setupHand();
     }
 
 
     @Override
-    public void setupAnim(@NotNull LatexSnepEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@NotNull LatexSnepFeralEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         if (!entity.isSleeping()) {
             this.Head.xRot = headPitch * ((float) Math.PI / 180F);
@@ -422,7 +422,7 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> {
 
 
     @Override
-    public HumanoidAnimator<LatexSnepEntity, LatexSnepModel> getAnimator(LatexSnepEntity entity) {
+    public HumanoidAnimator<LatexSnepFeralEntity, LatexSnepFeralModel> getAnimator(LatexSnepFeralEntity entity) {
         return animator;
     }
 

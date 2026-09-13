@@ -422,7 +422,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityType(LATEX_KITSUNE_MALE, "Male Latex Kitsune");
         addEntityFromId(PURO_KIND_FEMALE);
         addEntityFromId(PURO_KIND_MALE);
-        addEntityFromId(LATEX_SNEP);
+        addEntityFromId(LATEX_FERAL_SNEP);
         addEntityType(LATEX_SNOW_FOX_FEMALE, "Female Latex Snow Fox");
         addEntityType(LATEX_SNOW_FOX_MALE, "Male Latex Snow Fox");
         addEntityType(WHITE_FOX, "White Fox");
@@ -647,7 +647,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(LATEX_KAYLA_SHARK_SPAWN_EGG);
         addItem(LATEX_KITSUNE_FEMALE_SPAWN_EGG, "Female Latex Kitsune Spawn Egg");
         addItem(LATEX_KITSUNE_MALE_SPAWN_EGG, "Male Latex Kitsune Spawn Egg");
-        addItem(LATEX_SNEP_SPAWN_EGG, "Latex Animal Snow Leopard Spawn Egg");
+        addItem(LATEX_FERAL_SNEP_SPAWN_EGG, "Latex Animal Snow Leopard Spawn Egg");
         addItem(LATEX_SNOW_FOX_FEMALE_SPAWN_EGG, "Female Latex Snow Fox Spawn Egg");
         addItem(LATEX_SNOW_FOX_MALE_SPAWN_EGG, "Male Latex Snow Fox Spawn Egg");
         addItem(WHITE_FOX_SPAWN_EGG, "White Fox Spawn Egg");

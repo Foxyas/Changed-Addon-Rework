@@ -131,7 +131,7 @@ public class ClientPacketHandler {
                 if (entity instanceof LivingEntity livingEntity) {
 
                     // 1. Partículas
-                    var particleOption = ChangedAddonParticleTypes.entityModelFade(livingEntity, message.colorRGB, 0.25f);
+                    var particleOption = ChangedAddonParticleTypes.entityModelFade(livingEntity, message.colorRGB, 0.25f, message.modelSnapshots);
                     if (message.count <= 1) {
                         level.addParticle(particleOption, message.pos.x, message.pos.y, message.pos.z,
                                 message.motion.x * message.speed, message.motion.y * message.speed, message.motion.z * message.speed);

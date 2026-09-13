@@ -1,13 +1,13 @@
 package net.foxyas.changedaddon.entity.ai.goals.abilities;
 
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
 import net.foxyas.changedaddon.util.EntityUtil;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.Util;
@@ -64,7 +64,7 @@ public class MayGrabTargetGoal extends Goal {
         if (grabAbilityInstance == null) return false;
         if (GrabEntityAbility.getGrabber(target) != null) return false;
         if (grabber.getGrabCooldown() > 0) return false;
-        if (!target.getType().is(ChangedTags.EntityTypes.HUMANOIDS))
+        if (target.getType().is(ChangedAddonTags.EntityTypes.CANT_BE_GRABBED))
             return false;
 
         return (grabReach.contains(target.position()) || target.distanceToSqr(grabber.asMob()) <= reachSqr) && grabAbilityInstance.grabbedEntity == null;

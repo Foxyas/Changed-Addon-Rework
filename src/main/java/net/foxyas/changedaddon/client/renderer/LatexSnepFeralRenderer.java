@@ -2,8 +2,8 @@ package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.foxyas.changedaddon.client.model.LatexSnepModel;
-import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
+import net.foxyas.changedaddon.client.model.LatexSnepFeralModel;
+import net.foxyas.changedaddon.entity.advanced.LatexSnepFeralEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorNoneModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -17,11 +17,14 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity, LatexSnepModel> {
-    public LatexSnepRenderer(EntityRendererProvider.Context context) {
-        super(context, new LatexSnepModel(context.bakeLayer(LatexSnepModel.LAYER_LOCATION)),
+public class LatexSnepFeralRenderer extends AdvancedHumanoidRenderer<LatexSnepFeralEntity, LatexSnepFeralModel> {
+    public LatexSnepFeralRenderer(EntityRendererProvider.Context context) {
+        super(context, new LatexSnepFeralModel(context.bakeLayer(LatexSnepFeralModel.LAYER_LOCATION)),
                 ArmorNoneModel.MODEL_SET, 0.5f);
-        this.addLayer(new CustomCatEyesLayer<>(this, ResourceLocation.parse("changed_addon:textures/entities/latex_snep_right_eye.png"), ResourceLocation.parse("changed_addon:textures/entities/latex_snep_left_eye.png"), ResourceLocation.parse("changed_addon:textures/entities/latex_snep_sclera.png")));
+        this.addLayer(new CustomCatEyesLayer<>(this,
+                ResourceLocation.parse("changed_addon:textures/entities/latex_snep_feral/latex_snep_feral_right_eye.png"),
+                ResourceLocation.parse("changed_addon:textures/entities/latex_snep_feral_left_eye.png"),
+                ResourceLocation.parse("changed_addon:textures/entities/latex_snep_feral_sclera.png")));
     }
 
 
@@ -43,18 +46,18 @@ public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity,
 	*/
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull LatexSnepEntity entity) {
-        return ResourceLocation.parse("changed_addon:textures/entities/latex_snep.png");
+    public @NotNull ResourceLocation getTextureLocation(@NotNull LatexSnepFeralEntity entity) {
+        return ResourceLocation.parse("changed_addon:textures/entities/latex_snep_fera/latex_snep_feral.png");
     }
 
 
     @Override
-    protected float getFlipDegrees(@NotNull LatexSnepEntity entity) {
+    protected float getFlipDegrees(@NotNull LatexSnepFeralEntity entity) {
         return super.getFlipDegrees(entity);
     }
 
     @Override
-    protected boolean isEntityUprightType(@NotNull LatexSnepEntity entity) {
+    protected boolean isEntityUprightType(@NotNull LatexSnepFeralEntity entity) {
         return false;
     }
 

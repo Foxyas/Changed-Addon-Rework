@@ -121,7 +121,7 @@ public class ChangedAddonModels {
         ArmorLatexFemaleDragonAltTailModel.MODEL_SET.registerDefinitions(event::registerLayerDefinition);
 
         // --- Non Anthro Entities Model ---
-        event.registerLayerDefinition(LatexSnepModel.LAYER_LOCATION, LatexSnepModel::createBodyLayer);
+        event.registerLayerDefinition(LatexSnepFeralModel.LAYER_LOCATION, LatexSnepFeralModel::createBodyLayer);
 
         // --- Block Entities Custom Models ---
         event.registerLayerDefinition(SnepPlushyBlockEntityRenderer.SnepPlushExtraModel.LAYER_LOCATION, SnepPlushyBlockEntityRenderer.SnepPlushExtraModel::createBodyLayer);

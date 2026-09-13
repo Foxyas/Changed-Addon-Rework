@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexSnepFeralEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.network.chat.Component;
@@ -24,7 +24,7 @@ public class TurnFeralSnepAbility extends AbstractAbility<TurnFeralSnepAbilityIn
     @Nullable
     @Override
     public Component getSelectedDisplayText(IAbstractChangedEntity entity) {
-        if (entity.getChangedEntity() instanceof LatexSnepEntity) {
+        if (entity.getChangedEntity() instanceof LatexSnepFeralEntity) {
             return Component.translatable("ability.changed_addon.turn_feral.can");
         }
         return super.getSelectedDisplayText(entity);

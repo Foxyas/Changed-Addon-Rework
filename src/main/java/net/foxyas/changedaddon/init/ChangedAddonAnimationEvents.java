@@ -33,9 +33,15 @@ public class ChangedAddonAnimationEvents {
         return REGISTRY.register(name, () -> new AnimationEvent<>(parameters));
     }
 
+    public static <T extends AnimationParameters> void broadcastEntityAnimationWithFade(LivingEntity livingEntity, Color color, Vec3 pos, Vec3 motion, float speed, int count, int modelSnapshots, AnimationEvent<T> event, @Nullable T parameters) {
+        if (!livingEntity.level().isClientSide) {
+            ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> livingEntity), new S2CPlayAnimationAfterParticleFade<T>(livingEntity, color, pos, motion, speed, count, modelSnapshots, event, null, parameters));
+        }
+    }
+
     public static <T extends AnimationParameters> void broadcastEntityAnimationWithFade(LivingEntity livingEntity, Color color, Vec3 pos, Vec3 motion, float speed, int count, AnimationEvent<T> event, @Nullable T parameters) {
         if (!livingEntity.level().isClientSide) {
-            ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> livingEntity), new S2CPlayAnimationAfterParticleFade<T>(livingEntity, color, pos, motion, speed, count, event, null, parameters));
+            ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> livingEntity), new S2CPlayAnimationAfterParticleFade<T>(livingEntity, color, pos, motion, speed, count, 1, event, null, parameters));
         }
     }
 }
