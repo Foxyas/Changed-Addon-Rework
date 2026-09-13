@@ -742,14 +742,16 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         if (this.isPhase3() && (isBleeding() && this.computeHealthRatioForCurrentPhase() > 0.25f)) {
-            if (source.getDirectEntity() != null && source.getDirectEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
-                double speed = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2.0f);
-                dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
-            }
+            if (!this.isInvulnerableTo(source)) {
+                if (source.getDirectEntity() != null && source.getDirectEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
+                    double speed = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2.0f);
+                    dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
+                }
 
-            DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
-            this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
-            return false;
+                DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
+                this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
+                return false;
+            }
         }
 
 

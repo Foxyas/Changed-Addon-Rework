@@ -331,6 +331,6 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
 
     @Override
     public void setCanceledTo(boolean canceled) {
-        this.canceled = true;
+        this.canceled = canceled;
     }
 }
