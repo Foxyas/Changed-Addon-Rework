@@ -43,7 +43,7 @@ public class ProcessPatFeature {
                 0, 0, 0, 0, 0);
     }
 
-    public static class OnPatReactionEvent extends Event {
+    public static class GlobalPatReactionEvent extends Event {
         public final LivingEntity patter;
         public final LivingEntity target;
         public final LevelAccessor world;
@@ -51,7 +51,7 @@ public class ProcessPatFeature {
         @Nullable
         public final Vec3 pattedLocation;
 
-        public OnPatReactionEvent(LevelAccessor world, LivingEntity patter, InteractionHand hand, LivingEntity target, @Nullable Vec3 pattedLocation) {
+        public GlobalPatReactionEvent(LevelAccessor world, LivingEntity patter, InteractionHand hand, LivingEntity target, @Nullable Vec3 pattedLocation) {
             this.patter = patter;
             this.target = target;
             this.world = world;
@@ -73,7 +73,7 @@ public class ProcessPatFeature {
     public static class HandleGlobalPatReaction {
 
         @SubscribeEvent
-        public static void onPatEntity(OnPatReactionEvent event) {
+        public static void onPatEntity(GlobalPatReactionEvent event) {
             LivingEntity patter = event.patter;
             LivingEntity target = event.target;
 

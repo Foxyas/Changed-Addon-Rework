@@ -9,9 +9,8 @@ import net.foxyas.changedaddon.init.ChangedAddonStatRegistry;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.ChangedAddonVariables.PlayerVariables;
-import net.foxyas.changedaddon.network.packet.PatKeyPacket;
 import net.foxyas.changedaddon.network.packet.PatKeyPacket.PatType;
-import net.foxyas.changedaddon.process.features.ProcessPatFeature.OnPatReactionEvent;
+import net.foxyas.changedaddon.process.features.ProcessPatFeature.GlobalPatReactionEvent;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -127,7 +126,7 @@ public class PatFeatureHandle {
     private static void handleLatexEntity(LivingEntity livingEntity, InteractionHand emptyHand, ChangedEntity target, EntityHitResult entityHitResult, Level level) {
         livingEntity.swing(emptyHand);
 
-        OnPatReactionEvent globalPatReactionEvent = new OnPatReactionEvent(level, livingEntity, emptyHand, target, entityHitResult.getLocation());
+        GlobalPatReactionEvent globalPatReactionEvent = new GlobalPatReactionEvent(level, livingEntity, emptyHand, target, entityHitResult.getLocation());
         if (ChangedAddonMod.postEvent(globalPatReactionEvent)) {
             return;
         }
@@ -170,8 +169,8 @@ public class PatFeatureHandle {
             targetPat.whenPattedReactionSimple();
         }
 
-        OnPatReactionEvent onPatReactionEvent = new OnPatReactionEvent(level, player, emptyHand, target, entityHitResult.getLocation());
-        if (ChangedAddonMod.postEvent(onPatReactionEvent)) {
+        GlobalPatReactionEvent globalPatReactionEvent = new GlobalPatReactionEvent(level, player, emptyHand, target, entityHitResult.getLocation());
+        if (ChangedAddonMod.postEvent(globalPatReactionEvent)) {
             return;
         }
 
@@ -193,7 +192,7 @@ public class PatFeatureHandle {
         entity.swing(emptyHand);
 
         if (target instanceof LivingEntity livingTarget) {//assume that target is always livingEntity or allow entity in the event?
-            ChangedAddonMod.postEvent(new OnPatReactionEvent(level, entity, emptyHand, livingTarget, entityHitResult.getLocation()));
+            ChangedAddonMod.postEvent(new GlobalPatReactionEvent(level, entity, emptyHand, livingTarget, entityHitResult.getLocation()));
             return;
         }
 

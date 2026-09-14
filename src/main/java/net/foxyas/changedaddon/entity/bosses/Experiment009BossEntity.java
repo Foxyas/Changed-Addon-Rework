@@ -979,6 +979,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     protected void onPhaseChange(Exp9Phase oldPhase, Exp9Phase newPhase) {
         boolean refreshAttributes = oldPhase != newPhase;
+        boolean applyEffects = !this.firstTick;
         switch (newPhase) {
             case PHASE1 -> {
                 refreshPhaseAIGoals();
@@ -988,24 +989,31 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
             case PHASE2 -> {
                 refreshPhaseAIGoals();
-                if (refreshAttributes) {
-                    playSound(SoundEvents.PLAYER_ATTACK_CRIT, 2.5f, 0.75f);
-                    removeStatModifiers();
-                    applyStatModifier(this, 1.5f);
 
+                if (applyEffects) {
+                    playSound(SoundEvents.PLAYER_ATTACK_CRIT, 2.5f, 0.75f);
                     playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 5f, 0.75f);
                     knockBackAndDoThunderBolt();
                 }
+
+                if (refreshAttributes) {
+                    removeStatModifiers();
+                    applyStatModifier(this, 1.5f);
+                }
+
                 this.setPhase2(true);
                 this.setPhase3(false);
             }
             case PHASE3 -> {
                 refreshPhaseAIGoals();
                 if (refreshAttributes) {
-                    playSound(SoundEvents.PLAYER_ATTACK_CRIT, 2.5f, 0.25f);
                     removeStatModifiers();
                     applyStatModifierAllOutPhase();
 
+                }
+
+                if (applyEffects) {
+                    playSound(SoundEvents.PLAYER_ATTACK_CRIT, 2.5f, 0.25f);
                     playSound(SoundEvents.PLAYER_ATTACK_CRIT, 2.5f, 0.55f);
                     playSound(SoundEvents.LIGHTNING_BOLT_IMPACT, 5f, 0.55f);
                     playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 5f, 0.25f);
@@ -1244,7 +1252,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (tag.contains("bossPhase")) {
             CompoundTag bossPhase = tag.getCompound("bossPhase");
             this.setOldPhase(Exp9Phase.getFromTag(bossPhase, "oldPhase"));
-            this.setPhase(Exp9Phase.getFromTag(bossPhase, "currentPhase"));
+            Exp9Phase currentPhase = Exp9Phase.getFromTag(bossPhase, "currentPhase");
+            this.setPhase(currentPhase);
         }
 
         super.readAdditionalSaveData(tag);

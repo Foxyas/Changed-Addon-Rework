@@ -145,7 +145,7 @@ dependencies {
         changing = true
     }//Changed
 
-    compileOnly fg.deobf("net.parkabird.changedsynergy:ChangedSynergy-m1.20.1-v0.1.1-beta.1-all:0.1.1-beta.1") {
+    implementation fg.deobf("net.parkabird.changedsynergy:ChangedSynergy-m1.20.1-v0.1.1-beta.1-all:0.1.1-beta.1") {
         changing = true
     }//Changed
 
