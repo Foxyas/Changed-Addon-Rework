@@ -192,6 +192,8 @@ public class HULanguageProvider extends LanguageProvider {
         addBlock(ChangedAddonBlocks.LUMINARA_BUTTON, "Luminara gomb");
         addBlock(ChangedAddonBlocks.LUMINARA_PRESSURE_PLATE, "Luminara nyomólap");
         addBlock(ChangedAddonBlocks.LUMINARA_LEAVES, "Luminaralevelek");
+        addBlock(ChangedAddonBlocks.LUMINARA_PETALS, "Luminara virágszirmok");
+        addBlock(ChangedAddonBlocks.LUMINARA_LICHEN, "Luminara zuzmó");
         addBlock(ChangedAddonBlocks.LUMINARA_SAPLING, "Luminara csemete");
         addBlock(POTTED_LUMINARA_SAPLING, "Virágcserép luminara csemetével");
 
@@ -555,7 +557,7 @@ public class HULanguageProvider extends LanguageProvider {
         add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".description", "§3A tiszta energia-manipuláció és az elektromosság erejével átitatott DNS.");
         addItem(EXPERIMENT_10_DNA, "§410-es kísérlet DNS-e");
         add(EXPERIMENT_10_DNA.get().getDescriptionId() + ".description", "§4A rothadás és bomlás által károsított DNS képesnek tűnik az élő anyag lebontására.");
-        addItem(LUMINARA_BLOOM_PETALS, "Luminara virág sziromlevelei");
+        addItem(LUMINARA_BLOOM_PETALS, "Luminara virágszirmok");
         add(FOXTA.get().getDescriptionId() + ".desc", "Most 200%-kal több narancsból készült! Csak 982 forint! Mennyei íze van!");
         addItem(GOLDEN_ORANGE, "Aranynarancs");
         addItem(GOO_CORE_FRAGMENT, "Ragacsmag-szilánk");
