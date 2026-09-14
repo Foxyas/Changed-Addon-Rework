@@ -34,10 +34,10 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
 
     @Unique
     private static final List<Limb> LIMBS_TO_SEARCH = List.of(
-            Limb.LEFT_ARM,
-            Limb.RIGHT_ARM,
-            Limb.LEFT_LEG,
-            Limb.RIGHT_LEG,
+            Limb.UPPER_LEFT_ARM,
+            Limb.UPPER_RIGHT_ARM,
+            Limb.UPPER_LEFT_LEG,
+            Limb.UPPER_RIGHT_LEG,
             Limb.HEAD
     );
 
@@ -76,37 +76,33 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
 
                 player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).ifPresent(data -> {
                     for (Limb limb : LIMBS_TO_SEARCH) {
+                        boolean isVisible = data.getLimb(limb).isAmputated();
                         switch (limb) {
-                            case RIGHT_LEG -> {
-                                boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
+                            case UPPER_RIGHT_LEG -> {
                                 ModelPart leg = self.getLeg(HumanoidArm.RIGHT);
                                 if (leg != null) {
                                     leg.visible = !isVisible;
                                 }
                             }
-                            case RIGHT_ARM -> {
-                                boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
+                            case UPPER_RIGHT_ARM -> {
                                 ModelPart arm = self.getArm(HumanoidArm.RIGHT);
                                 if (arm != null) {
                                     arm.visible = !isVisible;
                                 }
                             }
-                            case LEFT_ARM -> {
-                                boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
+                            case UPPER_LEFT_ARM -> {
                                 ModelPart arm = self.getArm(HumanoidArm.LEFT);
                                 if (arm != null) {
                                     arm.visible = !isVisible;
                                 }
                             }
-                            case LEFT_LEG -> {
-                                boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
+                            case UPPER_LEFT_LEG -> {
                                 ModelPart leg = self.getLeg(HumanoidArm.LEFT);
                                 if (leg != null) {
                                     leg.visible = !isVisible;
                                 }
                             }
                             case HEAD -> {
-                                boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
                                 ModelPart head = self.getHead();
                                 if (head != null) {
                                     head.visible = !isVisible;
