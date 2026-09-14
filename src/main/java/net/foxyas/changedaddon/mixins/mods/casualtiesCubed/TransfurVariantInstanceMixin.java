@@ -16,8 +16,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Map;
-
 @Mixin(value = TransfurVariantInstance.class, remap = false)
 @RequiredMods("casualties_cubed")
 public class TransfurVariantInstanceMixin {
@@ -28,9 +26,7 @@ public class TransfurVariantInstanceMixin {
         Player player = self.getHost();
         if (ProcessTransfur.isPlayerLatex(player)) {
             if (self.ageAsVariant % 80 == 0) { // each 4 seconds.
-                if (player.getFoodData().getFoodLevel() >= 6) { // Only grow back if it has more then 3 hunger icons.
-                    changedAddonRework$GrowAllLimbs(player);
-                }
+                changedAddonRework$GrowAllLimbs(player);
             }
         }
     }
@@ -38,13 +34,13 @@ public class TransfurVariantInstanceMixin {
     @Unique
     private void changedAddonRework$GrowAllLimbs(Player player) {
         player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).ifPresent((self) -> {
-            Map<Limb, LimbStatistics> limbStats = ((PlayerHealthDataAccessor) self).getLimbStats();
+            if (self.hunger() < 30) return;// Only grow back if it has more then 30 hunger.
 
             // --- Scaling ---
             // Health/Blood: 0.0 a 1.0 (ex: 5/5 = 1.0)
             float maxNormalBloodVolume = 5f;
 
-            float healthRatio = self.getBloodVolume() / maxNormalBloodVolume; //EntityUtils.getHealthRatio(player);
+            float healthRatio = self.bloodVolume() / maxNormalBloodVolume; //EntityUtils.getHealthRatio(player);
             // Food: 0.0 a 1.0 (ex: 20/20 = 1.0)
             float foodRatio = EntityUtil.getFoodRatio(player, null);
 
@@ -53,19 +49,18 @@ public class TransfurVariantInstanceMixin {
             float progressBonus = 100f * healthRatio * foodRatio;
             MathFormulasUtil.lerpEase(healthRatio * foodRatio, 100, 300, MathFormulasUtil.EasingType.QUAD_IN);
 
-            // Valor máximo de regrow (20 ticks * 60 segundos = 1200)
-            float maxRegrow = 20 * 60;
             // ------------------------
 
             boolean playedSound = false;
 
-            for (Limb limb : limbStats.keySet()) {
-                if (!self.isAmputated(limb)) continue;
+            for (Limb limb : Limb.values()) {
+                LimbStatistics stats = self.getLimb(limb);
+                if (!stats.isAmputated()) continue;
 
                 Limb root = limb.getConnectedTo();
                 Limb targetLimb = (root == null || !self.isAmputated(root)) ? limb : root;
 
-                LimbStatistics stats = limbStats.get(targetLimb);
+                stats = self.getLimb(targetLimb);
                 stats.progressRegrowth(progressBonus);
             }
 
