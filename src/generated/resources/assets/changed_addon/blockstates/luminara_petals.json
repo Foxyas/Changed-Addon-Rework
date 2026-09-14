@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "facing=east,flower_amount=1,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_1",
+      "y": 270
+    },
+    "facing=east,flower_amount=1,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_1_emissive",
+      "y": 270
+    },
+    "facing=east,flower_amount=2,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_2",
+      "y": 270
+    },
+    "facing=east,flower_amount=2,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_2_emissive",
+      "y": 270
+    },
+    "facing=east,flower_amount=3,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_3",
+      "y": 270
+    },
+    "facing=east,flower_amount=3,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_3_emissive",
+      "y": 270
+    },
+    "facing=east,flower_amount=4,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_4",
+      "y": 270
+    },
+    "facing=east,flower_amount=4,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_4_emissive",
+      "y": 270
+    },
+    "facing=north,flower_amount=1,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_1",
+      "y": 180
+    },
+    "facing=north,flower_amount=1,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_1_emissive",
+      "y": 180
+    },
+    "facing=north,flower_amount=2,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_2",
+      "y": 180
+    },
+    "facing=north,flower_amount=2,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_2_emissive",
+      "y": 180
+    },
+    "facing=north,flower_amount=3,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_3",
+      "y": 180
+    },
+    "facing=north,flower_amount=3,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_3_emissive",
+      "y": 180
+    },
+    "facing=north,flower_amount=4,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_4",
+      "y": 180
+    },
+    "facing=north,flower_amount=4,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_4_emissive",
+      "y": 180
+    },
+    "facing=south,flower_amount=1,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_1"
+    },
+    "facing=south,flower_amount=1,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_1_emissive"
+    },
+    "facing=south,flower_amount=2,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_2"
+    },
+    "facing=south,flower_amount=2,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_2_emissive"
+    },
+    "facing=south,flower_amount=3,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_3"
+    },
+    "facing=south,flower_amount=3,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_3_emissive"
+    },
+    "facing=south,flower_amount=4,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_4"
+    },
+    "facing=south,flower_amount=4,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_4_emissive"
+    },
+    "facing=west,flower_amount=1,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_1",
+      "y": 90
+    },
+    "facing=west,flower_amount=1,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_1_emissive",
+      "y": 90
+    },
+    "facing=west,flower_amount=2,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_2",
+      "y": 90
+    },
+    "facing=west,flower_amount=2,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_2_emissive",
+      "y": 90
+    },
+    "facing=west,flower_amount=3,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_3",
+      "y": 90
+    },
+    "facing=west,flower_amount=3,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_3_emissive",
+      "y": 90
+    },
+    "facing=west,flower_amount=4,glowing=false": {
+      "model": "changed_addon:block/luminara_petals_4",
+      "y": 90
+    },
+    "facing=west,flower_amount=4,glowing=true": {
+      "model": "changed_addon:block/luminara_petals_4_emissive",
+      "y": 90
+    }
+  }
+}

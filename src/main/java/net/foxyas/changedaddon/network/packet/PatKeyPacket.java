@@ -3,15 +3,20 @@ package net.foxyas.changedaddon.network.packet;
 import net.foxyas.changedaddon.process.features.PatFeatureHandle;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public record PatKeyPacket(int type, int pressedMs) {
+public record PatKeyPacket(PatType type) {
+
+    public enum PatType {
+        RESET,
+        SINGLE,
+        CONTINUOS
+    }
 
     public PatKeyPacket(FriendlyByteBuf buf) {
-        this(buf.readVarInt(), buf.readVarInt());
+        this(buf.readEnum(PatType.class));
     }
 
     public static void handler(PatKeyPacket message, Supplier<NetworkEvent.Context> contextSupplier) {
@@ -20,13 +25,13 @@ public record PatKeyPacket(int type, int pressedMs) {
         context.setPacketHandled(true);
     }
 
-    public static void pressAction(Player player, int type) {
-        if (player == null) return;
-        PatFeatureHandle.run(player, type == 1);
+    public static void pressAction(Player player, PatType type) {
+        if (player == null || player.isSpectator()) return;
+
+        PatFeatureHandle.run(player, type);
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeVarInt(type);
-        buf.writeVarInt(pressedMs);
+        buf.writeEnum(type);
     }
 }

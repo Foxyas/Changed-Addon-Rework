@@ -4,6 +4,6 @@
   "render_type_fast": "minecraft:cutout",
   "textures": {
     "all": "changed_addon:block/luminara_tree/luminara_leaves",
-    "all_glow": "changed_addon:block/luminara_tree/empty"
+    "all_emissive": "changed_addon:block/luminara_tree/empty"
   }
 }

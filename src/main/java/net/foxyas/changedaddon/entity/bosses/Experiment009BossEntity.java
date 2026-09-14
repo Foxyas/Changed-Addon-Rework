@@ -617,15 +617,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     public void setOldPhase(Exp9Phase phase) {
-        entityData.set(OLD_PHASE, this.getPhase());
+        entityData.set(OLD_PHASE, phase);
     }
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {
         super.onSyncedDataUpdated(pKey);
-        if (pKey.equals(PHASE3) || pKey.equals(PHASE2)) {
-            this.setPhase(entityData.get(PHASE3) ? Exp9Phase.PHASE3 : entityData.get(PHASE2) ? Exp9Phase.PHASE2 : Exp9Phase.PHASE1);
-        }
         if (pKey.equals(CURRENT_PHASE)) {
             onPhaseChange(entityData.get(OLD_PHASE), entityData.get(CURRENT_PHASE));
         }
@@ -960,12 +957,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             float ratio = this.computeHealthRatio();
             boolean hasPhase3HealthRatio = currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO || ratio <= PHASE_3_HEALTH_RATIO;
             if (hasPhase3HealthRatio && !this.isPhase3()) {
-                this.setPhase3(true);
+                this.setPhase(Exp9Phase.PHASE3);
                 this.onPhaseChange(oldPhase, this.getPhase());
                 level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
             }
         } else if (currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO) {
-            this.setPhase2(true);
+            this.setPhase(Exp9Phase.PHASE2);
             this.onPhaseChange(oldPhase, this.getPhase());
             level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
         }
@@ -986,6 +983,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             case PHASE1 -> {
                 refreshPhaseAIGoals();
                 removeStatModifiers();
+                this.setPhase2(false);
+                this.setPhase3(false);
             }
             case PHASE2 -> {
                 refreshPhaseAIGoals();
@@ -997,6 +996,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                     playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 5f, 0.75f);
                     knockBackAndDoThunderBolt();
                 }
+                this.setPhase2(true);
+                this.setPhase3(false);
             }
             case PHASE3 -> {
                 refreshPhaseAIGoals();
@@ -1010,6 +1011,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                     playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 5f, 0.25f);
                     knockbackAndDoThunderStorm();
                 }
+                this.setPhase2(false);
+                this.setPhase3(true);
             }
         }
     }

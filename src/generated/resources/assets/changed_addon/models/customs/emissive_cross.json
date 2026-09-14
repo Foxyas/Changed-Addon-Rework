@@ -96,7 +96,7 @@
             "block_light": 15,
             "sky_light": 15
           },
-          "texture": "#glow",
+          "texture": "#emissive",
           "uv": [
             0.0,
             0.0,
@@ -110,7 +110,7 @@
             "block_light": 15,
             "sky_light": 15
           },
-          "texture": "#glow",
+          "texture": "#emissive",
           "uv": [
             0.0,
             0.0,
@@ -149,7 +149,7 @@
             "block_light": 15,
             "sky_light": 15
           },
-          "texture": "#glow",
+          "texture": "#emissive",
           "uv": [
             0.0,
             0.0,
@@ -163,7 +163,7 @@
             "block_light": 15,
             "sky_light": 15
           },
-          "texture": "#glow",
+          "texture": "#emissive",
           "uv": [
             0.0,
             0.0,

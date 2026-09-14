@@ -1,0 +1,261 @@
+{
+  "ambientocclusion": false,
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#flowerbed",
+          "uv": [
+            0.0,
+            16.0,
+            8.0,
+            8.0
+          ]
+        },
+        "up": {
+          "texture": "#flowerbed"
+        }
+      },
+      "from": [
+        0,
+        1,
+        8
+      ],
+      "to": [
+        8,
+        1,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#emissive_flowerbed",
+          "uv": [
+            0.0,
+            16.0,
+            8.0,
+            8.0
+          ]
+        },
+        "up": {
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#emissive_flowerbed"
+        }
+      },
+      "from": [
+        0,
+        1,
+        8
+      ],
+      "shade": false,
+      "to": [
+        8,
+        1,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#stem",
+          "tintindex": 1,
+          "uv": [
+            0.0,
+            6.0,
+            1.0,
+            7.0
+          ]
+        },
+        "west": {
+          "texture": "#stem",
+          "tintindex": 1,
+          "uv": [
+            0.0,
+            6.0,
+            1.0,
+            7.0
+          ]
+        }
+      },
+      "from": [
+        10.65,
+        0,
+        4.75
+      ],
+      "rotation": {
+        "angle": -45.0,
+        "axis": "y",
+        "origin": [
+          0,
+          0,
+          1
+        ]
+      },
+      "to": [
+        10.65,
+        1,
+        5.75
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#emissive_stem",
+          "uv": [
+            0.0,
+            6.0,
+            1.0,
+            7.0
+          ]
+        },
+        "west": {
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#emissive_stem",
+          "uv": [
+            0.0,
+            6.0,
+            1.0,
+            7.0
+          ]
+        }
+      },
+      "from": [
+        10.65,
+        0,
+        4.75
+      ],
+      "rotation": {
+        "angle": -45.0,
+        "axis": "y",
+        "origin": [
+          0,
+          0,
+          1
+        ]
+      },
+      "shade": false,
+      "to": [
+        10.65,
+        1,
+        5.75
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "texture": "#stem",
+          "tintindex": 1,
+          "uv": [
+            0.0,
+            6.0,
+            1.0,
+            7.0
+          ]
+        },
+        "south": {
+          "texture": "#stem",
+          "tintindex": 1,
+          "uv": [
+            0.0,
+            6.0,
+            1.0,
+            7.0
+          ]
+        }
+      },
+      "from": [
+        10.15,
+        0,
+        5.25
+      ],
+      "rotation": {
+        "angle": -45.0,
+        "axis": "y",
+        "origin": [
+          0,
+          0,
+          1
+        ]
+      },
+      "to": [
+        11.15,
+        1,
+        5.25
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#emissive_stem",
+          "uv": [
+            0.0,
+            6.0,
+            1.0,
+            7.0
+          ]
+        },
+        "south": {
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#emissive_stem",
+          "uv": [
+            0.0,
+            6.0,
+            1.0,
+            7.0
+          ]
+        }
+      },
+      "from": [
+        10.15,
+        0,
+        5.25
+      ],
+      "rotation": {
+        "angle": -45.0,
+        "axis": "y",
+        "origin": [
+          0,
+          0,
+          1
+        ]
+      },
+      "shade": false,
+      "to": [
+        11.15,
+        1,
+        5.25
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "#flowerbed"
+  }
+}

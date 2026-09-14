@@ -148,11 +148,11 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
     private void luminaraPetalsBlock(RegistryObject<? extends PinkPetalsBlock> block) {
         getVariantBuilder(block.get()).forAllStates(state -> {
             int amount = state.getValue(PinkPetalsBlock.AMOUNT);
-            boolean glowing = state.getValue(LuminaraPetalsBlock.GLOWING);
+            boolean emissive = state.getValue(LuminaraPetalsBlock.GLOWING);
             Direction facing = state.getValue(PinkPetalsBlock.FACING);
 
-            // Define o sufixo do modelo baseado na quantidade e na propriedade 'glowing'
-            String modelName = "luminara_petals_" + amount + (glowing ? "_glowing" : "");
+            // Define o sufixo do modelo baseado na quantidade e na propriedade 'emissive'
+            String modelName = "luminara_petals_" + amount + (emissive ? "_emissive" : "");
             ModelFile modelFile = models().getExistingFile(blockLoc(ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, modelName)));
 
             int yRot = (int) facing.toYRot();
@@ -468,6 +468,27 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         };
     }
 
+    private void luminaraLichen() {
+        var block = LUMINARA_LICHEN;
+        MultiPartBlockStateBuilder builder = getMultipartBuilder(block.get());
+        ResourceLocation loc = blockLoc(block.getId());
+
+        BlockState state = block.get().defaultBlockState();
+        ModelFile model = models().getExistingFile(loc);
+        for (Direction dir : Direction.values()) {
+            BooleanProperty prop = PipeBlock.PROPERTY_BY_DIRECTION.get(dir);
+            if (!state.hasProperty(prop)) continue;
+
+            builder.part()
+                    .modelFile(model)
+                    .rotationX(getXRotation(dir))
+                    .rotationY(getYRotation(dir))
+                    .addModel()
+                    .condition(prop, true);
+        }
+
+    }
+
     private void createMultiface(RegistryObject<? extends Block> block, boolean generatedItem) {
         MultiPartBlockStateBuilder builder = getMultipartBuilder(block.get());
         ResourceLocation loc = blockLoc(block.getId());
@@ -487,7 +508,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         }
 
         if (generatedItem)
-            itemModels().getBuilder(BuiltInRegistries.ITEM.getKey(block.get().asItem()).getPath()).parent(model);
+            itemModels().getBuilder(ForgeRegistries.ITEMS.getKey(block.get().asItem()).getPath()).parent(model);
     }
 
 

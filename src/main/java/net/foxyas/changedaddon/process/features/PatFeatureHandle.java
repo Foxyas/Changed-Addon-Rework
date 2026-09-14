@@ -8,6 +8,10 @@ import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonStatRegistry;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.network.ChangedAddonVariables.PlayerVariables;
+import net.foxyas.changedaddon.network.packet.PatKeyPacket;
+import net.foxyas.changedaddon.network.packet.PatKeyPacket.PatType;
+import net.foxyas.changedaddon.process.features.ProcessPatFeature.OnPatReactionEvent;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -37,11 +41,19 @@ public class PatFeatureHandle {
         return GrabEntityAbility.getControllingEntity(player) == player;
     }
 
-    public static void run(Player player, boolean playSound) {
+    public static void run(Player player, PatType patType) {
         if (player == null || player.isSpectator() || !canPlayerPat(player)) return;
 
-        ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.of(player);
-        if (vars != null && vars.isPatInCooldown()) return;
+        PlayerVariables vars = ChangedAddonVariables.of(player);
+        if (vars == null) return;
+
+        if (patType == PatType.RESET) {
+            vars.ticksPattingAnEntity = 0;
+            vars.syncPlayerVariables(player);
+            return;
+        }
+
+        if (patType == PatType.CONTINUOS && vars.isPatInCooldown()) return;
 
         InteractionHand emptyHand = getEmptyHand(player);
         if (emptyHand == null) return;
@@ -60,8 +72,16 @@ public class PatFeatureHandle {
         if (!(targetEntity instanceof LivingEntity living)) return;
 
 
-        if (patEntity(player, living, emptyHand, targetEntityResult) && playSound) {
-            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BRUSH_GENERIC, SoundSource.PLAYERS, 1, 1);
+        if (patEntity(player, living, emptyHand, targetEntityResult) && patType == PatType.CONTINUOS) {
+            vars.ticksPattingAnEntity++;
+            vars.syncPlayerVariables(player);
+
+            if (vars.ticksPattingAnEntity % 10 == 0) {
+                Level level = player.level();
+                if (!level.isClientSide()) {
+                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BRUSH_GENERIC, SoundSource.PLAYERS, 2.5f, 0.75f);
+                }
+            }
         }
     }
 
@@ -72,44 +92,44 @@ public class PatFeatureHandle {
     public static boolean patEntity(LivingEntity player, LivingEntity targetEntity, InteractionHand emptyHand, EntityHitResult targetEntityResult) {
         Level level = player.level;
         if (targetEntity instanceof SpecialPatLatex specialPatLatex) {
-            return handleSpecialEntities(player, emptyHand, targetEntity, targetEntityResult);
+            handleSpecialEntities(player, emptyHand, targetEntity, targetEntityResult);
+            return true;
         }
 
         if (targetEntity instanceof ChangedEntity changed) {
-            return handleLatexEntity(player, emptyHand, changed, targetEntityResult, level);
+            handleLatexEntity(player, emptyHand, changed, targetEntityResult, level);
+            return true;
         }
 
         if (targetEntity instanceof Player target) {
-            return handlePlayerEntity(player, emptyHand, target, targetEntityResult, level);
+            handlePlayerEntity(player, emptyHand, target, targetEntityResult, level);
+            return true;
         }
 
         if (targetEntity.getType().is(ChangedAddonTags.EntityTypes.PATABLE)) {
-            return handlePatableEntity(player, emptyHand, targetEntityResult, level);
-        }
-        return false;
-    }
-
-    private static boolean handleSpecialEntities(LivingEntity player, InteractionHand emptyHand, LivingEntity target, EntityHitResult entityHitResult) {
-        player.swing(emptyHand);
-        if (!(target instanceof ICustomPatReaction pat)) return false;
-
-        pat.whenPattedReactionSpecific(player, emptyHand, entityHitResult.getLocation());
-        pat.whenPattedReaction(player, emptyHand);
-        pat.whenPattedReactionSimple();
-
-        if (player instanceof ServerPlayer sPlayer) {
-            onPat(sPlayer);
+            handlePatableEntity(player, emptyHand, targetEntityResult, level);
             return true;
         }
         return false;
     }
 
-    private static boolean handleLatexEntity(LivingEntity livingEntity, InteractionHand emptyHand, ChangedEntity target, EntityHitResult entityHitResult, Level level) {
+    private static void handleSpecialEntities(LivingEntity player, InteractionHand emptyHand, LivingEntity target, EntityHitResult entityHitResult) {
+        player.swing(emptyHand);
+        if (!(target instanceof ICustomPatReaction pat)) return;
+
+        pat.whenPattedReactionSpecific(player, emptyHand, entityHitResult.getLocation());
+        pat.whenPattedReaction(player, emptyHand);
+        pat.whenPattedReactionSimple();
+
+        if (player instanceof ServerPlayer sPlayer) onPat(sPlayer);
+    }
+
+    private static void handleLatexEntity(LivingEntity livingEntity, InteractionHand emptyHand, ChangedEntity target, EntityHitResult entityHitResult, Level level) {
         livingEntity.swing(emptyHand);
 
-        ProcessPatFeature.OnPatReactionEvent onPatReactionEvent = new ProcessPatFeature.OnPatReactionEvent(level, livingEntity, emptyHand, target, entityHitResult.getLocation());
-        if (ChangedAddonMod.postEvent(onPatReactionEvent)) {
-            return false;
+        OnPatReactionEvent globalPatReactionEvent = new OnPatReactionEvent(level, livingEntity, emptyHand, target, entityHitResult.getLocation());
+        if (ChangedAddonMod.postEvent(globalPatReactionEvent)) {
+            return;
         }
 
         TransfurVariantInstance<?> selfTF = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(livingEntity));
@@ -125,18 +145,17 @@ public class PatFeatureHandle {
         }
 
         if (livingEntity instanceof ServerPlayer sp) {
-            triggerStealthPatAdvancement(sp, target);
+            GiveStealthPatAdvancement(sp, target);
             onPat(sp);
         }
-        return false;
     }
 
-    private static boolean handlePlayerEntity(LivingEntity player, InteractionHand emptyHand, Player target, EntityHitResult entityHitResult, Level level) {
+    private static void handlePlayerEntity(LivingEntity player, InteractionHand emptyHand, Player target, EntityHitResult entityHitResult, Level level) {
         TransfurVariantInstance<?> selfTF = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(player));
         TransfurVariantInstance<?> targetTF = ProcessTransfur.getPlayerTransfurVariant(target);
 
         if (selfTF == null && targetTF == null) {
-            return false;
+            return;
         }//Be Able to Pet if at least one is Transfur :P
 
         player.swing(emptyHand);
@@ -151,9 +170,9 @@ public class PatFeatureHandle {
             targetPat.whenPattedReactionSimple();
         }
 
-        ProcessPatFeature.OnPatReactionEvent onPatReactionEvent = new ProcessPatFeature.OnPatReactionEvent(level, player, emptyHand, target, entityHitResult.getLocation());
+        OnPatReactionEvent onPatReactionEvent = new OnPatReactionEvent(level, player, emptyHand, target, entityHitResult.getLocation());
         if (ChangedAddonMod.postEvent(onPatReactionEvent)) {
-            return false;
+            return;
         }
 
         if (player instanceof ServerPlayer sPlayer)
@@ -161,29 +180,27 @@ public class PatFeatureHandle {
         if (target instanceof ServerPlayer sPlayer)
             sPlayer.awardStat(ChangedAddonStatRegistry.PATS_RECEIVED.get());
 
-        if (targetTF == null || !(level instanceof ServerLevel)) return false;
+        if (targetTF == null || !(level instanceof ServerLevel)) return;
 
         if (player instanceof ServerPlayer sPlayer) {
-            if (sPlayer.getRandom().nextFloat() > 0.1f + sPlayer.getLuck() * 0.05f) return true;
+            if (sPlayer.getRandom().nextFloat() > 0.1f + sPlayer.getLuck() * 0.05f) return;
             healAndGiveRarePatAdvancement(sPlayer, target);
         }
-        return false;
     }
 
-    private static boolean handlePatableEntity(LivingEntity entity, InteractionHand emptyHand, EntityHitResult entityHitResult, Level level) {
+    private static void handlePatableEntity(LivingEntity entity, InteractionHand emptyHand, EntityHitResult entityHitResult, Level level) {
         Entity target = entityHitResult.getEntity();
         entity.swing(emptyHand);
 
         if (target instanceof LivingEntity livingTarget) {//assume that target is always livingEntity or allow entity in the event?
-            ChangedAddonMod.postEvent(new ProcessPatFeature.OnPatReactionEvent(level, entity, emptyHand, livingTarget, entityHitResult.getLocation()));
-            return false;
+            ChangedAddonMod.postEvent(new OnPatReactionEvent(level, entity, emptyHand, livingTarget, entityHitResult.getLocation()));
+            return;
         }
 
         if (level instanceof ServerLevel serverLevel && entity instanceof Player player) {
             player.displayClientMessage(Component.translatable("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
             serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
         }
-        return false;
     }
 
     private static InteractionHand getEmptyHand(Player player) {
@@ -206,14 +223,14 @@ public class PatFeatureHandle {
         ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(player, target, "chance");
     }
 
-    public static void triggerStealthPatAdvancement(ServerPlayer player, Entity target) {
+    public static void GiveStealthPatAdvancement(ServerPlayer player, Entity target) {
         ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(player, target, "stealth");
     }
 
     private static void onPat(ServerPlayer player) {
         player.awardStat(ChangedAddonStatRegistry.PATS_GIVEN.get());
 
-        ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
+        PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
         vars.patCooldown = 5;
         vars.syncPlayerVariables(player);
     }

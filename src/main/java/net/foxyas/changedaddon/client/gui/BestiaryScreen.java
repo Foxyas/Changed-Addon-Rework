@@ -91,13 +91,12 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         tfsListBackGround.rebuildMesh();
 
         /* WINDOW */
-        //window.addWidget(displayBackGround);
-        //window.addWidget(modelWidget);
-        //window.addWidget(loreScroll);
-        //window.addWidget(modelBackGround);
+        window.addWidget(displayBackGround);
+        window.addWidget(modelWidget);
+        window.addWidget(loreScroll);
+        window.addWidget(modelBackGround);
         window.addWidget(tfs);
         window.addWidget(tfsListBackGround);
-        //window.addWidget(shapeWidget);
         window.addWidget(attributeRadialWidget);
 
         window.init();

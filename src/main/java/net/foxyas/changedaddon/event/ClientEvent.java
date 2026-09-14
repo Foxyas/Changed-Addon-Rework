@@ -86,46 +86,14 @@ public class ClientEvent {
         boolean patting = ClientPatState.patting;
 
         if (patting && event.getHand() == InteractionHand.MAIN_HAND) {
-//            Todo: Uncomment this if is actually the best option
-//            event.setCanceled(true);
-//            PoseStack stack = event.getPoseStack();
-//            MultiBufferSource buffer = event.getMultiBufferSource();
-//            int light = event.getPackedLight();
-//            float partialTicks = event.getPartialTick();
-//            float equipProgress = event.getEquipProgress();
-//
-//            manuallyRenderFirstPersonHand(player, stack, equipProgress, partialTicks, buffer, light);
+            event.setCanceled(true);
+            PoseStack stack = event.getPoseStack();
+            MultiBufferSource buffer = event.getMultiBufferSource();
+            int light = event.getPackedLight();
+            float partialTicks = event.getPartialTick();
+            float equipProgress = event.getEquipProgress();
 
-            // Todo: comment the thing below and see if the upper code is actually better
-
-            // Suppress default vanilla swing
-            if (patKey.isDown()) {
-                player.attackAnim = 0.0f;
-                player.oAttackAnim = 0.0f;
-                player.swinging = false;
-                player.swingTime = -1;
-            }
-
-            PoseStack poseStack = event.getPoseStack();
-            float partialTick = event.getPartialTick();
-            float patSpeed = Math.max(0.01F, ClientPatState.patSpeed);
-
-            // Base cycle duration (12 ticks at standard 1.0 speed)
-            float baseCycleTicks = 12.0F;
-
-            // Smooth phase calculation using the accumulator + partial tick interpolation
-            float elapsed = ClientPatState.animTicks + (partialTick * patSpeed);
-            float phase = (elapsed % baseCycleTicks) / baseCycleTicks;
-
-            // Waveform calculations
-            float sweep = Mth.sin(phase * (float) Math.PI * 2.0F);
-            float lift = 0.5F - 0.5F * Mth.cos(phase * (float) Math.PI * 2.0F);
-
-            // Matrix transformations
-            poseStack.translate(0.036F * sweep, -0.012F * lift, -0.04F * lift);
-            poseStack.mulPose(Axis.XP.rotationDegrees(-3.0F * lift));
-            poseStack.mulPose(Axis.YP.rotationDegrees(2.2F * sweep));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(6.0F * sweep));
+            manuallyRenderFirstPersonHand(player, stack, equipProgress, partialTicks, buffer, light);
         }
     }
 
@@ -143,7 +111,7 @@ public class ClientEvent {
                 float f3 = 0.4F * Mth.sin(f1 * ((float) Math.PI * 2F));
                 float f4 = -0.4F * Mth.sin(pSwingProgress * (float) Math.PI);
 
-                stack.translate(f * (f2 + 0.64000005F), f3 + -0.6F + equipProgress * -0.6F, f4 + -0.71999997F);// 0 here is an inaccessible variable from ItemInHandRenderer
+                stack.translate(f * (f2 + 0.64000005F), f3 + -0.6F + equipProgress * -0.6F, f4 + -0.71999997F);
                 stack.mulPose(YP.rotationDegrees(f * 45.0F));
                 float f5 = Mth.sin(pSwingProgress * pSwingProgress * (float) Math.PI);
                 float f6 = Mth.sin(f1 * (float) Math.PI);

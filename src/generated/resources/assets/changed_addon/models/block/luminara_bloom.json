@@ -3,6 +3,6 @@
   "render_type": "minecraft:cutout",
   "textures": {
     "cross": "changed_addon:block/luminara_bloom",
-    "glow": "changed_addon:block/luminara_bloom_emissive"
+    "emissive": "changed_addon:block/luminara_bloom_emissive"
   }
 }
