@@ -193,7 +193,7 @@ public class ChangedAddonKeyMappings {
                 });
 
                 ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
-                ClientPatState.patting = vars.ticksPattingAnEntity >= 10;
+                ClientPatState.patting = vars.ticksPattingAnEntity >= 3;
 
                 boolean hasValidTarget = targetEntityResult != null && targetEntityResult.getType() != HitResult.Type.MISS;
                 if (hasValidTarget) {

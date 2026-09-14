@@ -1,6 +1,9 @@
 package net.foxyas.changedaddon.block;
 
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -16,6 +19,11 @@ public class LuminaraPetalsBlock extends PinkPetalsBlock {
         super(BlockBehaviour.Properties.copy(Blocks.PINK_PETALS));
 
         this.registerDefaultState(this.defaultBlockState().setValue(GLOWING, false));
+    }
+
+    @Override
+    protected boolean mayPlaceOn(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
+        return super.mayPlaceOn(pState, pLevel, pPos) || ChangedAddonBlocks.LUMINARA_BLOOM.get().mayPlaceOn(pState, pLevel, pPos);
     }
 
     @Override

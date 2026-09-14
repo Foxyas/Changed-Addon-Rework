@@ -20,6 +20,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
     public static final ResourceLocation EMISSIVE_FLOWER_BED_3 = ChangedAddonMod.resourceLoc("customs/emissive_flowerbed_3");
     public static final ResourceLocation EMISSIVE_FLOWER_BED_4 = ChangedAddonMod.resourceLoc("customs/emissive_flowerbed_4");
     public static final ResourceLocation EMISSIVE_MULTIFACE = ChangedAddonMod.resourceLoc("customs/emissive_multiface");
+    public static final ResourceLocation GENERIC_MULTIFACE = ChangedAddonMod.resourceLoc("customs/generic_multiface");
 
     public BlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ChangedAddonMod.MODID, existingFileHelper);
@@ -34,6 +35,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         generateEmissivePottedPlant();
         generateEmissiveFlowerbeds();
         generateEmissiveMultiface();
+        generateGenericMultiface();
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_BLOOM.getId().getPath(), EMISSIVE_CROSS)
                 .renderType("minecraft:cutout")
@@ -137,7 +139,11 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .texture("plant_emissive", "changed_addon:block/luminara_sapling_emissive")
         ;
 
-        withExistingParent(ChangedAddonBlocks.LUMINARA_LICHEN.getId().getPath(), EMISSIVE_MULTIFACE)
+        withExistingParent(ChangedAddonBlocks.LUMINARA_LICHEN.getId().getPath(), GENERIC_MULTIFACE)
+                .renderType("minecraft:cutout")
+                .texture("base", "changed_addon:block/luminara_lichen")
+        ;
+        withExistingParent(ChangedAddonBlocks.LUMINARA_LICHEN.getId().getPath() + "_emissive", EMISSIVE_MULTIFACE)
                 .renderType("minecraft:cutout")
                 .texture("base", "changed_addon:block/luminara_lichen")
                 .texture("emissive", "changed_addon:block/luminara_lichen_emissive")
@@ -554,6 +560,10 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         createEmissiveMultifaceModel("customs/emissive_multiface");
     }
 
+    protected void generateGenericMultiface() {
+        createGenericMultifaceModel("customs/generic_multiface");
+    }
+
     // ==========================================
     // FLOWERBED 1 (3 Flores, Altura ~3.0)
     // ==========================================
@@ -673,7 +683,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .ao(false)
                 .texture("particle", "#base")
 
-                // Base Layer (Standard Lighting)
+                // Base Layer
                 .element()
                 .from(0.0F, 0.0F, 0.1F)
                 .to(16.0F, 16.0F, 0.1F)
@@ -687,31 +697,35 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .end()
                 .end()
 
-                // Emissive Layer (Rendered slightly higher to prevent Z-fighting)
+                // Emissive Layer (Slightly offset towards center to avoid Z-fighting)
                 .element()
                 .from(0.0F, 0.0F, 0.101F)
                 .to(16.0F, 16.0F, 0.101F)
                 .face(Direction.NORTH)
                 .uvs(16.0F, 0.0F, 0.0F, 16.0F)
                 .texture("#emissive")
-                .emissivity(15, 15) // Marks this face full-bright in Forge
+                .emissivity(15, 15)
                 .end()
                 .face(Direction.SOUTH)
                 .uvs(0.0F, 0.0F, 16.0F, 16.0F)
                 .texture("#emissive")
-                .emissivity(15, 15) // Marks this face full-bright in Forge
+                .emissivity(15, 15)
                 .end()
                 .end();
     }
 
     public BlockModelBuilder createEmissiveMultifaceModelWithBaseTexture(String name, ResourceLocation baseTexture, ResourceLocation emissiveTexture) {
+        return createEmissiveMultifaceModel(name)
+                .texture("base", baseTexture)
+                .texture("emissive", emissiveTexture);
+    }
+
+    public BlockModelBuilder createGenericMultifaceModel(String name) {
         return getBuilder(name)
                 .ao(false)
-                .texture("particle", baseTexture)
-                .texture("base", baseTexture)
-                .texture("emissive", emissiveTexture)
+                .texture("particle", "#base")
 
-                // Base Layer (Standard Lighting)
+                // Base Layer
                 .element()
                 .from(0.0F, 0.0F, 0.1F)
                 .to(16.0F, 16.0F, 0.1F)
@@ -723,22 +737,12 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .uvs(0.0F, 0.0F, 16.0F, 16.0F)
                 .texture("#base")
                 .end()
-                .end()
-
-                // Emissive Layer (Rendered slightly higher to prevent Z-fighting)
-                .element()
-                .from(0.0F, 0.0F, 0.101F)
-                .to(16.0F, 16.0F, 0.101F)
-                .face(Direction.NORTH)
-                .uvs(16.0F, 0.0F, 0.0F, 16.0F)
-                .texture("#emissive")
-                .emissivity(15, 15) // Marks this face full-bright in Forge
-                .end()
-                .face(Direction.SOUTH)
-                .uvs(0.0F, 0.0F, 16.0F, 16.0F)
-                .texture("#emissive")
-                .emissivity(15, 15) // Marks this face full-bright in Forge
-                .end()
                 .end();
+    }
+
+    public BlockModelBuilder createGenericMultifaceModelWithBaseTexture(String name, ResourceLocation baseTexture) {
+        return createGenericMultifaceModel(name)
+                .texture("particle", baseTexture)
+                .texture("base", baseTexture);
     }
 }

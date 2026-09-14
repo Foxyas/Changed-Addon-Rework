@@ -1,0 +1,7 @@
+{
+  "parent": "changed_addon:customs/generic_multiface",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "base": "changed_addon:block/luminara_lichen"
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "true",
+        "glowing": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen_emissive",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "true",
+        "glowing": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "glowing": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen_emissive",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "glowing": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen"
+      },
+      "when": {
+        "glowing": "false",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen_emissive"
+      },
+      "when": {
+        "glowing": "true",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "glowing": "false",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen_emissive",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "glowing": "true",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "glowing": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen_emissive",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "glowing": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "glowing": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "changed_addon:block/luminara_lichen_emissive",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "glowing": "true"
+      }
+    }
+  ]
+}

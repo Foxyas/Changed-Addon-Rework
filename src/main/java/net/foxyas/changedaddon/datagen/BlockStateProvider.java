@@ -45,6 +45,23 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + loc.getPath() + suffix);
     }
 
+    private static int getXLichenRotation(Direction dir) {
+        return switch (dir) {
+            case DOWN -> -90;
+            case UP -> 90;
+            default -> 0;
+        };
+    }
+
+    private static int getYLichenRotation(Direction dir) {
+        return switch (dir) {
+            case NORTH -> 180;
+            case EAST -> 270;
+            case WEST -> 90;
+            default -> 0;
+        };
+    }
+
     private static int getXRotation(Direction dir) {
         return switch (dir) {
             case DOWN -> -90;
@@ -144,22 +161,36 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
     }
 
     private void luminaraPetalsBlock(RegistryObject<? extends PinkPetalsBlock> block) {
-        getVariantBuilder(block.get()).forAllStates(state -> {
-            int amount = state.getValue(PinkPetalsBlock.AMOUNT);
-            boolean emissive = state.getValue(LuminaraPetalsBlock.GLOWING);
-            Direction facing = state.getValue(PinkPetalsBlock.FACING);
+        MultiPartBlockStateBuilder builder = getMultipartBuilder(block.get());
 
-            // Define o sufixo do modelo baseado na quantidade e na propriedade 'emissive'
-            String modelName = "luminara_petals_" + amount + (emissive ? "_emissive" : "");
-            ModelFile modelFile = models().getExistingFile(blockLoc(ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, modelName)));
+        for (int amount = 1; amount <= 4; amount++) {
+            for (boolean emissive : new boolean[]{false, true}) {
 
-            int yRot = (int) facing.toYRot();
+                // Model e.g. "luminara_petals_1" or "luminara_petals_1_emissive"
+                String modelName = "luminara_petals_" + amount + (emissive ? "_emissive" : "");
+                ModelFile modelFile = models().getExistingFile(modLoc(modelName));
 
-            return ConfiguredModel.builder()
-                    .modelFile(modelFile)
-                    .rotationY(yRot)
-                    .build();
-        });
+                // Generate array of valid amounts (e.g. for part 2: [2, 3, 4])
+                Integer[] validAmounts = new Integer[5 - amount];
+                for (int i = 0; i < validAmounts.length; i++) {
+                    validAmounts[i] = amount + i;
+                }
+
+                for (Direction facing : Direction.Plane.HORIZONTAL) {
+                    int yRot = (int) facing.toYRot();
+
+                    builder.part()
+                            .modelFile(modelFile)
+                            .rotationY(yRot)
+                            .uvLock(true)
+                            .addModel()
+                            .condition(LuminaraPetalsBlock.GLOWING, emissive)
+                            .condition(PinkPetalsBlock.FACING, facing)
+                            // Pass array of allowed values to a single condition call
+                            .condition(PinkPetalsBlock.AMOUNT, validAmounts);
+                }
+            }
+        }
     }
 
     protected void hangingSign(RegistryObject<? extends CeilingHangingSignBlock> sign, RegistryObject<? extends WallHangingSignBlock> wall, ResourceLocation tex) {
@@ -470,9 +501,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         Block block = blockObject.get();
         MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
 
-        // 1. Get your two models (one standard, one with emissive/glowing layer)
         ModelFile normalModel = models().getExistingFile(blockLoc(LUMINARA_LICHEN.getId()));
-        ModelFile glowingModel = models().getExistingFile(blockLoc(LUMINARA_LICHEN.getId().withSuffix("_glowing")));
+        ModelFile glowingModel = models().getExistingFile(blockLoc(LUMINARA_LICHEN.getId().withSuffix("_emissive")));
 
         BlockState state = block.defaultBlockState();
 
@@ -480,29 +510,46 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
             BooleanProperty dirProp = PipeBlock.PROPERTY_BY_DIRECTION.get(dir);
             if (!state.hasProperty(dirProp)) continue;
 
-            int xRot = getXRotation(dir);
-            int yRot = getYRotation(dir);
+            // Use direct multiface rotation lookup (No inversions needed)
+            int xRot = getMultifaceXRot(dir);
+            int yRot = getMultifaceYRot(dir);
 
-            // 2. Part for glowing = false
+            // 1. Part for glowing = false
             builder.part()
                     .modelFile(normalModel)
                     .rotationX(xRot)
                     .rotationY(yRot)
-                    .uvLock(xRot != 0 || yRot != 0)
                     .addModel()
                     .condition(dirProp, true)
-                    .condition(LuminaraLichenBlock.GLOWING, false); // Your custom property
+                    .condition(LuminaraLichenBlock.GLOWING, false);
 
-            // 3. Part for glowing = true
+            // 2. Part for glowing = true
             builder.part()
                     .modelFile(glowingModel)
                     .rotationX(xRot)
                     .rotationY(yRot)
-                    .uvLock(xRot != 0 || yRot != 0)
                     .addModel()
                     .condition(dirProp, true)
-                    .condition(LuminaraLichenBlock.GLOWING, true); // Your custom property
+                    .condition(LuminaraLichenBlock.GLOWING, true);
         }
+    }
+
+    // Fixed directional rotation mappings matching Vanilla Glow Lichen / Multiface generator
+    private int getMultifaceXRot(Direction dir) {
+        return switch (dir) {
+            case UP -> 270;
+            case DOWN -> 90;
+            default -> 0;
+        };
+    }
+
+    private int getMultifaceYRot(Direction dir) {
+        return switch (dir) {
+            case EAST -> 90;
+            case SOUTH -> 180;
+            case WEST -> 270;
+            default -> 0; // NORTH, UP, DOWN
+        };
     }
 
     private void createMultiface(RegistryObject<? extends Block> block, boolean generatedItem) {

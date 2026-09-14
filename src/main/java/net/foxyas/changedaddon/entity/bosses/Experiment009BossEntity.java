@@ -227,8 +227,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         this.entityData.define(PHASE3, false);
         this.entityData.define(CASTING_ATTACK, false);
         this.entityData.define(CASTING_TICKS, 0);
-        this.entityData.define(OLD_PHASE, this.getPhase());
-        this.entityData.define(CURRENT_PHASE, this.getPhase());
+        this.entityData.define(OLD_PHASE, Exp9Phase.PHASE1);
+        this.entityData.define(CURRENT_PHASE, Exp9Phase.PHASE1);
         this.entityData.define(CLIENT_ANGER_LEVEL, 0);
     }
 

@@ -1,0 +1,68 @@
+{
+  "ambientocclusion": false,
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "texture": "#base",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#base"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0.1
+      ],
+      "to": [
+        16,
+        16,
+        0.1
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#emissive",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        },
+        "south": {
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#emissive"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0.101
+      ],
+      "to": [
+        16,
+        16,
+        0.101
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "#base"
+  }
+}
