@@ -1,0 +1,10 @@
+{
+  "parent": "changed_addon:customs/emissive_flowerbed_2",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "emissive_flowerbed": "changed_addon:block/luminara_petals_emissive",
+    "emissive_stem": "changed_addon:block/luminara_petals_stem_emissive",
+    "flowerbed": "changed_addon:block/luminara_petals",
+    "stem": "changed_addon:block/luminara_petals_stem"
+  }
+}

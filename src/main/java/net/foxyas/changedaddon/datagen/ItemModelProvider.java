@@ -75,6 +75,17 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
         basicBlockItem(ChangedAddonBlocks.LUMINARA_LEAVES);
         luminaraSapling();
+
+        luminaraPetals();
+    }
+
+    public void luminaraPetals() {
+        ResourceLocation item = LUMINARA_PETALS.getId();
+        getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "item/" + item.getPath()))
+                .texture("layer1", ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "item/" + item.getPath() + "_emissive"))
+                .customLoader(ItemLayerModelBuilder::begin).emissive(15, 15, 1);
     }
 
     public void luminaraBloom() {

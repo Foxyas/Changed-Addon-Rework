@@ -3,8 +3,8 @@
   "render_type": "minecraft:cutout",
   "textures": {
     "end": "changed_addon:block/luminara_tree/active_stripped_luminara_log_top",
-    "end_glow": "changed_addon:block/luminara_tree/active_stripped_luminara_log_top_glow",
+    "end_emissive": "changed_addon:block/luminara_tree/active_stripped_luminara_log_top_emissive",
     "side": "changed_addon:block/luminara_tree/active_stripped_luminara_log_side",
-    "side_glow": "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_glow"
+    "side_emissive": "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_emissive"
   }
 }

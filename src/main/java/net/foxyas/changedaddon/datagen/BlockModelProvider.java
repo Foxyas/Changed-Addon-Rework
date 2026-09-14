@@ -19,6 +19,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
     public static final ResourceLocation EMISSIVE_FLOWER_BED_2 = ChangedAddonMod.resourceLoc("customs/emissive_flowerbed_2");
     public static final ResourceLocation EMISSIVE_FLOWER_BED_3 = ChangedAddonMod.resourceLoc("customs/emissive_flowerbed_3");
     public static final ResourceLocation EMISSIVE_FLOWER_BED_4 = ChangedAddonMod.resourceLoc("customs/emissive_flowerbed_4");
+    public static final ResourceLocation EMISSIVE_MULTIFACE = ChangedAddonMod.resourceLoc("customs/emissive_multiface");
 
     public BlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ChangedAddonMod.MODID, existingFileHelper);
@@ -32,107 +33,108 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         generateEmissiveCubeColumn();
         generateEmissivePottedPlant();
         generateEmissiveFlowerbeds();
+        generateEmissiveMultiface();
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_BLOOM.getId().getPath(), EMISSIVE_CROSS)
                 .renderType("minecraft:cutout")
                 .texture("cross", ChangedAddonMod.resourceLoc("block/luminara_bloom"))
-                .texture("glow", ChangedAddonMod.resourceLoc("block/luminara_bloom_emissive"))
+                .texture("emissive", ChangedAddonMod.resourceLoc("block/luminara_bloom_emissive"))
         ;
 
         withExistingParent(ChangedAddonBlocks.GOO_CORE.getId().getPath(), EMISSIVE_CUBE_ALL)
                 .renderType("minecraft:cutout")
                 .texture("all", "changed_addon:block/goocore")
-                .texture("all_glow", "changed_addon:block/goocore_emissive")
+                .texture("all_emissive", "changed_addon:block/goocore_emissive")
                 .texture("particle", "changed_addon:block/goocore")
         ;
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_LOG.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
                 .texture("end", "changed_addon:block/luminara_tree/luminara_log_top")
-                .texture("end_glow", "changed_addon:block/luminara_tree/luminara_log_top_glow")
+                .texture("end_emissive", "changed_addon:block/luminara_tree/luminara_log_top_emissive")
                 .texture("side", "changed_addon:block/luminara_tree/luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/luminara_log_side_glow")
+                .texture("side_emissive", "changed_addon:block/luminara_tree/luminara_log_side_emissive")
         ;
 
         withExistingParent("active_" + ChangedAddonBlocks.LUMINARA_LOG.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
                 .texture("end", "changed_addon:block/luminara_tree/active_luminara_log_top")
-                .texture("end_glow", "changed_addon:block/luminara_tree/active_luminara_log_top_glow")
+                .texture("end_emissive", "changed_addon:block/luminara_tree/active_luminara_log_top_emissive")
                 .texture("side", "changed_addon:block/luminara_tree/active_luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/active_luminara_log_side_glow")
+                .texture("side_emissive", "changed_addon:block/luminara_tree/active_luminara_log_side_emissive")
         ;
 
         withExistingParent(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
                 .texture("end", "changed_addon:block/luminara_tree/stripped_luminara_log_top")
-                .texture("end_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_top_glow")
+                .texture("end_emissive", "changed_addon:block/luminara_tree/stripped_luminara_log_top_emissive")
                 .texture("side", "changed_addon:block/luminara_tree/stripped_luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_side_glow")
+                .texture("side_emissive", "changed_addon:block/luminara_tree/stripped_luminara_log_side_emissive")
         ;
 
         withExistingParent("active_" + ChangedAddonBlocks.STRIPPED_LUMINARA_LOG.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
                 .texture("end", "changed_addon:block/luminara_tree/active_stripped_luminara_log_top")
-                .texture("end_glow", "changed_addon:block/luminara_tree/active_stripped_luminara_log_top_glow")
+                .texture("end_emissive", "changed_addon:block/luminara_tree/active_stripped_luminara_log_top_emissive")
                 .texture("side", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_glow")
+                .texture("side_emissive", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_emissive")
         ;
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_WOOD.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
                 .texture("end", "changed_addon:block/luminara_tree/luminara_log_side")
-                .texture("end_glow", "changed_addon:block/luminara_tree/luminara_log_side_glow")
+                .texture("end_emissive", "changed_addon:block/luminara_tree/luminara_log_side_emissive")
                 .texture("side", "changed_addon:block/luminara_tree/luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/luminara_log_side_glow")
+                .texture("side_emissive", "changed_addon:block/luminara_tree/luminara_log_side_emissive")
         ;
 
         withExistingParent(ChangedAddonBlocks.STRIPPED_LUMINARA_WOOD.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
                 .texture("end", "changed_addon:block/luminara_tree/stripped_luminara_log_side")
-                .texture("end_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_side_glow")
+                .texture("end_emissive", "changed_addon:block/luminara_tree/stripped_luminara_log_side_emissive")
                 .texture("side", "changed_addon:block/luminara_tree/stripped_luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/stripped_luminara_log_side_glow")
+                .texture("side_emissive", "changed_addon:block/luminara_tree/stripped_luminara_log_side_emissive")
         ;
 
         withExistingParent("active_" + ChangedAddonBlocks.LUMINARA_WOOD.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
                 .texture("end", "changed_addon:block/luminara_tree/active_luminara_log_side")
-                .texture("end_glow", "changed_addon:block/luminara_tree/active_luminara_log_side_glow")
+                .texture("end_emissive", "changed_addon:block/luminara_tree/active_luminara_log_side_emissive")
                 .texture("side", "changed_addon:block/luminara_tree/active_luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/active_luminara_log_side_glow")
+                .texture("side_emissive", "changed_addon:block/luminara_tree/active_luminara_log_side_emissive")
         ;
 
         withExistingParent("active_" + ChangedAddonBlocks.STRIPPED_LUMINARA_WOOD.getId().getPath(), EMISSIVE_CUBE_COLUMN)
                 .renderType("minecraft:cutout")
                 .texture("end", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side")
-                .texture("end_glow", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_glow")
+                .texture("end_emissive", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_emissive")
                 .texture("side", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side")
-                .texture("side_glow", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_glow")
+                .texture("side_emissive", "changed_addon:block/luminara_tree/active_stripped_luminara_log_side_emissive")
         ;
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_LEAVES.getId().getPath(), EMISSIVE_CUBE_ALL)
                 .renderType("minecraft:cutout", "minecraft:cutout")
                 .texture("all", "changed_addon:block/luminara_tree/luminara_leaves")
-                //.texture("all_glow", "changed_addon:block/luminara_tree/luminara_leaves_glow")
-                .texture("all_glow", "changed_addon:block/luminara_tree/empty")
+                //.texture("all_emissive", "changed_addon:block/luminara_tree/luminara_leaves_emissive")
+                .texture("all_emissive", "changed_addon:block/luminara_tree/empty")
         ;
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_SAPLING.getId().getPath(), EMISSIVE_CROSS)
                 .renderType("minecraft:cutout")
                 .texture("cross", ChangedAddonMod.resourceLoc("block/luminara_sapling"))
-                .texture("glow", ChangedAddonMod.resourceLoc("block/luminara_sapling_emissive"))
+                .texture("emissive", ChangedAddonMod.resourceLoc("block/luminara_sapling_emissive"))
         ;
 
         withExistingParent(ChangedAddonBlocks.POTTED_LUMINARA_BLOOM.getId().getPath(), EMISSIVE_POTTED_PLANT)
                 .renderType("minecraft:cutout")
                 .texture("plant", "changed_addon:block/luminara_bloom")
-                .texture("plant_glow", "changed_addon:block/luminara_bloom_emissive")
+                .texture("plant_emissive", "changed_addon:block/luminara_bloom_emissive")
         ;
 
         withExistingParent(ChangedAddonBlocks.POTTED_LUMINARA_SAPLING.getId().getPath(), EMISSIVE_POTTED_PLANT)
                 .renderType("minecraft:cutout")
                 .texture("plant", "changed_addon:block/luminara_sapling")
-                .texture("plant_glow", "changed_addon:block/luminara_sapling_emissive")
+                .texture("plant_emissive", "changed_addon:block/luminara_sapling_emissive")
         ;
 
         generateLuminaraPetalsBlockModels();
@@ -142,13 +144,13 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         ResourceLocation[] emissiveFlowerBeds = new ResourceLocation[]{EMISSIVE_FLOWER_BED_1, EMISSIVE_FLOWER_BED_2, EMISSIVE_FLOWER_BED_3, EMISSIVE_FLOWER_BED_4};
 
         ResourceLocation flowerbed = ChangedAddonMod.resourceLoc("block/luminara_petals");
-        ResourceLocation flowerbedGlow = ChangedAddonMod.resourceLoc("block/luminara_petals_glow");
+        ResourceLocation flowerbedGlow = ChangedAddonMod.resourceLoc("block/luminara_petals_emissive");
         ResourceLocation stem = ChangedAddonMod.resourceLoc("block/luminara_petals_stem");
-        ResourceLocation stemGlow = ChangedAddonMod.resourceLoc("block/luminara_petals_stem_glow");
+        ResourceLocation stemGlow = ChangedAddonMod.resourceLoc("block/luminara_petals_stem_emissive");
 
         for (int i = 1; i <= 4; i++) {
             // Modelos com brilho emissivo
-            withExistingParent("luminara_petals_" + i + "_glowing", emissiveFlowerBeds[i - 1])
+            withExistingParent("luminara_petals_" + i + "_emissive", emissiveFlowerBeds[i - 1])
                     .renderType("minecraft:cutout")
                     .texture("flowerbed", flowerbed)
                     .texture("emissive_flowerbed", flowerbedGlow)
@@ -162,6 +164,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                     .texture("stem", stem);
         }
     }
+
 
     protected void generateEmissiveCubeColumn() {
         // Generates the clean utility layout under assets/changed_addon/models/block/customs/emissive_cube_all.json
@@ -180,13 +183,13 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .texture("west", "#side")
                 .texture("east", "#side")
 
-                // Map all overlay emissive faces to point to the unified "#side_glow" variable
-                .texture("emissive_down", "#end_glow")
-                .texture("emissive_up", "#end_glow")
-                .texture("emissive_north", "#side_glow")
-                .texture("emissive_south", "#side_glow")
-                .texture("emissive_west", "#side_glow")
-                .texture("emissive_east", "#side_glow");
+                // Map all overlay emissive faces to point to the unified "#side_emissive" variable
+                .texture("emissive_down", "#end_emissive")
+                .texture("emissive_up", "#end_emissive")
+                .texture("emissive_north", "#side_emissive")
+                .texture("emissive_south", "#side_emissive")
+                .texture("emissive_west", "#side_emissive")
+                .texture("emissive_east", "#side_emissive");
     }
 
     protected void generateEmissiveCube() {
@@ -304,13 +307,13 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .texture("west", "#all")
                 .texture("east", "#all")
 
-                // Map all overlay emissive faces to point to the unified "#all_glow" variable
-                .texture("emissive_down", "#all_glow")
-                .texture("emissive_up", "#all_glow")
-                .texture("emissive_north", "#all_glow")
-                .texture("emissive_south", "#all_glow")
-                .texture("emissive_west", "#all_glow")
-                .texture("emissive_east", "#all_glow");
+                // Map all overlay emissive faces to point to the unified "#all_emissive" variable
+                .texture("emissive_down", "#all_emissive")
+                .texture("emissive_up", "#all_emissive")
+                .texture("emissive_north", "#all_emissive")
+                .texture("emissive_south", "#all_emissive")
+                .texture("emissive_west", "#all_emissive")
+                .texture("emissive_east", "#all_emissive");
     }
 
     protected void generateEmissiveCrop() {
@@ -370,13 +373,13 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .shade(false)
                 .face(net.minecraft.core.Direction.NORTH)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
-                .texture("#glow")
+                .texture("#emissive")
                 .color(0xFFFFFFFF).emissivity(15, 15).ao(false)
                 .end()
                 .shade(false)
                 .face(net.minecraft.core.Direction.SOUTH)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
-                .texture("#glow")
+                .texture("#emissive")
                 .color(0xFFFFFFFF).emissivity(15, 15).ao(false) // 15 block light, no ambient occlusion shadows
                 .end()
                 .end()
@@ -394,13 +397,13 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .shade(false)
                 .face(net.minecraft.core.Direction.WEST)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
-                .texture("#glow")
+                .texture("#emissive")
                 .color(0xFFFFFFFF).emissivity(15, 15).ao(false) // 15 block light, no ambient occlusion shadows
                 .end()
                 .shade(false)
                 .face(net.minecraft.core.Direction.EAST)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
-                .texture("#glow")
+                .texture("#emissive")
                 .color(0xFFFFFFFF).emissivity(15, 15).ao(false) // 15 block light, no ambient occlusion shadows
                 .end()
                 .end();
@@ -490,14 +493,14 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .shade(false)
                 .face(Direction.NORTH)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
-                .texture("#plant_glow") // Points to custom emissive texture template variable
+                .texture("#plant_emissive") // Points to custom emissive texture template variable
                 .color(0xFFFFFFFF)
                 .emissivity(15, 15) // Dynamic ForgeFaceData emission coordinates
                 .ao(false)
                 .end()
                 .face(Direction.SOUTH)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
-                .texture("#plant_glow")
+                .texture("#plant_emissive")
                 .color(0xFFFFFFFF)
                 .emissivity(15, 15)
                 .ao(false)
@@ -510,14 +513,14 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .shade(false)
                 .face(Direction.WEST)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
-                .texture("#plant_glow")
+                .texture("#plant_emissive")
                 .color(0xFFFFFFFF)
                 .emissivity(15, 15)
                 .ao(false)
                 .end()
                 .face(Direction.EAST)
                 .uvs(0.0f, 0.0f, 16.0f, 16.0f)
-                .texture("#plant_glow")
+                .texture("#plant_emissive")
                 .color(0xFFFFFFFF)
                 .emissivity(15, 15)
                 .ao(false)
@@ -539,6 +542,10 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 case 4 -> buildFlowerbed4(builder);
             }
         }
+    }
+
+    protected void generateEmissiveMultiface() {
+        createEmissiveMultifaceModel("customs/emissive_multiface");
     }
 
     // ==========================================
@@ -653,5 +660,79 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .rotation().origin(ox, oy, oz).axis(Direction.Axis.Y).angle(-45.0f).end()
                 .face(Direction.NORTH).uvs(u1, v1, u2, v2).texture("#emissive_stem").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end()
                 .face(Direction.SOUTH).uvs(u1, v1, u2, v2).texture("#emissive_stem").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end();
+    }
+
+    public BlockModelBuilder createEmissiveMultifaceModel(String name) {
+        return getBuilder(name)
+                .ao(false)
+                .texture("particle", "#base")
+
+                // Base Layer (Standard Lighting)
+                .element()
+                .from(0.0F, 0.0F, 0.1F)
+                .to(16.0F, 16.0F, 0.1F)
+                .face(Direction.NORTH)
+                .uvs(16.0F, 0.0F, 0.0F, 16.0F)
+                .texture("#base")
+                .end()
+                .face(Direction.SOUTH)
+                .uvs(0.0F, 0.0F, 16.0F, 16.0F)
+                .texture("#base")
+                .end()
+                .end()
+
+                // Emissive Layer (Rendered slightly higher to prevent Z-fighting)
+                .element()
+                .from(0.0F, 0.0F, 0.101F)
+                .to(16.0F, 16.0F, 0.101F)
+                .face(Direction.NORTH)
+                .uvs(16.0F, 0.0F, 0.0F, 16.0F)
+                .texture("#emissive")
+                .emissivity(15, 15) // Marks this face full-bright in Forge
+                .end()
+                .face(Direction.SOUTH)
+                .uvs(0.0F, 0.0F, 16.0F, 16.0F)
+                .texture("#emissive")
+                .emissivity(15, 15) // Marks this face full-bright in Forge
+                .end()
+                .end();
+    }
+
+    public BlockModelBuilder createEmissiveMultifaceModelWithBaseTexture(String name, ResourceLocation baseTexture, ResourceLocation emissiveTexture) {
+        return getBuilder(name)
+                .ao(false)
+                .texture("particle", baseTexture)
+                .texture("base", baseTexture)
+                .texture("emissive", emissiveTexture)
+
+                // Base Layer (Standard Lighting)
+                .element()
+                .from(0.0F, 0.0F, 0.1F)
+                .to(16.0F, 16.0F, 0.1F)
+                .face(Direction.NORTH)
+                .uvs(16.0F, 0.0F, 0.0F, 16.0F)
+                .texture("#base")
+                .end()
+                .face(Direction.SOUTH)
+                .uvs(0.0F, 0.0F, 16.0F, 16.0F)
+                .texture("#base")
+                .end()
+                .end()
+
+                // Emissive Layer (Rendered slightly higher to prevent Z-fighting)
+                .element()
+                .from(0.0F, 0.0F, 0.101F)
+                .to(16.0F, 16.0F, 0.101F)
+                .face(Direction.NORTH)
+                .uvs(16.0F, 0.0F, 0.0F, 16.0F)
+                .texture("#emissive")
+                .emissivity(15, 15) // Marks this face full-bright in Forge
+                .end()
+                .face(Direction.SOUTH)
+                .uvs(0.0F, 0.0F, 16.0F, 16.0F)
+                .texture("#emissive")
+                .emissivity(15, 15) // Marks this face full-bright in Forge
+                .end()
+                .end();
     }
 }

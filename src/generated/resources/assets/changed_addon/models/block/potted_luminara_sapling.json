@@ -3,6 +3,6 @@
   "render_type": "minecraft:cutout",
   "textures": {
     "plant": "changed_addon:block/luminara_sapling",
-    "plant_glow": "changed_addon:block/luminara_sapling_emissive"
+    "plant_emissive": "changed_addon:block/luminara_sapling_emissive"
   }
 }
