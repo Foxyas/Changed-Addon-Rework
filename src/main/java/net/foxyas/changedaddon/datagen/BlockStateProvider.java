@@ -1,10 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.block.LuminarCrystalLarge;
-import net.foxyas.changedaddon.block.LuminaraLogBlock;
-import net.foxyas.changedaddon.block.LuminaraPetalsBlock;
-import net.foxyas.changedaddon.block.StackableCanBlock;
+import net.foxyas.changedaddon.block.*;
 import net.foxyas.changedaddon.block.advanced.TimedKeypadBlock;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.minecraft.core.Direction;
@@ -143,6 +140,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
         largeLuminarCrystalAnimatedWithItem();
         luminaraPetalsBlock(LUMINARA_PETALS);
+        luminaraLichen(LUMINARA_LICHEN);
     }
 
     private void luminaraPetalsBlock(RegistryObject<? extends PinkPetalsBlock> block) {
@@ -468,25 +466,43 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         };
     }
 
-    private void luminaraLichen() {
-        var block = LUMINARA_LICHEN;
-        MultiPartBlockStateBuilder builder = getMultipartBuilder(block.get());
-        ResourceLocation loc = blockLoc(block.getId());
+    private void luminaraLichen(RegistryObject<? extends Block> blockObject) {
+        Block block = blockObject.get();
+        MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
 
-        BlockState state = block.get().defaultBlockState();
-        ModelFile model = models().getExistingFile(loc);
+        // 1. Get your two models (one standard, one with emissive/glowing layer)
+        ModelFile normalModel = models().getExistingFile(blockLoc(LUMINARA_LICHEN.getId()));
+        ModelFile glowingModel = models().getExistingFile(blockLoc(LUMINARA_LICHEN.getId().withSuffix("_glowing")));
+
+        BlockState state = block.defaultBlockState();
+
         for (Direction dir : Direction.values()) {
-            BooleanProperty prop = PipeBlock.PROPERTY_BY_DIRECTION.get(dir);
-            if (!state.hasProperty(prop)) continue;
+            BooleanProperty dirProp = PipeBlock.PROPERTY_BY_DIRECTION.get(dir);
+            if (!state.hasProperty(dirProp)) continue;
 
+            int xRot = getXRotation(dir);
+            int yRot = getYRotation(dir);
+
+            // 2. Part for glowing = false
             builder.part()
-                    .modelFile(model)
-                    .rotationX(getXRotation(dir))
-                    .rotationY(getYRotation(dir))
+                    .modelFile(normalModel)
+                    .rotationX(xRot)
+                    .rotationY(yRot)
+                    .uvLock(xRot != 0 || yRot != 0)
                     .addModel()
-                    .condition(prop, true);
-        }
+                    .condition(dirProp, true)
+                    .condition(LuminaraLichenBlock.GLOWING, false); // Your custom property
 
+            // 3. Part for glowing = true
+            builder.part()
+                    .modelFile(glowingModel)
+                    .rotationX(xRot)
+                    .rotationY(yRot)
+                    .uvLock(xRot != 0 || yRot != 0)
+                    .addModel()
+                    .condition(dirProp, true)
+                    .condition(LuminaraLichenBlock.GLOWING, true); // Your custom property
+        }
     }
 
     private void createMultiface(RegistryObject<? extends Block> block, boolean generatedItem) {

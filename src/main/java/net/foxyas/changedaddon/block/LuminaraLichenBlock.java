@@ -15,13 +15,14 @@ import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LuminaraLichen extends MultifaceBlock implements SimpleWaterloggedBlock {
+public class LuminaraLichenBlock extends MultifaceBlock implements SimpleWaterloggedBlock {
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty GLOWING = BooleanProperty.create("glowing");
 
-    public LuminaraLichen(Properties pProperties) {
+    public LuminaraLichenBlock(Properties pProperties) {
         super(pProperties);
-        registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+        registerDefaultState(defaultBlockState().setValue(GLOWING, false).setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -36,7 +37,7 @@ public class LuminaraLichen extends MultifaceBlock implements SimpleWaterloggedB
     @Override
     public @Nullable BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
         BlockState state = super.getStateForPlacement(context);
-        return state != null ? state.setValue(WATERLOGGED, context.getLevel().isWaterAt(context.getClickedPos())) : null;
+        return state != null ? state.setValue(WATERLOGGED, context.getLevel().isWaterAt(context.getClickedPos())).setValue(GLOWING, false) : null;
     }
 
     public FluidState getFluidState(BlockState pState) {
@@ -45,6 +46,6 @@ public class LuminaraLichen extends MultifaceBlock implements SimpleWaterloggedB
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        super.createBlockStateDefinition(pBuilder.add(WATERLOGGED));
+        super.createBlockStateDefinition(pBuilder.add(WATERLOGGED, GLOWING));
     }
 }

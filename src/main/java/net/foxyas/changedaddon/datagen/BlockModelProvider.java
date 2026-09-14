@@ -137,6 +137,12 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .texture("plant_emissive", "changed_addon:block/luminara_sapling_emissive")
         ;
 
+        withExistingParent(ChangedAddonBlocks.LUMINARA_LICHEN.getId().getPath(), EMISSIVE_MULTIFACE)
+                .renderType("minecraft:cutout")
+                .texture("base", "changed_addon:block/luminara_lichen")
+                .texture("emissive", "changed_addon:block/luminara_lichen_emissive")
+        ;
+
         generateLuminaraPetalsBlockModels();
     }
 

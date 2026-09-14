@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock.NonLatexCoverableBlock;
 
-public class WolfCrystalPillar extends RotatedPillarBlock implements NonLatexCoverableBlock {
+public class WolfCrystalPillarBlock extends RotatedPillarBlock implements NonLatexCoverableBlock {
 
-    public WolfCrystalPillar() {
+    public WolfCrystalPillarBlock() {
         super(Properties.copy(Blocks.BLUE_ICE)
                 .friction(0.98F)
                 .sound(SoundType.AMETHYST)
