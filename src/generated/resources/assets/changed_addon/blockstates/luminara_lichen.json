@@ -3,7 +3,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen",
-        "uvlock": true,
         "x": 90
       },
       "when": {
@@ -14,7 +13,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen_emissive",
-        "uvlock": true,
         "x": 90
       },
       "when": {
@@ -25,7 +23,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen",
-        "uvlock": true,
         "x": 270
       },
       "when": {
@@ -36,7 +33,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen_emissive",
-        "uvlock": true,
         "x": 270
       },
       "when": {
@@ -65,7 +61,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen",
-        "uvlock": true,
         "y": 180
       },
       "when": {
@@ -76,7 +71,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen_emissive",
-        "uvlock": true,
         "y": 180
       },
       "when": {
@@ -87,7 +81,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen",
-        "uvlock": true,
         "y": 270
       },
       "when": {
@@ -98,7 +91,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen_emissive",
-        "uvlock": true,
         "y": 270
       },
       "when": {
@@ -109,7 +101,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen",
-        "uvlock": true,
         "y": 90
       },
       "when": {
@@ -120,7 +111,6 @@
     {
       "apply": {
         "model": "changed_addon:block/luminara_lichen_emissive",
-        "uvlock": true,
         "y": 90
       },
       "when": {

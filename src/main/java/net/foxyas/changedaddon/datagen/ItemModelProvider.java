@@ -77,7 +77,18 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         luminaraSapling();
 
         luminaraPetals();
+        luminaraLichen();
     }
+
+    public void luminaraLichen() {
+        ResourceLocation item = LUMINARA_LICHEN.getId();
+        getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "block/" + item.getPath()))
+                .texture("layer1", ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "block/" + item.getPath() + "_emissive"))
+                .customLoader(ItemLayerModelBuilder::begin).emissive(15, 15, 1);
+    }
+
 
     public void luminaraPetals() {
         ResourceLocation item = LUMINARA_PETALS.getId();

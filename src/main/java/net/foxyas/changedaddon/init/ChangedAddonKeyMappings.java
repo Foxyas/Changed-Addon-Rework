@@ -92,16 +92,16 @@ public class ChangedAddonKeyMappings {
         @Override
         public void setDown(boolean isDown) {
             super.setDown(isDown);
-            if (!isDown) return;
-
-            Player player = Minecraft.getInstance().player;
-            if (player == null || player.isDeadOrDying()) return;
-
-//            ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(Minecraft.getInstance().player);
-//            if (vars.isPatInCooldown()) return;
-
-            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(PatType.SINGLE));
-            PatKeyPacket.pressAction(Minecraft.getInstance().player, PatType.SINGLE);
+//            if (!isDown) return;
+//
+//            Player player = Minecraft.getInstance().player;
+//            if (player == null || player.isDeadOrDying()) return;
+//
+////            ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(Minecraft.getInstance().player);
+////            if (vars.isPatInCooldown()) return;
+//
+//            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(PatType.SINGLE));
+//            PatKeyPacket.pressAction(Minecraft.getInstance().player, PatType.SINGLE);
         }
     };
 
