@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.packet.PatKeyPacket;
+import net.foxyas.changedaddon.network.packet.PatKeyPacket.PatType;
 import net.foxyas.changedaddon.network.packet.ServerboundSwitchCuddlePacket;
 import net.foxyas.changedaddon.network.packet.TurnOffTransfurPacket;
 import net.foxyas.changedaddon.network.packet.VariantSecondAbilityActivate;
@@ -99,8 +100,8 @@ public class ChangedAddonKeyMappings {
 //            ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(Minecraft.getInstance().player);
 //            if (vars.isPatInCooldown()) return;
 
-            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(0, 0));
-            PatKeyPacket.pressAction(Minecraft.getInstance().player, 0);
+            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(PatType.SINGLE));
+            PatKeyPacket.pressAction(Minecraft.getInstance().player, PatType.SINGLE);
         }
     };
 
@@ -162,6 +163,10 @@ public class ChangedAddonKeyMappings {
                 ChangedAddonMod.PACKET_HANDLER.sendToServer(ServerboundSwitchCuddlePacket.INSTANCE);
             }
 
+            handlePatKey(mc);
+        }
+
+        public static void handlePatKey(Minecraft mc) {
             LocalPlayer player = mc.player;
             if (player == null || player.isDeadOrDying()) {
                 ClientPatState.patting = false;
@@ -187,26 +192,32 @@ public class ChangedAddonKeyMappings {
                     return livingEntity != player;
                 });
 
-                boolean hasValidTarget = targetEntityResult != null && targetEntityResult.getType() != HitResult.Type.MISS;
-                ClientPatState.patting = hasValidTarget && isHolding;
+                ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
+                ClientPatState.patting = vars.ticksPattingAnEntity >= 10;
 
+                boolean hasValidTarget = targetEntityResult != null && targetEntityResult.getType() != HitResult.Type.MISS;
                 if (hasValidTarget) {
-                    ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
 
                     // SPAM MODE: Manual click BYPASSES cooldown check
                     // HOLD MODE: Must wait for !isPatInCooldown()
                     if (manualClick || !vars.isPatInCooldown()) {
-                        ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(0, 0));
-                        PatKeyPacket.pressAction(player, 0);
-
-                        if (ClientPatState.animTicks % 5 == 0) {
-                            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(1, 0));
-                            PatKeyPacket.pressAction(player, 1);
+                        if (manualClick) {
+                            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(PatType.SINGLE));
+                            PatKeyPacket.pressAction(player, PatType.SINGLE);
+                        } else {
+                            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(PatType.CONTINUOS));
+                            PatKeyPacket.pressAction(player, PatType.CONTINUOS);
                         }
                     }
+                } else {
+                    ClientPatState.patting = false;
+                    ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(PatType.RESET));
+                    PatKeyPacket.pressAction(player, PatType.RESET);
                 }
             } else {
                 ClientPatState.patting = false;
+                ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(PatType.RESET));
+                PatKeyPacket.pressAction(player, PatType.RESET);
             }
         }
 
@@ -216,6 +227,10 @@ public class ChangedAddonKeyMappings {
 
         @SubscribeEvent
         public static void onMouseScrolling(InputEvent.MouseScrollingEvent event) {
+            handlePatKeyScrolling(event);
+        }
+
+        public static void handlePatKeyScrolling(InputEvent.MouseScrollingEvent event) {
             float scrollDelta = (float) event.getScrollDelta();
             if (PAT_KEY.isDown()) {
                 ClientPatState.patSpeed = Mth.clamp(ClientPatState.patSpeed + (scrollDelta * 0.01f), 0.25f, 3);

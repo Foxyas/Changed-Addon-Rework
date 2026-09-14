@@ -100,6 +100,8 @@ public class ChangedAddonVariables {
                 )
         );
 
+        public int ticksPattingAnEntity = 0;
+
         public float consciousnessFightProgress = 0;
         public boolean isTransfuredBySafeMethod = true;
         public int timeAfterVictoryOfFTK = 0;
