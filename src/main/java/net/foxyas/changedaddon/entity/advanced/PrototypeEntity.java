@@ -167,20 +167,19 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
     }
 
     @Override
-    public void whenPattedReaction(LivingEntity patter, InteractionHand hand) {
-        ICustomPatReaction.super.whenPattedReaction(patter, hand);
-        if (patter.level().isClientSide) return;
+    public boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+        if (patter.level().isClientSide) return false;
         if (!(patter instanceof Player player)) {
-            return;
+            return false;
         }
 
         if (!isTame()) {
             tame(player);
-            return;
+            return true;
         }
 
         InteractionResult interactionresult = super.mobInteract(player, hand);
-        if ((interactionresult.consumesAction() && !isBaby()) || !isOwnedBy(patter)) return;
+        if ((interactionresult.consumesAction() && !isBaby()) || !isOwnedBy(patter)) return false;
 
         boolean shouldFollow = !isFollowingOwner();
         setFollowOwner(shouldFollow);
@@ -189,6 +188,7 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
         jumping = false;
         navigation.stop();
         setTarget(null);
+        return ICustomPatReaction.super.whenPattedReaction(patter, hand);
     }
 
     @Override

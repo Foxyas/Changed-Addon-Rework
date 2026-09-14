@@ -16,6 +16,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.concurrent.CompletableFuture;
@@ -66,9 +67,11 @@ public class GatherData {
         generator.addProvider(true, new ENLanguageProvider(packOutput));
         generator.addProvider(true, new HULanguageProvider(packOutput));
 
-        generator.addProvider(true, new ENPatchouliBookProvider(packOutput));
-        generator.addProvider(true, new RUPatchouliBookProvider(packOutput));
-        generator.addProvider(true, new HUPatchouliBookProvider(packOutput));
+        if (ModList.get().isLoaded("patchouli")) {
+            generator.addProvider(true, new ENPatchouliBookProvider(packOutput));
+            generator.addProvider(true, new RUPatchouliBookProvider(packOutput));
+            generator.addProvider(true, new HUPatchouliBookProvider(packOutput));
+        }
 //        generator.addProvider(true, new ModAnimationAssociationsProvider(packOutput));
     }
 }

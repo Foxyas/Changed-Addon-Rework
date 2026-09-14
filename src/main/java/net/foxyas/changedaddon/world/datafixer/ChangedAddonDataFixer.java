@@ -2,6 +2,8 @@ package net.foxyas.changedaddon.world.datafixer;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -25,6 +27,7 @@ public class ChangedAddonDataFixer {
     private final Map<ResourceLocation, ResourceLocation> ENCHANTMENT_REMAP = new HashMap<>();
     // Future Data fixers
     private final Map<ResourceLocation, ResourceLocation> ENTITY_ID_REMAP = Util.make(new HashMap<>(), map -> {
+        map.put(ChangedAddonMod.resourceLoc("latex_snep"), ChangedAddonEntities.LATEX_FERAL_SNEP.getId());
     });
     private final Map<ResourceLocation, ResourceLocation> ITEM_ID_REMAP = Util.make(new HashMap<>(), map -> {
     });
@@ -33,7 +36,7 @@ public class ChangedAddonDataFixer {
     private final Map<ResourceLocation, ResourceLocation> BLOCK_ITEM_ID_REMAP = Util.make(new HashMap<>(), map -> {
     });
     private final Map<ResourceLocation, ResourceLocation> VARIANT_ID_REMAP = Util.make(new HashMap<>(), map -> {
-
+        map.put(ChangedAddonMod.resourceLoc("latex_snep"), ChangedAddonTransfurVariants.LATEX_SNEP_FERAL.getId());
     });
     private final Map<String, String> ENUM_REMAP = Util.make(new HashMap<>(), map -> {
     });

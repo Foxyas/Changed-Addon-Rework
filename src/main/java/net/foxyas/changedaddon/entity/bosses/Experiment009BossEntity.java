@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.bosses;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
+import com.mojang.serialization.DataResult;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -14,6 +15,7 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -51,6 +53,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.BossEvent;
@@ -63,10 +66,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.warden.Warden;
-import net.minecraft.world.entity.monster.warden.WardenAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -107,7 +108,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> CASTING_TICKS =
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Exp9Phase> PHASE =
+    private static final EntityDataAccessor<Exp9Phase> OLD_PHASE =
+            SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
+    private static final EntityDataAccessor<Exp9Phase> CURRENT_PHASE =
             SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
     public static final String ATTACK_DAMAGE_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb736";
     public static final String ARMOR_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb737";
@@ -122,8 +125,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     protected final Map<Exp9Phase, List<Goal>> phaseGoals = new EnumMap<>(Exp9Phase.class);
     private final DynamicAngerManagement angerManagement;
     protected int maxCastingTicks = 200;
-    protected boolean wasPhasedForPhase2 = false;
-    protected boolean wasPhasedForPhase3 = false;
 
     protected final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     protected boolean shouldBleed = false;
@@ -226,7 +227,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         this.entityData.define(PHASE3, false);
         this.entityData.define(CASTING_ATTACK, false);
         this.entityData.define(CASTING_TICKS, 0);
-        this.entityData.define(PHASE, this.getPhase());
+        this.entityData.define(OLD_PHASE, this.getPhase());
+        this.entityData.define(CURRENT_PHASE, this.getPhase());
         this.entityData.define(CLIENT_ANGER_LEVEL, 0);
     }
 
@@ -420,7 +422,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     protected void initPhaseGoals() {
         // Phase 1 Goals (Base Abilities)
         phaseGoals.put(Exp9Phase.PHASE1, List.of(
-                new ThunderDashAttack(this),
+                new ThunderDashAttack(this, UniformInt.of(200, 500)),
                 new ThunderDiveGoal(this, UniformInt.of(60, 100), 1.5f, 6f, 1f, 0.5f, 4),
                 new AoEThunderStrikeGoal(
                         this,
@@ -432,7 +434,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         // Phase 2 Goals
         phaseGoals.put(Exp9Phase.PHASE2, List.of(
-                new ThunderDashAttack(this),
+                new ThunderDashAttack(this, UniformInt.of(300, 700)),
                 new SummonLightningGoal(this, //PathfinderMob -> holder,
                         UniformInt.of(120, 240), //IntProvider -> cooldown,
                         UniformInt.of(2, 4), //IntProvider -> lightningCount,
@@ -455,7 +457,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         // Phase 3 Goals
         phaseGoals.put(Exp9Phase.PHASE3, List.of(
-                new ThunderDashAttack(this),
+                new ThunderDashAttack(this, UniformInt.of(200, 400)),
                 new ThunderDiveGoal(this,
                         UniformInt.of(60, 100), //IntProvider -> cooldownProvider
                         1.5f,
@@ -551,7 +553,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 //        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
     }
 
-    public enum Exp9Phase {
+    public enum Exp9Phase implements StringRepresentable {
         PHASE1(1f, 1f),
         PHASE2(2.5f, 0.5f),
 
@@ -572,12 +574,31 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         public float getCastModifier(@Nullable LivingEntity target) {
             return castModifier;
         }
+
+        public static @Nullable(value = "null if invalid") Exp9Phase getFromTag(CompoundTag tag, @Nullable String tagKey) {
+            String bossPhaseTagID = tagKey != null ? tagKey : "bossPhase";
+            return tag.contains(bossPhaseTagID) ? fromSerial(tag.getString(bossPhaseTagID)).get().orThrow() : null;
+        }
+
+        public void saveInTag(CompoundTag tag, @Nullable String tagKey) {
+            String bossPhaseID = tagKey != null ? tagKey : "bossPhase";
+            tag.putString(bossPhaseID, this.getSerializedName());
+        }
+
+        public static DataResult<Exp9Phase> fromSerial(String serializedName) {
+            return Arrays.stream(values()).filter((value) -> value.getSerializedName().equals(serializedName)).findAny().map(DataResult::success).orElse(DataResult.error(() -> "Invalid Boss Phase " + serializedName));
+        }
+
+        @Override
+        public @NotNull String getSerializedName() {
+            return this.name().toLowerCase();
+        }
     }
 
     @Override
     public Exp9Phase getPhase() {
-        if (entityData.hasItem(PHASE)) {
-            return entityData.get(PHASE);
+        if (entityData.hasItem(CURRENT_PHASE)) {
+            return entityData.get(CURRENT_PHASE);
         } else {
             if (isPhase3()) return Exp9Phase.PHASE3;
             if (isPhase2()) return Exp9Phase.PHASE2;
@@ -585,9 +606,18 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
+    public Exp9Phase getOldPhase() {
+        return entityData.get(OLD_PHASE);
+    }
+
     @Override
     public void setPhase(Exp9Phase phase) {
-        entityData.set(PHASE, phase);
+        entityData.set(OLD_PHASE, this.getPhase());
+        entityData.set(CURRENT_PHASE, phase);
+    }
+
+    public void setOldPhase(Exp9Phase phase) {
+        entityData.set(OLD_PHASE, this.getPhase());
     }
 
     @Override
@@ -596,8 +626,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (pKey.equals(PHASE3) || pKey.equals(PHASE2)) {
             this.setPhase(entityData.get(PHASE3) ? Exp9Phase.PHASE3 : entityData.get(PHASE2) ? Exp9Phase.PHASE2 : Exp9Phase.PHASE1);
         }
-        if (pKey.equals(PHASE)) {
-            onPhaseChange(entityData.get(PHASE));
+        if (pKey.equals(CURRENT_PHASE)) {
+            onPhaseChange(entityData.get(OLD_PHASE), entityData.get(CURRENT_PHASE));
         }
     }
 
@@ -710,6 +740,19 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
             triggerOnDamageReactiveGoals(source, amount, false);
             return false;
+        }
+
+        if (this.isPhase3() && (isBleeding() && this.computeHealthRatioForCurrentPhase() > 0.25f)) {
+            if (!this.isInvulnerableTo(source)) {
+                if (source.getDirectEntity() != null && source.getDirectEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
+                    double speed = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2.0f);
+                    dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
+                }
+
+                DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
+                this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
+                return false;
+            }
         }
 
 
@@ -912,17 +955,18 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
         }
 
+        Exp9Phase oldPhase = this.getPhase();
         if (this.isPhase2()) {
             float ratio = this.computeHealthRatio();
             boolean hasPhase3HealthRatio = currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO || ratio <= PHASE_3_HEALTH_RATIO;
             if (hasPhase3HealthRatio && !this.isPhase3()) {
                 this.setPhase3(true);
-                this.onPhaseChange(this.getPhase());
+                this.onPhaseChange(oldPhase, this.getPhase());
                 level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
             }
         } else if (currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO) {
             this.setPhase2(true);
-            this.onPhaseChange(this.getPhase());
+            this.onPhaseChange(oldPhase, this.getPhase());
             level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
         }
     }
@@ -932,30 +976,39 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return this.getMaxHealth() * ratio;
     }
 
-    protected void onPhaseChange(Exp9Phase phase) {
-        switch (phase) {
+    public float computeHealthRatioForCurrentPhase() {
+        return this.getHealth() / getMaxHealthForCurrentPhase();
+    }
+
+    protected void onPhaseChange(Exp9Phase oldPhase, Exp9Phase newPhase) {
+        boolean refreshAttributes = oldPhase != newPhase;
+        switch (newPhase) {
             case PHASE1 -> {
                 refreshPhaseAIGoals();
                 removeStatModifiers();
             }
             case PHASE2 -> {
-                if (!wasPhasedForPhase2) {
-                    refreshPhaseAIGoals();
+                refreshPhaseAIGoals();
+                if (refreshAttributes) {
+                    playSound(SoundEvents.PLAYER_ATTACK_CRIT, 2.5f, 0.75f);
                     removeStatModifiers();
                     applyStatModifier(this, 1.5f);
+
+                    playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 5f, 0.75f);
                     knockBackAndDoThunderBolt();
-                    wasPhasedForPhase2 = true;
-                    wasPhasedForPhase3 = false;
                 }
             }
             case PHASE3 -> {
-                if (!wasPhasedForPhase3) {
-                    refreshPhaseAIGoals();
+                refreshPhaseAIGoals();
+                if (refreshAttributes) {
+                    playSound(SoundEvents.PLAYER_ATTACK_CRIT, 2.5f, 0.25f);
                     removeStatModifiers();
                     applyStatModifierAllOutPhase();
+
+                    playSound(SoundEvents.PLAYER_ATTACK_CRIT, 2.5f, 0.55f);
+                    playSound(SoundEvents.LIGHTNING_BOLT_IMPACT, 5f, 0.55f);
+                    playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 5f, 0.25f);
                     knockbackAndDoThunderStorm();
-                    wasPhasedForPhase2 = true;
-                    wasPhasedForPhase3 = true;
                 }
             }
         }
@@ -1185,12 +1238,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
-        if (tag.contains("wasPhasedForPhase2")) {
-            wasPhasedForPhase2 = tag.getBoolean("wasPhasedForPhase2");
+        if (tag.contains("bossPhase")) {
+            CompoundTag bossPhase = tag.getCompound("bossPhase");
+            this.setOldPhase(Exp9Phase.getFromTag(bossPhase, "oldPhase"));
+            this.setPhase(Exp9Phase.getFromTag(bossPhase, "currentPhase"));
         }
-        if (tag.contains("wasPhasedForPhase3")) {
-            wasPhasedForPhase3 = tag.getBoolean("wasPhasedForPhase3");
-        }
+
         super.readAdditionalSaveData(tag);
         if (tag.contains("isPhase3"))
             setPhase3(tag.getBoolean("isPhase3"));
@@ -1208,14 +1261,17 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
-        tag.putBoolean("wasPhasedForPhase2", wasPhasedForPhase2);
-        tag.putBoolean("wasPhasedForPhase3", wasPhasedForPhase3);
         super.addAdditionalSaveData(tag);
+        CompoundTag bossPhase = new CompoundTag();
+        this.getOldPhase().saveInTag(bossPhase, "oldPhase");
+        this.getPhase().saveInTag(bossPhase, "currentPhase");
+        tag.put("bossPhase", bossPhase);
+
         tag.putBoolean("isPhase3", isPhase3());
         tag.putBoolean("isBleeding", shouldBleed);
         tag.putBoolean("castingAttack", this.isCastingAttack());
-        tag.putFloat("castingAttackTicks", this.getCastingTicks());
-        tag.putFloat("maxCastingTicks", this.getMaxCastingTicks());
+        tag.putInt("castingAttackTicks", this.getCastingTicks());
+        tag.putInt("maxCastingTicks", this.getMaxCastingTicks());
         this.angerManagement.save(tag);
 //        this.targetDataManager.saveTarget(tag);
     }
@@ -1223,21 +1279,25 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     public CompoundTag savePlayerVariantData() {
         CompoundTag tag = super.savePlayerVariantData();
-        tag.putBoolean("wasPhasedForPhase2", wasPhasedForPhase2);
-        tag.putBoolean("wasPhasedForPhase3", wasPhasedForPhase3);
+
+        CompoundTag bossPhase = new CompoundTag();
+        this.getOldPhase().saveInTag(bossPhase, "oldPhase");
+        this.getPhase().saveInTag(bossPhase, "currentPhase");
+
+        tag.put("bossPhase", bossPhase);
         tag.putBoolean("isPhase3", isPhase3());
         return tag;
     }
 
     @Override
     public void readPlayerVariantData(CompoundTag tag) {
-        if (tag.contains("wasPhasedForPhase2")) {
-            wasPhasedForPhase2 = tag.getBoolean("wasPhasedForPhase2");
-        }
-        if (tag.contains("wasPhasedForPhase2")) {
-            wasPhasedForPhase3 = tag.getBoolean("wasPhasedForPhase3");
-        }
         super.readPlayerVariantData(tag);
+        if (tag.contains("bossPhase")) {
+            CompoundTag bossPhase = tag.getCompound("bossPhase");
+            this.setOldPhase(Exp9Phase.getFromTag(bossPhase, "oldPhase"));
+            this.setPhase(Exp9Phase.getFromTag(bossPhase, "currentPhase"));
+        }
+
         if (tag.contains("isPhase3"))
             setPhase3(tag.getBoolean("isPhase3"));
     }
@@ -1330,12 +1390,19 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (shouldBleed) {
             if (this.computeHealthRatio() / PHASE_3_HEALTH_RATIO > 0.25f) {
                 if (this.tickCount % 20 == 0) {
-                    spawnThunderBoltsSpark(20, 2.5f, 16, true, 2, 10f, 0.25f);
+                    spawnThunderBoltsSpark(20, 2.5f, 4, true, 2, 10f, 0.25f);
                 }
             }
 
             if (this.tickCount % 4 == 0 && (!hurtMarked && hurtTime <= 0)) {
-                this.setHealth(this.getHealth() - 0.25f);
+                float minHealthThreshold = this.getMaxHealthForCurrentPhase() * 0.25f;
+
+                // Only apply bleeding if current health is above the 25% threshold
+                if (this.getHealth() > minHealthThreshold) {
+                    // Subtract 0.25 HP, but clamp the bottom limit to minHealthThreshold
+                    float newHealth = Math.max(minHealthThreshold, this.getHealth() - 0.25f);
+                    this.setHealth(newHealth);
+                }
             }
         }
 
@@ -1356,6 +1423,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                         // Moderate intensity
                         if (randomSource.nextFloat() < 0.20f) { // 20% chance instead of nested checks
                             ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, spawnPos, 0.15f, 0.15f, 0.15f, 2, 0.01f);
+                        }
+
+                        if (randomSource.nextFloat() < 0.05f) { // 5% chance instead of nested checks
+                            spawnThunderBoltsSpark(20, 2.5f, 1, true, 2, 4f, 0.25f);
                         }
                         ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), spawnPos, 0.2f, 0.2f, 0.2f, 2, 0.05f);
                     }
@@ -1483,13 +1554,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     @Override
-    public void whenPattedReaction(LivingEntity patter, InteractionHand hand) {
-        if (!(patter.level() instanceof ServerLevel)) return;
+    public boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+        if (!(patter.level() instanceof ServerLevel)) return false;
         if (patter instanceof ServerPlayer serverPlayer) {
             ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(serverPlayer, this, "pats_on_the_beast");
         }
         if (!(patter instanceof Player player)) {
-            return;
+            return false;
         }
 
         List<Component> translatableComponentList = new ArrayList<>();
@@ -1512,6 +1583,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         player.displayClientMessage(entityChat, false);
         applyRampage();
+        return IExp9Logic.super.whenPattedReaction(patter, hand);
     }
 
     private void applyRampage() {

@@ -22,12 +22,7 @@ public record PatKeyPacket(int type, int pressedMs) {
 
     public static void pressAction(Player player, int type) {
         if (player == null) return;
-        Level level = player.level;
-
-        if (type == 0) {
-
-            PatFeatureHandle.run(level, player);
-        }
+        PatFeatureHandle.run(player, type == 1);
     }
 
     public void encode(FriendlyByteBuf buf) {

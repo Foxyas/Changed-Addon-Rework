@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BlockModelProvider extends net.minecraftforge.client.model.generators.BlockModelProvider {
@@ -14,6 +15,10 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
     public static final ResourceLocation EMISSIVE_CUBE_COLUMN = ChangedAddonMod.resourceLoc("customs/emissive_cube_column");
     public static final ResourceLocation EMISSIVE_CUBE = ChangedAddonMod.resourceLoc("customs/emissive_cube");
     public static final ResourceLocation EMISSIVE_POTTED_PLANT = ChangedAddonMod.resourceLoc("customs/emissive_potted_plant");
+    public static final ResourceLocation EMISSIVE_FLOWER_BED_1 = ChangedAddonMod.resourceLoc("customs/emissive_flowerbed_1");
+    public static final ResourceLocation EMISSIVE_FLOWER_BED_2 = ChangedAddonMod.resourceLoc("customs/emissive_flowerbed_2");
+    public static final ResourceLocation EMISSIVE_FLOWER_BED_3 = ChangedAddonMod.resourceLoc("customs/emissive_flowerbed_3");
+    public static final ResourceLocation EMISSIVE_FLOWER_BED_4 = ChangedAddonMod.resourceLoc("customs/emissive_flowerbed_4");
 
     public BlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ChangedAddonMod.MODID, existingFileHelper);
@@ -26,6 +31,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         generateEmissiveCubeAll();
         generateEmissiveCubeColumn();
         generateEmissivePottedPlant();
+        generateEmissiveFlowerbeds();
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_BLOOM.getId().getPath(), EMISSIVE_CROSS)
                 .renderType("minecraft:cutout")
@@ -105,7 +111,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         ;
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_LEAVES.getId().getPath(), EMISSIVE_CUBE_ALL)
-                .renderType("minecraft:cutout","minecraft:cutout")
+                .renderType("minecraft:cutout", "minecraft:cutout")
                 .texture("all", "changed_addon:block/luminara_tree/luminara_leaves")
                 //.texture("all_glow", "changed_addon:block/luminara_tree/luminara_leaves_glow")
                 .texture("all_glow", "changed_addon:block/luminara_tree/empty")
@@ -128,9 +134,36 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .texture("plant", "changed_addon:block/luminara_sapling")
                 .texture("plant_glow", "changed_addon:block/luminara_sapling_emissive")
         ;
+
+        generateLuminaraPetalsBlockModels();
     }
 
-    private void generateEmissiveCubeColumn() {
+    protected void generateLuminaraPetalsBlockModels() {
+        ResourceLocation[] emissiveFlowerBeds = new ResourceLocation[]{EMISSIVE_FLOWER_BED_1, EMISSIVE_FLOWER_BED_2, EMISSIVE_FLOWER_BED_3, EMISSIVE_FLOWER_BED_4};
+
+        ResourceLocation flowerbed = ChangedAddonMod.resourceLoc("block/luminara_petals");
+        ResourceLocation flowerbedGlow = ChangedAddonMod.resourceLoc("block/luminara_petals_glow");
+        ResourceLocation stem = ChangedAddonMod.resourceLoc("block/luminara_petals_stem");
+        ResourceLocation stemGlow = ChangedAddonMod.resourceLoc("block/luminara_petals_stem_glow");
+
+        for (int i = 1; i <= 4; i++) {
+            // Modelos com brilho emissivo
+            withExistingParent("luminara_petals_" + i + "_glowing", emissiveFlowerBeds[i - 1])
+                    .renderType("minecraft:cutout")
+                    .texture("flowerbed", flowerbed)
+                    .texture("emissive_flowerbed", flowerbedGlow)
+                    .texture("stem", stem)
+                    .texture("emissive_stem", stemGlow);
+
+            // Modelos normais (utiliza o modelo de flowerbed padrão do Vanilla)
+            withExistingParent("luminara_petals_" + i, mcLoc("block/flowerbed_" + i))
+                    .renderType("minecraft:cutout")
+                    .texture("flowerbed", flowerbed)
+                    .texture("stem", stem);
+        }
+    }
+
+    protected void generateEmissiveCubeColumn() {
         // Generates the clean utility layout under assets/changed_addon/models/block/customs/emissive_cube_all.json
         getBuilder("customs/emissive_cube_column")
                 // Inherit directly from your own directional emissive cube!
@@ -156,7 +189,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .texture("emissive_east", "#side_glow");
     }
 
-    private void generateEmissiveCube() {
+    protected void generateEmissiveCube() {
         // Generates the model layout under assets/changed_addon/models/block/customs/emissive_cube.json
         getBuilder("customs/emissive_cube")
                 .parent(getExistingFile(mcLoc("block/block"))) // Inherits base settings from minecraft:block/block
@@ -254,7 +287,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .end();
     }
 
-    private void generateEmissiveCubeAll() {
+    protected void generateEmissiveCubeAll() {
         // Generates the clean utility layout under assets/changed_addon/models/block/customs/emissive_cube_all.json
         getBuilder("customs/emissive_cube_all")
                 // Inherit directly from your own directional emissive cube!
@@ -280,7 +313,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .texture("emissive_east", "#all_glow");
     }
 
-    private void generateEmissiveCrop() {
+    protected void generateEmissiveCrop() {
         getBuilder("customs/emissive_cross")
                 .parent(getExistingFile(mcLoc("block/cross"))) // Inherits base settings from minecraft:block/block
                 .ao(false) // Disable ambient occlusion for the entire model layout
@@ -373,7 +406,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .end();
     }
 
-    private void generateEmissivePottedPlant() {
+    protected void generateEmissivePottedPlant() {
         // Generates the model under assets/changed_addon/models/block/customs/emissive_potted_plant.json
         getBuilder("customs/emissive_potted_plant")
                 .ao(false) // Disable ambient occlusion globally for the model to prevent shading on the flower pot walls
@@ -490,5 +523,135 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
                 .ao(false)
                 .end()
                 .end();
+    }
+
+    protected void generateEmissiveFlowerbeds() {
+        // Declaração dos 4 arquivos de modelo que o Pink Petals / Flowerbed utiliza
+        for (int i = 1; i <= 4; i++) {
+            BlockModelBuilder builder = getBuilder("customs/emissive_flowerbed_" + i)
+                    .ao(false)
+                    .texture("particle", "#flowerbed");
+
+            switch (i) {
+                case 1 -> buildFlowerbed1(builder);
+                case 2 -> buildFlowerbed2(builder);
+                case 3 -> buildFlowerbed3(builder);
+                case 4 -> buildFlowerbed4(builder);
+            }
+        }
+    }
+
+    // ==========================================
+    // FLOWERBED 1 (3 Flores, Altura ~3.0)
+    // ==========================================
+    protected void buildFlowerbed1(BlockModelBuilder builder) {
+        // --- Camada de Pétalas (Base) ---
+        builder.element().from(0.0f, 2.99f, 0.0f).to(8.0f, 2.99f, 8.0f)
+                .face(Direction.UP).uvs(0.0f, 0.0f, 8.0f, 8.0f).texture("#flowerbed").end()
+                .face(Direction.DOWN).uvs(0.0f, 8.0f, 8.0f, 0.0f).texture("#flowerbed").end();
+
+        // --- Camada de Pétalas (Emissiva Overlay) ---
+        builder.element().from(0.0f, 2.99f, 0.0f).to(8.0f, 2.99f, 8.0f).shade(false)
+                .face(Direction.UP).uvs(0.0f, 0.0f, 8.0f, 8.0f).texture("#emissive_flowerbed").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end()
+                .face(Direction.DOWN).uvs(0.0f, 8.0f, 8.0f, 0.0f).texture("#emissive_flowerbed").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end();
+
+        // Haste 1 (Cruz 1)
+        addStemCross(builder, 4.25f, 0.0f, -2.6f, 4.25f, 2.99f, -1.6f, 3.75f, 0.0f, -2.1f, 4.75f, 2.99f, -2.1f, 0, 4, 1, 7, 0, 0, 0);
+        // Haste 2 (Cruz 2)
+        addStemCross(builder, 4.9f, 0.0f, 2.3f, 4.9f, 2.99f, 3.3f, 4.4f, 0.0f, 2.8f, 5.4f, 2.99f, 2.8f, 0, 4, 1, 7, 0, 0, 0);
+        // Haste 3 (Cruz 3)
+        addStemCross(builder, 9.15f, 0.0f, -0.45f, 9.15f, 2.99f, 0.55f, 8.65f, 0.0f, 0.05f, 9.65f, 2.99f, 0.05f, 0, 4, 1, 7, 0, 0, 0);
+    }
+
+    // ==========================================
+    // FLOWERBED 2 (1 Flor, Altura ~1.0)
+    // ==========================================
+    protected void buildFlowerbed2(BlockModelBuilder builder) {
+        // --- Camada de Pétalas (Base) ---
+        builder.element().from(0.0f, 1.0f, 8.0f).to(8.0f, 1.0f, 16.0f)
+                .face(Direction.UP).uvs(0.0f, 8.0f, 8.0f, 16.0f).texture("#flowerbed").end()
+                .face(Direction.DOWN).uvs(0.0f, 16.0f, 8.0f, 8.0f).texture("#flowerbed").end();
+
+        // --- Camada de Pétalas (Emissiva Overlay) ---
+        builder.element().from(0.0f, 1.0f, 8.0f).to(8.0f, 1.0f, 16.0f).shade(false)
+                .face(Direction.UP).uvs(0.0f, 8.0f, 8.0f, 16.0f).texture("#emissive_flowerbed").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end()
+                .face(Direction.DOWN).uvs(0.0f, 16.0f, 8.0f, 8.0f).texture("#emissive_flowerbed").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end();
+
+        // Haste
+        addStemCross(builder, 10.65f, 0.0f, 4.75f, 10.65f, 1.0f, 5.75f, 10.15f, 0.0f, 5.25f, 11.15f, 1.0f, 5.25f, 0, 6, 1, 7, 0, 0, 1);
+    }
+
+    // ==========================================
+    // FLOWERBED 3 (3 Flores, Altura ~2.0)
+    // ==========================================
+    protected void buildFlowerbed3(BlockModelBuilder builder) {
+        // --- Camada de Pétalas (Base) ---
+        builder.element().from(8.0f, 2.0f, 8.0f).to(16.0f, 2.0f, 16.0f)
+                .face(Direction.UP).uvs(8.0f, 8.0f, 16.0f, 16.0f).texture("#flowerbed").end()
+                .face(Direction.DOWN).uvs(8.0f, 16.0f, 16.0f, 8.0f).texture("#flowerbed").end();
+
+        // --- Camada de Pétalas (Emissiva Overlay) ---
+        builder.element().from(8.0f, 2.0f, 8.0f).to(16.0f, 2.0f, 16.0f).shade(false)
+                .face(Direction.UP).uvs(8.0f, 8.0f, 16.0f, 16.0f).texture("#emissive_flowerbed").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end()
+                .face(Direction.DOWN).uvs(8.0f, 16.0f, 16.0f, 8.0f).texture("#emissive_flowerbed").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end();
+
+        // Haste 1
+        addStemCross(builder, 18.15f, 0.0f, 1.4f, 18.15f, 2.0f, 2.4f, 17.65f, 0.0f, 1.9f, 18.65f, 2.0f, 1.9f, 0, 5, 1, 7, 0.5f, 0, 0.5f);
+        // Haste 2
+        addStemCross(builder, 17.65f, 0.0f, -3.35f, 17.65f, 2.0f, -2.35f, 17.15f, 0.0f, -2.85f, 18.15f, 2.0f, -2.85f, 0, 5, 1, 7, 0, 0, 0);
+        // Haste 3
+        addStemCross(builder, 13.4f, 0.0f, -0.5f, 13.4f, 2.0f, 0.5f, 12.9f, 0.0f, 0.0f, 13.9f, 2.0f, 0.0f, 0, 5, 1, 7, 0, 0, 0);
+    }
+
+    // ==========================================
+    // FLOWERBED 4 (1 Flor, Altura ~2.0)
+    // ==========================================
+    protected void buildFlowerbed4(BlockModelBuilder builder) {
+        // --- Camada de Pétalas (Base) ---
+        builder.element().from(8.0f, 2.0f, 0.0f).to(16.0f, 2.0f, 8.0f)
+                .face(Direction.UP).uvs(8.0f, 0.0f, 16.0f, 8.0f).texture("#flowerbed").end()
+                .face(Direction.DOWN).uvs(8.0f, 8.0f, 16.0f, 0.0f).texture("#flowerbed").end();
+
+        // --- Camada de Pétalas (Emissiva Overlay) ---
+        builder.element().from(8.0f, 2.0f, 0.0f).to(16.0f, 2.0f, 8.0f).shade(false)
+                .face(Direction.UP).uvs(8.0f, 0.0f, 16.0f, 8.0f).texture("#emissive_flowerbed").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end()
+                .face(Direction.DOWN).uvs(8.0f, 8.0f, 16.0f, 0.0f).texture("#emissive_flowerbed").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end();
+
+        // Haste
+        addStemCross(builder, 12.4f, 0.0f, -7.7f, 12.4f, 2.0f, -6.7f, 11.9f, 0.0f, -7.2f, 12.9f, 2.0f, -7.2f, 0, 5, 1, 7, -1, 0, -3);
+    }
+
+    // ==========================================
+    // HELPER: Constrói a Haste com Base e Camada Emissiva
+    // ==========================================
+    protected void addStemCross(BlockModelBuilder builder,
+                                float x1, float y1, float z1, float x2, float y2, float z2,
+                                float x3, float y3, float z3, float x4, float y4, float z4,
+                                float u1, float v1, float u2, float v2,
+                                float ox, float oy, float oz) {
+
+        // --- Plano Leste/Oeste (Base) ---
+        builder.element().from(x1, y1, z1).to(x2, y2, z2)
+                .rotation().origin(ox, oy, oz).axis(Direction.Axis.Y).angle(-45.0f).end()
+                .face(Direction.EAST).uvs(u1, v1, u2, v2).texture("#stem").tintindex(1).end()
+                .face(Direction.WEST).uvs(u1, v1, u2, v2).texture("#stem").tintindex(1).end();
+
+        // --- Plano Leste/Oeste (Overlay Emissivo) ---
+        builder.element().from(x1, y1, z1).to(x2, y2, z2).shade(false)
+                .rotation().origin(ox, oy, oz).axis(Direction.Axis.Y).angle(-45.0f).end()
+                .face(Direction.EAST).uvs(u1, v1, u2, v2).texture("#emissive_stem").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end()
+                .face(Direction.WEST).uvs(u1, v1, u2, v2).texture("#emissive_stem").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end();
+
+        // --- Plano Norte/Sul (Base) ---
+        builder.element().from(x3, y3, z3).to(x4, y4, z4)
+                .rotation().origin(ox, oy, oz).axis(Direction.Axis.Y).angle(-45.0f).end()
+                .face(Direction.NORTH).uvs(u1, v1, u2, v2).texture("#stem").tintindex(1).end()
+                .face(Direction.SOUTH).uvs(u1, v1, u2, v2).texture("#stem").tintindex(1).end();
+
+        // --- Plano Norte/Sul (Overlay Emissivo) ---
+        builder.element().from(x3, y3, z3).to(x4, y4, z4).shade(false)
+                .rotation().origin(ox, oy, oz).axis(Direction.Axis.Y).angle(-45.0f).end()
+                .face(Direction.NORTH).uvs(u1, v1, u2, v2).texture("#emissive_stem").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end()
+                .face(Direction.SOUTH).uvs(u1, v1, u2, v2).texture("#emissive_stem").color(0xFFFFFFFF).emissivity(15, 15).ao(false).end();
     }
 }

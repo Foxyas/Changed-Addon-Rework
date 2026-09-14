@@ -17,6 +17,7 @@ import java.util.Optional;
 public class S2CPlayAnimationAfterParticleFade<T extends AnimationParameters> {
     public final int entityId;
     public final int colorRGB;
+    public final int modelSnapshots;
     public final Vec3 pos;
     public final Vec3 motion;
     public final float speed;
@@ -27,10 +28,11 @@ public class S2CPlayAnimationAfterParticleFade<T extends AnimationParameters> {
     @Nullable public final AnimationCategory category;
     @Nullable public final T parameters;
 
-    public S2CPlayAnimationAfterParticleFade(LivingEntity entity, Color fadeColor, Vec3 pos, Vec3 motion, float speed, int count,
+    public S2CPlayAnimationAfterParticleFade(LivingEntity entity, Color fadeColor, Vec3 pos, Vec3 motion, float speed, int count, int modelSnapshots,
                                              AnimationEvent<T> event, @Nullable AnimationCategory category, @Nullable T parameters) {
         this.entityId = entity.getId();
         this.colorRGB = fadeColor.getRGB();
+        this.modelSnapshots = modelSnapshots;
         this.pos = pos;
         this.motion = motion;
         this.speed = speed;
@@ -44,6 +46,7 @@ public class S2CPlayAnimationAfterParticleFade<T extends AnimationParameters> {
     public S2CPlayAnimationAfterParticleFade(FriendlyByteBuf buffer) {
         this.entityId = buffer.readInt();
         this.colorRGB = buffer.readInt();
+        this.modelSnapshots = buffer.readInt();
         this.pos = new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
         this.motion = new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
         this.speed = buffer.readFloat();
@@ -63,6 +66,7 @@ public class S2CPlayAnimationAfterParticleFade<T extends AnimationParameters> {
     public void encode(FriendlyByteBuf buffer) {
         buffer.writeInt(this.entityId);
         buffer.writeInt(this.colorRGB);
+        buffer.writeInt(this.modelSnapshots);
         buffer.writeDouble(this.pos.x);
         buffer.writeDouble(this.pos.y);
         buffer.writeDouble(this.pos.z);

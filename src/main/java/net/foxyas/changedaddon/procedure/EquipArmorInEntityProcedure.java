@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedure;
 
-import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexSnepFeralEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
@@ -29,7 +29,7 @@ public class EquipArmorInEntityProcedure {
         if (event.getEntity().isShiftKeyDown() && event.getTarget() instanceof ChangedEntity changedEntity) {
             ItemStack itemStack = event.getItemStack();
             if (changedEntity instanceof DarkLatexWolfPup
-                    || changedEntity instanceof LatexSnepEntity
+                    || changedEntity instanceof LatexSnepFeralEntity
                     || changedEntity.getEntityShape() == EntityShape.FERAL
                     || (changedEntity instanceof AbstractCanTameSnepChangedEntity snepChanged && !snepChanged.isBiped())) {
                 return;

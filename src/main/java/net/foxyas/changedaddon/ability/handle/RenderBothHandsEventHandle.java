@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.mojang.math.Axis.*;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class RenderHandsEventHandle {
+public class RenderBothHandsEventHandle {
 
 
     /**
@@ -47,7 +47,7 @@ public class RenderHandsEventHandle {
     public static void onRenderHand(RenderHandEvent event) {
         if (lock) return;
         AbstractClientPlayer player = Minecraft.getInstance().player;
-        if (player == null) return;
+        if (player == null || player.isScoping() || player.isInvisible()) return;
 
         boolean shouldRenderHand = ProcessTransfur.ifPlayerTransfurred(player, variant -> shouldRenderBothHands(player, variant), () -> {
             extraHandShowProgress = DISABLE_HAND_SHOW_PROGRESS;
@@ -128,7 +128,7 @@ public class RenderHandsEventHandle {
         }
 
         // Check if the player is gliding with a variant that can glide and has sufficient speed
-        if (variantInstance.getParent().canGlide && player.isFallFlying()) {
+        if (variantInstance.canElytraGlide() && player.isFallFlying()) {
             double speed = player.getDeltaMovement().length(); // Velocidade do jogador
             if (speed > 1.5 || player.getFallFlyingTicks() >= 5) {
                 return true;

@@ -9,14 +9,21 @@ import net.foxyas.changedaddon.network.packet.PatKeyPacket;
 import net.foxyas.changedaddon.network.packet.ServerboundSwitchCuddlePacket;
 import net.foxyas.changedaddon.network.packet.TurnOffTransfurPacket;
 import net.foxyas.changedaddon.network.packet.VariantSecondAbilityActivate;
+import net.foxyas.changedaddon.process.features.ClientPatState;
+import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.tutorial.ChangedTutorial;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -25,6 +32,8 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class ChangedAddonKeyMappings {
@@ -87,8 +96,8 @@ public class ChangedAddonKeyMappings {
             Player player = Minecraft.getInstance().player;
             if (player == null || player.isDeadOrDying()) return;
 
-            ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(Minecraft.getInstance().player);
-            if (vars.isPatInCooldown()) return;
+//            ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(Minecraft.getInstance().player);
+//            if (vars.isPatInCooldown()) return;
 
             ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(0, 0));
             PatKeyPacket.pressAction(Minecraft.getInstance().player, 0);
@@ -138,19 +147,80 @@ public class ChangedAddonKeyMappings {
 
         @SubscribeEvent
         public static void onClientTick(TickEvent.ClientTickEvent event) {
-            if (Minecraft.getInstance().screen != null) return;
+            if (event.phase != TickEvent.Phase.END) return;
 
-            OPEN_EXTRA_DETAILS.consumeClick();
-            TURN_OFF_TRANSFUR.consumeClick();
-            PAT_KEY.consumeClick();
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.screen != null) {
+                ClientPatState.patting = false;
+                return;
+            }
 
+            // Process other single-click keybinds
+            if (OPEN_EXTRA_DETAILS.consumeClick()) { /* ... */ }
+            if (TURN_OFF_TRANSFUR.consumeClick()) { /* ... */ }
             if (CUDDLE_KEY.consumeClick()) {
                 ChangedAddonMod.PACKET_HANDLER.sendToServer(ServerboundSwitchCuddlePacket.INSTANCE);
+            }
+
+            LocalPlayer player = mc.player;
+            if (player == null || player.isDeadOrDying()) {
+                ClientPatState.patting = false;
+                return;
+            }
+
+            // Advance continuous animation timeline
+            ClientPatState.clientTick();
+
+            // 1. Check if holding the key
+            boolean isHolding = PAT_KEY.isDown();
+
+            // 2. consumeClick() returns TRUE only when a fresh physical press occurred
+            boolean manualClick = PAT_KEY.consumeClick();
+
+            if (isHolding || manualClick) {
+                EntityHitResult targetEntityResult = PlayerUtil.getEntityHitLookingAt(player, (float) player.getEntityReach(), PlayerUtil.BLOCK_COLLISION, e -> {
+                    if (e.isSpectator()) return false;
+                    if (!(e instanceof LivingEntity le)) return false;
+                    if (GrabEntityAbility.getGrabber(le) == null) return true;
+
+                    LivingEntity livingEntity = Objects.requireNonNull(GrabEntityAbility.getGrabber(le)).getEntity();
+                    return livingEntity != player;
+                });
+
+                boolean hasValidTarget = targetEntityResult != null && targetEntityResult.getType() != HitResult.Type.MISS;
+                ClientPatState.patting = hasValidTarget && isHolding;
+
+                if (hasValidTarget) {
+                    ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
+
+                    // SPAM MODE: Manual click BYPASSES cooldown check
+                    // HOLD MODE: Must wait for !isPatInCooldown()
+                    if (manualClick || !vars.isPatInCooldown()) {
+                        ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(0, 0));
+                        PatKeyPacket.pressAction(player, 0);
+
+                        if (ClientPatState.animTicks % 5 == 0) {
+                            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(1, 0));
+                            PatKeyPacket.pressAction(player, 1);
+                        }
+                    }
+                }
+            } else {
+                ClientPatState.patting = false;
             }
         }
 
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
+        }
+
+        @SubscribeEvent
+        public static void onMouseScrolling(InputEvent.MouseScrollingEvent event) {
+            float scrollDelta = (float) event.getScrollDelta();
+            if (PAT_KEY.isDown()) {
+                ClientPatState.patSpeed = Mth.clamp(ClientPatState.patSpeed + (scrollDelta * 0.01f), 0.25f, 3);
+                event.setCanceled(true);
+            }
         }
     }
 }

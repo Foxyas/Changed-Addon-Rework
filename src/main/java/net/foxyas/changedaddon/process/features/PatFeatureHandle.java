@@ -19,6 +19,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -35,7 +37,7 @@ public class PatFeatureHandle {
         return GrabEntityAbility.getControllingEntity(player) == player;
     }
 
-    public static void run(Level level, Player player) {
+    public static void run(Player player, boolean playSound) {
         if (player == null || player.isSpectator() || !canPlayerPat(player)) return;
 
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.of(player);
@@ -58,52 +60,56 @@ public class PatFeatureHandle {
         if (!(targetEntity instanceof LivingEntity living)) return;
 
 
-        patEntity(player, living, emptyHand, targetEntityResult);
+        if (patEntity(player, living, emptyHand, targetEntityResult) && playSound) {
+            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BRUSH_GENERIC, SoundSource.PLAYERS, 1, 1);
+        }
     }
 
-    public static void patEntity(LivingEntity player, LivingEntity targetEntity, InteractionHand hand) {
-        patEntity(player, targetEntity, hand, new EntityHitResult(targetEntity));
+    public static boolean patEntity(LivingEntity player, LivingEntity targetEntity, InteractionHand hand) {
+        return patEntity(player, targetEntity, hand, new EntityHitResult(targetEntity));
     }
 
-    public static void patEntity(LivingEntity player, LivingEntity targetEntity, InteractionHand emptyHand, EntityHitResult targetEntityResult) {
+    public static boolean patEntity(LivingEntity player, LivingEntity targetEntity, InteractionHand emptyHand, EntityHitResult targetEntityResult) {
         Level level = player.level;
         if (targetEntity instanceof SpecialPatLatex specialPatLatex) {
-            handleSpecialEntities(player, emptyHand, targetEntity, targetEntityResult);
-            return;
+            return handleSpecialEntities(player, emptyHand, targetEntity, targetEntityResult);
         }
 
         if (targetEntity instanceof ChangedEntity changed) {
-            handleLatexEntity(player, emptyHand, changed, targetEntityResult, level);
-            return;
+            return handleLatexEntity(player, emptyHand, changed, targetEntityResult, level);
         }
 
         if (targetEntity instanceof Player target) {
-            handlePlayerEntity(player, emptyHand, target, targetEntityResult, level);
-            return;
+            return handlePlayerEntity(player, emptyHand, target, targetEntityResult, level);
         }
 
         if (targetEntity.getType().is(ChangedAddonTags.EntityTypes.PATABLE)) {
-            handlePatableEntity(player, emptyHand, targetEntityResult, level);
+            return handlePatableEntity(player, emptyHand, targetEntityResult, level);
         }
+        return false;
     }
 
-    private static void handleSpecialEntities(LivingEntity player, InteractionHand emptyHand, LivingEntity target, EntityHitResult entityHitResult) {
+    private static boolean handleSpecialEntities(LivingEntity player, InteractionHand emptyHand, LivingEntity target, EntityHitResult entityHitResult) {
         player.swing(emptyHand);
-        if (!(target instanceof ICustomPatReaction pat)) return;
+        if (!(target instanceof ICustomPatReaction pat)) return false;
 
         pat.whenPattedReactionSpecific(player, emptyHand, entityHitResult.getLocation());
         pat.whenPattedReaction(player, emptyHand);
         pat.whenPattedReactionSimple();
 
-        if (player instanceof ServerPlayer sPlayer) onPat(sPlayer);
+        if (player instanceof ServerPlayer sPlayer) {
+            onPat(sPlayer);
+            return true;
+        }
+        return false;
     }
 
-    private static void handleLatexEntity(LivingEntity livingEntity, InteractionHand emptyHand, ChangedEntity target, EntityHitResult entityHitResult, Level level) {
+    private static boolean handleLatexEntity(LivingEntity livingEntity, InteractionHand emptyHand, ChangedEntity target, EntityHitResult entityHitResult, Level level) {
         livingEntity.swing(emptyHand);
 
-        ProcessPatFeature.GlobalPatReactionEvent globalPatReactionEvent = new ProcessPatFeature.GlobalPatReactionEvent(level, livingEntity, emptyHand, target, entityHitResult.getLocation());
-        if (ChangedAddonMod.postEvent(globalPatReactionEvent)) {
-            return;
+        ProcessPatFeature.OnPatReactionEvent onPatReactionEvent = new ProcessPatFeature.OnPatReactionEvent(level, livingEntity, emptyHand, target, entityHitResult.getLocation());
+        if (ChangedAddonMod.postEvent(onPatReactionEvent)) {
+            return false;
         }
 
         TransfurVariantInstance<?> selfTF = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(livingEntity));
@@ -119,17 +125,18 @@ public class PatFeatureHandle {
         }
 
         if (livingEntity instanceof ServerPlayer sp) {
-            GiveStealthPatAdvancement(sp, target);
+            triggerStealthPatAdvancement(sp, target);
             onPat(sp);
         }
+        return false;
     }
 
-    private static void handlePlayerEntity(LivingEntity player, InteractionHand emptyHand, Player target, EntityHitResult entityHitResult, Level level) {
+    private static boolean handlePlayerEntity(LivingEntity player, InteractionHand emptyHand, Player target, EntityHitResult entityHitResult, Level level) {
         TransfurVariantInstance<?> selfTF = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(player));
         TransfurVariantInstance<?> targetTF = ProcessTransfur.getPlayerTransfurVariant(target);
 
         if (selfTF == null && targetTF == null) {
-            return;
+            return false;
         }//Be Able to Pet if at least one is Transfur :P
 
         player.swing(emptyHand);
@@ -144,9 +151,9 @@ public class PatFeatureHandle {
             targetPat.whenPattedReactionSimple();
         }
 
-        ProcessPatFeature.GlobalPatReactionEvent globalPatReactionEvent = new ProcessPatFeature.GlobalPatReactionEvent(level, player, emptyHand, target, entityHitResult.getLocation());
-        if (ChangedAddonMod.postEvent(globalPatReactionEvent)) {
-            return;
+        ProcessPatFeature.OnPatReactionEvent onPatReactionEvent = new ProcessPatFeature.OnPatReactionEvent(level, player, emptyHand, target, entityHitResult.getLocation());
+        if (ChangedAddonMod.postEvent(onPatReactionEvent)) {
+            return false;
         }
 
         if (player instanceof ServerPlayer sPlayer)
@@ -154,27 +161,29 @@ public class PatFeatureHandle {
         if (target instanceof ServerPlayer sPlayer)
             sPlayer.awardStat(ChangedAddonStatRegistry.PATS_RECEIVED.get());
 
-        if (targetTF == null || !(level instanceof ServerLevel)) return;
+        if (targetTF == null || !(level instanceof ServerLevel)) return false;
 
         if (player instanceof ServerPlayer sPlayer) {
-            if (sPlayer.getRandom().nextFloat() > 0.1f + sPlayer.getLuck() * 0.05f) return;
+            if (sPlayer.getRandom().nextFloat() > 0.1f + sPlayer.getLuck() * 0.05f) return true;
             healAndGiveRarePatAdvancement(sPlayer, target);
         }
+        return false;
     }
 
-    private static void handlePatableEntity(LivingEntity entity, InteractionHand emptyHand, EntityHitResult entityHitResult, Level level) {
+    private static boolean handlePatableEntity(LivingEntity entity, InteractionHand emptyHand, EntityHitResult entityHitResult, Level level) {
         Entity target = entityHitResult.getEntity();
         entity.swing(emptyHand);
 
         if (target instanceof LivingEntity livingTarget) {//assume that target is always livingEntity or allow entity in the event?
-            ChangedAddonMod.postEvent(new ProcessPatFeature.GlobalPatReactionEvent(level, entity, emptyHand, livingTarget, entityHitResult.getLocation()));
-            return;
+            ChangedAddonMod.postEvent(new ProcessPatFeature.OnPatReactionEvent(level, entity, emptyHand, livingTarget, entityHitResult.getLocation()));
+            return false;
         }
 
         if (level instanceof ServerLevel serverLevel && entity instanceof Player player) {
             player.displayClientMessage(Component.translatable("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
             serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
         }
+        return false;
     }
 
     private static InteractionHand getEmptyHand(Player player) {
@@ -197,7 +206,7 @@ public class PatFeatureHandle {
         ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(player, target, "chance");
     }
 
-    public static void GiveStealthPatAdvancement(ServerPlayer player, Entity target) {
+    public static void triggerStealthPatAdvancement(ServerPlayer player, Entity target) {
         ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(player, target, "stealth");
     }
 

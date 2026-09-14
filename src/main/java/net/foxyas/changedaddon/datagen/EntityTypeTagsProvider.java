@@ -56,6 +56,7 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
     public void addTags(HolderLookup.@NotNull Provider pProvider) {
         tag(ChangedAddonTags.EntityTypes.CAN_GRAB);
         tag(ChangedAddonTags.EntityTypes.CAN_GRAB_SUIT);
+        tag(ChangedAddonTags.EntityTypes.CANT_BE_GRABBED);
 
         tag(ChangedTags.EntityTypes.LATEX).add(LatexEntities.stream().map(Supplier::get)
                 .sorted(Comparator.comparing(entityType -> ForgeRegistries.ENTITY_TYPES.getKey(entityType).getPath()))
@@ -67,7 +68,7 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
                 REYN.get());
         tag(ChangedTags.EntityTypes.PARTIAL_LATEX).add(
                 SNOW_LEOPARD_PARTIAL.get(),
-                LATEX_SNEP.get());
+                LATEX_FERAL_SNEP.get());
 
         tag(ChangedAddonTags.EntityTypes.ALPHA_BY_DEFAULT);
 

@@ -273,16 +273,6 @@ public abstract class AbstractUnfuseableChangedEntity extends ChangedEntity impl
         super.checkDespawn();
     }
 
-    @Override
-    public void whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
-        ICustomPatReaction.super.whenPattedReactionSpecific(patter, hand, pattedLocation);
-    }
-
-    @Override
-    public void whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
-        ICustomPatReaction.super.whenPatEvent(patter, hand, patTarget);
-    }
-
     public boolean isTame() {
         return (this.entityData.get(DATA_FLAGS_ID) & 4) != 0;
     }

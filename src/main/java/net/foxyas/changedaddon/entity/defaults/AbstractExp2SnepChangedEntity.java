@@ -350,9 +350,9 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
     }
 
     @Override
-    public void whenPattedReactionSpecific(LivingEntity patterLiving, InteractionHand hand, Vec3 pattedLocation) {
+    public boolean whenPattedReactionSpecific(LivingEntity patterLiving, InteractionHand hand, Vec3 pattedLocation) {
         if (!(patterLiving instanceof Player patter)) {
-            return;
+            return false;
         }
 
         boolean isPlayerTransfur = (ProcessTransfur.getPlayerTransfurVariant(patter) != null);
@@ -367,12 +367,14 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
         if (isPlayerTransfur) {
             if (!isPlayerTransfurInExp2 && isTargetTransfurInExp2) {
                 patter.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 100, false, false));
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public void whenPatEvent(LivingEntity self, InteractionHand hand, LivingEntity patTarget) {
+    public boolean whenPatEvent(LivingEntity self, InteractionHand hand, LivingEntity patTarget) {
         if (self instanceof Player patter) {
             boolean isPlayerTransfur = ProcessTransfur.isPlayerTransfurred(patter);
             boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant(patter) != null
@@ -388,6 +390,7 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
                 if (isPlayerTransfur && isTargetTransfur) { //Add The Effect if is Transfur is Exp2
                     if (isPlayerTransfurInExp2 && !isTargetTransfurInExp2) {
                         patTarget.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 100, false, false));
+                        return true;
                     }
                 }
             } else if (patTarget instanceof ChangedEntity patChangedEntityTarget) {
@@ -399,12 +402,14 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
                 if (isPlayerTransfur && isTargetLatexTransfur) { //Add The Effect if is Transfur is Exp2
                     if (isPlayerTransfurInExp2 && !isTargetTransfurInExp2) {
                         patTarget.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 100, false, false));
+                        return true;
                     }
                 }
             }
         }
 
 
+        return false;
     }
 
     public boolean isTame() {

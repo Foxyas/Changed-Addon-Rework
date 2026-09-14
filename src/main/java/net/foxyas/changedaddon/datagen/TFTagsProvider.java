@@ -84,7 +84,7 @@ public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
                         cast(EXP2_FEMALE),
                         cast(EXP2_MALE),
                         cast(EXP6),
-                        cast(LATEX_SNEP),
+                        cast(LATEX_SNEP_FERAL),
                         cast(LATEX_SNEP_FERAL_FORM),
                         cast(LYNX),
                         cast(LATEX_DRAGON_SNEP_SHARK),

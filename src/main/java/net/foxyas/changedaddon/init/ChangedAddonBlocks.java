@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -133,8 +134,11 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<PressurePlateBlock> LUMINARA_PRESSURE_PLATE = REGISTRY.register("luminara_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.CHERRY_PRESSURE_PLATE), BlockSetType.CHERRY));
 
     public static final RegistryObject<LuminaraLeavesBlock> LUMINARA_LEAVES = REGISTRY.register("luminara_leaves", LuminaraLeavesBlock::new);
+    public static final RegistryObject<PinkPetalsBlock> LUMINARA_PETALS = REGISTRY.register("luminara_petals", LuminaraPetalsBlock::new);
+    public static final RegistryObject<LuminaraLichen> LUMINARA_LICHEN = REGISTRY.register("luminara_lichen", () -> new LuminaraLichen(BlockBehaviour.Properties.of().mapColor(MapColor.GLOW_LICHEN).noCollission().strength(0.2F).sound(SoundType.GLOW_LICHEN).ignitedByLava().pushReaction(PushReaction.DESTROY)));
     public static final RegistryObject<LuminaraSapling> LUMINARA_SAPLING = REGISTRY.register("luminara_sapling", LuminaraSapling::new);
     public static final RegistryObject<PottedLuminaraSaplingBlock> POTTED_LUMINARA_SAPLING = REGISTRY.register("potted_luminara_sapling", PottedLuminaraSaplingBlock::new);
+
     public static final RegistryObject<MultifaceBlock> COVER_BLOCK = REGISTRY.register("cover_block", () -> new MultifaceBlock(BlockBehaviour.Properties.copy(Blocks.VINE).mapColor(MapColor.TERRACOTTA_BLACK)) {
         @Override
         public boolean skipRendering(@NotNull BlockState pState, @NotNull BlockState pAdjacentBlockState, @NotNull Direction pSide) {
