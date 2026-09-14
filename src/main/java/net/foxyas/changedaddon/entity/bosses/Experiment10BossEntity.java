@@ -427,12 +427,12 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
 
     @Override
     public boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
-        if (!(patter.level() instanceof ServerLevel)) return;
+        if (!(patter.level() instanceof ServerLevel)) return false;
         if (patter instanceof ServerPlayer serverPlayer) {
             ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(serverPlayer, this, "pats_on_the_beast");
         }
         if (!(patter instanceof Player player)) {
-            return;
+            return false;
         }
 
         List<Component> translatableComponentList = new ArrayList<>();
@@ -457,6 +457,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         this.playSound(SoundEvents.WITHER_AMBIENT, 0.05f, 2f);
         player.displayClientMessage(entityChat, false);
         applyRampage();
+        return true;
     }
 
     private void applyRampage() {
