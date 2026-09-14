@@ -234,17 +234,19 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     }
 
     @Override
-    public void whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
-        if (patter.level().isClientSide()) return;
+    public boolean whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
+        if (patter.level().isClientSide()) return false;
 
         patTarget.addEffect(getPatEffect(patter), patter);
+        return true;
     }
 
     @Override
-    public void whenPattedReaction(LivingEntity patter, InteractionHand hand) {
-        if (patter.level().isClientSide()) return;
+    public boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+        if (patter.level().isClientSide()) return false;
 
         patter.addEffect(getPatEffect(this), this);
+        return true;
     }
 
     @Override

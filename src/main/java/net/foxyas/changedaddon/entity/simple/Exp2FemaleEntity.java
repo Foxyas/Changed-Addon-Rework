@@ -184,7 +184,8 @@ public class Exp2FemaleEntity extends AbstractExp2SnepChangedEntityFavors {
     }
 
     @Override
-    public void whenPattedReactionSimple() {
+    public boolean whenPattedReactionSimple() {
         playSound(sounds.get(random.nextInt(sounds.size())), 2.5f, 1);
+        return super.whenPattedReactionSimple();
     }
 }

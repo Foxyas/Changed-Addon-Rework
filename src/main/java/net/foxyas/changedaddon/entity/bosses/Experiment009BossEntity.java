@@ -15,6 +15,7 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -1553,13 +1554,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     @Override
-    public void whenPattedReaction(LivingEntity patter, InteractionHand hand) {
-        if (!(patter.level() instanceof ServerLevel)) return;
+    public boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+        if (!(patter.level() instanceof ServerLevel)) return false;
         if (patter instanceof ServerPlayer serverPlayer) {
             ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(serverPlayer, this, "pats_on_the_beast");
         }
         if (!(patter instanceof Player player)) {
-            return;
+            return false;
         }
 
         List<Component> translatableComponentList = new ArrayList<>();
@@ -1582,6 +1583,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         player.displayClientMessage(entityChat, false);
         applyRampage();
+        return IExp9Logic.super.whenPattedReaction(patter, hand);
     }
 
     private void applyRampage() {

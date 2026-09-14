@@ -6,20 +6,23 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 public interface ICustomPatReaction {
-    default void whenPattedReactionSimple() {
+    default boolean whenPattedReactionSimple() {
+        return true;
     }
 
-    default void whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+    default boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+        return true;
     }
 
-    default void whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
+    default boolean whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
+        return true;
     }
 
-    default void whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
-
+    default boolean whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
+        return true;
     }
 
-    default void whenPatEventSpecific(LivingEntity patter, InteractionHand hand, LivingEntity patTarget, EntityHitResult patResult) {
-
+    default boolean whenPatEventSpecific(LivingEntity patter, InteractionHand hand, LivingEntity patTarget, EntityHitResult patResult) {
+        return true;
     }
 }

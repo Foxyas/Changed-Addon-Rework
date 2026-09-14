@@ -27,6 +27,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
@@ -36,6 +40,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -48,13 +53,13 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLLoader;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static com.mojang.math.Axis.*;
+import static com.mojang.math.Axis.YP;
 import static net.foxyas.changedaddon.event.ClientMod.changedAdditionsLoaded;
 import static net.foxyas.changedaddon.event.ClientMod.changedAdditionsWarningScreenShowed;
 
@@ -81,6 +86,18 @@ public class ClientEvent {
         boolean patting = ClientPatState.patting;
 
         if (patting && event.getHand() == InteractionHand.MAIN_HAND) {
+//            Todo: Uncomment this if is actually the best option
+//            event.setCanceled(true);
+//            PoseStack stack = event.getPoseStack();
+//            MultiBufferSource buffer = event.getMultiBufferSource();
+//            int light = event.getPackedLight();
+//            float partialTicks = event.getPartialTick();
+//            float equipProgress = event.getEquipProgress();
+//
+//            manuallyRenderFirstPersonHand(player, stack, equipProgress, partialTicks, buffer, light);
+
+            // Todo: comment the thing below and see if the upper code is actually better
+
             // Suppress default vanilla swing
             if (patKey.isDown()) {
                 player.attackAnim = 0.0f;
@@ -110,6 +127,69 @@ public class ClientEvent {
             poseStack.mulPose(Axis.YP.rotationDegrees(2.2F * sweep));
             poseStack.mulPose(Axis.ZP.rotationDegrees(6.0F * sweep));
         }
+    }
+
+    private static void manuallyRenderFirstPersonHand(LocalPlayer player, PoseStack stack, float equipProgress, float partialTicks, MultiBufferSource buffer, int light) {
+        EntityRenderer<? super LivingEntity> entRenderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(player);
+        if (entRenderer instanceof LivingEntityRenderer<?, ?> livingEntityRenderer) {
+            if (livingEntityRenderer instanceof PlayerRenderer playerRenderer) {
+                stack.pushPose();
+                boolean rightHand = player.getMainArm() == HumanoidArm.RIGHT;
+
+                float f = rightHand ? 1.0F : -1.0F;
+                float pSwingProgress = 0; // event.getSwingProgress();
+                float f1 = Mth.sqrt(pSwingProgress);
+                float f2 = -0.3F * Mth.sin(f1 * (float) Math.PI);
+                float f3 = 0.4F * Mth.sin(f1 * ((float) Math.PI * 2F));
+                float f4 = -0.4F * Mth.sin(pSwingProgress * (float) Math.PI);
+
+                stack.translate(f * (f2 + 0.64000005F), f3 + -0.6F + equipProgress * -0.6F, f4 + -0.71999997F);// 0 here is an inaccessible variable from ItemInHandRenderer
+                stack.mulPose(YP.rotationDegrees(f * 45.0F));
+                float f5 = Mth.sin(pSwingProgress * pSwingProgress * (float) Math.PI);
+                float f6 = Mth.sin(f1 * (float) Math.PI);
+                stack.mulPose(YP.rotationDegrees(f * f6 * 70.0F));
+                stack.mulPose(ZP.rotationDegrees(f * f5 * -20.0F));
+                stack.translate(f * -1.0F, 3.6F, 3.5D);
+                stack.mulPose(ZP.rotationDegrees(f * 120.0F));
+                stack.mulPose(XP.rotationDegrees(200.0F));
+                stack.mulPose(YP.rotationDegrees(f * -135.0F));
+                stack.translate(f * 5.6F, 0.0D, 0.0D);
+
+                applyPatHandTransformation(stack, partialTicks);
+
+                if (rightHand) {
+                    if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                        playerRenderer.renderRightHand(stack, buffer, light, player);
+                    }
+                } else {
+                    if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                        playerRenderer.renderLeftHand(stack, buffer, light, player);
+                    }
+                }
+                stack.popPose();
+            }
+        }
+    }
+
+    private static void applyPatHandTransformation(PoseStack poseStack, float partialTick) {
+        float patSpeed = Math.max(0.01F, ClientPatState.patSpeed);
+
+        // Base cycle duration (12 ticks at standard 1.0 speed)
+        float baseCycleTicks = 12.0F;
+
+        // Smooth phase calculation using the accumulator + partial tick interpolation
+        float elapsed = ClientPatState.animTicks + (partialTick * patSpeed);
+        float phase = (elapsed % baseCycleTicks) / baseCycleTicks;
+
+        // Waveform calculations
+        float sweep = Mth.sin(phase * (float) Math.PI * 2.0F);
+        float lift = 0.5F - 0.5F * Mth.cos(phase * (float) Math.PI * 2.0F);
+
+        // Matrix transformations
+        poseStack.translate(0.036F * sweep, -0.012F * lift, -0.04F * lift);
+        poseStack.mulPose(Axis.XP.rotationDegrees(-3.0F * lift));
+        poseStack.mulPose(Axis.YP.rotationDegrees(2.2F * sweep));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(6.0F * sweep));
     }
 
 //    private static final List<String> FULLBRIGHTS = Util.make(new ArrayList<>(), list -> {

@@ -85,7 +85,7 @@ import java.util.Objects;
 
 import static net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal.hasValidAlphaSleepGoal;
 import static net.foxyas.changedaddon.event.TransfurEvents.resolveChangedEntity;
-import static net.foxyas.changedaddon.process.features.ProcessPatFeature.GlobalPatReactionEvent;
+import static net.foxyas.changedaddon.process.features.ProcessPatFeature.OnPatReactionEvent;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
 public class CommonEvent {
@@ -111,7 +111,7 @@ public class CommonEvent {
     }
 
     @SubscribeEvent
-    public static void makeAlphaNotDespawnWhenPatted(GlobalPatReactionEvent event) {
+    public static void makeAlphaNotDespawnWhenPatted(OnPatReactionEvent event) {
         LivingEntity target = event.target;
         if (target instanceof IAlphaAbleEntity iAlphaAbleEntity) {
             if (iAlphaAbleEntity.isAlpha() && target instanceof Mob mob) {

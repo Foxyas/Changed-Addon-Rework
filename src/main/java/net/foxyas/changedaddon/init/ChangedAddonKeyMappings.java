@@ -188,7 +188,7 @@ public class ChangedAddonKeyMappings {
                 });
 
                 boolean hasValidTarget = targetEntityResult != null && targetEntityResult.getType() != HitResult.Type.MISS;
-                ClientPatState.patting = hasValidTarget;
+                ClientPatState.patting = hasValidTarget && isHolding;
 
                 if (hasValidTarget) {
                     ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
@@ -198,6 +198,11 @@ public class ChangedAddonKeyMappings {
                     if (manualClick || !vars.isPatInCooldown()) {
                         ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(0, 0));
                         PatKeyPacket.pressAction(player, 0);
+
+                        if (ClientPatState.animTicks % 5 == 0) {
+                            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(1, 0));
+                            PatKeyPacket.pressAction(player, 1);
+                        }
                     }
                 }
             } else {

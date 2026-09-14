@@ -146,16 +146,6 @@ public abstract class AbstractCoatEntity extends AbstractTamableLatexEntity impl
         super.checkDespawn();
     }
 
-    @Override
-    public void whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
-        ICustomPatReaction.super.whenPattedReactionSpecific(patter, hand, pattedLocation);
-    }
-
-    @Override
-    public void whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
-        ICustomPatReaction.super.whenPatEvent(patter, hand, patTarget);
-    }
-
     //TameType Use Type
     public boolean isTameItem(ItemStack stack, TameType tameType) {
         return false;
