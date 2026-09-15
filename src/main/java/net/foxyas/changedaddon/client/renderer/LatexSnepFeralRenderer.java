@@ -23,8 +23,8 @@ public class LatexSnepFeralRenderer extends AdvancedHumanoidRenderer<LatexSnepFe
                 ArmorNoneModel.MODEL_SET, 0.5f);
         this.addLayer(new CustomCatEyesLayer<>(this,
                 ResourceLocation.parse("changed_addon:textures/entities/latex_snep_feral/latex_snep_feral_right_eye.png"),
-                ResourceLocation.parse("changed_addon:textures/entities/latex_snep_feral_left_eye.png"),
-                ResourceLocation.parse("changed_addon:textures/entities/latex_snep_feral_sclera.png")));
+                ResourceLocation.parse("changed_addon:textures/entities/latex_snep_feral/latex_snep_feral_left_eye.png"),
+                ResourceLocation.parse("changed_addon:textures/entities/latex_snep_feral/latex_snep_feral_sclera.png")));
     }
 
 
