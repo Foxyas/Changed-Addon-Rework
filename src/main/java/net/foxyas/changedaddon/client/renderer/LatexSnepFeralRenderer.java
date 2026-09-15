@@ -47,7 +47,7 @@ public class LatexSnepFeralRenderer extends AdvancedHumanoidRenderer<LatexSnepFe
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull LatexSnepFeralEntity entity) {
-        return ResourceLocation.parse("changed_addon:textures/entities/latex_snep_fera/latex_snep_feral.png");
+        return ResourceLocation.parse("changed_addon:textures/entities/latex_snep_feral/latex_snep_feral.png");
     }
 
 

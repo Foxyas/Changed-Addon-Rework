@@ -765,6 +765,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addCommand("ftkMinigame.reset.fail", "Command execution failed: No eligible transfur subjects identified in selection.");
         addCommand("setPlayerLatexInfection.set.success", "Set player latex infection to form %2$s (Active: %1$s, Stall Transfur Progress: %3$s)");
         addCommand("setPlayerLatexInfection.clear.success", "Cleared player latex infection.");
+        addCommand("openBestiary.fail.notValidType", "Type %s is not valid");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Pats given");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Pats received");

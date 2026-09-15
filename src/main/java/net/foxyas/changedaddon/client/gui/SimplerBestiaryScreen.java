@@ -1,6 +1,10 @@
 package net.foxyas.changedaddon.client.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -18,16 +22,15 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
 import org.joml.Quaternionf;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Vanilla Minecraft styled BestiaryScreen with responsive container layout,
@@ -37,7 +40,7 @@ import java.util.Locale;
  * <p>Mappings: Official Mojang Mappings (Minecraft 1.20.1 Forge)
  * <p>Author / Contributor: ParkaBird
  */
-public class BestiaryScreen extends Screen implements MouseMoveListener {
+public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
     // Base Target Dialog Dimensions
     private static final int BASE_W = 440;
     private static final int BASE_H = 224;
@@ -84,7 +87,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
     private final List<FormattedCharSequence> loreLines = new ArrayList<>();
     private String classificationText = "";
 
-    public BestiaryScreen() {
+    public SimplerBestiaryScreen() {
         super(Component.literal("Bestiary"));
     }
 
@@ -555,8 +558,8 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             curY += 12;
 
             if (!classificationText.isEmpty()) {
-                String classDisplay = classificationText.startsWith("Classification:")
-                        ? "§7" + classificationText
+                String classDisplay = classificationText.startsWith("Classification:") 
+                        ? "§7" + classificationText 
                         : "§7Classification: " + classificationText;
                 graphics.drawString(this.font, classDisplay, x + 6, curY, 0xAAAAAA, false);
                 curY += 11;
