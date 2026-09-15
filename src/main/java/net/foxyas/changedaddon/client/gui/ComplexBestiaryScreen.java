@@ -340,6 +340,9 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                     : String.format(Locale.ROOT, "%.1f", pVal);
             float pRatio = clamp((float) (pVal / maxScale), 0.05f, 1.0f);
             playerAttributeBars.add(new AttributeBarItem(label, pValText, pRatio, 0xFF35A2FF, 0xFF70C5FF));
+        } else {
+            // Keeps playerAttributeBars length equal to attributeBars length
+            playerAttributeBars.add(new AttributeBarItem(label, "0.0", 0.05f, 0xFF35A2FF, 0xFF70C5FF));
         }
     }
 
@@ -711,7 +714,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 graphics.drawString(this.font, "§b[Entity Radar Chart]", x + 6, curY, 0x55FFFF, false);
 
                 // Toggle Button for Player Chart Overlay
-                int btnW = 85;
+                int btnW = 92;
                 int btnH = 12;
                 int btnX = x + w - btnW - 10;
                 int btnY = curY - 2;
@@ -728,9 +731,10 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 graphics.fill(btnX, btnY, btnX + btnW, btnY + btnH, btnBg);
                 graphics.renderOutline(btnX, btnY, btnW, btnH, btnBorder);
 
-                String btnText = showPlayerChart ? "✔ Player Overlay" : "+ Player Overlay";
+                String btnText = showPlayerChart ? "[X] Player Overlay" : "[+] Player Overlay";
                 int textW = this.font.width(btnText);
-                graphics.drawString(this.font, btnText, btnX + (btnW - textW) / 2, btnY + 2, showPlayerChart ? 0x55FF55 : (isBtnHovered ? 0xFFFFFF : 0xAAAAAA), false);
+                int textY = btnY + (btnH - 8) / 2; // Precise vertical font centering
+                graphics.drawString(this.font, btnText, btnX + (btnW - textW) / 2, textY, showPlayerChart ? 0x55FF55 : (isBtnHovered ? 0xFFFFFF : 0xAAAAAA), false);
 
                 curY += 14;
 
@@ -774,6 +778,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         RenderSystem.defaultBlendFunc();
         RenderSystem.disableCull();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.disableDepthTest(); // FIX: Prevent depth buffer from discarding 2D chart geometry
 
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder buffer = tesselator.getBuilder();
@@ -871,6 +876,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
         tesselator.end();
 
+        RenderSystem.enableDepthTest(); // Restore depth test state
         RenderSystem.enableCull();
         RenderSystem.disableBlend();
 
