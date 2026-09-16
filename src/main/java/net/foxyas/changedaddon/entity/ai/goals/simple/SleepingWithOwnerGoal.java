@@ -1,7 +1,10 @@
 package net.foxyas.changedaddon.entity.ai.goals.simple;
 
+import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Emote;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -16,24 +19,34 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 
 import java.util.*;
+import java.util.function.Consumer;
 
-public class SleepingWithOwnerGoal extends Goal {
+public class SleepingWithOwnerGoal<T extends LivingEntity> extends Goal {
     private static final double MAX_DISTANCE_SQ = 32.0; // 10 blocos ao quadrado
-    private final LivingEntity pet;
-    private final boolean isDogOrCat;
+    private final T pet;
+    private final Consumer<T> onStartSleeping;
     private Player owner;
     private BlockPos bedPos;
     private int sleepTimer = 0;
 
-    public SleepingWithOwnerGoal(LivingEntity pet, boolean isDogOrCat) {
+    public SleepingWithOwnerGoal(T pet, Consumer<T> onStartSleeping) {
         this.pet = pet;
-        this.isDogOrCat = isDogOrCat;
+        this.onStartSleeping = onStartSleeping;
     }
 
 
-    public SleepingWithOwnerGoal(LivingEntity pet) {
+    public SleepingWithOwnerGoal(T pet) {
         this.pet = pet;
-        this.isDogOrCat = false;
+        this.onStartSleeping = (e) -> {
+            if (e instanceof ChangedEntity ch) {
+                TransfurVariant<?> selfVariant = ch.getSelfVariant();
+                if (selfVariant.is(ChangedAddonTags.TransfurVariants.CAT_LIKE)) {
+                    ch.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F);
+                } else if (selfVariant.is(ChangedAddonTags.TransfurVariants.WOLF_LIKE)) {
+                    ch.playSound(SoundEvents.WOLF_AMBIENT, 1.0F, 1.0F);
+                }
+            }
+        };
     }
 
     @Override
@@ -88,9 +101,7 @@ public class SleepingWithOwnerGoal extends Goal {
             }
             // Move o pet para a cama com velocidade reduzida
             pathfinderPet.getNavigation().moveTo(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5, 0.7);
-            if (!isDogOrCat) {
-                pet.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F); // Toca o som de ronronar
-            }
+            onStartSleeping.accept(pet);
         }
     }
 
@@ -156,38 +167,77 @@ public class SleepingWithOwnerGoal extends Goal {
         this.sleepTimer = 0;
     }
 
-    public static class BipedSleepGoal extends Goal {
+    public static class BipedSleepGoal<T extends LivingEntity> extends Goal {
 
         private static final int BED_SEARCH_RADIUS = 5; // Raio de busca ao redor do dono
         private static final double MAX_DISTANCE_SQ = 32.0; // Distância máxima permitida para a cama
-        private final LivingEntity pet;
-        private final boolean isDogOrCat;
+        private final T pet;
+        private final Consumer<T> onStartSleeping;
         private final BedSearchType bedSearchType;
         private Player owner;
         private BlockPos bedPos;
         private int sleepTimer = 0;
 
-        public BipedSleepGoal(LivingEntity pet) {
+        public BipedSleepGoal(T pet) {
             this.pet = pet;
-            this.isDogOrCat = false;
+            this.onStartSleeping = (e) -> {
+                if (e instanceof ChangedEntity ch) {
+                    TransfurVariant<?> selfVariant = ch.getSelfVariant();
+                    if (selfVariant.is(ChangedAddonTags.TransfurVariants.CAT_LIKE)) {
+                        ch.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F);
+                    } else if (selfVariant.is(ChangedAddonTags.TransfurVariants.WOLF_LIKE)) {
+                        ch.playSound(SoundEvents.WOLF_AMBIENT, 1.0F, 1.0F);
+                    }
+                }
+            };
             this.bedSearchType = BedSearchType.NEAREST;
         }
 
-        public BipedSleepGoal(LivingEntity pet, boolean isDogOrCat) {
+        public BipedSleepGoal(T pet, Consumer<T> onStartSleeping) {
             this.pet = pet;
-            this.isDogOrCat = isDogOrCat;
+            this.onStartSleeping = onStartSleeping;
             this.bedSearchType = BedSearchType.NEAREST;
         }
 
-        public BipedSleepGoal(LivingEntity pet, boolean isDogOrCat, BedSearchType bedSearchType) {
+        public BipedSleepGoal(T pet, BedSearchType bedSearchType) {
             this.pet = pet;
-            this.isDogOrCat = isDogOrCat;
+            this.onStartSleeping = (e) -> {
+                if (e instanceof ChangedEntity ch) {
+                    TransfurVariant<?> selfVariant = ch.getSelfVariant();
+                    if (selfVariant.is(ChangedAddonTags.TransfurVariants.CAT_LIKE)) {
+                        ch.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F);
+                    } else if (selfVariant.is(ChangedAddonTags.TransfurVariants.WOLF_LIKE)) {
+                        ch.playSound(SoundEvents.WOLF_AMBIENT, 1.0F, 1.0F);
+                    }
+                }
+            };
             this.bedSearchType = bedSearchType;
         }
 
-        public BipedSleepGoal(LivingEntity pet, boolean isDogOrCat, Random PersonalityBased) {
+        public BipedSleepGoal(T pet, Consumer<T> onStartSleeping, BedSearchType bedSearchType) {
             this.pet = pet;
-            this.isDogOrCat = isDogOrCat;
+            this.onStartSleeping = onStartSleeping;
+            this.bedSearchType = bedSearchType;
+        }
+
+        public BipedSleepGoal(T pet, Consumer<T> onStartSleeping, Random PersonalityBased) {
+            this.pet = pet;
+            this.onStartSleeping = onStartSleeping;
+            this.bedSearchType = selectRandom(PersonalityBased);
+        }
+
+        public BipedSleepGoal(T pet, Random PersonalityBased) {
+            this.pet = pet;
+            this.onStartSleeping = (e) -> {
+                if (e instanceof ChangedEntity ch) {
+                    TransfurVariant<?> selfVariant = ch.getSelfVariant();
+                    if (selfVariant.is(ChangedAddonTags.TransfurVariants.CAT_LIKE)) {
+                        ch.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F);
+                    } else if (selfVariant.is(ChangedAddonTags.TransfurVariants.WOLF_LIKE)) {
+                        ch.playSound(SoundEvents.WOLF_AMBIENT, 1.0F, 1.0F);
+                    }
+                }
+            };
             this.bedSearchType = selectRandom(PersonalityBased);
         }
 
@@ -262,9 +312,7 @@ public class SleepingWithOwnerGoal extends Goal {
                     );
                 }
                 pathfinderPet.getNavigation().moveTo(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5, 0.7);
-                if (!isDogOrCat) {
-                    pet.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F); // Toca o som de ronronar
-                }
+                onStartSleeping.accept(pet);
             }
         }
 

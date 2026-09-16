@@ -22,9 +22,9 @@ public class ChangedEntityGoalsMixin {
     private void addExtraGoal(CallbackInfo ci) {
         ChangedEntity thisFixed = ((ChangedEntity) (Object) this);
         if (thisFixed instanceof AbstractDarkLatexWolf) {
-            thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal.BipedSleepGoal(thisFixed, true, SleepingWithOwnerGoal.BipedSleepGoal.BedSearchType.NEAREST));
+            thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal.BipedSleepGoal<>(thisFixed, SleepingWithOwnerGoal.BipedSleepGoal.BedSearchType.NEAREST));
         } else if (thisFixed instanceof DarkLatexWolfPup) {
-            thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal(thisFixed, true));
+            thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal<>(thisFixed));
         }
         if (thisFixed.getSelfVariant() != null
                 && (thisFixed.getSelfVariant().is(ChangedAddonTags.TransfurVariants.CAT_LIKE)
