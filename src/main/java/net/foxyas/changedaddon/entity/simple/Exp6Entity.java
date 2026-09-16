@@ -154,7 +154,11 @@ public class Exp6Entity extends AbstractCanTameSnepChangedEntityFavors {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(5, new SleepingWithOwnerGoal.BipedSleepGoal(this, false, SleepingWithOwnerGoal.BipedSleepGoal.BedSearchType.NEAREST));
+        this.goalSelector.addGoal(5, new SleepingWithOwnerGoal.BipedSleepGoal<>(this, (ch) -> ch.onStartSleeping(false), SleepingWithOwnerGoal.BipedSleepGoal.BedSearchType.NEAREST));
+    }
+
+    public void onStartSleeping(boolean withOwner) {
+        playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F);
     }
 
     @Override
