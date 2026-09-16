@@ -127,6 +127,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addAttribute(ChangedAddonAttributes.LATEX_RESISTANCE, "Latex Resistance");
         addAttribute(ChangedAddonAttributes.LATEX_INFECTION, "Latex Infection");
         addAttribute(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER, "Latex Solvent Damage Multiplier");
+        addAttribute(ChangedAddonAttributes.CUTENESS, "Cuteness");
+        //addAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE, "Alpha Scale");
 
         addBlockFromId(ADVANCED_CATALYZER);
         addBlockFromId(ADVANCED_UNIFUSER);

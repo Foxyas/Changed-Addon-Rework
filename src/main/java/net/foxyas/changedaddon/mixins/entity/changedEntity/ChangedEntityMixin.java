@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.entity.ai.goals.simple.HideInABoxGoal;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.entity.simple.WolfyEntity;
+import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
@@ -34,6 +35,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -259,4 +261,8 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
         }
     }
 
+    @ModifyReturnValue(at = @At("RETURN"), method = "createLatexAttributes")
+    private static AttributeSupplier.Builder addAttributes(AttributeSupplier.Builder original) {
+        return original.add(ChangedAddonAttributes.CUTENESS.get()).add(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
+    }
 }
