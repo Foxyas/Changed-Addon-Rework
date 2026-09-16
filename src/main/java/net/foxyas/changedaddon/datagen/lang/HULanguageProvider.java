@@ -780,6 +780,7 @@ public class HULanguageProvider extends LanguageProvider {
         addCommand("ftkMinigame.reset.fail", "Parancs végrehajtása sikertelen: Nem azonosítottak alkalmas transzfur alanyokat a kiválasztás során.");
         addCommand("setPlayerLatexInfection.set.success", "Játékos latex fertőzésének beállítása erre: %2$s (Aktív: %1$s, Transzfur előrehaladásának késleltetése: %3$s)");
         addCommand("setPlayerLatexInfection.clear.success", "El lett távolítva a játékos latex fertőzése.");
+        addCommand("openBestiary.fail.notValidType", "A(z) '%s' típus érvénytelen");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Simogatások adva");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Simogatások fogadva");
