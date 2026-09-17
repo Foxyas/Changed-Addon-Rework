@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoa
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
+import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
 import net.foxyas.changedaddon.world.gamerules.WorldDifficulty;
@@ -23,12 +24,12 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +42,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
@@ -65,6 +65,9 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 
     @Shadow
     public abstract LivingEntity maybeGetUnderlying();
+
+    @Shadow
+    private @Nullable Player underlyingPlayer;
 
     @Inject(at = @At("TAIL"), method = "<init>", cancellable = true)
     // Todo: Remove This in 0.16.0
@@ -207,6 +210,26 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         }
     }
 
+    @Inject(method = "mirrorLiving", at = @At("TAIL"), remap = false)
+    private void mirrorLivingHook(LivingEntity player, CallbackInfo ci) {
+        if (this.getUnderlyingPlayer() == null || this.getUnderlyingPlayer() != player) return;
+
+        ChangedEntity self = (ChangedEntity) (Object) this;
+        AttributeInstance alphaScaleAttributeSelf = self.getAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
+        AttributeInstance alphaScaleAttributePlayer = player.getAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
+
+        if (alphaScaleAttributeSelf != null && alphaScaleAttributePlayer != null) {
+            double selfValue = alphaScaleAttributeSelf.getValue();
+            double playerValue = alphaScaleAttributePlayer.getValue();
+            if (selfValue != playerValue) {
+                alphaScaleAttributeSelf.replaceFrom(alphaScaleAttributePlayer);
+                this.refreshDimensions();
+                refreshAttributes(self);
+                refreshAttributesForHost(self);
+            }
+        }
+    }
+
     @Override
     public int getGrabCooldown() {
         return this.entityData.get(GRAB_COOLDOWN);
@@ -261,7 +284,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
             this.saveGrabAbilityInTag(tag);
         }
         tag.putBoolean("isAlpha", isAlpha());
-        tag.putFloat("alphaScale", alphaAdditionalScale());
+//        tag.putFloat("alphaScale", alphaAdditionalScale());
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"), remap = true)
@@ -271,7 +294,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
             this.readGrabAbilityInTag(tag);
         }
         if (tag.contains("isAlpha")) setAlpha(tag.getBoolean("isAlpha"));
-        if (tag.contains("alphaScale")) setAlphaScale(tag.getFloat("alphaScale"));
+//        if (tag.contains("alphaScale")) setAlphaScale(tag.getFloat("alphaScale"));
     }
 
     @Override
@@ -334,8 +357,10 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Override
     public void setAlphaScale(float scale) {
         ChangedEntity self = (ChangedEntity) (Object) this;
+        AttributeInstance alphaScale = this.getAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
+        if (alphaScale == null) return;
         if (this.alphaAdditionalScale() != scale) {
-            self.getEntityData().set(ALPHA_SCALE, scale);
+            alphaScale.setBaseValue(scale);
             this.refreshDimensions();
             refreshAttributes(self);
             refreshAttributesForHost(self);
@@ -343,23 +368,23 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     }
 
     @Inject(method = "setTarget", at = @At("TAIL"), remap = true)
-    private void makeAlphaNotDespawnWhenTargetAPlayer(LivingEntity target, CallbackInfo ci) {
-        if (target instanceof Player || target instanceof AbstractVillager) this.setPersistenceRequired();
+    private void makeAlphaNotDespawnWhenTargetAPlayer(LivingEntity entity, CallbackInfo ci) {
+        if (entity instanceof Player || entity instanceof AbstractVillager) this.setPersistenceRequired();
     }
 
-    @Inject(method = "savePlayerVariantData", at = @At("RETURN"), cancellable = true)
-    private void savePlayerVariantDataHook(CallbackInfoReturnable<CompoundTag> cir) {
-        CompoundTag tag = cir.getReturnValue();
-        if (tag == null) tag = new CompoundTag();//temporary fix so it doesnt crash
+    @ModifyReturnValue(method = "savePlayerVariantData", at = @At("RETURN"))
+    private CompoundTag savePlayerVariantDataHook(CompoundTag original) {
+        CompoundTag tag = original != null ? original : new CompoundTag();
         tag.putBoolean("isAlpha", isAlpha());
-        tag.putFloat("alphaScale", alphaAdditionalScale());
+//        tag.putFloat("alphaScale", alphaAdditionalScale());
+        return tag;
     }
 
     @Inject(method = "readPlayerVariantData", at = @At("RETURN"), cancellable = true)
     private void readPlayerVariantDataHook(CompoundTag tag, CallbackInfo ci) {
         if (tag == null) return;
         if (tag.contains("isAlpha")) setAlpha(tag.getBoolean("isAlpha"));
-        if (tag.contains("alphaScale")) setAlphaScale(tag.getFloat("alphaScale"));
+//        if (tag.contains("alphaScale")) setAlphaScale(tag.getFloat("alphaScale"));
     }
 
     @Inject(method = "defineSynchedData", at = @At("HEAD"), remap = true, cancellable = true)
@@ -368,7 +393,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         self.getEntityData().define(CAN_USE_GRAB, false);
         self.getEntityData().define(GRAB_COOLDOWN, 0);
         self.getEntityData().define(IS_ALPHA, false);
-        self.getEntityData().define(ALPHA_SCALE, 0.75f);
     }
 
 //

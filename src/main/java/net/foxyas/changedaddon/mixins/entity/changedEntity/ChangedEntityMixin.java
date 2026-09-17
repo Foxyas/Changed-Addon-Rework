@@ -35,6 +35,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -134,6 +135,11 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
         return grabberSafe.isPresent() && grabberSafe.get() instanceof IGrabberEntity changedEntity;
     }
 
+//    @Inject(at = @At("HEAD"), method = "setAttributes", remap = false)
+//    private void setAttributeHook(AttributeMap attributes, CallbackInfo ci) {
+//        TODO: add a random value of cuteness here or when it first spawns.
+//    }
+
     @Inject(at = @At("HEAD"), method = "variantTick", cancellable = true)
     private void failSafePacified(Level level, CallbackInfo ci) {
         if (level.isClientSide()) return;
@@ -141,7 +147,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
         if (this.isPacified() && player != null) {
             TransfurVariantInstance<?> tf = ProcessTransfur.getPlayerTransfurVariant(player);
             if (tf == null) return;
-            if (tf.getParent().transfurMode != TransfurMode.NONE) {
+            if (tf.isTemporaryFromSuit() && tf.getParent().transfurMode != TransfurMode.NONE) {
                 if (tf.transfurMode != TransfurMode.NONE) {
                     tf.transfurMode = TransfurMode.NONE;
                 }

@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightGoal;
 import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightModeForAttackingGoal;
 import net.foxyas.changedaddon.entity.api.*;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
+import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -31,6 +32,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -203,12 +205,13 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
 
     @Override
     public void setAlphaScale(float scale) {
-        if (!entityData.hasItem(ALPHA_SCALE)) {
+        AttributeInstance alphaScale = this.getAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
+        if (alphaScale == null) {
             return;
         }
 
         if (this.alphaAdditionalScale() != scale) {
-            this.getEntityData().set(ALPHA_SCALE, scale);
+            alphaScale.setBaseValue(scale);
             this.refreshDimensions();
             refreshAttributes(this);
             refreshAttributesForHost(this);

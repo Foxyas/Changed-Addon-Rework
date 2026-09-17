@@ -1,10 +1,11 @@
 package net.foxyas.changedaddon.util;
 
-import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
+import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
@@ -15,17 +16,17 @@ import java.util.Optional;
 
 public class EntityUtil {
 
-    public static final int CUTENESS_LEVEL_NEEDED = 5;
+    public static final double CUTENESS_LEVEL_NEEDED = 5;
 
     // Mixin Friendly Method.
-    public static int getCutenessLevelOfEntity(LivingEntity livingEntity) {
-        int cutenessLevel = 0;
+    public static float getCutenessLevelOfEntity(LivingEntity livingEntity) {
+        float cutenessLevel = 0;
         if (livingEntity instanceof IVariantExtraStats IVariantExtraStats) {
-            cutenessLevel = IVariantExtraStats.cutenessLevel();
-        } else {
-            MobEffectInstance effect = livingEntity.getEffect(ChangedAddonMobEffects.PACIFIED.get());
-            if (effect != null) cutenessLevel = effect.getAmplifier();
+            cutenessLevel = IVariantExtraStats.getDefaultCutenessLevel();
         }
+
+        AttributeInstance cutenessAttribute = livingEntity.getAttribute(ChangedAddonAttributes.CUTENESS.get());
+        cutenessLevel += cutenessAttribute != null ? (float) cutenessAttribute.getValue() : 0f;
 
         return cutenessLevel;
     }
@@ -42,7 +43,7 @@ public class EntityUtil {
     }
 
     public static boolean isCuteEnoughToReceivePatsFromVillagers(AbstractVillager villager, LivingEntity target) {
-        return getCutenessLevelOfEntity(target) >= CUTENESS_LEVEL_NEEDED;
+        return getCutenessLevelOfEntity(target) >= ChangedAddonServerConfiguration.CUTENESS_LEVEL_NEEDED_TO_RECEIVE_PATS_FROM_VILLAGERS.get();
     }
 
     public static float getHealthRatio(LivingEntity livingEntity) {

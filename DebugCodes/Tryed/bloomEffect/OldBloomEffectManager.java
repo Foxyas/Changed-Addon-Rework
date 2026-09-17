@@ -57,14 +57,12 @@ public class OldBloomEffectManager {
 
             if (bloomFinalTarget != null) {
                 RenderTarget mainTarget = Minecraft.getInstance().getMainRenderTarget();
-                GlStateManager._glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, bloomFinalTarget.frameBufferId);
-                GlStateManager._glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, mainTarget.frameBufferId);
-                GlStateManager._glBlitFrameBuffer(
-                        0, 0, bloomFinalTarget.width, bloomFinalTarget.height,
-                        0, 0, mainTarget.width, mainTarget.height,
-                        GL30.GL_COLOR_BUFFER_BIT, GL30.GL_NEAREST
-                );
-                GlStateManager._glBindFramebuffer(GL30.GL_FRAMEBUFFER, mainTarget.frameBufferId);
+
+                // Replaces manual frame buffer binding & glBlitFrameBuffer
+                bloomFinalTarget.blitToScreen(mainTarget.width, mainTarget.height);
+
+                // Re-bind the main buffer for subsequent rendering
+                mainTarget.bindWrite(false);
             }
         }
     }

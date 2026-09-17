@@ -4,11 +4,13 @@ import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoalBuilder;
 import net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal;
+import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -47,7 +49,6 @@ public interface IAlphaAbleEntity {
     }
 
     EntityDataAccessor<Boolean> IS_ALPHA = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.BOOLEAN);
-    EntityDataAccessor<Float> ALPHA_SCALE = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.FLOAT);
 
     UUID FOLLOW_RANGE = UUID.fromString("8b8f5a1b-1c5c-4b9b-a001-01a01a01a000");
     UUID MAX_HEALTH = UUID.fromString("8b8f5a1b-1c5c-4b9b-a001-01a01a01a001");
@@ -189,20 +190,20 @@ public interface IAlphaAbleEntity {
     default void setAlphaScale(float scale) {
     }
 
-    default void refreshAttributes(ChangedEntity self) {
-        if (self.isDeadOrDying()) return;
-        SynchedEntityData entityData = self.getEntityData();
-        IAlphaAbleEntity.applyOrRemoveAlphaModifiers(self, entityData.get(IS_ALPHA), entityData.get(ALPHA_SCALE));
-        IAbstractChangedEntity.forEitherSafe(self.maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
+    default void refreshAttributes(ChangedEntity changedEntity) {
+        if (changedEntity.isDeadOrDying()) return;
+        SynchedEntityData entityData = changedEntity.getEntityData();
+        IAlphaAbleEntity.applyOrRemoveAlphaModifiers(changedEntity, entityData.get(IS_ALPHA), (float) changedEntity.getAttributeValue(ChangedAddonAttributes.ALPHA_GENE_SCALE.get()));
+        IAbstractChangedEntity.forEitherSafe(changedEntity.maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
     }
 
-    default void refreshAttributesForHost(ChangedEntity creature) {
-        if (!(creature.maybeGetUnderlying() instanceof Player host)) return;
+    default void refreshAttributesForHost(ChangedEntity changedEntity) {
+        if (!(changedEntity.maybeGetUnderlying() instanceof Player host)) return;
         if (host.isDeadOrDying()) return;
 
-        SynchedEntityData entityData = creature.getEntityData();
+        SynchedEntityData entityData = changedEntity.getEntityData();
         IAbstractChangedEntity.forEitherSafe(host).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
-        IAlphaAbleEntity.applyOrRemoveAlphaModifiers(host, entityData.get(IS_ALPHA), entityData.get(ALPHA_SCALE));
+        IAlphaAbleEntity.applyOrRemoveAlphaModifiers(host, entityData.get(IS_ALPHA), (float) changedEntity.getAttributeValue(ChangedAddonAttributes.ALPHA_GENE_SCALE.get()));
     }
 
     default void cleanAlphaAttributesFromHost(ChangedEntity creature) {
@@ -248,8 +249,8 @@ public interface IAlphaAbleEntity {
 
     default float alphaAdditionalScale() {
         if (this instanceof ChangedEntity changedEntity) {
-            SynchedEntityData entityData = changedEntity.getEntityData();
-            return entityData.hasItem(ALPHA_SCALE) ? entityData.get(ALPHA_SCALE) : DEFAULT_ALPHA_SIZE; // For future changes
+            AttributeInstance attributeInstance = changedEntity.getAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
+            return attributeInstance != null ? (float) attributeInstance.getValue() : DEFAULT_ALPHA_SIZE; // For future changes
         }
         return 0f;
     }
