@@ -62,6 +62,9 @@ public class TransfurVariantInstanceMixin {
 
                 stats = self.getLimb(targetLimb);
                 stats.progressRegrowth(progressBonus);
+                if (!stats.isAmputated()) {
+                    playedSound = true;
+                }
             }
 
             if (playedSound) {

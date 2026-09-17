@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.mixins.mods.casualtiesCubed;
 
+import net.foxyas.changedaddon.compatibility.casualities_cubed.LimbMapper;
 import net.foxyas.changedaddon.extension.RequiredMods;
+import net.ltxprogrammer.changed.client.animations.ModelPartIdentifier;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.LatexHumanoidArmorModel;
@@ -19,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
 import net.zaharenko424.casualties_cubed.limbs.Limb;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -38,6 +41,11 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
             Limb.UPPER_RIGHT_ARM,
             Limb.UPPER_LEFT_LEG,
             Limb.UPPER_RIGHT_LEG,
+            Limb.LOWER_LEFT_LEG,
+            Limb.LOWER_RIGHT_LEG,
+            Limb.LEFT_FOOT,
+            Limb.RIGHT_FOOT,
+            Limb.ABDOMEN,
             Limb.HEAD
     );
 
@@ -77,44 +85,21 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                 player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).ifPresent(data -> {
                     for (Limb limb : LIMBS_TO_SEARCH) {
                         boolean isVisible = data.getLimb(limb).isAmputated();
-                        switch (limb) {
-                            case UPPER_RIGHT_LEG -> {
-                                ModelPart leg = self.getLeg(HumanoidArm.RIGHT);
-                                if (leg != null) {
-                                    leg.visible = !isVisible;
-                                }
-                            }
-                            case UPPER_RIGHT_ARM -> {
-                                ModelPart arm = self.getArm(HumanoidArm.RIGHT);
-                                if (arm != null) {
-                                    arm.visible = !isVisible;
-                                }
-                            }
-                            case UPPER_LEFT_ARM -> {
-                                ModelPart arm = self.getArm(HumanoidArm.LEFT);
-                                if (arm != null) {
-                                    arm.visible = !isVisible;
-                                }
-                            }
-                            case UPPER_LEFT_LEG -> {
-                                ModelPart leg = self.getLeg(HumanoidArm.LEFT);
-                                if (leg != null) {
-                                    leg.visible = !isVisible;
-                                }
-                            }
-                            case HEAD -> {
-                                ModelPart head = self.getHead();
-                                if (head != null) {
-                                    head.visible = !isVisible;
-                                    if (minecraft.player == player) {
-                                        if (minecraft.player.isSleeping()) {
-                                            if (head.visible && minecraft.options.getCameraType().isFirstPerson()) {
-                                                head.visible = false;
-                                            }
+                        @Nullable ModelPartIdentifier changedLimb = LimbMapper.getChangedLimb(limb);
+                        if (changedLimb == null) continue;
+                        ModelPart modelPart = changedLimb.getModelPart(self, entity);
+                        if (modelPart != null) {
+                            if (changedLimb.limb() == net.ltxprogrammer.changed.client.animations.Limb.HEAD) {
+                                modelPart.visible = !isVisible;
+                                if (minecraft.player == player) {
+                                    if (minecraft.player.isSleeping()) {
+                                        if (modelPart.visible && minecraft.options.getCameraType().isFirstPerson()) {
+                                            modelPart.visible = false;
                                         }
                                     }
                                 }
-
+                            } else {
+                                modelPart.visible = !isVisible;
                             }
                         }
                     }
