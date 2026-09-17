@@ -15,8 +15,8 @@ public class ChangedAddonLimbExtensions {
 
     public static final Map<ResourceLocation, LimbExtension> EXTENSIONS = new HashMap<>();
 
-    public static final LimbExtension LEFT_LOWER_LEG = register("left_lower_foot", LimbExtension.forFetcher(Set.of(Limb.LEFT_LEG), getModelPartFetcherFor("LeftLowerLeg")));
-    public static final LimbExtension RIGHT_LOWER_LEG = register("right_lower_foot", LimbExtension.forFetcher(Set.of(Limb.RIGHT_LEG), getModelPartFetcherFor("RightLowerLeg")));
+    public static final LimbExtension LOWER_LEFT_LEG = register("lower_left_foot", LimbExtension.forFetcher(Set.of(Limb.LEFT_LEG), getModelPartFetcherFor("LeftLowerLeg")));
+    public static final LimbExtension LOWER_RIGHT_LEG = register("lower_right_foot", LimbExtension.forFetcher(Set.of(Limb.RIGHT_LEG), getModelPartFetcherFor("RightLowerLeg")));
     public static final LimbExtension LEFT_FOOT = register("left_foot", LimbExtension.forFetcher(Set.of(Limb.LEFT_LEG), getModelPartFetcherFor("LeftLowerLeg", "LeftFoot", "LeftPad")));
     public static final LimbExtension RIGHT_FOOT = register("right_foot", LimbExtension.forFetcher(Set.of(Limb.RIGHT_LEG), getModelPartFetcherFor("RightLowerLeg", "RightFoot", "RightPad")));
     public static final LimbExtension LEFT_PAD = register("left_pad", LimbExtension.forFetcher(Set.of(Limb.LEFT_LEG), getModelPartFetcherFor("LeftLowerLeg", "LeftFoot", "LeftPad")));

@@ -31,12 +31,12 @@ public class LimbMapper {
 
         // Right Leg segment
         map.put(Limb.UPPER_RIGHT_LEG, ModelPartIdentifier.forLimb(net.ltxprogrammer.changed.client.animations.Limb.RIGHT_LEG));
-        map.put(Limb.LOWER_RIGHT_LEG, ModelPartIdentifier.forLimb(net.ltxprogrammer.changed.client.animations.Limb.RIGHT_LEG));
+        map.put(Limb.LOWER_RIGHT_LEG, ModelPartIdentifier.forLimbAndExtension(net.ltxprogrammer.changed.client.animations.Limb.RIGHT_LEG, ChangedAddonLimbExtensions.LOWER_RIGHT_LEG));
         map.put(Limb.RIGHT_FOOT, ModelPartIdentifier.forLimbAndExtension(net.ltxprogrammer.changed.client.animations.Limb.RIGHT_LEG, ChangedAddonLimbExtensions.RIGHT_FOOT));
 
         // Left Leg segment
         map.put(Limb.UPPER_LEFT_LEG, ModelPartIdentifier.forLimb(net.ltxprogrammer.changed.client.animations.Limb.LEFT_LEG));
-        map.put(Limb.LOWER_LEFT_LEG, ModelPartIdentifier.forLimb(net.ltxprogrammer.changed.client.animations.Limb.LEFT_LEG));
+        map.put(Limb.LOWER_LEFT_LEG, ModelPartIdentifier.forLimbAndExtension(net.ltxprogrammer.changed.client.animations.Limb.LEFT_LEG, ChangedAddonLimbExtensions.LOWER_LEFT_LEG));
         map.put(Limb.LEFT_FOOT, ModelPartIdentifier.forLimbAndExtension(net.ltxprogrammer.changed.client.animations.Limb.LEFT_LEG, ChangedAddonLimbExtensions.LEFT_FOOT));
     });
 
