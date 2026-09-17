@@ -21,12 +21,20 @@ public class ChangedAddonAttributes {
     public static final RegistryObject<Attribute> LATEX_RESISTANCE = ATTRIBUTES.register("latex_resistance", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latex_resistance", 0, 0, 100)).setSyncable(true));
     public static final RegistryObject<Attribute> LATEX_INFECTION = ATTRIBUTES.register("latex_infection", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latex_infection", 0, 0, 100)).setSyncable(true));
     public static final RegistryObject<Attribute> LATEX_SOLVENT_DAMAGE_MULTIPLIER = ATTRIBUTES.register("latex_solvent_damage_multiplier", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latex_solvent_damage_multiplier", 0, 0, Float.MAX_VALUE)).setSyncable(true));
+    public static final RegistryObject<Attribute> CUTENESS = registerRanged("cuteness", 0, -Float.MAX_VALUE, Float.MAX_VALUE, true);
+    public static final RegistryObject<Attribute> ALPHA_GENE_SCALE = registerRanged("alpha_scale", 0.75, -0.99, 30, true);
+
+    private static RegistryObject<Attribute> registerRanged(String name, double defValue, double min, double max, boolean sync) {
+        return ATTRIBUTES.register(name, () -> new RangedAttribute("attribute." + ChangedAddonMod.MODID + "." + name, defValue, min, max).setSyncable(sync));
+    }
 
     @SubscribeEvent
     public static void addAttributes(EntityAttributeModificationEvent event) {
         event.add(EntityType.PLAYER, LATEX_RESISTANCE.get());
         event.add(EntityType.PLAYER, LATEX_INFECTION.get());
         event.add(EntityType.PLAYER, LATEX_SOLVENT_DAMAGE_MULTIPLIER.get());
+        event.add(EntityType.PLAYER, CUTENESS.get());
+        event.add(EntityType.PLAYER, ALPHA_GENE_SCALE.get());
     }
 
     public static double getEntityAttributeSafe(LivingEntity livingEntity, Attribute attribute) {
