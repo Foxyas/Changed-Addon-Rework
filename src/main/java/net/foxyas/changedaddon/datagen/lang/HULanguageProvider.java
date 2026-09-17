@@ -126,6 +126,8 @@ public class HULanguageProvider extends LanguageProvider {
         addAttribute(ChangedAddonAttributes.LATEX_RESISTANCE, "Latexfertőzés");
         addAttribute(ChangedAddonAttributes.LATEX_INFECTION, "Latexellenállás");
         addAttribute(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER, "Latexoldás sebzésének szorzója");
+        addAttribute(ChangedAddonAttributes.CUTENESS, "Cukiság");
+        //addAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE, "Alfa mérete");
 
         addBlock(ADVANCED_CATALYZER, "Fejlett katalizátor");
         addBlock(ADVANCED_UNIFUSER, "Fejlett unifúzor");
@@ -770,8 +772,8 @@ public class HULanguageProvider extends LanguageProvider {
         addCommand("alpha.set.fail", "Nem található érvényes alfa-kompatibilis entitás");
         addCommand("alpha.get.success", "Alfa gén: %s");
         addCommand("alpha.get.fail", "A célpont nem támogatja az alfa gént");
-        addCommand("alpha_scale.set.success", "Alfa skála %sra állítva %s entitáshoz");
-        addCommand("alpha_scale.get.success", "Alfa skála: %s");
+        addCommand("alpha_scale.set.success", "Alfa mérete %sra állítva %s entitáshoz");
+        addCommand("alpha_scale.get.success", "Alfa mérete: %s");
         addCommand("ftkMinigame.set.success", "FTKC paraméterek sikeresen kezdeményezve %s célpont(ok)hoz.");
         addCommand("ftkMinigame.set.fail", "Parancs végrehajtása sikertelen: Nem azonosítottak alkalmas transzfur alanyokat a kiválasztás során.");
         addCommand("ftkMinigame.get.has", "Aktív kognitív zár észlelve: %s.");
