@@ -16,6 +16,7 @@ import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
 import net.foxyas.changedaddon.network.packet.ExtraGrabDataSyncPacket;
 import net.foxyas.changedaddon.util.EntityUtil;
+import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -31,6 +32,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -53,6 +55,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 @SuppressWarnings("AddedMixinMembersNamePattern")
@@ -132,6 +135,23 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (tag.contains("alreadySnuggledTight")) isSnugglingTight = tag.getBoolean("alreadySnuggledTight");
         if (tag.contains("allowGrabTransfurred")) allowGrabTransfurred = tag.getBoolean("allowGrabTransfurred");
         if (tag.contains("transfurDamageMode")) transfurDamageMode = tag.getBoolean("transfurDamageMode");
+    }
+
+    @Inject(method = "readData", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getEntities(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;", shift = At.Shift.AFTER))
+    private void grabbedHardSetHook(CompoundTag tag, CallbackInfo ci) {
+        if (this.grabbedEntity == null) {
+            UUID entityUUID = tag.getUUID("GrabbedEntity");
+            Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), entityUUID);
+            if (entityByUUID instanceof LivingEntity grabbed && canGrabEntity(grabbed)) {
+                LivingEntity grabber = this.entity.getEntity();
+                if (grabber.distanceToSqr(grabbed) >= 16) {
+                    grabbed.setPos(grabber.position());
+                } else {
+                    grabber.setPos(grabbed.position());
+                }
+                this.grabbedEntity = grabbed;
+            }
+        }
     }
 
     @Override
