@@ -39,6 +39,7 @@ import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.process.TransfurEvents;
 import net.ltxprogrammer.changed.process.TransfurEvents.TickPlayerTransfurProgressEvent;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.commands.CommandBuildContext;
@@ -106,6 +107,8 @@ public class CommonEvent {
 
         // Run on server side only and throttle execution to once every second (20 ticks)
         if (entity.level().isClientSide() || entity.tickCount % 20 != 0) return;
+
+        if (!(ProcessTransfur.isPlayerTransfurred(EntityUtil.playerOrNull(entity)))) return;
 
         // Verify entity has the Cuteness attribute and meets the required level
         AttributeInstance cutenessAttr = entity.getAttribute(ChangedAddonAttributes.CUTENESS.get());
