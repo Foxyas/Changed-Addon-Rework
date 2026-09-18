@@ -17,6 +17,7 @@ import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
 import net.foxyas.changedaddon.network.packet.ExtraGrabDataSyncPacket;
 import net.foxyas.changedaddon.util.EntityUtil;
 import net.foxyas.changedaddon.util.PlayerUtil;
+import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -25,12 +26,13 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
+import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -81,14 +83,13 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     public KeyReference currentEscapeKey;
 
     @Shadow
-    public RandomSource escapeKeyRandom;
-    @Shadow
-    public KeyReference lastEscapeKey;
-    @Shadow
     public boolean attackDown;
 
     @Shadow
     public abstract void releaseEntity(boolean applyDebuffs);
+
+    @Shadow
+    public abstract boolean suitEntity(LivingEntity entity);
 
     @Unique
     private boolean safeMode = false;
@@ -137,12 +138,15 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (tag.contains("transfurDamageMode")) transfurDamageMode = tag.getBoolean("transfurDamageMode");
     }
 
+    @Unique
+    private boolean persistedGrab;
+
     @Inject(method = "readData", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getEntities(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;", shift = At.Shift.AFTER))
     private void grabbedHardSetHook(CompoundTag tag, CallbackInfo ci) {
         if (this.grabbedEntity == null) {
             UUID entityUUID = tag.getUUID("GrabbedEntity");
             Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), entityUUID);
-            if (entityByUUID instanceof LivingEntity grabbed && canGrabEntity(grabbed)) {
+            if (entityByUUID instanceof LivingEntity grabbed) {
                 LivingEntity grabber = this.entity.getEntity();
                 if (grabber.distanceToSqr(grabbed) >= 16) {
                     grabbed.setPos(grabber.position());
@@ -150,7 +154,18 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
                     grabber.setPos(grabbed.position());
                 }
                 this.grabbedEntity = grabbed;
+                persistedGrab = true;
             }
+        }
+    }
+
+    @Inject(at = @At("TAIL"), method = "tickIdle")
+    private void tickIdleTail(CallbackInfo ci) {
+        if (persistedGrab && !entity.getLevel().isClientSide) {
+            suitEntity(grabbedEntity);
+            ChangedAbilities.GRAB_ENTITY_ABILITY.get().setDirty(entity);
+            Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(entity::getEntity), new GrabEntityPacket(entity.getEntity(), grabbedEntity, GrabEntityPacket.GrabType.SUIT));
+            persistedGrab = false;
         }
     }
 
