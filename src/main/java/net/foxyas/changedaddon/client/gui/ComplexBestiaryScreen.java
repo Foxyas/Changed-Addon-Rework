@@ -44,6 +44,17 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     private static final int BASE_H = 230;
 
     // =============================================================
+    // DISPLAY MODES
+    // =============================================================
+    public enum DisplayMode {
+        NORMAL,       // Split view: 3D Model on left, Details on right
+        HIDE_MODEL,   // Lore / Details takes full width (Model hidden)
+        MODEL_ONLY    // 3D Model viewport takes full width (Details hidden)
+    }
+
+    private DisplayMode displayMode = DisplayMode.NORMAL;
+
+    // =============================================================
     // ENTITY GRID ICON CUSTOMIZATION
     // =============================================================
     private static final int ICON_Y_OFFSET = 1;
@@ -55,9 +66,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     private int dialogH;
     private int left;
     private int top;
-
-    private int vpW;
-    private int detW;
 
     private int activeTab = 0;
 
@@ -100,14 +108,48 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     private int lastChartCenterY = -1;
     private int lastChartRadius = 32;
 
-    // Toggle Player Chart Button Bounds
+    // Interactive Button Bounds
     private int lastPlayerBtnX = -1;
     private int lastPlayerBtnY = -1;
-    private int lastPlayerBtnW = 85;
+    private int lastPlayerBtnW = 92;
     private int lastPlayerBtnH = 12;
+
+    private int lastExpandModelBtnX = -1;
+    private int lastExpandModelBtnY = -1;
+    private int lastExpandModelBtnW = 14;
+    private int lastExpandModelBtnH = 12;
+
+    private int lastToggleLoreExpandBtnX = -1;
+    private int lastToggleLoreExpandBtnY = -1;
+    private int lastToggleLoreExpandBtnW = 85;
+    private int lastToggleLoreExpandBtnH = 12;
 
     public ComplexBestiaryScreen() {
         super(Component.literal("Bestiary"));
+    }
+
+    private int getAvailableInnerWidth() {
+        return this.dialogW - 22;
+    }
+
+    private int getEffectiveVpW() {
+        int availableInnerW = getAvailableInnerWidth();
+        if (displayMode == DisplayMode.MODEL_ONLY) {
+            return availableInnerW + 6;
+        } else if (displayMode == DisplayMode.HIDE_MODEL) {
+            return 0;
+        }
+        return Math.max(140, Math.min(175, availableInnerW * 42 / 100));
+    }
+
+    private int getEffectiveDetW() {
+        int availableInnerW = getAvailableInnerWidth();
+        if (displayMode == DisplayMode.HIDE_MODEL) {
+            return availableInnerW + 6;
+        } else if (displayMode == DisplayMode.MODEL_ONLY) {
+            return 0;
+        }
+        return availableInnerW - getEffectiveVpW();
     }
 
     @Override
@@ -119,10 +161,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         this.left = (this.width - this.dialogW) / 2;
         this.top = (this.height - this.dialogH) / 2;
 
-        int availableInnerW = this.dialogW - 22;
-        this.vpW = Math.max(140, Math.min(175, availableInnerW * 42 / 100));
-        this.detW = availableInnerW - this.vpW;
-
         if (allVariants.isEmpty()) {
             List<TransfurVariant<?>> variants = TransfurVariant.getPublicTransfurVariants()
                     .sorted(Comparator.comparing(var -> var.getFormId().toString()))
@@ -131,17 +169,14 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
 
         // Search Box Configuration
-        int detX = this.left + 8 + this.vpW + 6;
-        int detY = this.top + 22;
-        int contentY = detY + 16;
-
-        this.searchBox = new EditBox(this.font, detX + 3, contentY + 2, this.detW - 6, 14, Component.literal("Search"));
+        this.searchBox = new EditBox(this.font, 0, 0, 10, 14, Component.literal("Search"));
         this.searchBox.setHint(Component.literal("§7Search entity..."));
         this.searchBox.setResponder(s -> updateFilteredVariants());
         this.searchBox.setMaxLength(32);
         this.searchBox.setFocused(false);
         this.addRenderableWidget(this.searchBox);
 
+        updateSearchBoxBounds();
         updateFilteredVariants();
         updateSearchBoxVisibility();
 
@@ -152,9 +187,24 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
     }
 
+    private void updateSearchBoxBounds() {
+        if (this.searchBox != null) {
+            int detW = getEffectiveDetW();
+            int detX = (displayMode == DisplayMode.HIDE_MODEL)
+                    ? (this.left + 8)
+                    : (this.left + 8 + getEffectiveVpW() + 6);
+            int detY = this.top + 22;
+            int contentY = detY + 16;
+
+            this.searchBox.setX(detX + 3);
+            this.searchBox.setY(contentY + 2);
+            this.searchBox.setWidth(Math.max(10, detW - 6));
+        }
+    }
+
     private void updateSearchBoxVisibility() {
         if (this.searchBox != null) {
-            boolean isSelectorTab = (this.activeTab == 0);
+            boolean isSelectorTab = (this.activeTab == 0) && (displayMode != DisplayMode.MODEL_ONLY);
             this.searchBox.setVisible(isSelectorTab);
             if (!isSelectorTab) {
                 this.searchBox.setFocused(false);
@@ -231,6 +281,15 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         this.buildDetailsAndBarChart(entity);
     }
 
+    private void setDisplayMode(DisplayMode mode) {
+        this.displayMode = mode;
+        updateSearchBoxBounds();
+        updateSearchBoxVisibility();
+        if (this.currentEntity != null) {
+            buildDetailsAndBarChart(this.currentEntity);
+        }
+    }
+
     private void buildDetailsAndBarChart(ChangedEntity entity) {
         loreLines.clear();
         attributeBars.clear();
@@ -239,7 +298,8 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
         if (entity == null) return;
 
-        int textWrapWidth = Math.max(100, this.detW - 16);
+        int detW = getEffectiveDetW();
+        int textWrapWidth = Math.max(100, detW - 16);
 
         if (entity instanceof IBestiaryEntityData data) {
             List<IBestiaryEntityData.BestiaryInfo> infos = data.getBestiaryInfo().stream()
@@ -341,7 +401,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             float pRatio = clamp((float) (pVal / maxScale), 0.05f, 1.0f);
             playerAttributeBars.add(new AttributeBarItem(label, pValText, pRatio, 0xFF35A2FF, 0xFF70C5FF));
         } else {
-            // Keeps playerAttributeBars length equal to attributeBars length
             playerAttributeBars.add(new AttributeBarItem(label, "0.0", 0.05f, 0xFF35A2FF, 0xFF70C5FF));
         }
     }
@@ -360,25 +419,35 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         boolean isEscHovered = mouseX >= escX - 2 && mouseX <= escX + escW + 2 && mouseY >= escY - 2 && mouseY <= escY + 11;
         graphics.drawString(this.font, escHint, escX, escY, isEscHovered ? 0xFFFFAA : 0x888888, false);
 
+        int vpW = getEffectiveVpW();
+        int detW = getEffectiveDetW();
+
         int vpX = this.left + 8;
         int vpY = this.top + 22;
         int vpH = this.dialogH - 30;
 
-        int detX = vpX + this.vpW + 6;
+        int detX = (displayMode == DisplayMode.HIDE_MODEL) ? vpX : vpX + vpW + 6;
         int detY = this.top + 22;
         int detH = this.dialogH - 30;
 
-        renderModelViewport(graphics, vpX, vpY, this.vpW, vpH, mouseX, mouseY, partialTick);
-        renderDetailsTabs(graphics, detX, detY, this.detW, mouseX, mouseY);
+        // Render Model Viewport if not hidden
+        if (displayMode != DisplayMode.HIDE_MODEL && vpW > 0) {
+            renderModelViewport(graphics, vpX, vpY, vpW, vpH, mouseX, mouseY, partialTick);
+        }
 
-        int contentY = detY + 16;
-        int contentH = detH - 16;
-        if (activeTab == 0) {
-            renderVariantGrid(graphics, detX, contentY, this.detW, contentH, mouseX, mouseY);
-        } else if (activeTab == 1) {
-            renderLoreTab(graphics, detX, contentY, this.detW, contentH, mouseX, mouseY);
-        } else {
-            renderAttributesGridTab(graphics, detX, contentY, this.detW, contentH, mouseX, mouseY);
+        // Render Details Panel if not model only
+        if (displayMode != DisplayMode.MODEL_ONLY && detW > 0) {
+            renderDetailsTabs(graphics, detX, detY, detW, mouseX, mouseY);
+
+            int contentY = detY + 16;
+            int contentH = detH - 16;
+            if (activeTab == 0) {
+                renderVariantGrid(graphics, detX, contentY, detW, contentH, mouseX, mouseY);
+            } else if (activeTab == 1) {
+                renderLoreTab(graphics, detX, contentY, detW, contentH, mouseX, mouseY);
+            } else {
+                renderAttributesGridTab(graphics, detX, contentY, detW, contentH, mouseX, mouseY);
+            }
         }
 
         super.render(graphics, mouseX, mouseY, partialTick);
@@ -572,6 +641,35 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     private void renderModelViewport(GuiGraphics graphics, int x, int y, int w, int h, int mouseX, int mouseY, float partialTick) {
         renderInsetBox(graphics, x, y, w, h);
 
+        // Expand / Restore Model Toggle Button
+        int btnW = 14;
+        int btnH = 12;
+        int btnX = x + w - btnW - 3;
+        int btnY = y + 3;
+
+        this.lastExpandModelBtnX = btnX;
+        this.lastExpandModelBtnY = btnY;
+        this.lastExpandModelBtnW = btnW;
+        this.lastExpandModelBtnH = btnH;
+
+        boolean isBtnHovered = mouseX >= btnX && mouseX <= btnX + btnW && mouseY >= btnY && mouseY <= btnY + btnH;
+        boolean isModelOnly = (displayMode == DisplayMode.MODEL_ONLY);
+
+        int btnBg = isModelOnly ? 0xFF2A4438 : (isBtnHovered ? 0xFF282830 : 0xFF1A1A20);
+        int btnBorder = isModelOnly ? 0xFF55FF55 : (isBtnHovered ? 0xFF585868 : 0xFF2A2A32);
+
+        graphics.fill(btnX, btnY, btnX + btnW, btnY + btnH, btnBg);
+        graphics.renderOutline(btnX, btnY, btnW, btnH, btnBorder);
+
+        String btnSymbol = isModelOnly ? "◀" : "⛶";
+        int symW = this.font.width(btnSymbol);
+        graphics.drawString(this.font, btnSymbol, btnX + (btnW - symW) / 2, btnY + 2, isModelOnly ? 0x55FF55 : (isBtnHovered ? 0xFFFFFF : 0xAAAAAA), false);
+
+        if (isBtnHovered) {
+            String tooltip = isModelOnly ? "Restore Split View" : "Expand Model View";
+            graphics.renderTooltip(this.font, Component.literal(tooltip), mouseX, mouseY);
+        }
+
         if (this.currentEntity != null) {
             int centerX = x + w / 2;
             int centerY = y + h - 26;
@@ -655,6 +753,32 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             curY += 5;
 
             graphics.drawString(this.font, "§6[Archive Dossier]", x + 6, curY, 0xFFAA00, false);
+
+            // Toggle Expand Lore Button (Model Hidder)
+            int btnW = 85;
+            int btnH = 12;
+            int btnX = x + w - btnW - 10;
+            int btnY = curY - 2;
+
+            this.lastToggleLoreExpandBtnX = btnX;
+            this.lastToggleLoreExpandBtnY = btnY;
+            this.lastToggleLoreExpandBtnW = btnW;
+            this.lastToggleLoreExpandBtnH = btnH;
+
+            boolean isHideModel = (displayMode == DisplayMode.HIDE_MODEL);
+            boolean isBtnHovered = mouseX >= btnX && mouseX <= btnX + btnW && mouseY >= btnY && mouseY <= btnY + btnH;
+
+            int btnBg = isHideModel ? 0xFF2A4438 : (isBtnHovered ? 0xFF282830 : 0xFF1A1A20);
+            int btnBorder = isHideModel ? 0xFF55FF55 : (isBtnHovered ? 0xFF585868 : 0xFF2A2A32);
+
+            graphics.fill(btnX, btnY, btnX + btnW, btnY + btnH, btnBg);
+            graphics.renderOutline(btnX, btnY, btnW, btnH, btnBorder);
+
+            String btnText = isHideModel ? "[◀] Show Model" : "[↔] Expand Text";
+            int textW = this.font.width(btnText);
+            int textY = btnY + (btnH - 8) / 2;
+            graphics.drawString(this.font, btnText, btnX + (btnW - textW) / 2, textY, isHideModel ? 0x55FF55 : (isBtnHovered ? 0xFFFFFF : 0xAAAAAA), false);
+
             curY += 11;
 
             for (FormattedCharSequence line : loreLines) {
@@ -733,7 +857,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
                 String btnText = showPlayerChart ? "[X] Player Overlay" : "[+] Player Overlay";
                 int textW = this.font.width(btnText);
-                int textY = btnY + (btnH - 8) / 2; // Precise vertical font centering
+                int textY = btnY + (btnH - 8) / 2;
                 graphics.drawString(this.font, btnText, btnX + (btnW - textW) / 2, textY, showPlayerChart ? 0x55FF55 : (isBtnHovered ? 0xFFFFFF : 0xAAAAAA), false);
 
                 curY += 14;
@@ -760,9 +884,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         renderDetailsScrollbar(graphics, x, y, w, h, mouseX, mouseY);
     }
 
-    /**
-     * Renders radial radar polygon with optional overlayed player radar chart behind the entity radar chart.
-     */
     private void renderRadialAttributeChart(GuiGraphics graphics, int cx, int cy, float radius, List<AttributeBarItem> entityBars, List<AttributeBarItem> playerBars, int mouseX, int mouseY) {
         int size = entityBars.size();
         if (size < 3) return;
@@ -778,7 +899,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         RenderSystem.defaultBlendFunc();
         RenderSystem.disableCull();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.disableDepthTest(); // FIX: Prevent depth buffer from discarding 2D chart geometry
+        RenderSystem.disableDepthTest();
 
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder buffer = tesselator.getBuilder();
@@ -794,7 +915,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
         tesselator.end();
 
-        // 2. Player Attribute Fan (Rendered BEHIND Entity Fan)
+        // 2. Player Attribute Fan
         if (playerBars != null && playerBars.size() == size) {
             buffer.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
             buffer.vertex(matrix, cx, cy, 0).color(0.21f, 0.63f, 1.0f, 0.30f).endVertex();
@@ -824,7 +945,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             tesselator.end();
         }
 
-        // 3. Entity Attribute Fan (Rendered ON TOP)
+        // 3. Entity Attribute Fan
         buffer.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
         buffer.vertex(matrix, cx, cy, 0).color(0.3f, 0.8f, 0.4f, 0.35f).endVertex();
         for (int i = 0; i <= size; i++) {
@@ -876,7 +997,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
         tesselator.end();
 
-        RenderSystem.enableDepthTest(); // Restore depth test state
+        RenderSystem.enableDepthTest();
         RenderSystem.enableCull();
         RenderSystem.disableBlend();
 
@@ -932,7 +1053,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     // -------------------------------------------------------------
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (this.activeTab == 0 && !filteredVariants.isEmpty()) {
+        if (this.activeTab == 0 && displayMode != DisplayMode.MODEL_ONLY && !filteredVariants.isEmpty()) {
             int currentIndex = selected != null ? filteredVariants.indexOf(selected) : -1;
 
             if (keyCode == GLFW.GLFW_KEY_LEFT) {
@@ -958,8 +1079,9 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         selectTf(filteredVariants.get(clampedIndex));
 
         int targetRow = clampedIndex / GRID_COLS;
+        int detW = getEffectiveDetW();
         int gridH = (this.dialogH - 30) - 16 - 18;
-        int cellSize = (this.detW - 8) / GRID_COLS;
+        int cellSize = (detW - 8) / GRID_COLS;
         int visibleRows = Math.max(1, (gridH - 4) / cellSize);
 
         if (targetRow < gridRowScroll) {
@@ -971,11 +1093,14 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        int vpW = getEffectiveVpW();
+        int detW = getEffectiveDetW();
+
         int vpX = this.left + 8;
         int vpY = this.top + 22;
         int vpH = this.dialogH - 30;
 
-        int detX = vpX + this.vpW + 6;
+        int detX = (displayMode == DisplayMode.HIDE_MODEL) ? vpX : vpX + vpW + 6;
         int detY = this.top + 22;
 
         String escHint = "[ESC] Close";
@@ -987,53 +1112,79 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             return true;
         }
 
-        int numTabs = 3;
-        int tabW = (this.detW - (numTabs - 1) * 2) / numTabs;
-        int tabH = 14;
-        for (int i = 0; i < numTabs; i++) {
-            int tabX = detX + (i * (tabW + 2));
-            if (button == 0 && mouseX >= tabX && mouseX < tabX + tabW && mouseY >= detY && mouseY < detY + tabH) {
-                this.activeTab = i;
-                this.detailsScrollOffset = 0;
-                updateSearchBoxVisibility();
-                recalculateMaxScroll();
+        // Check Expand Model Toggle Button
+        if (displayMode != DisplayMode.HIDE_MODEL && lastExpandModelBtnX != -1) {
+            if (button == 0 && mouseX >= lastExpandModelBtnX && mouseX <= lastExpandModelBtnX + lastExpandModelBtnW
+                    && mouseY >= lastExpandModelBtnY && mouseY <= lastExpandModelBtnY + lastExpandModelBtnH) {
+                setDisplayMode(displayMode == DisplayMode.MODEL_ONLY ? DisplayMode.NORMAL : DisplayMode.MODEL_ONLY);
                 return true;
             }
         }
 
-        if (activeTab == 2 && lastPlayerBtnX != -1) {
-            if (button == 0 && mouseX >= lastPlayerBtnX && mouseX <= lastPlayerBtnX + lastPlayerBtnW
-                    && mouseY >= lastPlayerBtnY && mouseY <= lastPlayerBtnY + lastPlayerBtnH) {
-                showPlayerChart = !showPlayerChart;
-                recalculateMaxScroll();
-                return true;
+        // Check Details Panel interactions
+        if (displayMode != DisplayMode.MODEL_ONLY && detW > 0) {
+            int numTabs = 3;
+            int tabW = (detW - (numTabs - 1) * 2) / numTabs;
+            int tabH = 14;
+            for (int i = 0; i < numTabs; i++) {
+                int tabX = detX + (i * (tabW + 2));
+                if (button == 0 && mouseX >= tabX && mouseX < tabX + tabW && mouseY >= detY && mouseY < detY + tabH) {
+                    this.activeTab = i;
+                    this.detailsScrollOffset = 0;
+                    if (displayMode == DisplayMode.HIDE_MODEL && activeTab != 1) {
+                        setDisplayMode(DisplayMode.NORMAL);
+                    } else {
+                        updateSearchBoxVisibility();
+                        recalculateMaxScroll();
+                    }
+                    return true;
+                }
+            }
+
+            if (activeTab == 1 && lastToggleLoreExpandBtnX != -1) {
+                if (button == 0 && mouseX >= lastToggleLoreExpandBtnX && mouseX <= lastToggleLoreExpandBtnX + lastToggleLoreExpandBtnW
+                        && mouseY >= lastToggleLoreExpandBtnY && mouseY <= lastToggleLoreExpandBtnY + lastToggleLoreExpandBtnH) {
+                    setDisplayMode(displayMode == DisplayMode.HIDE_MODEL ? DisplayMode.NORMAL : DisplayMode.HIDE_MODEL);
+                    return true;
+                }
+            }
+
+            if (activeTab == 2 && lastPlayerBtnX != -1) {
+                if (button == 0 && mouseX >= lastPlayerBtnX && mouseX <= lastPlayerBtnX + lastPlayerBtnW
+                        && mouseY >= lastPlayerBtnY && mouseY <= lastPlayerBtnY + lastPlayerBtnH) {
+                    showPlayerChart = !showPlayerChart;
+                    recalculateMaxScroll();
+                    return true;
+                }
             }
         }
 
-        if (mouseX >= vpX && mouseX <= vpX + this.vpW && mouseY >= vpY && mouseY <= vpY + vpH) {
-            if (button == 0) {
-                isDraggingModel = true;
-                return true;
-            } else if (button == 1 && currentEntity != null) {
-                currentEntity.setPose(currentEntity.getPose() == Pose.STANDING ? Pose.CROUCHING : Pose.STANDING);
-                return true;
+        // Check Viewport Drag / Interaction
+        if (displayMode != DisplayMode.HIDE_MODEL && vpW > 0) {
+            if (mouseX >= vpX && mouseX <= vpX + vpW && mouseY >= vpY && mouseY <= vpY + vpH) {
+                if (button == 0) {
+                    isDraggingModel = true;
+                    return true;
+                } else if (button == 1 && currentEntity != null) {
+                    currentEntity.setPose(currentEntity.getPose() == Pose.STANDING ? Pose.CROUCHING : Pose.STANDING);
+                    return true;
+                }
             }
         }
 
-        if (activeTab == 0) {
+        if (displayMode != DisplayMode.MODEL_ONLY && activeTab == 0) {
             int contentY = detY + 16;
             int gridY = contentY + 18;
             int gridH = (this.dialogH - 30) - 16 - 18;
 
             int totalCount = filteredVariants.size();
-            int cellSize = (this.detW - 8) / GRID_COLS;
+            int cellSize = (detW - 8) / GRID_COLS;
             int rows = (int) Math.ceil(totalCount / (double) GRID_COLS);
             int visibleRows = Math.max(1, (gridH - 4) / cellSize);
             int maxScroll = Math.max(0, rows - visibleRows);
 
-            // Check List Scrollbar Click
             if (rows > visibleRows && maxScroll > 0) {
-                int barX = detX + this.detW - 7;
+                int barX = detX + detW - 7;
                 int trackY = gridY + 3;
                 int trackH = gridH - 6;
                 int trackW = 4;
@@ -1056,7 +1207,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 }
             }
 
-            // Grid Cell Selection
             int firstIndex = gridRowScroll * GRID_COLS;
             for (int i = firstIndex; i < totalCount; i++) {
                 int row = i / GRID_COLS - gridRowScroll;
@@ -1072,13 +1222,12 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                     return true;
                 }
             }
-        } else {
-            // Details / Lore / Stats Scrollbar Click
+        } else if (displayMode != DisplayMode.MODEL_ONLY) {
             int contentY = detY + 16;
             int contentH = (this.dialogH - 30) - 16;
 
             if (maxDetailsScroll > 0) {
-                int barX = detX + this.detW - 7;
+                int barX = detX + detW - 7;
                 int trackY = contentY + 3;
                 int trackH = contentH - 6;
                 int trackW = 4;
@@ -1121,10 +1270,12 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             return true;
         }
 
-        if (isDraggingListScroll && activeTab == 0) {
+        int detW = getEffectiveDetW();
+
+        if (isDraggingListScroll && activeTab == 0 && displayMode != DisplayMode.MODEL_ONLY) {
             int gridH = (this.dialogH - 30) - 16 - 18;
             int totalCount = filteredVariants.size();
-            int cellSize = (this.detW - 8) / GRID_COLS;
+            int cellSize = (detW - 8) / GRID_COLS;
             int rows = (int) Math.ceil(totalCount / (double) GRID_COLS);
             int visibleRows = Math.max(1, (gridH - 4) / cellSize);
             int maxScroll = Math.max(0, rows - visibleRows);
@@ -1143,7 +1294,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             return true;
         }
 
-        if (isDraggingDetailsScroll && activeTab != 0) {
+        if (isDraggingDetailsScroll && activeTab != 0 && displayMode != DisplayMode.MODEL_ONLY) {
             int detY = this.top + 22 + 16;
             int detH = this.dialogH - 30 - 16;
             if (maxDetailsScroll > 0) {
@@ -1165,41 +1316,46 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        int vpW = getEffectiveVpW();
+        int detW = getEffectiveDetW();
+
         int vpX = this.left + 8;
         int vpY = this.top + 22;
         int vpH = this.dialogH - 30;
 
-        int detX = vpX + this.vpW + 6;
+        int detX = (displayMode == DisplayMode.HIDE_MODEL) ? vpX : vpX + vpW + 6;
         int detY = this.top + 22;
         int detH = this.dialogH - 30;
 
-        // Model Viewport Zoom
-        if (mouseX >= vpX && mouseX <= vpX + this.vpW && mouseY >= vpY && mouseY <= vpY + vpH) {
-            modelZoom = clamp(modelZoom + (float) (delta * 3.0), 20.0f, 95.0f);
-            return true;
+        if (displayMode != DisplayMode.HIDE_MODEL && vpW > 0) {
+            if (mouseX >= vpX && mouseX <= vpX + vpW && mouseY >= vpY && mouseY <= vpY + vpH) {
+                modelZoom = clamp(modelZoom + (float) (delta * 3.0), 20.0f, 95.0f);
+                return true;
+            }
         }
 
-        if (mouseX >= detX && mouseX <= detX + this.detW && mouseY >= detY && mouseY <= detY + detH) {
-            if (activeTab == 0) {
-                int gridH = detH - 16 - 18;
-                int rows = (int) Math.ceil(filteredVariants.size() / (double) GRID_COLS);
-                int cellSize = (this.detW - 8) / GRID_COLS;
-                int visibleRows = Math.max(1, (gridH - 4) / cellSize);
-                int maxScroll = Math.max(0, rows - visibleRows);
-                gridRowScroll = clamp(gridRowScroll - (int) Math.signum(delta), 0, maxScroll);
-                return true;
-            } else if (activeTab == 2 && lastChartCenterX != -1) {
-                double distEntity = Math.hypot(mouseX - lastChartCenterX, mouseY - lastChartCenterY);
-                if (distEntity <= lastChartRadius + 12) {
-                    chartScaleFactor = clamp(chartScaleFactor + (float) (delta * 0.15f), 0.4f, 3.0f);
+        if (displayMode != DisplayMode.MODEL_ONLY && detW > 0) {
+            if (mouseX >= detX && mouseX <= detX + detW && mouseY >= detY && mouseY <= detY + detH) {
+                if (activeTab == 0) {
+                    int gridH = detH - 16 - 18;
+                    int rows = (int) Math.ceil(filteredVariants.size() / (double) GRID_COLS);
+                    int cellSize = (detW - 8) / GRID_COLS;
+                    int visibleRows = Math.max(1, (gridH - 4) / cellSize);
+                    int maxScroll = Math.max(0, rows - visibleRows);
+                    gridRowScroll = clamp(gridRowScroll - (int) Math.signum(delta), 0, maxScroll);
+                    return true;
+                } else if (activeTab == 2 && lastChartCenterX != -1) {
+                    double distEntity = Math.hypot(mouseX - lastChartCenterX, mouseY - lastChartCenterY);
+                    if (distEntity <= lastChartRadius + 12) {
+                        chartScaleFactor = clamp(chartScaleFactor + (float) (delta * 0.15f), 0.4f, 3.0f);
+                        return true;
+                    }
+                }
+
+                if (maxDetailsScroll > 0) {
+                    detailsScrollOffset = clamp(detailsScrollOffset - (int) Math.signum(delta) * 12, 0, maxDetailsScroll);
                     return true;
                 }
-            }
-
-            // Default details scroll
-            if (maxDetailsScroll > 0) {
-                detailsScrollOffset = clamp(detailsScrollOffset - (int) Math.signum(delta) * 12, 0, maxDetailsScroll);
-                return true;
             }
         }
 
