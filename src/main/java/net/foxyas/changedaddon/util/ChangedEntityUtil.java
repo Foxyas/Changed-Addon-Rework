@@ -127,25 +127,24 @@ public class ChangedEntityUtil {
      * ------------------------------------------------------------ */
     public static List<Component> getEntitySubtitle(ChangedEntity changedEntity) {
         if (changedEntity.getSelfVariant() == null) {
-            return List.of(Component.literal("§7N/A"));
+            return List.of(Component.translatable("gui.changed_addon.bestiary.na"));
         }
 
         List<Component> subtitles = new ArrayList<>();
 
-        // Change "are a" to "is a" or use a cleaner "Species:" label
-        subtitles.add(Component.literal("§fClassification: "));
+        subtitles.add(Component.translatable("gui.changed_addon.bestiary.classification_prefix"));
 
         List<MutableComponent> species = new ArrayList<>();
 
-        if (isCatTransfur(changedEntity)) species.add(Component.literal("§fCat"));
-        if (isFoxTransfur(changedEntity)) species.add(Component.literal("§fFox"));
-        if (isWolfTransfur(changedEntity)) species.add(Component.literal("§fCanine"));
-        if (isDragonTransfur(changedEntity)) species.add(Component.literal("§fDragon"));
-        if (isAquaticTransfur(changedEntity)) species.add(Component.literal("§fFish"));
-        if (isSpiderTransfur(changedEntity)) species.add(Component.literal("§fSpider"));
+        if (isCatTransfur(changedEntity)) species.add(Component.translatable("gui.changed_addon.bestiary.species.cat"));
+        if (isFoxTransfur(changedEntity)) species.add(Component.translatable("gui.changed_addon.bestiary.species.fox"));
+        if (isWolfTransfur(changedEntity)) species.add(Component.translatable("gui.changed_addon.bestiary.species.canine"));
+        if (isDragonTransfur(changedEntity)) species.add(Component.translatable("gui.changed_addon.bestiary.species.dragon"));
+        if (isAquaticTransfur(changedEntity)) species.add(Component.translatable("gui.changed_addon.bestiary.species.fish"));
+        if (isSpiderTransfur(changedEntity)) species.add(Component.translatable("gui.changed_addon.bestiary.species.spider"));
 
         if (species.isEmpty()) {
-            species.add(Component.literal("§8Unknown"));
+            species.add(Component.translatable("gui.changed_addon.bestiary.unknown"));
         }
 
         // Joins the species (e.g., "Cat / Canine")
@@ -153,7 +152,7 @@ public class ChangedEntityUtil {
 
         // Special traits on a new line or added to the list
         if (isApexPredator(changedEntity)) {
-            subtitles.add(Component.literal("§6[Apex Predator]"));
+            subtitles.add(Component.translatable("gui.changed_addon.bestiary.trait.apex_predator"));
         }
 
         return subtitles;

@@ -1,11 +1,7 @@
 package net.foxyas.changedaddon.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.*;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.foxyas.changedaddon.util.GuiUtils;
@@ -13,6 +9,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -23,11 +20,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.joml.Matrix4f;
@@ -91,7 +84,10 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     private float modelYaw = 25.0f;
     private float modelPitch = 0.0f;
     private float modelZoom = 52.0f;
+    private float modelOffsetX = 0.0f;
+    private float modelOffsetY = 0.0f;
     private boolean isDraggingModel = false;
+    private boolean isDraggingModelOffset = false;
 
     // Details Bar Chart & Lore Data
     private int detailsScrollOffset = 0;
@@ -125,7 +121,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     private int lastToggleLoreExpandBtnH = 12;
 
     public ComplexBestiaryScreen() {
-        super(Component.literal("Bestiary"));
+        super(Component.translatable("gui.changed_addon.bestiary.title"));
     }
 
     private int getAvailableInnerWidth() {
@@ -169,8 +165,8 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
 
         // Search Box Configuration
-        this.searchBox = new EditBox(this.font, 0, 0, 10, 14, Component.literal("Search"));
-        this.searchBox.setHint(Component.literal("§7Search entity..."));
+        this.searchBox = new EditBox(this.font, 0, 0, 10, 14, Component.translatable("gui.changed_addon.bestiary.search"));
+        this.searchBox.setHint(Component.translatable("gui.changed_addon.bestiary.search.hint"));
         this.searchBox.setResponder(s -> updateFilteredVariants());
         this.searchBox.setMaxLength(32);
         this.searchBox.setFocused(false);
@@ -230,13 +226,17 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         this.gridRowScroll = 0;
     }
 
-    private String getVariantDisplayName(TransfurVariant<?> tf) {
-        if (tf == null) return "Unknown";
+    private Component getVariantDisplayNameComponent(TransfurVariant<?> tf) {
+        if (tf == null) return Component.translatable("gui.changed_addon.bestiary.unknown");
         EntityType<?> type = tf.getEntityType();
         if (type != null) {
-            return Component.translatable(type.getDescriptionId()).getString();
+            return Component.translatable(type.getDescriptionId());
         }
-        return tf.getFormId().getPath();
+        return Component.literal(tf.getFormId().getPath());
+    }
+
+    private String getVariantDisplayName(TransfurVariant<?> tf) {
+        return getVariantDisplayNameComponent(tf).getString();
     }
 
     @Override
@@ -307,13 +307,14 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                     .toList();
             for (IBestiaryEntityData.BestiaryInfo info : infos) {
                 String titleStr = info.title().getString();
-                if (titleStr.equalsIgnoreCase("Attributes")) continue;
+                if (titleStr.equalsIgnoreCase("Attributes") || titleStr.equalsIgnoreCase(Component.translatable("gui.changed_addon.bestiary.attributes").getString()))
+                    continue;
 
-                if (titleStr.equalsIgnoreCase("Classification") || titleStr.toLowerCase().contains("class")) {
+                if (titleStr.equalsIgnoreCase("Classification") || titleStr.toLowerCase().contains("class") || titleStr.equalsIgnoreCase(Component.translatable("gui.changed_addon.bestiary.classification").getString())) {
                     classificationText = info.description().getString();
                 } else {
                     loreLines.addAll(this.font.split(
-                            Component.literal("§e" + titleStr + ": ").append(info.description()), textWrapWidth));
+                            Component.literal("§e").append(info.title()).append(": ").append(info.description()), textWrapWidth));
                 }
             }
         }
@@ -335,19 +336,19 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
 
         if (loreLines.isEmpty()) {
-            loreLines.addAll(this.font.split(Component.literal("§7Standard facility bio-archive record."), textWrapWidth));
+            loreLines.addAll(this.font.split(Component.translatable("gui.changed_addon.bestiary.lore.fallback"), textWrapWidth));
         }
 
         AttributeSupplier playerDefaults = DefaultAttributes.getSupplier(EntityType.PLAYER);
         AttributeMap transformedMap = entity.getAttributes();
 
-        checkAndAddBar(transformedMap, playerDefaults, Attributes.MAX_HEALTH, "Health", 60.0f, 0xFFFF4444, 0xFFFF7777);
-        checkAndAddBar(transformedMap, playerDefaults, Attributes.ARMOR, "Armor", 20.0f, 0xFF55FFFF, 0xFFAAFFFF);
-        checkAndAddBar(transformedMap, playerDefaults, Attributes.MOVEMENT_SPEED, "Speed", 0.20f, 0xFF55FF55, 0xFFAAFFAA);
-        checkAndAddBar(transformedMap, playerDefaults, Attributes.ATTACK_DAMAGE, "Attack", 16.0f, 0xFFFFAA00, 0xFFFFDD55);
-        checkAndAddBar(transformedMap, playerDefaults, Attributes.ARMOR_TOUGHNESS, "Toughness", 12.0f, 0xFF88AAFF, 0xFFBBDDFF);
-        checkAndAddBar(transformedMap, playerDefaults, Attributes.KNOCKBACK_RESISTANCE, "Knockback Res", 1.0f, 0xFFCC66FF, 0xFFEE99FF);
-        checkAndAddBar(transformedMap, playerDefaults, Attributes.FOLLOW_RANGE, "Follow Range", 48.0f, 0xFFBBAA88, 0xFFDDCCAA);
+        checkAndAddBar(transformedMap, playerDefaults, Attributes.MAX_HEALTH, Component.translatable(Attributes.MAX_HEALTH.getDescriptionId()), 60.0f, 0xFFFF4444, 0xFFFF7777);
+        checkAndAddBar(transformedMap, playerDefaults, Attributes.ARMOR, Component.translatable(Attributes.ARMOR.getDescriptionId()), 20.0f, 0xFF55FFFF, 0xFFAAFFFF);
+        checkAndAddBar(transformedMap, playerDefaults, Attributes.MOVEMENT_SPEED, Component.translatable(Attributes.MOVEMENT_SPEED.getDescriptionId()), 0.20f, 0xFF55FF55, 0xFFAAFFAA);
+        checkAndAddBar(transformedMap, playerDefaults, Attributes.ATTACK_DAMAGE, Component.translatable(Attributes.ATTACK_DAMAGE.getDescriptionId()), 16.0f, 0xFFFFAA00, 0xFFFFDD55);
+        checkAndAddBar(transformedMap, playerDefaults, Attributes.ARMOR_TOUGHNESS, Component.translatable(Attributes.ARMOR_TOUGHNESS.getDescriptionId()), 12.0f, 0xFF88AAFF, 0xFFBBDDFF);
+        checkAndAddBar(transformedMap, playerDefaults, Attributes.KNOCKBACK_RESISTANCE, Component.translatable(Attributes.KNOCKBACK_RESISTANCE.getDescriptionId()), 1.0f, 0xFFCC66FF, 0xFFEE99FF);
+        checkAndAddBar(transformedMap, playerDefaults, Attributes.FOLLOW_RANGE, Component.translatable(Attributes.FOLLOW_RANGE.getDescriptionId()), 48.0f, 0xFFBBAA88, 0xFFDDCCAA);
 
         recalculateMaxScroll();
     }
@@ -369,7 +370,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     }
 
     private void checkAndAddBar(AttributeMap map, AttributeSupplier playerDefaults,
-                                Attribute attr, String label, float maxScale, int fillColor, int highlightColor) {
+                                Attribute attr, Component label, float maxScale, int fillColor, int highlightColor) {
         if (!map.hasAttribute(attr)) return;
 
         double value = map.getValue(attr);
@@ -410,9 +411,9 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         graphics.fill(0, 0, this.width, this.height, 0x70000000);
 
         renderVanillaContainerFrame(graphics, this.left, this.top, this.dialogW, this.dialogH);
-        graphics.drawString(this.font, Component.literal("§6§lChanged Addon §r§7- Bestiary"), this.left + 10, this.top + 7, 0xFFFFFF);
+        graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.header"), this.left + 10, this.top + 7, 0xFFFFFF);
 
-        String escHint = "[ESC] Close";
+        Component escHint = Component.translatable("gui.changed_addon.bestiary.esc_close");
         int escW = this.font.width(escHint);
         int escX = this.left + this.dialogW - escW - 10;
         int escY = this.top + 7;
@@ -430,12 +431,10 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         int detY = this.top + 22;
         int detH = this.dialogH - 30;
 
-        // Render Model Viewport if not hidden
         if (displayMode != DisplayMode.HIDE_MODEL && vpW > 0) {
             renderModelViewport(graphics, vpX, vpY, vpW, vpH, mouseX, mouseY, partialTick);
         }
 
-        // Render Details Panel if not model only
         if (displayMode != DisplayMode.MODEL_ONLY && detW > 0) {
             renderDetailsTabs(graphics, detX, detY, detW, mouseX, mouseY);
 
@@ -480,7 +479,11 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         int tabW = (w - (numTabs - 1) * 2) / numTabs;
         int tabH = 14;
 
-        String[] titles = {"🔍 Entities", "📜 Lore", "📊 Stats"};
+        Component[] titles = {
+                Component.translatable("gui.changed_addon.bestiary.tab.entities"),
+                Component.translatable("gui.changed_addon.bestiary.tab.lore"),
+                Component.translatable("gui.changed_addon.bestiary.tab.stats")
+        };
 
         for (int i = 0; i < numTabs; i++) {
             int tabX = x + (i * (tabW + 2));
@@ -493,7 +496,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             graphics.fill(tabX, y, tabX + tabW, y + tabH, bg);
             graphics.renderOutline(tabX, y, tabW, tabH, border);
 
-            String title = titles[i];
+            Component title = titles[i];
             int titleW = this.font.width(title);
             int textColor = isActive ? 0xFFFFAA : (isHovered ? 0xFFE0E0E0 : 0x888888);
             graphics.drawString(this.font, title, tabX + (tabW - titleW) / 2, y + 3, textColor, false);
@@ -574,7 +577,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
 
         if (hoveredTf != null) {
-            graphics.renderTooltip(this.font, Component.literal(getVariantDisplayName(hoveredTf)), mouseX, mouseY);
+            graphics.renderTooltip(this.font, getVariantDisplayNameComponent(hoveredTf), mouseX, mouseY);
         }
     }
 
@@ -666,8 +669,8 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         graphics.drawString(this.font, btnSymbol, btnX + (btnW - symW) / 2, btnY + 2, isModelOnly ? 0x55FF55 : (isBtnHovered ? 0xFFFFFF : 0xAAAAAA), false);
 
         if (isBtnHovered) {
-            String tooltip = isModelOnly ? "Restore Split View" : "Expand Model View";
-            graphics.renderTooltip(this.font, Component.literal(tooltip), mouseX, mouseY);
+            Component tooltip = Component.translatable(isModelOnly ? "gui.changed_addon.bestiary.button.restore_split" : "gui.changed_addon.bestiary.button.expand_model");
+            graphics.renderTooltip(this.font, tooltip, mouseX, mouseY);
         }
 
         if (this.currentEntity != null) {
@@ -678,7 +681,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             graphics.fill(centerX - 18, centerY - 3, centerX + 18, centerY + 4, 0x33000000);
 
             if (!this.isUnlocked) {
-                graphics.drawString(this.font, "§c§l[LOCKED]", centerX - 24, y + 8, 0xFF5555, false);
+                graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.locked"), centerX - 24, y + 8, 0xFF5555, false);
             }
 
             float oldYBodyRot = this.currentEntity.yBodyRot;
@@ -693,16 +696,32 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             this.currentEntity.yHeadRot = 180.0f;
             this.currentEntity.yHeadRotO = 180.0f;
 
+            // Upright Quaternion: rotateZ by PI flips GUI inverted Y right-side up!
             Quaternionf pose = new Quaternionf()
                     .rotateZ((float) Math.PI)
                     .rotateX(modelPitch * ((float) Math.PI / 180.0f))
                     .rotateY(modelYaw * ((float) Math.PI / 180.0f));
 
+            boolean scissored = false;
+            if (w > 4 && h > 4) {
+                graphics.enableScissor(x + 2, y + 2, x + w - 2, y + h - 2);
+                scissored = true;
+            }
+
             try {
-                InventoryScreen.renderEntityInInventory(graphics, centerX, centerY, (int) modelZoom, pose, null, this.currentEntity);
+                int modelCenterX = centerX + (int) modelOffsetX;
+                int modelCenterY = centerY + (int) modelOffsetY;
+                graphics.pose().pushPose();
+                graphics.pose().translate(0, 0, 50);
+                InventoryScreen.renderEntityInInventory(graphics, modelCenterX, modelCenterY, (int) modelZoom, pose, null, this.currentEntity);
+                graphics.pose().popPose();
             } catch (Exception e) {
-                graphics.drawString(this.font, "§cRender Error", centerX - 28, centerY - 10, 0xFF5555, false);
+                graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.render_error"), centerX - 28, centerY - 10, 0xFF5555, false);
             } finally {
+                if (scissored) {
+                    graphics.disableScissor();
+                }
+                // Restore old rotations
                 this.currentEntity.yBodyRot = oldYBodyRot;
                 this.currentEntity.setYRot(oldYRot);
                 this.currentEntity.setXRot(oldXRot);
@@ -710,15 +729,15 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 this.currentEntity.yHeadRotO = oldYHeadRotO;
             }
         } else {
-            graphics.drawString(this.font, "§7No model", x + w / 2 - 24, y + h / 2 - 4, 0x777777, false);
+            graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.no_model"), x + w / 2 - 24, y + h / 2 - 4, 0x777777, false);
         }
 
-        String hint = "§8[Drag: Rotate | Scroll: Zoom]";
+        Component hint = Component.translatable("gui.changed_addon.bestiary.model_hint");
         int hintW = this.font.width(hint);
         float hintScale = 0.75f;
         PoseStack pose = graphics.pose();
         pose.pushPose();
-        pose.translate(x + (w - (int)(hintW * hintScale)) / 2.0, y + h - 9, 0.0);
+        pose.translate(x + (w - (int) (hintW * hintScale)) / 2.0, y + h - 9, 0.0);
         pose.scale(hintScale, hintScale, 1.0f);
         graphics.drawString(this.font, hint, 0, 0, 0x888888, false);
         pose.popPose();
@@ -737,14 +756,12 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         try {
             int curY = y + 5 - detailsScrollOffset;
 
-            String name = getVariantDisplayName(this.selected);
-            graphics.drawString(this.font, "§e§l" + name, x + 6, curY, 0xFFFF55, false);
+            Component name = getVariantDisplayNameComponent(this.selected);
+            graphics.drawString(this.font, Component.literal("§e§l").append(name), x + 6, curY, 0xFFFF55, false);
             curY += 12;
 
             if (!classificationText.isEmpty()) {
-                String classDisplay = classificationText.startsWith("Classification:")
-                        ? "§7" + classificationText
-                        : "§7Classification: " + classificationText;
+                Component classDisplay = Component.translatable("gui.changed_addon.bestiary.lore.classification", classificationText);
                 graphics.drawString(this.font, classDisplay, x + 6, curY, 0xAAAAAA, false);
                 curY += 11;
             }
@@ -752,7 +769,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             graphics.fill(x + 5, curY, x + w - 5, curY + 1, 0xFF353540);
             curY += 5;
 
-            graphics.drawString(this.font, "§6[Archive Dossier]", x + 6, curY, 0xFFAA00, false);
+            graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.lore.dossier_header"), x + 6, curY, 0xFFAA00, false);
 
             // Toggle Expand Lore Button (Model Hidder)
             int btnW = 85;
@@ -774,7 +791,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             graphics.fill(btnX, btnY, btnX + btnW, btnY + btnH, btnBg);
             graphics.renderOutline(btnX, btnY, btnW, btnH, btnBorder);
 
-            String btnText = isHideModel ? "[◀] Show Model" : "[↔] Expand Text";
+            Component btnText = Component.translatable(isHideModel ? "gui.changed_addon.bestiary.button.show_model" : "gui.changed_addon.bestiary.button.expand_text");
             int textW = this.font.width(btnText);
             int textY = btnY + (btnH - 8) / 2;
             graphics.drawString(this.font, btnText, btnX + (btnW - textW) / 2, textY, isHideModel ? 0x55FF55 : (isBtnHovered ? 0xFFFFFF : 0xAAAAAA), false);
@@ -807,7 +824,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         try {
             int curY = y + 5 - detailsScrollOffset;
 
-            graphics.drawString(this.font, "§a[Attribute Sheet]", x + 6, curY, 0x55FF55, false);
+            graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.attribute_sheet_header"), x + 6, curY, 0x55FF55, false);
             curY += 14;
 
             int barW = w - 16;
@@ -835,7 +852,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 graphics.fill(x + 5, curY, x + w - 5, curY + 1, 0xFF353540);
                 curY += 10;
 
-                graphics.drawString(this.font, "§b[Entity Radar Chart]", x + 6, curY, 0x55FFFF, false);
+                graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.radar_chart_header"), x + 6, curY, 0x55FFFF, false);
 
                 // Toggle Button for Player Chart Overlay
                 int btnW = 92;
@@ -855,14 +872,14 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 graphics.fill(btnX, btnY, btnX + btnW, btnY + btnH, btnBg);
                 graphics.renderOutline(btnX, btnY, btnW, btnH, btnBorder);
 
-                String btnText = showPlayerChart ? "[X] Player Overlay" : "[+] Player Overlay";
+                Component btnText = Component.translatable(showPlayerChart ? "gui.changed_addon.bestiary.button.hide_player_overlay" : "gui.changed_addon.bestiary.button.show_player_overlay");
                 int textW = this.font.width(btnText);
                 int textY = btnY + (btnH - 8) / 2;
                 graphics.drawString(this.font, btnText, btnX + (btnW - textW) / 2, textY, showPlayerChart ? 0x55FF55 : (isBtnHovered ? 0xFFFFFF : 0xAAAAAA), false);
 
                 curY += 14;
 
-                String scaleStr = String.format(Locale.ROOT, "§8Scale: %.1fx", chartScaleFactor);
+                Component scaleStr = Component.translatable("gui.changed_addon.bestiary.scale", String.format(Locale.ROOT, "%.1f", chartScaleFactor));
                 int scaleW = this.font.width(scaleStr);
                 graphics.drawString(this.font, scaleStr, x + w - scaleW - 10, curY, 0x888888, false);
 
@@ -1016,10 +1033,10 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
             if (isHovered) {
                 List<Component> tooltip = new ArrayList<>();
-                tooltip.add(Component.literal("§e" + entityBar.label));
-                tooltip.add(Component.literal("§7Entity: §f" + entityBar.valueText));
+                tooltip.add(entityBar.label.copy().withStyle(ChatFormatting.YELLOW));
+                tooltip.add(Component.translatable("gui.changed_addon.bestiary.radar.entity_val", entityBar.valueText));
                 if (playerBars != null && i < playerBars.size()) {
-                    tooltip.add(Component.literal("§3Player: §f" + playerBars.get(i).valueText));
+                    tooltip.add(Component.translatable("gui.changed_addon.bestiary.radar.player_val", playerBars.get(i).valueText));
                 }
                 graphics.renderComponentTooltip(this.font, tooltip, mouseX, mouseY);
             }
@@ -1103,7 +1120,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         int detX = (displayMode == DisplayMode.HIDE_MODEL) ? vpX : vpX + vpW + 6;
         int detY = this.top + 22;
 
-        String escHint = "[ESC] Close";
+        Component escHint = Component.translatable("gui.changed_addon.bestiary.esc_close");
         int escW = this.font.width(escHint);
         int escX = this.left + this.dialogW - escW - 10;
         int escY = this.top + 7;
@@ -1169,6 +1186,11 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                     currentEntity.setPose(currentEntity.getPose() == Pose.STANDING ? Pose.CROUCHING : Pose.STANDING);
                     return true;
                 }
+                // Todo: Need some kind of zoom rework
+                /*else if (button == 2) {
+                    isDraggingModelOffset = true;
+                    return true;
+                }*/
             }
         }
 
@@ -1257,6 +1279,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         isDraggingModel = false;
+        isDraggingModelOffset = false;
         isDraggingListScroll = false;
         isDraggingDetailsScroll = false;
         return super.mouseReleased(mouseX, mouseY, button);
@@ -1267,6 +1290,16 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         if (isDraggingModel) {
             modelYaw += (float) (dragX * 1.5);
             modelPitch = clamp(modelPitch - (float) (dragY * 1.5), -45.0f, 45.0f);
+            return true;
+        }
+
+        if (isDraggingModelOffset) {
+            int vpW = getEffectiveVpW();
+            int vpH = this.dialogH - 30;
+            float maxOffsetX = vpW / 2.0f;
+            float maxOffsetY = vpH / 2.0f;
+            modelOffsetX = clamp(modelOffsetX + (float) dragX, -maxOffsetX, maxOffsetX);
+            modelOffsetY = clamp(modelOffsetY + (float) dragY, -maxOffsetY, maxOffsetY);
             return true;
         }
 
@@ -1368,13 +1401,13 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     }
 
     private static class AttributeBarItem {
-        final String label;
+        final Component label;
         final String valueText;
         final float ratio;
         final int fillColor;
         final int highlightColor;
 
-        AttributeBarItem(String label, String valueText, float ratio, int fillColor, int highlightColor) {
+        AttributeBarItem(Component label, String valueText, float ratio, int fillColor, int highlightColor) {
             this.label = label;
             this.valueText = valueText;
             this.ratio = ratio;
