@@ -127,7 +127,7 @@ public class HULanguageProvider extends LanguageProvider {
         addAttribute(ChangedAddonAttributes.LATEX_INFECTION, "Latexellenállás");
         addAttribute(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER, "Latexoldás sebzésének szorzója");
         addAttribute(ChangedAddonAttributes.CUTENESS, "Cukiság");
-        //addAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE, "Alfa mérete");
+        addAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE, "Alfa mérete");
 
         addBlock(ADVANCED_CATALYZER, "Fejlett katalizátor");
         addBlock(ADVANCED_UNIFUSER, "Fejlett unifúzor");
