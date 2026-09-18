@@ -80,13 +80,7 @@ public interface IVariantExtraStats {
         return true;
     }
 
-    default int cutenessLevel() {
-        if (this instanceof LivingEntity livingEntity) {
-            MobEffectInstance effect = livingEntity.getEffect(ChangedAddonMobEffects.PACIFIED.get());
-            if (effect != null) {
-                return effect.getAmplifier();
-            }
-        }
+    default float getDefaultCutenessLevel() {
         return 0;
     }
 

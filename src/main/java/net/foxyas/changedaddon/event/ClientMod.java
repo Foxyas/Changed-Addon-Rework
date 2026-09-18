@@ -2,10 +2,12 @@ package net.foxyas.changedaddon.event;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.*;
+import net.foxyas.changedaddon.client.model.animations.ChangedAddonLimbExtensions;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonMenus;
 import net.foxyas.changedaddon.item.tooltip.ClientTransfurTotemTooltipComponent;
 import net.foxyas.changedaddon.item.tooltip.TransfurTotemTooltipComponent;
+import net.ltxprogrammer.changed.client.animations.LimbExtensions.GatherExtensionsEvent;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
@@ -44,6 +46,11 @@ public class ClientMod {
             MenuScreens.register(ChangedAddonMenus.TAMED_LATEX.get(), TamedLatexScreen::new);
             MenuScreens.register(ChangedAddonMenus.TAMED_LATEX_INVENTORY.get(), TamedLatexInventoryScreen::new);
         });
+    }
+
+    @SubscribeEvent
+    public static void gatherMoreLimbExtensions(GatherExtensionsEvent extensionsEvent) {
+        ChangedAddonLimbExtensions.EXTENSIONS.forEach(extensionsEvent::addLimbExtension);
     }
 
     @SubscribeEvent

@@ -145,9 +145,9 @@ dependencies {
         changing = true
     }//Changed
 
-    //implementation fg.deobf("net.parkabird.changedsynergy:ChangedSynergy-m1.20.1-v0.1.1-beta.1-all:0.1.1-beta.1") {
-    //    changing = true
-    //}//Changed
+    compileOnly fg.deobf("net.parkabird.changedsynergy:ChangedSynergy-m1.20.1-v0.1.1-beta.1-all:0.1.1-beta.1") {
+        changing = true
+    }//Changed
 
     //implementation fg.deobf("net.zaharenko424.casualties_cubed:casualties_cubed-1.3.0-all:1.3.0")
     implementation fg.deobf("curse.maven:casualties-cubed-1539563:8886924")

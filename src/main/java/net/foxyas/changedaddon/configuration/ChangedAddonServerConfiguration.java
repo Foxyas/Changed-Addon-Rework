@@ -42,6 +42,8 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> STOP_TRANSFURRED_PLAYERS_USE_BOWS;
     public static final ForgeConfigSpec.ConfigValue<Boolean> STOP_TRANSFURRED_PLAYERS_USE_GUNS;
 
+    public static final ForgeConfigSpec.ConfigValue<Float> CUTENESS_LEVEL_NEEDED_TO_RECEIVE_PATS_FROM_VILLAGERS;
+
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -142,7 +144,9 @@ public class ChangedAddonServerConfiguration {
                     .comment("Can transfurred Players use guns? [Only Compatible with TACZ and Just Enough Guns mod at this moment]")
                     .define("Stop Transfurred Players to Use Guns", false);
 
-            // TODO: COMPATIBILITY EVENTS CHECKS FOR THIS
+            CUTENESS_LEVEL_NEEDED_TO_RECEIVE_PATS_FROM_VILLAGERS = BUILDER
+                    .comment("The minimum cuteness level required for a player or entity to be patted by villagers.")
+                    .define("Cuteness Level For Villager Headpats", 5.0f);
         }
         BUILDER.pop();
 

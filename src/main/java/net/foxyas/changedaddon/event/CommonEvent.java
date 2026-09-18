@@ -29,6 +29,7 @@ import net.ltxprogrammer.changed.entity.SeatEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedItems;
@@ -49,7 +50,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.ai.gossip.GossipType;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
@@ -67,10 +71,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.VanillaGameEvent;
-import net.minecraftforge.event.entity.living.LivingBreatheEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -82,6 +83,7 @@ import net.minecraftforge.network.PacketDistributor;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal.hasValidAlphaSleepGoal;
 import static net.foxyas.changedaddon.event.TransfurEvents.resolveChangedEntity;
@@ -94,6 +96,55 @@ public class CommonEvent {
     //    @SubscribeEvent
     //    public static void addCustomDefaultAnimators(HumanoidAnimator.GatherAnimatorsEvent<ChangedEntity, AdvancedHumanoidModel<ChangedEntity>> event) {
     //    }
+
+    @SubscribeEvent
+    public static void onEntityTick(LivingEvent.LivingTickEvent event) {
+        double DETECT_RADIUS = 8.0D;
+        double MIN_CUTENESS_THRESHOLD = 5.0D;
+
+        LivingEntity entity = event.getEntity();
+
+        // Run on server side only and throttle execution to once every second (20 ticks)
+        if (entity.level().isClientSide() || entity.tickCount % 20 != 0) return;
+
+        // Verify entity has the Cuteness attribute and meets the required level
+        AttributeInstance cutenessAttr = entity.getAttribute(ChangedAddonAttributes.CUTENESS.get());
+        if (cutenessAttr == null || cutenessAttr.getValue() < MIN_CUTENESS_THRESHOLD) return;
+
+        // Search for nearby villagers
+        AABB area = entity.getBoundingBox().inflate(DETECT_RADIUS);
+        List<Villager> nearbyVillagers = entity.level().getEntitiesOfClass(Villager.class, area);
+
+        if (nearbyVillagers.isEmpty()) return;
+
+        for (Villager villager : nearbyVillagers) {
+            // Threat Check: Skip if entity is hostile or scaring the villager
+            if (isThreatToVillager(villager, entity)) continue;
+
+            // Add Positive Gossip towards this entity
+            villager.getGossips().add(
+                    entity.getUUID(),          // Target entity UUID
+                    GossipType.MINOR_POSITIVE, // Gossip Type (MINOR_POSITIVE / MAJOR_POSITIVE)
+                    5                          // Gossip Weight / Amount (Cap is usually 25 per type)
+            );
+        }
+    }
+
+    private static boolean isThreatToVillager(Villager villager, LivingEntity entity) {
+        // Check standard combat aggro
+        if (villager.getLastHurtByMob() == entity || entity.getLastHurtByMob() == villager) {
+            return true;
+        }
+
+        // Check if entity is a scaring TransfurVariant
+        Optional<IAbstractChangedEntity> optional = IAbstractChangedEntity.forEitherSafe(entity);
+        if (optional.isPresent()) {
+            ChangedEntity changedEntity = optional.get().getChangedEntity();
+            return TransfurVariant.shouldScareVillager(changedEntity, villager);
+        }
+
+        return false;
+    }
 
     @SubscribeEvent
     public static void makeEntitiesUnableToBreathWhenBeingChoked(LivingBreatheEvent event) {

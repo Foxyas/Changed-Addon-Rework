@@ -15,7 +15,6 @@
     "defaultRequire": 1
   },
   "client": [
-    "client.renderer.DebugRendererMixin",
     "mods.casualtiesCubed.AdvancedHumanoidModelMixin",
     "mods.firstPerson.LogicHandleMixin",
     "mods.vivecraft.AdvancedHumanoidModelMixin",

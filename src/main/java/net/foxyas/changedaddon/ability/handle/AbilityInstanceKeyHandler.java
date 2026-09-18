@@ -19,6 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.List;
 import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -149,7 +150,11 @@ public class AbilityInstanceKeyHandler {
         Optional<Integer> sectionAt = abilityRadialScreen.getSectionAt(mouseX, mouseY);
         if (sectionAt.isEmpty()) return;
 
-        AbstractAbility<?> ability = abilityRadialScreen.abilities.get(sectionAt.get());
+        List<AbstractAbility<?>> abilities = abilityRadialScreen.abilities;
+        int abilitiesSize = abilities.size() - 1;
+        if (sectionAt.get() > abilitiesSize) return;
+
+        AbstractAbility<?> ability = abilities.get(sectionAt.get());
 
         ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent(variantInstance -> {
             AbstractAbilityInstance abilityInstance = variantInstance.getAbilityInstance(ability);
@@ -171,7 +176,11 @@ public class AbilityInstanceKeyHandler {
         Optional<Integer> sectionAt = abilityRadialScreen.getSectionAt(mouseX, mouseY);
         if (sectionAt.isEmpty()) return;
 
-        AbstractAbility<?> ability = abilityRadialScreen.abilities.get(sectionAt.get());
+        List<AbstractAbility<?>> abilities = abilityRadialScreen.abilities;
+        int abilitiesSize = abilities.size() - 1;
+        if (sectionAt.get() > abilitiesSize) return;
+
+        AbstractAbility<?> ability = abilities.get(sectionAt.get());
 
         ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent(variantInstance -> {
             AbstractAbilityInstance abilityInstance = variantInstance.getAbilityInstance(ability);
