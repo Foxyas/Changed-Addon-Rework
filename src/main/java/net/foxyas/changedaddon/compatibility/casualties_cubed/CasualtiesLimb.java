@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.compatibility.casualities_cubed;
+package net.foxyas.changedaddon.compatibility.casualties_cubed;
 
 import net.zaharenko424.casualties_cubed.limbs.Limb;
 

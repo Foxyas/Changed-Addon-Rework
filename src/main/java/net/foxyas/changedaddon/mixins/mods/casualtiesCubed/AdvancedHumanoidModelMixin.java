@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins.mods.casualtiesCubed;
 
-import net.foxyas.changedaddon.compatibility.casualities_cubed.LimbMapper;
+import net.foxyas.changedaddon.compatibility.casualties_cubed.LimbMapper;
 import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.client.animations.ModelPartIdentifier;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
