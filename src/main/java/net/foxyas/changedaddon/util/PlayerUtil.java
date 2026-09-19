@@ -69,9 +69,9 @@ public class PlayerUtil {
 
     public static boolean canTurnCuddleModeOn(Player player) {
         // Verifica se o jogador é a entidade variante agarrando alguém
-        Optional<IAbstractChangedEntity> optionalPlayerVariant = IAbstractChangedEntity.forEitherSafe(player);
-        if (optionalPlayerVariant.isPresent()) {
-            IAbstractChangedEntity playerVariant = optionalPlayerVariant.get();
+        Optional<IAbstractChangedEntity> playerGrabber = IAbstractChangedEntity.forEitherSafe(player);
+        if (playerGrabber.isPresent()) {
+            IAbstractChangedEntity playerVariant = playerGrabber.get();
             GrabEntityAbilityInstance grabEntityAbilityInstance = playerVariant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
             if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
                 return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null && !grabEntityAbilityInstance.suited;
@@ -79,9 +79,9 @@ public class PlayerUtil {
         }
 
         // Verifica se o jogador está a ser agarrado
-        Optional<IAbstractChangedEntity> grabberSafe = IAbstractChangedEntity.forEitherSafe(getCuddlerFrom(player)); //  GrabEntityAbility.getGrabberSafe(player);
-        if (grabberSafe.isPresent()) {
-            IAbstractChangedEntity grabber = grabberSafe.get();
+        Optional<IAbstractChangedEntity> grabberFromPlayerSafe = IAbstractChangedEntity.forEitherSafe(getCuddlerFrom(player)); //  GrabEntityAbility.getGrabberSafe(player);
+        if (grabberFromPlayerSafe.isPresent()) {
+            IAbstractChangedEntity grabber = grabberFromPlayerSafe.get();
             GrabEntityAbilityInstance grabEntityAbilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
             if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
                 return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity == player && !grabEntityAbilityInstance.suited;
