@@ -189,7 +189,7 @@ public class CommonEvent {
         ItemStack itemStack = event.getItem();
         LivingEntity entity = event.getEntity();
 
-        // Verificamos se é um Player (pois LivingEntity inclui mobs)
+        // Verificamos se é um ‘Player’ (pois LivingEntity inclui mobs)
         if (!(entity instanceof Player player)) {
             return;
         }
@@ -270,6 +270,12 @@ public class CommonEvent {
             playerVariables.syncPlayerVariables(sleeper);
             sleeper.displayClientMessage(Component.translatable("text.changed_addon.invalid_cuddle_state"), true);
             return;
+        } else {
+            LivingEntity cuddler = PlayerUtil.getCuddlerFrom(sleeper);
+            if (cuddler != null && sleeper.tickCount % 260 == 0) {
+                sleeper.heal(0.05f);
+                cuddler.heal(0.05f);
+            }
         }
 
         LivingEntityDataExtensor ext = LivingEntityDataExtensor.ofEntity(sleeper);

@@ -39,6 +39,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
@@ -78,7 +79,7 @@ public class PlayerUtil {
         }
 
         // Verifica se o jogador está a ser agarrado
-        Optional<IAbstractChangedEntity> grabberSafe = GrabEntityAbility.getGrabberSafe(player);
+        Optional<IAbstractChangedEntity> grabberSafe = IAbstractChangedEntity.forEitherSafe(getCuddlerFrom(player)); //  GrabEntityAbility.getGrabberSafe(player);
         if (grabberSafe.isPresent()) {
             IAbstractChangedEntity grabber = grabberSafe.get();
             GrabEntityAbilityInstance grabEntityAbilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
@@ -88,6 +89,18 @@ public class PlayerUtil {
         }
 
         return false;
+    }
+
+    public static @Nullable LivingEntity getCuddlerFrom(Player player) {
+        Optional<IAbstractChangedEntity> grabberSafe = GrabEntityAbility.getGrabberSafe(player);
+        if (grabberSafe.isPresent()) {
+            IAbstractChangedEntity grabber = grabberSafe.get();
+            GrabEntityAbilityInstance grabEntityAbilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
+                return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity == player ? grabber.getEntity() : null;
+            }
+        }
+        return null;
     }
 
     public static boolean isCuddleStateValidForBed(Player player) {
@@ -158,7 +171,8 @@ public class PlayerUtil {
         if (player.level.isClientSide()) return;
 
         ProcessTransfur.ifPlayerTransfurred(player, (instance) -> {
-            UntransfurPlayerEvent untransfurEvent = new UntransfurPlayerEvent(player, instance, null) {};
+            UntransfurPlayerEvent untransfurEvent = new UntransfurPlayerEvent(player, instance, null) {
+            };
             if (ChangedAddonMod.postEvent(untransfurEvent)) {
                 TransfurVariant<?> nextVariant = untransfurEvent.getNextVariant();
                 if (nextVariant != null) {
