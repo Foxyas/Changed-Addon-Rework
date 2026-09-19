@@ -26,7 +26,6 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
@@ -92,6 +91,8 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     public abstract boolean suitEntity(LivingEntity entity);
 
     @Unique
+    private boolean needToSyncGrabber;
+    @Unique
     private boolean safeMode = false;
     @Unique
     private int snuggleCooldown = 0;
@@ -120,6 +121,11 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         return allowGrabTransfurred;
     }
 
+    @Override
+    public void markNeedToSyncGrabber() {
+        this.needToSyncGrabber = true;
+    }
+
     @Inject(method = "saveData", at = @At("TAIL"))
     private void injectCustomData(CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("safeMode", safeMode);
@@ -138,9 +144,6 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (tag.contains("transfurDamageMode")) transfurDamageMode = tag.getBoolean("transfurDamageMode");
     }
 
-    @Unique
-    private boolean persistedGrab;
-
     @Inject(method = "readData", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getEntities(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;", shift = At.Shift.AFTER))
     private void grabbedHardSetHook(CompoundTag tag, CallbackInfo ci) {
         if (this.grabbedEntity == null) {
@@ -154,18 +157,27 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
                     grabber.setPos(grabbed.position());
                 }
                 this.grabbedEntity = grabbed;
-                persistedGrab = true;
+                needToSyncGrabber = grabbedEntity instanceof Player;
             }
         }
     }
 
-    @Inject(at = @At("TAIL"), method = "tickIdle")
-    private void tickIdleTail(CallbackInfo ci) {
-        if (persistedGrab && !entity.getLevel().isClientSide) {
-            suitEntity(grabbedEntity);
-            ChangedAbilities.GRAB_ENTITY_ABILITY.get().setDirty(entity);
-            Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(entity::getEntity), new GrabEntityPacket(entity.getEntity(), grabbedEntity, GrabEntityPacket.GrabType.SUIT));
-            persistedGrab = false;
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/LivingEntityDataExtension;setGrabbedBy(Lnet/minecraft/world/entity/LivingEntity;)V"), method = "tickIdle")
+    private void tickIdleAfterSetGrabbedBy(CallbackInfo ci) {
+        if (needToSyncGrabber && !entity.getLevel().isClientSide) {
+            if (!(grabbedEntity instanceof Player player)) {
+                return;
+            }
+
+            GrabEntityPacket.GrabType grabType = GrabEntityPacket.GrabType.ARMS;
+            if (this.suited) {
+                grabType = GrabEntityPacket.GrabType.SUIT;
+            }
+
+            this.ability.setDirty(entity);
+            Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(entity::getEntity), new GrabEntityPacket(entity.getEntity(), player, grabType));
+
+            needToSyncGrabber = false;
         }
     }
 
@@ -301,8 +313,9 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (this.suitTransition >= 3) {
             this.suitTransition = 3.0F;
             this.suited = false;
-            if (ChangedAddon$getSelf().entity.getChangedEntity() instanceof ChangedEntityExtension changedEntityExtension && changedEntityExtension.shouldAlwaysHoldInGrab(grabbedEntity, ChangedAddon$getSelf())) {
-                this.grabStrength = 1; //Todo: maybe remove this later?
+
+            if (!(grabbedEntity instanceof Player player)) {
+                this.grabStrength = 1;
             }
 
             if (grabbedEntity != null) {
