@@ -13,6 +13,7 @@ import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.*;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.beast.AbstractAquaticEntity;
@@ -42,6 +43,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
@@ -88,7 +90,35 @@ public class PlayerUtil {
             }
         }
 
-        return false;
+        List<LivingEntity> nearbyEntities = player.level().getNearbyEntities(
+                LivingEntity.class,
+                TargetingConditions.forNonCombat().ignoreLineOfSight(),
+                player,
+                player.getBoundingBox().inflate(16.0)
+        );
+
+        boolean anyTamedEntityNearbyThatCanCuddle = nearbyEntities.stream().anyMatch(candidate -> {
+            if (!(candidate instanceof TamableLatexEntity tamableLatexEntity)) {
+                return false;
+            }
+
+            LivingEntity owner = tamableLatexEntity.getOwner();
+            if (owner == null || !owner.is(player)) {
+                return false;
+            }
+
+            Optional<IAbstractChangedEntity> changed = IAbstractChangedEntity.forEitherSafe(candidate);
+            if (changed.isEmpty()) {
+                return false;
+            }
+
+            GrabEntityAbilityInstance grabAbility =
+                    changed.get().getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+
+            return grabAbility != null;
+        });
+
+        return anyTamedEntityNearbyThatCanCuddle;
     }
 
     public static @Nullable LivingEntity getCuddlerFrom(Player player) {

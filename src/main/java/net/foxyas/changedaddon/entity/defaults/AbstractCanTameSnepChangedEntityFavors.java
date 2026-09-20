@@ -730,6 +730,10 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
         return true;
     }
 
+    public boolean forceOwnerGrabSuit() {
+        return true;
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -744,7 +748,9 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
                 if (forceOwnerGrabControl()) {
                     grabEntityAbilityInstance.grabbedHasControl = true;
                 }
-                grabEntityAbilityInstance.suited = true;
+                if (forceOwnerGrabSuit()) {
+                    grabEntityAbilityInstance.suited = true;
+                }
             }
         }
     }

@@ -231,7 +231,16 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;releaseEntity(Z)V", ordinal = 1))
-    private void stopDebuffsIfFriendlyMode(GrabEntityAbilityInstance instance, boolean applyDebuffs, Operation<Void> original) {
+    private void stopDebuffsIfFriendlyModeFromHoldingKeyRelease(GrabEntityAbilityInstance instance, boolean applyDebuffs, Operation<Void> original) {
+        if (this.isSafeMode()) {
+            original.call(instance, false);
+            return;
+        }
+        original.call(instance, applyDebuffs);
+    }
+
+    @WrapOperation(method = "tickIdle", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;releaseEntity(Z)V", ordinal = 1))
+    private void stopDebuffsIfFriendlyModeFromNaturalRelease(GrabEntityAbilityInstance instance, boolean applyDebuffs, Operation<Void> original) {
         if (this.isSafeMode()) {
             original.call(instance, false);
             return;
@@ -514,6 +523,34 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
                 tryCausingChokeDamage(grabber, damageAmount);
                 ci.cancel();
             }
+        }
+    }
+
+
+    // Todo: make a boolean to stop players from being able to escape a grab
+    @Override
+    public void sendPayload(CompoundTag tag) {
+        super.sendPayload(tag);
+    }
+
+    @Override
+    public void acceptPayload(CompoundTag tag) {
+        super.acceptPayload(tag);
+    }
+
+    @WrapOperation(
+            method = "tickIdle",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;handleEscape()V"
+            )
+    )
+    private void stopEscaping(
+            GrabEntityAbilityInstance instance, Operation<Void> original
+    ) {
+        // TODO : boolean here
+        if (true) {
+            original.call(instance);
         }
     }
 

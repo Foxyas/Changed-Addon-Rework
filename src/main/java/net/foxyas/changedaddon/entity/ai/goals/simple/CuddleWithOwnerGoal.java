@@ -92,6 +92,7 @@ public class CuddleWithOwnerGoal<T extends ChangedEntity & TamableLatexEntity> e
     @Override
     public void tick() {
         if (pet.isSleeping()) {
+            ((GrabEntityAbilityExtensor) grab).setSafeMode(true);
             pet.getNavigation().stop();
             Vec3 pVec = Vec3.atCenterOf(pet.getSleepingPos().orElse(bedPos));
             double distanceToBed = pet.distanceToSqr(pVec);
@@ -109,6 +110,7 @@ public class CuddleWithOwnerGoal<T extends ChangedEntity & TamableLatexEntity> e
         if (distanceToBed >= 1.5f) {
             pet.getNavigation().moveTo(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5, 0.3);
         } else if (grab.grabbedEntity != owner) {
+            pet.startSleeping(owner.getSleepingPos().orElse(bedPos));
             ((GrabEntityAbilityExtensor) grab).setSafeMode(true);
             GrabAbilityUtil.grabEntity(owner, pet, grab);
         }
@@ -121,7 +123,7 @@ public class CuddleWithOwnerGoal<T extends ChangedEntity & TamableLatexEntity> e
         }
 
         if (grab.grabbedEntity == owner) {
-            grab.releaseEntity(false);
+            GrabAbilityUtil.releaseEntity(owner, pet, grab, false);
             ((GrabEntityAbilityExtensor) grab).setSafeMode(false);
         }
 

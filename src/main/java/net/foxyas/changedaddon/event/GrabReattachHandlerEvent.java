@@ -28,13 +28,35 @@ public class GrabReattachHandlerEvent {
     public static void onPlayerLoggedInAttachGrab(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getEntity();
 
-        if (!(ChangedAddonServerConfiguration.SHOULD_CHANGED_ENTITY_GRABBING_BE_PERSISTENT.get())) {
-            GrabberAttachment attachment = ChangedAddonVariables.ofOrDefault(player).getGrabberAttachment();
-            attachment.setStoredGrabberData(null);
+        if (player.level().isClientSide() || !(player.level() instanceof ServerLevel serverLevel)) {
             return;
         }
 
-        if (player.level().isClientSide() || !(player.level() instanceof ServerLevel serverLevel)) {
+
+        if (!(ChangedAddonServerConfiguration.SHOULD_CHANGED_ENTITY_GRABBING_BE_PERSISTENT.get())) {
+            GrabberAttachment attachment = ChangedAddonVariables.ofOrDefault(player).getGrabberAttachment();
+            CompoundTag storedTag = attachment.getStoredGrabberData();
+            if (storedTag == null) {
+                return; // player wasn't grabbed when they logged out
+            }
+
+            // Claim it immediately so a re-fired event or a failed spawn can't double-consume it.
+            attachment.setStoredGrabberData(null);
+
+            // Reconstruct the grabber (and any non-player passengers it still had) at the
+            // player's current position — not wherever it was standing when they logged out.
+            Entity spawnedRaw = EntityType.loadEntityRecursive(storedTag, serverLevel, entity -> {
+                entity.moveTo(player.getX(), player.getY(), player.getZ(), player.getYRot(), 0F);
+                return !serverLevel.addWithUUID(entity) ? null : entity;
+            });
+
+            if (!(spawnedRaw instanceof LivingEntity freshGrabber)) {
+                return; // couldn't reconstruct (e.g. entity type missing) — data is lost, log if needed
+            }
+
+            addRecursively(freshGrabber, serverLevel);
+
+            // If the config is off then the reattach don't happen, but the entity need to be spawned back if the config were disabled after being enabled.
             return;
         }
 
