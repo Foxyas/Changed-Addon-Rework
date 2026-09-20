@@ -47,7 +47,7 @@ public class FollowAndLookAtLaser extends Goal {
 
     @Override
     public boolean canUse() {
-        return laserTarget != null
+        return mob.getTarget() == null && laserTarget != null
                 && isPlayerUsingLaser()
                 && hasLineOfSight(laserTarget)
                 && Math.sqrt(mob.distanceToSqr(laserTarget)) < 100;

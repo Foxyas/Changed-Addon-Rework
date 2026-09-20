@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.entity.simple;
 
+import net.foxyas.changedaddon.entity.ai.goals.simple.CuddleWithOwnerGoal;
+import net.foxyas.changedaddon.entity.ai.goals.simple.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntityFavors;
 import net.foxyas.changedaddon.util.ColorUtil;
@@ -41,6 +43,12 @@ public abstract class AbstractCheetahEntity extends AbstractCanTameSnepChangedEn
                 Biomes.SAVANNA_PLATEAU,
                 Biomes.WINDSWEPT_SAVANNA
         );
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        goalSelector.addGoal(5, new CuddleWithOwnerGoal<>(this));
     }
 
     @Override

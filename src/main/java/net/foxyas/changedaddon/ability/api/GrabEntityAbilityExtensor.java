@@ -18,6 +18,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public interface GrabEntityAbilityExtensor {
@@ -39,6 +40,10 @@ public interface GrabEntityAbilityExtensor {
     LivingEntity grabber();
 
     void markNeedToSyncGrabber();
+
+    UUID getEntityUUIDToTryAttachTo();
+
+    void markGrabbedToTryReattach();
 
     default void runHug(@NotNull LivingEntity livingEntity) {
         if (grabber() instanceof Player player) {
