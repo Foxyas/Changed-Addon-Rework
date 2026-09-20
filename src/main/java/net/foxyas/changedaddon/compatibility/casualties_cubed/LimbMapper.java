@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.compatibility.casualities_cubed;
+package net.foxyas.changedaddon.compatibility.casualties_cubed;
 
 import java.util.EnumMap;
 import java.util.Map;

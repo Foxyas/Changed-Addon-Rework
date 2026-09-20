@@ -8,6 +8,7 @@ import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.player.Player;
 import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
+import net.zaharenko424.casualties_cubed.config.ServerConfig;
 import net.zaharenko424.casualties_cubed.limbs.Limb;
 import net.zaharenko424.casualties_cubed.limbs.LimbStatistics;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,17 +37,14 @@ public class TransfurVariantInstanceMixin {
         player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).ifPresent((self) -> {
             if (self.hunger() < 30) return;// Only grow back if it has more then 30 hunger.
 
-            // --- Scaling ---
-            // Health/Blood: 0.0 a 1.0 (ex: 5/5 = 1.0)
-            float maxNormalBloodVolume = 5f;
-
-            float healthRatio = self.bloodVolume() / maxNormalBloodVolume; //EntityUtils.getHealthRatio(player);
+            float healthRatio = self.bloodPercentage(); //EntityUtils.getHealthRatio(player);
             // Food: 0.0 a 1.0 (ex: 20/20 = 1.0)
             float foodRatio = EntityUtil.getFoodRatio(player, null);
 
             // Base de 100 ticks, escalada pela saúde e fome
             // Se ambos estiverem no máximo, ganha 100. Se um estiver baixo, ganha menos.
-            float progressBonus = 100f * healthRatio * foodRatio;
+            float percentualProgress = ServerConfig.LIMB_REGROWTH_DURATION.get() * (0.10f * healthRatio * foodRatio);
+            float progressBonus = (200f + percentualProgress);
             MathFormulasUtil.lerpEase(healthRatio * foodRatio, 100, 300, MathFormulasUtil.EasingType.QUAD_IN);
 
             // ------------------------

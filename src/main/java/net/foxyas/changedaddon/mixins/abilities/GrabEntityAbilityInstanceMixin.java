@@ -16,6 +16,8 @@ import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
 import net.foxyas.changedaddon.network.packet.ExtraGrabDataSyncPacket;
 import net.foxyas.changedaddon.util.EntityUtil;
+import net.foxyas.changedaddon.util.PlayerUtil;
+import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
@@ -24,13 +26,14 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -53,6 +56,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 @SuppressWarnings("AddedMixinMembersNamePattern")
@@ -78,15 +82,16 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     public KeyReference currentEscapeKey;
 
     @Shadow
-    public RandomSource escapeKeyRandom;
-    @Shadow
-    public KeyReference lastEscapeKey;
-    @Shadow
     public boolean attackDown;
 
     @Shadow
     public abstract void releaseEntity(boolean applyDebuffs);
 
+    @Shadow
+    public abstract boolean suitEntity(LivingEntity entity);
+
+    @Unique
+    private boolean needToSyncGrabber;
     @Unique
     private boolean safeMode = false;
     @Unique
@@ -116,6 +121,11 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         return allowGrabTransfurred;
     }
 
+    @Override
+    public void markNeedToSyncGrabber() {
+        this.needToSyncGrabber = true;
+    }
+
     @Inject(method = "saveData", at = @At("TAIL"))
     private void injectCustomData(CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("safeMode", safeMode);
@@ -132,6 +142,43 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (tag.contains("alreadySnuggledTight")) isSnugglingTight = tag.getBoolean("alreadySnuggledTight");
         if (tag.contains("allowGrabTransfurred")) allowGrabTransfurred = tag.getBoolean("allowGrabTransfurred");
         if (tag.contains("transfurDamageMode")) transfurDamageMode = tag.getBoolean("transfurDamageMode");
+    }
+
+    @Inject(method = "readData", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getEntities(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;", shift = At.Shift.AFTER))
+    private void grabbedHardSetHook(CompoundTag tag, CallbackInfo ci) {
+        if (this.grabbedEntity == null) {
+            UUID entityUUID = tag.getUUID("GrabbedEntity");
+            Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), entityUUID);
+            if (entityByUUID instanceof LivingEntity grabbed) {
+                LivingEntity grabber = this.entity.getEntity();
+                if (grabber.distanceToSqr(grabbed) >= 16) {
+                    grabbed.setPos(grabber.position());
+                } else {
+                    grabber.setPos(grabbed.position());
+                }
+                this.grabbedEntity = grabbed;
+                needToSyncGrabber = grabbedEntity instanceof Player;
+            }
+        }
+    }
+
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/LivingEntityDataExtension;setGrabbedBy(Lnet/minecraft/world/entity/LivingEntity;)V"), method = "tickIdle")
+    private void tickIdleAfterSetGrabbedBy(CallbackInfo ci) {
+        if (needToSyncGrabber && !entity.getLevel().isClientSide) {
+            if (!(grabbedEntity instanceof Player player)) {
+                return;
+            }
+
+            GrabEntityPacket.GrabType grabType = GrabEntityPacket.GrabType.ARMS;
+            if (this.suited) {
+                grabType = GrabEntityPacket.GrabType.SUIT;
+            }
+
+            this.ability.setDirty(entity);
+            Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(entity::getEntity), new GrabEntityPacket(entity.getEntity(), player, grabType));
+
+            needToSyncGrabber = false;
+        }
     }
 
     @Override
@@ -266,8 +313,9 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (this.suitTransition >= 3) {
             this.suitTransition = 3.0F;
             this.suited = false;
-            if (ChangedAddon$getSelf().entity.getChangedEntity() instanceof ChangedEntityExtension changedEntityExtension && changedEntityExtension.shouldAlwaysHoldInGrab(grabbedEntity, ChangedAddon$getSelf())) {
-                this.grabStrength = 1; //Todo: maybe remove this later?
+
+            if (!(grabbedEntity instanceof Player player)) {
+                this.grabStrength = 1;
             }
 
             if (grabbedEntity != null) {

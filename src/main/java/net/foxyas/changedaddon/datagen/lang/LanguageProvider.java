@@ -228,7 +228,12 @@ public abstract class LanguageProvider extends net.minecraftforge.common.data.La
         add(stat.get().toLanguageKey("stat"), value);
     }
 
+    protected void addTransfurClassification(String path, String value) {
+        add("desc." + modid + ".transfurs." + path, value);
+    }
+
     protected String toLanguageKey(ResourceLocation loc, String type) {
         return type + "." + loc.getNamespace() + "." + loc.getPath();
     }
+
 }

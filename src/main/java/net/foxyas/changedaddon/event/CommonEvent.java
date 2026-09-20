@@ -39,6 +39,7 @@ import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.process.TransfurEvents;
 import net.ltxprogrammer.changed.process.TransfurEvents.TickPlayerTransfurProgressEvent;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.commands.CommandBuildContext;
@@ -106,6 +107,8 @@ public class CommonEvent {
 
         // Run on server side only and throttle execution to once every second (20 ticks)
         if (entity.level().isClientSide() || entity.tickCount % 20 != 0) return;
+
+        if (!(ProcessTransfur.isPlayerTransfurred(EntityUtil.playerOrNull(entity)))) return;
 
         // Verify entity has the Cuteness attribute and meets the required level
         AttributeInstance cutenessAttr = entity.getAttribute(ChangedAddonAttributes.CUTENESS.get());
@@ -186,7 +189,7 @@ public class CommonEvent {
         ItemStack itemStack = event.getItem();
         LivingEntity entity = event.getEntity();
 
-        // Verificamos se é um Player (pois LivingEntity inclui mobs)
+        // Verificamos se é um ‘Player’ (pois LivingEntity inclui mobs)
         if (!(entity instanceof Player player)) {
             return;
         }
@@ -267,6 +270,12 @@ public class CommonEvent {
             playerVariables.syncPlayerVariables(sleeper);
             sleeper.displayClientMessage(Component.translatable("text.changed_addon.invalid_cuddle_state"), true);
             return;
+        } else {
+            LivingEntity cuddler = PlayerUtil.getCuddlerFrom(sleeper);
+            if (cuddler != null && sleeper.tickCount % 260 == 0) {
+                sleeper.heal(0.05f);
+                cuddler.heal(0.05f);
+            }
         }
 
         LivingEntityDataExtensor ext = LivingEntityDataExtensor.ofEntity(sleeper);

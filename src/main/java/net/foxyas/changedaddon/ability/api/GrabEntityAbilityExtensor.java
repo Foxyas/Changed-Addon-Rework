@@ -38,6 +38,8 @@ public interface GrabEntityAbilityExtensor {
 
     LivingEntity grabber();
 
+    void markNeedToSyncGrabber();
+
     default void runHug(@NotNull LivingEntity livingEntity) {
         if (grabber() instanceof Player player) {
             if (!player.level().isClientSide()) {

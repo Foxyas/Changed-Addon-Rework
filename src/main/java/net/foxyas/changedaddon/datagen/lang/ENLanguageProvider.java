@@ -487,12 +487,59 @@ public class ENLanguageProvider extends LanguageProvider {
             addGui("transfur_sounds_gui." + transfurSoundAction.name().toLowerCase(), transfurSoundAction.getFormatedName());
         }
 
+        addGui("bestiary.na", "§7N/A");
+        addGui("bestiary.classification_prefix", "§fClassification: ");
+        addGui("bestiary.species.cat", "§fCat");
+        addGui("bestiary.species.fox", "§fFox");
+        addGui("bestiary.species.canine", "§fCanine");
+        addGui("bestiary.species.dragon", "§fDragon");
+        addGui("bestiary.species.fish", "§fFish");
+        addGui("bestiary.species.spider", "§fSpider");
+        addGui("bestiary.trait.apex_predator", "§6[Apex Predator]");
+
         addGui("transfur_sounds_gui.label_transfur_sounds", "TransfurSounds");
         addGui("unifuser_gui.label_full", "Full");
         addGui("unifuser_gui.tooltip.place_recipe_catalyst", "Place a Syringe with DNA");
         addGui("unifuser_gui.tooltip.place_first_ingredient", "Place the Powders or other ingredient");
         addGui("unifuser_gui.tooltip.place_second_ingredient", "Put the second ingredient");
         addGui("abilities_radial_screen.mouse.right_click", "Press %s to select the Second Ability");
+
+        addGui("bestiary.title", "Bestiary");
+        addGui("bestiary.header", "§6§lChanged Addon §r§7- Bestiary");
+        addGui("bestiary.esc_close", "[ESC] Close");
+        addGui("bestiary.search", "Search");
+        addGui("bestiary.search.hint", "§7Search entity...");
+        addGui("bestiary.unknown", "Unknown");
+        addGui("bestiary.attributes", "Attributes");
+        addGui("bestiary.classification", "Classification");
+        addGui("bestiary.tab.entities", "🔍 Entities");
+        addGui("bestiary.tab.lore", "📜 Lore");
+        addGui("bestiary.tab.stats", "📊 Stats");
+        addGui("bestiary.button.expand_model", "Expand Model View");
+        addGui("bestiary.button.restore_split", "Restore Split View");
+        addGui("bestiary.button.expand_text", "[↔] Expand Text");
+        addGui("bestiary.button.show_model", "[◀] Show Model");
+        addGui("bestiary.button.show_player_overlay", "[+] Player Overlay");
+        addGui("bestiary.button.hide_player_overlay", "[X] Player Overlay");
+        addGui("bestiary.locked", "§c§l[LOCKED]");
+        addGui("bestiary.render_error", "§cRender Error");
+        addGui("bestiary.no_model", "§7No model");
+        addGui("bestiary.model_hint", "§8[Drag: Rotate | Scroll: Zoom]");
+        addGui("bestiary.lore.dossier_header", "§6[Archive Dossier]");
+        addGui("bestiary.lore.classification", "§7Classification: %s");
+        addGui("bestiary.lore.fallback", "§7Standard facility bio-archive record.");
+        addGui("bestiary.attribute_sheet_header", "§a[Attribute Sheet]");
+        addGui("bestiary.radar_chart_header", "§b[Entity Radar Chart]");
+        addGui("bestiary.scale", "§8Scale: %sx");
+        addGui("bestiary.radar.entity_val", "§7Entity: §f%s");
+        addGui("bestiary.radar.player_val", "§3Player: §f%s");
+        addGui("bestiary.attribute.health", "Health");
+        addGui("bestiary.attribute.armor", "Armor");
+        addGui("bestiary.attribute.speed", "Speed");
+        addGui("bestiary.attribute.attack", "Attack");
+        addGui("bestiary.attribute.toughness", "Toughness");
+        addGui("bestiary.attribute.knockback_res", "Knockback Res");
+        addGui("bestiary.attribute.follow_range", "Follow Range");
 
         add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Press %s or %s to toggle friendly grab");
         add("ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode", "Press %s + %s or %s to toggle transfur damage grab");
