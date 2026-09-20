@@ -512,6 +512,13 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("bestiary.species.spider", "§fPók");
         addGui("bestiary.trait.apex_predator", "§6[Csúcsragadozó]");
 
+        addGui("transfur_sounds_gui.label_transfur_sounds", "Transzfur hangjai");
+        addGui("unifuser_gui.label_full", "Tele");
+        addGui("unifuser_gui.tooltip.place_recipe_catalyst", "Helyezz ide egy DNS-sel töltött fecskendőt");
+        addGui("unifuser_gui.tooltip.place_first_ingredient", "Helyezz ide a porokat vagy más hozzávalókat");
+        addGui("unifuser_gui.tooltip.place_second_ingredient", "Tedd ide a második hozzávalót");
+        addGui("abilities_radial_screen.mouse.right_click", "Nyomd meg a %s gombot a második képesség kiválasztásához");
+
         addGui("bestiary.title", "Bestiárium");
         addGui("bestiary.header", "§6§lChanged Addon §r§7- Bestiárium");
         addGui("bestiary.esc_close", "[ESC] Bezárás");
@@ -548,13 +555,6 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("bestiary.attribute.toughness", "Ellenállás");
         addGui("bestiary.attribute.knockback_res", "Stabilitás");
         addGui("bestiary.attribute.follow_range", "Követési hatótáv");
-
-        addGui("transfur_sounds_gui.label_transfur_sounds", "Transzfur hangjai");
-        addGui("unifuser_gui.label_full", "Tele");
-        addGui("unifuser_gui.tooltip.place_recipe_catalyst", "Helyezz ide egy DNS-sel töltött fecskendőt");
-        addGui("unifuser_gui.tooltip.place_first_ingredient", "Helyezz ide a porokat vagy más hozzávalókat");
-        addGui("unifuser_gui.tooltip.place_second_ingredient", "Tedd ide a második hozzávalót");
-        addGui("abilities_radial_screen.mouse.right_click", "Nyomd meg a %s gombot a második képesség kiválasztásához");
 
         add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Nyomja meg a %s vagy a %s gombot a barátságos megragadás kapcsolásához");
         add("ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode", "Nyomd meg a %s billentyűt és közben a %s vagy %s gombot a megragadáskori transzfur sebzés kapcsolásához");
