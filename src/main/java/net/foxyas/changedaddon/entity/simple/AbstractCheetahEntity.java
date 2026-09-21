@@ -1,7 +1,10 @@
 package net.foxyas.changedaddon.entity.simple;
 
+import net.foxyas.changedaddon.entity.ai.goals.simple.CuddleWithOwnerGoal;
+import net.foxyas.changedaddon.entity.ai.goals.simple.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntityFavors;
+import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
@@ -17,6 +20,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -41,6 +45,34 @@ public abstract class AbstractCheetahEntity extends AbstractCanTameSnepChangedEn
                 Biomes.SAVANNA_PLATEAU,
                 Biomes.WINDSWEPT_SAVANNA
         );
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        goalSelector.addGoal(5, new CuddleWithOwnerGoal<>(this));
+    }
+
+    @Override
+    public boolean forceOwnerGrabSuit() {
+        if (this.getOwner() instanceof Player player) {
+            if (ChangedAddonVariables.ofOrDefault(player).isCuddling()) {
+                return false;
+            }
+        }
+
+        return super.forceOwnerGrabSuit();
+    }
+
+    @Override
+    public boolean forceOwnerGrabControl() {
+        if (this.getOwner() instanceof Player player) {
+            if (ChangedAddonVariables.ofOrDefault(player).isCuddling()) {
+                return false;
+            }
+        }
+
+        return super.forceOwnerGrabControl();
     }
 
     @Override

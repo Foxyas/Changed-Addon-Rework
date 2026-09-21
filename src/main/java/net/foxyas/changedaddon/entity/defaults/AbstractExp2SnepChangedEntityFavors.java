@@ -741,6 +741,10 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
         return true;
     }
 
+    public boolean forceOwnerGrabSuit() {
+        return true;
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -755,7 +759,9 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
                 if (forceOwnerGrabControl()) {
                     grabEntityAbilityInstance.grabbedHasControl = true;
                 }
-                grabEntityAbilityInstance.suited = true;
+                if (forceOwnerGrabSuit()) {
+                    grabEntityAbilityInstance.suited = true;
+                }
             }
         }
     }

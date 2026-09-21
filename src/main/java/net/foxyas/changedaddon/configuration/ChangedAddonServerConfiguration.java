@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.configuration;
 
+import net.foxyas.changedaddon.process.GrabPersistenceMode;
 import net.foxyas.changedaddon.world.gamerules.ChangedEntitySpawnDressedType;
 import net.foxyas.changedaddon.world.gamerules.WorldDifficulty;
 import net.ltxprogrammer.changed.data.RegistryElementPredicate;
@@ -41,6 +42,8 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.IntValue FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY;
     public static final ForgeConfigSpec.ConfigValue<Boolean> STOP_TRANSFURRED_PLAYERS_USE_BOWS;
     public static final ForgeConfigSpec.ConfigValue<Boolean> STOP_TRANSFURRED_PLAYERS_USE_GUNS;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> SHOULD_CHANGED_ENTITY_GRABBING_BE_PERSISTENT;
+    public static final ForgeConfigSpec.EnumValue<GrabPersistenceMode> GRAB_PERSISTENCE_MODE;
 
     public static final ForgeConfigSpec.ConfigValue<Float> CUTENESS_LEVEL_NEEDED_TO_RECEIVE_PATS_FROM_VILLAGERS;
 
@@ -69,6 +72,33 @@ public class ChangedAddonServerConfiguration {
         GRABBY_ENTITIES_SPAWN_CHANCE = BUILDER
                 .comment("Control the chance for the \"Grabby\" entities to spawn with the grab ability feature")
                 .define("Grabby Entities Spawn Chance", 0.005);
+
+        SHOULD_CHANGED_ENTITY_GRABBING_BE_PERSISTENT = BUILDER.comment(
+                        "If true, an entity that is grabbing a player will be saved and reattached",
+                        "when that player logs back in, instead of despawning/breaking the grab",
+                        "when the player disconnects.",
+                        "",
+                        "The grabber is fully removed from the world while the player is offline",
+                        "and respawned in the same state (with the grab reattached) once they log",
+                        "back in near their new position.",
+                        "",
+                        "Set to false to disable this behavior: grabs will simply end (as normal)",
+                        "when the grabbed player logs out."
+                )
+                .define("Persistent Grabbing", true);
+
+        GRAB_PERSISTENCE_MODE = BUILDER
+                .comment(
+                        "Controls which kinds of grabs are eligible for persistent grabbing.",
+                        "Only takes effect if \"Persistent Grabbing\" is enabled above.",
+                        "",
+                        "THREAT: Only grabs where the entity is NOT doing a \"safe\" grab persist —",
+                        "        i.e. the entity isn't holding its own owner as a trust/favor action.",
+                        "SAFE:   Only grabs where the entity's owner IS the grabbed player persist —",
+                        "        e.g. a tamed/owned entity affectionately holding its own owner.",
+                        "BOTH:   Both kinds of grabs persist through logout/login."
+                )
+                .defineEnum("Persistent Grabbing Mode", GrabPersistenceMode.BOTH);
 
         BEHEMOTH_CAN_USE_GRAB_IN_DIFFICULTY = BUILDER
                 .comment("Defines which level of difficulty should allow behemoths to use the grab ability feature, if NONE then the behemoth will never use it")

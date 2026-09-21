@@ -16,7 +16,6 @@ import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.network.packet.AbilityWheelKeyPressPacket;
 import net.foxyas.changedaddon.network.packet.ExtraGrabDataSyncPacket;
 import net.foxyas.changedaddon.util.EntityUtil;
-import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -33,7 +32,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -92,6 +90,10 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
     @Unique
     private boolean needToSyncGrabber;
+
+    @Unique
+    private UUID entityUUIDToTryAttachTo = null;
+
     @Unique
     private boolean safeMode = false;
     @Unique
@@ -126,6 +128,18 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         this.needToSyncGrabber = true;
     }
 
+    @Override
+    public void markGrabbedToTryReattach() {
+        if (grabbedEntity == null) return;
+
+        this.entityUUIDToTryAttachTo = grabbedEntity.getUUID();
+    }
+
+    @Override
+    public UUID getEntityUUIDToTryAttachTo() {
+        return entityUUIDToTryAttachTo;
+    }
+
     @Inject(method = "saveData", at = @At("TAIL"))
     private void injectCustomData(CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("safeMode", safeMode);
@@ -142,24 +156,6 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (tag.contains("alreadySnuggledTight")) isSnugglingTight = tag.getBoolean("alreadySnuggledTight");
         if (tag.contains("allowGrabTransfurred")) allowGrabTransfurred = tag.getBoolean("allowGrabTransfurred");
         if (tag.contains("transfurDamageMode")) transfurDamageMode = tag.getBoolean("transfurDamageMode");
-    }
-
-    @Inject(method = "readData", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getEntities(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;", shift = At.Shift.AFTER))
-    private void grabbedHardSetHook(CompoundTag tag, CallbackInfo ci) {
-        if (this.grabbedEntity == null) {
-            UUID entityUUID = tag.getUUID("GrabbedEntity");
-            Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), entityUUID);
-            if (entityByUUID instanceof LivingEntity grabbed) {
-                LivingEntity grabber = this.entity.getEntity();
-                if (grabber.distanceToSqr(grabbed) >= 16) {
-                    grabbed.setPos(grabber.position());
-                } else {
-                    grabber.setPos(grabbed.position());
-                }
-                this.grabbedEntity = grabbed;
-                needToSyncGrabber = grabbedEntity instanceof Player;
-            }
-        }
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/LivingEntityDataExtension;setGrabbedBy(Lnet/minecraft/world/entity/LivingEntity;)V"), method = "tickIdle")
@@ -235,7 +231,16 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;releaseEntity(Z)V", ordinal = 1))
-    private void stopDebuffsIfFriendlyMode(GrabEntityAbilityInstance instance, boolean applyDebuffs, Operation<Void> original) {
+    private void stopDebuffsIfFriendlyModeFromHoldingKeyRelease(GrabEntityAbilityInstance instance, boolean applyDebuffs, Operation<Void> original) {
+        if (this.isSafeMode()) {
+            original.call(instance, false);
+            return;
+        }
+        original.call(instance, applyDebuffs);
+    }
+
+    @WrapOperation(method = "tickIdle", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;releaseEntity(Z)V", ordinal = 1))
+    private void stopDebuffsIfFriendlyModeFromNaturalRelease(GrabEntityAbilityInstance instance, boolean applyDebuffs, Operation<Void> original) {
         if (this.isSafeMode()) {
             original.call(instance, false);
             return;
@@ -521,6 +526,34 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         }
     }
 
+
+    // Todo: make a boolean to stop players from being able to escape a grab
+    @Override
+    public void sendPayload(CompoundTag tag) {
+        super.sendPayload(tag);
+    }
+
+    @Override
+    public void acceptPayload(CompoundTag tag) {
+        super.acceptPayload(tag);
+    }
+
+    @WrapOperation(
+            method = "tickIdle",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;handleEscape()V"
+            )
+    )
+    private void stopEscaping(
+            GrabEntityAbilityInstance instance, Operation<Void> original
+    ) {
+        // TODO : boolean here
+        if (true) {
+            original.call(instance);
+        }
+    }
+
     @Override
     public void tryCausingChokeDamage(LivingEntity grabber, float damageAmount) {
         Consumer<LivingEntity> afterDamage = (livingEntity) -> {
@@ -598,4 +631,47 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         }
         return false;
     }
+
+
+    /* OLD CODE. MAYBE WILL BE USEFULLY LATER IN THE FUTURE.
+    @Inject(method = "readData", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getEntities(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;", shift = At.Shift.AFTER))
+    private void grabbedHardSetHook(CompoundTag tag, CallbackInfo ci) {
+        if (this.grabbedEntity == null) {
+            UUID entityUUID = tag.getUUID("GrabbedEntity");
+            Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), entityUUID);
+            if (entityByUUID instanceof LivingEntity grabbed) {
+                LivingEntity grabber = this.entity.getEntity();
+                if (grabber.distanceToSqr(grabbed) >= 16) {
+                    grabbed.setPos(grabber.position());
+                } else {
+                    grabber.setPos(grabbed.position());
+                }
+                this.grabbedEntity = grabbed;
+                needToSyncGrabber = grabbedEntity instanceof Player;
+            } else {
+                entityUUIDToTryAttachTo = entityUUID;
+            }
+        }
+    }
+
+    @Inject(at = @At(value = "HEAD"), method = "tickIdle")
+    private void tickIdleTryCatchGrabberFromKnowUUID(CallbackInfo ci) {
+        if (!entity.getLevel().isClientSide) {
+            if (entityUUIDToTryAttachTo != null && this.grabbedEntity == null) {
+                Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), entityUUIDToTryAttachTo);
+                if (entityByUUID instanceof LivingEntity grabbed) {
+                    LivingEntity grabber = this.entity.getEntity();
+                    if (grabber.distanceToSqr(grabbed) >= 16 * 16) {
+                        return;
+                    }
+                    grabber.setPos(grabbed.position());
+                    this.grabbedEntity = grabbed;
+                    entityUUIDToTryAttachTo = null;
+                    needToSyncGrabber = grabbedEntity instanceof Player;
+                    this.entity.getEntity().resetFallDistance();
+                }
+            }
+        }
+    }
+*/
 }

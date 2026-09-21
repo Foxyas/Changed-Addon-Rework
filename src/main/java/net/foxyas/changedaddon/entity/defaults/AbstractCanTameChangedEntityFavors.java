@@ -728,6 +728,10 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
         return true;
     }
 
+    public boolean forceOwnerGrabSuit() {
+        return true;
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -742,7 +746,9 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
                 if (forceOwnerGrabControl()) {
                     grabEntityAbilityInstance.grabbedHasControl = true;
                 }
-                grabEntityAbilityInstance.suited = true;
+                if (forceOwnerGrabSuit()) {
+                    grabEntityAbilityInstance.suited = true;
+                }
             }
         }
     }

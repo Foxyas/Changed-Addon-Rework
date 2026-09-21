@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.network;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.process.GrabberAttachment;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness;
 import net.foxyas.changedaddon.variant.LatexInfection;
 import net.foxyas.changedaddon.variant.TransfurVariantsInfo.TransfurPermissions;
@@ -20,6 +21,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -83,7 +85,7 @@ public class ChangedAddonVariables {
         }
     }
 
-    public static class PlayerVariables {
+    public static class PlayerVariables implements INBTSerializable<CompoundTag> {
         @Nullable
         public FightToKeepConsciousness.MinigameType FTKCminigameType = null;
 
@@ -99,6 +101,8 @@ public class ChangedAddonVariables {
                         }
                 )
         );
+
+        public GrabberAttachment grabberAttachment =  new GrabberAttachment.Default();
 
         public int ticksPattingAnEntity = 0;
 
@@ -166,6 +170,7 @@ public class ChangedAddonVariables {
 
             transfurPermissions.save(nbt);
             latexInfection.save(nbt);
+            grabberAttachment.save(nbt);
             return nbt;
         }
 
@@ -193,6 +198,17 @@ public class ChangedAddonVariables {
 
             transfurPermissions.read(nbt);
             latexInfection.read(nbt);
+            grabberAttachment.load(nbt);
+        }
+
+        @Override
+        public CompoundTag serializeNBT() {
+            return writeNBT(true);
+        }
+
+        @Override
+        public void deserializeNBT(CompoundTag nbt) {
+            readNBT(nbt);
         }
 
         public void copyFrom(PlayerVariables other) {
@@ -211,6 +227,10 @@ public class ChangedAddonVariables {
             ticksFightingForConsciousness = other.ticksFightingForConsciousness;
             latexInfection = other.latexInfection;
             transfurPermissions = other.transfurPermissions;
+        }
+
+        public GrabberAttachment getGrabberAttachment() {
+            return grabberAttachment;
         }
 
         public LatexInfection getLatexInfection() {
