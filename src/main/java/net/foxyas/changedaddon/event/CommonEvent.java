@@ -24,10 +24,7 @@ import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.SeatEntity;
-import net.ltxprogrammer.changed.entity.TransfurCause;
-import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -56,10 +53,7 @@ import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -415,10 +409,25 @@ public class CommonEvent {
 
     @SubscribeEvent
     public static void onPlayerAttack(AttackEntityEvent attackEntityEvent) {
+        Player entity = attackEntityEvent.getEntity();
         Entity target = attackEntityEvent.getTarget();
+        if (entity.is(target)) {
+            attackEntityEvent.setCanceled(true);
+        }
+
         if (target.getVehicle() instanceof SeatEntity seatEntity) {
             if (seatEntity.shouldSeatedBeInvisible()) {
                 attackEntityEvent.setCanceled(true);
+            }
+        }
+
+        if (!(target instanceof LivingEntity living)) {
+            return;
+        }
+
+        if (entity instanceof ServerPlayer serverPlayer) {
+            if (serverPlayer.getMainHandItem().is(Items.DEBUG_STICK)) {
+                serverPlayer.setCamera(living);
             }
         }
     }

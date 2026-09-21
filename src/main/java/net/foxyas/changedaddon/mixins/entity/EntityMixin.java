@@ -1,12 +1,15 @@
 package net.foxyas.changedaddon.mixins.entity;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
-import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.SeatEntity;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,15 +18,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public class EntityMixin implements LivingEntityDataExtensor {
 
-    @ModifyReturnValue(method = "canCollideWith", at = @At("RETURN"))
-    private boolean stopCollisionWithBody(boolean original, Entity entity) {
+    @ModifyExpressionValue(method = "push(Lnet/minecraft/world/entity/Entity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;isPassengerOfSameVehicle(Lnet/minecraft/world/entity/Entity;)Z"))
+    private boolean stopPushWithBody(boolean original, Entity entity) {
         var self = (Entity) (Object) this;
-        if (entity instanceof ChangedEntity changedEntity) {
-            if (changedEntity.getUnderlyingPlayer() != null && changedEntity.getUnderlyingPlayer().is(self)) {
-                return false;
+        if (!self.level().isClientSide() && self instanceof ServerPlayer serverPlayer) {
+            boolean isSpectating = serverPlayer.getCamera().is(entity);
+            if (isSpectating) {
+                return true;
             }
-        } else if (entity instanceof Player player && self instanceof ChangedEntity changedEntity) {
-            if (changedEntity.getUnderlyingPlayer() != null && changedEntity.getUnderlyingPlayer().is(player)) {
+        }
+
+        if (entity instanceof ServerPlayer serverPlayer) {
+            boolean isSpectating = serverPlayer.getCamera().is(self);
+            if (isSpectating) {
                 return false;
             }
         }
