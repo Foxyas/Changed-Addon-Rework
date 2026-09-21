@@ -93,6 +93,7 @@ public class CuddleWithOwnerGoal<T extends ChangedEntity & TamableLatexEntity> e
     @Override
     public void tick() {
         if (pet.isSleeping()) {
+            this.ticksCuddling++;
             ((GrabEntityAbilityExtensor) grab).setSafeMode(true);
             pet.getNavigation().stop();
             Vec3 pVec = Vec3.atCenterOf(pet.getSleepingPos().orElse(bedPos));
