@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.network;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.process.CuddleHandle;
 import net.foxyas.changedaddon.process.GrabberAttachment;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness;
 import net.foxyas.changedaddon.variant.LatexInfection;
@@ -120,7 +121,8 @@ public class ChangedAddonVariables {
         public boolean exp009BossTransfurPermission = false;
         public boolean exp10BossTransfurPermission = false;
 
-        public boolean isCuddling = false;
+//        public boolean isCuddling = false;
+        public CuddleHandle cuddleHandle = new CuddleHandle();
 
         public void tickCooldowns() {
             if (actCooldown > 0) {
@@ -141,7 +143,7 @@ public class ChangedAddonVariables {
             other.untransfurProgress = untransfurProgress;
             other.exp009BossTransfurPermission = exp009BossTransfurPermission;
             other.exp10BossTransfurPermission = exp10BossTransfurPermission;
-            other.isCuddling = isCuddling;
+            other.cuddleHandle = cuddleHandle;
             if (!wasDeath) {
                 other.consciousnessFightProgress = consciousnessFightProgress;
                 other.FTKCminigameType = FTKCminigameType;
@@ -163,7 +165,6 @@ public class ChangedAddonVariables {
                 nbt.putInt("patCooldown", patCooldown);
             }
             nbt.putDouble("UntransfurProgress", untransfurProgress);
-            nbt.putBoolean("isCuddling", isCuddling);
             nbt.putBoolean("isTransfuredBySafeMethod", isTransfuredBySafeMethod);
             nbt.putInt("timeAfterVictoryOfFTK", timeAfterVictoryOfFTK);
             nbt.putInt("ticksFightingForConsciousness", ticksFightingForConsciousness);
@@ -171,6 +172,7 @@ public class ChangedAddonVariables {
             transfurPermissions.save(nbt);
             latexInfection.save(nbt);
             grabberAttachment.save(nbt);
+            cuddleHandle.save(nbt);
             return nbt;
         }
 
@@ -191,7 +193,6 @@ public class ChangedAddonVariables {
             untransfurProgress = nbt.getDouble("UntransfurProgress");
             exp009BossTransfurPermission = nbt.getBoolean("Exp009TransfurAllowed");
             exp10BossTransfurPermission = nbt.getBoolean("Exp10TransfurAllowed");
-            isCuddling = nbt.getBoolean("isCuddling");
             isTransfuredBySafeMethod = nbt.getBoolean("isTransfuredBySafeMethod");
             timeAfterVictoryOfFTK = nbt.getInt("timeAfterVictoryOfFTK");
             ticksFightingForConsciousness = nbt.getInt("ticksFightingForConsciousness");
@@ -199,6 +200,7 @@ public class ChangedAddonVariables {
             transfurPermissions.read(nbt);
             latexInfection.read(nbt);
             grabberAttachment.load(nbt);
+            cuddleHandle.load(nbt);
         }
 
         @Override
@@ -221,19 +223,19 @@ public class ChangedAddonVariables {
             untransfurProgress = other.untransfurProgress;
             exp009BossTransfurPermission = other.exp009BossTransfurPermission;
             exp10BossTransfurPermission = other.exp10BossTransfurPermission;
-            isCuddling = other.isCuddling;
             isTransfuredBySafeMethod = other.isTransfuredBySafeMethod;
             timeAfterVictoryOfFTK = other.timeAfterVictoryOfFTK;
             ticksFightingForConsciousness = other.ticksFightingForConsciousness;
             latexInfection = other.latexInfection;
             transfurPermissions = other.transfurPermissions;
+            cuddleHandle = other.cuddleHandle;
         }
 
         public GrabberAttachment getGrabberAttachment() {
             return grabberAttachment;
         }
 
-        public LatexInfection getLatexInfection() {
+        public @NotNull LatexInfection getLatexInfection() {
             return latexInfection;
         }
 
@@ -257,8 +259,12 @@ public class ChangedAddonVariables {
             return this.patCooldown > 0;
         }
 
-        public boolean isCuddling() {
-            return isCuddling;
+        public boolean wantToCuddles() {
+            return cuddleHandle.wantToCuddles();
+        }
+
+        public void setWantCuddles(boolean wantCuddles) {
+            this.cuddleHandle.setWantToCuddle(wantCuddles);
         }
 
         public boolean has10BossTransfurPermission() {

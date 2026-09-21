@@ -6,7 +6,7 @@ import net.foxyas.changedaddon.entity.ai.goals.prototype.*;
 import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
 import net.foxyas.changedaddon.entity.api.ItemHandlerHolder;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
+import net.foxyas.changedaddon.entity.defaults.tamable.AbstractCanTameChangedEntityFavors;
 import net.foxyas.changedaddon.menu.PrototypeMenu;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;

@@ -51,7 +51,7 @@ public abstract class MinecraftMixin {
 
     @WrapOperation(at = @At(value = "NEW", target = "net/minecraft/client/gui/screens/InBedChatScreen"), method = "tick")
     private InBedChatScreen stopSettingSleepScreenWhenCuddling(Operation<InBedChatScreen> original) {
-        return ChangedAddonVariables.ofOrDefault(player).isCuddling ? null : original.call();
+        return ChangedAddonVariables.ofOrDefault(player).wantToCuddles() ? null : original.call();
     }
 
     @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isHandsBusy()Z"),
@@ -59,7 +59,7 @@ public abstract class MinecraftMixin {
     private boolean makeHandsNotBusyForCuddle(boolean original) {
         if (!original) return false;
 
-        if (!ChangedAddonVariables.ofOrDefault(player).isCuddling) return true;
+        if (!ChangedAddonVariables.ofOrDefault(player).wantToCuddles()) return true;
 
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (instance == null) return true;

@@ -9,6 +9,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.advanced.LatexSnowFoxFoxyasEntity;
 import net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.IDynamicCamera;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -245,22 +246,23 @@ public class CommonEvent {
     @SubscribeEvent
     public static void allowPlayersToSleepAtAnyMomentWhenCuddling(SleepingTimeCheckEvent event) {
         Player sleeper = event.getEntity();
-        if (!ChangedAddonVariables.ofOrDefault(sleeper).isCuddling) return;
+        if (!ChangedAddonVariables.ofOrDefault(sleeper).wantToCuddles()) return;
 
         event.setResult(Event.Result.ALLOW);
     }
 
     @SubscribeEvent
     public static void forcePlayersToNeverSleepEnough(TickEvent.PlayerTickEvent event) {
+        /* Moved to CuddleHandle$mayForcePlayerToNeverSleepEnough
         if (event.phase != TickEvent.Phase.END) return;
 
         Player sleeper = event.player;
         if (!sleeper.isSleeping()) return;
 
         PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(sleeper);
-        if (!playerVariables.isCuddling) return;
+        if (!playerVariables.wantToCuddles()) return;
         if (!PlayerUtil.isCuddleStateValidForBed(sleeper)) {
-            playerVariables.isCuddling = false;
+            playerVariables.setWantCuddles(false);
             playerVariables.syncPlayerVariables(sleeper);
             sleeper.displayClientMessage(Component.translatable("text.changed_addon.invalid_cuddle_state"), true);
             return;
@@ -275,7 +277,7 @@ public class CommonEvent {
         LivingEntityDataExtensor ext = LivingEntityDataExtensor.ofEntity(sleeper);
         if (ext == null) return;
 
-        ext.setSleepCounter(1);
+        ext.setSleepCounter(1);*/
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
@@ -283,13 +285,13 @@ public class CommonEvent {
         if (!event.isCancelable() || event instanceof PlayerInteractEvent.RightClickItem) return;
 
         Player player = event.getEntity();
-        if (player.isSleeping() && ChangedAddonVariables.ofOrDefault(player).isCuddling) event.setCanceled(true);
+        if (player.isSleeping() && ChangedAddonVariables.ofOrDefault(player).wantToCuddles()) event.setCanceled(true);
     }
 
     @SubscribeEvent
     public static void onBedInteract(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getEntity();
-        if (player.isCrouching() || player.isSleeping() || !ChangedAddonVariables.ofOrDefault(player).isCuddling)
+        if (player.isCrouching() || player.isSleeping() || !ChangedAddonVariables.ofOrDefault(player).wantToCuddles())
             return;
 
         Level level = player.level;
@@ -316,7 +318,7 @@ public class CommonEvent {
         if (list.isEmpty()) return;
 
         Player target = list.get(0);
-        if (!ChangedAddonVariables.ofOrDefault(target).isCuddling) return;
+        if (!ChangedAddonVariables.ofOrDefault(target).wantToCuddles()) return;
 
         GrabEntityAbilityInstance targetGrab = ProcessTransfur.ifPlayerTransfurred(target, var -> var.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()), () -> null);
         if (targetGrab != null) {
@@ -427,7 +429,12 @@ public class CommonEvent {
 
         if (entity instanceof ServerPlayer serverPlayer) {
             if (serverPlayer.getMainHandItem().is(Items.DEBUG_STICK)) {
+                if (serverPlayer instanceof IDynamicCamera dynamicCamera) {
+                    dynamicCamera.setSoftSetCameraByDefault(true);
+                    dynamicCamera.setResetCameraOnShift(false);
+                }
                 serverPlayer.setCamera(living);
+                attackEntityEvent.setCanceled(true);
             }
         }
     }
@@ -479,6 +486,8 @@ public class CommonEvent {
 
         Player player = event.player;
         if (!player.isAlive()) return;
+
+        tickCuddleHandle(player);
 
         cleanAlphaAttributes(player);
 
@@ -609,6 +618,12 @@ public class CommonEvent {
         if (latexInfection.shouldStallTransfurProgress()) {
             event.setCanceled(true);
         }
+    }
+
+
+    private static void tickCuddleHandle(Player player) {
+        PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(player);
+        playerVariables.cuddleHandle.tick(player);
     }
 
     private static void tickInfectionAndRes(TickPlayerTransfurProgressEvent event) {

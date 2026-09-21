@@ -35,7 +35,7 @@ public abstract class AdvancedHumanoidModelMixin <T extends ChangedEntity> {
         GrabEntityAbilityInstance ability = ProcessTransfur.getPlayerTransfurVariant(player).getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
         if (ability == null || ability.grabbedEntity == null || ability.suited) return;
         ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.of(player);
-        if (playerVariables == null || !playerVariables.isCuddling) return;
+        if (playerVariables == null || !playerVariables.wantToCuddles()) return;
 
 
         HoldEntityAnimator<T,?> anim = (HoldEntityAnimator<T, ?>) getAnimator(entity).getAnimators(HumanoidAnimator.AnimateStage.FINAL).filter(a -> a instanceof HoldEntityAnimator<T,?>).findFirst().orElse(null);

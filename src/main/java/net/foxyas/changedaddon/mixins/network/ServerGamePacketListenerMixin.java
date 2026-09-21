@@ -17,7 +17,7 @@ public abstract class ServerGamePacketListenerMixin {
 
     @ModifyVariable(name = "d10", at = @At(value = "LOAD", ordinal = 0), method = "handleMovePlayer")
     private double acceptHeadRotWhenCuddling(double original, @Local(name = "f") float f, @Local(name = "f1") float f1) {
-        if (!ChangedAddonVariables.ofOrDefault(player).isCuddling || original > 1) return original;
+        if (!ChangedAddonVariables.ofOrDefault(player).wantToCuddles() || original > 1) return original;
 
         player.absMoveTo(player.getX(), player.getY(), player.getZ(), f, f1);
         return original;

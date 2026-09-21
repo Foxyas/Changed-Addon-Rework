@@ -14,7 +14,7 @@ public class StopCuddlingHint {
 
     public static void render(ForgeGui forgeGui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
         Player player = forgeGui.getMinecraft().player;
-        if (player == null || player.isDeadOrDying() || !player.isSleeping() || !ChangedAddonVariables.ofOrDefault(player).isCuddling) return;
+        if (player == null || player.isDeadOrDying() || !player.isSleeping() || !ChangedAddonVariables.ofOrDefault(player).wantToCuddles()) return;
 
         WidgetHelper.drawCenteredComp(guiGraphics, forgeGui.getFont(), Component.translatable("text.changed_addon.stop_cuddling", Component.keybind(ChangedAddonKeyMappings.CUDDLE_KEY.getName())), screenWidth / 2f, 30, -1, false);
     }

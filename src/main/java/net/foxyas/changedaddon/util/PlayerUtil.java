@@ -133,6 +133,15 @@ public class PlayerUtil {
         return null;
     }
 
+    public static @Nullable LivingEntity getCuddledFrom(Player player) {
+        IAbstractChangedEntity grabber = IAbstractChangedEntity.forPlayer(player);
+        GrabEntityAbilityInstance grabEntityAbilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+        if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
+            return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null ? grabEntityAbilityInstance.grabbedEntity : null;
+        }
+        return null;
+    }
+
     public static boolean isCuddleStateValidForBed(Player player) {
         return canTurnCuddleModeOn(player);
     }

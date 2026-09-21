@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.defaults.tamable;
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
@@ -61,6 +61,7 @@ public abstract class AbstractTamableLatexEntity extends ChangedEntity implement
 
     protected void defineSynchedData() {
         super.defineSynchedData();
+        //TODO: REMOVE ME
         this.entityData.define(DATA_FLAGS_ID, (byte) 0);
         this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
     }

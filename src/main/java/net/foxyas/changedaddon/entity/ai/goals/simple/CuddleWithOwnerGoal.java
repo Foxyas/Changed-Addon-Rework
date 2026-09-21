@@ -20,12 +20,13 @@ import net.minecraft.world.phys.Vec3;
 
 public class CuddleWithOwnerGoal<T extends ChangedEntity & TamableLatexEntity> extends Goal {
 
-    protected static final double MAX_DISTANCE_SQ = 32.0;
+    protected static final double MAX_DISTANCE_SQ = 256;
 
     protected GrabEntityAbilityInstance grab;
     protected final T pet;
     protected Player owner;
     protected BlockPos bedPos;
+    protected int ticksCuddling = 0;
 
     public CuddleWithOwnerGoal(T pet) {
         this.pet = pet;
@@ -47,7 +48,7 @@ public class CuddleWithOwnerGoal<T extends ChangedEntity & TamableLatexEntity> e
 
         this.owner = player;
 
-        if (!ChangedAddonVariables.ofOrDefault(owner).isCuddling || !player.isSleeping() || player.getSleepingPos().isEmpty()
+        if (!ChangedAddonVariables.ofOrDefault(owner).wantToCuddles() || !player.isSleeping() || player.getSleepingPos().isEmpty()
                 || !canGrabOwner()) return false;
 
         bedPos = player.getSleepingPos().get();
@@ -86,7 +87,7 @@ public class CuddleWithOwnerGoal<T extends ChangedEntity & TamableLatexEntity> e
 
     @Override
     public boolean canContinueToUse() {
-        return ChangedAddonVariables.ofOrDefault(owner).isCuddling && owner != null && owner.isSleeping() && canGrabOwner();
+        return ChangedAddonVariables.ofOrDefault(owner).wantToCuddles() && owner != null && owner.isSleeping() && canGrabOwner();
     }
 
     @Override
@@ -112,6 +113,7 @@ public class CuddleWithOwnerGoal<T extends ChangedEntity & TamableLatexEntity> e
         } else if (grab.grabbedEntity != owner) {
             pet.startSleeping(owner.getSleepingPos().orElse(bedPos));
             ((GrabEntityAbilityExtensor) grab).setSafeMode(true);
+            ((GrabEntityAbilityExtensor) grab).setAbleToEscape(false);
             GrabAbilityUtil.grabEntity(owner, pet, grab);
         }
     }

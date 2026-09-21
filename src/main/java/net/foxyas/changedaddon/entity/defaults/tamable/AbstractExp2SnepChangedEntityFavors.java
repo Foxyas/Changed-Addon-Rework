@@ -1,9 +1,10 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.defaults.tamable;
 
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import net.foxyas.changedaddon.entity.ai.*;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
 import net.foxyas.changedaddon.menu.TamedLatexInventoryMenu;
 import net.foxyas.changedaddon.menu.TamedLatexMenu;
 import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
@@ -59,16 +60,16 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 @Deprecated
-public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCanTameSnepChangedEntity implements TamableLatexEntityFavors {
-    protected static final EntityDataAccessor<LatexTargetType> DATA_TARGET_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_TARGET_TYPE);
-    protected static final EntityDataAccessor<LatexAttackType> DATA_ATTACK_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_TYPE);
-    protected static final EntityDataAccessor<LatexAttackCondition> DATA_ATTACK_CONDITION_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_CONDITION);
-    protected static final EntityDataAccessor<LatexFavor> DATA_FAVOR_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_FAVOR);
+public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2SnepChangedEntity implements TamableLatexEntityFavors, TamableLatexEntityWithTameFunction {
+    protected static final EntityDataAccessor<LatexTargetType> DATA_TARGET_TYPE_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_TARGET_TYPE);
+    protected static final EntityDataAccessor<LatexAttackType> DATA_ATTACK_TYPE_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_TYPE);
+    protected static final EntityDataAccessor<LatexAttackCondition> DATA_ATTACK_CONDITION_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_CONDITION);
+    protected static final EntityDataAccessor<LatexFavor> DATA_FAVOR_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_FAVOR);
     protected @Nullable LatexInventory inventory; // Inventory doesn't exist until DL is tamed
     protected @Nullable GrabEntityAbilityInstance grabEntityAbilityInstance; // Grab doesn't exist until DL is tamed
     public static final int OWNER_HOSTILE_DURATION_TICKS = 600;
 
-    public AbstractCanTameSnepChangedEntityFavors(EntityType<? extends AbstractSnowLeopard> p_19870_, Level p_19871_) {
+    public AbstractExp2SnepChangedEntityFavors(EntityType<? extends AbstractSnowLeopard> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
         this.inventory = null;
         this.grabEntityAbilityInstance = null;
@@ -204,7 +205,7 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> accessor) {
         super.onSyncedDataUpdated(accessor);
-        if (DATA_OWNERUUID_ID.equals(accessor)) {
+        if (DATA_OWNER_UUID_ID.equals(accessor)) {
             if (this.inventory == null)
                 this.inventory = createInventory();
             if (this.grabEntityAbilityInstance == null)
@@ -313,7 +314,7 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
     @Nullable
     @Override
     public UUID getOwnerUUID() {
-        return this.entityData.get(DATA_OWNERUUID_ID).orElse(null);
+        return this.entityData.get(DATA_OWNER_UUID_ID).orElse(null);
     }
 
     public void setOwnerUUID(@Nullable UUID uuid) {
@@ -433,6 +434,11 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
         return true;
     }
 
+    @Override
+    public void tameEntityForPlayer(Player player) {
+        this.tame(player);
+    }
+
     public void tame(Player player) {
         this.setTame(true);
         this.setFollowOwner(true);
@@ -539,7 +545,7 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
 
     @Override
     public boolean wantsToAttack(LivingEntity target, LivingEntity owner) {
-        if (target instanceof AbstractCanTameSnepChangedEntityFavors) {
+        if (target instanceof AbstractExp2SnepChangedEntityFavors) {
             return false;
         }
 
@@ -649,6 +655,11 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
     }
 
     @Override
+    public void copyTraitsFrom(IAbstractChangedEntity entity) {
+        super.copyTraitsFrom(entity);
+    }
+
+    @Override
     protected void pickUpItem(@NotNull ItemEntity itemEntity) {
         if (inventory == null)
             super.pickUpItem(itemEntity);
@@ -704,7 +715,7 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
 
         double d0 = this.getAttributeValue(Attributes.FOLLOW_RANGE);
         AABB aabb = AABB.unitCubeFromLowerCorner(this.position()).inflate(d0, 10.0D, d0);
-        this.level().getEntitiesOfClass(AbstractCanTameSnepChangedEntityFavors.class, aabb, EntitySelector.NO_SPECTATORS).forEach(nearby -> {
+        this.level().getEntitiesOfClass(AbstractExp2SnepChangedEntityFavors.class, aabb, EntitySelector.NO_SPECTATORS).forEach(nearby -> {
             if (nearby.getTarget() == null && !nearby.isAlliedTo(source))
                 nearby.setTarget(source);
         });
