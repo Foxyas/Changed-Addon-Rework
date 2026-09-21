@@ -1,14 +1,15 @@
 package net.foxyas.changedaddon.variant;
 
-import net.foxyas.changedaddon.network.packet.SyncAllUntransfurImmunityPacket;
-import net.foxyas.changedaddon.network.packet.utils.PacketsUtils;
 import net.foxyas.changedaddon.process.UntransfurReason;
+import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.network.packet.SyncTransfurPacket;
 import net.ltxprogrammer.changed.util.KeyStateTracker;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.network.PacketDistributor;
 
 public interface TransfurVariantInstanceExtensor {
 
@@ -33,6 +34,10 @@ public interface TransfurVariantInstanceExtensor {
     @Deprecated
     AbstractAbilityInstance getSecondSelectedAbilityInstance();
 
+    boolean hasControlOverBody();
+
+    void setControlOverBody(boolean value);
+
     boolean getUntransfurImmunity(UntransfurReason type);
 
     void setUntransfurImmunity(UntransfurReason type, boolean value);
@@ -47,12 +52,12 @@ public interface TransfurVariantInstanceExtensor {
 
         if (!player.level().isClientSide) {
             if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
-                boolean untransfurImmunitySurvival = this.getUntransfurImmunity(UntransfurReason.SURVIVAL);
-                boolean untransfurImmunityCommand = this.getUntransfurImmunity(UntransfurReason.COMMAND);
-                PacketsUtils.sendToPlayer(new SyncAllUntransfurImmunityPacket(serverPlayer.getId(), untransfurImmunityCommand, untransfurImmunitySurvival), serverPlayer);
+//                boolean untransfurImmunitySurvival = this.getUntransfurImmunity(UntransfurReason.SURVIVAL);
+//                boolean untransfurImmunityCommand = this.getUntransfurImmunity(UntransfurReason.COMMAND);
+//                PacketsUtils.sendToPlayer(new SyncAllUntransfurImmunityPacket(serverPlayer.getId(), untransfurImmunityCommand, untransfurImmunitySurvival), serverPlayer);
 
                 // TODO: maybe Change this to be just the packet below instead of a custom one?
-                //  Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> serverPlayer), SyncTransfurPacket.Builder.of(player));
+                Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> serverPlayer), SyncTransfurPacket.Builder.of(player));
             }
         }
     }

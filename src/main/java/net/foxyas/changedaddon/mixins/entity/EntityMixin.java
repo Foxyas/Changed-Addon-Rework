@@ -2,8 +2,11 @@ package net.foxyas.changedaddon.mixins.entity;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
+import net.ltxprogrammer.changed.Changed;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.SeatEntity;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -11,6 +14,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public class EntityMixin implements LivingEntityDataExtensor {
+
+    @ModifyReturnValue(method = "canCollideWith", at = @At("RETURN"))
+    private boolean stopCollisionWithBody(boolean original, Entity entity) {
+        var self = (Entity) (Object) this;
+        if (entity instanceof ChangedEntity changedEntity) {
+            if (changedEntity.getUnderlyingPlayer() != null && changedEntity.getUnderlyingPlayer().is(self)) {
+                return false;
+            }
+        } else if (entity instanceof Player player && self instanceof ChangedEntity changedEntity) {
+            if (changedEntity.getUnderlyingPlayer() != null && changedEntity.getUnderlyingPlayer().is(player)) {
+                return false;
+            }
+        }
+
+
+        return original;
+    }
 
     @Inject(method = "isInWater", at = @At("RETURN"), cancellable = true)
     private void customIsInWater(CallbackInfoReturnable<Boolean> cir) {
