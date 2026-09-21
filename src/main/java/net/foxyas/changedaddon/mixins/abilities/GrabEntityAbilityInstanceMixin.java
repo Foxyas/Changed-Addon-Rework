@@ -260,7 +260,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     private void tickSendKeyBindInfo(CallbackInfo ci) {
         Level level = entity.getLevel();
         if (level.isClientSide()) {
-            if (ChangedAddonClientConfiguration.GRAB_ABILITY_KEY_INFO.get()) {
+            if (ChangedAddonClientConfiguration.GRAB_ABILITY_KEY_INFO.get() && this.currentEscapeKey != null) {
                 this.entity.displayClientMessage(this.currentEscapeKey.getName(level), true);
             }
         }
