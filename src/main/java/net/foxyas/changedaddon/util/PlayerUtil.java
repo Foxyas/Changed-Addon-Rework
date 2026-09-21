@@ -278,6 +278,58 @@ public class PlayerUtil {
         world.addFreshEntity(entityToSpawn);
     }
 
+    public static @Nullable LivingEntity spawnPlayerTransfurAsChangedEntity(TransfurVariantInstance<?> transfurVariantInstance) {
+        Player player = transfurVariantInstance.getHost();
+        if (!(player.level instanceof ServerLevel level)) return null;
+        TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (instance == null) return null;
+
+        ChangedEntity fakeEntity = instance.getChangedEntity();
+
+        Entity entityToSpawn = fakeEntity.getType().create(level);
+        if (!(entityToSpawn instanceof ChangedEntity changedEntity)) {
+            return null;
+        }
+        TransfurVariantInstance.syncEntityPosRotWithEntity(changedEntity, player);
+
+        ForgeEventFactory.onFinalizeSpawn(changedEntity, level, level.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION, null, null);
+
+        if (fakeEntity instanceof IAlphaAbleEntity original && entityToSpawn instanceof IAlphaAbleEntity alphaAble) {
+            alphaAble.setAlpha(original.isAlpha());
+            alphaAble.setAlphaScale(original.alphaAdditionalScale());
+        }
+
+        if (level.addFreshEntity(changedEntity)) {
+            return changedEntity;
+        }
+        return null;
+    }
+
+    public static @Nullable ChangedEntity getPlayerTransfurAsChangedEntity(TransfurVariantInstance<?> transfurVariantInstance) {
+        Player player = transfurVariantInstance.getHost();
+        if (!(player.level instanceof ServerLevel level)) return null;
+        TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (instance == null) return null;
+
+        ChangedEntity fakeEntity = instance.getChangedEntity();
+
+        Entity entityToSpawn = fakeEntity.getType().create(level);
+        if (!(entityToSpawn instanceof ChangedEntity changedEntity)) {
+            return null;
+        }
+        TransfurVariantInstance.syncEntityPosRotWithEntity(changedEntity, player);
+
+        ForgeEventFactory.onFinalizeSpawn(changedEntity, level, level.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION, null, null);
+
+        if (fakeEntity instanceof IAlphaAbleEntity original && entityToSpawn instanceof IAlphaAbleEntity alphaAble) {
+            alphaAble.setAlpha(original.isAlpha());
+            alphaAble.setAlphaScale(original.alphaAdditionalScale());
+        }
+
+        return changedEntity;
+    }
+
+
     public static boolean isCatTransfur(Player player) {
         TransfurVariant<?> variant = ProcessTransfur.getPlayerTransfurVariant(player).getParent();
         return variant.is(ChangedAddonTags.TransfurVariants.CAT_LIKE) ||

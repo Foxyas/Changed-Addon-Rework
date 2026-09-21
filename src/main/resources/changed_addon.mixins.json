@@ -120,6 +120,7 @@
     "effect.particle.EmoteParticleMixin",
     "entity.player.LocalPlayerMixin",
     "entity.projectiles.GasParticleMixin",
+    "entity.variant.ClientTransfurVariantInstanceMixin",
     "mods.changed.AbilityOverlayMixin",
     "mods.changed.AbilityRadialScreenMixin",
     "mods.changed.AbstractRadialScreenMixin",

@@ -3,11 +3,17 @@ package net.foxyas.changedaddon.mixins.abilities;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.platform.InputConstants;
+import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -52,4 +58,30 @@ public abstract class GrabEntityAbilityMixin extends AbstractAbility<GrabEntityA
 
         return description;
     }
+
+//    @ModifyReturnValue(method = "getControllingEntity", at = @At("RETURN"))
+//    private static LivingEntity getControllingEntityHook(LivingEntity original) {
+//        if (original instanceof Player player) {
+//            TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+//            if (variantInstance instanceof TransfurVariantInstanceExtensor instanceExtensor) {
+//                if (!instanceExtensor.hasControlOverBody()) {
+//                    return variantInstance.getChangedEntity();
+//                }
+//            }
+//        }
+//        return original;
+//    }
+//
+//    @ModifyReturnValue(method = "isEntityNoControl", at = @At("RETURN"))
+//    private static boolean isEntityNoControlHook(boolean original, Entity entity) {
+//        if (entity instanceof Player player) {
+//            TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+//            if (variantInstance instanceof TransfurVariantInstanceExtensor instanceExtensor) {
+//                if (!instanceExtensor.hasControlOverBody()) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return original;
+//    }
 }

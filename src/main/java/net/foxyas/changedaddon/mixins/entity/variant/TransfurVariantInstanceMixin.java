@@ -5,8 +5,6 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
-import net.foxyas.changedaddon.mixins.entity.LivingEntityAccessor;
-import net.foxyas.changedaddon.mixins.entity.MobAccessor;
 import net.foxyas.changedaddon.process.UntransfurReason;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
@@ -23,15 +21,10 @@ import net.ltxprogrammer.changed.util.TagUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerChunkCache;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -60,12 +53,15 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     @Unique
     protected boolean hasControlOverBody = true;
 
-    @Unique @Deprecated
+    @Unique
+    @Deprecated
     public KeyStateTracker secondAbilityKey = new KeyStateTracker();
-    @Unique @Deprecated
+    @Unique
+    @Deprecated
     public AbstractAbility<?> secondSelectedAbility;
 
-    @Shadow @Final
+    @Shadow
+    @Final
     protected TransfurVariant<ChangedEntity> parent;
     @Shadow
     @Final
@@ -119,22 +115,26 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         return hasControlOverBody;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public KeyStateTracker getSecondAbilityKey() {
         return secondAbilityKey;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public void setSecondAbilityKey(KeyStateTracker secondAbilityKey) {
         this.secondAbilityKey = secondAbilityKey;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public AbstractAbility<?> getSecondSelectedAbility() {
         return secondSelectedAbility;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public void setSecondSelectedAbility(AbstractAbility<?> secondSelectedAbility) {
         if (!abilityInstances.containsKey(secondSelectedAbility)) return;
 
@@ -150,69 +150,22 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         this.secondSelectedAbility = secondSelectedAbility;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public int getTicksSinceSecondAbilityActivity() {
         return ticksSinceSecondAbilityActivity;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public void resetTicksSinceSecondAbilityActivity() {
         this.ticksSinceSecondAbilityActivity = 0;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public AbstractAbilityInstance getSecondSelectedAbilityInstance() {
         return this.abilityInstances.get(this.secondSelectedAbility);
-    }
-
-    @Inject(method = "sync", at = @At("HEAD"), cancellable = true)
-    private void changedAddon$makeEntityControlPlayer(CallbackInfo ci) {
-        Player player = this.getHost();
-        ChangedEntity entity = getChangedEntity();
-
-        if (player instanceof ServerPlayer serverPlayer && entity != null && !player.level().isClientSide) {
-            if (!hasControlOverBody()) {
-                ci.cancel();
-                if (!(serverPlayer.level() instanceof ServerLevel serverLevel)) {
-                    return;
-                }
-
-                if (!(entity.isAddedToWorld())) {
-                    entity.onAddedToWorld();
-                }
-
-                // 2. Se a IA estiver parada ou sem Goals/Targets, força o re-registro e ativação
-                entity.setNoAi(false);
-                if (entity.goalSelector.getAvailableGoals().isEmpty() && entity instanceof MobAccessor accessor) {
-                    accessor.registerAIGoals();
-                }
-
-                entity.tick();
-
-                // 4. Copia a Posição e Rotação REAL calculada pela IA da entidade para o Player
-                player.setYRot(entity.getYRot());
-                player.setXRot(entity.getXRot());
-                player.setYHeadRot(entity.getYHeadRot());
-                player.yBodyRot = entity.yBodyRot;
-
-                // Transfere o movimento do Pathfinder para o Player
-                Vec3 entityPos = entity.position();
-                if (player.distanceToSqr(entity) > 0.001D) {
-                    player.setDeltaMovement(entity.getDeltaMovement());
-
-                    // Move o jogador para acompanhar exatamente onde a IA andou
-                    player.teleportTo(entityPos.x, entityPos.y, entityPos.z);
-                }
-
-                // Copia estados de animação/ações
-                if (((LivingEntityAccessor)entity).isJumping()) {
-                    player.jumpFromGround();
-                }
-                player.setShiftKeyDown(entity.isCrouching());
-                player.setSprinting(entity.isSprinting());
-
-            }
-        }
     }
 
     @Inject(method = "tickAbilities", at = @At(value = "FIELD",
