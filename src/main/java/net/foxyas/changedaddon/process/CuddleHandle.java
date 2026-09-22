@@ -135,7 +135,8 @@ public class CuddleHandle {
         LivingEntity cuddlingWith = Objects.requireNonNullElse(cuddlerFrom, cuddledFrom);
 
 
-        return !cuddlingWith.isDeadOrDying() && !cuddlingWith.isRemoved();
+        boolean normalSituation = !cuddlingWith.isDeadOrDying() && !cuddlingWith.isRemoved();
+        return normalSituation || PlayerUtil.canTurnCuddleModeOn(player);
     }
 
     public void stopCuddling() {

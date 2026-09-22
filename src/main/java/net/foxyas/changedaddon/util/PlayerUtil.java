@@ -134,7 +134,10 @@ public class PlayerUtil {
     }
 
     public static @Nullable LivingEntity getCuddledFrom(Player player) {
-        IAbstractChangedEntity grabber = IAbstractChangedEntity.forPlayer(player);
+        IAbstractChangedEntity grabber = IAbstractChangedEntity.forEitherSafe(player).orElse(null);
+        if (grabber == null) {
+            return null;
+        }
         GrabEntityAbilityInstance grabEntityAbilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
         if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
             return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null ? grabEntityAbilityInstance.grabbedEntity : null;

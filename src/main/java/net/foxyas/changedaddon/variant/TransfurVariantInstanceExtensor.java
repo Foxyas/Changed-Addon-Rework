@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.process.UntransfurReason;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.network.packet.SyncTransfurPacket;
 import net.ltxprogrammer.changed.util.KeyStateTracker;
@@ -41,6 +42,8 @@ public interface TransfurVariantInstanceExtensor {
     boolean getUntransfurImmunity(UntransfurReason type);
 
     void setUntransfurImmunity(UntransfurReason type, boolean value);
+
+    ChangedEntity getChangedEntityInControl();
 
     default void maySendDataUpdate() {
         if (!(this instanceof TransfurVariantInstance<?> variantInstance)) {

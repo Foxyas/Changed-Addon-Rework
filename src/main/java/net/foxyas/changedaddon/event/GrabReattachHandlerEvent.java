@@ -72,7 +72,7 @@ public class GrabReattachHandlerEvent {
         // Reconstruct the grabber (and any non-player passengers it still had) at the
         // player's current position — not wherever it was standing when they logged out.
         Entity spawnedRaw = EntityType.loadEntityRecursive(storedTag, serverLevel, entity -> {
-            entity.moveTo(player.getX(), player.getY(), player.getZ(), player.getYRot(), 0F);
+            entity.moveTo(player.getX(), player.getY(), player.getZ(), player.getYRot(), player.getXRot());
             return !serverLevel.addWithUUID(entity) ? null : entity;
         });
 

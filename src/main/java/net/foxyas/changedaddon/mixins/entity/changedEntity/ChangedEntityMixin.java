@@ -163,7 +163,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
         if (player instanceof Player underLyingPlayer) {
             TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(underLyingPlayer);
             if (variantInstance instanceof TransfurVariantInstanceExtensor extensor) {
-                if (!extensor.hasControlOverBody()) {
+                if (!extensor.hasControlOverBody() && is(extensor.getChangedEntityInControl())) {
                     return;
                 }
             }

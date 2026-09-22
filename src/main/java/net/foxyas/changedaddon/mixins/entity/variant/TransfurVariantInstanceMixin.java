@@ -2,6 +2,8 @@ package net.foxyas.changedaddon.mixins.entity.variant;
 
 import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
@@ -16,11 +18,16 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.KeyStateTracker;
 import net.ltxprogrammer.changed.util.TagUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +44,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TransfurVariantInstance.class, remap = false)
-public abstract class TransfurVariantInstanceMixin implements TransfurVariantInstanceExtensor {
+public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> implements TransfurVariantInstanceExtensor {
 
     @Shadow
     @Final
@@ -52,6 +59,9 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
 
     @Unique
     protected boolean hasControlOverBody = true;
+
+    @Unique
+    protected T entityInControl = null;
 
     @Unique
     @Deprecated
@@ -82,6 +92,13 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     @Shadow
     public abstract Player getHost();
 
+    @Shadow
+    @Final
+    protected T entity;
+
+    @Shadow
+    public abstract float getTransfurProgression(float partial);
+
     @Inject(at = @At("HEAD"), method = "lambda$onBlockRightClick$13", cancellable = true)
     private static void allowCuddleInteract(PlayerInteractEvent.RightClickBlock event, TransfurVariantInstance<?> variant, CallbackInfo ci) {
         Level level = event.getLevel();
@@ -108,6 +125,11 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     public void setControlOverBody(boolean controlOverBody) {
         this.hasControlOverBody = controlOverBody;
         maySendDataUpdate();
+    }
+
+    @Override
+    public ChangedEntity getChangedEntityInControl() {
+        return entityInControl;
     }
 
     @Override
@@ -166,6 +188,74 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     @Deprecated
     public AbstractAbilityInstance getSecondSelectedAbilityInstance() {
         return this.abilityInstances.get(this.secondSelectedAbility);
+    }
+
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;checkForTemporary()Z"))
+    private boolean checkForTemporaryHook(TransfurVariantInstance<?> instance, Operation<Boolean> original) {
+        if (!ProcessTransfur.isPlayerTransfurred(this.host)) return original.call(instance);
+
+        if (!hasControlOverBody && !host.isSpectator()) {
+
+            if (this.entityInControl != null) {
+                if (this.entityInControl.isRemoved()) {
+                    this.entityInControl = null;
+                    this.generateEntityInControl();
+                }
+
+                Player player = this.getHost();
+                if (entityInControl.getUnderlyingPlayer() == null || !player.is(entityInControl.getUnderlyingPlayer())) {
+                    entityInControl.setUnderlyingPlayer(player);
+                }
+                if (!entityInControl.isAddedToWorld() && !host.level().isClientSide()) {
+                    if (!player.level().addFreshEntity(entityInControl)) {
+                        entityInControl.setUUID(Mth.createInsecureUUID(entityInControl.getRandom()));
+                    } else {
+                        if (player instanceof ServerPlayer serverPlayer) {
+                            serverPlayer.setCamera(entityInControl);
+                        }
+                    }
+                }
+
+                if (player instanceof ServerPlayer serverPlayer) {
+                    if (!serverPlayer.getCamera().is(entityInControl)) {
+                        serverPlayer.setCamera(entityInControl);
+                    }
+                }
+                player.setInvisible(true);
+                player.setSilent(true);
+
+                return true;
+            } else if (this.getTransfurProgression(0) >= 1f) {
+                generateEntityInControl();
+                return true;
+            }
+        } else {
+            if (entityInControl != null) {
+                this.entityInControl.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
+                this.entityInControl = null;
+                Player player = this.getHost();
+                player.setInvisible(false);
+                player.setSilent(false);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.setCamera(null);
+                }
+            }
+        }
+
+        return original.call(instance);
+    }
+
+    private void generateEntityInControl() {
+        EntityType<?> type = this.entity.getType();
+        Entity rawEntity = type.create(host.level());
+        if (rawEntity instanceof ChangedEntity changedEntity) {
+            CompoundTag entityData = getChangedEntity().saveWithoutId(new CompoundTag());
+            entityData.remove("UUID");
+            changedEntity.load(entityData);
+            changedEntity.setUUID(Mth.createInsecureUUID(changedEntity.getRandom()));
+            changedEntity.setUnderlyingPlayer(host);
+            entityInControl = (T) changedEntity;
+        }
     }
 
     @Inject(method = "tickAbilities", at = @At(value = "FIELD",
@@ -270,6 +360,11 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
             tag.putBoolean("untransfurImmunityCommand", getUntransfurImmunity(UntransfurReason.COMMAND));
         }
         tag.putBoolean("hasControlOverBody", hasControlOverBody);
+        if (!this.hasControlOverBody && this.entityInControl != null) {
+            CompoundTag entityInControlTag = new CompoundTag();
+            boolean saved = entityInControl.saveAsPassenger(entityInControlTag);
+            if (saved) tag.put("entityInControlData", entityInControlTag);
+        }
     }
 
     @Inject(method = "load", at = @At("RETURN"))
@@ -283,5 +378,16 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         if (tag.contains("untransfurImmunityCommand"))
             setUntransfurImmunity(UntransfurReason.COMMAND, tag.getBoolean("untransfurImmunityCommand"));
         if (tag.contains("hasControlOverBody")) hasControlOverBody = tag.getBoolean("hasControlOverBody");
+        if (tag.contains("entityInControlData")) {
+            CompoundTag entityInControlData = tag.getCompound("entityInControlData");
+            Level level = host.level;
+            Entity spawnedRaw = EntityType.loadEntityRecursive(entityInControlData, level, entity -> {
+                entity.moveTo(host.getX(), host.getY(), host.getZ(), host.getYRot(), host.getXRot());
+                return entity;
+            });
+            if (spawnedRaw instanceof ChangedEntity changedEntity) {
+                this.entityInControl = (T) changedEntity;
+            }
+        }
     }
 }

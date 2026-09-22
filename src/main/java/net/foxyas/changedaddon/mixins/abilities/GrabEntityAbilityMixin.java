@@ -8,6 +8,7 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.Component;
@@ -59,29 +60,30 @@ public abstract class GrabEntityAbilityMixin extends AbstractAbility<GrabEntityA
         return description;
     }
 
-//    @ModifyReturnValue(method = "getControllingEntity", at = @At("RETURN"))
-//    private static LivingEntity getControllingEntityHook(LivingEntity original) {
-//        if (original instanceof Player player) {
-//            TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-//            if (variantInstance instanceof TransfurVariantInstanceExtensor instanceExtensor) {
-//                if (!instanceExtensor.hasControlOverBody()) {
-//                    return variantInstance.getChangedEntity();
-//                }
-//            }
-//        }
-//        return original;
-//    }
-//
-//    @ModifyReturnValue(method = "isEntityNoControl", at = @At("RETURN"))
-//    private static boolean isEntityNoControlHook(boolean original, Entity entity) {
-//        if (entity instanceof Player player) {
-//            TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-//            if (variantInstance instanceof TransfurVariantInstanceExtensor instanceExtensor) {
-//                if (!instanceExtensor.hasControlOverBody()) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return original;
-//    }
+    @ModifyReturnValue(method = "getControllingEntity", at = @At("RETURN"))
+    private static LivingEntity getControllingEntityHook(LivingEntity original, LivingEntity livingEntity) {
+        if (livingEntity instanceof Player player && !player.isSpectator()) {
+            TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (variantInstance instanceof TransfurVariantInstanceExtensor instanceExtensor) {
+                ChangedEntity changedEntityInControl = instanceExtensor.getChangedEntityInControl();
+                if (!instanceExtensor.hasControlOverBody() && changedEntityInControl != null) {
+                    return changedEntityInControl;
+                }
+            }
+        }
+        return original;
+    }
+
+    @ModifyReturnValue(method = "isEntityNoControl", at = @At("RETURN"))
+    private static boolean isEntityNoControlHook(boolean original, Entity entity) {
+        if (entity instanceof Player player && !player.isSpectator()) {
+            TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (variantInstance instanceof TransfurVariantInstanceExtensor instanceExtensor) {
+                if (!instanceExtensor.hasControlOverBody()) {
+                    return true;
+                }
+            }
+        }
+        return original;
+    }
 }
