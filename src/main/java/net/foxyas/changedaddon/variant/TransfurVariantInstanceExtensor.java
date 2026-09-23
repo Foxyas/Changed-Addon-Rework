@@ -12,6 +12,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.PacketDistributor;
 
+import java.util.UUID;
+
 public interface TransfurVariantInstanceExtensor {
 
     @Deprecated
@@ -44,6 +46,7 @@ public interface TransfurVariantInstanceExtensor {
     void setUntransfurImmunity(UntransfurReason type, boolean value);
 
     ChangedEntity getChangedEntityInControl();
+    void setChangedEntityInControl(ChangedEntity changedEntity);
 
     default void maySendDataUpdate() {
         if (!(this instanceof TransfurVariantInstance<?> variantInstance)) {

@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
 import net.foxyas.changedaddon.process.UntransfurReason;
+import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -32,6 +33,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -133,6 +135,11 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
     }
 
     @Override
+    public void setChangedEntityInControl(ChangedEntity changedEntity) {
+        this.entityInControl = (T) changedEntity;
+    }
+
+    @Override
     public boolean hasControlOverBody() {
         return hasControlOverBody;
     }
@@ -195,7 +202,6 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
         if (!ProcessTransfur.isPlayerTransfurred(this.host)) return original.call(instance);
 
         if (!hasControlOverBody && !host.isSpectator()) {
-
             if (this.entityInControl != null) {
                 if (this.entityInControl.isRemoved()) {
                     this.entityInControl = null;
@@ -209,25 +215,20 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
                 if (!entityInControl.isAddedToWorld() && !host.level().isClientSide()) {
                     if (!player.level().addFreshEntity(entityInControl)) {
                         entityInControl.setUUID(Mth.createInsecureUUID(entityInControl.getRandom()));
-                    } else {
-                        if (player instanceof ServerPlayer serverPlayer) {
-                            serverPlayer.setCamera(entityInControl);
-                        }
                     }
                 }
-
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (!serverPlayer.getCamera().is(entityInControl)) {
-                        serverPlayer.setCamera(entityInControl);
-                    }
-                }
+//                if (player instanceof ServerPlayer serverPlayer) {
+//                    serverPlayer.setCamera(entityInControl);
+//                }
                 player.setInvisible(true);
                 player.setSilent(true);
 
                 return true;
             } else if (this.getTransfurProgression(0) >= 1f) {
-                generateEntityInControl();
-                return true;
+                if (!host.level().isClientSide()) {
+                    generateEntityInControl();
+                    return true;
+                }
             }
         } else {
             if (entityInControl != null) {
@@ -249,10 +250,9 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
         EntityType<?> type = this.entity.getType();
         Entity rawEntity = type.create(host.level());
         if (rawEntity instanceof ChangedEntity changedEntity) {
-            CompoundTag entityData = getChangedEntity().saveWithoutId(new CompoundTag());
+            CompoundTag entityData = entity.saveWithoutId(new CompoundTag());
             entityData.remove("UUID");
             changedEntity.load(entityData);
-            changedEntity.setUUID(Mth.createInsecureUUID(changedEntity.getRandom()));
             changedEntity.setUnderlyingPlayer(host);
             entityInControl = (T) changedEntity;
         }
@@ -346,6 +346,7 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
         if (changedEntity instanceof IAlphaAbleEntity iAlphaAbleEntity) {
             iAlphaAbleEntity.cleanAlphaAttributesFromHost(changedEntity);
         }
+        this.entityInControl = null;
     }
 
     @Inject(method = "save", at = @At("RETURN"))
@@ -381,12 +382,19 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
         if (tag.contains("entityInControlData")) {
             CompoundTag entityInControlData = tag.getCompound("entityInControlData");
             Level level = host.level;
-            Entity spawnedRaw = EntityType.loadEntityRecursive(entityInControlData, level, entity -> {
-                entity.moveTo(host.getX(), host.getY(), host.getZ(), host.getYRot(), host.getXRot());
-                return entity;
-            });
-            if (spawnedRaw instanceof ChangedEntity changedEntity) {
-                this.entityInControl = (T) changedEntity;
+            if (level.isClientSide()) {
+                Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(level, entityInControlData.getUUID("UUID"));
+                if (entityByUUID instanceof ChangedEntity changedEntity) {
+                    this.entityInControl = (T) changedEntity;
+                }
+            } else {
+                Entity spawnedRaw = EntityType.loadEntityRecursive(entityInControlData, level, entity -> {
+                    entity.moveTo(host.getX(), host.getY(), host.getZ(), host.getYRot(), host.getXRot());
+                    return entity;
+                });
+                if (spawnedRaw instanceof ChangedEntity changedEntity) {
+                    this.entityInControl = (T) changedEntity;
+                }
             }
         }
     }

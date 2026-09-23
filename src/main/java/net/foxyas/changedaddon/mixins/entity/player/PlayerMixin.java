@@ -12,6 +12,7 @@ import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.AbstractKatanaItem;
 import net.foxyas.changedaddon.item.api.IDrinkItem;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
+import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
 import net.ltxprogrammer.changed.data.AccessorySlots;
@@ -93,6 +94,14 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
         if (this.overrideSwimUpdate()) {
             self.setSwimming(self.isSprinting() && !self.isPassenger());
         }
+    }
+
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isSpectator()Z"))
+    private boolean hasNoControlOfBody(Player player, Operation<Boolean> original){
+        if (ProcessTransfur.getPlayerTransfurVariant(player) instanceof TransfurVariantInstanceExtensor extensor) {
+            if (!extensor.hasControlOverBody()) return true;
+        }
+        return original.call(player);
     }
 
 

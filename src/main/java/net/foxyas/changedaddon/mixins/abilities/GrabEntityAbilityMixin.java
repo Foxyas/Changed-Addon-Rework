@@ -62,7 +62,7 @@ public abstract class GrabEntityAbilityMixin extends AbstractAbility<GrabEntityA
 
     @ModifyReturnValue(method = "getControllingEntity", at = @At("RETURN"))
     private static LivingEntity getControllingEntityHook(LivingEntity original, LivingEntity livingEntity) {
-        if (livingEntity instanceof Player player && !player.isSpectator()) {
+        if (livingEntity instanceof Player player && !player.isSpectator() && !player.level().isClientSide()) {
             TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
             if (variantInstance instanceof TransfurVariantInstanceExtensor instanceExtensor) {
                 ChangedEntity changedEntityInControl = instanceExtensor.getChangedEntityInControl();
