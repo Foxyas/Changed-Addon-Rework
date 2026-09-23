@@ -8,6 +8,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.network.packet.SyncTransfurPacket;
 import net.ltxprogrammer.changed.util.KeyStateTracker;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.PacketDistributor;
@@ -64,6 +65,26 @@ public interface TransfurVariantInstanceExtensor {
 
                 // TODO: maybe Change this to be just the packet below instead of a custom one?
                 Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> serverPlayer), SyncTransfurPacket.Builder.of(player));
+            }
+        }
+    }
+
+    default void requestDataUpdate() {
+        if (!(this instanceof TransfurVariantInstance<?> variantInstance)) {
+            return;
+        }
+
+        Player player = variantInstance.getHost();
+        if (player == null) return;
+
+        if (player.level().isClientSide) {
+            if (player instanceof LocalPlayer localPlayer && localPlayer.connection != null) {
+//                boolean untransfurImmunitySurvival = this.getUntransfurImmunity(UntransfurReason.SURVIVAL);
+//                boolean untransfurImmunityCommand = this.getUntransfurImmunity(UntransfurReason.COMMAND);
+//                PacketsUtils.sendToPlayer(new SyncAllUntransfurImmunityPacket(localPlayer.getId(), untransfurImmunityCommand, untransfurImmunitySurvival), localPlayer);
+
+                // TODO: maybe Change this to be just the packet below instead of a custom one?
+                Changed.PACKET_HANDLER.sendToServer(SyncTransfurPacket.Builder.of(player));
             }
         }
     }

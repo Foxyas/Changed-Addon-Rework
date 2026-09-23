@@ -6,7 +6,9 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.IDynamicCamera;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
+import net.foxyas.changedaddon.mixins.entity.MobAccessor;
 import net.foxyas.changedaddon.process.UntransfurReason;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
@@ -35,6 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -58,12 +61,6 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
     protected boolean untransfurImmunity = false;
     @Unique
     protected boolean untransfurImmunityCommand = false;
-
-    @Unique
-    protected boolean hasControlOverBody = true;
-
-    @Unique
-    protected T entityInControl = null;
 
     @Unique
     @Deprecated
@@ -101,6 +98,7 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
     @Shadow
     public abstract float getTransfurProgression(float partial);
 
+
     @Inject(at = @At("HEAD"), method = "lambda$onBlockRightClick$13", cancellable = true)
     private static void allowCuddleInteract(PlayerInteractEvent.RightClickBlock event, TransfurVariantInstance<?> variant, CallbackInfo ci) {
         Level level = event.getLevel();
@@ -121,27 +119,6 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
         if (type == UntransfurReason.SURVIVAL) untransfurImmunity = value;
         if (type == UntransfurReason.COMMAND) untransfurImmunityCommand = value;
         maySendDataUpdate();
-    }
-
-    @Override
-    public void setControlOverBody(boolean controlOverBody) {
-        this.hasControlOverBody = controlOverBody;
-        maySendDataUpdate();
-    }
-
-    @Override
-    public ChangedEntity getChangedEntityInControl() {
-        return entityInControl;
-    }
-
-    @Override
-    public void setChangedEntityInControl(ChangedEntity changedEntity) {
-        this.entityInControl = (T) changedEntity;
-    }
-
-    @Override
-    public boolean hasControlOverBody() {
-        return hasControlOverBody;
     }
 
     @Override
@@ -195,67 +172,6 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
     @Deprecated
     public AbstractAbilityInstance getSecondSelectedAbilityInstance() {
         return this.abilityInstances.get(this.secondSelectedAbility);
-    }
-
-    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;checkForTemporary()Z"))
-    private boolean checkForTemporaryHook(TransfurVariantInstance<?> instance, Operation<Boolean> original) {
-        if (!ProcessTransfur.isPlayerTransfurred(this.host)) return original.call(instance);
-
-        if (!hasControlOverBody && !host.isSpectator()) {
-            if (this.entityInControl != null) {
-                if (this.entityInControl.isRemoved()) {
-                    this.entityInControl = null;
-                    this.generateEntityInControl();
-                }
-
-                Player player = this.getHost();
-                if (entityInControl.getUnderlyingPlayer() == null || !player.is(entityInControl.getUnderlyingPlayer())) {
-                    entityInControl.setUnderlyingPlayer(player);
-                }
-                if (!entityInControl.isAddedToWorld() && !host.level().isClientSide()) {
-                    if (!player.level().addFreshEntity(entityInControl)) {
-                        entityInControl.setUUID(Mth.createInsecureUUID(entityInControl.getRandom()));
-                    }
-                }
-//                if (player instanceof ServerPlayer serverPlayer) {
-//                    serverPlayer.setCamera(entityInControl);
-//                }
-                player.setInvisible(true);
-                player.setSilent(true);
-
-                return true;
-            } else if (this.getTransfurProgression(0) >= 1f) {
-                if (!host.level().isClientSide()) {
-                    generateEntityInControl();
-                    return true;
-                }
-            }
-        } else {
-            if (entityInControl != null) {
-                this.entityInControl.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
-                this.entityInControl = null;
-                Player player = this.getHost();
-                player.setInvisible(false);
-                player.setSilent(false);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.setCamera(null);
-                }
-            }
-        }
-
-        return original.call(instance);
-    }
-
-    private void generateEntityInControl() {
-        EntityType<?> type = this.entity.getType();
-        Entity rawEntity = type.create(host.level());
-        if (rawEntity instanceof ChangedEntity changedEntity) {
-            CompoundTag entityData = entity.saveWithoutId(new CompoundTag());
-            entityData.remove("UUID");
-            changedEntity.load(entityData);
-            changedEntity.setUnderlyingPlayer(host);
-            entityInControl = (T) changedEntity;
-        }
     }
 
     @Inject(method = "tickAbilities", at = @At(value = "FIELD",
@@ -345,57 +261,6 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
         ChangedEntity changedEntity = this.getChangedEntity();
         if (changedEntity instanceof IAlphaAbleEntity iAlphaAbleEntity) {
             iAlphaAbleEntity.cleanAlphaAttributesFromHost(changedEntity);
-        }
-        this.entityInControl = null;
-    }
-
-    @Inject(method = "save", at = @At("RETURN"))
-    private void InjectData(CallbackInfoReturnable<CompoundTag> cir) {
-        CompoundTag tag = cir.getReturnValue();
-        if (this.getChangedEntity() instanceof IVariantExtraStats stats) {
-            stats.saveExtraData(tag);
-        }
-
-        tag.putBoolean("untransfurImmunity", getUntransfurImmunity(UntransfurReason.SURVIVAL));
-        if (!getUntransfurImmunity(UntransfurReason.COMMAND)) {
-            tag.putBoolean("untransfurImmunityCommand", getUntransfurImmunity(UntransfurReason.COMMAND));
-        }
-        tag.putBoolean("hasControlOverBody", hasControlOverBody);
-        if (!this.hasControlOverBody && this.entityInControl != null) {
-            CompoundTag entityInControlTag = new CompoundTag();
-            boolean saved = entityInControl.saveAsPassenger(entityInControlTag);
-            if (saved) tag.put("entityInControlData", entityInControlTag);
-        }
-    }
-
-    @Inject(method = "load", at = @At("RETURN"))
-    private void readInjectedData(CompoundTag tag, CallbackInfo cir) {
-        if (this.getChangedEntity() instanceof IVariantExtraStats IVariantExtraStats) {
-            IVariantExtraStats.readExtraData(tag);
-        }
-
-        if (tag.contains("untransfurImmunity"))
-            setUntransfurImmunity(UntransfurReason.SURVIVAL, tag.getBoolean("untransfurImmunity"));
-        if (tag.contains("untransfurImmunityCommand"))
-            setUntransfurImmunity(UntransfurReason.COMMAND, tag.getBoolean("untransfurImmunityCommand"));
-        if (tag.contains("hasControlOverBody")) hasControlOverBody = tag.getBoolean("hasControlOverBody");
-        if (tag.contains("entityInControlData")) {
-            CompoundTag entityInControlData = tag.getCompound("entityInControlData");
-            Level level = host.level;
-            if (level.isClientSide()) {
-                Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(level, entityInControlData.getUUID("UUID"));
-                if (entityByUUID instanceof ChangedEntity changedEntity) {
-                    this.entityInControl = (T) changedEntity;
-                }
-            } else {
-                Entity spawnedRaw = EntityType.loadEntityRecursive(entityInControlData, level, entity -> {
-                    entity.moveTo(host.getX(), host.getY(), host.getZ(), host.getYRot(), host.getXRot());
-                    return entity;
-                });
-                if (spawnedRaw instanceof ChangedEntity changedEntity) {
-                    this.entityInControl = (T) changedEntity;
-                }
-            }
         }
     }
 }

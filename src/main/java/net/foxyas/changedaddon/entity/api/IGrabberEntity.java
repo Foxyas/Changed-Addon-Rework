@@ -105,6 +105,11 @@ public interface IGrabberEntity {
         return createGrabAbility(true);
     }
 
+    // Todo: Remove this function since ChangedEntity will get such feature.
+    default GrabEntityAbilityInstance makeGrabAbility() {
+        return createGrabAbility(false);
+    }
+
     default boolean canUseGrab() {
         return isAbleToGrab();
     }

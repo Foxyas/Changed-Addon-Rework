@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.init;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.packet.PatKeyPacket;
@@ -193,7 +194,8 @@ public class ChangedAddonKeyMappings {
                 });
 
                 ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
-                ClientPatState.patting = vars.ticksPattingAnEntity >= 3;
+                int ticksNeeded = ChangedAddonClientConfiguration.PAT_ANIMATION_TRIGGER_TIME.get();
+                ClientPatState.patting = ticksNeeded == -1 || vars.ticksPattingAnEntity >= ticksNeeded;
 
                 boolean hasValidTarget = targetEntityResult != null && targetEntityResult.getType() != HitResult.Type.MISS;
                 if (hasValidTarget) {

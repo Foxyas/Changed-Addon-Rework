@@ -252,6 +252,29 @@ public class CommonEvent {
     }
 
     @SubscribeEvent
+    public static void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
+        Player player = event.getEntity();
+        TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (variantInstance instanceof TransfurVariantInstanceExtensor extensor) {
+            ChangedEntity changedEntityInControl = extensor.getChangedEntityInControl();
+            if (changedEntityInControl != null) {
+                changedEntityInControl.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
+            }
+        }
+    }
+
+//    @SubscribeEvent
+//    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+//        Player player = event.getEntity();
+//        TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+//        if (variantInstance instanceof TransfurVariantInstanceExtensor extensor) {
+//            if (!extensor.hasControlOverBody()) {
+//                extensor.maySendDataUpdate();
+//            }
+//        }
+//    }
+
+    @SubscribeEvent
     public static void forcePlayersToNeverSleepEnough(TickEvent.PlayerTickEvent event) {
         /* Moved to CuddleHandle$mayForcePlayerToNeverSleepEnough
         if (event.phase != TickEvent.Phase.END) return;
