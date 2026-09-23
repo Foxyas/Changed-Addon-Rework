@@ -2,16 +2,15 @@ package net.foxyas.changedaddon.mixins.entity.variant;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicCamera;
-import net.foxyas.changedaddon.process.UntransfurReason;
 import net.foxyas.changedaddon.util.PlayerUtil;
-import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
+import net.ltxprogrammer.changed.client.LocalPlayerAccessor;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -99,6 +98,10 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                     this.generateEntityInControl();
                 }
 
+                if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
+                    ((LocalPlayerAccessor) localPlayer).setHandsBusy(true);
+                }
+
                 Player player = this.getHost();
                 if (!entityInControl.isAddedToWorld() && !host.level().isClientSide()) {
                     if (!player.level().addFreshEntity(entityInControl)) {
@@ -135,6 +138,10 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                         serverPlayer.setCamera(null);
                     }
                 }
+
+                if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
+                    ((LocalPlayerAccessor) localPlayer).setHandsBusy(false);
+                }
             }
         }
 
@@ -156,7 +163,6 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
     private void injectUnHookALl(Player player, CallbackInfo ci) {
         this.entityInControl = null;
     }
-
 
 
     @Inject(method = "save", at = @At("RETURN"))

@@ -7,7 +7,6 @@ import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoa
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
-import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
 import net.foxyas.changedaddon.world.gamerules.WorldDifficulty;
@@ -29,9 +28,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -45,6 +42,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
+// Grab Mixin should only declare IGrabberEntity
 @Mixin(value = ChangedEntity.class, remap = false)
 public abstract class ChangedEntityGrabHandleMixin extends Monster implements IGrabberEntity, IAlphaAbleEntity {
 
@@ -67,7 +65,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Shadow
     private @Nullable Player underlyingPlayer;
 
-    @Inject(at = @At("TAIL"), method = "<init>", cancellable = true)
+    @Inject(at = @At("TAIL"), method = "<init>")
     // Todo: Remove This in 0.16.0
     private void initHook(EntityType<? extends Monster> type, Level level, CallbackInfo ci) {
         if (ChangedAddonServerConfiguration.CAN_GRABBY_ENTITIES_SPAWN.get()) {
@@ -85,7 +83,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         }
 
         if (canEntityGrab(type, level)) {
-            this.grabEntityAbilityInstance = this.createSimpleGrabAbility();
+            this.grabEntityAbilityInstance = this.makeGrabAbility();
         }
     }
 
@@ -119,16 +117,17 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         return this;
     }
 
-    // Todo: Remove This in 0.16.0
-    @Inject(at = @At("TAIL"), method = "registerGoals", remap = true, cancellable = true)
+    @Inject(at = @At("TAIL"), method = "registerGoals", remap = true)
     private void goalsHook(CallbackInfo ci) {
         ChangedEntity self = (ChangedEntity) (Object) this;
         if (self instanceof IGrabberCondition iGrabberCondition && !iGrabberCondition.isAffectedByGrab()) {
             return;
         }
         this.goalSelector.addGoal(10, new MayDropGrabbedEntityGoal(this));
-        this.goalSelector.addGoal(10, new MayGrabTargetGoal(this));
         this.goalSelector.addGoal(10, new MayCauseGrabDamageGoal(this));
+
+        // Todo: Remove This in 0.16.0
+        this.goalSelector.addGoal(10, new MayGrabTargetGoal(this));
     }
 
     @Override
@@ -155,7 +154,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         // Todo: Remove This in 0.16.0
         if (canEntityGrab(this.getType(), level)) {
             if (grabEntityAbilityInstance == null) {
-                this.grabEntityAbilityInstance = createSimpleGrabAbility(); // fail-safe
+                this.grabEntityAbilityInstance = makeGrabAbility(); // fail-safe
                 return;
             }
             if (!this.level.isClientSide()) {
@@ -182,7 +181,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 //        }
     }
 
-    @Inject(method = "variantTick", at = @At("HEAD"), remap = false, cancellable = true)
+    @Inject(method = "variantTick", at = @At("HEAD"), remap = false)
     private void variantTickHook(CallbackInfo ci) {
 //        Todo: Uncomment this if REALLY needed. check LivingEntityChangedEntityMixin$changedEntityOnSyncedDataUpdatedHook for details.
 //        ChangedEntity self = (ChangedEntity) (Object) this;
@@ -196,41 +195,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 //                appliedAlphaAttributesForHost = false;
 //            }
 //        }
-    }
-
-    @Inject(method = "tick", at = @At("HEAD"), remap = true, cancellable = true)
-    private void tickHook(CallbackInfo ci) {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        if (self instanceof BehemothHead behemothHead) {
-            if (behemothHead instanceof IAlphaAbleEntity iAlphaAbleEntity) {
-                if (behemothHead.rightHand instanceof IAlphaAbleEntity alphaAbleEntity) {
-                    alphaAbleEntity.setAlpha(iAlphaAbleEntity.isAlpha());
-                }
-                if (behemothHead.leftHand instanceof IAlphaAbleEntity alphaAbleEntity) {
-                    alphaAbleEntity.setAlpha(iAlphaAbleEntity.isAlpha());
-                }
-            }
-        }
-    }
-
-    @Inject(method = "mirrorLiving", at = @At("TAIL"), remap = false)
-    private void mirrorLivingHook(LivingEntity player, CallbackInfo ci) {
-        if (this.getUnderlyingPlayer() == null || this.getUnderlyingPlayer() != player) return;
-
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        AttributeInstance alphaScaleAttributeSelf = self.getAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
-        AttributeInstance alphaScaleAttributePlayer = player.getAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
-
-        if (alphaScaleAttributeSelf != null && alphaScaleAttributePlayer != null) {
-            double selfValue = alphaScaleAttributeSelf.getValue();
-            double playerValue = alphaScaleAttributePlayer.getValue();
-            if (selfValue != playerValue) {
-                alphaScaleAttributeSelf.replaceFrom(alphaScaleAttributePlayer);
-                this.refreshDimensions();
-                refreshAttributes(self);
-                refreshAttributesForHost(self);
-            }
-        }
     }
 
     @Override
@@ -286,8 +250,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         if (canEntityGrab(this.getType(), level)) {
             this.saveGrabAbilityInTag(tag);
         }
-        tag.putBoolean("isAlpha", isAlpha());
-//        tag.putFloat("alphaScale", alphaAdditionalScale());
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"), remap = true)
@@ -296,8 +258,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         if (canEntityGrab(this.getType(), level)) {
             this.readGrabAbilityInTag(tag);
         }
-        if (tag.contains("isAlpha")) setAlpha(tag.getBoolean("isAlpha"));
-//        if (tag.contains("alphaScale")) setAlphaScale(tag.getFloat("alphaScale"));
     }
 
     @Override
@@ -319,16 +279,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         return this.canUseGrab() || isAlpha();
     }
 
-
-    @Inject(method = "copyTraitsFrom", at = @At("TAIL"))
-    private void syncAlphaData(IAbstractChangedEntity entity, CallbackInfo ci) {
-        var self = (ChangedEntity) (Object) this;
-        if (self instanceof IAlphaAbleEntity to && entity.getChangedEntity() instanceof IAlphaAbleEntity from) {
-            to.setAlpha(from.isAlpha());
-            to.setAlphaScale(from.alphaAdditionalScale());
-        }
-    }
-
     @ModifyReturnValue(method = "getAbilityInstance", at = @At("RETURN"))
     private <A extends AbstractAbilityInstance> A getAbilityInstanceHook(A original, AbstractAbility<A> ability) {
         if (canEntityGrab(this.getType(), level) && original == null)
@@ -336,66 +286,11 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         return original;
     }
 
-    @Override
-    public boolean isAlpha() {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        boolean originalValue = self.getEntityData().get(IS_ALPHA);
-        if (this instanceof IOverrideAlphaState IOverrideAlphaState) {
-            return IOverrideAlphaState.isConsiderateAlpha(originalValue);
-        }
-        return originalValue;
-    }
-
-    @Override
-    public void setAlpha(boolean alpha) {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        if (this.isAlpha() != alpha) {
-            self.getEntityData().set(IS_ALPHA, alpha);
-            this.refreshDimensions();
-            refreshAttributes(self);
-            refreshAttributesForHost(self);
-        }
-    }
-
-    @Override
-    public void setAlphaScale(float scale) {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        AttributeInstance alphaScale = this.getAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
-        if (alphaScale == null) return;
-        if (this.alphaAdditionalScale() != scale) {
-            alphaScale.setBaseValue(scale);
-            this.refreshDimensions();
-            refreshAttributes(self);
-            refreshAttributesForHost(self);
-        }
-    }
-
-    @Inject(method = "setTarget", at = @At("TAIL"), remap = true)
-    private void makeAlphaNotDespawnWhenTargetAPlayer(LivingEntity entity, CallbackInfo ci) {
-        if (entity instanceof Player || entity instanceof AbstractVillager) this.setPersistenceRequired();
-    }
-
-    @ModifyReturnValue(method = "savePlayerVariantData", at = @At("RETURN"))
-    private CompoundTag savePlayerVariantDataHook(CompoundTag original) {
-        CompoundTag tag = original != null ? original : new CompoundTag();
-        tag.putBoolean("isAlpha", isAlpha());
-//        tag.putFloat("alphaScale", alphaAdditionalScale());
-        return tag;
-    }
-
-    @Inject(method = "readPlayerVariantData", at = @At("RETURN"), cancellable = true)
-    private void readPlayerVariantDataHook(CompoundTag tag, CallbackInfo ci) {
-        if (tag == null) return;
-        if (tag.contains("isAlpha")) setAlpha(tag.getBoolean("isAlpha"));
-//        if (tag.contains("alphaScale")) setAlphaScale(tag.getFloat("alphaScale"));
-    }
-
-    @Inject(method = "defineSynchedData", at = @At("HEAD"), remap = true, cancellable = true)
+    @Inject(method = "defineSynchedData", at = @At("HEAD"), remap = true)
     private void defineSynchedDataHook(CallbackInfo ci) {
         ChangedEntity self = (ChangedEntity) (Object) this;
         self.getEntityData().define(CAN_USE_GRAB, false);
         self.getEntityData().define(GRAB_COOLDOWN, 0);
-        self.getEntityData().define(IS_ALPHA, false);
     }
 
 //

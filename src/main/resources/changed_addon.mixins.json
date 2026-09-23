@@ -42,6 +42,7 @@
     "entity.WanderingTraderMixin",
     "entity.attributes.AttributeMapAccessor",
     "entity.changedEntity.AbstractDarkLatexEntityMixin",
+    "entity.changedEntity.ChangedEntityAlphaEntityHandle",
     "entity.changedEntity.ChangedEntityGrabHandleMixin",
     "entity.changedEntity.ChangedEntityMixin",
     "entity.changedEntity.DarkLatexWolfPupMixin",

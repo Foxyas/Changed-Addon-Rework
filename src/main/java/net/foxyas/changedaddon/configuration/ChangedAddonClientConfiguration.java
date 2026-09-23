@@ -25,6 +25,7 @@ public class ChangedAddonClientConfiguration {
     public static final ForgeConfigSpec.ConfigValue<BossMusicHandler.FollowType> BOSS_MUSIC_LOCATION_TYPE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> SUIT_ANIM;
     public static final ForgeConfigSpec.ConfigValue<Boolean> USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES;
+    public static final ForgeConfigSpec.ConfigValue<Integer> PAT_ANIMATION_TRIGGER_TIME;
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -39,8 +40,8 @@ public class ChangedAddonClientConfiguration {
         BUILDER.pop();
 
         BUILDER.push("Custom Hair Color");
-        FEMALE_SNEPS_HAIR = BUILDER.comment("Set The Custom Hair Color For the Female Sneps [BioSynth and Exp2]").define("Females Sneps Custom Hair Color", false);
-        MALE_SNEPS_HAIR = BUILDER.comment("Set The Custom Hair Color For the Male Sneps [BioSynth and Exp2]").define("Males Sneps Custom Hair Color", false);
+        FEMALE_SNEPS_HAIR = BUILDER.comment("Set The Custom Hair Color Layer For some the Female Sneps").comment("* Currently the only ones accepted is BioSynth and Exp2").define("Females Sneps Custom Hair Color", false);
+        MALE_SNEPS_HAIR = BUILDER.comment("Set The Custom Hair Color Layer For some the Male Sneps").comment("* Currently the only ones accepted is BioSynth and Exp2").define("Males Sneps Custom Hair Color", false);
         BUILDER.pop();
 
         BUILDER.push("Overlays");
@@ -68,6 +69,11 @@ public class ChangedAddonClientConfiguration {
 
         USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES = BUILDER.comment("Switches the render type for the Entity model fade particle, it can look a bit odd with some specific colors so use it as your taste.")
                 .define("additive transparency for entity model fade particle", false);
+
+        PAT_ANIMATION_TRIGGER_TIME = BUILDER
+                .comment("The time in ticks required to hold or interact before triggering the patting hand animation.")
+                .comment("set to -1 to always")
+                .defineInRange("patAnimationTriggerTime", 3, -1, 72000);
 
         SPEC = BUILDER.build();
     }

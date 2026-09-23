@@ -4,8 +4,10 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.ltxprogrammer.changed.effect.particle.EmoteParticle;
+import net.ltxprogrammer.changed.entity.Emote;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,8 +34,17 @@ public abstract class EmoteParticleMixin extends TextureSheetParticle {
         super(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
     }
 
+    @Inject(method = "<init>", at = @At("RETURN"))
+    private void scaleParticleBasedOnEntityScaleInit(ClientLevel level, double x, double y, double z, double vx, double vy, double vz, SpriteSet sprite, Emote emote, Entity track, CallbackInfo ci) {
+        if (track instanceof LivingEntity livingTrack) {
+            float size = 0.3f * livingTrack.getScale();
+            this.setSize(size, size);
+            this.quadSize = 0.3f * livingTrack.getScale();
+        }
+    }
+
     @Inject(method = "tick", at = @At(value = "TAIL"), remap = true)
-    private void scaleParticleBasedOnEntityScale(CallbackInfo ci) {
+    private void scaleParticleBasedOnEntityScaleTick(CallbackInfo ci) {
         if (track instanceof LivingEntity livingTrack) {
             float size = 0.3f * livingTrack.getScale();
             this.setSize(size, size);

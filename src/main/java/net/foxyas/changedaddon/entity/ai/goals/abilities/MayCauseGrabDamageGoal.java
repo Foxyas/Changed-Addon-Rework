@@ -40,18 +40,6 @@ public class MayCauseGrabDamageGoal extends Goal {
     public void tick() {
         // force a tick of the grab ability instances to avoid issues.
         grabber.mayTickGrabAbility();
-//        GrabEntityAbilityInstance grabAbilityInstance = grabber.getGrabAbilityInstance();
-//        LivingEntity grabbed = grabAbilityInstance.grabbedEntity;
-//        if (grabbed != null) {
-//            IAbstractChangedEntity entity = grabAbilityInstance.entity;
-//            int grabberId = entity.getEntity().getId();
-//            if (!grabbed.level().isClientSide()) {
-//                ChangedAddonMod.PACKET_HANDLER.send(
-//                        PacketDistributor.TRACKING_ENTITY.with(entity::getEntity),
-//                        new S2CCheckGrabberEntity(grabberId, grabbed.getId())
-//                );
-//            }
-//        }
     }
 
     @Override
