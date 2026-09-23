@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.entity.ai.goals.abilities;
 
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -40,6 +42,15 @@ public class MayCauseGrabDamageGoal extends Goal {
     public void tick() {
         // force a tick of the grab ability instances to avoid issues.
         grabber.mayTickGrabAbility();
+
+        if (!mob.level().isClientSide()) {
+            GrabEntityAbilityInstance grabAbilityInstance = grabber.getGrabAbilityInstance();
+            if (grabAbilityInstance == null) {
+                return;
+            }
+            LivingEntity grabbedEntity = grabAbilityInstance.grabbedEntity;
+            grabAbilityInstance.useDown = this.grabber.getGrabStrategy(grabbedEntity).shouldSuit() && !grabAbilityInstance.suited;
+        }
     }
 
     @Override
