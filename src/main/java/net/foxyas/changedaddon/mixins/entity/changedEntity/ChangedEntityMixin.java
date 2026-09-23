@@ -158,7 +158,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
         }
     }
 
-    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/ChangedEntity;mirrorLiving(Lnet/minecraft/world/entity/LivingEntity;)V"))
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/ChangedEntity;mirrorLiving(Lnet/minecraft/world/entity/LivingEntity;)V", remap = false))
     private void stopMirroringIfPlayerHasNoControl(ChangedEntity instance, LivingEntity player, Operation<Void> original) {
         if (player instanceof Player underLyingPlayer) {
             TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(underLyingPlayer);
