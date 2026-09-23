@@ -33,6 +33,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.Opcodes;
@@ -101,19 +102,6 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
     @Shadow
     public abstract float getTransfurProgression(float partial);
 
-//    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;generateForm(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;)Lnet/ltxprogrammer/changed/entity/ChangedEntity;"))
-//    private T modifyChangedEntity(TransfurVariant<?> instance, @NotNull Player player, Level level, Operation<T> original) {
-//        T originalEntity = original.call(instance, player, level);
-//        originalEntity.targetSelector.removeAllGoals(goal -> true);
-//        ((MobAccessor)originalEntity).registerAIGoals();
-//        return originalEntity;
-//    }
-
-//    @ModifyReturnValue(method = "getChangedEntity", at = @At("RETURN"))
-//    private ChangedEntity getChangedEntityHook(T original){
-//        if (!hasControlOverBody && entityInControl != null) return entityInControl;
-//        return original;
-//    }
 
     @Inject(at = @At("HEAD"), method = "lambda$onBlockRightClick$13", cancellable = true)
     private static void allowCuddleInteract(PlayerInteractEvent.RightClickBlock event, TransfurVariantInstance<?> variant, CallbackInfo ci) {
@@ -223,9 +211,6 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
                 }
 
                 Player player = this.getHost();
-                if (entityInControl.getUnderlyingPlayer() == null || !player.is(entityInControl.getUnderlyingPlayer())) {
-                    entityInControl.setUnderlyingPlayer(player);
-                }
                 if (!entityInControl.isAddedToWorld() && !host.level().isClientSide()) {
                     if (!player.level().addFreshEntity(entityInControl)) {
                         entityInControl.setUUID(Mth.createInsecureUUID(entityInControl.getRandom()));
@@ -238,7 +223,8 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
 //                }
                 player.setInvisible(true);
                 player.setSilent(true);
-                TransfurVariantInstance.syncEntityPosRotWithEntity(player, entity);
+                Vec3 position = entityInControl.position();
+                player.teleportTo(position.x, position.y, position.z);
             } else if (this.getTransfurProgression(0) >= 1f) {
                 if (!host.level().isClientSide()) {
                     generateEntityInControl();;
@@ -267,7 +253,6 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
             CompoundTag entityData = entity.saveWithoutId(new CompoundTag());
             entityData.remove("UUID");
             changedEntity.load(entityData);
-            changedEntity.setUnderlyingPlayer(host);
             entityInControl = (T) changedEntity;
         }
     }
