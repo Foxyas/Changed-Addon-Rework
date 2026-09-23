@@ -126,6 +126,8 @@ public class HULanguageProvider extends LanguageProvider {
         addAttribute(ChangedAddonAttributes.LATEX_RESISTANCE, "Latexfertőzés");
         addAttribute(ChangedAddonAttributes.LATEX_INFECTION, "Latexellenállás");
         addAttribute(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER, "Latexoldás sebzésének szorzója");
+        addAttribute(ChangedAddonAttributes.CUTENESS, "Cukiság");
+        addAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE, "Alfa mérete");
 
         addBlock(ADVANCED_CATALYZER, "Fejlett katalizátor");
         addBlock(ADVANCED_UNIFUSER, "Fejlett unifúzor");
@@ -500,12 +502,59 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("transfur_sounds_gui.whine", "Vinnyog");
         addGui("transfur_sounds_gui.yip", "Csahol");
 
+        addGui("bestiary.na", "§7N/A");
+        addGui("bestiary.classification_prefix", "§fOsztályozás: ");
+        addGui("bestiary.species.cat", "§fMacska");
+        addGui("bestiary.species.fox", "§fRóka");
+        addGui("bestiary.species.canine", "§fKutya");
+        addGui("bestiary.species.dragon", "§fSárkány");
+        addGui("bestiary.species.fish", "§fHal");
+        addGui("bestiary.species.spider", "§fPók");
+        addGui("bestiary.trait.apex_predator", "§6[Csúcsragadozó]");
+
         addGui("transfur_sounds_gui.label_transfur_sounds", "Transzfur hangjai");
         addGui("unifuser_gui.label_full", "Tele");
         addGui("unifuser_gui.tooltip.place_recipe_catalyst", "Helyezz ide egy DNS-sel töltött fecskendőt");
         addGui("unifuser_gui.tooltip.place_first_ingredient", "Helyezz ide a porokat vagy más hozzávalókat");
         addGui("unifuser_gui.tooltip.place_second_ingredient", "Tedd ide a második hozzávalót");
         addGui("abilities_radial_screen.mouse.right_click", "Nyomd meg a %s gombot a második képesség kiválasztásához");
+
+        addGui("bestiary.title", "Bestiárium");
+        addGui("bestiary.header", "§6§lChanged Addon §r§7- Bestiárium");
+        addGui("bestiary.esc_close", "[ESC] Bezárás");
+        addGui("bestiary.search", "Keresés");
+        addGui("bestiary.search.hint", "§7Entitás keresése...");
+        addGui("bestiary.unknown", "Ismeretlen");
+        addGui("bestiary.attributes", "Tulajdonságok");
+        addGui("bestiary.classification", "Osztályozás");
+        addGui("bestiary.tab.entities", "🔍 Entitások");
+        addGui("bestiary.tab.lore", "📜 Tan");
+        addGui("bestiary.tab.stats", "📊 Statisztikák");
+        addGui("bestiary.button.expand_model", "Modellnézet kibontása");
+        addGui("bestiary.button.restore_split", "Osztott nézet visszaállítása");
+        addGui("bestiary.button.expand_text", "[↔] Szöveg kibontása");
+        addGui("bestiary.button.show_model", "[◀] Modell mutatása");
+        addGui("bestiary.button.show_player_overlay", "[+] Játékos-átfedés");
+        addGui("bestiary.button.hide_player_overlay", "[X] Játékos-átfedés");
+        addGui("bestiary.locked", "§c§l[ZÁRVA]");
+        addGui("bestiary.render_error", "§cMegjelenítési hiba");
+        addGui("bestiary.no_model", "§7Nincs modell");
+        addGui("bestiary.model_hint", "§8[Húzás: Forgatás | Görgetés: Nagyítás]");
+        addGui("bestiary.lore.dossier_header", "§6[Archív dosszié]");
+        addGui("bestiary.lore.classification", "§7Osztályozás: %s");
+        addGui("bestiary.lore.fallback", "§7Szabványos létesítményi bioarchívum-nyilvántartás.");
+        addGui("bestiary.attribute_sheet_header", "§a[Tulajdonságlap]");
+        addGui("bestiary.radar_chart_header", "§b[Entitás-radardiagram]");
+        addGui("bestiary.scale", "§8Méret: %sx");
+        addGui("bestiary.radar.entity_val", "§7Entitás: §f%s");
+        addGui("bestiary.radar.player_val", "§3Játékos: §f%s");
+        addGui("bestiary.attribute.health", "Életpont");
+        addGui("bestiary.attribute.armor", "Vértezet");
+        addGui("bestiary.attribute.speed", "Sebesség");
+        addGui("bestiary.attribute.attack", "Sebzés");
+        addGui("bestiary.attribute.toughness", "Ellenállás");
+        addGui("bestiary.attribute.knockback_res", "Stabilitás");
+        addGui("bestiary.attribute.follow_range", "Követési hatótáv");
 
         add("ability.changed.grab_entity.desc.toggle_grab_safe_mode", "Nyomja meg a %s vagy a %s gombot a barátságos megragadás kapcsolásához");
         add("ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode", "Nyomd meg a %s billentyűt és közben a %s vagy %s gombot a megragadáskori transzfur sebzés kapcsolásához");
@@ -770,8 +819,8 @@ public class HULanguageProvider extends LanguageProvider {
         addCommand("alpha.set.fail", "Nem található érvényes alfa-kompatibilis entitás");
         addCommand("alpha.get.success", "Alfa gén: %s");
         addCommand("alpha.get.fail", "A célpont nem támogatja az alfa gént");
-        addCommand("alpha_scale.set.success", "Alfa skála %sra állítva %s entitáshoz");
-        addCommand("alpha_scale.get.success", "Alfa skála: %s");
+        addCommand("alpha_scale.set.success", "Alfa mérete %sra állítva %s entitáshoz");
+        addCommand("alpha_scale.get.success", "Alfa mérete: %s");
         addCommand("ftkMinigame.set.success", "FTKC paraméterek sikeresen kezdeményezve %s célpont(ok)hoz.");
         addCommand("ftkMinigame.set.fail", "Parancs végrehajtása sikertelen: Nem azonosítottak alkalmas transzfur alanyokat a kiválasztás során.");
         addCommand("ftkMinigame.get.has", "Aktív kognitív zár észlelve: %s.");
@@ -780,6 +829,7 @@ public class HULanguageProvider extends LanguageProvider {
         addCommand("ftkMinigame.reset.fail", "Parancs végrehajtása sikertelen: Nem azonosítottak alkalmas transzfur alanyokat a kiválasztás során.");
         addCommand("setPlayerLatexInfection.set.success", "Játékos latex fertőzésének beállítása erre: %2$s (Aktív: %1$s, Transzfur előrehaladásának késleltetése: %3$s)");
         addCommand("setPlayerLatexInfection.clear.success", "El lett távolítva a játékos latex fertőzése.");
+        addCommand("openBestiary.fail.notValidType", "A(z) '%s' típus érvénytelen");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Simogatások adva");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Simogatások fogadva");
