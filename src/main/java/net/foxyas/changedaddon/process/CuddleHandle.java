@@ -140,7 +140,6 @@ public class CuddleHandle {
     }
 
     public void stopCuddling() {
-        this.wantToCuddle = false;
         this.ticksCuddling = 0;
     }
 
