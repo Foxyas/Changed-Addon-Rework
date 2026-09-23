@@ -48,7 +48,7 @@ public abstract class InBedChatScreenMixin extends Screen {
         if (this.minecraft == null || this.minecraft.player == null) return;
         LocalPlayer player = this.minecraft.player;
         cuddleButton.visible = PlayerUtil.canTurnCuddleModeOn(player) && !ChangedAddonKeyMappings.CUDDLE_KEY.isUnbound();
-        if (!ChangedAddonVariables.ofOrDefault(player).isCuddling) return;
+        if (!ChangedAddonVariables.ofOrDefault(player).wantToCuddles()) return;
 
         ci.cancel();
         closeSilently = true;
@@ -63,7 +63,7 @@ public abstract class InBedChatScreenMixin extends Screen {
 
     @Inject(at = @At("HEAD"), method = "sendWakeUp", cancellable = true)
     private void closeSilentlyWhenCuddling(CallbackInfo ci) {
-        if (!closeSilently && !ChangedAddonVariables.ofOrDefault(minecraft.player).isCuddling) return;
+        if (!closeSilently && !ChangedAddonVariables.ofOrDefault(minecraft.player).wantToCuddles()) return;
 
         ci.cancel();
         Minecraft.getInstance().setScreen(null);

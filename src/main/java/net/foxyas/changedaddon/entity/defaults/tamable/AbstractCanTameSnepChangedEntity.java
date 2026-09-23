@@ -1,13 +1,16 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.defaults.tamable;
 
-import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
 import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
 import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtTargetGoal;
+import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
+import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
-import net.minecraft.core.BlockPos;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -16,7 +19,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.tags.ItemTags;
@@ -26,12 +28,15 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.scores.Team;
 import net.minecraftforge.common.IExtensibleEnum;
 import org.apache.commons.lang3.NotImplementedException;
@@ -41,12 +46,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class AbstractCanTameChangedEntity extends AbstractBasicChangedEntity implements TamableLatexEntity {
-    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntity.class, EntityDataSerializers.BYTE);
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+@Deprecated
+public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopard implements TamableLatexEntity, IDynamicRideOffsetEntity {
+    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.BYTE);
+    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
-    public AbstractCanTameChangedEntity(EntityType<? extends ChangedEntity> type, Level level) {
+    public AbstractCanTameSnepChangedEntity(EntityType<? extends AbstractSnowLeopard> type, Level level) {
         super(type, level);
+    }
+
+    public static LootTable.@NotNull Builder getLoot() {
+        return LootTable.lootTable();
     }
 
     protected void registerGoals() {
@@ -57,22 +67,25 @@ public abstract class AbstractCanTameChangedEntity extends AbstractBasicChangedE
     }
 
     @Override
+    protected void setAttributes(AttributeMap attributes) {
+        super.setAttributes(attributes);
+        attributes.getInstance(ChangedAttributes.AIR_CAPACITY.get()).setBaseValue(7.5);
+        attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.25);
+        attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5);
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        //TODO: REMOVE ME
         this.entityData.define(DATA_FLAGS_ID, (byte) 0);
         this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
     }
 
-    @Override
-    public void stopSleeping() {
-        super.stopSleeping();
+    protected boolean isTamableBy(Player player) {
+        return false;
     }
 
-    @Override
-    public void startSleeping(@NotNull BlockPos blockPos) {
-        super.startSleeping(blockPos);
-        //this.setPose(Pose.SLEEPING);
-    }
 
     public boolean isBiped() {
         return true;
@@ -82,13 +95,19 @@ public abstract class AbstractCanTameChangedEntity extends AbstractBasicChangedE
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
 
-        UUID uuid = null;
+        UUID uuid;
         if (tag.hasUUID("Owner")) {
             uuid = tag.getUUID("Owner");
         } else {
             String s = tag.getString("Owner");
             if (this.getServer() != null) {
                 uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
+            } else {
+                try {
+                    uuid = UUID.fromString(s);
+                } catch (IllegalArgumentException e) {
+                    uuid = null;
+                }
             }
         }
 
@@ -184,43 +203,45 @@ public abstract class AbstractCanTameChangedEntity extends AbstractBasicChangedE
 
     }
 
-    @Override
+    public boolean hasFavorSystem() {
+        return false;
+    }
+
     protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        InteractionResult result = itemstack.interactLivingEntity(player, this, hand);
-        if (result.consumesAction()) {
+        Item item = itemstack.getItem();
+
+        if (hasFavorSystem()) {
             return super.mobInteract(player, hand);
         }
+
         if (this.level.isClientSide) {
             boolean flag = this.isOwnedBy(player) || this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else {
-            if (this.isTame()) {
-                if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
-                    itemstack.shrink(1);
-                    this.heal(2.0F);
-                    if (this.level instanceof ServerLevel _level) {
-                        _level.sendParticles(ParticleTypes.HEART, (this.getX()), (this.getY() + 1), (this.getZ()), 7, 0.3, 0.3, 0.3, 1); //Spawn Heal Particles
-                    }
-                    this.level().gameEvent(this, GameEvent.ENTITY_INTERACT, this.getEyePosition());
+        } else if (this.isTame()) {
+            if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
+                itemstack.shrink(1);
+                this.heal(2.0F);
+                this.level().gameEvent(this, GameEvent.ENTITY_INTERACT, this.getEyePosition());
+                this.level.broadcastEntityEvent(this, (byte) 7);
+                return InteractionResult.SUCCESS;
+            } else {
+                InteractionResult interactionresult = super.mobInteract(player, hand);
+                if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(player)) {
+                    boolean shouldFollow = !this.isFollowingOwner();
+                    this.setFollowOwner(shouldFollow);
+                    player.displayClientMessage(Component.translatable(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", this.getDisplayName()), true);
+                    this.jumping = false;
+                    this.navigation.stop();
+                    this.setTarget(null);
                     return InteractionResult.SUCCESS;
                 } else {
-                    InteractionResult interactionresult = super.mobInteract(player, hand);
-                    if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(player)) {
-                        boolean shouldFollow = !this.isFollowingOwner();
-                        this.setFollowOwner(shouldFollow);
-
-                        player.displayClientMessage(Component.translatable(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", this.getDisplayName()), true);
-                        this.jumping = false;
-                        this.navigation.stop();
-                        this.setTarget(null);
-                        return InteractionResult.SUCCESS;
-                    }
+                    return interactionresult;
                 }
             }
+        } else {
+            return super.mobInteract(player, hand);
         }
-
-        return super.mobInteract(player, hand);
     }
 
     @Override
@@ -300,7 +321,7 @@ public abstract class AbstractCanTameChangedEntity extends AbstractBasicChangedE
 
     public void die(@NotNull DamageSource source) {
         // FORGE: Super moved to top so that death message would be cancelled properly
-        Component deathMessage = this.getCombatTracker().getDeathMessage();
+        net.minecraft.network.chat.Component deathMessage = this.getCombatTracker().getDeathMessage();
         super.die(source);
 
         if (this.dead)
@@ -320,7 +341,81 @@ public abstract class AbstractCanTameChangedEntity extends AbstractBasicChangedE
     }
 
     //Default Use Type
-    public abstract boolean isTameItem(ItemStack stack);
+    public boolean isTameItem(ItemStack stack) {
+        return stack.is(Items.COD)
+                || stack.is(ChangedItems.ORANGE.get())
+                || stack.is(Items.COOKED_COD)
+                || stack.is(Items.SALMON)
+                || stack.is(Items.COOKED_SALMON)
+                || stack.is(ChangedAddonTags.Items.TAME_ITEM);
+    }
+
+    //Preset Styles For Tame
+    public InteractionResult Exp2Sytle(Player player, InteractionHand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (this.level.isClientSide) {
+            boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
+            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+        } else {
+            if (!this.isTame() && this.isTameItem(itemstack)) {
+                if (!player.getAbilities().instabuild) {
+                    itemstack.shrink(1);
+                }
+                boolean istransfur = ProcessTransfur.isPlayerTransfurred(player);
+
+                if (!istransfur && this.random.nextInt(2) == 0) { // One in 2 chance
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte) 7);
+                } else if (istransfur && this.random.nextInt(12) == 0) { //One in 12
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte) 7);
+                } else {
+                    this.level.broadcastEntityEvent(this, (byte) 6);
+                }
+
+                return InteractionResult.SUCCESS;
+            }
+
+            return super.mobInteract(player, hand);
+        }
+    }
+
+    public InteractionResult BioSynthSnepStyle(Player player, InteractionHand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (this.level.isClientSide) {
+            boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
+            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+        } else {
+            if (!this.isTame() && this.isTameItem(itemstack)) {
+                if (!player.getAbilities().instabuild) {
+                    itemstack.shrink(1);
+                }
+                boolean isTransfur = ProcessTransfur.isPlayerTransfurred(player);
+
+                if (!isTransfur && this.random.nextInt(3) == 0) { // One in 3 chance
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte) 7);
+                } else if (isTransfur && this.random.nextInt(6) == 0) {
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte) 7);
+                } else {
+                    this.level.broadcastEntityEvent(this, (byte) 6);
+                }
+
+                return InteractionResult.SUCCESS;
+            }
+
+            return super.mobInteract(player, hand);
+        }
+    }
 
     //Public enum TameType that just hold a string for the Items tag Logic
     public enum TameType implements IExtensibleEnum {

@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.defaults;
 import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;
 import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ISafeChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.tamable.AbstractTamableLatexEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.minecraft.core.BlockPos;

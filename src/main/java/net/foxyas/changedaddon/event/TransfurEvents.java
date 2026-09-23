@@ -4,6 +4,8 @@ import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
 import net.foxyas.changedaddon.entity.defaults.*;
+import net.foxyas.changedaddon.entity.defaults.tamable.*;
+import net.foxyas.changedaddon.entity.defaults.tamable.AbstractTamableLatexEntity;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.armor.HazardBodySuit;

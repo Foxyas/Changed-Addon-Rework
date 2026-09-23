@@ -4,10 +4,14 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.server.ServerTransfurVariantInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.pathfinder.Path;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +19,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = ServerTransfurVariantInstance.class, remap = false)
-public class ServerTransfurVariantInstanceMixin {
+public abstract class ServerTransfurVariantInstanceMixin<T extends ChangedEntity> extends TransfurVariantInstance<T> {
+
+    public ServerTransfurVariantInstanceMixin(TransfurVariant<T> parent, Player host) {
+        super(parent, host);
+    }
 
     @WrapOperation(method = "tickScare",
             at = @At(

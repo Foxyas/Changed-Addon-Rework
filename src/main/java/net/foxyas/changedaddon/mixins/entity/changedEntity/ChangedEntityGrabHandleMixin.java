@@ -50,8 +50,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 
     @Unique
     protected GrabEntityAbilityInstance grabEntityAbilityInstance = null;
-    private boolean appliedAlphaAttributes = false;
-    private boolean appliedAlphaAttributesForHost = false;
 
     protected ChangedEntityGrabHandleMixin(EntityType<? extends Monster> type, Level pLevel) {
         super(type, pLevel);
@@ -104,6 +102,11 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Override
     public @Nullable GrabEntityAbilityInstance getGrabAbilityInstance() {
         return this.grabEntityAbilityInstance;
+    }
+
+    @Override
+    public void setGrabAbilityInstance(GrabEntityAbilityInstance instance) {
+        this.grabEntityAbilityInstance = instance;
     }
 
     @Override

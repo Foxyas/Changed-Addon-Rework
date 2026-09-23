@@ -45,6 +45,9 @@ public interface GrabEntityAbilityExtensor {
 
     void markGrabbedToTryReattach();
 
+    boolean isAbleToEscape();
+    void setAbleToEscape(boolean ableToEscape);
+
     default void runHug(@NotNull LivingEntity livingEntity) {
         if (grabber() instanceof Player player) {
             if (!player.level().isClientSide()) {

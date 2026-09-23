@@ -60,9 +60,9 @@ public class ServerPacketHandler {
         context.enqueueWork(() -> {
             ServerPlayer sender = context.getSender();
             ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(sender);
-            vars.isCuddling = !vars.isCuddling;
+            vars.setWantCuddles(!vars.wantToCuddles());
             vars.syncPlayerVariables(sender);
-            sender.displayClientMessage(Component.translatable("key.changed_addon.cuddle.set", vars.isCuddling), true);
+            sender.displayClientMessage(Component.translatable("key.changed_addon.cuddle.set", vars.wantToCuddles()), true);
         });
         context.setPacketHandled(true);
     }

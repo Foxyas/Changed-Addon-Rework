@@ -1,9 +1,8 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.entity.ai.goals.simple.CuddleWithOwnerGoal;
-import net.foxyas.changedaddon.entity.ai.goals.simple.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntityFavors;
+import net.foxyas.changedaddon.entity.defaults.tamable.AbstractCanTameSnepChangedEntityFavors;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -56,7 +55,7 @@ public abstract class AbstractCheetahEntity extends AbstractCanTameSnepChangedEn
     @Override
     public boolean forceOwnerGrabSuit() {
         if (this.getOwner() instanceof Player player) {
-            if (ChangedAddonVariables.ofOrDefault(player).isCuddling()) {
+            if (ChangedAddonVariables.ofOrDefault(player).wantToCuddles()) {
                 return false;
             }
         }
@@ -67,7 +66,7 @@ public abstract class AbstractCheetahEntity extends AbstractCanTameSnepChangedEn
     @Override
     public boolean forceOwnerGrabControl() {
         if (this.getOwner() instanceof Player player) {
-            if (ChangedAddonVariables.ofOrDefault(player).isCuddling()) {
+            if (ChangedAddonVariables.ofOrDefault(player).wantToCuddles()) {
                 return false;
             }
         }

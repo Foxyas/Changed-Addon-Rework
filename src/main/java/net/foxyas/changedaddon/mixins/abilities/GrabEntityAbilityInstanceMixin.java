@@ -107,6 +107,9 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Unique
     private boolean allowGrabTransfurred = false; // Default is false. it can be true using external code
 
+    @Unique
+    private boolean ableToEscape = true;
+
     public GrabEntityAbilityInstanceMixin(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
         super(ability, entity);
     }
@@ -140,6 +143,19 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         return entityUUIDToTryAttachTo;
     }
 
+    @Override
+    public boolean isAbleToEscape() {
+        return ableToEscape;
+    }
+
+    @Override
+    public void setAbleToEscape(boolean ableToEscape) {
+        this.ableToEscape = ableToEscape;
+        CompoundTag tag = new CompoundTag();
+        tag.putBoolean("isAbleToEscape", isAbleToEscape());
+        this.sendPayload(tag);
+    }
+
     @Inject(method = "saveData", at = @At("TAIL"))
     private void injectCustomData(CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("safeMode", safeMode);
@@ -148,6 +164,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (!transfurDamageMode) { // don't put tag if the value is a default.
             tag.putBoolean("transfurDamageMode", transfurDamageMode);
         }
+        tag.putBoolean("isAbleToEscape", isAbleToEscape());
     }
 
     @Inject(method = "readData", at = @At("TAIL"))
@@ -156,6 +173,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         if (tag.contains("alreadySnuggledTight")) isSnugglingTight = tag.getBoolean("alreadySnuggledTight");
         if (tag.contains("allowGrabTransfurred")) allowGrabTransfurred = tag.getBoolean("allowGrabTransfurred");
         if (tag.contains("transfurDamageMode")) transfurDamageMode = tag.getBoolean("transfurDamageMode");
+        if (tag.contains("isAbleToEscape")) setAbleToEscape(tag.getBoolean("isAbleToEscape"));
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/LivingEntityDataExtension;setGrabbedBy(Lnet/minecraft/world/entity/LivingEntity;)V"), method = "tickIdle")
@@ -260,7 +278,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     private void tickSendKeyBindInfo(CallbackInfo ci) {
         Level level = entity.getLevel();
         if (level.isClientSide()) {
-            if (ChangedAddonClientConfiguration.GRAB_ABILITY_KEY_INFO.get()) {
+            if (ChangedAddonClientConfiguration.GRAB_ABILITY_KEY_INFO.get() && this.currentEscapeKey != null) {
                 this.entity.displayClientMessage(this.currentEscapeKey.getName(level), true);
             }
         }
@@ -526,16 +544,10 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         }
     }
 
-
-    // Todo: make a boolean to stop players from being able to escape a grab
-    @Override
-    public void sendPayload(CompoundTag tag) {
-        super.sendPayload(tag);
-    }
-
     @Override
     public void acceptPayload(CompoundTag tag) {
         super.acceptPayload(tag);
+        if (tag.contains("isAbleToEscape")) setAbleToEscape(tag.getBoolean("isAbleToEscape"));
     }
 
     @WrapOperation(
@@ -548,8 +560,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     private void stopEscaping(
             GrabEntityAbilityInstance instance, Operation<Void> original
     ) {
-        // TODO : boolean here
-        if (true) {
+        if (isAbleToEscape()) {
             original.call(instance);
         }
     }

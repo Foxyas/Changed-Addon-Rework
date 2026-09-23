@@ -2,10 +2,13 @@ package net.foxyas.changedaddon.mixins.entity.variant;
 
 import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
 import net.foxyas.changedaddon.process.UntransfurReason;
+import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -16,15 +19,21 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.KeyStateTracker;
 import net.ltxprogrammer.changed.util.TagUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -37,20 +46,32 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TransfurVariantInstance.class, remap = false)
-public abstract class TransfurVariantInstanceMixin implements TransfurVariantInstanceExtensor {
+public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> implements TransfurVariantInstanceExtensor {
 
     @Shadow
     @Final
     public ImmutableMap<AbstractAbility<?>, AbstractAbilityInstance> abilityInstances;
     @Unique
     public int ticksSinceSecondAbilityActivity;
+
+    @Unique
+    protected boolean untransfurImmunity = false;
+    @Unique
+    protected boolean untransfurImmunityCommand = false;
+
+    @Unique
+    protected boolean hasControlOverBody = true;
+
+    @Unique
+    protected T entityInControl = null;
+
+    @Unique
+    @Deprecated
     public KeyStateTracker secondAbilityKey = new KeyStateTracker();
     @Unique
-    public boolean untransfurImmunity = false;
-    @Unique
-    public boolean untransfurImmunityCommand = false;
-    @Unique
+    @Deprecated
     public AbstractAbility<?> secondSelectedAbility;
+
     @Shadow
     @Final
     protected TransfurVariant<ChangedEntity> parent;
@@ -72,6 +93,13 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
 
     @Shadow
     public abstract Player getHost();
+
+    @Shadow
+    @Final
+    protected T entity;
+
+    @Shadow
+    public abstract float getTransfurProgression(float partial);
 
     @Inject(at = @At("HEAD"), method = "lambda$onBlockRightClick$13", cancellable = true)
     private static void allowCuddleInteract(PlayerInteractEvent.RightClickBlock event, TransfurVariantInstance<?> variant, CallbackInfo ci) {
@@ -95,22 +123,47 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         maySendDataUpdate();
     }
 
-    @Override @Deprecated
+    @Override
+    public void setControlOverBody(boolean controlOverBody) {
+        this.hasControlOverBody = controlOverBody;
+        maySendDataUpdate();
+    }
+
+    @Override
+    public ChangedEntity getChangedEntityInControl() {
+        return entityInControl;
+    }
+
+    @Override
+    public void setChangedEntityInControl(ChangedEntity changedEntity) {
+        this.entityInControl = (T) changedEntity;
+    }
+
+    @Override
+    public boolean hasControlOverBody() {
+        return hasControlOverBody;
+    }
+
+    @Override
+    @Deprecated
     public KeyStateTracker getSecondAbilityKey() {
         return secondAbilityKey;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public void setSecondAbilityKey(KeyStateTracker secondAbilityKey) {
         this.secondAbilityKey = secondAbilityKey;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public AbstractAbility<?> getSecondSelectedAbility() {
         return secondSelectedAbility;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public void setSecondSelectedAbility(AbstractAbility<?> secondSelectedAbility) {
         if (!abilityInstances.containsKey(secondSelectedAbility)) return;
 
@@ -126,19 +179,83 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         this.secondSelectedAbility = secondSelectedAbility;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public int getTicksSinceSecondAbilityActivity() {
         return ticksSinceSecondAbilityActivity;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public void resetTicksSinceSecondAbilityActivity() {
         this.ticksSinceSecondAbilityActivity = 0;
     }
 
-    @Override @Deprecated
+    @Override
+    @Deprecated
     public AbstractAbilityInstance getSecondSelectedAbilityInstance() {
         return this.abilityInstances.get(this.secondSelectedAbility);
+    }
+
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;checkForTemporary()Z"))
+    private boolean checkForTemporaryHook(TransfurVariantInstance<?> instance, Operation<Boolean> original) {
+        if (!ProcessTransfur.isPlayerTransfurred(this.host)) return original.call(instance);
+
+        if (!hasControlOverBody && !host.isSpectator()) {
+            if (this.entityInControl != null) {
+                if (this.entityInControl.isRemoved()) {
+                    this.entityInControl = null;
+                    this.generateEntityInControl();
+                }
+
+                Player player = this.getHost();
+                if (entityInControl.getUnderlyingPlayer() == null || !player.is(entityInControl.getUnderlyingPlayer())) {
+                    entityInControl.setUnderlyingPlayer(player);
+                }
+                if (!entityInControl.isAddedToWorld() && !host.level().isClientSide()) {
+                    if (!player.level().addFreshEntity(entityInControl)) {
+                        entityInControl.setUUID(Mth.createInsecureUUID(entityInControl.getRandom()));
+                    }
+                }
+//                if (player instanceof ServerPlayer serverPlayer) {
+//                    serverPlayer.setCamera(entityInControl);
+//                }
+                player.setInvisible(true);
+                player.setSilent(true);
+
+                return true;
+            } else if (this.getTransfurProgression(0) >= 1f) {
+                if (!host.level().isClientSide()) {
+                    generateEntityInControl();
+                    return true;
+                }
+            }
+        } else {
+            if (entityInControl != null) {
+                this.entityInControl.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
+                this.entityInControl = null;
+                Player player = this.getHost();
+                player.setInvisible(false);
+                player.setSilent(false);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.setCamera(null);
+                }
+            }
+        }
+
+        return original.call(instance);
+    }
+
+    private void generateEntityInControl() {
+        EntityType<?> type = this.entity.getType();
+        Entity rawEntity = type.create(host.level());
+        if (rawEntity instanceof ChangedEntity changedEntity) {
+            CompoundTag entityData = entity.saveWithoutId(new CompoundTag());
+            entityData.remove("UUID");
+            changedEntity.load(entityData);
+            changedEntity.setUnderlyingPlayer(host);
+            entityInControl = (T) changedEntity;
+        }
     }
 
     @Inject(method = "tickAbilities", at = @At(value = "FIELD",
@@ -229,18 +346,25 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         if (changedEntity instanceof IAlphaAbleEntity iAlphaAbleEntity) {
             iAlphaAbleEntity.cleanAlphaAttributesFromHost(changedEntity);
         }
+        this.entityInControl = null;
     }
 
     @Inject(method = "save", at = @At("RETURN"))
     private void InjectData(CallbackInfoReturnable<CompoundTag> cir) {
-        CompoundTag returnValue = cir.getReturnValue();
+        CompoundTag tag = cir.getReturnValue();
         if (this.getChangedEntity() instanceof IVariantExtraStats stats) {
-            stats.saveExtraData(returnValue);
+            stats.saveExtraData(tag);
         }
 
-        returnValue.putBoolean("untransfurImmunity", getUntransfurImmunity(UntransfurReason.SURVIVAL));
+        tag.putBoolean("untransfurImmunity", getUntransfurImmunity(UntransfurReason.SURVIVAL));
         if (!getUntransfurImmunity(UntransfurReason.COMMAND)) {
-            returnValue.putBoolean("untransfurImmunityCommand", getUntransfurImmunity(UntransfurReason.COMMAND));
+            tag.putBoolean("untransfurImmunityCommand", getUntransfurImmunity(UntransfurReason.COMMAND));
+        }
+        tag.putBoolean("hasControlOverBody", hasControlOverBody);
+        if (!this.hasControlOverBody && this.entityInControl != null) {
+            CompoundTag entityInControlTag = new CompoundTag();
+            boolean saved = entityInControl.saveAsPassenger(entityInControlTag);
+            if (saved) tag.put("entityInControlData", entityInControlTag);
         }
     }
 
@@ -254,5 +378,24 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
             setUntransfurImmunity(UntransfurReason.SURVIVAL, tag.getBoolean("untransfurImmunity"));
         if (tag.contains("untransfurImmunityCommand"))
             setUntransfurImmunity(UntransfurReason.COMMAND, tag.getBoolean("untransfurImmunityCommand"));
+        if (tag.contains("hasControlOverBody")) hasControlOverBody = tag.getBoolean("hasControlOverBody");
+        if (tag.contains("entityInControlData")) {
+            CompoundTag entityInControlData = tag.getCompound("entityInControlData");
+            Level level = host.level;
+            if (level.isClientSide()) {
+                Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(level, entityInControlData.getUUID("UUID"));
+                if (entityByUUID instanceof ChangedEntity changedEntity) {
+                    this.entityInControl = (T) changedEntity;
+                }
+            } else {
+                Entity spawnedRaw = EntityType.loadEntityRecursive(entityInControlData, level, entity -> {
+                    entity.moveTo(host.getX(), host.getY(), host.getZ(), host.getYRot(), host.getXRot());
+                    return entity;
+                });
+                if (spawnedRaw instanceof ChangedEntity changedEntity) {
+                    this.entityInControl = (T) changedEntity;
+                }
+            }
+        }
     }
 }

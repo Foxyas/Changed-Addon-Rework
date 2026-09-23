@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.mixins.entity.changedEntity;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.ai.advanced.AdvancedGroundPathNavigation;
@@ -14,6 +16,7 @@ import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
 import net.foxyas.changedaddon.util.TagKeyUtil;
+import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.block.entity.CardboardBoxBlockEntity;
@@ -35,7 +38,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -154,6 +156,19 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
             }
             this.setPacified(false);
         }
+    }
+
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/ChangedEntity;mirrorLiving(Lnet/minecraft/world/entity/LivingEntity;)V"))
+    private void stopMirroringIfPlayerHasNoControl(ChangedEntity instance, LivingEntity player, Operation<Void> original) {
+        if (player instanceof Player underLyingPlayer) {
+            TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(underLyingPlayer);
+            if (variantInstance instanceof TransfurVariantInstanceExtensor extensor) {
+                if (!extensor.hasControlOverBody() && is(extensor.getChangedEntityInControl())) {
+                    return;
+                }
+            }
+        }
+        original.call(instance, player);
     }
 
     @Inject(at = @At("HEAD"), method = "targetSelectorTest", cancellable = true)

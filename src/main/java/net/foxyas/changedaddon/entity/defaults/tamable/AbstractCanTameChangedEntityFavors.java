@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.defaults.tamable;
 
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
+@Deprecated
 public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamableLatexEntity implements TamableLatexEntityFavors {
     protected static final EntityDataAccessor<LatexTargetType> DATA_TARGET_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_TARGET_TYPE);
     protected static final EntityDataAccessor<LatexAttackType> DATA_ATTACK_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_TYPE);

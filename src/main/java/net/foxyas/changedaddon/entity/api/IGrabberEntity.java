@@ -25,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
-@Deprecated
 // Todo: remove/tweak this class since 0.16.0 will let any changed entity able to have a grabAbilityInstance
 public interface IGrabberEntity {
 
@@ -78,6 +77,7 @@ public interface IGrabberEntity {
         return createGrabAbility(false);
     }
 
+    @Deprecated // Changed Mod Will have they own method for that.
     default GrabEntityAbilityInstance createGrabAbility(boolean isSafeByDefault) {
         GrabEntityAbilityInstance instance = null;
         if (this instanceof AbstractDarkLatexEntity abstractDarkLatexEntity) {
@@ -95,10 +95,12 @@ public interface IGrabberEntity {
         return instance;
     }
 
+    @Deprecated // Changed Mod Will have they own method for that.
     default GrabEntityAbilityInstance createSimpleGrabAbility() {
         return createGrabAbility(false);
     }
 
+    @Deprecated // Changed Mod Will have they own method for that.
     default GrabEntityAbilityInstance createSafeGrabAbility() {
         return createGrabAbility(true);
     }
@@ -118,18 +120,6 @@ public interface IGrabberEntity {
             if (grabAbilityInstance.getController().getHoldTicks() > 0 && (grabAbilityInstance.canUse() && grabAbilityInstance.canKeepUsing())) {
                 grabAbilityInstance.tick();
             }
-
-//            LivingEntity grabbed = grabAbilityInstance.grabbedEntity;
-//            if (grabbed != null) {
-//                IAbstractChangedEntity entity = grabAbilityInstance.entity;
-//                int grabberId = entity.getEntity().getId();
-//                if (!grabbed.level().isClientSide()) {
-//                    ChangedAddonMod.PACKET_HANDLER.send(
-//                            PacketDistributor.TRACKING_ENTITY.with(entity::getEntity),
-//                            new S2CCheckGrabberEntity(grabberId, grabbed.getId())
-//                    );
-//                }
-//            }
 
         }
     }

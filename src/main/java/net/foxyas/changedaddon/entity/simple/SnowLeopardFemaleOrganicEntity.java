@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntityFavors;
+import net.foxyas.changedaddon.entity.defaults.tamable.AbstractCanTameSnepChangedEntityFavors;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;

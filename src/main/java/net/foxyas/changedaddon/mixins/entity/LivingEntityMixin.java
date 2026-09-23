@@ -34,7 +34,7 @@ public abstract class LivingEntityMixin extends Entity implements IFallFlyAbleEn
     private void allowLookAroundWhenCuddling(LivingEntity instance, float v, Operation<Void> original) {
         if (!(instance instanceof Player player)) return;
 
-        if (!ChangedAddonVariables.ofOrDefault(player).isCuddling) original.call(instance, v);
+        if (!ChangedAddonVariables.ofOrDefault(player).wantToCuddles()) original.call(instance, v);
     }
 
     @Inject(method = "onClimbable", at = @At("HEAD"), cancellable = true)
