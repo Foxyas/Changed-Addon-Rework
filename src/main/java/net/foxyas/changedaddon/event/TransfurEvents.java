@@ -3,15 +3,14 @@ package net.foxyas.changedaddon.event;
 import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
-import net.foxyas.changedaddon.entity.defaults.*;
 import net.foxyas.changedaddon.entity.defaults.tamable.*;
-import net.foxyas.changedaddon.entity.defaults.tamable.AbstractTamableLatexEntity;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.armor.HazardBodySuit;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.process.UntransfurReason;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.ILatexAssimilatedEntity;
 import net.ltxprogrammer.changed.data.AccessorySlots;
@@ -23,6 +22,7 @@ import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
@@ -161,7 +161,32 @@ public class TransfurEvents {
         LatexAssimilationDecision<?> original = event.getOriginalDecision();
         if (original.method() != LatexAssimilationDecision.Method.ABSORPTION) return;
 
+        LivingEntity target = event.getEntity();
         LivingEntity sourceEntity = event.getSourceEntity();
+
+        IAbstractChangedEntity iAbstractChangedEntity = IAbstractChangedEntity.forEither(sourceEntity);
+        if (iAbstractChangedEntity != null) {
+            GrabEntityAbilityInstance abilityInstance = iAbstractChangedEntity.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (abilityInstance != null) {
+                if (abilityInstance.grabbedEntity == target) {
+                    Optional<AccessorySlots> forEntity = AccessorySlots.getForEntity(EntityUtil.maybeGetUnderlying(target));
+                    if (forEntity.isEmpty()) return;
+
+                    AccessorySlots accessorySlots = forEntity.get();
+                    Optional<ItemStack> item = accessorySlots.getItem(ChangedAccessorySlots.FULL_BODY.get());
+                    if (item.isEmpty()) return;
+
+                    ItemStack stack = item.get();
+                    if (stack.getItem() instanceof HazardBodySuit hazardBodySuit) {
+                        if (hazardBodySuit.getClothingState(stack).getValue(HazardBodySuit.HELMET)) {
+                            event.setCanceled(true);
+                        }
+                    }
+                    return;
+                }
+            }
+        }
+
         Optional<AccessorySlots> forEntity = AccessorySlots.getForEntity(EntityUtil.maybeGetUnderlying(sourceEntity));
         if (forEntity.isEmpty()) return;
 
@@ -271,7 +296,8 @@ public class TransfurEvents {
 
     @SubscribeEvent
     public static void cancelUntransfur(UntransfurPlayerEvent untransfurEvent) {
-        if (untransfurEvent instanceof UntransfurPlayerByCommandEvent commandEvent) return; // let the cancelUntransfurByCommand handle it.
+        if (untransfurEvent instanceof UntransfurPlayerByCommandEvent commandEvent)
+            return; // let the cancelUntransfurByCommand handle it.
 
         Player player = untransfurEvent.getPlayer();
         TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);

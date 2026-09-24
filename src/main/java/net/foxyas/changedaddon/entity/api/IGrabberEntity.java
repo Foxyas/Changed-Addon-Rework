@@ -25,6 +25,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 // Todo: remove/tweak this class since 0.16.0 will let any changed entity able to have a grabAbilityInstance
 public interface IGrabberEntity {
 
@@ -205,6 +207,9 @@ public interface IGrabberEntity {
         GrabEntityAbilityInstance grabAbilityInstance = this.getGrabAbilityInstance();
         if (grabAbilityInstance != null) {
             grabAbilityInstance.attackDown = value;
+            if (grabAbilityInstance.suited) {
+                grabAbilityInstance.useDown = value;
+            }
         }
     }
 
@@ -260,9 +265,41 @@ public interface IGrabberEntity {
     }
 
     /// Optional Function to handle the grab type decision
-    default GrabStrategy getGrabStrategy() {
-        if (this instanceof LivingEntity living) {
+    default GrabStrategy getGrabStrategy(LivingEntity target) {
+        GrabEntityAbilityInstance grabAbilityInstance = getGrabAbilityInstance();
+        if (this instanceof LivingEntity living && grabAbilityInstance != null) {
             if (living.getType().is(ChangedAddonTags.EntityTypes.CAN_GRAB_SUIT)) {
+                // Check for available nearby targets within an 8-block radius (excluding self)
+                List<LivingEntity> nearbyTargets = living.level.getNearbyEntities(
+                        LivingEntity.class,
+                        TargetingConditions.forNonCombat()
+                                .range(16)
+                                .ignoreLineOfSight()
+                                .ignoreInvisibilityTesting(),
+                        living,
+                        living.getBoundingBox().inflate(16)
+                ).stream().filter((e) -> {
+                    // 1. If X is the grabber, it does not count.
+                    if (e == living) return false;
+                    if (e == target) return false;
+
+                    // 2. If X is the grabbed entity, it does not count.
+                    if (e == grabAbilityInstance.grabbedEntity) return false;
+
+                    // 3. Armor stands are considered inanimate/empty and do not count.
+                    if (e instanceof ArmorStand) return false;
+
+                    // 4. Skip entities that are tagged to NOT target grabbed entities.
+                    // Since they won't interfere, they don't block they ability to cause damage.
+                    return !e.getType().is(ChangedAddonTags.EntityTypes.IGNORE_GRABBED_TARGETS);
+                }).toList();
+
+                // Prefer SUIT when no other targets are available.
+                if (nearbyTargets.isEmpty()) {
+                    return GrabStrategy.SUIT;
+                }
+
+                // Fallback to 25% chance when surrounded by multiple targets
                 return living.getRandom().nextFloat() <= 0.25f ? GrabStrategy.SUIT : GrabStrategy.GRAB;
             }
         }
@@ -272,5 +309,9 @@ public interface IGrabberEntity {
     enum GrabStrategy {
         GRAB,
         SUIT;
+
+        public boolean shouldSuit() {
+            return this == SUIT;
+        }
     }
 }

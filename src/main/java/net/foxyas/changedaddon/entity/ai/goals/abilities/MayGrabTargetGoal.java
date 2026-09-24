@@ -96,19 +96,23 @@ public class MayGrabTargetGoal extends Goal {
         LivingEntity target = living.getTarget();
         if (!living.level().isClientSide()) {
             GrabEntityAbilityInstance grabAbilityInstance = grabber.getGrabAbilityInstance();
+            if (grabAbilityInstance == null) {
+                return;
+            }
+            LivingEntity grabbedEntity = grabAbilityInstance.grabbedEntity;
+            if (grabbedEntity == target) {
+                grabAbilityInstance.useDown = this.grabber.getGrabStrategy(grabbedEntity).shouldSuit() && !grabAbilityInstance.suited;
+                return;
+            }
             EntityDimensions dimensions = living.getDimensions(living.getPose()).scale(1.25f);
             AABB grabReach = dimensions.makeBoundingBox(living.position());
             if (target != null && (grabReach.contains(target.position()) || target.distanceTo(living) <= EntityUtil.getAttributeValueSafe(living, ForgeMod.ENTITY_REACH.get()).orElse(2.5f))) {
-                if (grabAbilityInstance != null) {
-                    if (grabAbilityInstance.getController() instanceof AbilityControllerAccessor accessor)
-                        accessor.setHoldTicks(20);
-                    mayGrabEntity(target, grabAbilityInstance);
-                }
+                if (grabAbilityInstance.getController() instanceof AbilityControllerAccessor accessor)
+                    accessor.setHoldTicks(20);
+                mayGrabEntity(target, grabAbilityInstance);
             } else {
-                if (grabAbilityInstance != null) {
-                    if (grabAbilityInstance.getController() instanceof AbilityControllerAccessor accessor)
-                        accessor.setHoldTicks(20);
-                }
+                if (grabAbilityInstance.getController() instanceof AbilityControllerAccessor accessor)
+                    accessor.setHoldTicks(20);
             }
         }
     }
@@ -116,7 +120,7 @@ public class MayGrabTargetGoal extends Goal {
     protected void mayGrabEntity(LivingEntity target, GrabEntityAbilityInstance grabAbilityInstance) {
         LivingEntity grabbedEntity = grabAbilityInstance.grabbedEntity;
         if (grabbedEntity == null && GrabEntityAbility.getGrabber(target) == null) {
-            grabStrategyMap.get(this.grabber.getGrabStrategy()).accept(target, grabAbilityInstance);
+            grabStrategyMap.get(this.grabber.getGrabStrategy(target)).accept(target, grabAbilityInstance);
         }
     }
 
