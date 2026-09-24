@@ -140,6 +140,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                 player.setLastHurtByMob(entityInControl.getLastHurtByMob());
                 player.setLastHurtByPlayer(((LivingEntityAccessor)entityInControl).ChangedAddon$getLastHurtByPlayer());
                 player.setLastHurtMob(entityInControl.getLastHurtMob());
+                player.setForcedPose(entityInControl.getPose());
 //                Vec3 position = entityInControl.position();
 //                player.teleportTo(position.x, position.y, position.z);
             } else if (this.getTransfurProgression(0) >= 1f) {
@@ -152,22 +153,28 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                 this.entityInControl.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
                 this.entityInControl = null;
                 Player player = this.getHost();
-                player.setInvisible(player.isSpectator());
-                player.setSilent(false);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (serverPlayer instanceof IDynamicCamera iDynamicCamera) {
-                        iDynamicCamera.setResetCameraOnShift(true);
-                        serverPlayer.setCamera(null);
-                    }
-                }
-
-                if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
-                    ((LocalPlayerAccessor) localPlayer).setHandsBusy(false);
-                }
+                ChangedAddon$resetPlayer(player);
             }
         }
 
         return original.call(instance);
+    }
+
+    @Unique
+    private void ChangedAddon$resetPlayer(Player player) {
+        player.setInvisible(player.isSpectator());
+        player.setSilent(false);
+        player.setForcedPose(null);
+        if (player instanceof ServerPlayer serverPlayer) {
+            if (serverPlayer instanceof IDynamicCamera iDynamicCamera) {
+                iDynamicCamera.setResetCameraOnShift(true);
+                serverPlayer.setCamera(null);
+            }
+        }
+
+        if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
+            ((LocalPlayerAccessor) localPlayer).setHandsBusy(false);
+        }
     }
 
     @Unique
@@ -196,18 +203,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
         if (entityInControl != null) {
             this.entityInControl.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
             this.entityInControl = null;
-            player.setInvisible(player.isSpectator());
-            player.setSilent(false);
-            if (player instanceof ServerPlayer serverPlayer) {
-                if (serverPlayer instanceof IDynamicCamera iDynamicCamera) {
-                    iDynamicCamera.setResetCameraOnShift(true);
-                    serverPlayer.setCamera(null);
-                }
-            }
-
-            if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
-                ((LocalPlayerAccessor) localPlayer).setHandsBusy(false);
-            }
+            ChangedAddon$resetPlayer(player);
         }
     }
 
