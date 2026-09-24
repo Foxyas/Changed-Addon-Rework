@@ -152,7 +152,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                 this.entityInControl.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
                 this.entityInControl = null;
                 Player player = this.getHost();
-                player.setInvisible(false);
+                player.setInvisible(player.isSpectator());
                 player.setSilent(false);
                 if (player instanceof ServerPlayer serverPlayer) {
                     if (serverPlayer instanceof IDynamicCamera iDynamicCamera) {
@@ -193,7 +193,22 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
 
     @Inject(method = "unhookAll", at = @At("TAIL"))
     private void injectUnHookALl(Player player, CallbackInfo ci) {
-        this.entityInControl = null;
+        if (entityInControl != null) {
+            this.entityInControl.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
+            this.entityInControl = null;
+            player.setInvisible(player.isSpectator());
+            player.setSilent(false);
+            if (player instanceof ServerPlayer serverPlayer) {
+                if (serverPlayer instanceof IDynamicCamera iDynamicCamera) {
+                    iDynamicCamera.setResetCameraOnShift(true);
+                    serverPlayer.setCamera(null);
+                }
+            }
+
+            if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
+                ((LocalPlayerAccessor) localPlayer).setHandsBusy(false);
+            }
+        }
     }
 
 
