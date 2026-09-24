@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.mixins.entity.variant;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.entity.api.IDynamicCamera;
+import net.foxyas.changedaddon.mixins.entity.LivingEntityAccessor;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.client.LocalPlayerAccessor;
@@ -67,6 +68,9 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
     public abstract float getTransfurProgression(float partial);
 
 
+    @Shadow
+    public abstract void setDead();
+
     @Override
     public void setControlOverBody(boolean controlOverBody) {
         this.hasControlOverBody = controlOverBody;
@@ -96,7 +100,8 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
             if (this.entityInControl != null) {
                 if (this.entityInControl.isRemoved()) {
                     this.entityInControl = null;
-                    this.generateEntityInControl();
+                    this.ChangedAddon$generateEntityInControl();
+                    if (entityInControl == null) return original.call(instance);
                 }
 
                 if (this.entityInControl.isDeadOrDying()) {
@@ -105,6 +110,9 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                     } else {
                         this.getHost().kill();
                     }
+                    this.setDead();
+                    this.entityInControl = null;
+                    return original.call(instance);
                 }
 
                 if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
@@ -128,11 +136,15 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                 entityInControl.getBasicPlayerInfo().copyFrom(((PlayerDataExtension) player).getBasicPlayerInfo());
                 player.setInvisible(true);
                 player.setSilent(true);
+                player.setHealth(entityInControl.getHealth());
+                player.setLastHurtByMob(entityInControl.getLastHurtByMob());
+                player.setLastHurtByPlayer(((LivingEntityAccessor)entityInControl).ChangedAddon$getLastHurtByPlayer());
+                player.setLastHurtMob(entityInControl.getLastHurtMob());
 //                Vec3 position = entityInControl.position();
 //                player.teleportTo(position.x, position.y, position.z);
             } else if (this.getTransfurProgression(0) >= 1f) {
                 if (!host.level().isClientSide()) {
-                    generateEntityInControl();
+                    ChangedAddon$generateEntityInControl();
                 }
             }
         } else {
@@ -158,15 +170,25 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
         return original.call(instance);
     }
 
-    private void generateEntityInControl() {
+    @Unique
+    private void ChangedAddon$generateEntityInControl() {
         EntityType<?> type = this.entity.getType();
         Entity rawEntity = type.create(host.level());
         if (rawEntity instanceof ChangedEntity changedEntity) {
             CompoundTag entityData = entity.saveWithoutId(new CompoundTag());
             entityData.remove("UUID");
             changedEntity.load(entityData);
+            ChangedAddon$copyHostSimpleData(changedEntity);
             entityInControl = (T) changedEntity;
         }
+    }
+
+    @Unique
+    private void ChangedAddon$copyHostSimpleData(ChangedEntity entity) {
+        Player host = this.getHost();
+        entity.setLastHurtByMob(host.getLastHurtByMob());
+        entity.setLastHurtByPlayer(((LivingEntityAccessor)host).ChangedAddon$getLastHurtByPlayer());
+        entity.setLastHurtMob(host.getLastHurtMob());
     }
 
     @Inject(method = "unhookAll", at = @At("TAIL"))
@@ -203,6 +225,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                     return entity;
                 });
                 if (spawnedRaw instanceof ChangedEntity changedEntity) {
+                    ChangedAddon$copyHostSimpleData(changedEntity);
                     this.entityInControl = (T) changedEntity;
                 }
             }
