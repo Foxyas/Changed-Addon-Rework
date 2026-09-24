@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.client.LocalPlayerAccessor;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.PlayerDataExtension;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -98,6 +99,14 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                     this.generateEntityInControl();
                 }
 
+                if (this.entityInControl.isDeadOrDying()) {
+                    if (entityInControl.getLastDamageSource() != null) {
+                        this.getHost().hurt(entityInControl.getLastDamageSource(), Float.MAX_VALUE);
+                    } else {
+                        this.getHost().kill();
+                    }
+                }
+
                 if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
                     ((LocalPlayerAccessor) localPlayer).setHandsBusy(true);
                 }
@@ -116,6 +125,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                         serverPlayer.setCamera(entityInControl);
                     }
                 }
+                entityInControl.getBasicPlayerInfo().copyFrom(((PlayerDataExtension) player).getBasicPlayerInfo());
                 player.setInvisible(true);
                 player.setSilent(true);
 //                Vec3 position = entityInControl.position();
