@@ -4,6 +4,7 @@ import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PinkPetalsBlock;
@@ -48,6 +49,10 @@ public class LuminaraPetalsBlock extends PinkPetalsBlock {
     @Override
     public @NotNull BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
         BlockState state = super.getStateForPlacement(context);
-        return state.setValue(GLOWING, false);
+        Level level = context.getLevel();
+        BlockPos clickedPos = context.getClickedPos();
+        boolean startGlowing = (level.canSeeSky(clickedPos) && level.isNight()) || (level.getMaxLocalRawBrightness(clickedPos) <= 4);
+        state = state.setValue(GLOWING, startGlowing);
+        return state;
     }
 }

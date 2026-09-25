@@ -4,6 +4,7 @@ import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -61,7 +62,14 @@ public class LuminaraLichenBlock extends MultifaceBlock implements SimpleWaterlo
     @Override
     public @Nullable BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
         BlockState state = super.getStateForPlacement(context);
-        return state != null ? state.setValue(WATERLOGGED, context.getLevel().isWaterAt(context.getClickedPos())).setValue(GLOWING, false) : null;
+        if (state != null) {
+            Level level = context.getLevel();
+            BlockPos clickedPos = context.getClickedPos();
+            boolean startGlowing = (level.canSeeSky(clickedPos) && level.isNight()) || (level.getMaxLocalRawBrightness(clickedPos) <= 4);
+            return state.setValue(WATERLOGGED, level.isWaterAt(clickedPos)).setValue(GLOWING, startGlowing);
+        } else {
+            return null;
+        }
     }
 
     public FluidState getFluidState(BlockState pState) {
