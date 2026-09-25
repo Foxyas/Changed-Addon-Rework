@@ -96,10 +96,10 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
         }
     }
 
-    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isSpectator()Z"))
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isSpectator()Z", ordinal = 0))
     private boolean hasNoControlOfBody(Player player, Operation<Boolean> original){
         if (ProcessTransfur.getPlayerTransfurVariant(player) instanceof TransfurVariantInstanceExtensor extensor) {
-            if (!extensor.hasControlOverBody()) return true;
+            if (!extensor.hasControlOverBody() && extensor.getChangedEntityInControl() != null) return true;
         }
         return original.call(player);
     }

@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.bosses;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -15,7 +16,6 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.entity.api.ICustomPatReaction;
 import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -122,7 +122,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 //        return SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
 //    }
 
-    protected final Map<Exp9Phase, List<Goal>> phaseGoals = new EnumMap<>(Exp9Phase.class);
+    protected final Map<Exp9Phase, List<Pair<Integer, Goal>>> phaseGoals = new EnumMap<>(Exp9Phase.class);
     private final DynamicAngerManagement angerManagement;
     protected int maxCastingTicks = 200;
 
@@ -422,60 +422,60 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     protected void initPhaseGoals() {
         // Phase 1 Goals (Base Abilities)
         phaseGoals.put(Exp9Phase.PHASE1, List.of(
-                new ThunderDashAttack(this, UniformInt.of(200, 500)),
-                new ThunderDiveGoal(this, UniformInt.of(60, 100), 1.5f, 6f, 1f, 0.5f, 4),
-                new AoEThunderStrikeGoal(
+                Pair.of(15, new ThunderDashAttack(this, UniformInt.of(200, 500))),
+                Pair.of(15, new ThunderDiveGoal(this, UniformInt.of(60, 100), 1.5f, 6f, 1f, 0.5f, 4)),
+                Pair.of(10, new AoEThunderStrikeGoal(
                         this,
                         UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                         UniformInt.of(4, 8), //IntProvider -> damageProvider
                         1.5f,
-                        200)
+                        200))
         ));
 
         // Phase 2 Goals
         phaseGoals.put(Exp9Phase.PHASE2, List.of(
-                new ThunderDashAttack(this, UniformInt.of(300, 700)),
-                new SummonLightningGoal(this, //PathfinderMob -> holder,
+                Pair.of(10, (new ThunderDashAttack(this, UniformInt.of(300, 700)))),
+                Pair.of(15, (new SummonLightningGoal(this, //PathfinderMob -> holder,
                         UniformInt.of(120, 240), //IntProvider -> cooldown,
                         UniformInt.of(2, 4), //IntProvider -> lightningCount,
                         UniformInt.of(80, 160), //IntProvider -> castDuration,
                         UniformInt.of(80, 100), //IntProvider -> lightningDelay,
-                        UniformFloat.of(5, 12)),
-                new StaticDischargeGoal(this,
+                        UniformFloat.of(5, 12)))),
+                Pair.of(15, (new StaticDischargeGoal(this,
                         UniformInt.of(75, 125),
                         4,
                         UniformInt.of(40, 80),
                         8,
-                        UniformFloat.of(4, 8)),
-                new AoEThunderStrikeGoal(
+                        UniformFloat.of(4, 8)))),
+                Pair.of(10, (new AoEThunderStrikeGoal(
                         this,
                         UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                         UniformInt.of(4, 8), //IntProvider -> damageProvider
                         1.5f,
-                        200)
+                        200)))
         ));
 
         // Phase 3 Goals
         phaseGoals.put(Exp9Phase.PHASE3, List.of(
-                new ThunderDashAttack(this, UniformInt.of(200, 400)),
-                new ThunderDiveGoal(this,
+                Pair.of(10, (new ThunderDashAttack(this, UniformInt.of(200, 400)))),
+                Pair.of(10, (new ThunderDiveGoal(this,
                         UniformInt.of(60, 100), //IntProvider -> cooldownProvider
                         1.5f,
                         6f,
                         1f,
                         0.5f,
-                        4),
-                new LightningComboAttackGoal(this,
+                        4))),
+                Pair.of(15, (new LightningComboAttackGoal(this,
                         UniformInt.of(100, 140),
                         UniformInt.of(4, 8),
                         UniformInt.of(20, 40),
-                        UniformFloat.of(8, 12)),
-                new AoEThunderStrikeGoal(
+                        UniformFloat.of(8, 12)))),
+                Pair.of(15, (new AoEThunderStrikeGoal(
                         this,
                         UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                         UniformInt.of(4, 8), //IntProvider -> damageProvider
                         1.5f,
-                        200)
+                        200)))
         ));
     }
 
@@ -486,10 +486,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     protected void registerDynamicPhaseGoals() {
         initPhaseGoals();
-        List<Goal> goals = phaseGoals.get(getPhase());
-        if (goals != null) {
-            for (Goal goal : goals) {
-                this.goalSelector.addGoal(5, goal);
+        List<Pair<Integer, Goal>> pairs = phaseGoals.get(getPhase());
+        if (pairs != null) {
+            for (Pair<Integer, Goal> goal : pairs) {
+                this.goalSelector.addGoal(goal.getFirst(), goal.getSecond());
             }
         }
     }
@@ -497,10 +497,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     protected void addAbilitiesGoals() {
         if (phaseGoals != null) {
-            List<Goal> goals = phaseGoals.get(getPhase());
-            if (goals != null) {
-                for (Goal goal : goals) {
-                    this.goalSelector.addGoal(5, goal);
+            List<Pair<Integer, Goal>> pairs = phaseGoals.get(getPhase());
+            if (pairs != null) {
+                for (Pair<Integer, Goal> goal : pairs) {
+                    this.goalSelector.addGoal(goal.getFirst(), goal.getSecond());
                 }
             }
         }
@@ -680,6 +680,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         DodgeAnimationParameters dodgeAnimationParameters = DodgeAnimationParameters.DEFAULT;
         if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.OUTSIDE_BORDER) || source.is(DamageTypes.GENERIC_KILL)) {
             return super.hurt(source, amount);
+        }
+
+        if (source.is(DamageTypeTags.BYPASSES_ARMOR)) {
+            amount *= 0.25f;
         }
 
         if (source.getDirectEntity() instanceof ThrownPotion ||

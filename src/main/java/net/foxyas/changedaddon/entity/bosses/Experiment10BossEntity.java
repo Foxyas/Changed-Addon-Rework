@@ -236,6 +236,10 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
             case "trident" -> amount *= 0.5f;
         }
 
+        if (source.is(DamageTypeTags.BYPASSES_ARMOR)) {
+            amount *= 0.25f;
+        }
+
         if (source.is(DamageTypeTags.IS_FIRE)) {
             amount = 0;
         }

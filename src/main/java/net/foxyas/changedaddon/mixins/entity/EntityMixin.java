@@ -27,14 +27,14 @@ public class EntityMixin implements LivingEntityDataExtensor {
         if (!self.level().isClientSide() && self instanceof ServerPlayer serverPlayer) {
             boolean isSpectating = serverPlayer.getCamera().is(entity);
             if (isSpectating) {
-                return false;
+                return true;
             }
         }
 
         if (entity instanceof ServerPlayer serverPlayer) {
             boolean isSpectating = serverPlayer.getCamera().is(self);
             if (isSpectating) {
-                return false;
+                return true;
             }
         }
 
@@ -44,14 +44,14 @@ public class EntityMixin implements LivingEntityDataExtensor {
 
                 if (underlyingPlayer instanceof ChangedEntity otherEntity) {
                     if (changedEntity.getUnderlyingPlayer() == otherEntity.getUnderlyingPlayer()) {
-                     return false;
+                     return true;
                     }
                 }
 
                 TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(underlyingPlayer));
                 if (entity.is(underlyingPlayer) && variantInstance instanceof TransfurVariantInstanceExtensor extensor) {
                     if (self.is(extensor.getChangedEntityInControl())) {
-                        return false;
+                        return true;
                     }
                 }
             }
