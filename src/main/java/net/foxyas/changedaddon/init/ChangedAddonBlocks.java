@@ -135,7 +135,7 @@ public class ChangedAddonBlocks {
 
     public static final RegistryObject<LuminaraLeavesBlock> LUMINARA_LEAVES = REGISTRY.register("luminara_leaves", LuminaraLeavesBlock::new);
     public static final RegistryObject<PinkPetalsBlock> LUMINARA_PETALS = REGISTRY.register("luminara_petals", LuminaraPetalsBlock::new);
-    public static final RegistryObject<LuminaraLichenBlock> LUMINARA_LICHEN = REGISTRY.register("luminara_lichen", () -> new LuminaraLichenBlock(BlockBehaviour.Properties.of().mapColor(MapColor.GLOW_LICHEN).noCollission().strength(0.2F).sound(SoundType.GLOW_LICHEN).ignitedByLava().pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<LuminaraLichenBlock> LUMINARA_LICHEN = REGISTRY.register("luminara_lichen", LuminaraLichenBlock::new);
     public static final RegistryObject<LuminaraSapling> LUMINARA_SAPLING = REGISTRY.register("luminara_sapling", LuminaraSapling::new);
     public static final RegistryObject<PottedLuminaraSaplingBlock> POTTED_LUMINARA_SAPLING = REGISTRY.register("potted_luminara_sapling", PottedLuminaraSaplingBlock::new);
 
