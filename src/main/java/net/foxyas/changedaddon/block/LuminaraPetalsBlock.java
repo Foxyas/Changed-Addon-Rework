@@ -1,9 +1,11 @@
 package net.foxyas.changedaddon.block;
 
-import net.foxyas.changedaddon.init.ChangedAddonBlocks;
+import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -16,14 +18,26 @@ public class LuminaraPetalsBlock extends PinkPetalsBlock {
     public static final BooleanProperty GLOWING = BooleanProperty.create("glowing");
 
     public LuminaraPetalsBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.PINK_PETALS));
+        super(BlockBehaviour.Properties.copy(Blocks.PINK_PETALS).dynamicShape());
 
         this.registerDefaultState(this.defaultBlockState().setValue(GLOWING, false));
     }
 
     @Override
     protected boolean mayPlaceOn(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
-        return super.mayPlaceOn(pState, pLevel, pPos) || ChangedAddonBlocks.LUMINARA_BLOOM.get().mayPlaceOn(pState, pLevel, pPos);
+        if (pState.getBlock() instanceof AbstractLatexBlock) {
+            return true;
+        }
+        return super.mayPlaceOn(pState, pLevel, pPos);
+    }
+
+    @Override
+    public boolean canSurvive(@NotNull BlockState pState, @NotNull LevelReader pLevel, @NotNull BlockPos pPos) {
+        BlockState below = pLevel.getBlockState(pPos.below());
+        if (below.getBlock() instanceof AbstractLatexBlock) {
+            return true;
+        }
+        return super.canSurvive(pState, pLevel, pPos);
     }
 
     @Override
@@ -35,6 +49,10 @@ public class LuminaraPetalsBlock extends PinkPetalsBlock {
     @Override
     public @NotNull BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
         BlockState state = super.getStateForPlacement(context);
-        return state.setValue(GLOWING, false);
+        Level level = context.getLevel();
+        BlockPos clickedPos = context.getClickedPos();
+        boolean startGlowing = (level.canSeeSky(clickedPos) && level.isNight()) || (level.getMaxLocalRawBrightness(clickedPos) <= 4);
+        state = state.setValue(GLOWING, startGlowing);
+        return state;
     }
 }

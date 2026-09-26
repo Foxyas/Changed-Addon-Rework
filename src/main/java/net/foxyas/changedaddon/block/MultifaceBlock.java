@@ -19,7 +19,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MultifaceBlock extends Block {
@@ -74,7 +77,19 @@ public class MultifaceBlock extends Block {
             BlockPos rel = currentPos.relative(dir);
             if (!canAttachTo(level, rel, level.getBlockState(rel), dir.getOpposite())) {
                 state = state.setValue(prop, false);
-                if (level instanceof Level l) Block.popResource(l, currentPos, new ItemStack(this));
+                if (level instanceof Level l) {
+                    @NotNull BlockState finalState = state;
+                    List<Direction> facesLeft = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().map(entry -> {
+                        if (finalState.getValue(entry.getValue())) {
+                            return entry.getKey();
+                        }
+
+                        return null;
+                    }).filter(Objects::nonNull).toList();
+                    if (!facesLeft.isEmpty()) {
+                        Block.popResource(l, currentPos, new ItemStack(this));
+                    }
+                }
                 continue;
             }
 

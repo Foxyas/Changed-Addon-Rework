@@ -75,31 +75,14 @@ public class SprayItem extends Item {
         ItemStack stack = context.getItemInHand();
         player.getCooldowns().addCooldown(stack.getItem(), 20);
 
-//        BlockPos origin = context.getClickedPos();
-//        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-
         Direction clickedFace = context.getClickedFace();
 
         Level level = player.level;
-//        pos.set(origin);
 
         int affectedBlocks = 0;
 
         if (latexType.get() == ChangedLatexTypes.NONE.get()) {
             handleLatexRemoval(context);
-//            LatexCoverState latexCoverState = LatexCoverState.getAt(level, pos);
-//            if (!latexCoverState.isAir()) {
-//                BooleanProperty faceProp = SpreadingLatexType.FACES.get(clickedFace.getOpposite());
-//                LatexCoverState.setAtAndUpdate(level, pos, latexCoverState.setValue(faceProp, false));
-//
-//                for (Direction dir : Direction.values()) {
-//                    pos.set(origin).move(dir);
-//                    latexCoverState = LatexCoverState.getAt(level, pos);
-//
-//                    if (!latexCoverState.isAir())
-//                        LatexCoverState.setAtAndUpdate(level, pos, latexCoverState.setValue(faceProp, false));
-//                }
-//            }
         } else {
             BlockPos clickedOriginPos = context.getClickedPos();
             List<BlockPos> clickedPoses = new ArrayList<>(List.of(clickedOriginPos));
