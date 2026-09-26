@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp10;
 
+import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.projectile.WitherParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.server.level.ServerLevel;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public class ThrowWitherProjectileGoal extends Goal {
+public class ThrowWitherProjectileGoal extends Goal implements IAbilityGoal {
 
     public final Mob holder;
     public final float distance;

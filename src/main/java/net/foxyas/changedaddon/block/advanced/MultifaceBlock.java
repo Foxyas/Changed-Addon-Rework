@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.block;
+package net.foxyas.changedaddon.block.advanced;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,13 +19,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MultifaceBlock extends Block {
+    public static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION;
 
     public static final BooleanProperty UP = PipeBlock.UP;
     public static final BooleanProperty NORTH = PipeBlock.NORTH;
@@ -71,7 +71,7 @@ public class MultifaceBlock extends Block {
         BooleanProperty prop;
         boolean empty = true;
         for (Direction dir : Direction.values()) {
-            prop = PipeBlock.PROPERTY_BY_DIRECTION.get(dir);
+            prop = PROPERTY_BY_DIRECTION.get(dir);
             if (!state.getValue(prop)) continue;
 
             BlockPos rel = currentPos.relative(dir);
@@ -79,7 +79,7 @@ public class MultifaceBlock extends Block {
                 state = state.setValue(prop, false);
                 if (level instanceof Level l) {
                     @NotNull BlockState finalState = state;
-                    List<Direction> facesLeft = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().map(entry -> {
+                    List<Direction> facesLeft = PROPERTY_BY_DIRECTION.entrySet().stream().map(entry -> {
                         if (finalState.getValue(entry.getValue())) {
                             return entry.getKey();
                         }
@@ -99,7 +99,7 @@ public class MultifaceBlock extends Block {
         return empty ? Blocks.AIR.defaultBlockState() : state;
     }
 
-    protected boolean canAttachTo(LevelAccessor level, BlockPos attachToPos, BlockState attachTo, Direction attachToFace) {
+    public boolean canAttachTo(LevelAccessor level, BlockPos attachToPos, BlockState attachTo, Direction attachToFace) {
         return Block.isFaceFull(attachTo.getShape(level, attachToPos), attachToFace);
     }
 
@@ -108,7 +108,7 @@ public class MultifaceBlock extends Block {
         Level level = context.getLevel();
         BlockState state = level.getBlockState(context.getClickedPos());
         Direction dir = context.getClickedFace();
-        BooleanProperty prop = PipeBlock.PROPERTY_BY_DIRECTION.get(dir.getOpposite());
+        BooleanProperty prop = PROPERTY_BY_DIRECTION.get(dir.getOpposite());
 
         if (state.is(this)) {
             if (state.getValue(prop)) return null;
@@ -163,5 +163,14 @@ public class MultifaceBlock extends Block {
             case FRONT_BACK -> state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
             default -> state;
         };
+    }
+
+    public static boolean hasFace(BlockState pState, Direction pDirection) {
+        BooleanProperty booleanproperty = getFaceProperty(pDirection);
+        return pState.hasProperty(booleanproperty) && pState.getValue(booleanproperty);
+    }
+
+    public static BooleanProperty getFaceProperty(Direction pDirection) {
+        return PROPERTY_BY_DIRECTION.get(pDirection);
     }
 }

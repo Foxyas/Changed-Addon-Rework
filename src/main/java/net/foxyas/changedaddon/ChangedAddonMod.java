@@ -15,6 +15,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.IModBusEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
@@ -80,7 +81,12 @@ public class ChangedAddonMod {
 
         ChangedAddonTransfurVariants.REGISTRY.register(bus);
         dataFixer = new ChangedAddonDataFixer();
-        ChangedAddonModCompatEvents.registerOptionalEvents();
+
+        bus.addListener(this::initCompatibilitiesEvent);
+    }
+
+    private void initCompatibilitiesEvent(final FMLCommonSetupEvent event) {
+        event.enqueueWork(ChangedAddonModCompatEvents::registerOptionalEvents);
     }
 
     //Thanks :D

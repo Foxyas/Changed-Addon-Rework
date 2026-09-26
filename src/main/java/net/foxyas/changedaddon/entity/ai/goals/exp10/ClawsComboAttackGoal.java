@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp10;
 
+import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -23,7 +24,7 @@ import org.joml.Vector3f;
 
 import java.util.EnumSet;
 
-public class ClawsComboAttackGoal extends Goal {
+public class ClawsComboAttackGoal extends Goal implements IAbilityGoal {
 
     private static final DustParticleOptions PARTICLE = new DustParticleOptions(new Vector3f(1, 1, 1), 1);
     protected final PathfinderMob holder;

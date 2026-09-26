@@ -2,8 +2,8 @@ package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.*;
-import net.foxyas.changedaddon.block.MultifaceBlock;
 import net.foxyas.changedaddon.block.advanced.HandScanner;
+import net.foxyas.changedaddon.block.advanced.MultifaceBlock;
 import net.foxyas.changedaddon.block.advanced.PawsScanner;
 import net.foxyas.changedaddon.block.advanced.TimedKeypadBlock;
 import net.foxyas.changedaddon.block.debug.StructureSpawnerBlock;
@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;

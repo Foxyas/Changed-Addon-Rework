@@ -4,13 +4,13 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
+import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
 import net.foxyas.changedaddon.effect.particles.EntityLinkedThunderParticleOptions;
 import net.foxyas.changedaddon.effect.particles.ThunderParticleOptions;
+import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
@@ -95,9 +95,10 @@ import org.joml.Vector3f;
 import java.util.*;
 
 public class Experiment009BossEntity extends Experiment009Entity implements IExp9Logic {
-    public static final float PHASE_3_HEALTH_RATIO = 0.4f;
-    public static final float PHASE_2_HEALTH_RATIO = 0.75f;
     public static final String KNOCKBACK_RESISTANCE_MODIFER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb739";
+    public static final String ATTACK_DAMAGE_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb736";
+    public static final String ARMOR_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb737";
+    public static final String ARMOR_TOUGHNESS_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb738";
 
     private static final EntityDataAccessor<Integer> CLIENT_ANGER_LEVEL = SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> PHASE2 =
@@ -112,10 +113,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
     private static final EntityDataAccessor<Exp9Phase> CURRENT_PHASE =
             SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
-    public static final String ATTACK_DAMAGE_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb736";
-    public static final String ARMOR_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb737";
-    public static final String ARMOR_TOUGHNESS_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb738";
-    public static final float PHASE_1_HEALTH_RATIO = 0.25f;
+
+    public float PHASE_3_HEALTH_RATIO = 0.4f;
+    public float PHASE_2_HEALTH_RATIO = 0.75f;
+    public float PHASE_1_HEALTH_RATIO = 0.25f;
 
 //
 //    private static EntityDataAccessor<Exp9Phase> PHASE() {
@@ -400,7 +401,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     protected void addPassiveGoals() {
         super.addPassiveGoals();
-        this.passiveSelector.addGoal(10, new ThunderStorm(this, UniformInt.of(60, 100)));
+        this.passiveSelector.addGoal(10, new ThunderStormGoal(this, UniformInt.of(60, 100)));
         this.passiveSelector.addGoal(20, new ExtinguishFireNearbyGoal(this) {
             @Override
             public void start() {
@@ -422,19 +423,19 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     protected void initPhaseGoals() {
         // Phase 1 Goals (Base Abilities)
         phaseGoals.put(Exp9Phase.PHASE1, List.of(
-                Pair.of(15, new ThunderDashAttack(this, UniformInt.of(200, 500))),
+                Pair.of(15, new ThunderDashAttackGoal(this, UniformInt.of(200, 500))),
                 Pair.of(15, new ThunderDiveGoal(this, UniformInt.of(60, 100), 1.5f, 6f, 1f, 0.5f, 4)),
                 Pair.of(10, new AoEThunderStrikeGoal(
                         this,
                         UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                         UniformInt.of(4, 8), //IntProvider -> damageProvider
                         1.5f,
-                        200))
+                        UniformInt.of(120, 200)))
         ));
 
         // Phase 2 Goals
         phaseGoals.put(Exp9Phase.PHASE2, List.of(
-                Pair.of(10, (new ThunderDashAttack(this, UniformInt.of(300, 700)))),
+                Pair.of(10, (new ThunderDashAttackGoal(this, UniformInt.of(300, 700)))),
                 Pair.of(15, (new SummonLightningGoal(this, //PathfinderMob -> holder,
                         UniformInt.of(120, 240), //IntProvider -> cooldown,
                         UniformInt.of(2, 4), //IntProvider -> lightningCount,
@@ -452,12 +453,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                         UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                         UniformInt.of(4, 8), //IntProvider -> damageProvider
                         1.5f,
-                        200)))
+                        UniformInt.of(120, 200))))
         ));
 
         // Phase 3 Goals
         phaseGoals.put(Exp9Phase.PHASE3, List.of(
-                Pair.of(10, (new ThunderDashAttack(this, UniformInt.of(200, 400)))),
+                Pair.of(10, (new ThunderDashAttackGoal(this, UniformInt.of(200, 400)))),
                 Pair.of(10, (new ThunderDiveGoal(this,
                         UniformInt.of(60, 100), //IntProvider -> cooldownProvider
                         1.5f,
@@ -475,7 +476,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                         UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                         UniformInt.of(4, 8), //IntProvider -> damageProvider
                         1.5f,
-                        200)))
+                        UniformInt.of(120, 200))))
         ));
     }
 
@@ -700,9 +701,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         boolean isProjectile = source.is(DamageTypeTags.IS_PROJECTILE) ||
-                source.getMsgId().equals("trident") ||
-                source.getMsgId().contains("bullet") ||
-                source.getMsgId().contains("gun");
+                source.getMsgId().equals("trident") || ChangedAddonModCompatEvents.isDamageTypeBullet(source);
 
         if (isProjectile && !source.getMsgId().equals("trident") && !isVulnerableToProjectiles()) {
             shouldDodgeAndNegateDamage = true;
@@ -736,6 +735,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 }
 
                 DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
+                this.setDeltaMovement(this.getDeltaMovement().multiply(0, 1, 0));
                 this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
             }
 
@@ -751,7 +751,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 }
 
                 DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
+                this.setDeltaMovement(this.getDeltaMovement().multiply(0, 1, 0));
                 this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
+                this.setHealth(this.getHealth() - 2f);
                 return false;
             }
         }
@@ -797,10 +799,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (source.is(DamageTypeTags.IS_PROJECTILE)) {
             if (isVulnerableToProjectiles()) {
                 if (player.distanceTo(this) >= 3 && isPhase3()) {
-                    if (nextFloat >= 0.25f) {
+                    if (nextFloat <= 0.25f) {
                         player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_at_distance")), false);
                     }
-                } else if (nextFloat >= 0.25f) {
+                } else if (nextFloat <= 0.25f) {
                     player.displayClientMessage(getEntityChat(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_when_vulnerable")), false);
                 }
             } else { // Hints will always show up but "rage bait" reactions is a random.
@@ -809,12 +811,17 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
-    public static final int FIRE_EXTINGUISH_MESSAGE_ID = 1001;
-    private static final Int2ObjectMap<Component> TALK_MESSAGES = Util.make(new Int2ObjectArrayMap<>(), (map) -> {
+    public static final String FIRE_EXTINGUISH_MESSAGE_ID = ChangedAddonMod.resourceLocString("exp9.fire_extinguish");
+    public static final String PHASING_PHASE2_TALK_ID = ChangedAddonMod.resourceLocString("exp9.phasing_phase2");
+    public static final String PHASING_PHASE3_TALK_ID = ChangedAddonMod.resourceLocString("exp9.phasing_phase3");
+    private static final HashMap<String, Component> TALK_MESSAGES = Util.make(new HashMap<>(), (map) -> {
         map.put(FIRE_EXTINGUISH_MESSAGE_ID, Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_extinguish"));
+        map.put(PHASING_PHASE2_TALK_ID, Component.translatable("entity_dialogues.changed_addon.exp9.reaction.phasing.phase2"));
+        map.put(PHASING_PHASE3_TALK_ID, Component.translatable("entity_dialogues.changed_addon.exp9.reaction.phasing.phase3"));
     });
 
-    private void maySpeak(int id) {
+    private void maySpeak(String id) {
+        if (this.level().isClientSide()) return;
         Component component = TALK_MESSAGES.get(id);
         LivingEntity target = this.getTarget();
         speak(component, target);
@@ -957,17 +964,18 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         Exp9Phase oldPhase = this.getPhase();
+        float ratio = this.computeHealthRatio();
+        boolean hasPhase3HealthRatio = currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO || ratio <= PHASE_3_HEALTH_RATIO;
+        boolean hasPhase2HealthRatio = currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO && !hasPhase3HealthRatio;
         if (this.isPhase2()) {
-            float ratio = this.computeHealthRatio();
-            boolean hasPhase3HealthRatio = currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO || ratio <= PHASE_3_HEALTH_RATIO;
             if (hasPhase3HealthRatio && !this.isPhase3()) {
                 this.setPhase(Exp9Phase.PHASE3);
-                this.onPhaseChange(oldPhase, this.getPhase());
+//                this.onPhaseChange(oldPhase, this.getPhase());
                 level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
             }
-        } else if (currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO) {
+        } else if (hasPhase2HealthRatio && !isPhase3()) {
             this.setPhase(Exp9Phase.PHASE2);
-            this.onPhaseChange(oldPhase, this.getPhase());
+//            this.onPhaseChange(oldPhase, this.getPhase());
             level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
         }
     }
@@ -997,6 +1005,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 if (applyEffects) {
                     playSound(SoundEvents.PLAYER_ATTACK_CRIT, 2.5f, 0.75f);
                     playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 5f, 0.75f);
+                    this.maySpeak(PHASING_PHASE2_TALK_ID);
                     knockBackAndDoThunderBolt();
                 }
 
@@ -1022,6 +1031,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                     playSound(SoundEvents.LIGHTNING_BOLT_IMPACT, 5f, 0.55f);
                     playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 5f, 0.25f);
                     knockbackAndDoThunderStorm();
+                    this.maySpeak(PHASING_PHASE3_TALK_ID);
                 }
                 this.setPhase2(false);
                 this.setPhase3(true);
@@ -1344,30 +1354,28 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (this.isCastingAttack()) {
             this.setCastingAttack(false);
         }
-        if (damageSource.getDirectEntity() == null) {
-            super.die(damageSource);
-            return;
-        }
 
         this.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1, 1);
 
-        float angleTheta, anglePhi, x, y, z;
-        for (int theta = 0; theta < 360; theta += 25) { // Ângulo horizontal
-            angleTheta = Mth.DEG_TO_RAD * theta;
+        if (damageSource.getEntity() != null) {
+            float angleTheta, anglePhi, x, y, z;
+            for (int theta = 0; theta < 360; theta += 25) { // Ângulo horizontal
+                angleTheta = Mth.DEG_TO_RAD * theta;
 
-            for (int phi = 0; phi <= 180; phi += 25) { // Ângulo vertical
-                anglePhi = Mth.DEG_TO_RAD * phi;
-                x = (float) getX() + Mth.sin(anglePhi) * Mth.cos(angleTheta) * 4.0f;
-                y = (float) getY() + Mth.cos(anglePhi) * 4.0f;
-                z = (float) getZ() + Mth.sin(anglePhi) * Mth.sin(angleTheta) * 4.0f;
-                ParticlesUtil.sendParticlesWithMotion(
-                        this,
-                        0,
-                        ParticleTypes.ELECTRIC_SPARK,
-                        Vec3.ZERO,
-                        this.getPosition(0).subtract(x, y, z),
-                        5, 0.025f
-                );
+                for (int phi = 0; phi <= 180; phi += 25) { // Ângulo vertical
+                    anglePhi = Mth.DEG_TO_RAD * phi;
+                    x = (float) getX() + Mth.sin(anglePhi) * Mth.cos(angleTheta) * 4.0f;
+                    y = (float) getY() + Mth.cos(anglePhi) * 4.0f;
+                    z = (float) getZ() + Mth.sin(anglePhi) * Mth.sin(angleTheta) * 4.0f;
+                    ParticlesUtil.sendParticlesWithMotion(
+                            this,
+                            0,
+                            ParticleTypes.ELECTRIC_SPARK,
+                            Vec3.ZERO,
+                            this.getPosition(0).subtract(x, y, z),
+                            5, 0.025f
+                    );
+                }
             }
         }
 

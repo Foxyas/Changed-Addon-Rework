@@ -6,10 +6,10 @@ import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class RegisterThirst {
+public class ThirstCompatibility {
 
     static void register() {
-        MinecraftForge.EVENT_BUS.register(new RegisterThirst());
+        MinecraftForge.EVENT_BUS.register(new ThirstCompatibility());
     }
 
     @SubscribeEvent

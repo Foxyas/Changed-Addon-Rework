@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
+import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.EnumSet;
 import java.util.List;
 
-public class ThunderDashAttack extends Goal implements IReactiveGoal, IAbilityGoal {
+public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbilityGoal {
 
     private static final int MAX_CHARGE_TICKS = 60; // 3 seconds
     private static final int MAX_DASH_TICKS = 20;
@@ -49,7 +50,7 @@ public class ThunderDashAttack extends Goal implements IReactiveGoal, IAbilityGo
     protected boolean finishDashing = false; // hardcoded
     protected int cooldownTicks = 0;
 
-    public ThunderDashAttack(Experiment009BossEntity dasher, IntProvider cooldownProvider) {
+    public ThunderDashAttackGoal(Experiment009BossEntity dasher, IntProvider cooldownProvider) {
         this.dasher = dasher;
         this.cooldownProvider = cooldownProvider;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));

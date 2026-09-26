@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.compatibility;
 
 import com.tacz.guns.api.event.common.GunShootEvent;
+import com.tacz.guns.init.ModDamageTypes;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
@@ -9,17 +10,18 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class TACZEvents {
+public class TACZCompatibility {
     
     public static void register() {
         // Registra esta própria classe no barramento de eventos
-        MinecraftForge.EVENT_BUS.register(new TACZEvents());
+        MinecraftForge.EVENT_BUS.register(new TACZCompatibility());
     }
 
 //    @SubscribeEvent
@@ -49,6 +51,10 @@ public class TACZEvents {
 //            }
 //        }
 //    }
+
+    public static boolean isDamageTypeBullet(DamageSource damageSource) {
+        return damageSource.is(ModDamageTypes.BULLETS_TAG);
+    }
 
     @SubscribeEvent
     public void onAttemptToFireGun(GunShootEvent event) {

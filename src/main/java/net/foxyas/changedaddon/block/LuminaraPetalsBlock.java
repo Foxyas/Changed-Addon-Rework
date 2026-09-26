@@ -49,10 +49,12 @@ public class LuminaraPetalsBlock extends PinkPetalsBlock {
     @Override
     public @NotNull BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
         BlockState state = super.getStateForPlacement(context);
-        Level level = context.getLevel();
-        BlockPos clickedPos = context.getClickedPos();
-        boolean startGlowing = (level.canSeeSky(clickedPos) && level.isNight()) || (level.getMaxLocalRawBrightness(clickedPos) <= 4);
-        state = state.setValue(GLOWING, startGlowing);
+        if (!state.getValue(GLOWING)) {
+            Level level = context.getLevel();
+            BlockPos clickedPos = context.getClickedPos();
+            boolean startGlowing = (level.canSeeSky(clickedPos) && level.isNight()) || (level.getMaxLocalRawBrightness(clickedPos) <= 4);
+            return state.setValue(GLOWING, startGlowing);
+        }
         return state;
     }
 }
