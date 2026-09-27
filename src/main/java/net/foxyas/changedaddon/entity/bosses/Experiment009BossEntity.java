@@ -170,7 +170,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return builder;
     }
 
-    private static GearTier getGearTier(LivingEntity entity) {
+    public static GearTier getGearTier(LivingEntity entity) {
 
         double armor = entity.getAttributeValue(Attributes.ARMOR);
         double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
