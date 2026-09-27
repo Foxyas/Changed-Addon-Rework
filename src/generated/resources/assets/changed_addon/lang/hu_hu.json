@@ -452,6 +452,8 @@
   "entity_dialogues.changed_addon.exp9.pat.type_3": "§l§3Simogass meg még egyszer, és addig zúzlak össze, amíg semmi sem marad belőled!",
   "entity_dialogues.changed_addon.exp9.reaction.fire_damage": "§l§o§3Gyufával küzdesz a viharral.... Nem rosszul számoltál – félreértettél.",
   "entity_dialogues.changed_addon.exp9.reaction.fire_extinguish": "§3§l§oElég ebből a tűzből! Kezd már nagyon idegesíteni.",
+  "entity_dialogues.changed_addon.exp9.reaction.phasing.phase2": "§c§l§oElég volt! Elegem van a veled való játszadozásból!",
+  "entity_dialogues.changed_addon.exp9.reaction.phasing.phase3": "§c§l§oRENDBEN! AKKOR MINDENT VAGY SEMMIT!",
   "entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_at_distance": "§l§o§3GYÁVA VAGY! Csak a távolságra számíthatsz? TÉNYLEG SZÁMORÚ!!!",
   "entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_when_vulnerable": "§l§o§3GYÁVA VAGY! Akkor támadsz, amikor a legsebezhetőbb állapotban vagyok, ahelyett, hogy nyíltan beszélnél velem.",
   "entity_dialogues.changed_addon.exp9.reaction.range_attacks.not_affect": "§l§o§3Már hozzászoktam az ilyen fegyverekhez. Legközelebb légy kreatívabb.",
