@@ -302,6 +302,8 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityDialogues("exp9.reaction.range_attacks.attack_when_vulnerable", "§l§o§3GYÁVA VAGY! Akkor támadsz, amikor a legsebezhetőbb állapotban vagyok, ahelyett, hogy nyíltan beszélnél velem.");
         addEntityDialogues("exp9.reaction.fire_damage", "§l§o§3Gyufával küzdesz a viharral.... Nem rosszul számoltál – félreértettél.");
         addEntityDialogues("exp9.reaction.fire_extinguish", "§3§l§oElég ebből a tűzből! Kezd már nagyon idegesíteni.");
+        addEntityDialogues("exp9.reaction.phasing.phase2", "§c§l§oElég volt! Elegem van a veled való játszadozásból!");
+        addEntityDialogues("exp9.reaction.phasing.phase3", "§c§l§oRENDBEN! AKKOR MINDENT VAGY SEMMIT!");
         addEntityDialogues("exp10.pat.type_0", "§l§4Igen, VÉGET VETEK A KIBASZOTT ÉLETEDNEK");
         addEntityDialogues("exp10.pat.type_1", "§l§4Nem fogod sokáig megbánni – meghalsz érte.");
         addEntityDialogues("exp10.pat.type_2", "§l§4Érj meg újra, és gyorsan csinálom... neked.");
