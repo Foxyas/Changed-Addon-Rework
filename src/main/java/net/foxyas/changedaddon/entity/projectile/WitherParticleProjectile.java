@@ -31,6 +31,9 @@ public class WitherParticleProjectile extends AbstractGenericParticleProjectile 
 
     @Override
     protected void spawnParticle() {
+        if (isNoGravity()) {
+            return;
+        }
         super.spawnParticle();
     }
 
