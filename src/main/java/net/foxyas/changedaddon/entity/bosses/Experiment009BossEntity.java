@@ -1654,7 +1654,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         IAlphaAbleEntity.apply(entity, ChangedAttributes.JUMP_STRENGTH.get(), IAlphaAbleEntity.JUMP_STRENGTH, "Alpha Jump Strength", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
     }
 
-    private enum GearTier {
+    public enum GearTier {
         LOW,
         MID,
         HIGH
