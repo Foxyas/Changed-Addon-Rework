@@ -458,6 +458,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityType(LUMINAR_CRYSTAL_SPEAR, "Luminar Crystal Spear");
         addEntityType(PARTICLE_PROJECTILE, "Light Particle");
         addEntityType(WITHER_PARTICLE_PROJECTILE, "Wither Particle");
+        addEntityType(CRYSTAL_SHARD, "Crystal Shard");
         add(EntityType.VILLAGER.getDescriptionId() + ".changed_addon.scientist", "Scientist");
 
         add("fluid." + modid + ".litix_camonia_fluid", "Litix Camonia Fluid");

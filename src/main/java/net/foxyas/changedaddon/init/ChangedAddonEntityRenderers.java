@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.client.renderer.*;
 import net.foxyas.changedaddon.client.renderer.advanced.*;
 import net.foxyas.changedaddon.client.renderer.basic.*;
 import net.foxyas.changedaddon.client.renderer.mobs.LatexSnowFoxFoxyasRenderer;
+import net.foxyas.changedaddon.client.renderer.projectiles.CrystalShardRenderer;
 import net.foxyas.changedaddon.client.renderer.projectiles.SimpleProjectileRenderer;
 import net.foxyas.changedaddon.client.renderer.projectiles.WitherSimpleProjectileRenderer;
 import net.ltxprogrammer.changed.client.RegisterComplexRenderersEvent;
@@ -17,8 +18,6 @@ public class ChangedAddonEntityRenderers {
 
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), LuminarCrystalSpearRenderer::new);
-
         event.registerEntityRenderer(ChangedAddonEntities.LATEX_SNOW_FOX_MALE.get(), LatexSnowFoxMaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.WHITE_FOX.get(), WhiteFoxRenderer::new);
@@ -87,6 +86,8 @@ public class ChangedAddonEntityRenderers {
                 SimpleProjectileRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.WITHER_PARTICLE_PROJECTILE.get(),
                 WitherSimpleProjectileRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), LuminarCrystalSpearRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.CRYSTAL_SHARD.get(), CrystalShardRenderer::new);
     }
 
 

@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.advanced.*;
 import net.foxyas.changedaddon.entity.bosses.*;
 import net.foxyas.changedaddon.entity.partials.SnowLeopardPartialEntity;
+import net.foxyas.changedaddon.entity.projectile.CrystalShardProjectile;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
 import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
 import net.foxyas.changedaddon.entity.projectile.WitherParticleProjectile;
@@ -200,6 +201,10 @@ public class ChangedAddonEntities {
                     .setTrackingRange(64)
                     .setUpdateInterval(1)
 
+                    .sized(0.5f, 0.5f));
+
+    public static final RegistryObject<EntityType<CrystalShardProjectile>> CRYSTAL_SHARD = register("crystal_shard",
+            EntityType.Builder.<CrystalShardProjectile>of(CrystalShardProjectile::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f));
 
 
