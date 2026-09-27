@@ -571,6 +571,14 @@ public class ChangedAddonEntities {
                     .setTrackingRange(64)
                     .sized(0.91F, 2.6F)); // 0.7F *1.3F, 2F *1.3F
 
+    public static final RegistryObject<EntityType<FemaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_FEMALE = registerChangedEntity("luminara_crystal_being_female",
+            EntityType.Builder.of(FemaleLuminaraCrystalBeing::new, MobCategory.MONSTER)
+                    .sized(0.7f, 1.93f));
+
+    public static final RegistryObject<EntityType<MaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_MALE = registerChangedEntity("luminara_crystal_being_male",
+            EntityType.Builder.of(MaleLuminaraCrystalBeing::new, MobCategory.MONSTER)
+                    .sized(0.7f, 1.93f));
+
     /// OCs
 
     public static final RegistryObject<EntityType<BorealisMaleEntity>> BOREALIS_MALE = registerOrganicChangedEntity("borealis_male",
@@ -755,6 +763,8 @@ public class ChangedAddonEntities {
         event.put(LATEX_KAYLA_SHARK.get(), LatexKaylaSharkEntity.createLatexAttributes().build());
         event.put(LATEX_BORDER_COLLIE.get(), LatexBorderCollieEntity.createLatexAttributes().build());
         event.put(DARK_LATEX_YUFENG_QUEEN.get(), DarkLatexYufengQueenEntity.createLatexAttributes().build());
+        event.put(LUMINARA_CRYSTAL_BEING_FEMALE.get(), FemaleLuminaraCrystalBeing.createLatexAttributes().build());
+        event.put(LUMINARA_CRYSTAL_BEING_MALE.get(), MaleLuminaraCrystalBeing.createLatexAttributes().build());
     }
 
     @SubscribeEvent

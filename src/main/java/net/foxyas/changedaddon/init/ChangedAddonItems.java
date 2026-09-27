@@ -244,6 +244,8 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> LATEX_CHEETAH_MALE_SPAWN_EGG = REGISTRY.register("latex_cheetah_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_CHEETAH_MALE, Color3.getColor("#d8b270").toInt(), Color3.getColor("#634927").toInt(), new Item.Properties()));
     public static final RegistryObject<Item> LUMINARA_FLOWER_BEAST_SPAWN_EGG = REGISTRY.register("luminara_flower_beast_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LUMINARA_FLOWER_BEAST, Color3.getColor("#f5d4ef").toInt(), Color3.getColor("#241942").toInt(), new Item.Properties()));
     public static final RegistryObject<Item> DARK_LATEX_YUFENG_QUEEN_SPAWN_EGG = REGISTRY.register("dark_latex_yufeng_queen_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.DARK_LATEX_YUFENG_QUEEN, 0x393939, 0xFAFAFA, new Item.Properties()));
+    public static final RegistryObject<Item> LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG = REGISTRY.register("luminara_crystal_being_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_FEMALE, 0xf5d4ef, 0x241942, new Item.Properties()));
+    public static final RegistryObject<Item> LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG = REGISTRY.register("luminara_crystal_being_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_MALE, 0xf5d4ef, 0x241942, new Item.Properties()));
     // MISC ITEMS
     public static final RegistryObject<Item> DARK_LATEX_COAT = REGISTRY.register("dark_latex_coat",
             () -> new DarkLatexCoatItem(ArmorItem.Type.CHESTPLATE, new Item.Properties()));

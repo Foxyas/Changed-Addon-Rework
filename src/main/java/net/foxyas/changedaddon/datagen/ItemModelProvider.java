@@ -46,6 +46,9 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         basicSpawnEgg(WHITE_FOX_SPAWN_EGG);
         basicSpawnEgg(BIOSYNTH_SNOW_LEOPARD_MALE_SPAWN_EGG);
         basicSpawnEgg(BIOSYNTH_SNOW_LEOPARD_FEMALE_SPAWN_EGG);
+        basicSpawnEgg(LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG);
+        basicSpawnEgg(LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG);
+
         basicItem(ALPHA_SERUM_SYRINGE.get());
         basicItem(TRANSLATOR.get());
 

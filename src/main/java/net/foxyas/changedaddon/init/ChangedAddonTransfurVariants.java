@@ -314,6 +314,11 @@ public class ChangedAddonTransfurVariants {
                     .nightVision()
                     .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION));
 
+    public static final RegistryObject<TransfurVariant<FemaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_FEMALE = register("luminara_crystal_being/female",
+            () -> TransfurVariant.Builder.of(ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_FEMALE));
+
+    public static final RegistryObject<TransfurVariant<MaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_MALE = register("luminara_crystal_being/male",
+            () -> TransfurVariant.Builder.of(ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_MALE));
 
     // ============================================================ OCs ============================================================ //
     public static final RegistryObject<TransfurVariant<LatexSnowFoxFoxyasEntity>> FOXYAS = register("form_foxyas",

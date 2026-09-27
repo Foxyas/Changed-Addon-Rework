@@ -454,6 +454,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityFromId(WOLFY);
         addEntityFromId(MONGOOSE);
         addEntityType(DARK_LATEX_YUFENG_QUEEN, "Dark Latex Yufeng Queen");
+        addEntityType(LUMINARA_CRYSTAL_BEING_FEMALE, "Female Luminara Crystal Being");
+        addEntityType(LUMINARA_CRYSTAL_BEING_MALE, "Male Luminara Crystal Being");
 
         addEntityType(LUMINAR_CRYSTAL_SPEAR, "Luminar Crystal Spear");
         addEntityType(PARTICLE_PROJECTILE, "Light Particle");
@@ -732,6 +734,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(VOID_FOX_SPAWN_EGG);
         addItemFromId(WOLFY_SPAWN_EGG);
         addItem(DARK_LATEX_YUFENG_QUEEN_SPAWN_EGG, "Dark Latex Yufeng Queen Spawn Egg");
+        addItem(LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG, "Female Luminara Crystal Being Spawn Egg");
+        addItem(LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG, "Male Luminara Crystal Being Spawn Egg");
 
         add("key.categories." + modid, "Changed Addon Keybinds");
         addKey(ChangedAddonKeyMappings.OPEN_EXTRA_DETAILS, "Open Transfur Extra");

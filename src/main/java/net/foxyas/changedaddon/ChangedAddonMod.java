@@ -102,6 +102,10 @@ public class ChangedAddonMod {
         return MODID + ":" + path;
     }
 
+    public static ResourceLocation texLoc(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, "textures/" + path + ".png");
+    }
+
     public static ResourceLocation textureLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath(MODID, path + ".png");
     }
