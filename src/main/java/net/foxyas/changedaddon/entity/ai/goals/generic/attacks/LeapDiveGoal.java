@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.generic.attacks;
 
+import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -25,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
-public class LeapDiveGoal extends Goal {
+public class LeapDiveGoal extends Goal implements IAbilityGoal {
 
     protected final PathfinderMob mob;
     protected final Vec3 followAscendMultiplier;

@@ -79,6 +79,15 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         };
     }
 
+    private static int getModelYRotation(Direction dir) {
+        return switch (dir) {
+            case EAST -> 90;
+            case SOUTH -> 180;
+            case WEST -> 270;
+            default -> 0;
+        };
+    }
+
     @Override
     protected void registerStatesAndModels() {
         horizontalBlock(ADVANCED_CATALYZER);
@@ -177,12 +186,11 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                 }
 
                 for (Direction facing : Direction.Plane.HORIZONTAL) {
-                    int yRot = (int) facing.toYRot();
+                    int yRot = getModelYRotation(facing);
 
                     builder.part()
                             .modelFile(modelFile)
                             .rotationY(yRot)
-                            .uvLock(true)
                             .addModel()
                             .condition(LuminaraPetalsBlock.GLOWING, emissive)
                             .condition(PinkPetalsBlock.FACING, facing)

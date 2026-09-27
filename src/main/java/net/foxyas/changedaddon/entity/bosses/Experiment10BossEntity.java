@@ -1,8 +1,9 @@
 package net.foxyas.changedaddon.entity.bosses;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
+import net.foxyas.changedaddon.entity.ai.goals.exp10.CircleShootWitherProjectileGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.ClawsComboAttackGoal;
-import net.foxyas.changedaddon.entity.ai.goals.exp10.ThrowWitherProjectileGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.WitherWave;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.DashPunchGoal;
@@ -209,7 +210,8 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         this.goalSelector.addGoal(10, new LeapSmashGoal(this));
         this.goalSelector.addGoal(15, new DashPunchGoal(this));
         //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
-        this.goalSelector.addGoal(10, new ThrowWitherProjectileGoal(this, UniformInt.of(60, 120), UniformInt.of(1, 8), 36));
+//        this.goalSelector.addGoal(10, new ThrowWitherProjectileGoal(this, UniformInt.of(60, 120), UniformInt.of(1, 8), 36));
+        this.goalSelector.addGoal(10, new CircleShootWitherProjectileGoal(this, UniformInt.of(60, 120), UniformInt.of(1, 8), 36));
     }
 
     protected void addPassivesGoals() {
@@ -245,6 +247,10 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         }
 
         if (source.is(DamageTypeTags.IS_PROJECTILE)) {
+            amount *= 0.5f;
+        }
+
+        if (ChangedAddonModCompatEvents.isDamageTypeBullet(source)) {
             amount *= 0.5f;
         }
 

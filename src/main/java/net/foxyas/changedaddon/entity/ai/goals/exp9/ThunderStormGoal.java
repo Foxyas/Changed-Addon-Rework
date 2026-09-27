@@ -9,14 +9,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 
-public class ThunderStorm extends Goal {
+public class ThunderStormGoal extends Goal {
 
     public final Experiment009BossEntity boss;
 
     protected final IntProvider cooldownProvider;
     public int cooldown = 0;
 
-    public ThunderStorm(Experiment009BossEntity boss, IntProvider cooldownProvider) {
+    public ThunderStormGoal(Experiment009BossEntity boss, IntProvider cooldownProvider) {
         super();
         this.boss = boss;
         this.cooldownProvider = cooldownProvider;

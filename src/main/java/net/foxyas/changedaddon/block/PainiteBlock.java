@@ -33,8 +33,10 @@ public class PainiteBlock extends Block {
     @Override
     public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
         ItemStack selectedItem = player.getInventory().getSelected();
-        if (selectedItem.getItem() instanceof TieredItem tieredItem && tieredItem.isCorrectToolForDrops(selectedItem, state)) {
-            return TierSortingRegistry.isCorrectTierForDrops(tieredItem.getTier(), state);
+        if (selectedItem.getItem() instanceof TieredItem tieredItem && player.hasCorrectToolForDrops(state)) {
+            if (TierSortingRegistry.isCorrectTierForDrops(tieredItem.getTier(), state) || tieredItem.getTier().getLevel() >= 4) {
+                return true;
+            }
         }
         return super.canHarvestBlock(state, world, pos, player);
     }

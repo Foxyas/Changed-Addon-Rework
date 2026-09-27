@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.block.*;
+import net.foxyas.changedaddon.block.advanced.*;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.ltxprogrammer.changed.init.ChangedItems;

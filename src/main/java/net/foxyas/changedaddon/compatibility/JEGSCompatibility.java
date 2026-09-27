@@ -8,17 +8,23 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import ttv.migami.jeg.event.GunFireEvent;
+import ttv.migami.jeg.init.ModDamageTypes;
 
-public class JEGSEvents {
+public class JEGSCompatibility {
     
     public static void register() {
         // Registra esta própria classe no barramento de eventos
-        MinecraftForge.EVENT_BUS.register(new JEGSEvents());
+        MinecraftForge.EVENT_BUS.register(new JEGSCompatibility());
+    }
+
+    public static boolean isDamageTypeBullet(DamageSource damageSource) {
+        return damageSource.is(ModDamageTypes.BULLET);
     }
 
     @SubscribeEvent

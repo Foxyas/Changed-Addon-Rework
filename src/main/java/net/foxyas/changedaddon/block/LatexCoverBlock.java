@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.block;
 
+import net.foxyas.changedaddon.block.advanced.MultifaceBlock;
 import net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock;
 import net.foxyas.changedaddon.fluid.LitixCamoniaFluid;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
@@ -163,7 +164,7 @@ public class LatexCoverBlock extends MultifaceBlock implements NonLatexCoverable
     }
 
     @Override
-    protected boolean canAttachTo(LevelAccessor level, BlockPos attachToPos, BlockState attachTo, Direction attachToFace) {
+    public boolean canAttachTo(LevelAccessor level, BlockPos attachToPos, BlockState attachTo, Direction attachToFace) {
         if (attachTo.getBlock() instanceof ConditionalLatexCoverableBlock conditionalLatexCoverableBlock) {
             return conditionalLatexCoverableBlock.canBeSpread(level, attachTo, attachToPos);
         }

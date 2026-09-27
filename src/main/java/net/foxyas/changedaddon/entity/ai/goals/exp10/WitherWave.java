@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp10;
 
+import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 import java.util.List;
 
-public class WitherWave extends Goal {
+public class WitherWave extends Goal implements IAbilityGoal {
 
     private final Mob mob;
     private final UniformInt cooldownProvider;

@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import com.google.common.collect.Iterables;
+import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.util.ComponentUtil;
 import net.minecraft.core.particles.ParticleTypes;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.Random;
 
-public class InductionCoilGoal extends Goal implements IAbilityGoal{
+public class InductionCoilGoal extends Goal implements IAbilityGoal {
 
     protected final PathfinderMob holder;
     protected final IntProvider cooldownProvider;

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.compatibility;
 
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraftforge.fml.ModList;
 
 public class ChangedAddonModCompatEvents {
@@ -10,15 +11,27 @@ public class ChangedAddonModCompatEvents {
         // Verifica se o mod TACZ está presente
         if (list.isLoaded("tacz")) {
             // Só chama a classe que contém o evento se o mod existir
-            TACZEvents.register();
+            TACZCompatibility.register();
         }
         
         if (list.isLoaded("jeg")) {
-            JEGSEvents.register();
+            JEGSCompatibility.register();
         }
 
         if (list.isLoaded("thirst")) {
-            RegisterThirst.register();
+            ThirstCompatibility.register();
         }
+    }
+
+    public static boolean isDamageTypeBullet(DamageSource source) {
+        return isDamageTypeBulletTACZ(source) || isDamageTypeBulletJEG(source);
+    }
+
+    public static boolean isDamageTypeBulletTACZ(DamageSource damageSource) {
+        return ModList.get().isLoaded("tacz") && TACZCompatibility.isDamageTypeBullet(damageSource);
+    }
+
+    public static boolean isDamageTypeBulletJEG(DamageSource damageSource) {
+        return ModList.get().isLoaded("jeg") && JEGSCompatibility.isDamageTypeBullet(damageSource);
     }
 }

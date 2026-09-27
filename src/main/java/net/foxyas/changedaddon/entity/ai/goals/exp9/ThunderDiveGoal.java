@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
+import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.BlockPos;

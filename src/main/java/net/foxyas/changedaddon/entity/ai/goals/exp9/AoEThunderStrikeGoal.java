@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
+import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
@@ -35,7 +36,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Objects;
 
 public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactiveGoal.ICancelOnDamageGoal, IAbilityGoal {
     public static final int FAIL_SAFE_TICKS = 600;
@@ -43,18 +43,19 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
     protected final Experiment009Entity experiment009;
     protected final IntProvider damageProvider;
     protected final double jumpPower;
-    protected final int duration; // ticks de duração do ataque
+    protected final IntProvider durationProvider; // ticks de duração do ataque
+    protected int duration; // ticks de duração do ataque
     public int cooldown = 0;
     protected int tickCounter;
     protected BlockPos groundPos;
     protected LivingEntity target;
     protected boolean canceled = false;
 
-    public AoEThunderStrikeGoal(Experiment009Entity experiment009, IntProvider cooldownProvider, IntProvider damageProvider, double jumpPower, int duration) {
+    public AoEThunderStrikeGoal(Experiment009Entity experiment009, IntProvider cooldownProvider, IntProvider damageProvider, double jumpPower, IntProvider durationProvider) {
         this.experiment009 = experiment009;
         this.damageProvider = damageProvider;
         this.jumpPower = jumpPower;
-        this.duration = duration;
+        this.durationProvider = durationProvider;
         this.cooldownProvider = cooldownProvider;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
     }
@@ -79,6 +80,7 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
         this.experiment009.invulnerableTime = 10;
         this.target = experiment009.getTarget();
         this.groundPos = experiment009.blockPosition();
+        this.duration = this.durationProvider.sample(experiment009.getRandom());
         this.tickCounter = 0;
         this.setCanceledTo(false);
 
@@ -127,7 +129,13 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
             experiment009BossEntity.setCastingAttack(true);
             experiment009BossEntity.setCastingTicks(0);
         }
-        if (tickCounter % 10 != 0) return;
+        int delay;
+        if (experiment009 instanceof Experiment009BossEntity experiment009Boss) {
+            delay = (int) (10 * experiment009Boss.getPhase().getCastModifier(target));
+        } else {
+            delay = 10;
+        }
+        if (tickCounter % delay != 0) return;
         thunderStorm();
         //pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         experiment009.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
@@ -194,6 +202,7 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
 
 
         level.addFreshEntity(lightning);
+        lightning.tick();
         ParticlesUtil.sendParticles(level, ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
         applyKnockBack(lightning);
     }
@@ -246,30 +255,33 @@ public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactive
     }
 
     public void applyKnockBack(LightningBolt lightning) {
-        var list = lightning.getHitEntities().map(e -> e instanceof LivingEntity livingEntity ? livingEntity : null).filter(Objects::nonNull).toList();
-//                lightning.level
-//                .getEntitiesOfClass(
-//                        LivingEntity.class,
-//                        getBoundingBoxFromLightningBolt(lightning),
-//                        (target) -> !target.is(lightning) && !target.is(experiment009) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(target)
-//                );
+        var hitEntities = lightning.getHitEntities()
+                .filter(LivingEntity.class::isInstance)
+                .map(LivingEntity.class::cast)
+                .toList();
 
-        for (LivingEntity livingEntity : list) {
-            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.25f).add(0, livingEntity.onGround() ? 0.25f : 0.05f, 0);
-            if (!livingEntity.isBlocking()) {
-                if (livingEntity instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.push(pushForce.x(), pushForce.y(), pushForce.z());
-                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
-                            serverPlayer.getId(),
-                            serverPlayer.getDeltaMovement())
-                    );
-                } else {
-                    livingEntity.push(pushForce.x(), pushForce.y(), pushForce.z());
+        if (hitEntities.isEmpty()) {
+            this.duration -= 20;
+        } else {
+            for (LivingEntity livingEntity : hitEntities) {
+                Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.25f).add(0, livingEntity.onGround() ? 0.25f : 0.05f, 0);
+                if (!livingEntity.isBlocking()) {
+                    if (livingEntity instanceof ServerPlayer serverPlayer) {
+                        serverPlayer.push(pushForce.x(), pushForce.y(), pushForce.z());
+                        serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                                serverPlayer.getId(),
+                                serverPlayer.getDeltaMovement())
+                        );
+                    } else {
+                        livingEntity.push(pushForce.x(), pushForce.y(), pushForce.z());
+                    }
+
+                    livingEntity.hasImpulse = true;
+                    this.duration += 5;
                 }
-
-                livingEntity.hasImpulse = true;
             }
         }
+
     }
 
     public AABB getBoundingBoxFromLightningBolt(LightningBolt bolt) {
