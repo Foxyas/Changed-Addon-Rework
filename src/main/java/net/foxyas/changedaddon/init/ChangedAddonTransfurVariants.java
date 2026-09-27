@@ -54,8 +54,8 @@ public class ChangedAddonTransfurVariants {
                     .addAbility(ChangedAddonAbilities.CARRY)
                     .scares(List.of()));
 
-    public static final RegistryObject<TransfurVariant<SnowLeopardMaleOrganicEntity>> ORGANIC_SNOW_LEOPARD_MALE = register("form_biosynth_snow_leopard/male",
-            () -> TransfurVariant.Builder.of(ChangedAddonEntities.SNOW_LEOPARD_MALE_ORGANIC)
+    public static final RegistryObject<TransfurVariant<BioSynthSnowLeopardMaleEntity>> BIOSYNTH_SNOW_LEOPARD_MALE = register("form_biosynth_snow_leopard/male",
+            () -> TransfurVariant.Builder.of(ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_MALE)
                     .transfurMode(TransfurMode.REPLICATION)
                     .nightVision()
                     .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION)
@@ -65,8 +65,8 @@ public class ChangedAddonTransfurVariants {
                     .addAbility(ChangedAddonAbilities.CLAWS)
                     .scares(List.of(Creeper.class)));
 
-    public static final RegistryObject<TransfurVariant<SnowLeopardFemaleOrganicEntity>> ORGANIC_SNOW_LEOPARD_FEMALE = register("form_biosynth_snow_leopard/female",
-            () -> TransfurVariant.Builder.of(ChangedAddonEntities.SNOW_LEOPARD_FEMALE_ORGANIC)
+    public static final RegistryObject<TransfurVariant<BioSynthSnowLeopardFemaleEntity>> BIOSYNTH_SNOW_LEOPARD_FEMALE = register("form_biosynth_snow_leopard/female",
+            () -> TransfurVariant.Builder.of(ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_FEMALE)
                     .transfurMode(TransfurMode.ABSORPTION)
                     .nightVision()
                     .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION)
@@ -753,7 +753,7 @@ public class ChangedAddonTransfurVariants {
     @Mod.EventBusSubscriber
     public static class Gendered {
         public static final GenderedPair<PuroKindMaleEntity, PuroKindFemaleEntity> PURO_KIND = registerPair(PURO_KIND_MALE, PURO_KIND_FEMALE);
-        public static final GenderedPair<SnowLeopardMaleOrganicEntity, SnowLeopardFemaleOrganicEntity> ORGANIC_SNOW_LEOPARD = registerPair(ORGANIC_SNOW_LEOPARD_MALE, ORGANIC_SNOW_LEOPARD_FEMALE);
+        public static final GenderedPair<BioSynthSnowLeopardMaleEntity, BioSynthSnowLeopardFemaleEntity> ORGANIC_SNOW_LEOPARD = registerPair(BIOSYNTH_SNOW_LEOPARD_MALE, BIOSYNTH_SNOW_LEOPARD_FEMALE);
         public static final GenderedPair<LatexSnowFoxMaleEntity, LatexSnowFoxFemaleEntity> LATEX_SNOW_FOX = registerPair(LATEX_SNOW_FOX_MALE, LATEX_SNOW_FOX_FEMALE);
         public static final GenderedPair<Exp1MaleEntity, Exp1FemaleEntity> EXP1 = registerPair(EXP1_MALE, EXP1_FEMALE);
         public static final GenderedPair<Exp2MaleEntity, Exp2FemaleEntity> EXP2 = registerPair(EXP2_MALE, EXP2_FEMALE);

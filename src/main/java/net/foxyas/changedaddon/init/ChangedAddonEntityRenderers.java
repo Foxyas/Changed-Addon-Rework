@@ -26,10 +26,10 @@ public class ChangedAddonEntityRenderers {
         event.registerEntityRenderer(ChangedAddonEntities.PURO_KIND_MALE.get(), PuroKindMaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.PURO_KIND_FEMALE.get(), PuroKindFemaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.BUNY.get(), BunyRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.SNOW_LEOPARD_FEMALE_ORGANIC.get(), SnowLeopardFemaleOrganicRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_FEMALE.get(), BioSynthSnowLeopardFemaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.EXPERIMENT_009.get(), Experiment009Renderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.MIRROR_WHITE_TIGER.get(), MirrorWhiteTigerRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.SNOW_LEOPARD_MALE_ORGANIC.get(), SnowLeopardMaleOrganicRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_MALE.get(), BioSynthSnowLeopardMaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.EXPERIMENT_10.get(), Experiment10Renderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.EXP_2_MALE.get(), Exp2MaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.EXP_2_FEMALE.get(), Exp2FemaleRenderer::new);

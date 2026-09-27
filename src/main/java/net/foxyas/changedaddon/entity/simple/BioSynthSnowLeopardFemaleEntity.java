@@ -13,10 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -32,15 +29,13 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
+public class BioSynthSnowLeopardFemaleEntity extends AbstractCanTameSnepChangedEntityFavors {
 
-public class SnowLeopardMaleOrganicEntity extends AbstractCanTameSnepChangedEntityFavors {
-
-    public SnowLeopardMaleOrganicEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonEntities.SNOW_LEOPARD_MALE_ORGANIC.get(), world);
+    public BioSynthSnowLeopardFemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
+        this(ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_FEMALE.get(), world);
     }
 
-    public SnowLeopardMaleOrganicEntity(EntityType<SnowLeopardMaleOrganicEntity> type, Level world) {
+    public BioSynthSnowLeopardFemaleEntity(EntityType<BioSynthSnowLeopardFemaleEntity> type, Level world) {
         super(type, world);
         xpReward = 0;
         this.setAttributes(this.getAttributes());
@@ -57,7 +52,6 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameSnepChangedEnti
         return builder;
     }
 
-    @Override
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((0));
@@ -110,6 +104,11 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameSnepChangedEnti
     }
 
     @Override
+    public boolean tryTransfurTarget(Entity entity) {
+        return super.tryTransfurTarget(entity) && this.getAttributeValue(ChangedAttributes.TRANSFUR_DAMAGE.get()) > 0;
+    }
+
+    @Override
     protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         return SnowLeopard(player, hand, this.getUnderlyingPlayer());
     }
@@ -124,7 +123,16 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameSnepChangedEnti
 
     @Override
     public Gender getGender() {
-        return Gender.MALE;
+        return Gender.FEMALE;
+    }
+
+    @Override
+    public HairStyle getDefaultHairStyle() {
+        if (random.nextInt(10) > 5) {
+            return HairStyle.LONG_MESSY.get();
+        }
+        return HairStyle.LONG_KEPT.get();
+
     }
 
     @Override
@@ -134,16 +142,7 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameSnepChangedEnti
 
     @Override
     public @Nullable List<HairStyle> getValidHairStyles() {
-        return HairStyle.Collection.MALE.getStyles();
-    }
-
-    @Override
-    public HairStyle getDefaultHairStyle() {
-        HairStyle Hair = BALD.get();
-        if (random.nextInt(10) > 5) {
-            return HairStyle.SHORT_MESSY.get();
-        }
-        return BALD.get();
+        return HairStyle.Collection.FEMALE.getStyles();
     }
 
     @Override
@@ -154,12 +153,6 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameSnepChangedEnti
     @Override
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
         return false;
-    }
-
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
-        //this.goalSelector.addGoal(5, new SleepingWithOwnerGoal.BipedSleepGoal(this));
     }
 
     @Override
@@ -189,6 +182,4 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameSnepChangedEnti
     public @NotNull SoundEvent getDeathSound() {
         return SoundEvents.GENERIC_DEATH;
     }
-
-
 }

@@ -28,6 +28,8 @@ public class ChangedAddonDataFixer {
     // Future Data fixers
     private final Map<ResourceLocation, ResourceLocation> ENTITY_ID_REMAP = Util.make(new HashMap<>(), map -> {
         map.put(ChangedAddonMod.resourceLoc("latex_snep"), ChangedAddonEntities.LATEX_FERAL_SNEP.getId());
+        map.put(ChangedAddonMod.resourceLoc("snow_leopard_male_organic"), ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_MALE.getId());
+        map.put(ChangedAddonMod.resourceLoc("snow_leopard_female_organic"), ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_FEMALE.getId());
     });
     private final Map<ResourceLocation, ResourceLocation> ITEM_ID_REMAP = Util.make(new HashMap<>(), map -> {
     });
@@ -43,10 +45,6 @@ public class ChangedAddonDataFixer {
     private final Map<String, String> TAG_REMAP = Util.make(new HashMap<>(), map -> {
     });
     private final Map<String, String> GAMERULES_REMAP = Util.make(new HashMap<>(), map -> {
-//        map.put("doLatexInfection", ChangedAddonGameRules.DO_LATEX_INFECTION.getId());
-//        map.put("painiteGeneration", ChangedAddonGameRules.PAINITE_GENERATION.getId());
-//        map.put("doDazedLatexBurn", ChangedAddonGameRules.DO_DAZED_LATEX_BURN.getId());
-//        map.put("doDarkLatexMaskTransfur", ChangedAddonGameRules.TICKS_TO_DARK_LATEX_MASK_TRANSFUR.getId());
     });
 
     public ChangedAddonDataFixer() {

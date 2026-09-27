@@ -1,6 +1,8 @@
 {
   "values": [
     "changed_addon:avali_zergodmaster",
+    "changed_addon:biosynth_snow_leopard_female",
+    "changed_addon:biosynth_snow_leopard_male",
     "changed_addon:buff_latex_dazed",
     "changed_addon:crystal_gas_cat_female",
     "changed_addon:crystal_gas_cat_male",
@@ -38,8 +40,6 @@
     "changed_addon:lynx",
     "changed_addon:puro_kind_female",
     "changed_addon:puro_kind_male",
-    "changed_addon:snow_leopard_female_organic",
-    "changed_addon:snow_leopard_male_organic",
     "changed_addon:void_fox",
     "changed_addon:wolfy"
   ]

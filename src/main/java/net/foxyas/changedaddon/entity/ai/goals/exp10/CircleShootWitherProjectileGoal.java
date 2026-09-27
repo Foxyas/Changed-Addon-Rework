@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -21,8 +22,9 @@ import java.util.List;
 public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoal {
 
     public enum OrbitType {
-        HORIZONTAL_AROUND, // Círculo horizontal ao redor do mob
-        VERTICAL_BEHIND    // Círculo vertical atrás das costas do mob
+        HORIZONTAL_AROUND, // Full horizontal ring centered on eye level
+        VERTICAL_BEHIND,   // Vertical half-circle arc shifted behind the mob
+        VERTICAL_CENTER    // Vertical half-circle arc centered directly at the mob's X/Z
     }
 
     public final Mob holder;
@@ -36,15 +38,14 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
 
     // Configuration
     private static final double CIRCLE_RADIUS = 2.5;
-    private static final double BEHIND_OFFSET = 1.2; // Distância para trás da cabeça quando em modo VERTICAL
-    private static final int CHARGE_DURATION = 20; // Ticks antes de disparar (~1 sec)
-    private static final int FIRING_INTERVAL = 4;  // Ticks entre cada projétil
+    private static final int CHARGE_DURATION = 20; // Ticks before firing starts (~1 sec)
+    private static final int FIRING_INTERVAL = 4;  // Ticks between firing each projectile
 
     private final List<WitherParticleProjectile> spawnedProjectiles = new ArrayList<>();
     private boolean isFullySpawned = false;
     private int currentFireIndex = 0;
 
-    // Tipo de órbita sorteado para a execução atual
+    // Orbit mode randomly assigned per usage
     private OrbitType currentOrbitType = OrbitType.HORIZONTAL_AROUND;
 
     public CircleShootWitherProjectileGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider) {
@@ -82,8 +83,9 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
         this.spawnedProjectiles.clear();
         this.projectileCount = countProvider.sample(this.holder.getRandom());
 
-        // Escolhe o tipo de órbita aleatoriamente (50% de chance para cada)
-        this.currentOrbitType = holder.getRandom().nextBoolean() ? OrbitType.HORIZONTAL_AROUND : OrbitType.VERTICAL_BEHIND;
+        // Pick randomly among all 3 orbit types
+        OrbitType[] types = OrbitType.values();
+        this.currentOrbitType = types[holder.getRandom().nextInt(types.length)];
 
         if (holder.level() instanceof ServerLevel level) {
             spawnCircleProjectiles(level);
@@ -91,7 +93,7 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
     }
 
     /**
-     * Spawns all projectiles around or behind the mob according to the orbit type.
+     * Spawns all projectiles based on the selected orbit strategy.
      */
     private void spawnCircleProjectiles(ServerLevel level) {
         for (int i = 0; i < projectileCount; i++) {
@@ -125,12 +127,12 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
             holder.getLookControl().setLookAt(target, 180f, 180f);
         }
 
-        if (tick < CHARGE_DURATION) {
+        if (tick < getChargeDuration()) {
             updateHoverPositions();
             return;
         }
 
-        if ((tick - CHARGE_DURATION) % FIRING_INTERVAL == 0 && currentFireIndex < spawnedProjectiles.size()) {
+        if ((tick - getChargeDuration()) % getFiringIntervale() == 0 && currentFireIndex < spawnedProjectiles.size()) {
             WitherParticleProjectile projectile = spawnedProjectiles.get(currentFireIndex);
 
             if (projectile != null && projectile.isAlive()) {
@@ -141,8 +143,16 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
         }
     }
 
+    protected int getChargeDuration() {
+        return CHARGE_DURATION;
+    }
+
+    protected int getFiringIntervale() {
+        return FIRING_INTERVAL;
+    }
+
     /**
-     * Keeps surviving un-launched projectiles in formation around/behind the entity while charging.
+     * Updates un-launched projectile locations in orbit while charging.
      */
     private void updateHoverPositions() {
         for (int i = currentFireIndex; i < spawnedProjectiles.size(); i++) {
@@ -156,36 +166,48 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
     }
 
     /**
-     * Calcule a posição 3D exata de um projétil baseado no tipo de órbita ativo.
+     * Calculates the exact position for each projectile depending on the active OrbitType.
      */
     private Vec3 calculateProjectilePosition(int index, int currentTick) {
         Vec3 headPos = holder.getEyePosition();
-        double angleStep = (2 * Math.PI) / projectileCount;
-        double angle = (index * angleStep) + (currentTick * 0.05); // Rotação suave ao longo do tempo
 
         if (this.currentOrbitType == OrbitType.HORIZONTAL_AROUND) {
-            // Órbita Horizontal Padrão
+            // Full 360-degree circle horizontally around the mob
+            double angleStep = (2 * Math.PI) / projectileCount;
+            double angle = (index * angleStep) + (currentTick * 0.05);
+
             double xOffset = CIRCLE_RADIUS * Math.cos(angle);
             double zOffset = CIRCLE_RADIUS * Math.sin(angle);
             return headPos.add(xOffset, 0, zOffset);
         } else {
-            // Órbita Vertical Atrás das Costas do Mob
-            float yRot = holder.getYRot(); // Rotação horizontal do mob
-            Vec3 lookVec = Vec3.directionFromRotation(0, yRot); // Vetor da olhada horizontal
+            // Half-circle arc above/around eye level (0 to Math.PI radians) to avoid bottom collisions
+            double angleStep = (projectileCount > 1) ? (Math.PI / (projectileCount - 1)) : 0;
+            double baseAngle = index * angleStep;
 
-            // Posição central do círculo (Deslocado ligeiramente para trás do mob)
-            Vec3 circleCenter = headPos.subtract(lookVec.scale(BEHIND_OFFSET));
+            // Slight floating wave oscillation during charge tick
+            double angle = baseAngle + (Math.sin(currentTick * 0.1 + index) * 0.05);
 
-            // Vetor lateral (Right Vector) em relação para onde o mob está olhando
+            float yRot = holder.getYRot();
             float radYaw = yRot * Mth.DEG_TO_RAD;
+
+            // Horizontal right vector relative to body facing direction
             Vec3 rightVec = new Vec3(-Math.cos(radYaw), 0, -Math.sin(radYaw));
-            Vec3 upVec = new Vec3(0, 1, 0); // Eixo vertical
+            Vec3 upVec = new Vec3(0, 1, 0);
 
-            double offsetX = CIRCLE_RADIUS * Math.cos(angle);
-            double offsetY = CIRCLE_RADIUS * Math.sin(angle);
+            double offsetX = CIRCLE_RADIUS * Math.cos(angle); // Spand side to side
+            double offsetY = CIRCLE_RADIUS * Math.sin(angle); // Arc strictly upwards
 
-            // Combina os vetores para formar o plano vertical
-            return circleCenter
+            Vec3 arcCenter = headPos;
+
+            if (this.currentOrbitType == OrbitType.VERTICAL_BEHIND) {
+                // Offset backward relative to look vector
+                Vec3 lookVec = Vec3.directionFromRotation(0, yRot);
+                double behindOffset = holder.getBbWidth() + 0.8D;
+                arcCenter = headPos.subtract(lookVec.scale(behindOffset));
+            }
+            // VERTICAL_CENTER uses headPos directly (same X/Z as mob)
+
+            return arcCenter
                     .add(rightVec.scale(offsetX))
                     .add(upVec.scale(offsetY));
         }
@@ -202,8 +224,15 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
                 shootDir = holder.getLookAngle();
             }
 
+            // Shifts launch origin outwards past the mob's bounding box to avoid self-hits
+            Vec3 safeFirePos = projectile.position();
+            if (holder.getBoundingBox().inflate(0.3D).contains(safeFirePos)) {
+                safeFirePos = safeFirePos.add(shootDir.scale(holder.getBbWidth() + 0.6D));
+            }
+
+            projectile.setPos(safeFirePos.x, safeFirePos.y, safeFirePos.z);
             projectile.setNoGravity(false);
-            projectile.shoot(shootDir.x, shootDir.y, shootDir.z, 2.25f, 1.0f);
+            projectile.shoot(shootDir.x, shootDir.y, shootDir.z, 2.25f, level.getDifficulty() == Difficulty.HARD ? 0 : Mth.nextFloat(holder.getRandom(), 0.5f, 1.0f));
 
             level.playSound(null, projectile.getX(), projectile.getY(), projectile.getZ(),
                     SoundEvents.BLAZE_SHOOT, SoundSource.HOSTILE, 1.0f, 1.0f);

@@ -19,7 +19,7 @@ public class PuroKindMaleRenderer extends AdvancedHumanoidRenderer<PuroKindMaleE
         super(context, new PuroKindMaleModel(context.bakeLayer(PuroKindMaleModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new LatexParticlesLayer<>(this, getModel(), model::isPartNotMask));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-        this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer.fixedColor(Color3.parseHex("#242424")), CustomEyesLayer::glowingIrisColorLeft, CustomEyesLayer::glowingIrisColorRight));
+        this.addLayer(CustomEyesLayer.builder(this, context.getModelSet()).withSclera(CustomEyesLayer.fixedColor(Color3.parseHex("#242424"))).withLeftIris(CustomEyesLayer::glowingIrisColorLeft).withRightIris(CustomEyesLayer::glowingIrisColorRight).build());
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
     }
 
