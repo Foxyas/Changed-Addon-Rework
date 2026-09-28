@@ -191,7 +191,7 @@ public class ChangedAddonEntities {
 
                     .sized(0.25F, 0.25F));
 
-    public static final RegistryObject<EntityType<LuminarCrystalSpearProjectile>> LUMINAR_CRYSTAL_SPEAR = register("projectile_luminar_crystal_spear",
+    public static final RegistryObject<EntityType<LuminarCrystalSpearProjectile>> LUMINAR_CRYSTAL_SPEAR = register("luminar_crystal_spear",
             EntityType.Builder.<LuminarCrystalSpearProjectile>of(LuminarCrystalSpearProjectile::new, MobCategory.MISC)
                     .setCustomClientFactory(LuminarCrystalSpearProjectile::new)
                     .setShouldReceiveVelocityUpdates(true)

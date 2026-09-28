@@ -366,9 +366,9 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     @Override
     public void baseTick() {
         super.baseTick();
-        SetDefense(this);
-        SetAttack(this);
-        SetSpeed(this);
+        updateDefense(this);
+        updateAttack(this);
+        updateSpeed(this);
         this.crawlingSystem((float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f);
         this.burstAbilityHandle.tick();
     }
@@ -395,7 +395,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         }
     }
 
-    public void SetDefense(Experiment10BossEntity entity) {
+    public void updateDefense(Experiment10BossEntity entity) {
         AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "ArmorChange", 20, AttributeModifier.Operation.ADDITION);
         AttributeModifier AttibuteDefenseChange = new AttributeModifier(UUID.fromString("10-10-0-0-0"), "ArmorChange", 0.7, AttributeModifier.Operation.MULTIPLY_BASE);
         if (entity.isPhase2()) {
@@ -413,7 +413,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         }
     }
 
-    public void SetAttack(Experiment10BossEntity entity) {
+    public void updateAttack(Experiment10BossEntity entity) {
         AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Attack", 0.6667, AttributeModifier.Operation.MULTIPLY_BASE);
         if (entity.isPhase2()) {
             if (!((entity.getAttribute(Attributes.ATTACK_DAMAGE).hasModifier(AttibuteChange)))) {
@@ -424,7 +424,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         }
     }
 
-    public void SetSpeed(Experiment10BossEntity entity) {
+    public void updateSpeed(Experiment10BossEntity entity) {
         AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Speed", -0.4, AttributeModifier.Operation.MULTIPLY_BASE);
         if (entity.getPose() == Pose.SWIMMING) {
             if (!((entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(AttibuteChange)))) {

@@ -13,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -194,8 +195,8 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
             Vec3 rightVec = new Vec3(-Math.cos(radYaw), 0, -Math.sin(radYaw));
             Vec3 upVec = new Vec3(0, 1, 0);
 
-            double offsetX = CIRCLE_RADIUS * Math.cos(angle); // Spand side to side
-            double offsetY = CIRCLE_RADIUS * Math.sin(angle); // Arc strictly upwards
+            double offsetX = CIRCLE_RADIUS * Math.cos(angle);
+            double offsetY = CIRCLE_RADIUS * Math.sin(angle);
 
             Vec3 arcCenter = headPos;
 
@@ -205,7 +206,6 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
                 double behindOffset = holder.getBbWidth() + 0.8D;
                 arcCenter = headPos.subtract(lookVec.scale(behindOffset));
             }
-            // VERTICAL_CENTER uses headPos directly (same X/Z as mob)
 
             return arcCenter
                     .add(rightVec.scale(offsetX))
@@ -217,26 +217,45 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
         if (holder.level() instanceof ServerLevel level) {
             holder.swing(InteractionHand.MAIN_HAND);
 
+            Vec3 startPos = projectile.position();
             Vec3 shootDir;
+
             if (target != null && !target.isDeadOrDying()) {
-                shootDir = target.getEyePosition().subtract(projectile.position()).normalize();
+                shootDir = target.getEyePosition().subtract(startPos).normalize();
             } else {
                 shootDir = holder.getLookAngle();
             }
 
-            // Shifts launch origin outwards past the mob's bounding box to avoid self-hits
-            Vec3 safeFirePos = projectile.position();
-            if (holder.getBoundingBox().inflate(0.3D).contains(safeFirePos)) {
-                safeFirePos = safeFirePos.add(shootDir.scale(holder.getBbWidth() + 0.6D));
+            // Expanded bounding box check: prevents self-hits regardless of origin angle
+            AABB inflatedBox = holder.getBoundingBox().inflate(0.5D);
+            Vec3 safeFirePos = startPos;
+
+            // Step along the shooting path; if it crosses or starts inside the owner's hitbox,
+            // push the launch origin out past the far edge of the mob
+            if (inflatedBox.contains(startPos) || intersectsBoundingBox(startPos, shootDir, inflatedBox)) {
+                double safeDistance = holder.getBbWidth() + 1.2D;
+                safeFirePos = holder.getEyePosition().add(shootDir.scale(safeDistance));
             }
 
             projectile.setPos(safeFirePos.x, safeFirePos.y, safeFirePos.z);
-            projectile.setNoGravity(false);
-            projectile.shoot(shootDir.x, shootDir.y, shootDir.z, 2.25f, level.getDifficulty() == Difficulty.HARD ? 0 : Mth.nextFloat(holder.getRandom(), 0.5f, 1.0f));
+
+            // Keeps noGravity true so the projectiles fly straight without dipping quickly
+            projectile.setNoGravity(true);
+
+            float inaccuracy = level.getDifficulty() == Difficulty.HARD ? 0.0f : Mth.nextFloat(holder.getRandom(), 0.5f, 1.0f);
+            projectile.shoot(shootDir.x, shootDir.y, shootDir.z, 2.0f, inaccuracy);
 
             level.playSound(null, projectile.getX(), projectile.getY(), projectile.getZ(),
                     SoundEvents.BLAZE_SHOOT, SoundSource.HOSTILE, 1.0f, 1.0f);
         }
+    }
+
+    /**
+     * Ray-checks if the line from firing position toward direction intersects the mob's bounding box.
+     */
+    private boolean intersectsBoundingBox(Vec3 origin, Vec3 dir, AABB box) {
+        Vec3 end = origin.add(dir.scale(CIRCLE_RADIUS * 2));
+        return box.clip(origin, end).isPresent();
     }
 
     @Override

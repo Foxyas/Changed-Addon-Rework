@@ -15,7 +15,7 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class LuminarCrystalSpearRenderer extends EntityRenderer<LuminarCrystalSpearProjectile> {
-    private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/entities/luminar_crystal_spear.png");
+    private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/entities/projectiles/luminar_crystal_spear.png");
     private final LuminarCrystalSpearModel<LuminarCrystalSpearProjectile> model;
 
     public LuminarCrystalSpearRenderer(EntityRendererProvider.Context context) {

@@ -8,7 +8,6 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -63,6 +62,7 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
     public static final EnumProperty<Half> HALF = BlockStateProperties.HALF;
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty CAN_SURVIVE_ANYWHERE = LuminarCrystalSmall.CAN_SURVIVE_ANYWHERE;
 
     public LuminarCrystalLarge(Properties properties) {
         super(properties.sound(SoundType.AMETHYST_CLUSTER)
@@ -73,7 +73,7 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
                 .hasPostProcess((blockState, blockGetter, blockPos) -> true)
                 .emissiveRendering((blockState, blockGetter, blockPos) -> true)
                 .noOcclusion());
-        registerDefaultState(getStateDefinition().any().setValue(HEARTED, false).setValue(HALF, Half.BOTTOM).setValue(FACING, Direction.UP).setValue(WATERLOGGED, false));
+        registerDefaultState(getStateDefinition().any().setValue(HEARTED, false).setValue(HALF, Half.BOTTOM).setValue(FACING, Direction.UP).setValue(WATERLOGGED, false).setValue(CAN_SURVIVE_ANYWHERE, false));
     }
 
     @Override
@@ -166,7 +166,7 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
 
         if (!canSupportRigidBlock(level, blockPos.relative(oppositeDirection)))
             return false;
-        return blockStateOn.is(ChangedAddonTags.Blocks.CAN_LUMINAR_CRYSTAL_SURVIVE);
+        return blockStateOn.is(ChangedAddonTags.Blocks.CAN_LUMINAR_CRYSTAL_SURVIVE) || blockState.getValue(CAN_SURVIVE_ANYWHERE);
     }
 
     @Override

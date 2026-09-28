@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard;
 
 import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalShardProjectile;
+import net.foxyas.changedaddon.entity.projectile.WitherParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -13,6 +14,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -22,9 +24,9 @@ import java.util.List;
 public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbilityGoal {
 
     public enum OrbitType {
-        HORIZONTAL_AROUND, // Anel horizontal completo no nível dos olhos
-        VERTICAL_BEHIND,   // Arco de meia-lua vertical atrás das costas do mob
-        VERTICAL_CENTER    // Arco de meia-lua vertical centralizado no X/Z do mob
+        HORIZONTAL_AROUND, // Full horizontal ring centered on eye level
+        VERTICAL_BEHIND,   // Vertical half-circle arc shifted behind the mob
+        VERTICAL_CENTER    // Vertical half-circle arc centered directly at the mob's X/Z
     }
 
     public final Mob holder;
@@ -36,16 +38,16 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
     public int projectileCount;
     public int tick;
 
-    // Configuração
+    // Configuration
     private static final double CIRCLE_RADIUS = 2.5;
-    private static final int CHARGE_DURATION = 20; // Ticks antes de disparar (~1 seg)
-    private static final int FIRING_INTERVAL = 4;  // Ticks entre cada disparo
+    private static final int CHARGE_DURATION = 20; // Ticks before firing starts (~1 sec)
+    private static final int FIRING_INTERVAL = 4;  // Ticks between firing each projectile
 
     private final List<LuminarCrystalShardProjectile> spawnedProjectiles = new ArrayList<>();
     private boolean isFullySpawned = false;
     private int currentFireIndex = 0;
 
-    // Tipo de órbita sorteado para a execução atual
+    // Orbit mode randomly assigned per usage
     private OrbitType currentOrbitType = OrbitType.HORIZONTAL_AROUND;
 
     public CircleShootLuminarCrystalShardGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider) {
@@ -83,7 +85,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         this.spawnedProjectiles.clear();
         this.projectileCount = countProvider.sample(this.holder.getRandom());
 
-        // Escolhe o tipo de órbita aleatoriamente entre os 3 disponíveis
+        // Pick randomly among all 3 orbit types
         OrbitType[] types = OrbitType.values();
         this.currentOrbitType = types[holder.getRandom().nextInt(types.length)];
 
@@ -93,13 +95,13 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
     }
 
     /**
-     * Spawna todos os estilhaços de cristal ao redor/atrás da entidade de acordo com o padrão selecionado.
+     * Spawns all projectiles based on the selected orbit strategy.
      */
     private void spawnCircleProjectiles(ServerLevel level) {
         for (int i = 0; i < projectileCount; i++) {
             Vec3 spawnPos = calculateProjectilePosition(i, 0);
 
-            LuminarCrystalShardProjectile projectile = new LuminarCrystalShardProjectile(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD.get(), level);
+            LuminarCrystalShardProjectile projectile = new LuminarCrystalShardProjectile(ChangedAddonEntities.WITHER_PARTICLE_PROJECTILE.get(), level);
             projectile.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
             projectile.setOwner(holder);
             projectile.setNoGravity(true);
@@ -113,7 +115,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             spawnedProjectiles.add(projectile);
         }
 
-        level.playSound(null, holder, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 1.0f, 1.2f);
+        level.playSound(null, holder, SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 0.5f, 1.5f);
         isFullySpawned = true;
     }
 
@@ -152,7 +154,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
     }
 
     /**
-     * Atualiza as posições flutuantes dos projéteis na formação enquanto estão carregando.
+     * Updates un-launched projectile locations in orbit while charging.
      */
     private void updateHoverPositions() {
         for (int i = currentFireIndex; i < spawnedProjectiles.size(); i++) {
@@ -166,13 +168,13 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
     }
 
     /**
-     * Calcula a posição 3D exata do projétil baseado na OrbitType ativa.
+     * Calculates the exact position for each projectile depending on the active OrbitType.
      */
     private Vec3 calculateProjectilePosition(int index, int currentTick) {
         Vec3 headPos = holder.getEyePosition();
 
         if (this.currentOrbitType == OrbitType.HORIZONTAL_AROUND) {
-            // Círculo horizontal completo (360 graus) ao redor da cabeça do mob
+            // Full 360-degree circle horizontally around the mob
             double angleStep = (2 * Math.PI) / projectileCount;
             double angle = (index * angleStep) + (currentTick * 0.05);
 
@@ -180,17 +182,17 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             double zOffset = CIRCLE_RADIUS * Math.sin(angle);
             return headPos.add(xOffset, 0, zOffset);
         } else {
-            // Arco de meia-lua vertical (0 a PI radianos) no topo para não atingir as pernas
+            // Half-circle arc above/around eye level (0 to Math.PI radians) to avoid bottom collisions
             double angleStep = (projectileCount > 1) ? (Math.PI / (projectileCount - 1)) : 0;
             double baseAngle = index * angleStep;
 
-            // Leve oscilação de flutuação em onda
+            // Slight floating wave oscillation during charge tick
             double angle = baseAngle + (Math.sin(currentTick * 0.1 + index) * 0.05);
 
             float yRot = holder.getYRot();
             float radYaw = yRot * Mth.DEG_TO_RAD;
 
-            // Vetor lateral (Right Vector) com base na rotação do mob
+            // Horizontal right vector relative to body facing direction
             Vec3 rightVec = new Vec3(-Math.cos(radYaw), 0, -Math.sin(radYaw));
             Vec3 upVec = new Vec3(0, 1, 0);
 
@@ -200,12 +202,11 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             Vec3 arcCenter = headPos;
 
             if (this.currentOrbitType == OrbitType.VERTICAL_BEHIND) {
-                // Desloca o arco para trás do mob
+                // Offset backward relative to look vector
                 Vec3 lookVec = Vec3.directionFromRotation(0, yRot);
                 double behindOffset = holder.getBbWidth() + 0.8D;
                 arcCenter = headPos.subtract(lookVec.scale(behindOffset));
             }
-            // VERTICAL_CENTER usa headPos diretamente (mesmo X/Z do mob)
 
             return arcCenter
                     .add(rightVec.scale(offsetX))
@@ -217,28 +218,45 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         if (holder.level() instanceof ServerLevel level) {
             holder.swing(InteractionHand.MAIN_HAND);
 
+            Vec3 startPos = projectile.position();
             Vec3 shootDir;
+
             if (target != null && !target.isDeadOrDying()) {
-                shootDir = target.getEyePosition().subtract(projectile.position()).normalize();
+                shootDir = target.getEyePosition().subtract(startPos).normalize();
             } else {
                 shootDir = holder.getLookAngle();
             }
 
-            // Desloca o ponto inicial do disparo para fora da bounding box para evitar auto-dano no disparo
-            Vec3 safeFirePos = projectile.position();
-            if (holder.getBoundingBox().inflate(0.3D).contains(safeFirePos)) {
-                safeFirePos = safeFirePos.add(shootDir.scale(holder.getBbWidth() + 0.6D));
+            // Expanded bounding box check: prevents self-hits regardless of origin angle
+            AABB inflatedBox = holder.getBoundingBox().inflate(0.5D);
+            Vec3 safeFirePos = startPos;
+
+            // Step along the shooting path; if it crosses or starts inside the owner's hitbox,
+            // push the launch origin out past the far edge of the mob
+            if (inflatedBox.contains(startPos) || intersectsBoundingBox(startPos, shootDir, inflatedBox)) {
+                double safeDistance = holder.getBbWidth() + 1.2D;
+                safeFirePos = holder.getEyePosition().add(shootDir.scale(safeDistance));
             }
 
             projectile.setPos(safeFirePos.x, safeFirePos.y, safeFirePos.z);
-            projectile.setNoGravity(false);
-            
+
+            // Keeps noGravity true so the projectiles fly straight without dipping quickly
+            projectile.setNoGravity(true);
+
             float inaccuracy = level.getDifficulty() == Difficulty.HARD ? 0.0f : Mth.nextFloat(holder.getRandom(), 0.5f, 1.0f);
-            projectile.shoot(shootDir.x, shootDir.y, shootDir.z, 2.25f, inaccuracy);
+            projectile.shoot(shootDir.x, shootDir.y, shootDir.z, 2.0f, inaccuracy);
 
             level.playSound(null, projectile.getX(), projectile.getY(), projectile.getZ(),
-                    SoundEvents.AMETHYST_BLOCK_HIT, SoundSource.HOSTILE, 1.0f, 1.4f);
+                    SoundEvents.BLAZE_SHOOT, SoundSource.HOSTILE, 1.0f, 1.0f);
         }
+    }
+
+    /**
+     * Ray-checks if the line from firing position toward direction intersects the mob's bounding box.
+     */
+    private boolean intersectsBoundingBox(Vec3 origin, Vec3 dir, AABB box) {
+        Vec3 end = origin.add(dir.scale(CIRCLE_RADIUS * 2));
+        return box.clip(origin, end).isPresent();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.projectile;
 
+import net.foxyas.changedaddon.block.LuminarCrystalSmall;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
@@ -183,7 +184,7 @@ public class LuminarCrystalSpearProjectile extends AbstractArrow implements Item
             int radius = 1 + Math.max(0, (EnchantmentHelper.getTagEnchantmentLevel(Enchantments.SHARPNESS, this.spearItem) / 3));
 
             // Obtém o estado padrão do pequeno cristal
-            BlockState crystalState = ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState();
+            BlockState crystalState = ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState().setValue(LuminarCrystalSmall.CAN_SURVIVE_ANYWHERE, true);
 
             // Varre a área plana da parede ao redor do ponto atingido
             for (BlockPos wallPos : FoxyasUtil.betweenClosedStreamSphere(hitPos, radius, radius, 1.25f).toList()) {
