@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 // Made with Blockbench 4.12.3
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
-public class ModelLuminarCrystalSpearModel<T extends Entity> extends EntityModel<T> {
+public class LuminarCrystalSpearModel<T extends Entity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in
     // the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = ChangedAddonMod.layerLocation(("model_luminar_crystal_spear_model"), "main");
@@ -27,7 +27,7 @@ public class ModelLuminarCrystalSpearModel<T extends Entity> extends EntityModel
     public final ModelPart Grip;
     public final ModelPart bone;
 
-    public ModelLuminarCrystalSpearModel(ModelPart root) {
+    public LuminarCrystalSpearModel(ModelPart root) {
         this.IceSpikeBottom = root.getChild("IceSpikeBottom");
         this.Ice_Spike2 = root.getChild("Ice_Spike2");
         this.Ice_Spike3 = root.getChild("Ice_Spike3");

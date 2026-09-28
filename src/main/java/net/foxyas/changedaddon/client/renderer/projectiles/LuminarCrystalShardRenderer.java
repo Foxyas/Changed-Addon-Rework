@@ -17,9 +17,9 @@ import org.joml.Matrix4f;
 
 import static net.minecraft.client.renderer.entity.TippableArrowRenderer.NORMAL_ARROW_LOCATION;
 
-public class CrystalShardRenderer extends EntityRenderer<CrystalShardProjectile> {
+public class LuminarCrystalShardRenderer extends EntityRenderer<CrystalShardProjectile> {
 
-    public CrystalShardRenderer(EntityRendererProvider.Context pContext) {
+    public LuminarCrystalShardRenderer(EntityRendererProvider.Context pContext) {
         super(pContext);
     }
 
@@ -32,6 +32,15 @@ public class CrystalShardRenderer extends EntityRenderer<CrystalShardProjectile>
         pPoseStack.scale(0.05625F, 0.05625F, 0.05625F);
         pPoseStack.translate(-4.0F, 0.0F, 0.0F);
         VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(pEntity)));
+        VertexConsumer glowingvertexConsumer = pBuffer.getBuffer(RenderType.eyes(this.getTextureLocation(pEntity)));
+        renderModel(pPoseStack, pPackedLight, vertexconsumer);
+        renderModel(pPoseStack, pPackedLight, glowingvertexConsumer);
+
+        pPoseStack.popPose();
+        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+    }
+
+    private void renderModel(PoseStack pPoseStack, int pPackedLight, VertexConsumer vertexconsumer) {
         PoseStack.Pose posestack$pose = pPoseStack.last();
         Matrix4f matrix4f = posestack$pose.pose();
         Matrix3f matrix3f = posestack$pose.normal();
@@ -51,9 +60,6 @@ public class CrystalShardRenderer extends EntityRenderer<CrystalShardProjectile>
             this.vertex(matrix4f, matrix3f, vertexconsumer, 8, 2, 0, 0.5F, 0.15625F, 0, 1, 0, pPackedLight);
             this.vertex(matrix4f, matrix3f, vertexconsumer, -8, 2, 0, 0.0F, 0.15625F, 0, 1, 0, pPackedLight);
         }
-
-        pPoseStack.popPose();
-        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
     }
 
     public void vertex(Matrix4f pMatrix, Matrix3f pNormal, VertexConsumer pConsumer, int pX, int pY, int pZ, float pU, float pV, int pNormalX, int pNormalZ, int pNormalY, int pPackedLight) {

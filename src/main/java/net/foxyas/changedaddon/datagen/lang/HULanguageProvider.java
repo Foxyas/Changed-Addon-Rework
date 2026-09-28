@@ -55,6 +55,7 @@ import static net.foxyas.changedaddon.init.ChangedAddonEntities.*;
 import static net.foxyas.changedaddon.init.ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR;
 import static net.foxyas.changedaddon.init.ChangedAddonGameRules.*;
 import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
+import static net.foxyas.changedaddon.init.ChangedAddonItems.LUMINAR_CRYSTAL_SHARD;
 import static net.foxyas.changedaddon.init.ChangedAddonKeyMappings.*;
 import static net.foxyas.changedaddon.init.ChangedAddonMobEffects.*;
 import static net.foxyas.changedaddon.init.ChangedAddonSoundEvents.*;

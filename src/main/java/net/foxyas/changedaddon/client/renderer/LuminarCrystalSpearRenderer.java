@@ -3,8 +3,8 @@ package net.foxyas.changedaddon.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.foxyas.changedaddon.client.model.ModelLuminarCrystalSpearModel;
-import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
+import net.foxyas.changedaddon.client.model.LuminarCrystalSpearModel;
+import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearProjectile;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -14,17 +14,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-public class LuminarCrystalSpearRenderer extends EntityRenderer<LuminarCrystalSpearEntity> {
+public class LuminarCrystalSpearRenderer extends EntityRenderer<LuminarCrystalSpearProjectile> {
     private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/entities/luminar_crystal_spear.png");
-    private final ModelLuminarCrystalSpearModel<LuminarCrystalSpearEntity> model;
+    private final LuminarCrystalSpearModel<LuminarCrystalSpearProjectile> model;
 
     public LuminarCrystalSpearRenderer(EntityRendererProvider.Context context) {
         super(context);
-        model = new ModelLuminarCrystalSpearModel<>(context.bakeLayer(ModelLuminarCrystalSpearModel.LAYER_LOCATION));
+        model = new LuminarCrystalSpearModel<>(context.bakeLayer(LuminarCrystalSpearModel.LAYER_LOCATION));
     }
 
     @Override
-    public void render(LuminarCrystalSpearEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight) {
+    public void render(LuminarCrystalSpearProjectile entity, float entityYaw, float partialTicks, PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
 
         // Rotaciona igual ao tridente
@@ -43,7 +43,7 @@ public class LuminarCrystalSpearRenderer extends EntityRenderer<LuminarCrystalSp
 
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull LuminarCrystalSpearEntity entity) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull LuminarCrystalSpearProjectile entity) {
         return texture;
     }
 }

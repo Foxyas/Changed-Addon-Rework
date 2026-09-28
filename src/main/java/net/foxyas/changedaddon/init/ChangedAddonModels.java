@@ -38,7 +38,7 @@ public class ChangedAddonModels {
         event.registerLayerDefinition(LatexHumanHazardBodySuitModel.LATEX_PLAYER_SLIM, () -> LatexHumanHazardBodySuitModel.createBodyLayer(new CubeDeformation(0.05f), true));
 
 
-        event.registerLayerDefinition(ModelLuminarCrystalSpearModel.LAYER_LOCATION, ModelLuminarCrystalSpearModel::createBodyLayer);
+        event.registerLayerDefinition(LuminarCrystalSpearModel.LAYER_LOCATION, LuminarCrystalSpearModel::createBodyLayer);
 
         // --- MONSTER/MOB ENTITIES MODELS---
         event.registerLayerDefinition(ModelFoxyasModel.LAYER_LOCATION, ModelFoxyasModel::createBodyLayer);

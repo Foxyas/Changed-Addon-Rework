@@ -5,10 +5,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.advanced.*;
 import net.foxyas.changedaddon.entity.bosses.*;
 import net.foxyas.changedaddon.entity.partials.SnowLeopardPartialEntity;
-import net.foxyas.changedaddon.entity.projectile.CrystalShardProjectile;
-import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
-import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
-import net.foxyas.changedaddon.entity.projectile.WitherParticleProjectile;
+import net.foxyas.changedaddon.entity.projectile.*;
 import net.foxyas.changedaddon.entity.simple.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -194,17 +191,17 @@ public class ChangedAddonEntities {
 
                     .sized(0.25F, 0.25F));
 
-    public static final RegistryObject<EntityType<LuminarCrystalSpearEntity>> LUMINAR_CRYSTAL_SPEAR = register("projectile_luminar_crystal_spear",
-            EntityType.Builder.<LuminarCrystalSpearEntity>of(LuminarCrystalSpearEntity::new, MobCategory.MISC)
-                    .setCustomClientFactory(LuminarCrystalSpearEntity::new)
+    public static final RegistryObject<EntityType<LuminarCrystalSpearProjectile>> LUMINAR_CRYSTAL_SPEAR = register("projectile_luminar_crystal_spear",
+            EntityType.Builder.<LuminarCrystalSpearProjectile>of(LuminarCrystalSpearProjectile::new, MobCategory.MISC)
+                    .setCustomClientFactory(LuminarCrystalSpearProjectile::new)
                     .setShouldReceiveVelocityUpdates(true)
                     .setTrackingRange(64)
                     .setUpdateInterval(1)
 
                     .sized(0.5f, 0.5f));
 
-    public static final RegistryObject<EntityType<CrystalShardProjectile>> CRYSTAL_SHARD = register("crystal_shard",
-            EntityType.Builder.<CrystalShardProjectile>of(CrystalShardProjectile::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<LuminarCrystalShardProjectile>> LUMINAR_CRYSTAL_SHARD = register("luminar_crystal_shard",
+            EntityType.Builder.<LuminarCrystalShardProjectile>of(LuminarCrystalShardProjectile::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f));
 
 

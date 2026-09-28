@@ -87,7 +87,7 @@ public class LeapSmashGoal extends Goal {
             if (leapTicks >= 40) {
                 Vec3 motion = mob.getDeltaMovement();
                 double verticalBoost = -0.5f;
-                mob.getLookControl().setLookAt(motion.x, verticalBoost, motion.z, 30, 30);
+                mob.getLookControl().setLookAt(motion.x, verticalBoost, motion.z, 180, 180);
                 mob.setDeltaMovement(motion.x, verticalBoost, motion.z);
             }
         }

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
+import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearProjectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -94,7 +94,7 @@ public class LuminarCrystalSpearItem extends Item implements Vanishable {
                             p_43388_.broadcastBreakEvent(livingEntity.getUsedItemHand());
                         });
                         if (j == 0) {
-                            LuminarCrystalSpearEntity LuminarCrystalSpear = new LuminarCrystalSpearEntity(world, player, itemStack);
+                            LuminarCrystalSpearProjectile LuminarCrystalSpear = new LuminarCrystalSpearProjectile(world, player, itemStack);
                             LuminarCrystalSpear.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F + (float) j * 0.5F, 1.0F);
                             if (player.getAbilities().instabuild) {
                                 LuminarCrystalSpear.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
