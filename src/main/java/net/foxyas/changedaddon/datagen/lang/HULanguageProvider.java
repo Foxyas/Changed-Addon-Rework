@@ -454,10 +454,13 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityFromId(WOLFY);
         addEntityType(MONGOOSE, "Mongúz");
         addEntityType(DARK_LATEX_YUFENG_QUEEN, "Sötét latex jüfeng királynő");
+        addEntityType(LUMINARA_CRYSTAL_BEING_FEMALE, "Nőstény fénykristály lény");
+        addEntityType(LUMINARA_CRYSTAL_BEING_MALE, "Hím fénykristály lény");
 
         addEntityType(LUMINAR_CRYSTAL_SPEAR, "Fénykristály-lándzsa");
         addEntityType(PARTICLE_PROJECTILE, "Fényrészecske");
         addEntityType(WITHER_PARTICLE_PROJECTILE, "Sorvadás részecskéje");
+        addEntityType(CRYSTAL_SHARD, "Kristályszilánk");
         add(EntityType.VILLAGER.getDescriptionId() + ".changed_addon.scientist", "Tudós");
 
         add("fluid." + modid + ".litix_camonia_fluid", "Folyékony litix-kamónia");
@@ -746,6 +749,8 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(VOID_FOX_SPAWN_EGG, "Űrrókaidéző tojás");
         addItem(WOLFY_SPAWN_EGG, "Wolfyidéző tojás");
         addItem(DARK_LATEX_YUFENG_QUEEN_SPAWN_EGG, "Sötét latex jüfeng királynőt idéző tojás");
+        addItem(LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG, "Nőstény fénykristály lényt idéző tojás");
+        addItem(LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG, "Hím fénykristály lényt idéző tojás");
 
         add("key.categories." + modid, "Changed Addon key bindek");
         addKey(ChangedAddonKeyMappings.OPEN_EXTRA_DETAILS, "Transzfuráltak többleteinek nyitása");
