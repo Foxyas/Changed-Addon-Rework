@@ -371,7 +371,7 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        super.createBlockStateDefinition(pBuilder.add(HEARTED, HALF, FACING, WATERLOGGED));
+        super.createBlockStateDefinition(pBuilder.add(HEARTED, HALF, FACING, WATERLOGGED, CAN_SURVIVE_ANYWHERE));
     }
 
     @Override

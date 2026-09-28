@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +20,8 @@ import java.util.List;
 
 public class WitherParticleProjectile extends AbstractGenericParticleProjectile {
 
+    private Entity owner;
+
     public WitherParticleProjectile(EntityType<? extends AbstractGenericParticleProjectile> type, Level level) {
         super(type, level);
         this.particleOptions = ParticleTypes.DAMAGE_INDICATOR;
@@ -27,6 +30,17 @@ public class WitherParticleProjectile extends AbstractGenericParticleProjectile 
     @Override
     protected @NotNull ItemStack getPickupItem() {
         return ItemStack.EMPTY;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        owner = this.getOwner();
+        if (this.isNoGravity() && owner != null) {
+            if (this.distanceTo(owner) > 16f || owner.isRemoved()) {
+                this.setNoGravity(false);
+            }
+        }
     }
 
     @Override

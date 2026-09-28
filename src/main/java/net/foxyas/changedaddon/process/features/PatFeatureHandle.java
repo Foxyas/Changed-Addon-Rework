@@ -70,15 +70,17 @@ public class PatFeatureHandle {
         Entity targetEntity = targetEntityResult.getEntity();
         if (!(targetEntity instanceof LivingEntity living)) return;
 
+        if (patEntity(player, living, emptyHand, targetEntityResult)) {
+            player.awardStat(ChangedAddonStatRegistry.ENTITY_PATTED.get().get(living.getType()));
+            if (patType == PatType.CONTINUOS) {
+                vars.ticksPattingAnEntity++;
+                vars.syncPlayerVariables(player);
 
-        if (patEntity(player, living, emptyHand, targetEntityResult) && patType == PatType.CONTINUOS) {
-            vars.ticksPattingAnEntity++;
-            vars.syncPlayerVariables(player);
-
-            if (vars.ticksPattingAnEntity % 10 == 0) {
-                Level level = player.level();
-                if (!level.isClientSide()) {
-                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BRUSH_GENERIC, SoundSource.PLAYERS, 2.5f, 0.75f);
+                if (vars.ticksPattingAnEntity % 10 == 0) {
+                    Level level = player.level();
+                    if (!level.isClientSide()) {
+                        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BRUSH_GENERIC, SoundSource.PLAYERS, 2.5f, 0.75f);
+                    }
                 }
             }
         }

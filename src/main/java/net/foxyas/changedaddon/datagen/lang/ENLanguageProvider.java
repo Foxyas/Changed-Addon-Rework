@@ -295,7 +295,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityDialogues("exp9.death.text1", "§b§l§oPathetic!,How dare you show weakness like this! you really are just a useless peace of scrap!!§r");
         addEntityDialogues("exp9.death.text2", "§b§l§oYou Fall Because Of This? How Pathetic...§r");
         addEntityDialogues("exp9.transfur.text.secret", "§b§l§oHey You look familiar, maybe i know you from §csomewhere?§r");
-        addEntityDialogues("exp9.dead", "§o§n§l§345 years of being a single orb.. You humans, still have more power than i do... I'll be back, here is my gift for you.");
+        addEntityDialogues("exp9.dead", "§o§n§l§3Heh... the cycle repeats. Over and over again... You’ve defeated me %1$s times... yet something tells me that one day I’ll find the sweet freedom I so richly deserve. But what if... I’m wrong? Will this cycle of re-synthesis and slaughter repeat indefinitely? Well, it wouldn't surprise me; you humans are truly nothing but cruel, amoral beings crawling about in search of material possessions.");
         addEntityDialogues("exp9.pat.type_1", "§l§3...You dare mock me like this?! I'll tear you apart!");
         addEntityDialogues("exp9.pat.type_2", "§l§3Get your filthy hands off me!");
         addEntityDialogues("exp9.pat.type_3", "§l§3Pat me again, and I'll crush you until nothing's left!");
@@ -828,6 +828,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Pats received");
         addStat(ChangedAddonStatRegistry.ENTITY_ASSIMILATED, "Entities assimilated while transfurred");
         addStat(ChangedAddonStatRegistry.ENTITY_TRANSFURRED, "Entities transfurred while transfurred");
+        addStatType(ChangedAddonStatRegistry.ENTITY_PATTED, "Entities Patted");
 
         add("warn.rei.not.supported.move.items.but.right.container", "Move Items is not supported with this kind of workstation");
         addText("cuddle_button", "Start cuddling");
