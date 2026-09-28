@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.advanced.*;
 import net.foxyas.changedaddon.entity.bosses.*;
 import net.foxyas.changedaddon.entity.partials.SnowLeopardPartialEntity;
+import net.foxyas.changedaddon.entity.projectile.CrystalShardProjectile;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
 import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
 import net.foxyas.changedaddon.entity.projectile.WitherParticleProjectile;
@@ -202,6 +203,10 @@ public class ChangedAddonEntities {
 
                     .sized(0.5f, 0.5f));
 
+    public static final RegistryObject<EntityType<CrystalShardProjectile>> CRYSTAL_SHARD = register("crystal_shard",
+            EntityType.Builder.<CrystalShardProjectile>of(CrystalShardProjectile::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f));
+
 
     // --- CHANGED ENTITIES ---
     public static final RegistryObject<EntityType<LatexSnowFoxMaleEntity>> LATEX_SNOW_FOX_MALE = registerChangedEntity("latex_snow_fox_male",
@@ -252,20 +257,20 @@ public class ChangedAddonEntities {
                     .setCustomClientFactory(PuroKindFemaleEntity::new)
                     .sized(0.7f, 1.93f));
 
-    public static final RegistryObject<EntityType<SnowLeopardFemaleOrganicEntity>> SNOW_LEOPARD_FEMALE_ORGANIC = registerChangedEntity("snow_leopard_female_organic",
-            EntityType.Builder.<SnowLeopardFemaleOrganicEntity>of(SnowLeopardFemaleOrganicEntity::new, MobCategory.MONSTER)
+    public static final RegistryObject<EntityType<BioSynthSnowLeopardFemaleEntity>> BIOSYNTH_SNOW_LEOPARD_FEMALE = registerChangedEntity("biosynth_snow_leopard_female",
+            EntityType.Builder.<BioSynthSnowLeopardFemaleEntity>of(BioSynthSnowLeopardFemaleEntity::new, MobCategory.MONSTER)
                     .setShouldReceiveVelocityUpdates(true)
                     .setTrackingRange(64)
                     .setUpdateInterval(3)
-                    .setCustomClientFactory(SnowLeopardFemaleOrganicEntity::new)
+                    .setCustomClientFactory(BioSynthSnowLeopardFemaleEntity::new)
                     .sized(0.7f, 1.93f));
 
-    public static final RegistryObject<EntityType<SnowLeopardMaleOrganicEntity>> SNOW_LEOPARD_MALE_ORGANIC = registerChangedEntity("snow_leopard_male_organic",
-            EntityType.Builder.<SnowLeopardMaleOrganicEntity>of(SnowLeopardMaleOrganicEntity::new, MobCategory.MONSTER)
+    public static final RegistryObject<EntityType<BioSynthSnowLeopardMaleEntity>> BIOSYNTH_SNOW_LEOPARD_MALE = registerChangedEntity("biosynth_snow_leopard_male",
+            EntityType.Builder.<BioSynthSnowLeopardMaleEntity>of(BioSynthSnowLeopardMaleEntity::new, MobCategory.MONSTER)
                     .setShouldReceiveVelocityUpdates(true)
                     .setTrackingRange(64)
                     .setUpdateInterval(3)
-                    .setCustomClientFactory(SnowLeopardMaleOrganicEntity::new)
+                    .setCustomClientFactory(BioSynthSnowLeopardMaleEntity::new)
                     .sized(0.7f, 1.93f));
 
     public static final RegistryObject<EntityType<MirrorWhiteTigerEntity>> MIRROR_WHITE_TIGER = registerOrganicChangedEntity("mirror_white_tiger",
@@ -566,6 +571,14 @@ public class ChangedAddonEntities {
                     .setTrackingRange(64)
                     .sized(0.91F, 2.6F)); // 0.7F *1.3F, 2F *1.3F
 
+    public static final RegistryObject<EntityType<FemaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_FEMALE = registerChangedEntity("luminara_crystal_being_female",
+            EntityType.Builder.of(FemaleLuminaraCrystalBeing::new, MobCategory.MONSTER)
+                    .sized(0.7f, 1.93f));
+
+    public static final RegistryObject<EntityType<MaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_MALE = registerChangedEntity("luminara_crystal_being_male",
+            EntityType.Builder.of(MaleLuminaraCrystalBeing::new, MobCategory.MONSTER)
+                    .sized(0.7f, 1.93f));
+
     /// OCs
 
     public static final RegistryObject<EntityType<BorealisMaleEntity>> BOREALIS_MALE = registerOrganicChangedEntity("borealis_male",
@@ -699,10 +712,10 @@ public class ChangedAddonEntities {
         event.put(PURO_KIND_MALE.get(), PuroKindMaleEntity.createAttributes().build());
         event.put(PURO_KIND_FEMALE.get(), PuroKindFemaleEntity.createAttributes().build());
         event.put(BUNY.get(), BunyEntity.createAttributes().build());
-        event.put(SNOW_LEOPARD_FEMALE_ORGANIC.get(), SnowLeopardFemaleOrganicEntity.createAttributes().build());
+        event.put(BIOSYNTH_SNOW_LEOPARD_FEMALE.get(), BioSynthSnowLeopardFemaleEntity.createAttributes().build());
         event.put(EXPERIMENT_009.get(), Experiment009Entity.createAttributes().build());
         event.put(MIRROR_WHITE_TIGER.get(), MirrorWhiteTigerEntity.createAttributes().build());
-        event.put(SNOW_LEOPARD_MALE_ORGANIC.get(), SnowLeopardMaleOrganicEntity.createAttributes().build());
+        event.put(BIOSYNTH_SNOW_LEOPARD_MALE.get(), BioSynthSnowLeopardMaleEntity.createAttributes().build());
         event.put(EXPERIMENT_10.get(), Experiment10Entity.createAttributes().build());
         event.put(EXP_2_MALE.get(), Exp2MaleEntity.createAttributes().build());
         event.put(EXP_2_FEMALE.get(), Exp2FemaleEntity.createAttributes().build());
@@ -750,6 +763,8 @@ public class ChangedAddonEntities {
         event.put(LATEX_KAYLA_SHARK.get(), LatexKaylaSharkEntity.createLatexAttributes().build());
         event.put(LATEX_BORDER_COLLIE.get(), LatexBorderCollieEntity.createLatexAttributes().build());
         event.put(DARK_LATEX_YUFENG_QUEEN.get(), DarkLatexYufengQueenEntity.createLatexAttributes().build());
+        event.put(LUMINARA_CRYSTAL_BEING_FEMALE.get(), FemaleLuminaraCrystalBeing.createLatexAttributes().build());
+        event.put(LUMINARA_CRYSTAL_BEING_MALE.get(), MaleLuminaraCrystalBeing.createLatexAttributes().build());
     }
 
     @SubscribeEvent

@@ -284,7 +284,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
                     if (!leopard.canAttack(closestEntity) || !leopard.hasLineOfSight(closestEntity)) continue;
 
                     LuminarCrystalBlock.moveOrTarget(closestEntity, leopard);
-                    level.playSound(null, pos, SoundEvents.ENDERMAN_SCREAM, SoundSource.MASTER, 1, 0);
+                    leopard.playRoarSound();
                 }
             }
             super.onRemove(oldState, level, pos, newState, isMoving);
@@ -355,8 +355,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
             }
 
             level.addFreshEntity(newLeopard);
-            newLeopard.playSound(SoundEvents.ENDERMAN_SCREAM, 1, 0);
-
+            newLeopard.playRoarSound();
         }
         super.onRemove(oldState, level, pos, newState, isMoving);
     }

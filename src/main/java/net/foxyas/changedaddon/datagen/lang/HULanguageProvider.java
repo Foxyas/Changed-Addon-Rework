@@ -448,8 +448,8 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityFromId(PROTOGEN_0SENIA0);
         addEntityFromId(REYN);
         addEntityType(SNEPSI_LEOPARD, "Snepsi párduc");
-        addEntityType(SNOW_LEOPARD_FEMALE_ORGANIC, "Nőstény bioszintetikus hópárduc");
-        addEntityType(SNOW_LEOPARD_MALE_ORGANIC, "Hím bioszintetikus hópárduc");
+        addEntityType(BIOSYNTH_SNOW_LEOPARD_FEMALE, "Nőstény bioszintetikus hópárduc");
+        addEntityType(BIOSYNTH_SNOW_LEOPARD_MALE, "Hím bioszintetikus hópárduc");
         addEntityType(VOID_FOX, "Űrróka");
         addEntityFromId(WOLFY);
         addEntityType(MONGOOSE, "Mongúz");
@@ -741,8 +741,8 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(PURO_KIND_MALE_SPAWN_EGG, "Hím Puro-félét idéző tojás");
         addItem(REYN_SPAWN_EGG, "Reynidéző tojás");
         addItem(SNEPSI_LEOPARD_SPAWN_EGG, "Snepsi párducot idéző tojás");
-        addItem(ORGANIC_SNOW_LEOPARD_FEMALE_SPAWN_EGG, "Nőstény bioszintetikus hópárducot idéző tojás");
-        addItem(ORGANIC_SNOW_LEOPARD_MALE_SPAWN_EGG, "Hím bioszintetikus hópárducot idéző tojás");
+        addItem(BIOSYNTH_SNOW_LEOPARD_FEMALE_SPAWN_EGG, "Nőstény bioszintetikus hópárducot idéző tojás");
+        addItem(BIOSYNTH_SNOW_LEOPARD_MALE_SPAWN_EGG, "Hím bioszintetikus hópárducot idéző tojás");
         addItem(VOID_FOX_SPAWN_EGG, "Űrrókaidéző tojás");
         addItem(WOLFY_SPAWN_EGG, "Wolfyidéző tojás");
         addItem(DARK_LATEX_YUFENG_QUEEN_SPAWN_EGG, "Sötét latex jüfeng királynőt idéző tojás");

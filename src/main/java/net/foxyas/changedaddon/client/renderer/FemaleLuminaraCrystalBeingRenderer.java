@@ -1,7 +1,8 @@
-package net.foxyas.changedaddon.client.renderer.basic;
+package net.foxyas.changedaddon.client.renderer;
 
-import net.foxyas.changedaddon.client.model.simple.LatexBorderCollieModel;
-import net.foxyas.changedaddon.entity.simple.LatexBorderCollieEntity;
+import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.client.model.FemaleLuminaraCrystalBeingModel;
+import net.foxyas.changedaddon.entity.simple.FemaleLuminaraCrystalBeing;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
@@ -10,16 +11,17 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class LatexBorderCollieRenderer extends AdvancedHumanoidRenderer<LatexBorderCollieEntity, LatexBorderCollieModel> {
-    public LatexBorderCollieRenderer(EntityRendererProvider.Context context) {
-        super(context, new LatexBorderCollieModel(context.bakeLayer(LatexBorderCollieModel.LAYER_LOCATION)),
+public class FemaleLuminaraCrystalBeingRenderer extends AdvancedHumanoidRenderer<FemaleLuminaraCrystalBeing, FemaleLuminaraCrystalBeingModel> {
+
+    public FemaleLuminaraCrystalBeingRenderer(EntityRendererProvider.Context context) {
+        super(context, new FemaleLuminaraCrystalBeingModel(context.bakeLayer(FemaleLuminaraCrystalBeingModel.LAYER_LOCATION)),
                 ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(CustomEyesLayer.builder(this, context.getModelSet()).withSclera(CustomEyesLayer::scleraColor).withLeftIris(CustomEyesLayer::irisColorLeft).withRightIris(CustomEyesLayer::irisColorRight).build());
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull LatexBorderCollieEntity entity) {
-        return ResourceLocation.parse("changed_addon:textures/entities/latex_border_collie/latex_border_collie.png");
+    public @NotNull ResourceLocation getTextureLocation(@NotNull FemaleLuminaraCrystalBeing entity) {
+        return ChangedAddonMod.texLoc("entity/female_luminara_crystal_being/base");
     }
 }

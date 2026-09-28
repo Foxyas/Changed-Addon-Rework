@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.simple.SnowLeopardMaleOrganicEntity;
+import net.foxyas.changedaddon.entity.simple.BioSynthSnowLeopardMaleEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class BioSynthSnowLeopardMaleModel extends AdvancedHumanoidModel<SnowLeopardMaleOrganicEntity> {
+public class BioSynthSnowLeopardMaleModel extends AdvancedHumanoidModel<BioSynthSnowLeopardMaleEntity> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = ChangedAddonMod.layerLocation("biosynth_snow_leopard_male", "main");
     private final ModelPart RightLeg;
@@ -28,7 +28,7 @@ public class BioSynthSnowLeopardMaleModel extends AdvancedHumanoidModel<SnowLeop
     private final ModelPart RightArmFur;
     private final ModelPart LeftArmFur;
     private final ModelPart Tail;
-    private final HumanoidAnimator<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> animator;
+    private final HumanoidAnimator<BioSynthSnowLeopardMaleEntity, BioSynthSnowLeopardMaleModel> animator;
 
     public BioSynthSnowLeopardMaleModel(ModelPart root) {
         super(root);
@@ -187,17 +187,17 @@ public class BioSynthSnowLeopardMaleModel extends AdvancedHumanoidModel<SnowLeop
     }
 
     @Override
-    public void prepareMobModel(@NotNull SnowLeopardMaleOrganicEntity p_162861, float p_102862, float p_102863, float p_102864_) {
+    public void prepareMobModel(@NotNull BioSynthSnowLeopardMaleEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         super.prepareMobModel(p_162861, p_102862, p_102863, p_102864_);
     }
 
     @Override
-    public void setupHand(SnowLeopardMaleOrganicEntity entity) {
+    public void setupHand(BioSynthSnowLeopardMaleEntity entity) {
         animator.setupHand();
     }
 
     @Override
-    public void setupAnim(@NotNull SnowLeopardMaleOrganicEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@NotNull BioSynthSnowLeopardMaleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
@@ -230,7 +230,7 @@ public class BioSynthSnowLeopardMaleModel extends AdvancedHumanoidModel<SnowLeop
     }
 
     @Override
-    public HumanoidAnimator<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> getAnimator(SnowLeopardMaleOrganicEntity entity) {
+    public HumanoidAnimator<BioSynthSnowLeopardMaleEntity, BioSynthSnowLeopardMaleModel> getAnimator(BioSynthSnowLeopardMaleEntity entity) {
         return animator;
     }
 }

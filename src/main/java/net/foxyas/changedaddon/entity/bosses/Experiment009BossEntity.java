@@ -170,7 +170,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return builder;
     }
 
-    private static GearTier getGearTier(LivingEntity entity) {
+    public static GearTier getGearTier(LivingEntity entity) {
 
         double armor = entity.getAttributeValue(Attributes.ARMOR);
         double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
@@ -967,15 +967,15 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         float ratio = this.computeHealthRatio();
         boolean hasPhase3HealthRatio = currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO || ratio <= PHASE_3_HEALTH_RATIO;
         boolean hasPhase2HealthRatio = currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO && !hasPhase3HealthRatio;
-        if (this.isPhase2()) {
-            if (hasPhase3HealthRatio && !this.isPhase3()) {
-                this.setPhase(Exp9Phase.PHASE3);
-//                this.onPhaseChange(oldPhase, this.getPhase());
-                level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
-            }
-        } else if (hasPhase2HealthRatio && !isPhase3()) {
+        if (hasPhase2HealthRatio && !isPhase3()) {
             this.setPhase(Exp9Phase.PHASE2);
 //            this.onPhaseChange(oldPhase, this.getPhase());
+            level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
+        }
+
+        if (hasPhase3HealthRatio && !this.isPhase3()) {
+            this.setPhase(Exp9Phase.PHASE3);
+//                this.onPhaseChange(oldPhase, this.getPhase());
             level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
         }
     }
@@ -1654,7 +1654,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         IAlphaAbleEntity.apply(entity, ChangedAttributes.JUMP_STRENGTH.get(), IAlphaAbleEntity.JUMP_STRENGTH, "Alpha Jump Strength", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
     }
 
-    private enum GearTier {
+    public enum GearTier {
         LOW,
         MID,
         HIGH

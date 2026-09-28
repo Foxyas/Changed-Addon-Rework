@@ -18,6 +18,7 @@ import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
@@ -480,6 +481,10 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         }
 
         return super.hurt(source, amount);
+    }
+
+    public void playRoarSound() {
+        this.playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 1, 0);
     }
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)

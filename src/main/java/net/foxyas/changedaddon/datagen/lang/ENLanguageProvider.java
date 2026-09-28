@@ -448,16 +448,19 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityFromId(PROTOGEN_0SENIA0);
         addEntityFromId(REYN);
         addEntityFromId(SNEPSI_LEOPARD);
-        addEntityType(SNOW_LEOPARD_FEMALE_ORGANIC, "Female BioSynth Snow Leopard");
-        addEntityType(SNOW_LEOPARD_MALE_ORGANIC, "Male BioSynth Snow Leopard");
+        addEntityType(BIOSYNTH_SNOW_LEOPARD_FEMALE, "Female BioSynth Snow Leopard");
+        addEntityType(BIOSYNTH_SNOW_LEOPARD_MALE, "Male BioSynth Snow Leopard");
         addEntityFromId(VOID_FOX);
         addEntityFromId(WOLFY);
         addEntityFromId(MONGOOSE);
         addEntityType(DARK_LATEX_YUFENG_QUEEN, "Dark Latex Yufeng Queen");
+        addEntityType(LUMINARA_CRYSTAL_BEING_FEMALE, "Female Luminara Crystal Being");
+        addEntityType(LUMINARA_CRYSTAL_BEING_MALE, "Male Luminara Crystal Being");
 
         addEntityType(LUMINAR_CRYSTAL_SPEAR, "Luminar Crystal Spear");
         addEntityType(PARTICLE_PROJECTILE, "Light Particle");
         addEntityType(WITHER_PARTICLE_PROJECTILE, "Wither Particle");
+        addEntityType(CRYSTAL_SHARD, "Crystal Shard");
         add(EntityType.VILLAGER.getDescriptionId() + ".changed_addon.scientist", "Scientist");
 
         add("fluid." + modid + ".litix_camonia_fluid", "Litix Camonia Fluid");
@@ -726,11 +729,13 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(PURO_KIND_MALE_SPAWN_EGG);
         addItemFromId(REYN_SPAWN_EGG);
         addItemFromId(SNEPSI_LEOPARD_SPAWN_EGG);
-        addItem(ORGANIC_SNOW_LEOPARD_FEMALE_SPAWN_EGG, "Female BioSynth Snow Leopard Spawn Egg");
-        addItem(ORGANIC_SNOW_LEOPARD_MALE_SPAWN_EGG, "Male BioSynth Snow Leopard Spawn Egg");
+        addItem(BIOSYNTH_SNOW_LEOPARD_FEMALE_SPAWN_EGG, "Female BioSynth Snow Leopard Spawn Egg");
+        addItem(BIOSYNTH_SNOW_LEOPARD_MALE_SPAWN_EGG, "Male BioSynth Snow Leopard Spawn Egg");
         addItemFromId(VOID_FOX_SPAWN_EGG);
         addItemFromId(WOLFY_SPAWN_EGG);
         addItem(DARK_LATEX_YUFENG_QUEEN_SPAWN_EGG, "Dark Latex Yufeng Queen Spawn Egg");
+        addItem(LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG, "Female Luminara Crystal Being Spawn Egg");
+        addItem(LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG, "Male Luminara Crystal Being Spawn Egg");
 
         add("key.categories." + modid, "Changed Addon Keybinds");
         addKey(ChangedAddonKeyMappings.OPEN_EXTRA_DETAILS, "Open Transfur Extra");

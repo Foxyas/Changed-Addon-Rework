@@ -44,6 +44,8 @@ public class ChangedAddonModels {
         event.registerLayerDefinition(ModelFoxyasModel.LAYER_LOCATION, ModelFoxyasModel::createBodyLayer);
 
         // --- CHANGED ENTITIES MODELS---
+        event.registerLayerDefinition(FemaleLuminaraCrystalBeingModel.LAYER_LOCATION, FemaleLuminaraCrystalBeingModel::createBodyLayer);
+        event.registerLayerDefinition(MaleLuminaraCrystalBeingModel.LAYER_LOCATION, MaleLuminaraCrystalBeingModel::createBodyLayer);
         event.registerLayerDefinition(LatexSnowFoxMaleModel.LAYER_LOCATION, LatexSnowFoxMaleModel::createBodyLayer);
         event.registerLayerDefinition(LatexSnowFoxFemaleModel.LAYER_LOCATION, LatexSnowFoxFemaleModel::createBodyLayer);
         event.registerLayerDefinition(WhiteFoxModel.LAYER_LOCATION, WhiteFoxModel::createBodyLayer);

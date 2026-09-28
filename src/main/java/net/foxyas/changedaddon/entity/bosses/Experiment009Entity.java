@@ -245,7 +245,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
                 UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                 UniformInt.of(4, 8), //IntProvider -> damageProvider
                 1.5f,
-                200) {
+                UniformInt.of(120, 200)) {
             @Override
             public boolean canUse() {
                 return super.canUse() && !Experiment009Entity.this.isSwimming();
