@@ -11,6 +11,7 @@ import net.foxyas.changedaddon.entity.simple.AbstractSnowFoxEntity;
 import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.*;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
@@ -41,7 +42,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -271,16 +271,15 @@ public class PlayerUtil {
         if (instance == null) return;
 
         ChangedEntity fakeEntity = instance.getChangedEntity();
+        TransfurVariant<?> bossVersionOf = ChangedAddonTransfurVariants.getBossVersionOf(instance.getParent());
 
-        Entity entityToSpawn = fakeEntity.getType().create(level);
+        ChangedEntity entityToSpawn = bossVersionOf.getEntityType().create(level);
         assert entityToSpawn != null;
         entityToSpawn.moveTo(player.getX(), player.getY(), player.getZ(), 0, 0);
         entityToSpawn.setYBodyRot(0);
         entityToSpawn.setYHeadRot(0);
 
-        if (entityToSpawn instanceof Mob mob) {
-            ForgeEventFactory.onFinalizeSpawn(mob, level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
-        }
+        ForgeEventFactory.onFinalizeSpawn(entityToSpawn, level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
 
         if (fakeEntity instanceof IAlphaAbleEntity original && entityToSpawn instanceof IAlphaAbleEntity alphaAble) {
             alphaAble.setAlpha(original.isAlpha());

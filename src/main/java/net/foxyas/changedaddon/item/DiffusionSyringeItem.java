@@ -1,7 +1,9 @@
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.PlayerUtil;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -29,9 +31,17 @@ public class DiffusionSyringeItem extends AbstractSyringeItem {
 
         if (!(entity instanceof Player player)) return;
 
-        if (ProcessTransfur.isPlayerTransfurred(player)) {
-            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (transfurVariant.is(ChangedTransfurVariants.DARK_LATEX_DOUBLE_YUFENG.get())) {
+        if (ProcessTransfur.getPlayerTransfurVariant(player) != null) {
+            TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+            TransfurVariant<?> variant = instance.getParent();
+            if (ChangedAddonTransfurVariants.isBossVariant(variant)) {
+                if (ChangedAddonVariables.ofOrDefault(player).showWarns) {
+                    player.displayClientMessage(Component.translatable("changed_addon.untransfur.no_effect"), true);
+                }
+                return;
+            }
+
+            if (instance.is(ChangedTransfurVariants.DARK_LATEX_DOUBLE_YUFENG.get())) {
                 ProcessTransfur.changeTransfur(player, ChangedTransfurVariants.DARK_LATEX_YUFENG.get());
             }
             PlayerUtil.splitChangedEntityFromPlayer(level, player);
