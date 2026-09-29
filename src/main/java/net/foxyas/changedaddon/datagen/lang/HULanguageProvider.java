@@ -294,7 +294,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityDialogues("exp9.death.text1", "§b§l§oSzánalmas! Hogy merészeled így megmutatni a gyengeségedet! Te tényleg csak egy haszontalan roncs vagy!!§r");
         addEntityDialogues("exp9.death.text2", "§b§l§oEmiatt estél el? Milyen szánalmas...§r");
         addEntityDialogues("exp9.transfur.text.secret", "§b§l§oHé, ismerősnek tűnsz, talán ismerlek §cvalahonnan?§r");
-        addEntityDialogues("exp9.dead", "§o§n§l§345 év egyetlen gömbként... Ti, emberek, még mindig nagyobb hatalmatok van, mint nekem... Visszajövök, itt van az ajándékom neked.");
+        addEntityDialogues("exp9.dead", "§o§n§l§3Heh... a körforgás megismétlődik. Újra és újra... Már %1$s alkalommal győztél le... mégis valami azt súgja, hogy egy napon rátalálok arra az édes szabadságra, amelyet olyannyira megérdemlek. De mi van, ha... tévedek? Vajon az újjáépítés és a mészárlás e körforgása a végtelenségig ismétlődik majd? Nos, nem lepne meg; ti, emberek, valójában nem vagytok mások, mint kegyetlen, erkölcstelen lények, akik anyagi javak után kutatva nyüzsögnek.");
         addEntityDialogues("exp9.pat.type_1", "§l§3...Így merészelsz gúnyolódni velem?! Széttéplek!");
         addEntityDialogues("exp9.pat.type_2", "§l§3Vedd le rólam a mocskos kezeidet!");
         addEntityDialogues("exp9.pat.type_3", "§l§3Simogass meg még egyszer, és addig zúzlak össze, amíg semmi sem marad belőled!");
@@ -843,6 +843,7 @@ public class HULanguageProvider extends LanguageProvider {
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Simogatások fogadva");
         addStat(ChangedAddonStatRegistry.ENTITY_ASSIMILATED, "Entitások beolvaszva miközben transzfurált állapotban van");
         addStat(ChangedAddonStatRegistry.ENTITY_TRANSFURRED, "Entitások transzfurálva miközben transzfurált állapotban van");
+        addStatType(ChangedAddonStatRegistry.ENTITY_PATTED, "Megsimogatott entitások");
 
         add("warn.rei.not.supported.move.items.but.right.container", "Az elemek áthelyezése nem támogatott ennél a munkaállomásnál");
         addText("cuddle_button", "Ölelkezés elkezdése");
