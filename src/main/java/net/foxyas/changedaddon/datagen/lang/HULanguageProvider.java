@@ -461,7 +461,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(LUMINAR_CRYSTAL_SPEAR, "Fénykristály-lándzsa");
         addEntityType(PARTICLE_PROJECTILE, "Fényrészecske");
         addEntityType(WITHER_PARTICLE_PROJECTILE, "Sorvadás részecskéje");
-        addEntityType(CRYSTAL_SHARD, "Kristályszilánk");
+        addEntityType(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD, "Kristályszilánk");
         add(EntityType.VILLAGER.getDescriptionId() + ".changed_addon.scientist", "Tudós");
 
         add("fluid." + modid + ".litix_camonia_fluid", "Folyékony litix-kamónia");
