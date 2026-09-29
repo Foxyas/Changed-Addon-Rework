@@ -116,8 +116,8 @@ public class LeapAbilityInstance extends AbstractAbilityInstance implements Abil
             Vec3 newMotion = player.getDeltaMovement().add(leapVec);
 
             // Cap maximum upward Y velocity (e.g. max 0.25D)
-            if (isFromJumping && newMotion.y > 0.25D) {
-                newMotion = new Vec3(newMotion.x, 0.25D, newMotion.z);
+            if (isFromJumping && newMotion.y > 0.15D) {
+                newMotion = new Vec3(newMotion.x, 0.15D, newMotion.z);
             }
 
             player.setDeltaMovement(newMotion);
@@ -135,7 +135,7 @@ public class LeapAbilityInstance extends AbstractAbilityInstance implements Abil
             motionY = targetY * 0.8F;
 
             if (isFromJumping) {
-                motionY *= 0.015F; // Reduce Y scaling on jump
+                motionY *= 0.0025F; // Reduce Y scaling on jump
             }
 
             motionZ = Math.cos(Math.toRadians(player.getYRot())) * 0.15;
@@ -146,8 +146,8 @@ public class LeapAbilityInstance extends AbstractAbilityInstance implements Abil
             Vec3 newMotion = player.getDeltaMovement().add(motionX, motionY * multiplier, motionZ);
 
             // Cap max Y motion for precision leap when jumping (e.g. max 0.6D)
-            if (isFromJumping && newMotion.y > 0.6D) {
-                newMotion = new Vec3(newMotion.x, 0.6D, newMotion.z);
+            if (isFromJumping && newMotion.y > 0.4D) {
+                newMotion = new Vec3(newMotion.x, 0.4D, newMotion.z);
             }
 
             player.setDeltaMovement(newMotion);
