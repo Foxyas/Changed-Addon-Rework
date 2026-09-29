@@ -9,7 +9,6 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -52,6 +51,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
     public static final BooleanProperty HEARTED = BooleanProperty.create("hearted");
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty CAN_SURVIVE_ANYWHERE = BooleanProperty.create("can_survive_anywhere");
     protected static final VoxelShape NORTH_AABB = Block.box(2, 2, 2, 14, 14, 16.0);
     protected static final VoxelShape SOUTH_AABB = Block.box(2, 2, 0, 14, 14, 14.0); // Corrigido
     protected static final VoxelShape EAST_AABB = Block.box(0, 2, 2, 14, 14, 14); // Corrigido
@@ -70,7 +70,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
                         .hasPostProcess((blockState, blockGetter, blockPos) -> true)
                         .emissiveRendering((blockState, blockGetter, blockPos) -> true)
                         .noOcclusion());
-        this.registerDefaultState(this.stateDefinition.any().setValue(HEARTED, false).setValue(FACING, Direction.UP).setValue(WATERLOGGED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(HEARTED, false).setValue(FACING, Direction.UP).setValue(WATERLOGGED, false).setValue(CAN_SURVIVE_ANYWHERE, false));
 
     }
 
@@ -118,9 +118,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(HEARTED);
-        builder.add(FACING);
-        builder.add(WATERLOGGED);
+        builder.add(HEARTED, FACING, WATERLOGGED, CAN_SURVIVE_ANYWHERE);
     }
 
     @Override
@@ -235,7 +233,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
         BlockState blockStateOn = level.getBlockState(blockPos.relative(oppositeDirection));
         if (!canSupportRigidBlock(level, blockPos.relative(oppositeDirection)))
             return false;
-        return blockStateOn.is(ChangedAddonTags.Blocks.CAN_LUMINAR_CRYSTAL_SURVIVE);
+        return blockStateOn.is(ChangedAddonTags.Blocks.CAN_LUMINAR_CRYSTAL_SURVIVE) || blockState.getValue(CAN_SURVIVE_ANYWHERE);
     }
 
     @Override

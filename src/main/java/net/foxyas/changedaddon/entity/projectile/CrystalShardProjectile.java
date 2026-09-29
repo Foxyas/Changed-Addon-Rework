@@ -36,26 +36,24 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class CrystalShardProjectile extends Projectile {
+public abstract class CrystalShardProjectile extends Projectile {
 
+    private static final double ARROW_BASE_DAMAGE = 2.0D;
     private static final EntityDataAccessor<Byte> ID_FLAGS = SynchedEntityData.defineId(CrystalShardProjectile.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> PIERCE_LEVEL = SynchedEntityData.defineId(CrystalShardProjectile.class, EntityDataSerializers.BYTE);
+    private static final int FLAG_CRIT = 1;
 
     private BlockState lastState;
     protected boolean inGround;
     protected int inGroundTime;
     public AbstractArrow.Pickup pickup = AbstractArrow.Pickup.DISALLOWED;
     private int life;
-    private double baseDamage = 2.0D;
+    private double baseDamage = ARROW_BASE_DAMAGE;
     private int knockback;
     private SoundEvent soundEvent = getDefaultHitGroundSoundEvent();
     @Nullable
     private IntOpenHashSet piercingIgnoreEntityIds;
     private final IntOpenHashSet ignoredEntities = new IntOpenHashSet();
-
-    public CrystalShardProjectile(Level level) {
-        super(ChangedAddonEntities.CRYSTAL_SHARD.get(), level);
-    }
 
     public CrystalShardProjectile(EntityType<? extends Projectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -515,6 +513,13 @@ public class CrystalShardProjectile extends Projectile {
     public boolean isCrit() {
         byte b0 = entityData.get(ID_FLAGS);
         return (b0 & 1) != 0;
+    }
+
+    /**
+     * Whether the arrow has a stream of critical hit particles flying behind it.
+     */
+    public void setCritArrow(boolean pCritArrow) {
+        setFlag(FLAG_CRIT, pCritArrow);
     }
 
     public byte getPierceLevel() {

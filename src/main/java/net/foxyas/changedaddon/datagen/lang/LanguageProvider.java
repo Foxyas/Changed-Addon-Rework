@@ -4,6 +4,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.stats.StatType;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
@@ -226,6 +227,10 @@ public abstract class LanguageProvider extends net.minecraftforge.common.data.La
 
     protected void addStat(RegistryObject<ResourceLocation> stat, String value) {
         add(stat.get().toLanguageKey("stat"), value);
+    }
+
+    protected <T extends Object> void addStatType(RegistryObject<StatType<T>> stat, String value) {
+        add(stat.get().getTranslationKey(), value);
     }
 
     protected void addTransfurClassification(String path, String value) {

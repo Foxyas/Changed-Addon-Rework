@@ -49,6 +49,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
@@ -1391,6 +1392,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         if (damageSource.getEntity() instanceof LivingEntity living) {
             FoxyasUtil.repairAllItems(living, 1000);
+
+            if (living instanceof ServerPlayer serverPlayer) {
+                int value = serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(this.getType()));
+                if (value > 3) {
+                    this.speak(Component.translatable("entity_dialogues.changed_addon.exp9.dead", value), serverPlayer);
+                }
+            }
         }
 
         super.die(damageSource);

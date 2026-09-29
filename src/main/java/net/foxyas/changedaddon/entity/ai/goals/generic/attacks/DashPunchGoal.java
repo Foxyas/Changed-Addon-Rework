@@ -348,6 +348,7 @@ public class DashPunchGoal extends Goal {
                 .add(0f, 0.5f, 0f)
                 .scale(2.75f);
         mob.setDeltaMovement(movement.x, movement.y, movement.z);
+        mob.getLookControl().setLookAt(target, 180f, 180f);
     }
 
     protected void onBlockedAttemptToHitTarget(LivingEntity target) {

@@ -78,6 +78,7 @@ public class ChangedAddonMod {
         ChangedAddonProcessors.PROCESSORS.register(bus);
 
         ChangedAddonStatRegistry.STATS.register(bus);
+        ChangedAddonStatRegistry.STAT_TYPES.register(bus);
 
         ChangedAddonTransfurVariants.REGISTRY.register(bus);
         dataFixer = new ChangedAddonDataFixer();

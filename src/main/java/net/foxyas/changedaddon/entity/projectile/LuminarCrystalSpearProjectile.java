@@ -1,10 +1,12 @@
 package net.foxyas.changedaddon.entity.projectile;
 
+import net.foxyas.changedaddon.block.LuminarCrystalSmall;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -30,6 +32,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -44,35 +48,35 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
-public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupplier {
+public class LuminarCrystalSpearProjectile extends AbstractArrow implements ItemSupplier {
 
-    private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(LuminarCrystalSpearEntity.class, EntityDataSerializers.BYTE);
-    private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(LuminarCrystalSpearEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(LuminarCrystalSpearProjectile.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(LuminarCrystalSpearProjectile.class, EntityDataSerializers.BOOLEAN);
     public int clientSideReturnSpearTickCount;
-    private ItemStack SpearItem = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SPEAR.get());
+    private ItemStack spearItem = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SPEAR.get());
     private boolean dealtDamage;
 
-    public LuminarCrystalSpearEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
+    public LuminarCrystalSpearProjectile(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         super(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), world);
     }
 
-    public LuminarCrystalSpearEntity(Level level, LivingEntity shooter, ItemStack weapon) {
+    public LuminarCrystalSpearProjectile(Level level, LivingEntity shooter, ItemStack weapon) {
         super(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), shooter, level);
-        this.SpearItem = weapon.copy();
+        this.spearItem = weapon.copy();
         this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(weapon));
         this.entityData.set(ID_FOIL, weapon.hasFoil());
     }
 
 
-    public LuminarCrystalSpearEntity(EntityType<? extends LuminarCrystalSpearEntity> type, Level world) {
+    public LuminarCrystalSpearProjectile(EntityType<? extends LuminarCrystalSpearProjectile> type, Level world) {
         super(type, world);
     }
 
-    public LuminarCrystalSpearEntity(EntityType<? extends LuminarCrystalSpearEntity> type, double x, double y, double z, Level world) {
+    public LuminarCrystalSpearProjectile(EntityType<? extends LuminarCrystalSpearProjectile> type, double x, double y, double z, Level world) {
         super(type, x, y, z, world);
     }
 
-    public LuminarCrystalSpearEntity(EntityType<? extends LuminarCrystalSpearEntity> type, LivingEntity entity, Level world) {
+    public LuminarCrystalSpearProjectile(EntityType<? extends LuminarCrystalSpearProjectile> type, LivingEntity entity, Level world) {
         super(type, entity, world);
     }
 
@@ -90,12 +94,12 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
     @Override
     @OnlyIn(Dist.CLIENT)
     public @NotNull ItemStack getItem() {
-        return this.SpearItem;
+        return this.spearItem;
     }
 
     @Override
     protected @NotNull ItemStack getPickupItem() {
-        return this.SpearItem;
+        return this.spearItem;
     }
 
     @Override
@@ -150,44 +154,6 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
     }
 
 
-    /*@Override
-    protected void onHitBlock(@NotNull BlockHitResult result) {
-        super.onHitBlock(result);
-        if (this.level() instanceof ServerLevel serverLevel) {
-            BlockState hitState = serverLevel.getBlockState(result.getBlockPos());
-            if (hitState.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get()) || hitState.isAir()) {
-                return;
-            }
-            Explosion explosion = new Explosion(serverLevel, this, this.position().x(), this.position().y(), this.position().z(), 3f);
-            //AABB BoundBox = new AABB(result.getBlockPos());
-            //BoundBox.inflate(1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem));
-            int radius = 1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem);
-
-            // Todas as direções possíveis
-            Direction[] directions = Direction.values();
-
-            for (Direction dir1 : directions) {
-                for (Direction dir2 : directions) {
-                    if (dir1 != dir2 && dir1.getAxis() != dir2.getAxis()) {
-                        for (BlockPos pos : BlockPos.spiralAround(result.getBlockPos(), radius, dir1, dir2)) {
-                            BlockState state = serverLevel.getBlockState(pos);
-                            if (state.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get()) || state.isAir()) continue;
-
-                            if (TierSortingRegistry.isCorrectTierForDrops(Tiers.STONE, state) &&
-                                    state.getExplosionResistance(serverLevel, result.getBlockPos(), explosion) < 1) {
-                                serverLevel.setBlockAndUpdate(pos, ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState());
-                                serverLevel.playSound(null, pos,
-                                        ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState().getSoundType().getPlaceSound(),
-                                        SoundSource.BLOCKS, 1, 1);
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-    }*/
-
     public boolean isFoil() {
         return this.entityData.get(ID_FOIL);
     }
@@ -201,24 +167,53 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
     protected void onHitBlock(@NotNull BlockHitResult result) {
         super.onHitBlock(result);
         if (this.level() instanceof ServerLevel serverLevel) {
-            BlockState hitState = serverLevel.getBlockState(result.getBlockPos());
-            if (hitState.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get()) || hitState.isAir()) {
+            BlockPos hitPos = result.getBlockPos();
+            BlockState hitState = serverLevel.getBlockState(hitPos);
+
+            if (hitState.isAir()) {
                 return;
             }
+
+            // Direção da face da parede atingida (ex: NORTH, SOUTH, EAST, WEST, UP, DOWN)
+            Direction faceDirection = result.getDirection();
+
+            // Objeto dummy de explosão para checar a resistência dos blocos
             Explosion explosion = new Explosion(serverLevel, this, this.position().x(), this.position().y(), this.position().z(), 3f, false, Explosion.BlockInteraction.DESTROY);
-            //AABB BoundBox = new AABB(result.getBlockPos());
-            //BoundBox.inflate(1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem));
-            int radius = 1 + Math.max(0, (EnchantmentHelper.getTagEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem) / 3));
-            for (BlockPos pos : FoxyasUtil.betweenClosedStreamSphere(result.getBlockPos(), radius, radius, 1.25f).toList()) {
-                BlockState state = serverLevel.getBlockState(pos);
-                if (state.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get()) || state.isAir()) {
-                    continue;
-                }
-                if (TierSortingRegistry.isCorrectTierForDrops(Tiers.STONE, state) && state.getExplosionResistance(serverLevel, result.getBlockPos(), explosion) < 1) {
-                    serverLevel.setBlockAndUpdate(pos, ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState());
-                    serverLevel.playSound(null, pos,
-                            ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState().getSoundType().getPlaceSound(),
-                            SoundSource.BLOCKS, 1, 1);
+
+            // Raio de espalhamento na parede baseado no encantamento Sharpness
+            int radius = 1 + Math.max(0, (EnchantmentHelper.getTagEnchantmentLevel(Enchantments.SHARPNESS, this.spearItem) / 3));
+
+            // Obtém o estado padrão do pequeno cristal
+            BlockState crystalState = ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState().setValue(LuminarCrystalSmall.CAN_SURVIVE_ANYWHERE, true);
+
+            // Varre a área plana da parede ao redor do ponto atingido
+            for (BlockPos wallPos : FoxyasUtil.betweenClosedStreamSphere(hitPos, radius, radius, 1.25f).toList()) {
+                BlockState state = serverLevel.getBlockState(wallPos);
+
+                // Onde o cristal vai ser colado (o bloco de ar diretamente na frente do bloco da parede)
+                BlockPos targetAirPos = wallPos.relative(faceDirection);
+                BlockState airState = serverLevel.getBlockState(targetAirPos);
+
+                // Verifica se o bloco da parede não é ar, se pode ser minerado com nível pedra e se o espaço na frente está livre
+                if (!state.isAir()
+                        && airState.isAir()
+                        && TierSortingRegistry.isCorrectTierForDrops(Tiers.STONE, state)
+                        && state.getExplosionResistance(serverLevel, hitPos, explosion) < 1) {
+
+                    // Se o seu cristal tiver propriedade de direção/facing, tentamos ajustar para ele grudar na parede
+                    BlockState finalCrystalState = crystalState;
+                    if (crystalState.hasProperty(DirectionalBlock.FACING)) {
+                        finalCrystalState = crystalState.setValue(DirectionalBlock.FACING, faceDirection);
+                    } else if (crystalState.hasProperty(HorizontalDirectionalBlock.FACING) && faceDirection.getAxis().isHorizontal()) {
+                        finalCrystalState = crystalState.setValue(HorizontalDirectionalBlock.FACING, faceDirection);
+                    }
+
+                    // Posiciona o pequeno cristal no espaço de ar adjacente à parede
+                    serverLevel.setBlockAndUpdate(targetAirPos, finalCrystalState);
+
+                    serverLevel.playSound(null, targetAirPos,
+                            finalCrystalState.getSoundType().getPlaceSound(),
+                            SoundSource.BLOCKS, 1.0f, 1.2f);
                 }
             }
         }
@@ -229,7 +224,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
         Entity entity = p_37573_.getEntity();
         float f = 12.0F;
         if (entity instanceof LivingEntity livingentity) {
-            f += EnchantmentHelper.getDamageBonus(this.SpearItem, livingentity.getMobType());
+            f += EnchantmentHelper.getDamageBonus(this.spearItem, livingentity.getMobType());
         }
 
         Entity entity1 = this.getOwner();
@@ -270,7 +265,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
     }
 
     public boolean isChanneling() {
-        return EnchantmentHelper.hasChanneling(this.SpearItem);
+        return EnchantmentHelper.hasChanneling(this.spearItem);
     }
 
     protected boolean tryPickup(@NotNull Player p_150196_) {
@@ -291,16 +286,16 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
     public void readAdditionalSaveData(@NotNull CompoundTag p_37578_) {
         super.readAdditionalSaveData(p_37578_);
         if (p_37578_.contains("CrystalSpear", 10)) {
-            this.SpearItem = ItemStack.of(p_37578_.getCompound("CrystalSpear"));
+            this.spearItem = ItemStack.of(p_37578_.getCompound("CrystalSpear"));
         }
 
         this.dealtDamage = p_37578_.getBoolean("DealtDamage");
-        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(this.SpearItem));
+        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(this.spearItem));
     }
 
     public void addAdditionalSaveData(@NotNull CompoundTag p_37582_) {
         super.addAdditionalSaveData(p_37582_);
-        p_37582_.put("CrystalSpear", this.SpearItem.save(new CompoundTag()));
+        p_37582_.put("CrystalSpear", this.spearItem.save(new CompoundTag()));
         p_37582_.putBoolean("DealtDamage", this.dealtDamage);
     }
 

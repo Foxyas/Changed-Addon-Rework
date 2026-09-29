@@ -1,6 +1,7 @@
-package net.foxyas.changedaddon.entity.ai.goals.exp10;
+package net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard;
 
 import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
+import net.foxyas.changedaddon.entity.projectile.LuminarCrystalShardProjectile;
 import net.foxyas.changedaddon.entity.projectile.WitherParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.server.level.ServerLevel;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoal {
+public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbilityGoal {
 
     public enum OrbitType {
         HORIZONTAL_AROUND, // Full horizontal ring centered on eye level
@@ -42,18 +43,18 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
     private static final int CHARGE_DURATION = 20; // Ticks before firing starts (~1 sec)
     private static final int FIRING_INTERVAL = 4;  // Ticks between firing each projectile
 
-    private final List<WitherParticleProjectile> spawnedProjectiles = new ArrayList<>();
+    private final List<LuminarCrystalShardProjectile> spawnedProjectiles = new ArrayList<>();
     private boolean isFullySpawned = false;
     private int currentFireIndex = 0;
 
     // Orbit mode randomly assigned per usage
     private OrbitType currentOrbitType = OrbitType.HORIZONTAL_AROUND;
 
-    public CircleShootWitherProjectileGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider) {
+    public CircleShootLuminarCrystalShardGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider) {
         this(holder, cooldownProvider, countProvider, 25f);
     }
 
-    public CircleShootWitherProjectileGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider, float distance) {
+    public CircleShootLuminarCrystalShardGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider, float distance) {
         super();
         this.holder = holder;
         this.cooldownProvider = cooldownProvider;
@@ -100,7 +101,7 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
         for (int i = 0; i < projectileCount; i++) {
             Vec3 spawnPos = calculateProjectilePosition(i, 0);
 
-            WitherParticleProjectile projectile = new WitherParticleProjectile(ChangedAddonEntities.WITHER_PARTICLE_PROJECTILE.get(), level);
+            LuminarCrystalShardProjectile projectile = new LuminarCrystalShardProjectile(ChangedAddonEntities.WITHER_PARTICLE_PROJECTILE.get(), level);
             projectile.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
             projectile.setOwner(holder);
             projectile.setNoGravity(true);
@@ -134,7 +135,7 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
         }
 
         if ((tick - getChargeDuration()) % getFiringIntervale() == 0 && currentFireIndex < spawnedProjectiles.size()) {
-            WitherParticleProjectile projectile = spawnedProjectiles.get(currentFireIndex);
+            LuminarCrystalShardProjectile projectile = spawnedProjectiles.get(currentFireIndex);
 
             if (projectile != null && projectile.isAlive()) {
                 fireProjectileAtTarget(projectile, target);
@@ -157,7 +158,7 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
      */
     private void updateHoverPositions() {
         for (int i = currentFireIndex; i < spawnedProjectiles.size(); i++) {
-            WitherParticleProjectile projectile = spawnedProjectiles.get(i);
+            LuminarCrystalShardProjectile projectile = spawnedProjectiles.get(i);
             if (projectile != null && projectile.isAlive()) {
                 Vec3 targetPos = calculateProjectilePosition(i, tick);
                 projectile.setPos(targetPos.x, targetPos.y, targetPos.z);
@@ -213,7 +214,7 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
         }
     }
 
-    private void fireProjectileAtTarget(WitherParticleProjectile projectile, LivingEntity target) {
+    private void fireProjectileAtTarget(LuminarCrystalShardProjectile projectile, LivingEntity target) {
         if (holder.level() instanceof ServerLevel level) {
             holder.swing(InteractionHand.MAIN_HAND);
 
@@ -277,7 +278,7 @@ public class CircleShootWitherProjectileGoal extends Goal implements IAbilityGoa
         this.cooldown = cooldownProvider.sample(this.holder.getRandom());
 
         for (int i = currentFireIndex; i < spawnedProjectiles.size(); i++) {
-            WitherParticleProjectile projectile = spawnedProjectiles.get(i);
+            LuminarCrystalShardProjectile projectile = spawnedProjectiles.get(i);
             if (projectile != null && projectile.isAlive()) {
                 projectile.discard();
             }
