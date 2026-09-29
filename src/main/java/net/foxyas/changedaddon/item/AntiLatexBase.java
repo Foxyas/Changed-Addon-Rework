@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class UnlatexbaseItem extends Item {
-    public UnlatexbaseItem() {
+public class AntiLatexBase extends Item {
+    public AntiLatexBase() {
         super(new Item.Properties()
                 .stacksTo(64).rarity(Rarity.COMMON));
     }

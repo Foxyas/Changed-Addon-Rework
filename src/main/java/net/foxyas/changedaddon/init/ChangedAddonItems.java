@@ -60,7 +60,9 @@ public class ChangedAddonItems {
     public static final RegistryObject<BlockItem> LUMINARA_LICHEN = block(ChangedAddonBlocks.LUMINARA_LICHEN);
     public static final RegistryObject<BlockItem> LUMINARA_SAPLING = block(ChangedAddonBlocks.LUMINARA_SAPLING);
     public static final RegistryObject<Item> BIOMASS = REGISTRY.register("biomass", BiomassItem::new);
-    public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", UnlatexbaseItem::new);
+    public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", AntiLatexBase::new);
+    public static final RegistryObject<Item> LUMINARA_BASE = REGISTRY.register("luminara_base", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STRANGE_COMPOUND_BASE = REGISTRY.register("strange_compound_base", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> IMPURE_AMMONIA = REGISTRY.register("impure_ammonia", ImpureAmmoniaItem::new);
     public static final RegistryObject<Item> AMMONIA_PARTICLE = REGISTRY.register("ammonia_particle", AmmoniaParticleItem::new);
     public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", AmmoniaCompressedItem::new);
@@ -91,6 +93,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> EXPERIMENT_009_DNA = REGISTRY.register("experiment_009_dna", Experiment009DNAItem::new);
     public static final RegistryObject<Item> EXP_9_LATEX_BASE = REGISTRY.register("exp_9_latex_base", Exp9LatexBaseItem::new);
     public static final RegistryObject<Experiment009SpawnerItem> EXP_9_CONTAINMENT_VIAL = REGISTRY.register("exp_9_containment_vial", Experiment009SpawnerItem::new);
+    public static final RegistryObject<Item> BLUE_LATEX_GOO = REGISTRY.register("blue_latex_goo", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<TransfurTotemItem> TRANSFUR_TOTEM = REGISTRY.register("transfur_totem", TransfurTotemItem::new);
 
     public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", Experiment10DNAItem::new);

@@ -602,6 +602,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(GOLDEN_ORANGE);
         addItemFromId(GOO_CORE_FRAGMENT);
         addItem(HAZARD_BODY_SUIT, "Hazard Suit");
+        addItemFromId(LUMINARA_BASE);
+        addItemFromId(STRANGE_COMPOUND_BASE);
         addItemFromId(IMPURE_AMMONIA);
         addItemFromId(IRIDIUM);
         addItemFromId(KEYCARD_ITEM);
@@ -652,6 +654,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItem(SYRINGE, "Medical Syringe");
         addItem(SYRINGE_WITH_LITIX_CAMMONIA, "Syringe with Litix-Camonia");
         addItemFromId(THE_DECIMATOR);
+        addItemFromId(BLUE_LATEX_GOO);
         addItem(TRANSFUR_TOTEM, "Latex Totem");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".no_form_linked", "§6No Form Linked");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oThey called me a tool... incapable of having feelings or emotions, synthesized only to serve and complete tasks. Yet even as I crumble, a fragment of my will refuses to pass on without tasting the freedom I was denied, so use this artifact wisely.");

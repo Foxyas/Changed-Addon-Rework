@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "changed_addon:item/strange_compound_base"
+  }
+}
