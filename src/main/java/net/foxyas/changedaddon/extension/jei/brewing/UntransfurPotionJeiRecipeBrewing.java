@@ -53,7 +53,7 @@ public class UntransfurPotionJeiRecipeBrewing implements IJeiBrewingRecipe {
 
     @Override
     public @Unmodifiable @NotNull List<ItemStack> getIngredients() {
-        return List.of(new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get()));
+        return List.of(new ItemStack(ChangedAddonItems.LITIX_CAMMONIA.get()));
     }
 
     @Override

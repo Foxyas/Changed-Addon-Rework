@@ -54,7 +54,7 @@ public class ChangedAddonTrades {
         list.add(new BasicItemListing(new ItemStack(ChangedAddonItems.LATEX_INSULATOR.get(), 4), new ItemStack(Items.EMERALD, 1), 12, 10, 0.02f));
         list.add(new BasicItemListing(new ItemStack(ChangedBlocks.DARK_LATEX_BLOCK.get().asItem(), 4), new ItemStack(Items.EMERALD, 1), 12, 15, 0.02f));
         list.add(new BasicItemListing(new ItemStack(ChangedBlocks.WHITE_LATEX_BLOCK.get().asItem(), 4), new ItemStack(Items.EMERALD, 1), 12, 15, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 4), new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get(), 2), 12, 15, 0.02f));
+        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 4), new ItemStack(ChangedAddonItems.LITIX_CAMMONIA.get(), 2), 12, 15, 0.02f));
         list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 1), new ItemStack(ChangedAddonItems.SIGNAL_CATCHER.get()), 12, 15, 0.02f));
         list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 4), new ItemStack(ChangedAddonItems.SNEPSI.get(), 1), 12, 15, 0.02f));
         list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 2), new ItemStack(ChangedAddonItems.FOXTA.get(), 1), 12, 15, 0.02f));

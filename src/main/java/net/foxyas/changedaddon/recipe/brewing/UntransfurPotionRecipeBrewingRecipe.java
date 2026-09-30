@@ -21,7 +21,7 @@ public class UntransfurPotionRecipeBrewingRecipe implements IBrewingRecipe {
 
     @Override
     public boolean isIngredient(@NotNull ItemStack ingredient) {
-        return Ingredient.of(new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get())).test(ingredient);
+        return Ingredient.of(new ItemStack(ChangedAddonItems.LITIX_CAMMONIA.get())).test(ingredient);
     }
 
     @Override

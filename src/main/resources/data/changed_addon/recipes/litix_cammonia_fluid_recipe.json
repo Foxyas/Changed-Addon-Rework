@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "changed_addon:litix_cammonia"
+    },
+    {
+      "item": "minecraft:potion",
+      "nbt": "{Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:litix_cammonia_fluid_bucket",
+    "count": 1
+  }
+}

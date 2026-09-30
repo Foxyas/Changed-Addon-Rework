@@ -48,7 +48,7 @@ public class LaethinminatorItem extends AbstractFlamethrowerItem {
             if (hitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos pos = hitResult.getBlockPos();
                 BlockState state = level.getBlockState(pos);
-                if (state.getFluidState().is(ChangedAddonFluids.LITIX_CAMONIA_FLUID.get()) || state.getFluidState().is(ChangedAddonFluids.FLOWING_LITIX_CAMONIA_FLUID.get())) {
+                if (state.getFluidState().is(ChangedAddonFluids.LITIX_CAMMONIA_FLUID.get()) || state.getFluidState().is(ChangedAddonFluids.FLOWING_LITIX_CAMMONIA_FLUID.get())) {
                     stack.setDamageValue(0);
                     entity.playSound(SoundEvents.BUCKET_FILL, 1f, 1f);
                 }

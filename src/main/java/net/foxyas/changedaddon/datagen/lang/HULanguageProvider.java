@@ -89,7 +89,7 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("kill_experiment_009", "Vége", "Megölte a 09-es kísérletet. Szép munka!");
         addAdvancement("latex_insulator_advancement", "Latex szigetelő", "Szigeteljük ezt a ragacsos fertőzést!");
         addAdvancement("leaper", "Szökkenő", "Ugorj magasra macska latexként.");
-        addAdvancement("craft_litix_camonia", "Litix-kamónia!?", "Barkácsolj egy litix-kamóniát");
+        addAdvancement("craft_litix_cammonia", "Litix-kamónia!?", "Barkácsolj egy litix-kamóniát");
         addAdvancement("obtain_a_electric_katana", "A Shocking upgrade!", "Get the electric katana!");
         addAdvancement("obtain_dark_crystal_dagger", "§8Sötét§r kristálytőr!", "Szerezz egy §8sötét§r kristálytőrt!");
         addAdvancement("obtain_foxta", "Foxta!", "Szerezz egy Foxtát!");
@@ -105,7 +105,7 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("pat_advancement", "Ez csinál valamit?!", "Annyira jól esett a simogatása, hogy segített valakinek jobban lenni");
         addAdvancement("pats_on_the_beast", "Rossz ötlet?...vagy egyáltalán megéri?", "Gratulálok!!!, most erősítetted meg a szörnyet!, valószínűleg most már nem lesznek kegyelmesek a lelkedhez!, Sok szerencsét!");
         addAdvancement("paticifier", "§oBékéltető§r vagy.", "Nem csak megsimogattad, §omegnyugtattad.§r§5, egy latex lényt a simogatásaiddal megnyugtattál, azonban ez nem állandó.");
-        addAdvancement("pot_with_litix_camonia_use", "Finom?", "Ittál egy folyadékot, amit litix-kamónia hígításából készítettél. Az íze nem rossz, ráadásul cseresznye íze van!");
+        addAdvancement("pot_with_litix_cammonia_use", "Finom?", "Ittál egy folyadékot, amit litix-kamónia hígításából készítettél. Az íze nem rossz, ráadásul cseresznye íze van!");
         addAdvancement("snepsi_addictive", "Snepsifüggő!", "Nagy kortyot ittunk, te 100 Snepsit ittál!");
         addAdvancement("stealth_pats", "Rejtett §cszeretet§r", "Simogass meg egy latex lényt álcában, hogy magát elrejtse és őt összezavarja.");
         addAdvancement("swim_regret", "Megbánom!", "Ússz egy percig olyan formában, amely alacsony úszási sebességgel rendelkezik");
@@ -150,7 +150,7 @@ public class HULanguageProvider extends LanguageProvider {
         addBlock(IRIDIUM_BLOCK, "Irídiumblokk");
         addBlock(DEEPSLATE_IRIDIUM_ORE, "Irídiumérc mélypalában");
         addBlock(LATEX_INSULATOR, "Latex szigetelő");
-        addBlock(LITIX_CAMONIA_FLUID, "Folyékony litix-kamónia");
+        addBlock(LITIX_CAMMONIA_FLUID, "Folyékony litix-kamónia");
         addBlock(LUMINARA_BLOOM, "Luminara virág");
         addBlock(POTTED_LUMINARA_BLOOM, "Virágcserép luminara virággal");
         addBlock(LUMINAR_CRYSTAL_BLOCK, "Fénykristály-blokk");
@@ -464,7 +464,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD, "Kristályszilánk");
         add(EntityType.VILLAGER.getDescriptionId() + ".changed_addon.scientist", "Tudós");
 
-        add("fluid." + modid + ".litix_camonia_fluid", "Folyékony litix-kamónia");
+        add("fluid." + modid + ".litix_cammonia_fluid", "Folyékony litix-kamónia");
 
         addGamerule(CHANGED_ADDON_CREATURE_DIETS, "Lények étrendje?", "Lehetővé teszi a transzfuráltak számára, hogy több éhség helyreállítást és telítettséget kapjanak, ha jó ételt esznek számukra");
         addGamerule(CHANGED_ADDON_HARD_MODE_BOSSES, "Changed Addon Nehéz módi fő ellenségek", "Nehézségi szorzó hozzáadása Changed Addon mód fő ellenségeire");
@@ -637,9 +637,9 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(FLAMETHROWER, "Lángszóró");
         addItem(LASER_POINTER, "Lézermutató");
         add(LASER_POINTER.get().getDescriptionId() + ".tooltip", "Szín: %s");
-        addItem(LITIX_CAMONIA, "Litix-kamónia");
-        addItem(LITIX_CAMONIA_FLUID_BUCKET, "Litix-kamóniás vödör");
-        addItem(LITIX_CAMONIA_SPRAY, "Litix-kamóniás szpré");
+        addItem(LITIX_CAMMONIA, "Litix-kamónia");
+        addItem(LITIX_CAMMONIA_FLUID_BUCKET, "Litix-kamóniás vödör");
+        addItem(LITIX_CAMMONIA_SPRAY, "Litix-kamóniás szpré");
         addItem(LUMINAR_CRYSTAL_SHARD, "Fénykristály szilánk");
         addItem(LUMINAR_CRYSTAL_SHARD_HEARTED, "Szíves fénykristály szilánk");
         addItem(ChangedAddonItems.LUMINAR_CRYSTAL_SPEAR, "Fénykristály-lándzsa");
@@ -649,7 +649,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(ORANGE_WOLF_CRYSTAL_FRAGMENT, "§6Narancssárga§r farkas kristályszilánk");
         addItem(ORANGE_JUICE, "Narancslé");
         addItem(PAINITE, "Painit");
-        addItem(POT_WITH_CAMONIA, "Litix-kamóniás edény");
+        addItem(POT_WITH_CAMMONIA, "Litix-kamóniás edény");
         addItem(RAW_IRIDIUM, "Nyersirídium");
         addItem(RED_LATEX_GOO, "§4Vörös latex ragacs");
         add(RED_LATEX_GOO.get().getDescriptionId() + ".description", "§4Egy furcsa ragacs");

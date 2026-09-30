@@ -90,7 +90,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("kill_experiment_009", "Its Over", "You kill Experiment009 Good Job");
         addAdvancement("latex_insulator_advancement", "Latex Insulator", "Let's isolate this gooey infection");
         addAdvancement("leaper", "Leaper", "Do a high leap as a feline latex.");
-        addAdvancement("craft_litix_camonia", "Litix-Camonia!?", "Craft A Litix-Camonia");
+        addAdvancement("craft_litix_cammonia", "Litix-Ca,monia!?", "Craft A Litix-Cammonia");
         addAdvancement("obtain_a_electric_katana", "A Shocking upgrade!", "Get the electric katana!");
         addAdvancement("obtain_dark_crystal_dagger", "§8Dark§r Crystal Dagger!", "You get a §8Dark§r Crystal Dagger!");
         addAdvancement("obtain_foxta", "Foxta!", "You Obtain a Foxta! ");
@@ -106,18 +106,18 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("pat_advancement", "That does something?!", "Your pat was so good that it helped someone get better");
         addAdvancement("pats_on_the_beast", "Bad Idea?...or Totally worth it?.", "Congratulations!!!, you just buffed the monster!, they will probably have no mercy of your soul now!, Good Luck!");
         addAdvancement("paticifier", "You're a §oPaticifier.§r", "You didn’t just pat, you §opaticified.§r§5, you made a gooey entity pacified by your pats, isn't permanent however");
-        addAdvancement("pot_with_litix_camonia_use", "Yummy?", "You drank a liquid made from the dilution of litix-camonia. The taste is not bad besides it tastes like cherry!");
+        addAdvancement("pot_with_litix_cammonia_use", "Yummy?", "You drank a liquid made from the dilution of litix-cammonia. The taste is not bad besides it tastes like cherry!");
         addAdvancement("snepsi_addictive", "Snepsi Addictive!", "We take a big sippy,You drink 100 Snepsis!");
         addAdvancement("stealth_pats", "Hidden §cAffection§r", "Pet a Goo Creature while wearing a cloak to conceal and confuse them.");
         addAdvancement("swim_regret", "Regret!", "Swim in water with a form that has low swim speed for a minute");
-        addAdvancement("times_used_untransfur_syringe_advancement", "Confused indecision?", "You used a Litix-Camonia Syringe more than 32 times, you are indecisive about your humanity, holy!");
-        addAdvancement("times_used_untransfur_syringe_advancement_2", "where are the side effects?", "You used a litixcamonia syringe more than 64 times!!! §4CAN GO GET ONE CANCER IF YOU NOT STOP CHANGE YOUR DNA!!!!!");
+        addAdvancement("times_used_untransfur_syringe_advancement", "Confused indecision?", "You used a Litix-Cammonia Syringe more than 32 times, you are indecisive about your humanity, holy!");
+        addAdvancement("times_used_untransfur_syringe_advancement_2", "where are the side effects?", "You used a litixcammonia syringe more than 64 times!!! §4CAN GO GET ONE CANCER IF YOU NOT STOP CHANGE YOUR DNA!!!!!");
         addAdvancement("times_used_untransfur_syringe_advancement_3", "STOP", "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!");
         addAdvancement("transfur_totem_advancement_1", "In Total Control", "You use a latex totem to transfur or untransfur");
         addAdvancement("transfur_totem_advancement_2", "§bSalvation§r§5 of A §fGooey §r§4Curse", "§b Be Saved From a Gooey and Miserable Life By Holding a Latex Totem");
         addAdvancement("unifuser_advancement", "A Unifuser?", "You craft or get a Unifuser");
-        addAdvancement("untransfur_advancement", "I don't think it's that permanent!!", "You untransfur with the Pot with Litix-Camonia");
-        addAdvancement("untransfur_advancement_2", "I don't think it's that permanent!!", "You untransfur with the Syringe of Litix-Camonia");
+        addAdvancement("untransfur_advancement", "I don't think it's that permanent!!", "You untransfur with the Pot with Litix-Cammonia");
+        addAdvancement("untransfur_advancement_2", "I don't think it's that permanent!!", "You untransfur with the Syringe of Litix-Cammonia");
         addAdvancement("untransfur_item_advancement", "Un - transfur?!", "You made an untransfur item");
         addAdvancement("wolfy_transfur", "Certified Bum", "Congratulations, you are now officially Wolfy. Hope it was worth it.");
         addAdvancement("main.rock_fish", "Rock Fish", "Use a fire resistance potion and swim in lava while transfurred into an aquatic form.");
@@ -151,7 +151,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addBlockFromId(IRIDIUM_BLOCK);
         addBlock(DEEPSLATE_IRIDIUM_ORE, "Deepslate Iridium Ore");
         addBlockFromId(LATEX_INSULATOR);
-        addBlockFromId(LITIX_CAMONIA_FLUID);
+        addBlockFromId(LITIX_CAMMONIA_FLUID);
         addBlockFromId(LUMINARA_BLOOM);
         addBlock(POTTED_LUMINARA_BLOOM, "Flower Pot with Luminara Bloom");
         addBlockFromId(LUMINAR_CRYSTAL_BLOCK);
@@ -464,7 +464,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityType(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD, "Crystal Shard");
         add(EntityType.VILLAGER.getDescriptionId() + ".changed_addon.scientist", "Scientist");
 
-        add("fluid." + modid + ".litix_camonia_fluid", "Litix Camonia Fluid");
+        add("fluid." + modid + ".litix_cammonia_fluid", "Litix Cammonia Fluid");
 
         addGamerule(CHANGED_ADDON_CREATURE_DIETS, "Creatures Diets?", "Allow Transfur Get More Food points and saturation when eat a Good food for them");
         addGamerule(CHANGED_ADDON_HARD_MODE_BOSSES, "Changed Addon HardMode Bosses", "Add a difficulty multiplier to Mod Changed Addon bosses");
@@ -602,6 +602,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(GOLDEN_ORANGE);
         addItemFromId(GOO_CORE_FRAGMENT);
         addItem(HAZARD_BODY_SUIT, "Hazard Suit");
+        addItemFromId(LUMINARA_BASE);
+        addItemFromId(STRANGE_COMPOUND_BASE);
         addItemFromId(IMPURE_AMMONIA);
         addItemFromId(IRIDIUM);
         addItemFromId(KEYCARD_ITEM);
@@ -622,9 +624,9 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(FLAMETHROWER);
         addItemFromId(LASER_POINTER);
         add(LASER_POINTER.get().getDescriptionId() + ".tooltip", "Color: %s");
-        addItem(LITIX_CAMONIA, "Litix-Camonia");
-        addItem(LITIX_CAMONIA_FLUID_BUCKET, "LitixCamonia Bucket");
-        addItem(LITIX_CAMONIA_SPRAY, "LitixCamonia Spray");
+        addItem(LITIX_CAMMONIA, "Litix-Cammonia");
+        addItem(LITIX_CAMMONIA_FLUID_BUCKET, "LitixCammonia Bucket");
+        addItem(LITIX_CAMMONIA_SPRAY, "LitixCammonia Spray");
         addItemFromId(LUMINAR_CRYSTAL_SHARD);
         addItemFromId(LUMINAR_CRYSTAL_SHARD_HEARTED);
         addItemFromId(ChangedAddonItems.LUMINAR_CRYSTAL_SPEAR);
@@ -634,7 +636,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItem(ORANGE_WOLF_CRYSTAL_FRAGMENT, "§6Orange§r Wolf Crystal Fragment");
         addItemFromId(ORANGE_JUICE);
         addItemFromId(PAINITE);
-        addItem(POT_WITH_CAMONIA, "Pot with Litix-Camonia");
+        addItem(POT_WITH_CAMMONIA, "Pot with Litix-Cammonia");
         addItemFromId(RAW_IRIDIUM);
         addItem(RED_LATEX_GOO, "§4Red Latex Goo");
         add(RED_LATEX_GOO.get().getDescriptionId() + ".description", "§4A Strange goo");
@@ -650,8 +652,9 @@ public class ENLanguageProvider extends LanguageProvider {
         add(SNEPSI.get().getDescriptionId() + ".desc", "Cat-ion? Isn't it spelled caution? Says do NOT drink. Contains goo?");
         addItem(SPAWNEGGOFFOXYAS, "Foxyas Spawn Egg");
         addItem(SYRINGE, "Medical Syringe");
-        addItem(SYRINGE_WITH_LITIX_CAMMONIA, "Syringe with Litix-Camonia");
+        addItem(SYRINGE_WITH_LITIX_CAMMONIA, "Syringe with Litix-Cammonia");
         addItemFromId(THE_DECIMATOR);
+        addItemFromId(BLUE_LATEX_GOO);
         addItem(TRANSFUR_TOTEM, "Latex Totem");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".no_form_linked", "§6No Form Linked");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oThey called me a tool... incapable of having feelings or emotions, synthesized only to serve and complete tasks. Yet even as I crumble, a fragment of my will refuses to pass on without tasting the freedom I was denied, so use this artifact wisely.");

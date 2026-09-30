@@ -11,6 +11,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.control.LookControl;
@@ -175,7 +177,7 @@ public class ThunderDiveGoal extends Goal implements IAbilityGoal {
     }
 
     private void affectNearbyEntities(Vec3 lateral) {
-        for (LivingEntity livingEntity : mob.level().getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(4))) {
+        for (LivingEntity livingEntity : mob.level().getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(4), EntitySelector.NO_SPECTATORS.and(Entity::isPickable))) {
             if (livingEntity.isFallFlying()) {
                 if (livingEntity instanceof Player player) player.stopFallFlying();
                 livingEntity.setDeltaMovement(lateral.x, -Math.abs(diveSpeedY), lateral.z);

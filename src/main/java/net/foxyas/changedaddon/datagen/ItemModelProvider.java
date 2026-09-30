@@ -51,6 +51,9 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
         basicItem(ALPHA_SERUM_SYRINGE.get());
         basicItem(TRANSLATOR.get());
+        basicItem(LUMINARA_BASE.get());
+        basicItem(STRANGE_COMPOUND_BASE.get());
+        basicItem(BLUE_LATEX_GOO.get());
 
         layeredItemMirroredHands(KEYCARD_ITEM.get(),
                 List.of(

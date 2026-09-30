@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "changed_addon:ammonia_particle"
+    },
+    {
+      "item": "changed_addon:ammonia_particle"
+    },
+    {
+      "item": "changed_addon:luminara_base"
+    },
+    {
+      "item": "changed:latex_base"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "changed_addon:anti_latex_base"
+  }
+}

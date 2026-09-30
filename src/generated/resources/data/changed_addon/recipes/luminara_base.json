@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "changed_addon:luminara_petals"
+    },
+    {
+      "item": "changed_addon:luminara_petals"
+    },
+    {
+      "item": "changed:latex_base"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:luminara_base"
+  }
+}

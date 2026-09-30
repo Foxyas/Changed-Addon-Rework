@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:item/litix_camonia_syringe_almost_full"
+    "layer0": "changed_addon:item/litix_cammonia_syringe_almost_full"
   },
   "display": {
     "thirdperson_lefthand": {

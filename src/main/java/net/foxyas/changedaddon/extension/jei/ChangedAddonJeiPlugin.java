@@ -114,7 +114,7 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
 
         PotionUtils.setPotion(potion, Potions.AWKWARD);
         PotionUtils.setPotion(potion2, ChangedAddonPotions.LITIX_CAMMONIA_EFFECT.get());
-        brewingRecipes.add(factory.createBrewingRecipe(List.of(new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get())), potion.copy(), potion2.copy()));
+        brewingRecipes.add(factory.createBrewingRecipe(List.of(new ItemStack(ChangedAddonItems.LITIX_CAMMONIA.get())), potion.copy(), potion2.copy()));
         PotionUtils.setPotion(potion, Potions.AWKWARD);
         PotionUtils.setPotion(potion2, ChangedAddonPotions.TRANSFUR_SICKNESS_POTION.get());
         brewingRecipes.add(factory.createBrewingRecipe(List.of(new ItemStack(ChangedAddonItems.LAETHIN.get())), potion.copy(), potion2.copy()));
@@ -138,7 +138,7 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
             registration.addIngredientInfo(new ItemStack(ChangedAddonItems.EXPERIMENT_009_DNA.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei_descriptions.changed_addon.exp9_dna"));
             registration.addIngredientInfo(new ItemStack(ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei_descriptions.changed_addon.litix_cammonia_syringe"));
             registration.addIngredientInfo(new ItemStack(ChangedAddonItems.LAETHIN_SYRINGE.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei_descriptions.changed_addon.laethin_syringe"));
-            registration.addIngredientInfo(new ItemStack(ChangedAddonItems.POT_WITH_CAMONIA.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei_descriptions.changed_addon.pot_with_cammonia"));
+            registration.addIngredientInfo(new ItemStack(ChangedAddonItems.POT_WITH_CAMMONIA.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei_descriptions.changed_addon.pot_with_cammonia"));
             registration.addIngredientInfo(new ItemStack(ChangedAddonItems.DIFFUSION_SYRINGE.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei_descriptions.changed_addon.diffusion_syringe"));
             registration.addIngredientInfo(new ItemStack(ChangedAddonItems.IRIDIUM.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei_descriptions.changed_addon.iridium_use"));
             registration.addIngredientInfo(new ItemStack(ChangedAddonItems.INFORMANT_BLOCK.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei_descriptions.changed_addon.informant_block"));

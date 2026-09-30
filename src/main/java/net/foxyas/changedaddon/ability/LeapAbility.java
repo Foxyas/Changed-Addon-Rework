@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.ability;
 import net.foxyas.changedaddon.entity.advanced.LatexSnepFeralEntity;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.init.ChangedSounds;
@@ -15,86 +16,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-public class LeapAbility extends SimpleAbility {
+public class LeapAbility extends AbstractAbility<LeapAbilityInstance> {
 
     public LeapAbility() {
-        super();
-    }
-
-    private static void makeEntityLeap(Entity entity, IAbstractChangedEntity iAbstractChangedEntity) {
-        if (!(entity instanceof Player player) || player.getFoodData().getFoodLevel() <= 6) {
-            return;
-        }
-
-        if (!player.onGround() || player.isInWater() || player.isSpectator()) {
-            return;
-        }
-
-        double speed = 0.6;
-        double motionX, motionY, motionZ;
-
-        if (!player.isShiftKeyDown()) {
-            // Normal Leap
-            player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(speed, speed, speed)));
-            playSound(player);
-            exhaustPlayer(player, 0.5F);
-
-        } else {
-            // Precision Leap
-            double targetY = player.getViewVector(1).y;
-            motionX = -Math.sin(Math.toRadians(player.getYRot())) * 0.15;
-            motionY = targetY * 0.8F;
-            motionZ = Math.cos(Math.toRadians(player.getYRot())) * 0.15;
-            float multiplier = (iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL.get()
-                    || iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() ? 1.3F : 1) + IAlphaAbleEntity.getEntityAlphaScale(iAbstractChangedEntity.getChangedEntity());
-
-            player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY * multiplier, motionZ));
-            playSound(player);
-            applyFatigue(player, motionY);
-
-            // Grant Advancement
-            if (motionY * multiplier >= 0.75) {
-                //player.displayClientMessage(Component.literal("Message" + motionY * multiplier), true);
-                grantAdvancement(player, "changed_addon:leaper");
-            }
-        }
-    }
-
-    private static void playSound(Player player) {
-        if (!player.level.isClientSide()) {
-            player.level.playSound(null, player.blockPosition(), ChangedSounds.CARDBOARD_BOX_OPEN.get(),
-                    player.getSoundSource(), 2.5F, 1.0F);
-        }
-    }
-
-    private static void exhaustPlayer(Player player, float exhaustion) {
-        if (!player.isCreative()) {
-            player.causeFoodExhaustion(exhaustion);
-        }
-    }
-
-    private static void applyFatigue(Player player, double motionY) {
-        if (!player.isCreative()) {
-            player.causeFoodExhaustion((float) (motionY * 0.25));
-        }
-    }
-
-    private static void grantAdvancement(Player player, String advancementId) {
-        if (!(player instanceof ServerPlayer serverPlayer) ||
-                !(serverPlayer.level instanceof ServerLevel)) {
-            return;
-        }
-
-        Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(ResourceLocation.parse(advancementId));
-        if (advancement == null) return;
-
-
-        AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
-        if (!progress.isDone()) {
-            for (String criterion : progress.getRemainingCriteria()) {
-                serverPlayer.getAdvancements().award(advancement, criterion);
-            }
-        }
+        super(LeapAbilityInstance::new);
     }
 
     @Override
@@ -129,8 +54,4 @@ public class LeapAbility extends SimpleAbility {
         return 15;
     }
 
-    @Override
-    public void startUsing(IAbstractChangedEntity entity) {
-        makeEntityLeap(entity.getEntity(), entity);
-    }
 }

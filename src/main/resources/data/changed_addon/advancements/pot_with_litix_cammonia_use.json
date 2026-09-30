@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:pot_with_cammonia"
+    },
+    "title": {
+      "translate": "advancements.pot_with_litix_cammonia_use.title"
+    },
+    "description": {
+      "translate": "advancements.pot_with_litix_cammonia_use.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "pot_with_litix_cammonia_use": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "changed_addon:pot_with_cammonia"
+          ]
+        }
+      }
+    }
+  },
+  "parent": "changed_addon:unifuser_advancement"
+}

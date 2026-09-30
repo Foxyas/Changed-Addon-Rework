@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:litix_cammonia"
+    },
+    "title": {
+      "translate": "advancements.craft_litix_cammonia.title"
+    },
+    "description": {
+      "translate": "advancements.craft_litix_cammonia.descr"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "craft_litix_cammonia": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:unifuser_advancement"
+}

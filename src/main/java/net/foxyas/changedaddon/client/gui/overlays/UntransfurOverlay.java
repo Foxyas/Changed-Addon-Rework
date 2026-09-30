@@ -15,8 +15,8 @@ import net.minecraftforge.client.gui.overlay.ForgeGui;
 @OnlyIn(Dist.CLIENT)
 public class UntransfurOverlay {
 
-    public static final ResourceLocation FULL_BAR = ResourceLocation.parse("changed_addon:textures/screens/untransfurprogress_full.png");
-    public static final ResourceLocation NORMAL_BAR = ResourceLocation.parse("changed_addon:textures/screens/untransfurprogress.png");
+    public static final ResourceLocation FULL_BAR = ResourceLocation.parse("changed_addon:textures/screens/untransfur_progress.png");
+    public static final ResourceLocation NORMAL_BAR = ResourceLocation.parse("changed_addon:textures/screens/progress_bars/untransfur_progress_outline.png");
 
     public static void renderUntransfurProgressOverlay(ForgeGui forgeGui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
         Player player = Minecraft.getInstance().player;

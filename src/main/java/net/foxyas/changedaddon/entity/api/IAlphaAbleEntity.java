@@ -182,6 +182,10 @@ public interface IAlphaAbleEntity {
         return entity instanceof IAlphaAbleEntity iAlphaAbleEntity ? iAlphaAbleEntity.alphaAdditionalScale() : 0;
     }
 
+    static float getEntityAlphaScaleWithCheck(Entity entity) {
+        return entity instanceof IAlphaAbleEntity iAlphaAbleEntity && iAlphaAbleEntity.isAlpha() ? iAlphaAbleEntity.alphaAdditionalScale() : 0;
+    }
+
     boolean isAlpha();
 
     default void setAlpha(boolean alphaGene) {

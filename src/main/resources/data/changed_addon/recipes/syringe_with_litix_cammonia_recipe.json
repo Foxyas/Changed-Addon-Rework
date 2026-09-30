@@ -1,0 +1,20 @@
+{
+  "type": "changed_addon:unifuser",
+  "ingredients": [
+    {
+      "item": "changed_addon:litix_cammonia"
+    },
+    {
+      "tag": "changed_addon:gooey"
+    },
+    {
+      "tag": "changed_addon:blood_type_syringe"
+    }    
+  ],
+  "output": {
+    "item": "changed_addon:syringe_with_litix_cammonia",
+    "count": 1
+  },
+  "progressSpeed": 0.25,
+  "experience": 1
+}

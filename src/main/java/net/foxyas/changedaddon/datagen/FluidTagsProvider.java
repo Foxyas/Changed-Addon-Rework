@@ -10,8 +10,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-import static net.foxyas.changedaddon.init.ChangedAddonFluids.FLOWING_LITIX_CAMONIA_FLUID;
-import static net.foxyas.changedaddon.init.ChangedAddonFluids.LITIX_CAMONIA_FLUID;
+import static net.foxyas.changedaddon.init.ChangedAddonFluids.FLOWING_LITIX_CAMMONIA_FLUID;
+import static net.foxyas.changedaddon.init.ChangedAddonFluids.LITIX_CAMMONIA_FLUID;
 
 public class FluidTagsProvider extends net.minecraft.data.tags.FluidTagsProvider {
 
@@ -21,6 +21,6 @@ public class FluidTagsProvider extends net.minecraft.data.tags.FluidTagsProvider
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
-        tag(FluidTags.WATER).add(LITIX_CAMONIA_FLUID.get(), FLOWING_LITIX_CAMONIA_FLUID.get());
+        tag(FluidTags.WATER).add(LITIX_CAMMONIA_FLUID.get(), FLOWING_LITIX_CAMMONIA_FLUID.get());
     }
 }

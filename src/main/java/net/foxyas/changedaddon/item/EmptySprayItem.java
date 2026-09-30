@@ -34,12 +34,12 @@ public class EmptySprayItem extends Item {
         if (!stack.is(ChangedAddonItems.EMPTY_SPRAY.get())) return InteractionResultHolder.pass(stack);
 
         BlockHitResult result = player.level.clip(new ClipContext(player.getEyePosition(1f), player.getEyePosition(1f).add(player.getViewVector(1f).scale(5)), ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, player));
-        if (!level.getFluidState(result.getBlockPos()).createLegacyBlock().is(ChangedAddonBlocks.LITIX_CAMONIA_FLUID.get()))
+        if (!level.getFluidState(result.getBlockPos()).createLegacyBlock().is(ChangedAddonBlocks.LITIX_CAMMONIA_FLUID.get()))
             return InteractionResultHolder.pass(stack);
 
         player.swing(hand, true);
         level.playSound(null, player, SoundEvents.BOTTLE_FILL, SoundSource.MASTER, 1, 1);
 
-        return InteractionResultHolder.success(new ItemStack(ChangedAddonItems.LITIX_CAMONIA_SPRAY.get()));
+        return InteractionResultHolder.success(new ItemStack(ChangedAddonItems.LITIX_CAMMONIA_SPRAY.get()));
     }
 }

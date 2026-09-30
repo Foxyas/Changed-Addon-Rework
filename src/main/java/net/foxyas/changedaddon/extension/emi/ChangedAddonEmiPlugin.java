@@ -91,7 +91,7 @@ public class ChangedAddonEmiPlugin implements EmiPlugin {
         addItemDesc(registry, ChangedAddonItems.EXPERIMENT_009_DNA.get(), "jei_descriptions.changed_addon.exp9_dna");
         addItemDesc(registry, ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(), "jei_descriptions.changed_addon.litix_cammonia_syringe");
         addItemDesc(registry, ChangedAddonItems.LAETHIN_SYRINGE.get(), "jei_descriptions.changed_addon.laethin_syringe");
-        addItemDesc(registry, ChangedAddonItems.POT_WITH_CAMONIA.get(), "jei_descriptions.changed_addon.pot_with_cammonia");
+        addItemDesc(registry, ChangedAddonItems.POT_WITH_CAMMONIA.get(), "jei_descriptions.changed_addon.pot_with_cammonia");
         addItemDesc(registry, ChangedAddonItems.DIFFUSION_SYRINGE.get(), "jei_descriptions.changed_addon.diffusion_syringe");
         addItemDesc(registry, ChangedAddonItems.IRIDIUM.get(), "jei_descriptions.changed_addon.iridium_use");
         addItemDesc(registry, ChangedAddonItems.INFORMANT_BLOCK.get(), "jei_descriptions.changed_addon.informant_block");

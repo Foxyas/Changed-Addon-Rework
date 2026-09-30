@@ -100,6 +100,8 @@
     "client.EventHandlerClientMixin",
     "client.HumanoidModelMixin",
     "client.MinecraftMixin",
+    "client.MobRowMixin",
+    "client.MobsStatisticsListMixin",
     "client.MouseHandlerAccessor",
     "client.ParticleEngineMixin",
     "client.PlayerModelMixin",

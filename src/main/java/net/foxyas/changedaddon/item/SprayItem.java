@@ -289,7 +289,7 @@ public class SprayItem extends Item {
             if (player == null) return;
 
             ItemStack itemstack = event.getOriginal();
-            if (itemstack.is(ChangedAddonItems.LITIX_CAMONIA_SPRAY.get())
+            if (itemstack.is(ChangedAddonItems.LITIX_CAMMONIA_SPRAY.get())
                     || itemstack.is(ChangedAddonItems.WHITE_LATEX_SPRAY.get())
                     || itemstack.is(ChangedAddonItems.DARK_LATEX_SPRAY.get())) {
                 ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(ChangedAddonItems.EMPTY_SPRAY.get()));

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.advanced.MultifaceBlock;
 import net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock;
-import net.foxyas.changedaddon.fluid.LitixCamoniaFluid;
+import net.foxyas.changedaddon.fluid.LitixCammoniaFluid;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.init.ChangedGameRules;
 import net.minecraft.core.BlockPos;
@@ -76,10 +76,10 @@ public class LatexCoverBlock extends MultifaceBlock implements NonLatexCoverable
         BlockState neighborState = level.getBlockState(fromPos);
         if (neighborState.getFluidState().isSource()
                 || neighborState.getFluidState().is(Fluids.WATER)
-                || neighborState.getFluidState().getType() instanceof LitixCamoniaFluid) {
+                || neighborState.getFluidState().getType() instanceof LitixCammoniaFluid) {
             // Efeito visual opcional
             level.levelEvent(2001, pos, Block.getId(state)); // partículas de quebra
-            if (neighborState.getFluidState().getType() instanceof LitixCamoniaFluid) {
+            if (neighborState.getFluidState().getType() instanceof LitixCammoniaFluid) {
                 level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH,
                         SoundSource.BLOCKS, 0.5f, 1.0f);
             }
