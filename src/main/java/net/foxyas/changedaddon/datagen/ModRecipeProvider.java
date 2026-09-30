@@ -68,7 +68,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_latex_base", has(ChangedItems.LATEX_BASE.get()))
                 .save(recipeConsumer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ANTI_LATEX_BASE.get(), 2)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, LUMINARA_BASE.get(), 1)
                 .requires(LUMINARA_PETALS.get(), 2)
                 .requires(ChangedItems.LATEX_BASE.get())
                 .unlockedBy("has_latex_base", has(ChangedItems.LATEX_BASE.get()))
@@ -172,8 +172,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(ChangedAddonTags.Items.AIR)
                 .withSpeed(0.5f)
                 .withExperience(2.0f)
-                .unlockedBy("has_litix_camonia", has(ChangedAddonItems.LITIX_CAMMONIA.get()))
-                .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "multi_litix_camonia_recipe_white"));
+                .unlockedBy("has_litix_cammonia", has(ChangedAddonItems.LITIX_CAMMONIA.get()))
+                .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "multi_litix_cammonia_recipe_white"));
         ItemStack black = LAETHIN.get().getDefaultInstance();
         LaethinItem.setLaethinTypeForStack(white, LaethinItem.Type.DARK_LATEX);
         stack = StrictNBTIngredient.of(black);
@@ -183,8 +183,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(ChangedAddonTags.Items.AIR)
                 .withSpeed(0.5f)
                 .withExperience(2.0f)
-                .unlockedBy("has_litix_camonia", has(ChangedAddonItems.LITIX_CAMMONIA.get()))
-                .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "multi_litix_camonia_recipe_dark"));
+                .unlockedBy("has_litix_cammonia", has(ChangedAddonItems.LITIX_CAMMONIA.get()))
+                .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "multi_litix_cammonia_recipe_dark"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FLAMETHROWER.get())
                 .pattern(" IB")

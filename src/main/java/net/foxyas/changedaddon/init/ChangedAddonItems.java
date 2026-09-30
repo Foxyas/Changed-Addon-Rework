@@ -67,7 +67,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> AMMONIA_PARTICLE = REGISTRY.register("ammonia_particle", AmmoniaParticleItem::new);
     public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", AmmoniaCompressedItem::new);
     public static final RegistryObject<Item> AMMONIA = REGISTRY.register("ammonia", AmmoniaItem::new);
-    public static final RegistryObject<Item> LITIX_CAMMONIA = REGISTRY.register("litix_cammonia", LitixCamoniaItem::new);
+    public static final RegistryObject<Item> LITIX_CAMMONIA = REGISTRY.register("litix_cammonia", LitixCammoniaItem::new);
     public static final RegistryObject<LaethinItem> LAETHIN = REGISTRY.register("laethin", LaethinItem::new);
     public static final RegistryObject<Item> CATALYZED_DNA = REGISTRY.register("catalyzed_dna", CatalyzedDNAItem::new);
 
@@ -75,7 +75,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> DIFFUSION_SYRINGE = REGISTRY.register("diffusion_syringe", DiffusionSyringeItem::new);
     public static final RegistryObject<Item> SYRINGE_WITH_LITIX_CAMMONIA = REGISTRY.register("syringe_with_litix_cammonia", SyringeWithLitixCammoniaItem::new);
     public static final RegistryObject<LaethinSyringeItem> LAETHIN_SYRINGE = REGISTRY.register("laethin_syringe", LaethinSyringeItem::new);
-    public static final RegistryObject<Item> POT_WITH_CAMONIA = REGISTRY.register("pot_with_camonia", PotWithCamoniaItem::new);
+    public static final RegistryObject<Item> POT_WITH_CAMMONIA = REGISTRY.register("pot_with_cammonia", PotWithCamnoniaItem::new);
     public static final RegistryObject<AlphaSerumSyringeItem> ALPHA_SERUM_SYRINGE = REGISTRY.register("alpha_serum_syringe", AlphaSerumSyringeItem::new);
 
     public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", RawIridiumItem::new);
@@ -88,7 +88,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<BlockItem> PAINITE_ORE = block(ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE);
     public static final RegistryObject<BlockItem> PAINITE_BLOCK = block(ChangedAddonBlocks.PAINITE_BLOCK);
 
-    public static final RegistryObject<Item> LITIX_CAMONIA_FLUID_BUCKET = REGISTRY.register("litix_camonia_fluid_bucket", LitixCamoniaFluidItem::new);
+    public static final RegistryObject<Item> LITIX_CAMMONIA_FLUID_BUCKET = REGISTRY.register("litix_cammonia_fluid_bucket", LitixCammoniaFluidItem::new);
 
     public static final RegistryObject<Item> EXPERIMENT_009_DNA = REGISTRY.register("experiment_009_dna", Experiment009DNAItem::new);
     public static final RegistryObject<Item> EXP_9_LATEX_BASE = REGISTRY.register("exp_9_latex_base", Exp9LatexBaseItem::new);
@@ -169,7 +169,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> CRYSTAL_DAGGER_GREEN = REGISTRY.register("crystal_dagger_green", CrystalAddagerGreenItem::new);
     public static final RegistryObject<Item> CRYSTAL_DAGGER_BLACK = REGISTRY.register("crystal_dagger_black", CrystalAddagerBlackItem::new);
     public static final RegistryObject<Item> EMPTY_SPRAY = REGISTRY.register("empty_spray", EmptySprayItem::new);
-    public static final RegistryObject<Item> LITIX_CAMONIA_SPRAY = REGISTRY.register("litix_camonia_spray", () -> new SprayItem(ChangedLatexTypes.NONE::get));
+    public static final RegistryObject<Item> LITIX_CAMMONIA_SPRAY = REGISTRY.register("litix_cammonia_spray", () -> new SprayItem(ChangedLatexTypes.NONE::get));
     public static final RegistryObject<Item> DARK_LATEX_SPRAY = REGISTRY.register("dark_latex_spray", () -> new SprayItem(ChangedLatexTypes.DARK_LATEX::get));
     public static final RegistryObject<Item> WHITE_LATEX_SPRAY = REGISTRY.register("white_latex_spray", () -> new SprayItem(ChangedLatexTypes.WHITE_LATEX::get));
     public static final RegistryObject<Item> LUNAR_ROSE = REGISTRY.register("lunar_rose", LunarRoseItem::new);

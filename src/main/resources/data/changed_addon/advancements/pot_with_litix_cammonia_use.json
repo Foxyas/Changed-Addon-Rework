@@ -1,13 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:pot_with_camonia"
+      "item": "changed_addon:pot_with_cammonia"
     },
     "title": {
-      "translate": "advancements.pot_with_litix_camonia_use.title"
+      "translate": "advancements.pot_with_litix_cammonia_use.title"
     },
     "description": {
-      "translate": "advancements.pot_with_litix_camonia_use.descr"
+      "translate": "advancements.pot_with_litix_cammonia_use.descr"
     },
     "frame": "task",
     "show_toast": true,
@@ -15,12 +15,12 @@
     "hidden": false
   },
   "criteria": {
-    "pot_with_litix_camonia_use": {
+    "pot_with_litix_cammonia_use": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "items": [
-            "changed_addon:pot_with_camonia"
+            "changed_addon:pot_with_cammonia"
           ]
         }
       }

@@ -108,7 +108,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         simpleBlockExisting(IRIDIUM_BLOCK);
         simpleBlockExisting(DEEPSLATE_IRIDIUM_ORE);
         simpleBlockExisting(LATEX_INSULATOR);
-        simpleBlockExisting(LITIX_CAMONIA_FLUID, BlockStateProperties.LEVEL);
+        simpleBlockExisting(LITIX_CAMMONIA_FLUID, BlockStateProperties.LEVEL);
         simpleBlockExisting(LUMINARA_BLOOM);
         simpleBlockExisting(ORANGE_WOLF_CRYSTAL_BLOCK);
         simpleBlockExisting(ORANGE_WOLF_CRYSTAL_SMALL);

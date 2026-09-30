@@ -12,11 +12,11 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class LitixCamoniaItem extends Item {
+public class LitixCammoniaItem extends Item {
 
-    private static final ResourceLocation advLocation = ChangedAddonMod.resourceLoc("craft_litix_camonia");
+    private static final ResourceLocation advLocation = ChangedAddonMod.resourceLoc("craft_litix_cammonia");
 
-    public LitixCamoniaItem() {
+    public LitixCammoniaItem() {
         super(new Item.Properties()
                 .stacksTo(64).rarity(Rarity.UNCOMMON));
     }

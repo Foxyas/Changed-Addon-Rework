@@ -2,7 +2,7 @@
   "type": "changed_addon:unifuser",
   "ingredients": [
     {
-      "item": "changed_addon:litix_camonia"
+      "item": "changed_addon:litix_cammonia"
     },
     {
       "item": "minecraft:potion",
@@ -14,7 +14,7 @@
     }    
   ],
   "output": {
-    "item": "changed_addon:pot_with_camonia",
+    "item": "changed_addon:pot_with_cammonia",
     "count": 1
   },
   "progressSpeed": 0.3,

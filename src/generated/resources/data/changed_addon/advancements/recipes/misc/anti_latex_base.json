@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_litix_camonia": {
+    "has_latex_base": {
       "conditions": {
         "items": [
           {
             "items": [
-              "changed_addon:litix_camonia"
+              "changed:latex_base"
             ]
           }
         ]
@@ -15,21 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "changed_addon:multi_litix_camonia_recipe_dark"
+        "recipe": "changed_addon:anti_latex_base"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_litix_camonia",
+      "has_latex_base",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "changed_addon:multi_litix_camonia_recipe_dark"
+      "changed_addon:anti_latex_base"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

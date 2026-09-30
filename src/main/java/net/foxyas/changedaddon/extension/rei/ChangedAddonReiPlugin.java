@@ -191,9 +191,9 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
             // Informações de Itens Comuns
             addIngredientInfo(registration, new ItemStack(ChangedAddonItems.TRANSFUR_TOTEM.get()), Component.translatable("jei_descriptions.changed_addon.latex_totem"));
             addIngredientInfo(registration, new ItemStack(ChangedAddonItems.EXPERIMENT_009_DNA.get()), Component.translatable("jei_descriptions.changed_addon.exp9_dna"));
-            addIngredientInfo(registration, new ItemStack(ChangedAddonItems.SYRINGE_WITH_LITIX_CAMONIA.get()), Component.translatable("jei_descriptions.changed_addon.litix_camonia_syringe"));
+            addIngredientInfo(registration, new ItemStack(ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get()), Component.translatable("jei_descriptions.changed_addon.litix_cammonia_syringe"));
             addIngredientInfo(registration, new ItemStack(ChangedAddonItems.LAETHIN_SYRINGE.get()), Component.translatable("jei_descriptions.changed_addon.laethin_syringe"));
-            addIngredientInfo(registration, new ItemStack(ChangedAddonItems.POT_WITH_CAMONIA.get()), Component.translatable("jei_descriptions.changed_addon.pot_with_camonia"));
+            addIngredientInfo(registration, new ItemStack(ChangedAddonItems.POT_WITH_CAMMONIA.get()), Component.translatable("jei_descriptions.changed_addon.pot_with_cammonia"));
             addIngredientInfo(registration, new ItemStack(ChangedAddonItems.DIFFUSION_SYRINGE.get()), Component.translatable("jei_descriptions.changed_addon.diffusion_syringe"));
             addIngredientInfo(registration, new ItemStack(ChangedAddonItems.IRIDIUM.get()), Component.translatable("jei_descriptions.changed_addon.iridium_use"));
             addIngredientInfo(registration, new ItemStack(ChangedAddonItems.INFORMANT_BLOCK.get()), Component.translatable("jei_descriptions.changed_addon.informant_block"));

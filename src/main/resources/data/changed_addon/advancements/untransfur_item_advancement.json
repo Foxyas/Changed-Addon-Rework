@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           { "items": ["changed_addon:syringe_with_litix_cammonia"] },
-          { "items": ["changed_addon:pot_with_camonia"] },
+          { "items": ["changed_addon:pot_with_cammonia"] },
           { "items": ["changed_addon:diffusion_syringe"] }
         ]
       }

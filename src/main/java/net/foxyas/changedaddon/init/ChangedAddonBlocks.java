@@ -37,7 +37,7 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<Block> IRIDIUM_BLOCK = REGISTRY.register("iridium_block", IridiumBlock::new);
     public static final RegistryObject<Block> DEEPSLATE_PAINITE_ORE = REGISTRY.register("deepslate_painite_ore", DeepslatePainiteOreBlock::new);
     public static final RegistryObject<Block> PAINITE_BLOCK = REGISTRY.register("painite_block", PainiteBlock::new);
-    public static final RegistryObject<LiquidBlock> LITIX_CAMONIA_FLUID = REGISTRY.register("litix_camonia_fluid", LitixCamoniaFluidBlock::new);
+    public static final RegistryObject<LitixCammoniaFluidBlock> LITIX_CAMMONIA_FLUID = REGISTRY.register("litix_cammonia_fluid", LitixCammoniaFluidBlock::new);
     public static final RegistryObject<CatalyzerBlock> CATALYZER = REGISTRY.register("catalyzer", CatalyzerBlock::new);
     public static final RegistryObject<UnifuserBlock> UNIFUSER = REGISTRY.register("unifuser", UnifuserBlock::new);
     public static final RegistryObject<DarkLatexPuddleBlock> DARK_LATEX_PUDDLE = REGISTRY.register("dark_latex_puddle", DarkLatexPuddleBlock::new);

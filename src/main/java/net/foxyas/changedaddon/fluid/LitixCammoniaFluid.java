@@ -38,18 +38,18 @@ import org.joml.Vector3f;
 
 import java.util.function.Consumer;
 
-public abstract class LitixCamoniaFluid extends ForgeFlowingFluid {
+public abstract class LitixCammoniaFluid extends ForgeFlowingFluid {
 
     public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(
-            ChangedAddonFluids.LITIX_CAMONIA_FLUID_TYPE,
-            ChangedAddonFluids.LITIX_CAMONIA_FLUID,
-            ChangedAddonFluids.FLOWING_LITIX_CAMONIA_FLUID)
+            ChangedAddonFluids.LITIX_CAMMONIA_FLUID_TYPE,
+            ChangedAddonFluids.LITIX_CAMMONIA_FLUID,
+            ChangedAddonFluids.FLOWING_LITIX_CAMMONIA_FLUID)
             .explosionResistance(100f)
             .slopeFindDistance(2)
-            .bucket(ChangedAddonItems.LITIX_CAMONIA_FLUID_BUCKET)
-            .block(ChangedAddonBlocks.LITIX_CAMONIA_FLUID);
+            .bucket(ChangedAddonItems.LITIX_CAMMONIA_FLUID_BUCKET)
+            .block(ChangedAddonBlocks.LITIX_CAMMONIA_FLUID);
 
-    private LitixCamoniaFluid() {
+    private LitixCammoniaFluid() {
         super(PROPERTIES);
     }
 
@@ -78,7 +78,7 @@ public abstract class LitixCamoniaFluid extends ForgeFlowingFluid {
                     .canDrown(true)
                     .canSwim(true)
                     .fallDistanceModifier(0)
-                    .descriptionId("fluid." + ChangedAddonMod.MODID + "." + ChangedAddonFluids.LITIX_CAMONIA_FLUID.getId().getPath())
+                    .descriptionId("fluid." + ChangedAddonMod.MODID + "." + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId().getPath())
             );
         }
 
@@ -106,8 +106,8 @@ public abstract class LitixCamoniaFluid extends ForgeFlowingFluid {
         @Override
         public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
             consumer.accept(new IClientFluidTypeExtensions() {
-                private static final ResourceLocation FLUID_STILL = ChangedAddonMod.resourceLoc("block/litix_camonia_fluid/litix_camonia_fluid_still");
-                private static final ResourceLocation FLUID_FLOWING = ChangedAddonMod.resourceLoc("block/litix_camonia_fluid/litix_camonia_fluid_flowing");
+                private static final ResourceLocation FLUID_STILL = ChangedAddonMod.resourceLoc("block/litix_cammonia_fluid/litix_cammonia_fluid_still");
+                private static final ResourceLocation FLUID_FLOWING = ChangedAddonMod.resourceLoc("block/litix_cammonia_fluid/litix_cammonia_fluid_flowing");
 
                 public ResourceLocation getStillTexture() {
                     return FLUID_STILL;
@@ -134,7 +134,7 @@ public abstract class LitixCamoniaFluid extends ForgeFlowingFluid {
             @OnlyIn(Dist.CLIENT)
             @SubscribeEvent
             public void onRenderFog(ViewportEvent.RenderFog event) {
-                if (!(event.getCamera().getBlockAtCamera().getFluidState().getType() instanceof LitixCamoniaFluid))
+                if (!(event.getCamera().getBlockAtCamera().getFluidState().getType() instanceof LitixCammoniaFluid))
                     return;
 
                 event.setNearPlaneDistance(0.25F);
@@ -144,7 +144,7 @@ public abstract class LitixCamoniaFluid extends ForgeFlowingFluid {
         }
     }
 
-    public static class Source extends LitixCamoniaFluid {
+    public static class Source extends LitixCammoniaFluid {
 
         public int getAmount(@NotNull FluidState state) {
             return 8;
@@ -155,7 +155,7 @@ public abstract class LitixCamoniaFluid extends ForgeFlowingFluid {
         }
     }
 
-    public static class Flowing extends LitixCamoniaFluid {
+    public static class Flowing extends LitixCammoniaFluid {
 
         protected void createFluidStateDefinition(StateDefinition.@NotNull Builder<Fluid, FluidState> builder) {
             super.createFluidStateDefinition(builder);

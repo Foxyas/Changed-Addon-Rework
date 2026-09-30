@@ -1,13 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:litix_camonia"
+      "item": "changed_addon:litix_cammonia"
     },
     "title": {
-      "translate": "advancements.craft_litix_camonia.title"
+      "translate": "advancements.craft_litix_cammonia.title"
     },
     "description": {
-      "translate": "advancements.craft_litix_camonia.descr"
+      "translate": "advancements.craft_litix_cammonia.descr"
     },
     "frame": "goal",
     "show_toast": true,
@@ -15,7 +15,7 @@
     "hidden": true
   },
   "criteria": {
-    "craft_litix_camonia": {
+    "craft_litix_cammonia": {
       "trigger": "minecraft:impossible"
     }
   },

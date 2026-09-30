@@ -25,10 +25,10 @@ import net.minecraft.world.level.material.MapColor;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class LitixCamoniaFluidBlock extends LiquidBlock {
+public class LitixCammoniaFluidBlock extends LiquidBlock {
 
-    public LitixCamoniaFluidBlock() {
-        super(() -> (FlowingFluid) ChangedAddonFluids.LITIX_CAMONIA_FLUID.get(),
+    public LitixCammoniaFluidBlock() {
+        super(() -> (FlowingFluid) ChangedAddonFluids.LITIX_CAMMONIA_FLUID.get(),
                 BlockBehaviour.Properties.copy(Blocks.WATER).mapColor(MapColor.SNOW).strength(100f) //Fixme: (Material.WATER, MaterialColor.SNOW)
         );
     }

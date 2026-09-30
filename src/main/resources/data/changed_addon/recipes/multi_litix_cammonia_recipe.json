@@ -2,7 +2,7 @@
   "type": "changed_addon:unifuser",
   "ingredients": [
     {
-      "item": "changed_addon:litix_camonia"
+      "item": "changed_addon:litix_cammonia"
     },
     {
       "item": "changed_addon:laethin"
@@ -12,7 +12,7 @@
     }    
   ],
   "output": {
-    "item": "changed_addon:litix_camonia",
+    "item": "changed_addon:litix_cammonia",
     "count": 3
   },
   "progressSpeed": 0.5,

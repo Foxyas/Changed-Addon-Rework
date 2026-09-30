@@ -12,9 +12,9 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PotWithCamoniaItem extends Item {
+public class PotWithCamnoniaItem extends Item {
 
-    public PotWithCamoniaItem() {
+    public PotWithCamnoniaItem() {
         super(new Item.Properties()
                 .stacksTo(64).rarity(Rarity.UNCOMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(2f).alwaysEat().build()));
     }

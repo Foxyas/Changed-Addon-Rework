@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:item/litix_camonia_syringe_almost_full"
+    "layer0": "changed_addon:item/litix_cammonia_syringe"
   },
   "display": {
     "thirdperson_lefthand": {
@@ -14,5 +14,13 @@
       "translation": [ 1.13, 3.2, 1.13],
       "scale": [ 0.68, 0.68, 0.68 ]
     }
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.5
+      },
+      "model": "changed_addon:item/syringe_with_litix_cammonia_0"
+    }
+  ]
 }

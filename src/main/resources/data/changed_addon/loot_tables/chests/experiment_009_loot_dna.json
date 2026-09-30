@@ -168,7 +168,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "changed_addon:litix_camonia",
+          "name": "changed_addon:litix_cammonia",
           "weight": 9,
           "functions": [
             {
@@ -227,7 +227,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "changed_addon:pot_with_camonia",
+          "name": "changed_addon:pot_with_cammonia",
           "weight": 11,
           "functions": [
             {

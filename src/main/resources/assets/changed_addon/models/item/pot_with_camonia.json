@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "changed_addon:item/glass_bottle_with_litix_camonia"
-  }
-}

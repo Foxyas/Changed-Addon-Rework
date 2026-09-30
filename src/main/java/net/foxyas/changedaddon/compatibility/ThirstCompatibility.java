@@ -28,7 +28,7 @@ public class ThirstCompatibility {
 
         // Changed Addon Stuff.
         event.addFood(ChangedAddonItems.GOLDEN_ORANGE.get(), 2, 6);
-        event.addDrink(ChangedAddonItems.POT_WITH_CAMONIA.get(), 6, 8);
+        event.addDrink(ChangedAddonItems.POT_WITH_CAMMONIA.get(), 6, 8);
         event.addDrink(ChangedAddonItems.ORANGE_JUICE.get(), 6, 8);
         event.addDrink(ChangedAddonItems.FOXTA.get(), 6, 8);
         event.addDrink(ChangedAddonItems.SNEPSI.get(), 6, 8);
