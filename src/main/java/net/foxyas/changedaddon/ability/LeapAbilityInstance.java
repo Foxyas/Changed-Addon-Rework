@@ -135,7 +135,7 @@ public class LeapAbilityInstance extends AbstractAbilityInstance implements Abil
             motionY = targetY * 0.8F;
 
             if (isFromJumping) {
-                motionY *= 0.0025F; // Reduce Y scaling on jump
+                motionY *= 0.001F; // Reduce Y scaling on jump
             }
 
             motionZ = Math.cos(Math.toRadians(player.getYRot())) * 0.15;
@@ -145,8 +145,8 @@ public class LeapAbilityInstance extends AbstractAbilityInstance implements Abil
 
             Vec3 newMotion = player.getDeltaMovement().add(motionX, motionY * multiplier, motionZ);
 
-            // Cap max Y motion for precision leap when jumping (e.g. max 0.6D)
-            if (isFromJumping && newMotion.y > 0.4D) {
+            // Cap max Y motion for precision leap when jumping (e.g. max 0.3D)
+            if (isFromJumping && newMotion.y > 0.3D) {
                 newMotion = new Vec3(newMotion.x, 0.4D, newMotion.z);
             }
 
@@ -159,7 +159,7 @@ public class LeapAbilityInstance extends AbstractAbilityInstance implements Abil
             applyFatigue(player, motionY);
 
             // Grant Advancement
-            if (motionY * multiplier >= 0.75) {
+            if (motionY * targetY >= 0.75) {
                 grantAdvancement(player, "changed_addon:leaper");
             }
         }
