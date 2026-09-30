@@ -13,9 +13,9 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
-public class CrystalAddagerBlackItem extends SwordItem {
+public class CrystalDaggerBlackItem extends SwordItem {
 
-    public CrystalAddagerBlackItem() {
+    public CrystalDaggerBlackItem() {
         super(new Tier() {
                   public int getUses() {
                       return 524;

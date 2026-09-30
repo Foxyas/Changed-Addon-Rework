@@ -5,16 +5,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 
 public class DarkLatexWolfPlushyItem extends BlockItem {
-    public DarkLatexWolfPlushyItem(Block pBlock, Properties pProperties) {
-        super(pBlock, pProperties);
-    }
 
     public DarkLatexWolfPlushyItem() {
-        this(ChangedAddonBlocks.DARK_LATEX_WOLF_PLUSHY.get(), new Properties()
-        );
+        super(ChangedAddonBlocks.DARK_LATEX_WOLF_PLUSHY.get(), new Properties());
     }
 
     @Override

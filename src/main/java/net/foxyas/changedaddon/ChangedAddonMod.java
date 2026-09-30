@@ -99,10 +99,6 @@ public class ChangedAddonMod {
         return ResourceLocation.fromNamespaceAndPath(MODID, path).toString();
     }
 
-    public static String resourceLocStringStyle(String path) {
-        return MODID + ":" + path;
-    }
-
     public static ResourceLocation texLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath(MODID, "textures/" + path + ".png");
     }
@@ -116,7 +112,7 @@ public class ChangedAddonMod {
     }
 
     public static <T> @NotNull ResourceKey<T> resourceKey(ResourceKey<? extends Registry<T>> registry, String str) {
-        return ResourceKey.create(registry, ResourceLocation.fromNamespaceAndPath(net.foxyas.changedaddon.ChangedAddonMod.MODID, str));
+        return ResourceKey.create(registry, ResourceLocation.fromNamespaceAndPath(MODID, str));
     }
 
     public static <T extends Event> boolean postEvent(T event) {

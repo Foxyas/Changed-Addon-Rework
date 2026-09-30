@@ -206,8 +206,6 @@ dependencies {
     // Patcholi Main Mod
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-85-FORGE:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-85-FORGE")
-
-    //implementation files("libs/Changed-m1.18.2-v0.14")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
