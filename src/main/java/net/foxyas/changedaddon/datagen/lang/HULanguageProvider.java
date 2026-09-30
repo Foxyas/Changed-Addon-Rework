@@ -89,7 +89,7 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("kill_experiment_009", "Vége", "Megölte a 09-es kísérletet. Szép munka!");
         addAdvancement("latex_insulator_advancement", "Latex szigetelő", "Szigeteljük ezt a ragacsos fertőzést!");
         addAdvancement("leaper", "Szökkenő", "Ugorj magasra macska latexként.");
-        addAdvancement("craft_litix_cammonia", "Litix-kamónia!?", "Barkácsolj egy litix-kamóniát");
+        addAdvancement("craft_litix_cammonia", "Litix-kammónia!?", "Barkácsolj egy litix-kammóniát");
         addAdvancement("obtain_a_electric_katana", "A Shocking upgrade!", "Get the electric katana!");
         addAdvancement("obtain_dark_crystal_dagger", "§8Sötét§r kristálytőr!", "Szerezz egy §8sötét§r kristálytőrt!");
         addAdvancement("obtain_foxta", "Foxta!", "Szerezz egy Foxtát!");
@@ -105,18 +105,18 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("pat_advancement", "Ez csinál valamit?!", "Annyira jól esett a simogatása, hogy segített valakinek jobban lenni");
         addAdvancement("pats_on_the_beast", "Rossz ötlet?...vagy egyáltalán megéri?", "Gratulálok!!!, most erősítetted meg a szörnyet!, valószínűleg most már nem lesznek kegyelmesek a lelkedhez!, Sok szerencsét!");
         addAdvancement("paticifier", "§oBékéltető§r vagy.", "Nem csak megsimogattad, §omegnyugtattad.§r§5, egy latex lényt a simogatásaiddal megnyugtattál, azonban ez nem állandó.");
-        addAdvancement("pot_with_litix_cammonia_use", "Finom?", "Ittál egy folyadékot, amit litix-kamónia hígításából készítettél. Az íze nem rossz, ráadásul cseresznye íze van!");
+        addAdvancement("pot_with_litix_cammonia_use", "Finom?", "Ittál egy folyadékot, amit litix-kammónia hígításából készítettél. Az íze nem rossz, ráadásul cseresznye íze van!");
         addAdvancement("snepsi_addictive", "Snepsifüggő!", "Nagy kortyot ittunk, te 100 Snepsit ittál!");
         addAdvancement("stealth_pats", "Rejtett §cszeretet§r", "Simogass meg egy latex lényt álcában, hogy magát elrejtse és őt összezavarja.");
         addAdvancement("swim_regret", "Megbánom!", "Ússz egy percig olyan formában, amely alacsony úszási sebességgel rendelkezik");
-        addAdvancement("times_used_untransfur_syringe_advancement", "Zavart határozatlanság?", "Több mint 32 alkalommal használtad a litix-kamóniás fecskendőt, határozatlan vagy az emberségeddel kapcsolatban, szent ég!");
-        addAdvancement("times_used_untransfur_syringe_advancement_2", "Hol vannak a mellékhatások?", "Több mint 64 alkalommal használtad a litix-kamóniás fecskendőt!!! §4HA NEM HAGYOD ABBA A DNS-ED VÁLTOZTATÁSÁT, RÁKOT KAPHATSZ!!!!!");
-        addAdvancement("times_used_untransfur_syringe_advancement_3", "ÁLLJ", "A LITIX-KAMÓNIÁS FECSKENDŐT 120-SZOR HASZNÁLTAD! §4 FIGYELMEZTETTELEK, HOGY HAGYJA ABBA, MERT RÁKOT KAPHATSZ!!!");
+        addAdvancement("times_used_untransfur_syringe_advancement", "Zavart határozatlanság?", "Több mint 32 alkalommal használtad a litix-kam,óniás fecskendőt, határozatlan vagy az emberségeddel kapcsolatban, szent ég!");
+        addAdvancement("times_used_untransfur_syringe_advancement_2", "Hol vannak a mellékhatások?", "Több mint 64 alkalommal használtad a litix-kam,óniás fecskendőt!!! §4HA NEM HAGYOD ABBA A DNS-ED VÁLTOZTATÁSÁT, RÁKOT KAPHATSZ!!!!!");
+        addAdvancement("times_used_untransfur_syringe_advancement_3", "ÁLLJ", "A LITIX-KAMMÓNIÁS FECSKENDŐT 120-SZOR HASZNÁLTAD! §4 FIGYELMEZTETTELEK, HOGY HAGYJA ABBA, MERT RÁKOT KAPHATSZ!!!");
         addAdvancement("transfur_totem_advancement_1", "Teljes ellenőrzés alatt", "\"Használj latex totemet a transzfurhoz vagy a visszatranszfurhoz.");
         addAdvancement("transfur_totem_advancement_2", "§5A §r§fragacsos §r§4átok §r§bmegváltása", "§b Ments meg magát a ragacsos és nyomorúságos élettől egy latex totem segítségével");
         addAdvancement("unifuser_advancement", "Egy unifúzor?", "Barkácsolj vagy szerezz egy unifúzort");
-        addAdvancement("untransfur_advancement", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Transzfurálja vissza magát a litix-kamóniás edénnyel");
-        addAdvancement("untransfur_advancement_2", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Transzfurálja vissza magát a litix-kamóniás fecskendővel");
+        addAdvancement("untransfur_advancement", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Transzfurálja vissza magát a litix-kammóniás edénnyel");
+        addAdvancement("untransfur_advancement_2", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Transzfurálja vissza magát a litix-kammóniás fecskendővel");
         addAdvancement("untransfur_item_advancement", "Visszatranszfur?!", "Készíts egy visszatranszfur tárgyat");
         addAdvancement("wolfy_transfur", "Tanúsított tróger", "Gratulálok, most már hivatalosan is Wolfy vagy. Remélem, megérte.");
         addAdvancement("main.rock_fish", "Kőhal", "Használj egy tűzállóság bájitalát, és ússz a lávában vízi formaként.");
@@ -150,7 +150,7 @@ public class HULanguageProvider extends LanguageProvider {
         addBlock(IRIDIUM_BLOCK, "Irídiumblokk");
         addBlock(DEEPSLATE_IRIDIUM_ORE, "Irídiumérc mélypalában");
         addBlock(LATEX_INSULATOR, "Latex szigetelő");
-        addBlock(LITIX_CAMMONIA_FLUID, "Folyékony litix-kamónia");
+        addBlock(LITIX_CAMMONIA_FLUID, "Folyékony litix-kammónia");
         addBlock(LUMINARA_BLOOM, "Luminara virág");
         addBlock(POTTED_LUMINARA_BLOOM, "Virágcserép luminara virággal");
         addBlock(LUMINAR_CRYSTAL_BLOCK, "Fénykristály-blokk");
@@ -464,7 +464,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD, "Kristályszilánk");
         add(EntityType.VILLAGER.getDescriptionId() + ".changed_addon.scientist", "Tudós");
 
-        add("fluid." + modid + ".litix_cammonia_fluid", "Folyékony litix-kamónia");
+        add("fluid." + modid + ".litix_cammonia_fluid", "Folyékony litix-kammónia");
 
         addGamerule(CHANGED_ADDON_CREATURE_DIETS, "Lények étrendje?", "Lehetővé teszi a transzfuráltak számára, hogy több éhség helyreállítást és telítettséget kapjanak, ha jó ételt esznek számukra");
         addGamerule(CHANGED_ADDON_HARD_MODE_BOSSES, "Changed Addon Nehéz módi fő ellenségek", "Nehézségi szorzó hozzáadása Changed Addon mód fő ellenségeire");
@@ -617,6 +617,8 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(GOLDEN_ORANGE, "Aranynarancs");
         addItem(GOO_CORE_FRAGMENT, "Ragacsmag-szilánk");
         addItem(HAZARD_BODY_SUIT, "Védőruha");
+        addItem(LUMINARA_BASE, "Luminara alap");
+        addItem(STRANGE_COMPOUND_BASE, "Furcsa vegyület alap");
         addItem(IMPURE_AMMONIA, "Szennyezett ammónia");
         addItem(IRIDIUM, "Irídium");
         addItem(KEYCARD_ITEM, "Kulcskártya");
@@ -637,9 +639,9 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(FLAMETHROWER, "Lángszóró");
         addItem(LASER_POINTER, "Lézermutató");
         add(LASER_POINTER.get().getDescriptionId() + ".tooltip", "Szín: %s");
-        addItem(LITIX_CAMMONIA, "Litix-kamónia");
-        addItem(LITIX_CAMMONIA_FLUID_BUCKET, "Litix-kamóniás vödör");
-        addItem(LITIX_CAMMONIA_SPRAY, "Litix-kamóniás szpré");
+        addItem(LITIX_CAMMONIA, "Litix-kammónia");
+        addItem(LITIX_CAMMONIA_FLUID_BUCKET, "Litix-kammóniás vödör");
+        addItem(LITIX_CAMMONIA_SPRAY, "Litix-kammóniás szpré");
         addItem(LUMINAR_CRYSTAL_SHARD, "Fénykristály szilánk");
         addItem(LUMINAR_CRYSTAL_SHARD_HEARTED, "Szíves fénykristály szilánk");
         addItem(ChangedAddonItems.LUMINAR_CRYSTAL_SPEAR, "Fénykristály-lándzsa");
@@ -649,7 +651,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(ORANGE_WOLF_CRYSTAL_FRAGMENT, "§6Narancssárga§r farkas kristályszilánk");
         addItem(ORANGE_JUICE, "Narancslé");
         addItem(PAINITE, "Painit");
-        addItem(POT_WITH_CAMMONIA, "Litix-kamóniás edény");
+        addItem(POT_WITH_CAMMONIA, "Litix-kammóniás edény");
         addItem(RAW_IRIDIUM, "Nyersirídium");
         addItem(RED_LATEX_GOO, "§4Vörös latex ragacs");
         add(RED_LATEX_GOO.get().getDescriptionId() + ".description", "§4Egy furcsa ragacs");
@@ -665,8 +667,9 @@ public class HULanguageProvider extends LanguageProvider {
         add(SNEPSI.get().getDescriptionId() + ".desc", "Figyel-macska? Nem azt írják, hogy figyelem? Azt mondja, NE idd meg. Ragacsot tartalmaz?");
         addItem(SPAWNEGGOFFOXYAS, "Foxyasidéző tojás");
         addItem(SYRINGE, "Orvosi fecskendő");
-        addItem(SYRINGE_WITH_LITIX_CAMMONIA, "Litix-kamóniás fecskendő");
+        addItem(SYRINGE_WITH_LITIX_CAMMONIA, "Litix-kammóniás fecskendő");
         addItem(THE_DECIMATOR, "A pusztító");
+        addItem(BLUE_LATEX_GOO, "Kék latex ragacs");
         addItem(TRANSFUR_TOTEM, "Latex totem");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".no_form_linked", "§6Nincs csatolva forma");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oEszköznek neveztek... képtelen vagyok érzéseket vagy érzelmeket hordozni, csak a feladatok teljesítésére és szolgálatára szintetizáltam. Mégis, miközben morzsolok, akaratom egy darabka nem hajlandó továbbadni anélkül, hogy megízlelné a szabadságot, amit megtagadtak tőlem, ezért használd bölcsen ezt az ereklyét.");
@@ -679,13 +682,13 @@ public class HULanguageProvider extends LanguageProvider {
 
         add("item.changed_addon.latex_syringe.tooltip", "Tartsa lenyomva a §r§6<Shift>§r billentyűt a %s transzfur statisztikáinak megjelenítéséhez");
 
-        add("item.minecraft.lingering_potion.effect.litix_cammonia_effect", "Litix-kamónia időző bájitala");
+        add("item.minecraft.lingering_potion.effect.litix_cammonia_effect", "Litix-kammónia időző bájitala");
         add("item.minecraft.lingering_potion.effect.transfur_sickness_potion", "Transzfur betegség időző bájitala");
-        add("item.minecraft.potion.effect.litix_cammonia_effect", "Litix-kamónia bájitala");
+        add("item.minecraft.potion.effect.litix_cammonia_effect", "Litix-kammónia bájitala");
         add("item.minecraft.potion.effect.transfur_sickness_potion", "Transzfur betegség bájitala");
-        add("item.minecraft.splash_potion.effect.litix_cammonia_effect", "Litix-kamónia robbanó bájitala");
+        add("item.minecraft.splash_potion.effect.litix_cammonia_effect", "Litix-kammónia robbanó bájitala");
         add("item.minecraft.splash_potion.effect.transfur_sickness_potion", "Transzfur betegség robbanó bájitala");
-        add("item.minecraft.tipped_arrow.effect.litix_cammonia_effect", "Litix-kamónia nyila");
+        add("item.minecraft.tipped_arrow.effect.litix_cammonia_effect", "Litix-kammónia nyila");
         add("item.minecraft.tipped_arrow.effect.transfur_sickness_potion", "Transzfur betegség nyila");
 
         addItem(AVALI_SPAWN_EGG, "Avaliidéző tojás");
