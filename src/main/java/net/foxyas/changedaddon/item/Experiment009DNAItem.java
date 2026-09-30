@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.item.api.ICustomGlowingOutline;
-import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -9,23 +8,14 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-import java.util.List;
 
-public class Experiment009DNAItem extends Item implements ICustomGlowingOutline {
+public class Experiment009DNAItem extends ItemWithDescription implements ICustomGlowingOutline {
+
     public Experiment009DNAItem() {
         super(new Item.Properties()
                 .stacksTo(64).fireResistant().rarity(Rarity.RARE));
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack itemstack, Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-        super.appendHoverText(itemstack, world, list, flag);
-        list.add(Component.translatable("item.changed_addon.experiment_009_dna.description"));
     }
 
     @Override
