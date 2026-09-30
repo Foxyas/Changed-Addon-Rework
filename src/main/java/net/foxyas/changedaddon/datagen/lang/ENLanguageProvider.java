@@ -90,7 +90,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("kill_experiment_009", "Its Over", "You kill Experiment009 Good Job");
         addAdvancement("latex_insulator_advancement", "Latex Insulator", "Let's isolate this gooey infection");
         addAdvancement("leaper", "Leaper", "Do a high leap as a feline latex.");
-        addAdvancement("craft_litix_cammonia", "Litix-Ca,monia!?", "Craft A Litix-Cammonia");
+        addAdvancement("craft_litix_cammonia", "Litix-Cammonia!?", "Craft A Litix-Cammonia");
         addAdvancement("obtain_a_electric_katana", "A Shocking upgrade!", "Get the electric katana!");
         addAdvancement("obtain_dark_crystal_dagger", "§8Dark§r Crystal Dagger!", "You get a §8Dark§r Crystal Dagger!");
         addAdvancement("obtain_foxta", "Foxta!", "You Obtain a Foxta! ");
