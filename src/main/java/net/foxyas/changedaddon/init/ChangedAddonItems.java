@@ -61,13 +61,13 @@ public class ChangedAddonItems {
     public static final RegistryObject<BlockItem> LUMINARA_SAPLING = block(ChangedAddonBlocks.LUMINARA_SAPLING);
     public static final RegistryObject<Item> BIOMASS = REGISTRY.register("biomass", BiomassItem::new);
     public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", AntiLatexBase::new);
-    public static final RegistryObject<Item> LUMINARA_BASE = REGISTRY.register("luminara_base", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STRANGE_COMPOUND_BASE = REGISTRY.register("strange_compound_base", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> LUMINARA_BASE = REGISTRY.register("luminara_base", LuminaraBase::new);
+    public static final RegistryObject<Item> STRANGE_COMPOUND_BASE = REGISTRY.register("strange_compound_base", StrangeCompoundBase::new);
     public static final RegistryObject<Item> IMPURE_AMMONIA = REGISTRY.register("impure_ammonia", ImpureAmmoniaItem::new);
     public static final RegistryObject<Item> AMMONIA_PARTICLE = REGISTRY.register("ammonia_particle", AmmoniaParticleItem::new);
     public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", AmmoniaCompressedItem::new);
     public static final RegistryObject<Item> AMMONIA = REGISTRY.register("ammonia", AmmoniaItem::new);
-    public static final RegistryObject<Item> LITIX_CAMONIA = REGISTRY.register("litix_camonia", LitixCamoniaItem::new);
+    public static final RegistryObject<Item> LITIX_CAMMONIA = REGISTRY.register("litix_cammonia", LitixCamoniaItem::new);
     public static final RegistryObject<LaethinItem> LAETHIN = REGISTRY.register("laethin", LaethinItem::new);
     public static final RegistryObject<Item> CATALYZED_DNA = REGISTRY.register("catalyzed_dna", CatalyzedDNAItem::new);
 

@@ -114,7 +114,7 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
 
         PotionUtils.setPotion(potion, Potions.AWKWARD);
         PotionUtils.setPotion(potion2, ChangedAddonPotions.LITIX_CAMMONIA_EFFECT.get());
-        brewingRecipes.add(factory.createBrewingRecipe(List.of(new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get())), potion.copy(), potion2.copy()));
+        brewingRecipes.add(factory.createBrewingRecipe(List.of(new ItemStack(ChangedAddonItems.LITIX_CAMMONIA.get())), potion.copy(), potion2.copy()));
         PotionUtils.setPotion(potion, Potions.AWKWARD);
         PotionUtils.setPotion(potion2, ChangedAddonPotions.TRANSFUR_SICKNESS_POTION.get());
         brewingRecipes.add(factory.createBrewingRecipe(List.of(new ItemStack(ChangedAddonItems.LAETHIN.get())), potion.copy(), potion2.copy()));

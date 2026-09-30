@@ -583,7 +583,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(FLAMETHROWER, "Lángszóró");
         addItem(LASER_POINTER, "Lézermutató");
         add(LASER_POINTER.get().getDescriptionId() + ".tooltip", "Szín: %s");
-        addItem(LITIX_CAMONIA, "Litix-kamónia");
+        addItem(LITIX_CAMMONIA, "Litix-kamónia");
         addItem(LITIX_CAMONIA_FLUID_BUCKET, "Litix-kamóniás vödör");
         addItem(LITIX_CAMONIA_SPRAY, "Litix-kamóniás szpré");
         addItem(LUMINAR_CRYSTAL_SHARD, "Fénykristály szilánk");

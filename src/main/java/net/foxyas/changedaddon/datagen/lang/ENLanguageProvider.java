@@ -624,7 +624,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(FLAMETHROWER);
         addItemFromId(LASER_POINTER);
         add(LASER_POINTER.get().getDescriptionId() + ".tooltip", "Color: %s");
-        addItem(LITIX_CAMONIA, "Litix-Camonia");
+        addItem(LITIX_CAMMONIA, "Litix-Cammonia");
         addItem(LITIX_CAMONIA_FLUID_BUCKET, "LitixCamonia Bucket");
         addItem(LITIX_CAMONIA_SPRAY, "LitixCamonia Spray");
         addItemFromId(LUMINAR_CRYSTAL_SHARD);
@@ -652,7 +652,7 @@ public class ENLanguageProvider extends LanguageProvider {
         add(SNEPSI.get().getDescriptionId() + ".desc", "Cat-ion? Isn't it spelled caution? Says do NOT drink. Contains goo?");
         addItem(SPAWNEGGOFFOXYAS, "Foxyas Spawn Egg");
         addItem(SYRINGE, "Medical Syringe");
-        addItem(SYRINGE_WITH_LITIX_CAMMONIA, "Syringe with Litix-Camonia");
+        addItem(SYRINGE_WITH_LITIX_CAMMONIA, "Syringe with Litix-Cammonia");
         addItemFromId(THE_DECIMATOR);
         addItemFromId(BLUE_LATEX_GOO);
         addItem(TRANSFUR_TOTEM, "Latex Totem");

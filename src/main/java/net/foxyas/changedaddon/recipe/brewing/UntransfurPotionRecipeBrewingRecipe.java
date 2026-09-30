@@ -21,13 +21,13 @@ public class UntransfurPotionRecipeBrewingRecipe implements IBrewingRecipe {
 
     @Override
     public boolean isIngredient(@NotNull ItemStack ingredient) {
-        return Ingredient.of(new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get())).test(ingredient);
+        return Ingredient.of(new ItemStack(ChangedAddonItems.LITIX_CAMMONIA.get())).test(ingredient);
     }
 
     @Override
     public @NotNull ItemStack getOutput(@NotNull ItemStack input, @NotNull ItemStack ingredient) {
         if (isInput(input) && isIngredient(ingredient)) {
-            return PotionUtils.setPotion(new ItemStack(input.getItem()), ChangedAddonPotions.LITIX_CAMMONIA_EFFECT.get());
+            return PotionUtils.setPotion(new ItemStack(input.getItem()), ChangedAddonPotions.LITIX_CAMONIA_EFFECT.get());
         }
         return ItemStack.EMPTY;
     }
