@@ -15,16 +15,20 @@ import net.foxyas.changedaddon.util.ItemStackLoreUtil;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.advancements.CriterionTriggerInstance;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.CompoundIngredient;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.PartialNBTIngredient;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
@@ -36,6 +40,7 @@ import vazkii.patchouli.api.PatchouliAPI;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE;
 import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
 import static net.minecraft.world.item.Items.*;
 
@@ -74,11 +79,24 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_latex_base", has(ChangedItems.LATEX_BASE.get()))
                 .save(recipeConsumer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, STRANGE_COMPOUND_BASE.get(), 1)
+        ChangedAddonRecipeBuilder.unifuser(STRANGE_COMPOUND_BASE.get().getDefaultInstance())
                 .requires(BLUE_LATEX_GOO.get(), 1)
                 .requires(RED_LATEX_GOO.get(), 1)
                 .requires(ChangedItems.LATEX_BASE.get())
                 .unlockedBy("has_latex_base", has(ChangedItems.LATEX_BASE.get()))
+                .save(recipeConsumer);
+
+        Ingredient flowersOrPlants = CompoundIngredient.of(
+                Ingredient.of(ItemTags.FLOWERS),
+                Ingredient.of(ChangedAddonTags.Items.PLANTS)
+        );
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, IMPURE_AMMONIA.get(), 3)
+                .requires(flowersOrPlants, 4) // Requer 4 do ingrediente composto
+                .requires(Ingredient.of(ChangedAddonTags.Items.MEAT), 3)
+                .requires(Tags.Items.SEEDS)
+                .requires(Items.BONE_MEAL)
+                .unlockedBy("has_bone_meal", has(Items.BONE_MEAL))
                 .save(recipeConsumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, IRIDIUM_BLOCK.get())
@@ -147,6 +165,56 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('P', Items.PAPER)
                 .unlockedBy("has_redstone", has(Items.REDSTONE))
                 .save(recipeConsumer);
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(RAW_IRIDIUM.get()),
+                        RecipeCategory.MISC,
+                        IRIDIUM.get(),
+                        1.2f,
+                        300)
+                .unlockedBy("has_raw_iridium", has(RAW_IRIDIUM.get()))
+                .save(recipeConsumer);
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DEEPSLATE_IRIDIUM_ORE.get()),
+                        RecipeCategory.MISC,
+                        IRIDIUM.get(),
+                        25f,
+                        400)
+                .unlockedBy("has_iridium", has(DEEPSLATE_IRIDIUM_ORE.get()))
+                .save(recipeConsumer, getItemName(IRIDIUM.get()) + "raw_to_ingot");
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DEEPSLATE_PAINITE_ORE.get()),
+                        RecipeCategory.MISC,
+                        PAINITE.get(),
+                        20.0F,
+                        100)
+                .unlockedBy("has_painite", has(DEEPSLATE_PAINITE_ORE.get()))
+                .save(recipeConsumer, getBlastingRecipeName(PAINITE.get()));
+
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(RAW_IRIDIUM.get()),
+                        RecipeCategory.MISC,
+                        IRIDIUM.get(),
+                        1.2f,
+                        100)
+                .unlockedBy("has_raw_iridium", has(RAW_IRIDIUM.get()))
+                .save(recipeConsumer, getItemName(IRIDIUM.get()) + "raw_to_ingot" + "_from_blasting");
+
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(DEEPSLATE_IRIDIUM_ORE.get()),
+                        RecipeCategory.MISC,
+                        IRIDIUM.get(),
+                        25f,
+                        100)
+                .unlockedBy("has_iridium", has(DEEPSLATE_IRIDIUM_ORE.get()))
+                .save(recipeConsumer, getBlastingRecipeName(IRIDIUM.get()));
+
+        SmithingTransformRecipeBuilder.smithing(
+                        Ingredient.of(STRANGE_COMPOUND_BASE.get()),
+                        Ingredient.of(TOTEM_OF_UNDYING),
+                        Ingredient.EMPTY,
+                        RecipeCategory.TOOLS,
+                        TRANSFUR_TOTEM.get()
+                )
+                .unlocks("has_items", hasItems(STRANGE_COMPOUND_BASE.get(), TOTEM_OF_UNDYING))
+                .save(recipeConsumer, getItemName(TRANSFUR_TOTEM.get()) + "_smithing");
 
         reinforce(REINFORCED_WALL_CAUTION.get(), ChangedBlocks.WALL_CAUTION.get(), iridium, hasIridium)
                 .save(recipeConsumer);
@@ -316,6 +384,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 //        hasPatchouliMod.addRecipe(changedBookRecipe::save).build(recipeConsumer, changedBookRecipeID);
 
         saveRecipeWithConditionAndSpecificID(recipeConsumer, changedBookRecipe, changedBookRecipeID, this.modLoaded(PatchouliAPI.MOD_ID));
+    }
+
+    protected static InventoryChangeTrigger.TriggerInstance hasItems(ItemLike... pItemLike) {
+        return inventoryTrigger(ItemPredicate.Builder.item().of(pItemLike).build());
     }
 
     private void saveRecipeWithCondition(Consumer<FinishedRecipe> recipeConsumer, RecipeBuilder recipe, ICondition... conditions) {

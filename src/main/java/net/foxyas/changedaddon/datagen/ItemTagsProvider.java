@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedTags;
+import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -36,6 +37,57 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         tag(ChangedAddonTags.Items.AIR).add(Items.AIR);
+        tag(ChangedAddonTags.Items.PLANTS)
+                // Inclui tags vanilla inteiras para cobrir automaticamente novas plantas e flores de mods
+                .addTag(ItemTags.SAPLINGS)
+                .addTag(ItemTags.LEAVES)
+                .addTag(ItemTags.FLOWERS)
+                .addTag(ItemTags.SMALL_FLOWERS)
+                .addTag(ItemTags.TALL_FLOWERS)
+
+                // Gramas, Samambaias e Plantas de Terreno
+                .add(Items.GRASS)
+                .add(Items.TALL_GRASS)
+                .add(Items.FERN)
+                .add(Items.LARGE_FERN)
+                .add(Items.DEAD_BUSH)
+                .add(Items.VINE)
+                .add(Items.GLOW_LICHEN)
+                .add(Items.HANGING_ROOTS)
+                .add(Items.BIG_DRIPLEAF)
+                .add(Items.SMALL_DRIPLEAF)
+                .add(Items.SPORE_BLOSSOM)
+                .add(Items.MOSS_CARPET)
+                .add(Items.MOSS_BLOCK)
+                .add(Items.PINK_PETALS)
+
+                // Cultivos e Fibras
+                .add(Items.SUGAR_CANE)
+                .add(Items.WHEAT)
+                .add(Items.CACTUS)
+                .add(Items.BAMBOO)
+                .add(Items.TORCHFLOWER)
+                .add(Items.PITCHER_PLANT)
+
+                // Cogumelos e Fungos
+                .add(Items.BROWN_MUSHROOM)
+                .add(Items.RED_MUSHROOM)
+                .add(Items.CRIMSON_FUNGUS)
+                .add(Items.WARPED_FUNGUS)
+                .add(Items.CRIMSON_ROOTS)
+                .add(Items.WARPED_ROOTS)
+                .add(Items.NETHER_SPROUTS)
+                .add(Items.WEEPING_VINES)
+                .add(Items.TWISTING_VINES)
+
+                // Plantas Aquáticas
+                .add(Items.SEAGRASS)
+                .add(Items.KELP)
+                .add(Items.LILY_PAD)
+                .add(ChangedItems.ORANGE.get())
+                .add(ChangedBlocks.ORANGE_TREE_SAPLING.get().asItem())
+        ;
+
         tag(Tags.Items.RAW_MATERIALS).add(RAW_IRIDIUM.get());
         tag(forgeRawIridium).add(RAW_IRIDIUM.get());
         tag(ItemTags.TRIM_MATERIALS).add(IRIDIUM.get(), GOO_CORE_FRAGMENT.get());

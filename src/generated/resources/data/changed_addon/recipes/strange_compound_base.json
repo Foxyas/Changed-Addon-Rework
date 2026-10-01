@@ -1,6 +1,5 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
+  "type": "changed_addon:unifuser",
   "ingredients": [
     {
       "item": "changed_addon:blue_latex_goo"
@@ -12,7 +11,10 @@
       "item": "changed:latex_base"
     }
   ],
-  "result": {
+  "output": {
+    "type": "forge:nbt",
+    "count": 1,
     "item": "changed_addon:strange_compound_base"
-  }
+  },
+  "progressSpeed": 1.0
 }

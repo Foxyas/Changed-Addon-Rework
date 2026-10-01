@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": [],
+  "base": {
+    "item": "minecraft:totem_of_undying"
+  },
+  "result": {
+    "item": "changed_addon:transfur_totem"
+  },
+  "template": {
+    "item": "changed_addon:strange_compound_base"
+  }
+}

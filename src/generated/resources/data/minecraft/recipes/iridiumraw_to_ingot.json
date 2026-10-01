@@ -1,7 +1,8 @@
 {
   "type": "minecraft:smelting",
-  "experience": 25,
-  "cookingtime": 200,
+  "category": "misc",
+  "cookingtime": 400,
+  "experience": 25.0,
   "ingredient": {
     "item": "changed_addon:deepslate_iridium_ore"
   },
