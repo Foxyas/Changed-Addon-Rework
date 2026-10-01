@@ -15,6 +15,8 @@ import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
@@ -38,10 +40,10 @@ public class ChangedAddonItems {
     public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChangedAddonMod.MODID);
 
     public static final RegistryObject<Item> CHANGED_BOOK = REGISTRY.register("changedbook", ChangedBookItem::new);
-    public static final RegistryObject<Item> LUMINARA_BLOOM = block(ChangedAddonBlocks.LUMINARA_BLOOM, new Item.Properties().rarity(Rarity.RARE));
+    public static final RegistryObject<BlockItem> LUMINARA_BLOOM = block(ChangedAddonBlocks.LUMINARA_BLOOM, new Item.Properties().rarity(Rarity.RARE));
     public static final RegistryObject<Item> LUMINARA_BLOOM_PETALS = REGISTRY.register("luminara_bloom_petals", LuminaraBloomPetalsItem::new);
-    public static final RegistryObject<Item> LUMINARA_LOG = block(ChangedAddonBlocks.LUMINARA_LOG, new Item.Properties());
-    public static final RegistryObject<Item> STRIPPED_LUMINARA_LOG = block(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG, new Item.Properties());
+    public static final RegistryObject<BlockItem> LUMINARA_LOG = block(ChangedAddonBlocks.LUMINARA_LOG);
+    public static final RegistryObject<BlockItem> STRIPPED_LUMINARA_LOG = block(ChangedAddonBlocks.STRIPPED_LUMINARA_LOG);
     public static final RegistryObject<BlockItem> LUMINARA_WOOD = block(ChangedAddonBlocks.LUMINARA_WOOD);
     public static final RegistryObject<BlockItem> STRIPPED_LUMINARA_WOOD = block(ChangedAddonBlocks.STRIPPED_LUMINARA_WOOD);
     public static final RegistryObject<BlockItem> LUMINARA_PLANKS = block(ChangedAddonBlocks.LUMINARA_PLANKS);
@@ -55,35 +57,35 @@ public class ChangedAddonItems {
     public static final RegistryObject<HangingSignItem> LUMINARA_HANGING_SIGN = REGISTRY.register("luminara_hanging_sign", () -> new HangingSignItem(ChangedAddonBlocks.LUMINARA_HANGING_SIGN.get(), ChangedAddonBlocks.LUMINARA_WALL_HANGING_SIGN.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> LUMINARA_BUTTON = block(ChangedAddonBlocks.LUMINARA_BUTTON);
     public static final RegistryObject<BlockItem> LUMINARA_PRESSURE_PLATE = block(ChangedAddonBlocks.LUMINARA_PRESSURE_PLATE);
-    public static final RegistryObject<Item> LUMINARA_LEAVES = block(ChangedAddonBlocks.LUMINARA_LEAVES, new Item.Properties());
+    public static final RegistryObject<BlockItem> LUMINARA_LEAVES = block(ChangedAddonBlocks.LUMINARA_LEAVES);
     public static final RegistryObject<BlockItem> LUMINARA_PETALS = block(ChangedAddonBlocks.LUMINARA_PETALS);
     public static final RegistryObject<BlockItem> LUMINARA_LICHEN = block(ChangedAddonBlocks.LUMINARA_LICHEN);
     public static final RegistryObject<BlockItem> LUMINARA_SAPLING = block(ChangedAddonBlocks.LUMINARA_SAPLING);
     public static final RegistryObject<Item> BIOMASS = REGISTRY.register("biomass", BiomassItem::new);
-    public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", AntiLatexBase::new);
-    public static final RegistryObject<Item> LUMINARA_BASE = REGISTRY.register("luminara_base", LuminaraBase::new);
-    public static final RegistryObject<Item> STRANGE_COMPOUND_BASE = REGISTRY.register("strange_compound_base", StrangeCompoundBase::new);
-    public static final RegistryObject<Item> IMPURE_AMMONIA = REGISTRY.register("impure_ammonia", ImpureAmmoniaItem::new);
-    public static final RegistryObject<Item> AMMONIA_PARTICLE = REGISTRY.register("ammonia_particle", AmmoniaParticleItem::new);
-    public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", AmmoniaCompressedItem::new);
-    public static final RegistryObject<Item> AMMONIA = REGISTRY.register("ammonia", AmmoniaItem::new);
+    public static final RegistryObject<Item> ANTI_LATEX_BASE = registerWithDesc("anti_latex_base");
+    public static final RegistryObject<Item> LUMINARA_BASE = registerWithDesc("luminara_base", new Item.Properties().rarity(Rarity.RARE));
+    public static final RegistryObject<Item> STRANGE_COMPOUND_BASE = registerWithDesc("strange_compound_base", new Item.Properties().rarity(Rarity.RARE));
+    public static final RegistryObject<Item> IMPURE_AMMONIA = registerSimple("impure_ammonia");
+    public static final RegistryObject<Item> AMMONIA_PARTICLE = registerSimple("ammonia_particle");
+    public static final RegistryObject<Item> AMMONIA_COMPRESSED = registerSimple("ammonia_compressed");
+    public static final RegistryObject<Item> AMMONIA = registerSimple("ammonia");
     public static final RegistryObject<Item> LITIX_CAMMONIA = REGISTRY.register("litix_cammonia", LitixCammoniaItem::new);
     public static final RegistryObject<LaethinItem> LAETHIN = REGISTRY.register("laethin", LaethinItem::new);
-    public static final RegistryObject<Item> CATALYZED_DNA = REGISTRY.register("catalyzed_dna", CatalyzedDNAItem::new);
+    public static final RegistryObject<Item> CATALYZED_DNA = registerSimple("catalyzed_dna", new Item.Properties().stacksTo(1).rarity(Rarity.RARE));
 
-    public static final RegistryObject<Item> SYRINGE = REGISTRY.register("syringe", SyringeItem::new);
+    public static final RegistryObject<Item> SYRINGE = registerSimple("syringe");
     public static final RegistryObject<Item> DIFFUSION_SYRINGE = REGISTRY.register("diffusion_syringe", DiffusionSyringeItem::new);
     public static final RegistryObject<Item> SYRINGE_WITH_LITIX_CAMMONIA = REGISTRY.register("syringe_with_litix_cammonia", SyringeWithLitixCammoniaItem::new);
     public static final RegistryObject<LaethinSyringeItem> LAETHIN_SYRINGE = REGISTRY.register("laethin_syringe", LaethinSyringeItem::new);
     public static final RegistryObject<Item> POT_WITH_CAMMONIA = REGISTRY.register("pot_with_cammonia", PotWithCamnoniaItem::new);
     public static final RegistryObject<AlphaSerumSyringeItem> ALPHA_SERUM_SYRINGE = REGISTRY.register("alpha_serum_syringe", AlphaSerumSyringeItem::new);
 
-    public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", RawIridiumItem::new);
+    public static final RegistryObject<Item> RAW_IRIDIUM = registerSimple("raw_iridium", new Item.Properties().fireResistant().rarity(Rarity.UNCOMMON));
     public static final RegistryObject<Item> IRIDIUM = REGISTRY.register("iridium", IridiumItem::new);
     public static final RegistryObject<BlockItem> DEEPSLATE_IRIDIUM_ORE = block(ChangedAddonBlocks.DEEPSLATE_IRIDIUM_ORE);
     public static final RegistryObject<BlockItem> IRIDIUM_BLOCK = block(ChangedAddonBlocks.IRIDIUM_BLOCK);
 
-    public static final RegistryObject<Item> PAINITE = REGISTRY.register("painite", PainiteGemItem::new);
+    public static final RegistryObject<Item> PAINITE = registerSimple("painite", new Item.Properties().fireResistant().rarity(Rarity.RARE));
     public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", AccessoriesItem.Chestplate::new);
     public static final RegistryObject<BlockItem> PAINITE_ORE = block(ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE);
     public static final RegistryObject<BlockItem> PAINITE_BLOCK = block(ChangedAddonBlocks.PAINITE_BLOCK);
@@ -91,15 +93,15 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> LITIX_CAMMONIA_FLUID_BUCKET = REGISTRY.register("litix_cammonia_fluid_bucket", LitixCammoniaFluidItem::new);
 
     public static final RegistryObject<Item> EXPERIMENT_009_DNA = REGISTRY.register("experiment_009_dna", Experiment009DNAItem::new);
-    public static final RegistryObject<Item> EXP_9_LATEX_BASE = REGISTRY.register("exp_9_latex_base", Exp9LatexBaseItem::new);
+    public static final RegistryObject<Item> EXP_9_LATEX_BASE = registerSimple("exp_9_latex_base", new Item.Properties().rarity(Rarity.RARE));
     public static final RegistryObject<Experiment009SpawnerItem> EXP_9_CONTAINMENT_VIAL = REGISTRY.register("exp_9_containment_vial", Experiment009SpawnerItem::new);
-    public static final RegistryObject<Item> BLUE_LATEX_GOO = REGISTRY.register("blue_latex_goo", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> BLUE_LATEX_GOO = registerSimple("blue_latex_goo", new Item.Properties().rarity(Rarity.RARE));
     public static final RegistryObject<TransfurTotemItem> TRANSFUR_TOTEM = REGISTRY.register("transfur_totem", TransfurTotemItem::new);
 
     public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", Experiment10DNAItem::new);
-    public static final RegistryObject<Item> EXP_10_LATEX_BASE = REGISTRY.register("exp_10_latex_base", Exp10LatexBaseItem::new);
+    public static final RegistryObject<Item> EXP_10_LATEX_BASE = registerSimple("exp_10_latex_base", new Item.Properties().rarity(Rarity.RARE));
     public static final RegistryObject<Experiment10SpawnerItem> EXP_10_CONTAINMENT_VIAL = REGISTRY.register("exp_10_containment_vial", Experiment10SpawnerItem::new);
-    public static final RegistryObject<Item> RED_LATEX_GOO = REGISTRY.register("red_latex_goo", RedLatexGooItem::new);
+    public static final RegistryObject<Item> RED_LATEX_GOO = registerWithDesc("red_latex_goo", new Item.Properties().fireResistant().rarity(Rarity.RARE));
 
     // Foods and Drinks
     public static final RegistryObject<Item> ORANGE_JUICE = REGISTRY.register("orange_juice", OrangeJuiceItem::new);
@@ -109,7 +111,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> OPENED_CANNED_SOUP = REGISTRY.register("opened_canned_soup", OpenedCannedSoupItem::new);
 
     // Remain Items
-    public static final RegistryObject<Item> EMPTY_CAN = REGISTRY.register("empty_can", EmptyCanItem::new);
+    public static final RegistryObject<Item> EMPTY_CAN = registerSimple("empty_can");
 
 
     public static final RegistryObject<BlockItem> SNEP_PLUSHY = block(ChangedAddonBlocks.SNEP_PLUSHY);
@@ -136,8 +138,8 @@ public class ChangedAddonItems {
     public static final RegistryObject<TranslatorItem> TRANSLATOR = REGISTRY.register("translator", TranslatorItem::new);
     public static final RegistryObject<BlockItem> INFORMANT_BLOCK = block(ChangedAddonBlocks.INFORMANT_BLOCK);
 
-    public static final RegistryObject<Item> LUMINAR_CRYSTAL_SHARD = REGISTRY.register("luminar_crystal_shard", LuminarCrystalShardItem::new);
-    public static final RegistryObject<Item> LUMINAR_CRYSTAL_SHARD_HEARTED = REGISTRY.register("luminar_crystal_shard_hearted", LuminarCrystalShardHeartedItem::new);
+    public static final RegistryObject<Item> LUMINAR_CRYSTAL_SHARD = registerSimple("luminar_crystal_shard", new Item.Properties().fireResistant().rarity(Rarity.RARE));
+    public static final RegistryObject<Item> LUMINAR_CRYSTAL_SHARD_HEARTED = registerSimple("luminar_crystal_shard_hearted", new Item.Properties().fireResistant().rarity(Rarity.RARE));
     public static final RegistryObject<BlockItem> LUMINAR_CRYSTAL_SMALL = block(ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL);
     public static final RegistryObject<BlockItem> LUMINAR_CRYSTAL_LARGE = block(ChangedAddonBlocks.LUMINAR_CRYSTAL_LARGE);
     public static final RegistryObject<BlockItem> LUMINAR_CRYSTAL_BLOCK = block(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK);
@@ -157,24 +159,26 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("blue_wolf_crystal_fragment", BlueWolfCrystalFragmentItem::new);
     public static final RegistryObject<BlockItem> BLUE_WOLF_CRYSTAL_SMALL = block(ChangedAddonBlocks.BLUE_WOLF_CRYSTAL_SMALL);
     public static final RegistryObject<BlockItem> BLUE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonBlocks.BLUE_WOLF_CRYSTAL_BLOCK);
-    public static final RegistryObject<Item> GOO_CORE_FRAGMENT = REGISTRY.register("goo_core_fragment", GooCoreFragmentItem::new);
+    public static final RegistryObject<Item> GOO_CORE_FRAGMENT = registerSimple("goo_core_fragment", new Item.Properties().fireResistant());
     public static final RegistryObject<BlockItem> GOO_CORE = block(ChangedAddonBlocks.GOO_CORE);
-    public static final RegistryObject<Item> MEANINGLESS_STRAFE_MUSIC_DISC = REGISTRY.register("meaningless_strafe_music_disc", MeaninglessStrafeMusicDiscItem::new);    public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", ElectricKatanaItem::new);
-    public static final RegistryObject<Item> LUMINAR_CRYSTAL_SPEAR = REGISTRY.register("luminar_crystal_spear", LuminarCrystalSpearItem::new);    public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", ElectricKatanaRedItem::new);
+    public static final RegistryObject<Item> MEANINGLESS_STRAFE_MUSIC_DISC = REGISTRY.register("meaningless_strafe_music_disc", MeaninglessStrafeMusicDiscItem::new);
+    public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", ElectricKatanaItem::new);
+    public static final RegistryObject<Item> LUMINAR_CRYSTAL_SPEAR = REGISTRY.register("luminar_crystal_spear", LuminarCrystalSpearItem::new);
+    public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", ElectricKatanaRedItem::new);
     public static final RegistryObject<Item> THE_DECIMATOR = REGISTRY.register("the_decimator", TheDecimatorItem::new);
     public static final RegistryObject<Item> CROWBAR = REGISTRY.register("crow_bar", CrowbarItem::new);
     public static final RegistryObject<Item> LAETHINMINATOR = REGISTRY.register("laethinminator", LaethinminatorItem::new);
     public static final RegistryObject<FlamethrowerItem> FLAMETHROWER = REGISTRY.register("flamethrower", FlamethrowerItem::new);
-    public static final RegistryObject<Item> CRYSTAL_DAGGER_RED = REGISTRY.register("crystal_dagger_red", CrystalAddagerRedItem::new);
-    public static final RegistryObject<Item> CRYSTAL_DAGGER_GREEN = REGISTRY.register("crystal_dagger_green", CrystalAddagerGreenItem::new);
-    public static final RegistryObject<Item> CRYSTAL_DAGGER_BLACK = REGISTRY.register("crystal_dagger_black", CrystalAddagerBlackItem::new);
+    public static final RegistryObject<Item> CRYSTAL_DAGGER_RED = REGISTRY.register("crystal_dagger_red", CrystalDaggerRedItem::new);
+    public static final RegistryObject<Item> CRYSTAL_DAGGER_GREEN = REGISTRY.register("crystal_dagger_green", CrystalDaggerGreenItem::new);
+    public static final RegistryObject<Item> CRYSTAL_DAGGER_BLACK = REGISTRY.register("crystal_dagger_black", CrystalDaggerBlackItem::new);
     public static final RegistryObject<Item> EMPTY_SPRAY = REGISTRY.register("empty_spray", EmptySprayItem::new);
     public static final RegistryObject<Item> LITIX_CAMMONIA_SPRAY = REGISTRY.register("litix_cammonia_spray", () -> new SprayItem(ChangedLatexTypes.NONE::get));
     public static final RegistryObject<Item> DARK_LATEX_SPRAY = REGISTRY.register("dark_latex_spray", () -> new SprayItem(ChangedLatexTypes.DARK_LATEX::get));
     public static final RegistryObject<Item> WHITE_LATEX_SPRAY = REGISTRY.register("white_latex_spray", () -> new SprayItem(ChangedLatexTypes.WHITE_LATEX::get));
     public static final RegistryObject<Item> LUNAR_ROSE = REGISTRY.register("lunar_rose", LunarRoseItem::new);
-    public static final RegistryObject<Item> CATALYZER_BLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("catalyzer_block_illustrative_item", CatalyzerBlockIllustrativeItemItem::new);
-    public static final RegistryObject<Item> UNIFUSER_BLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("unifuser_block_illustrative_item", UnifuserBlockIllustrativeItemItem::new);
+    public static final RegistryObject<Item> CATALYZER_BLOCK_ILLUSTRATIVE_ITEM = registerSimple("catalyzer_block_illustrative_item", new Item.Properties().rarity(Rarity.RARE));
+    public static final RegistryObject<Item> UNIFUSER_BLOCK_ILLUSTRATIVE_ITEM = registerSimple("unifuser_block_illustrative_item", new Item.Properties().rarity(Rarity.RARE));
     public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", SnepIconItem::new);
     public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", FriendlyGoeyIconItem::new);
     public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", PatIconItem::new);
@@ -185,70 +189,70 @@ public class ChangedAddonItems {
     // --- MOBS SPAWN EGGS ---
     public static final RegistryObject<SpecialSpawnEggItem> SPAWNEGGOFFOXYAS = REGISTRY.register("spawneggoffoxyas", () -> new SpecialSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_FOXYAS, new Item.Properties()));
     // --- CHANGED ENTITIES SPAWN EGGS ---
-    public static final RegistryObject<Item> PROTOTYPE_SPAWN_EGG = REGISTRY.register("prototype_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOTYPE, new Color(-5325833).getRGB(), new Color(-9306113).getRGB(), new Item.Properties()));
+    public static final RegistryObject<SpawnEggItem> PROTOTYPE_SPAWN_EGG = registerSpawnEgg("prototype_spawn_egg", ChangedAddonEntities.PROTOTYPE, -5325833, -9306113);
     public static final RegistryObject<SpecialSpawnEggItem> CRAFTABLE_PROTOTYPE_SPAWN_EGG = REGISTRY.register("prototype_spawn_egg_c", () -> new SpecialSpawnEggItem(ChangedAddonEntities.PROTOTYPE, new Item.Properties()));
-    public static final RegistryObject<Item> WHITE_FOX_SPAWN_EGG = REGISTRY.register("white_fox_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.WHITE_FOX, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_SNOW_FOX_MALE_SPAWN_EGG = REGISTRY.register("latex_snow_fox_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_MALE, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_SNOW_FOX_FEMALE_SPAWN_EGG = REGISTRY.register("latex_snow_fox_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_FEMALE, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties()));
-    public static final RegistryObject<Item> FOXYAS_SPAWN_EGG = REGISTRY.register("latex_snow_fox_foxyas_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_FOXYAS, -1, -26215, new Item.Properties()));
-    public static final RegistryObject<Item> DAZED_LATEX_SPAWN_EGG = REGISTRY.register("latex_dazed_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.DAZED_LATEX, 0xFFFFFFF, 0xffCFCFCF, new Item.Properties()));
-    public static final RegistryObject<Item> BUFF_DAZED_LATEX_SPAWN_EGG = REGISTRY.register("buff_latex_dazed_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.BUFF_DAZED_LATEX, 0xFFFFFFF, 0xffCFCFCF, new Item.Properties()));
-    public static final RegistryObject<Item> PURO_KIND_MALE_SPAWN_EGG = REGISTRY.register("puro_kind_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PURO_KIND_MALE, Color3.getColor("#393939").toInt(), Color3.getColor("#303030").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> PURO_KIND_FEMALE_SPAWN_EGG = REGISTRY.register("puro_kind_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PURO_KIND_FEMALE, Color3.getColor("#393939").toInt(), Color3.getColor("#303030").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> BUNY_SPAWN_EGG = REGISTRY.register("buny_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.BUNY, Color3.getColor("#fee9c8").toInt(), Color3.getColor("#9c8c73").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> BIOSYNTH_SNOW_LEOPARD_MALE_SPAWN_EGG = REGISTRY.register("biosynth_snow_leopard_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_MALE, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#292929").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> BIOSYNTH_SNOW_LEOPARD_FEMALE_SPAWN_EGG = REGISTRY.register("biosynth_snow_leopard_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_FEMALE, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#292929").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> MIRROR_WHITE_TIGER_SPAWN_EGG = REGISTRY.register("mirror_white_tiger_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.MIRROR_WHITE_TIGER, Color3.getColor("#FFFFFF").toInt(), Color3.getColor("#ACACAC").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> WOLFY_SPAWN_EGG = REGISTRY.register("wolfy_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.WOLFY, Color3.getColor("#393939").toInt(), Color3.getColor("#303030").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> EXP1_MALE_SPAWN_EGG = REGISTRY.register("exp_1_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.EXP_1_MALE, 0xFFFFFFF, 0xffb6b9b9, new Item.Properties()));
-    public static final RegistryObject<Item> EXP1_FEMALE_SPAWN_EGG = REGISTRY.register("exp_1_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.EXP_1_FEMALE, 0xFFFFFFF, 0xffb6b9b9, new Item.Properties()));
-    public static final RegistryObject<Item> EXP2_MALE_SPAWN_EGG = REGISTRY.register("exp_2_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.EXP_2_MALE, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> EXP2_FEMALE_SPAWN_EGG = REGISTRY.register("exp_2_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.EXP_2_FEMALE, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_FERAL_SNEP_SPAWN_EGG = REGISTRY.register("latex_ferar_snep_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_FERAL_SNEP, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> EXP6_SPAWN_EGG = REGISTRY.register("exp_6_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.EXP_6, Color3.getColor("#B2B1B9").toInt(), Color3.getColor("#CAA2E6").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> EXP10_SPAWN_EGG = REGISTRY.register("experiment_10_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.EXPERIMENT_10, Color3.getColor("#181818").toInt(), Color3.getColor("#ed1c24").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> EXPERIMENT_009_SPAWN_EGG = REGISTRY.register("experiment_009_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.EXPERIMENT_009, Color3.getColor("#E9E9E9").toInt(), Color3.getColor("#66FFFF").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> EXPERIMENT_009_BOSS_SPAWN_EGG = REGISTRY.register("experiment_009_boss_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.EXPERIMENT_009_BOSS, Color3.getColor("#E9E9E9").toInt(), Color3.getColor("#66FFFF").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> EXP10_BOSS_SPAWN_EGG = REGISTRY.register("experiment_10_boss_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.EXPERIMENT_10_BOSS, Color3.getColor("#181818").toInt(), Color3.getColor("#ed1c24").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> PARTIAL_SNOW_LEOPARD_SPAWN_EGG = REGISTRY.register("latex_snow_leopard_partial_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.SNOW_LEOPARD_PARTIAL, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> REYN_SPAWN_EGG = REGISTRY.register("reyn_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.REYN, Color3.getColor("#4C4C4C").toInt(), Color3.getColor("#464646").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LUMINARCTIC_LEOPARD_MALE_SPAWN_EGG = REGISTRY.register("luminarctic_leopard_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LUMINARCTIC_LEOPARD_MALE, Color3.getColor("#414141").toInt(), Color3.getColor("#FFFFFF").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LUMINARCTIC_FEMALE_LEOPARD_SPAWN_EGG = REGISTRY.register("luminarctic_leopard_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LUMINARCTIC_LEOPARD_FEMALE, Color3.getColor("#414141").toInt(), Color3.getColor("#FFFFFF").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_SQUID_TIGER_SHARK_SPAWN_EGG = REGISTRY.register("latex_squid_tiger_shark_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_SQUID_TIGER_SHARK, Color3.getColor("#969696").toInt(), Color3.BLACK.toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LYNX_SPAWN_EGG = REGISTRY.register("lynx_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LYNX, Color3.getColor("#ebd182").toInt(), Color3.getColor("#eace7a").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> FOXTA_FOXY_SPAWN_EGG = REGISTRY.register("foxta_foxy_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.FOXTA_FOXY, Color3.getColor("#FF8F33").toInt(), Color3.getColor("#FFBC85").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> SNEPSI_LEOPARD_SPAWN_EGG = REGISTRY.register("snepsi_leopard_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.SNEPSI_LEOPARD, Color3.getColor("#95D161").toInt(), Color3.getColor("#B5DF90").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> FENGQI_WOLF_SPAWN_EGG = REGISTRY.register("fengqi_wolf_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.FENGQI_WOLF, Color3.getColor("#93c6fd").toInt(), Color3.getColor("#FAC576").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> BAGEL_SPAWN_EGG = REGISTRY.register("bagel_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.BAGEL, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_SNEP_SHARK_SPAWN_EGG = REGISTRY.register("latex_dragon_snow_leopard_shark_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK, 0x969696, 0x292929, new Item.Properties()));
-    public static final RegistryObject<Item> CRYSTAL_GAS_CAT_MALE_SPAWN_EGG = REGISTRY.register("crystal_gas_cat_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.CRYSTAL_GAS_CAT_MALE, 0x9c9c9c, 0x262626, new Item.Properties()));
-    public static final RegistryObject<Item> CRYSTAL_GAS_CAT_FEMALE_SPAWN_EGG = REGISTRY.register("crystal_gas_cat_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.CRYSTAL_GAS_CAT_FEMALE, 0x9c9c9c, 0x262626, new Item.Properties()));
-    public static final RegistryObject<Item> VOID_FOX_SPAWN_EGG = REGISTRY.register("void_fox_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.VOID_FOX, 0x393939, 0xffffff, new Item.Properties()));
-    public static final RegistryObject<Item> HAYDEN_FENNEC_FOX_SPAWN_EGG = REGISTRY.register("hayden_fennec_fox_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.HAYDEN_FENNEC_FOX, 0xF6DC70, 0xF0E4B9, new Item.Properties()));
-    public static final RegistryObject<Item> BLUE_LIZARD_SPAWN_EGG = REGISTRY.register("blue_lizard_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.BLUE_LIZARD, 0x00F3FF, 0xffffff, new Item.Properties()));
-    public static final RegistryObject<Item> AVALI_SPAWN_EGG = REGISTRY.register("avali_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.AVALI, 0xffffff, 0xffffff, new Item.Properties()));
-    public static final RegistryObject<Item> AVALI_ZERGODMASTER_SPAWN_EGG = REGISTRY.register("avali_zergodmaster_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.AVALI_ZERGODMASTER, 0x000000, 0xcfa100, new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_KAYLA_SHARK_SPAWN_EGG = REGISTRY.register("latex_kayla_shark_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_KAYLA_SHARK, 0xce4d62, 0xcb4be9, new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_KITSUNE_MALE_SPAWN_EGG = REGISTRY.register("latex_kitsune_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_KITSUNE_MALE, 0xfff6f6, 0xffeeee, new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_KITSUNE_FEMALE_SPAWN_EGG = REGISTRY.register("latex_kitsune_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_KITSUNE_FEMALE, 0xfff6f6, 0xffeeee, new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_CALICO_CAT_SPAWN_EGG = REGISTRY.register("latex_calico_cat_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_CALICO_CAT, 0xffece4, 0xd56f53, new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_BORDER_COLLIE_SPAWN_EGG = REGISTRY.register("latex_border_collie_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_BORDER_COLLIE, new Color(24, 24, 30).getRGB(), new Color(255, 255, 255).getRGB(), new Item.Properties()));
-    public static final RegistryObject<Item> PROTOGEN_SPAWN_EGG = REGISTRY.register("protogen_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOGEN, new Color(255, 255, 255).getRGB(), new Color(0, 196, 255).getRGB(), new Item.Properties()));
-    public static final RegistryObject<Item> PROTOGEN_0SENIA0_SPAWN_EGG = REGISTRY.register("protogen_0senia0_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOGEN_0SENIA0, Color3.getColor("#4d0ddb").toInt(), Color3.getColor("#98b440").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> MONGOOSE_SPAWN_EGG = REGISTRY.register("mongoose_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.MONGOOSE, new Color(213, 152, 113).getRGB(), new Color(91, 91, 91).getRGB(), new Item.Properties()));
-    public static final RegistryObject<Item> BOREALIS_MALE_SPAWN_EGG = REGISTRY.register("borealis_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.BOREALIS_MALE, new Color(102, 130, 193).getRGB(), new Color(28, 42, 78).getRGB(), new Item.Properties()));
-    public static final RegistryObject<Item> BOREALIS_FEMALE_SPAWN_EGG = REGISTRY.register("borealis_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.BOREALIS_FEMALE, new Color(102, 130, 193).getRGB(), new Color(28, 42, 78).getRGB(), new Item.Properties()));
-    public static final RegistryObject<Item> PINK_CYAN_SKUNK_SPAWN_EGG = REGISTRY.register("pink_cyan_skunk_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PINK_CYAN_SKUNK, new Color(219, 175, 226).getRGB(), new Color(175, 224, 221).getRGB(), new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_WIND_CAT_MALE_SPAWN_EGG = REGISTRY.register("latex_wind_cat_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_WIND_CAT_MALE, Color3.getColor("#dfe6ec").toInt(), Color3.getColor("#87a5d4").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_WIND_CAT_FEMALE_SPAWN_EGG = REGISTRY.register("latex_wind_cat_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_WIND_CAT_FEMALE, Color3.getColor("#dfe6ec").toInt(), Color3.getColor("#87a5d4").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_WHITE_SNOW_LEOPARD_MALE_SPAWN_EGG = REGISTRY.register("latex_white_snow_leopard_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_WHITE_SNOW_LEOPARD_MALE, Color3.getColor("#fbfcff").toInt(), Color3.getColor("#7c7f88").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_WHITE_SNOW_LEOPARD_FEMALE_SPAWN_EGG = REGISTRY.register("latex_white_snow_leopard_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_WHITE_SNOW_LEOPARD_FEMALE, Color3.getColor("#fbfcff").toInt(), Color3.getColor("#7c7f88").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_CHEETAH_FEMALE_SPAWN_EGG = REGISTRY.register("latex_cheetah_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_CHEETAH_FEMALE, Color3.getColor("#d8b270").toInt(), Color3.getColor("#634927").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LATEX_CHEETAH_MALE_SPAWN_EGG = REGISTRY.register("latex_cheetah_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_CHEETAH_MALE, Color3.getColor("#d8b270").toInt(), Color3.getColor("#634927").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> LUMINARA_FLOWER_BEAST_SPAWN_EGG = REGISTRY.register("luminara_flower_beast_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LUMINARA_FLOWER_BEAST, Color3.getColor("#f5d4ef").toInt(), Color3.getColor("#241942").toInt(), new Item.Properties()));
-    public static final RegistryObject<Item> DARK_LATEX_YUFENG_QUEEN_SPAWN_EGG = REGISTRY.register("dark_latex_yufeng_queen_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.DARK_LATEX_YUFENG_QUEEN, 0x393939, 0xFAFAFA, new Item.Properties()));
-    public static final RegistryObject<Item> LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG = REGISTRY.register("luminara_crystal_being_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_FEMALE, 0xf5d4ef, 0x241942, new Item.Properties()));
-    public static final RegistryObject<Item> LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG = REGISTRY.register("luminara_crystal_being_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_MALE, 0xf5d4ef, 0x241942, new Item.Properties()));
+    public static final RegistryObject<SpawnEggItem> WHITE_FOX_SPAWN_EGG = registerSpawnEgg("white_fox_spawn_egg", ChangedAddonEntities.WHITE_FOX, -1, 0xfD6DDF7);
+    public static final RegistryObject<SpawnEggItem> LATEX_SNOW_FOX_MALE_SPAWN_EGG = registerSpawnEgg("latex_snow_fox_male_spawn_egg", ChangedAddonEntities.LATEX_SNOW_FOX_MALE, -1, 0xfD6DDF7);
+    public static final RegistryObject<SpawnEggItem> LATEX_SNOW_FOX_FEMALE_SPAWN_EGG = registerSpawnEgg("latex_snow_fox_female_spawn_egg", ChangedAddonEntities.LATEX_SNOW_FOX_FEMALE, -1, 0xfD6DDF7);
+    public static final RegistryObject<SpawnEggItem> FOXYAS_SPAWN_EGG = registerSpawnEgg("latex_snow_fox_foxyas_spawn_egg", ChangedAddonEntities.LATEX_SNOW_FOX_FOXYAS, -1, -26215);
+    public static final RegistryObject<SpawnEggItem> DAZED_LATEX_SPAWN_EGG = registerSpawnEgg("latex_dazed_spawn_egg", ChangedAddonEntities.DAZED_LATEX, -1, 0xffCFCFCF);
+    public static final RegistryObject<SpawnEggItem> BUFF_DAZED_LATEX_SPAWN_EGG = registerSpawnEgg("buff_latex_dazed_spawn_egg", ChangedAddonEntities.BUFF_DAZED_LATEX, -1, 0xffCFCFCF);
+    public static final RegistryObject<SpawnEggItem> PURO_KIND_MALE_SPAWN_EGG = registerSpawnEgg("puro_kind_male_spawn_egg", ChangedAddonEntities.PURO_KIND_MALE, 0x393939, 0x303030);
+    public static final RegistryObject<SpawnEggItem> PURO_KIND_FEMALE_SPAWN_EGG = registerSpawnEgg("puro_kind_female_spawn_egg", ChangedAddonEntities.PURO_KIND_FEMALE, 0x393939, 0x303030);
+    public static final RegistryObject<SpawnEggItem> BUNY_SPAWN_EGG = registerSpawnEgg("buny_spawn_egg", ChangedAddonEntities.BUNY, 0xfee9c8, 0x9c8c73);
+    public static final RegistryObject<SpawnEggItem> BIOSYNTH_SNOW_LEOPARD_MALE_SPAWN_EGG = registerSpawnEgg("biosynth_snow_leopard_male_spawn_egg", ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_MALE, 0x9C9C9C, 0x292929);
+    public static final RegistryObject<SpawnEggItem> BIOSYNTH_SNOW_LEOPARD_FEMALE_SPAWN_EGG = registerSpawnEgg("biosynth_snow_leopard_female_spawn_egg", ChangedAddonEntities.BIOSYNTH_SNOW_LEOPARD_FEMALE, 0x9C9C9C, 0x292929);
+    public static final RegistryObject<SpawnEggItem> MIRROR_WHITE_TIGER_SPAWN_EGG = registerSpawnEgg("mirror_white_tiger_spawn_egg", ChangedAddonEntities.MIRROR_WHITE_TIGER, -1, 0xACACAC);
+    public static final RegistryObject<SpawnEggItem> WOLFY_SPAWN_EGG = registerSpawnEgg("wolfy_spawn_egg", ChangedAddonEntities.WOLFY, 0x393939, 0x303030);
+    public static final RegistryObject<SpawnEggItem> EXP1_MALE_SPAWN_EGG = registerSpawnEgg("exp_1_male_spawn_egg", ChangedAddonEntities.EXP_1_MALE, -1, 0xffb6b9b9);
+    public static final RegistryObject<SpawnEggItem> EXP1_FEMALE_SPAWN_EGG = registerSpawnEgg("exp_1_female_spawn_egg", ChangedAddonEntities.EXP_1_FEMALE, -1, 0xffb6b9b9);
+    public static final RegistryObject<SpawnEggItem> EXP2_MALE_SPAWN_EGG = registerSpawnEgg("exp_2_male_spawn_egg", ChangedAddonEntities.EXP_2_MALE, 0x9C9C9C, 0x484848);
+    public static final RegistryObject<SpawnEggItem> EXP2_FEMALE_SPAWN_EGG = registerSpawnEgg("exp_2_female_spawn_egg", ChangedAddonEntities.EXP_2_FEMALE, 0x9C9C9C, 0x484848);
+    public static final RegistryObject<SpawnEggItem> LATEX_FERAL_SNEP_SPAWN_EGG = registerSpawnEgg("latex_ferar_snep_spawn_egg", ChangedAddonEntities.LATEX_FERAL_SNEP, 0x9C9C9C, 0x484848);
+    public static final RegistryObject<SpawnEggItem> EXP6_SPAWN_EGG = registerSpawnEgg("exp_6_spawn_egg", ChangedAddonEntities.EXP_6, 0xB2B1B9, 0xCAA2E6);
+    public static final RegistryObject<SpawnEggItem> EXP10_SPAWN_EGG = registerSpawnEgg("experiment_10_spawn_egg", ChangedAddonEntities.EXPERIMENT_10, 0x181818, 0xed1c24);
+    public static final RegistryObject<SpawnEggItem> EXPERIMENT_009_SPAWN_EGG = registerSpawnEgg("experiment_009_spawn_egg", ChangedAddonEntities.EXPERIMENT_009, 0xE9E9E9, 0x66FFFF);
+    public static final RegistryObject<SpawnEggItem> EXPERIMENT_009_BOSS_SPAWN_EGG = registerSpawnEgg("experiment_009_boss_spawn_egg", ChangedAddonEntities.EXPERIMENT_009_BOSS, 0xE9E9E9, 0x66FFFF);
+    public static final RegistryObject<SpawnEggItem> EXP10_BOSS_SPAWN_EGG = registerSpawnEgg("experiment_10_boss_spawn_egg", ChangedAddonEntities.EXPERIMENT_10_BOSS, 0x181818, 0xed1c24);
+    public static final RegistryObject<SpawnEggItem> PARTIAL_SNOW_LEOPARD_SPAWN_EGG = registerSpawnEgg("latex_snow_leopard_partial_spawn_egg", ChangedAddonEntities.SNOW_LEOPARD_PARTIAL, 0x9C9C9C, 0x484848);
+    public static final RegistryObject<SpawnEggItem> REYN_SPAWN_EGG = registerSpawnEgg("reyn_spawn_egg", ChangedAddonEntities.REYN, 0x4C4C4C, 0x464646);
+    public static final RegistryObject<SpawnEggItem> LUMINARCTIC_LEOPARD_MALE_SPAWN_EGG = registerSpawnEgg("luminarctic_leopard_male_spawn_egg", ChangedAddonEntities.LUMINARCTIC_LEOPARD_MALE, 0x414141, -1);
+    public static final RegistryObject<SpawnEggItem> LUMINARCTIC_FEMALE_LEOPARD_SPAWN_EGG = registerSpawnEgg("luminarctic_leopard_female_spawn_egg", ChangedAddonEntities.LUMINARCTIC_LEOPARD_FEMALE, 0x414141, -1);
+    public static final RegistryObject<SpawnEggItem> LATEX_SQUID_TIGER_SHARK_SPAWN_EGG = registerSpawnEgg("latex_squid_tiger_shark_spawn_egg", ChangedAddonEntities.LATEX_SQUID_TIGER_SHARK, 0x969696, Color3.BLACK.toInt());
+    public static final RegistryObject<SpawnEggItem> LYNX_SPAWN_EGG = registerSpawnEgg("lynx_spawn_egg", ChangedAddonEntities.LYNX, 0xebd182, 0xeace7a);
+    public static final RegistryObject<SpawnEggItem> FOXTA_FOXY_SPAWN_EGG = registerSpawnEgg("foxta_foxy_spawn_egg", ChangedAddonEntities.FOXTA_FOXY, 0xFF8F33, 0xFFBC85);
+    public static final RegistryObject<SpawnEggItem> SNEPSI_LEOPARD_SPAWN_EGG = registerSpawnEgg("snepsi_leopard_spawn_egg", ChangedAddonEntities.SNEPSI_LEOPARD, 0x95D161, 0xB5DF90);
+    public static final RegistryObject<SpawnEggItem> FENGQI_WOLF_SPAWN_EGG = registerSpawnEgg("fengqi_wolf_spawn_egg", ChangedAddonEntities.FENGQI_WOLF, 0x93c6fd, 0xFAC576);
+    public static final RegistryObject<SpawnEggItem> BAGEL_SPAWN_EGG = registerSpawnEgg("bagel_spawn_egg", ChangedAddonEntities.BAGEL, -1, 0xfD6DDF7);
+    public static final RegistryObject<SpawnEggItem> LATEX_SNEP_SHARK_SPAWN_EGG = registerSpawnEgg("latex_dragon_snow_leopard_shark_spawn_egg", ChangedAddonEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK, 0x969696, 0x292929);
+    public static final RegistryObject<SpawnEggItem> CRYSTAL_GAS_CAT_MALE_SPAWN_EGG = registerSpawnEgg("crystal_gas_cat_male_spawn_egg", ChangedAddonEntities.CRYSTAL_GAS_CAT_MALE, 0x9c9c9c, 0x262626);
+    public static final RegistryObject<SpawnEggItem> CRYSTAL_GAS_CAT_FEMALE_SPAWN_EGG = registerSpawnEgg("crystal_gas_cat_female_spawn_egg", ChangedAddonEntities.CRYSTAL_GAS_CAT_FEMALE, 0x9c9c9c, 0x262626);
+    public static final RegistryObject<SpawnEggItem> VOID_FOX_SPAWN_EGG = registerSpawnEgg("void_fox_spawn_egg", ChangedAddonEntities.VOID_FOX, 0x393939, -1);
+    public static final RegistryObject<SpawnEggItem> HAYDEN_FENNEC_FOX_SPAWN_EGG = registerSpawnEgg("hayden_fennec_fox_spawn_egg", ChangedAddonEntities.HAYDEN_FENNEC_FOX, 0xF6DC70, 0xF0E4B9);
+    public static final RegistryObject<SpawnEggItem> BLUE_LIZARD_SPAWN_EGG = registerSpawnEgg("blue_lizard_spawn_egg", ChangedAddonEntities.BLUE_LIZARD, 0x00F3FF, -1);
+    public static final RegistryObject<SpawnEggItem> AVALI_SPAWN_EGG = registerSpawnEgg("avali_spawn_egg", ChangedAddonEntities.AVALI, -1, -1);
+    public static final RegistryObject<SpawnEggItem> AVALI_ZERGODMASTER_SPAWN_EGG = registerSpawnEgg("avali_zergodmaster_spawn_egg", ChangedAddonEntities.AVALI_ZERGODMASTER, 0x000000, 0xcfa100);
+    public static final RegistryObject<SpawnEggItem> LATEX_KAYLA_SHARK_SPAWN_EGG = registerSpawnEgg("latex_kayla_shark_spawn_egg", ChangedAddonEntities.LATEX_KAYLA_SHARK, 0xce4d62, 0xcb4be9);
+    public static final RegistryObject<SpawnEggItem> LATEX_KITSUNE_MALE_SPAWN_EGG = registerSpawnEgg("latex_kitsune_male_spawn_egg", ChangedAddonEntities.LATEX_KITSUNE_MALE, 0xfff6f6, 0xffeeee);
+    public static final RegistryObject<SpawnEggItem> LATEX_KITSUNE_FEMALE_SPAWN_EGG = registerSpawnEgg("latex_kitsune_female_spawn_egg", ChangedAddonEntities.LATEX_KITSUNE_FEMALE, 0xfff6f6, 0xffeeee);
+    public static final RegistryObject<SpawnEggItem> LATEX_CALICO_CAT_SPAWN_EGG = registerSpawnEgg("latex_calico_cat_spawn_egg", ChangedAddonEntities.LATEX_CALICO_CAT, 0xffece4, 0xd56f53);
+    public static final RegistryObject<SpawnEggItem> LATEX_BORDER_COLLIE_SPAWN_EGG = registerSpawnEgg("latex_border_collie_spawn_egg", ChangedAddonEntities.LATEX_BORDER_COLLIE, new Color(24, 24, 30).getRGB(), new Color(255, 255, 255).getRGB());
+    public static final RegistryObject<SpawnEggItem> PROTOGEN_SPAWN_EGG = registerSpawnEgg("protogen_spawn_egg", ChangedAddonEntities.PROTOGEN, new Color(255, 255, 255).getRGB(), new Color(0, 196, 255).getRGB());
+    public static final RegistryObject<SpawnEggItem> PROTOGEN_0SENIA0_SPAWN_EGG = registerSpawnEgg("protogen_0senia0_spawn_egg", ChangedAddonEntities.PROTOGEN_0SENIA0, 0x4d0ddb, 0x98b440);
+    public static final RegistryObject<SpawnEggItem> MONGOOSE_SPAWN_EGG = registerSpawnEgg("mongoose_spawn_egg", ChangedAddonEntities.MONGOOSE, new Color(213, 152, 113).getRGB(), new Color(91, 91, 91).getRGB());
+    public static final RegistryObject<SpawnEggItem> BOREALIS_MALE_SPAWN_EGG = registerSpawnEgg("borealis_male_spawn_egg", ChangedAddonEntities.BOREALIS_MALE, new Color(102, 130, 193).getRGB(), new Color(28, 42, 78).getRGB());
+    public static final RegistryObject<SpawnEggItem> BOREALIS_FEMALE_SPAWN_EGG = registerSpawnEgg("borealis_female_spawn_egg", ChangedAddonEntities.BOREALIS_FEMALE, new Color(102, 130, 193).getRGB(), new Color(28, 42, 78).getRGB());
+    public static final RegistryObject<SpawnEggItem> PINK_CYAN_SKUNK_SPAWN_EGG = registerSpawnEgg("pink_cyan_skunk_spawn_egg", ChangedAddonEntities.PINK_CYAN_SKUNK, new Color(219, 175, 226).getRGB(), new Color(175, 224, 221).getRGB());
+    public static final RegistryObject<SpawnEggItem> LATEX_WIND_CAT_MALE_SPAWN_EGG = registerSpawnEgg("latex_wind_cat_male_spawn_egg", ChangedAddonEntities.LATEX_WIND_CAT_MALE, 0xdfe6ec, 0x87a5d4);
+    public static final RegistryObject<SpawnEggItem> LATEX_WIND_CAT_FEMALE_SPAWN_EGG = registerSpawnEgg("latex_wind_cat_female_spawn_egg", ChangedAddonEntities.LATEX_WIND_CAT_FEMALE, 0xdfe6ec, 0x87a5d4);
+    public static final RegistryObject<SpawnEggItem> LATEX_WHITE_SNOW_LEOPARD_MALE_SPAWN_EGG = registerSpawnEgg("latex_white_snow_leopard_male_spawn_egg", ChangedAddonEntities.LATEX_WHITE_SNOW_LEOPARD_MALE, 0xfbfcff, 0x7c7f88);
+    public static final RegistryObject<SpawnEggItem> LATEX_WHITE_SNOW_LEOPARD_FEMALE_SPAWN_EGG = registerSpawnEgg("latex_white_snow_leopard_female_spawn_egg", ChangedAddonEntities.LATEX_WHITE_SNOW_LEOPARD_FEMALE, 0xfbfcff, 0x7c7f88);
+    public static final RegistryObject<SpawnEggItem> LATEX_CHEETAH_FEMALE_SPAWN_EGG = registerSpawnEgg("latex_cheetah_female_spawn_egg", ChangedAddonEntities.LATEX_CHEETAH_FEMALE, 0xd8b270, 0x634927);
+    public static final RegistryObject<SpawnEggItem> LATEX_CHEETAH_MALE_SPAWN_EGG = registerSpawnEgg("latex_cheetah_male_spawn_egg", ChangedAddonEntities.LATEX_CHEETAH_MALE, 0xd8b270, 0x634927);
+    public static final RegistryObject<SpawnEggItem> LUMINARA_FLOWER_BEAST_SPAWN_EGG = registerSpawnEgg("luminara_flower_beast_spawn_egg", ChangedAddonEntities.LUMINARA_FLOWER_BEAST, 0xf5d4ef, 0x241942);
+    public static final RegistryObject<SpawnEggItem> DARK_LATEX_YUFENG_QUEEN_SPAWN_EGG = registerSpawnEgg("dark_latex_yufeng_queen_spawn_egg", ChangedAddonEntities.DARK_LATEX_YUFENG_QUEEN, 0x393939, 0xFAFAFA);
+    public static final RegistryObject<SpawnEggItem> LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG = registerSpawnEgg("luminara_crystal_being_female_spawn_egg", ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_FEMALE, 0xf5d4ef, 0x241942);
+    public static final RegistryObject<SpawnEggItem> LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG = registerSpawnEgg("luminara_crystal_being_male_spawn_egg", ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_MALE, 0xf5d4ef, 0x241942);
     // MISC ITEMS
     public static final RegistryObject<Item> DARK_LATEX_COAT = REGISTRY.register("dark_latex_coat",
             () -> new DarkLatexCoatItem(ArmorItem.Type.CHESTPLATE, new Item.Properties()));
@@ -261,8 +265,8 @@ public class ChangedAddonItems {
     public static final RegistryObject<HazardBodySuit> HAZARD_BODY_SUIT = REGISTRY.register("hazard_body_suit", HazardBodySuit::new);
     public static final RegistryObject<KeycardItem> KEYCARD_ITEM = REGISTRY.register("keycard", KeycardItem::new);
     public static final RegistryObject<TimedKeypadItem> TIMED_KEYPAD = REGISTRY.register("timed_keypad", TimedKeypadItem::new);
-    public static final RegistryObject<Item> HAND_SCANNER = RegisterBlockItem(REGISTRY, ChangedAddonBlocks.HAND_SCANNER);
-    public static final RegistryObject<Item> PAWS_SCANNER = RegisterBlockItem(REGISTRY, ChangedAddonBlocks.PAWS_SCANNER);
+    public static final RegistryObject<BlockItem> HAND_SCANNER = block(ChangedAddonBlocks.HAND_SCANNER);
+    public static final RegistryObject<BlockItem> PAWS_SCANNER = block(ChangedAddonBlocks.PAWS_SCANNER);
 
     @SubscribeEvent
     public static void clientLoad(FMLClientSetupEvent event) {
@@ -297,35 +301,39 @@ public class ChangedAddonItems {
         }
     }
 
+    private static RegistryObject<Item> registerSimple(String path) {
+        return REGISTRY.register(path, () -> new Item(new Item.Properties()));
+    }
+
+    private static RegistryObject<Item> registerSimple(String path, Item.Properties properties) {
+        return REGISTRY.register(path, () -> new Item(properties));
+    }
+
+    private static RegistryObject<Item> registerWithDesc(String path) {
+        return REGISTRY.register(path, ItemWithDescription::new);
+    }
+
+    private static RegistryObject<Item> registerWithDesc(String path, Item.Properties properties) {
+        return REGISTRY.register(path, () -> new ItemWithDescription(properties));
+    }
+
+    private static RegistryObject<SpawnEggItem> registerSpawnEgg(String path, RegistryObject<? extends EntityType<? extends Mob>> entity, int bgColor, int highlightColor) {
+        return REGISTRY.register(path, () -> new ForgeSpawnEggItem(entity, bgColor, highlightColor, new Item.Properties()));
+    }
+
     private static RegistryObject<BlockItem> block(RegistryObject<? extends Block> block) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
-    private static RegistryObject<Item> blockNoTab(RegistryObject<? extends Block> block) {
+    private static RegistryObject<BlockItem> blockNoTab(RegistryObject<? extends Block> block) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
-    private static RegistryObject<Item> block(RegistryObject<? extends Block> block, Item.Properties properties) {
+    private static RegistryObject<BlockItem> block(RegistryObject<? extends Block> block, Item.Properties properties) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), properties));
     }
 
-    private static RegistryObject<Item> RegisterBlockItem(DeferredRegister<Item> registry, RegistryObject<? extends Block> block) {
-        return registry.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
-    }
-
-    private static RegistryObject<Item> RegisterBlockItem(DeferredRegister<Item> registry, String id, RegistryObject<? extends Block> block) {
-        return registry.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
-    }
-
-    private static RegistryObject<Item> RegisterBlockItem(RegistryObject<? extends Block> block) {
-        return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
-    }
-
     public static List<RegistryObject<Item>> getNoTabItems() {
-        return List.of(SNEP_ICON, PAT_ICON, FRIENDLY_GOEY_ICON);
+        return List.of(SNEP_ICON, PAT_ICON, FRIENDLY_GOEY_ICON, CATALYZER_BLOCK_ILLUSTRATIVE_ITEM, UNIFUSER_BLOCK_ILLUSTRATIVE_ITEM, CHANGED_BOOK);
     }
-
-
-
-
 }

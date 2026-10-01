@@ -74,6 +74,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_latex_base", has(ChangedItems.LATEX_BASE.get()))
                 .save(recipeConsumer);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, STRANGE_COMPOUND_BASE.get(), 1)
+                .requires(BLUE_LATEX_GOO.get(), 1)
+                .requires(RED_LATEX_GOO.get(), 1)
+                .requires(ChangedItems.LATEX_BASE.get())
+                .unlockedBy("has_latex_base", has(ChangedItems.LATEX_BASE.get()))
+                .save(recipeConsumer);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, IRIDIUM_BLOCK.get())
                 .pattern("III")
                 .pattern("III")
