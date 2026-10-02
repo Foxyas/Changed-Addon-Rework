@@ -1,9 +1,10 @@
 {
   "type": "minecraft:blasting",
-  "experience": 25,
+  "category": "misc",
   "cookingtime": 100,
+  "experience": 1.2,
   "ingredient": {
-    "item": "changed_addon:deepslate_iridium_ore"
+    "item": "changed_addon:raw_iridium"
   },
   "result": "changed_addon:iridium"
 }

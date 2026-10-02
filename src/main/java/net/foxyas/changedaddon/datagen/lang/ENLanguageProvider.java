@@ -19,6 +19,7 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.CATALYZER;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.CONTAINMENT_CONTAINER;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DARK_LATEX_PUDDLE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DEEPSLATE_IRIDIUM_ORE;
+import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DORMANT_DARK_LATEX;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DORMANT_WHITE_LATEX;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.GOO_CORE;

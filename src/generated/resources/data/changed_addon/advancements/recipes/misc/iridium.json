@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_latex_base": {
+    "has_raw_iridium": {
       "conditions": {
         "items": [
           {
             "items": [
-              "changed:latex_base"
+              "changed_addon:raw_iridium"
             ]
           }
         ]
@@ -15,21 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "changed_addon:strange_compound_base"
+        "recipe": "changed_addon:iridium"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_latex_base",
+      "has_raw_iridium",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "changed_addon:strange_compound_base"
+      "changed_addon:iridium"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

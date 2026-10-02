@@ -42,6 +42,7 @@ public final class ChangedAddonTags {
 
     public static final class Items {
         public static final TagKey<Item> AIR = vanillaKey("air");
+        public static final TagKey<Item> PLANTS = vanillaKey("plants");
 
         public static final TagKey<Item> METAL = key("metal");
         public static final TagKey<Item> PARTIAL_METAL = key("partial_metal");

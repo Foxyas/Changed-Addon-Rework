@@ -1,0 +1,57 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    [
+      {
+        "tag": "minecraft:flowers"
+      },
+      {
+        "tag": "minecraft:plants"
+      }
+    ],
+    [
+      {
+        "tag": "minecraft:flowers"
+      },
+      {
+        "tag": "minecraft:plants"
+      }
+    ],
+    [
+      {
+        "tag": "minecraft:flowers"
+      },
+      {
+        "tag": "minecraft:plants"
+      }
+    ],
+    [
+      {
+        "tag": "minecraft:flowers"
+      },
+      {
+        "tag": "minecraft:plants"
+      }
+    ],
+    {
+      "tag": "changed_addon:meat"
+    },
+    {
+      "tag": "changed_addon:meat"
+    },
+    {
+      "tag": "changed_addon:meat"
+    },
+    {
+      "tag": "forge:seeds"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "changed_addon:impure_ammonia"
+  }
+}

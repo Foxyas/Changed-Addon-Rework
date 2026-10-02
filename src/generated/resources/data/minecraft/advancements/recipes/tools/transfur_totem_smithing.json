@@ -1,12 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_latex_base": {
+    "has_items": {
       "conditions": {
         "items": [
           {
             "items": [
-              "changed:latex_base"
+              "changed_addon:strange_compound_base",
+              "minecraft:totem_of_undying"
             ]
           }
         ]
@@ -15,21 +16,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "changed_addon:strange_compound_base"
+        "recipe": "minecraft:transfur_totem_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_latex_base",
+      "has_items",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "changed_addon:strange_compound_base"
+      "minecraft:transfur_totem_smithing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_latex_base": {
+    "has_iridium": {
       "conditions": {
         "items": [
           {
             "items": [
-              "changed:latex_base"
+              "changed_addon:deepslate_iridium_ore"
             ]
           }
         ]
@@ -15,21 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "changed_addon:strange_compound_base"
+        "recipe": "minecraft:iridium_from_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_latex_base",
+      "has_iridium",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "changed_addon:strange_compound_base"
+      "minecraft:iridium_from_blasting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

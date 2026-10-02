@@ -87,7 +87,7 @@ public class ChangedAddonItems {
 
     public static final RegistryObject<Item> PAINITE = registerSimple("painite", new Item.Properties().fireResistant().rarity(Rarity.RARE));
     public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", AccessoriesItem.Chestplate::new);
-    public static final RegistryObject<BlockItem> PAINITE_ORE = block(ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE);
+    public static final RegistryObject<BlockItem> DEEPSLATE_PAINITE_ORE = block(ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE);
     public static final RegistryObject<BlockItem> PAINITE_BLOCK = block(ChangedAddonBlocks.PAINITE_BLOCK);
 
     public static final RegistryObject<Item> LITIX_CAMMONIA_FLUID_BUCKET = REGISTRY.register("litix_cammonia_fluid_bucket", LitixCammoniaFluidItem::new);
