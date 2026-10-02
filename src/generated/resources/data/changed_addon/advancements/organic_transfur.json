@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:changed/transfur",
+  "criteria": {
+    "organic_transfur": {
+      "conditions": {
+        "forms": [
+          {
+            "entity_type_tag": "changed:latexes",
+            "inverted": true
+          }
+        ]
+      },
+      "trigger": "changed_addon:dynamic_transfur"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.organic_transfur.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:bone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.organic_transfur.title"
+    }
+  },
+  "requirements": [
+    [
+      "organic_transfur"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

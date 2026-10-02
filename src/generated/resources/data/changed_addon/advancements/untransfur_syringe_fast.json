@@ -1,0 +1,34 @@
+{
+  "parent": "changed_addon:untransfur_item",
+  "criteria": {
+    "untransfur_syringe_fast": {
+      "conditions": {
+        "item": "changed_addon:syringe_with_litix_cammonia",
+        "mobEffect": "changed_addon:untransfur_effect_fast"
+      },
+      "trigger": "changed_addon:untransfur"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.untransfur_syringe_fast.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:syringe_with_litix_cammonia",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.untransfur_syringe_fast.title"
+    }
+  },
+  "requirements": [
+    [
+      "untransfur_syringe_fast"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

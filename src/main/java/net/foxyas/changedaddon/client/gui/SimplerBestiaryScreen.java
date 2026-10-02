@@ -233,10 +233,10 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
             for (IBestiaryEntityData.BestiaryInfo info : infos) {
                 String titleStr = info.title().getString();
                 // Skip duplicate text attribute dump; our bar chart handles it!
-                if (titleStr.equalsIgnoreCase(attrTitleKey) || titleStr.equalsIgnoreCase("Attributes")) {
+                if (titleStr.equalsIgnoreCase(attrTitleKey) || titleStr.equalsIgnoreCase("Attributes") || titleStr.equalsIgnoreCase(Component.translatable("gui.changed_addon.bestiary.attributes").getString())) {
                     continue;
                 }
-                if (titleStr.equalsIgnoreCase(classTitleKey) || titleStr.equalsIgnoreCase("Classification") || titleStr.toLowerCase().contains("class")) {
+                if (titleStr.equalsIgnoreCase(classTitleKey) || titleStr.equalsIgnoreCase("Classification") || titleStr.toLowerCase().contains("class") || titleStr.equalsIgnoreCase(Component.translatable("gui.changed_addon.bestiary.classification").getString())) {
                     classificationText = info.description().getString();
                 } else {
                     loreLines.addAll(this.font.split(
@@ -250,7 +250,7 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
             for (int i = 0; i < subtitles.size(); i++) {
                 Component sub = subtitles.get(i);
                 String subStr = sub.getString();
-                if (subStr.contains("Classification:")) {
+                if (subStr.contains("Classification:") || subStr.contains(Component.translatable("gui.changed_addon.bestiary.classification_prefix").getString())) {
                     if (classificationText.isEmpty() && i + 1 < subtitles.size()) {
                         classificationText = subtitles.get(i + 1).getString().replace("§f", "").trim();
                         i++;

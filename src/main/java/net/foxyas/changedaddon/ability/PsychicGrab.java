@@ -43,7 +43,7 @@ public class PsychicGrab extends AbstractAbility<PsychicGrabInstance> {
     @Override
     public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
         Collection<Component> descriptions = new ArrayList<>(super.getAbilityDescription(entity));
-        descriptions.add(Component.translatable("ability.changed_addon.psychic_grab.description"));
+        descriptions.add(Component.translatable("ability.changed_addon.psychic_grab.desc"));
         return descriptions;
     }
 

@@ -1,9 +1,14 @@
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.item.SpecializedAnimations;
 import net.ltxprogrammer.changed.item.Syringe;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -72,5 +77,25 @@ public abstract class AbstractSyringeItem extends Item implements SpecializedAni
             if (!player.isCreative()) ItemHandlerHelper.giveItemToPlayer(player, result);
         } else Block.popResource(entity.level, entity.blockPosition(), result);
         return inUse;
+    }
+
+    protected static void resetAdvancement(ServerPlayer player, String id) {
+        Advancement adv = player.server.getAdvancements().getAdvancement(ResourceLocation.parse(id));
+        if (adv == null) return;
+
+        AdvancementProgress progress = player.getAdvancements().getOrStartProgress(adv);
+        for (String criteria : progress.getCompletedCriteria()) {
+            player.getAdvancements().revoke(adv, criteria);
+        }
+    }
+
+    protected static void grantAdvancement(Player player, ItemStack itemStack) {
+        if (!(player instanceof ServerPlayer sp)) return;
+
+        ChangedAddonCriteriaTriggers.UNTRANSFUR.trigger(sp, itemStack);
+    }
+
+    protected static void sendMessage(Player player, String key) {
+        player.displayClientMessage(Component.translatable(key), true);
     }
 }

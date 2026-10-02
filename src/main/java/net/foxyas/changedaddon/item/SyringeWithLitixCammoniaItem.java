@@ -35,61 +35,30 @@ public class SyringeWithLitixCammoniaItem extends AbstractSyringeItem {
                 .durability(2).rarity(Rarity.UNCOMMON));
     }
 
-    private static void handleUntransfurSuccess(Level level, Player player) {
+    private static void handleUntransfurSuccess(Player player, ItemStack pStack) {
+        ChangedAddonVariables.PlayerVariables playerVars = getVars(player);
         if (ProcessTransfur.isPlayerNotLatex(player)) {
             if (!player.level.isClientSide()) {
                 player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.UNTRANSFUR.get(), 1000, 0, false, false));
             }
-            if (getVars(player).showWarns) {
+            if (playerVars.showWarns) {
                 sendMessage(player, "changed_addon.untransfur.slow_effect");
             }
             return;
         }
 
-        PlayerUtil.unTransfurPlayerAndSpawnParticles(player);
+        // Visual feedback
+        if (PlayerUtil.unTransfurPlayerAndSpawnParticles(player, true, true)) {
+            // Optional: Reset advancement
+            if (playerVars.resetTransfurAdvancements && player instanceof ServerPlayer sp) {
+                resetAdvancement(sp, "minecraft:changed/transfur");
+            }
 
-        if (getVars(player).resetTransfurAdvancements && player instanceof ServerPlayer sp) {
-            resetAdvancement(sp, "minecraft:changed/transfur");
-        }
-
-        if (!player.isCreative() && !player.isSpectator()) {
-            if (!player.level.isClientSide()) {
-                player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
-                player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
+            // Grant untransfur advancement if not already
+            if (player instanceof ServerPlayer serverPlayer) {
+                grantAdvancement(serverPlayer, pStack);
             }
         }
-
-        grantAdvancement(player, "changed_addon:untransfur_advancement_2");
-
-        level.playSound(null, player, ChangedAddonSoundEvents.UNTRANSFUR.get(), SoundSource.NEUTRAL, 1, 1);
-    }
-
-    private static void resetAdvancement(ServerPlayer player, String id) {
-        Advancement adv = player.server.getAdvancements().getAdvancement(ResourceLocation.parse(id));
-        if (adv == null) return;
-
-        AdvancementProgress progress = player.getAdvancements().getOrStartProgress(adv);
-        for (String criteria : progress.getCompletedCriteria()) {
-            player.getAdvancements().revoke(adv, criteria);
-        }
-    }
-
-    private static void grantAdvancement(Player player, String id) {
-        if (!(player instanceof ServerPlayer sp)) return;
-
-        Advancement adv = sp.server.getAdvancements().getAdvancement(ResourceLocation.parse(id));
-        if (adv == null) return;
-
-        AdvancementProgress progress = sp.getAdvancements().getOrStartProgress(adv);
-        if (!progress.isDone()) {
-            for (String criteria : progress.getRemainingCriteria()) {
-                sp.getAdvancements().award(adv, criteria);
-            }
-        }
-    }
-
-    private static void sendMessage(Player player, String key) {
-        player.displayClientMessage(Component.translatable(key), true);
     }
 
     private static ChangedAddonVariables.PlayerVariables getVars(Player entity) {
@@ -125,7 +94,7 @@ public class SyringeWithLitixCammoniaItem extends AbstractSyringeItem {
 
         if (ProcessTransfur.isPlayerTransfurred(player)) {
             if (player.getRandom().nextFloat() >= 0.35) {
-                handleUntransfurSuccess(level, player);
+                handleUntransfurSuccess(player, pStack);
             } else {
                 player.hurt(ChangedAddonDamageSources.UNTRANSFUR_FAIL.source(level), 15);
                 sendMessage(player, "changed_addon.untransfur.fail");

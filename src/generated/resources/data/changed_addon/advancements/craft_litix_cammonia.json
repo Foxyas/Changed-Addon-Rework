@@ -1,0 +1,32 @@
+{
+  "parent": "changed_addon:obtain_unifuser",
+  "criteria": {
+    "craft_litix_cammonia": {
+      "conditions": {
+        "recipe_id": "changed_addon:litix_cammonia"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.craft_litix_cammonia.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:litix_cammonia"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.craft_litix_cammonia.title"
+    }
+  },
+  "requirements": [
+    [
+      "craft_litix_cammonia"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

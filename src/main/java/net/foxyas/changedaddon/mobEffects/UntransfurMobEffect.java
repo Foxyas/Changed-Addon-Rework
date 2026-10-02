@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.mobEffects;
 
 import com.google.common.collect.Iterables;
+import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -87,22 +88,14 @@ public class UntransfurMobEffect extends MobEffect {
             removePlayerTransfurAdvancements(player);
         });
 
-        grandPlayerUntransfurAdvancement(player);
+        grandPlayerUntransfurAdvancement(player, this);
         PlayerUtil.unTransfurPlayerAndSpawnParticles(player, !player.isCreative() && !player.isSpectator(), true);
     }
 
-    public static void grandPlayerUntransfurAdvancement(Player player) {
+    public static void grandPlayerUntransfurAdvancement(Player player, UntransfurMobEffect untransfurMobEffect) {
         if (player instanceof ServerPlayer sPlayer) {
             if (sPlayer.level instanceof ServerLevel) {
-                Advancement advancement = sPlayer.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:untransfur_advancement"));
-                if (!sPlayer.getAdvancements().getOrStartProgress(Objects.requireNonNull(advancement)).isDone()) {
-                    AdvancementProgress advancementProgress = sPlayer.getAdvancements().getOrStartProgress(advancement);
-                    if (!advancementProgress.isDone()) {
-                        for (String s : advancementProgress.getRemainingCriteria()) {
-                            sPlayer.getAdvancements().award(advancement, s);
-                        }
-                    }
-                }
+                ChangedAddonCriteriaTriggers.UNTRANSFUR.trigger(sPlayer, untransfurMobEffect);
             }
         }
     }

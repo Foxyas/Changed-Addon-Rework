@@ -185,13 +185,13 @@ public class PlayerUtil {
         }
     }
 
-    public static void unTransfurPlayerAndSpawnParticles(Player player, boolean shouldApplyEffects, boolean playSound) {
+    public static boolean unTransfurPlayerAndSpawnParticles(Player player, boolean shouldApplyEffects, boolean playSound) {
         TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
-        if (variant == null) return;
+        if (variant == null) return false;
 
         ChangedEntity fakeEntity = variant.getChangedEntity();
         Color3 color3 = fakeEntity.getTransfurColor(TransfurCause.DEFAULT);
-        if (!(player.level instanceof ServerLevel serverLevel)) return;
+        if (!(player.level instanceof ServerLevel serverLevel)) return false;
 
         if (!variant.getParent().getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
             serverLevel.sendParticles(ChangedParticles.gas(color3), player.getX(), player.getY() + 1, player.getZ(), 40, 0.2, 0.5, 0.2, 0);
@@ -199,64 +199,67 @@ public class PlayerUtil {
             serverLevel.sendParticles(ChangedParticles.drippingLatex(color3), player.getX(), player.getY() + 1, player.getZ(), 40, 0.2, 0.5, 0.2, 0);
         }
         if (playSound) {
-            unTransfurPlayerAndPlaySound(player, shouldApplyEffects);
+            return unTransfurPlayerAndPlaySound(player, shouldApplyEffects);
         } else {
-            unTransfurPlayer(player, shouldApplyEffects);
+            return unTransfurPlayer(player, shouldApplyEffects);
         }
     }
 
-    public static void unTransfurPlayerAndSpawnParticles(Player player) {
-        unTransfurPlayerAndSpawnParticles(player, false, false);
+    public static boolean unTransfurPlayerAndSpawnParticles(Player player) {
+        return unTransfurPlayerAndSpawnParticles(player, false, false);
     }
 
-    public static void unTransfurPlayer(Player player) {
-        if (player.level.isClientSide()) return;
+    public static boolean unTransfurPlayer(Player player) {
+        if (player.level.isClientSide()) return false;
+        TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (instance == null) return false;
 
-        ProcessTransfur.ifPlayerTransfurred(player, (instance) -> {
-            UntransfurPlayerEvent untransfurEvent = new UntransfurPlayerEvent(player, instance, null) {
-            };
-            if (ChangedAddonMod.postEvent(untransfurEvent)) {
-                TransfurVariant<?> nextVariant = untransfurEvent.getNextVariant();
-                if (nextVariant != null) {
-                    ProcessTransfur.setPlayerTransfurVariant(player, nextVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), 1, false);
-                    return;
-                }
-
-                player.displayClientMessage(Component.translatable("changed_addon.untransfur.fail"), true);
-                return;
+        UntransfurPlayerEvent untransfurEvent = new UntransfurPlayerEvent(player, instance, null) {
+        };
+        if (ChangedAddonMod.postEvent(untransfurEvent)) {
+            TransfurVariant<?> nextVariant = untransfurEvent.getNextVariant();
+            if (nextVariant != null) {
+                ProcessTransfur.setPlayerTransfurVariant(player, nextVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), 1, false);
+                return false;
             }
 
-            if (instance.isTemporaryFromSuit()) {
-                IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
-                if (grabber != null) {
-                    if (grabber.getEntity() instanceof TamableLatexEntityFavors favors) {
-                        favors.setFavor(LatexFavor.NONE);
-                    } else {
-                        GrabAbilityUtil.releaseEntity(player, grabber, false);
-                    }
+            player.displayClientMessage(Component.translatable("changed_addon.untransfur.fail"), true);
+            return false;
+        }
+
+        if (instance.isTemporaryFromSuit()) {
+            IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
+            if (grabber != null) {
+                if (grabber.getEntity() instanceof TamableLatexEntityFavors favors) {
+                    favors.setFavor(LatexFavor.NONE);
+                } else {
+                    GrabAbilityUtil.releaseEntity(player, grabber, false);
                 }
             }
+        }
 
-            instance.unhookAll(player);
-            finalizeUntransfurPlayerEvent(untransfurEvent);
+        instance.unhookAll(player);
+        finalizeUntransfurPlayerEvent(untransfurEvent);
 //            ProcessTransfur.removePlayerTransfurVariant(player);
 //            ProcessTransfur.setPlayerTransfurProgress(player, 0.0f);
-        });
+        return ProcessTransfur.getPlayerTransfurVariant(player) == null;
     }
 
-    public static void unTransfurPlayer(Player player, boolean shouldApplyEffects) {
-        unTransfurPlayer(player);
-        if (shouldApplyEffects && !player.level().isClientSide()) {
+    public static boolean unTransfurPlayer(Player player, boolean shouldApplyEffects) {
+        if (unTransfurPlayer(player) && shouldApplyEffects && !player.level().isClientSide()) {
             player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
             player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
+            return true;
         }
+        return false;
     }
 
-    public static void unTransfurPlayerAndPlaySound(Player player, boolean shouldApplyEffects) {
-        unTransfurPlayer(player, shouldApplyEffects);
-        if (player.level() instanceof ServerLevel serverLevel) {
+    public static boolean unTransfurPlayerAndPlaySound(Player player, boolean shouldApplyEffects) {
+        if (unTransfurPlayer(player, shouldApplyEffects) && player.level() instanceof ServerLevel serverLevel) {
             serverLevel.playSound(null, player.getX(), player.getEyeY(), player.getZ(), ChangedAddonSoundEvents.UNTRANSFUR.get(), SoundSource.PLAYERS, 1, 1);
+            return true;
         }
+        return false;
     }
 
     public static void splitChangedEntityFromPlayer(Level world, Player player) {

@@ -1,0 +1,33 @@
+{
+  "parent": "changed_addon:untransfur_item",
+  "criteria": {
+    "untransfur_mob_effect_slow": {
+      "conditions": {
+        "item": "changed_addon:pot_with_cammonia",
+        "mobEffect": "changed_addon:untransfur"
+      },
+      "trigger": "changed_addon:untransfur"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.untransfur_mob_effect_slow.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:pot_with_cammonia"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.untransfur_mob_effect_slow.title"
+    }
+  },
+  "requirements": [
+    [
+      "untransfur_mob_effect_slow"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
