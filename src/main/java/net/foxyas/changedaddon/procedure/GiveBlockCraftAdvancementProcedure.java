@@ -17,39 +17,39 @@ import java.util.Iterator;
 
 @Mod.EventBusSubscriber
 public class GiveBlockCraftAdvancementProcedure {
-    @SubscribeEvent
-    public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-        execute(event, event.getEntity(), event.getCrafting());
-    }
-
-    public static void execute(Entity entity, ItemStack itemstack) {
-        execute(null, entity, itemstack);
-    }
-
-    private static void execute(@Nullable Event event, Entity entity, ItemStack itemstack) {
-        if (entity == null)
-            return;
-        if (itemstack.getItem() == ChangedAddonBlocks.UNIFUSER.get().asItem()) {
-            if (entity instanceof ServerPlayer _player) {
-                Advancement advancement = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:unifuser_advancement"));
-                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(advancement);
-                if (!_ap.isDone()) {
-                    Iterator _iterator = _ap.getRemainingCriteria().iterator();
-                    while (_iterator.hasNext())
-                        _player.getAdvancements().award(advancement, (String) _iterator.next());
-                }
-            }
-        }
-        if (itemstack.getItem() == ChangedAddonBlocks.CATALYZER.get().asItem()) {
-            if (entity instanceof ServerPlayer _player) {
-                Advancement advancement = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:catalyzer_advancement"));
-                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(advancement);
-                if (!_ap.isDone()) {
-                    Iterator _iterator = _ap.getRemainingCriteria().iterator();
-                    while (_iterator.hasNext())
-                        _player.getAdvancements().award(advancement, (String) _iterator.next());
-                }
-            }
-        }
-    }
+//    @SubscribeEvent
+//    public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
+//        execute(event, event.getEntity(), event.getCrafting());
+//    }
+//
+//    public static void execute(Entity entity, ItemStack itemstack) {
+//        execute(null, entity, itemstack);
+//    }
+//
+//    private static void execute(@Nullable Event event, Entity entity, ItemStack itemstack) {
+//        if (entity == null)
+//            return;
+//        if (itemstack.getItem() == ChangedAddonBlocks.UNIFUSER.get().asItem()) {
+//            if (entity instanceof ServerPlayer _player) {
+//                Advancement advancement = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:unifuser_advancement"));
+//                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(advancement);
+//                if (!_ap.isDone()) {
+//                    Iterator _iterator = _ap.getRemainingCriteria().iterator();
+//                    while (_iterator.hasNext())
+//                        _player.getAdvancements().award(advancement, (String) _iterator.next());
+//                }
+//            }
+//        }
+//        if (itemstack.getItem() == ChangedAddonBlocks.CATALYZER.get().asItem()) {
+//            if (entity instanceof ServerPlayer _player) {
+//                Advancement advancement = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:catalyzer_advancement"));
+//                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(advancement);
+//                if (!_ap.isDone()) {
+//                    Iterator _iterator = _ap.getRemainingCriteria().iterator();
+//                    while (_iterator.hasNext())
+//                        _player.getAdvancements().award(advancement, (String) _iterator.next());
+//                }
+//            }
+//        }
+//    }
 }

@@ -25,6 +25,7 @@
     "client.renderer.LightningBoltRendererMixin",
     "client.renderer.WingFallFlyAnimationMixin",
     "client.renderer.WingFlyAnimationMixin",
+    "critereon.TransfurTriggerMixin",
     "enchantments.EnchantmentHelperMixin",
     "enchantments.EnchantmentMixin",
     "enchantments.InfinityEnchantmentMixin",

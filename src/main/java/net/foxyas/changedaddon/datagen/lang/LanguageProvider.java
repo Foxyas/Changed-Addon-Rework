@@ -53,6 +53,11 @@ public abstract class LanguageProvider extends net.minecraftforge.common.data.La
         add(toLanguageKey(attribute.getId(), "attribute"), value);
     }
 
+    protected void addAttributeDescription(RegistryObject<Attribute> attribute, String value) {
+        add(toLanguageKey(attribute.getId(), "attribute") + ".desc", value);
+        add(toLanguageKey(attribute.getId(), "attribute") + ".description", value);
+    }
+
     protected void addStasisModify(String key, String value) {
         add(modid + ".stasis.modify." + key, value);
     }

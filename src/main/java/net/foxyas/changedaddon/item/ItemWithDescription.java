@@ -22,6 +22,6 @@ public class ItemWithDescription extends Item {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, Level level, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
         super.appendHoverText(stack, level, list, flag);
-        list.add(Component.translatable(getDescriptionId(stack) + ".description"));
+        list.add(Component.translatable(getDescriptionId(stack) + ".desc"));
     }
 }

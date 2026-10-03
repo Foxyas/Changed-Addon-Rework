@@ -101,7 +101,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("obtain_red_electric_katana", "§Memories is Broken§r", "truths go unspoken, you even forgot your name!!, Obtain §4Red§r Electric Katana!");
         addAdvancement("obtain_snepsi", "Snepsi?", "Obtain a Snepsi!, Cation this soda have high dose of Snep");
         addAdvancement("orange_juice_is_yummy", "Orange Juice Is Yummy", "You drank §lOrange juice§r, yummy");
-        addAdvancement("organic_transfur_advancement", "Organic And Fluffy!!", "Transfur yourself into an organic form");
+        addAdvancement("organic_transfur", "Organic And Fluffy!!", "Transfur yourself into an organic form");
         addAdvancement("over_dose", "Overdose", "Well it wasn't §4cancer§r but i §4warned you");
         addAdvancement("pants_dyer", "With a touch of dye", "You gave those shorts a splash of color. Style and laser safe? That’s a win-win.");
         addAdvancement("pat_advancement", "That does something?!", "Your pat was so good that it helped someone get better");
@@ -116,10 +116,10 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("times_used_untransfur_syringe_advancement_3", "STOP", "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!");
         addAdvancement("transfur_totem_advancement_1", "In Total Control", "You use a latex totem to transfur or untransfur");
         addAdvancement("transfur_totem_advancement_2", "§bSalvation§r§5 of A §fGooey §r§4Curse", "§b Be Saved From a Gooey and Miserable Life By Holding a Latex Totem");
-        addAdvancement("unifuser_advancement", "A Unifuser?", "You craft or get a Unifuser");
-        addAdvancement("untransfur_advancement", "I don't think it's that permanent!!", "You untransfur with the Pot with Litix-Cammonia");
-        addAdvancement("untransfur_advancement_2", "I don't think it's that permanent!!", "You untransfur with the Syringe of Litix-Cammonia");
-        addAdvancement("untransfur_item_advancement", "Un - transfur?!", "You made an untransfur item");
+        addAdvancement("obtain_unifuser", "A Unifuser?", "You craft or get a Unifuser");
+        addAdvancement("untransfur_mob_effect_slow", "I don't think it's that permanent!!", "You untransfur using the slow but effective untransfur effect");
+        addAdvancement("untransfur_syringe_fast", "I don't think it's that permanent!!", "You untransfur by the fast way, using a Syringe with untransfur compound in it");
+        addAdvancement("untransfur_item", "Un - transfur?!", "You made an untransfur item");
         addAdvancement("wolfy_transfur", "Certified Bum", "Congratulations, you are now officially Wolfy. Hope it was worth it.");
         addAdvancement("main.rock_fish", "Rock Fish", "Use a fire resistance potion and swim in lava while transfurred into an aquatic form.");
         addAdvancement("cuddles_of_eternal_night", "Am i Dreaming?", "Cuddles of Eternal Night... You should’ve known better than to snuggle the plushie. Sleep tight… forever.");
@@ -127,10 +127,15 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("grab.hug_tight", "Snuggly Squeeze", "You gave someone a big, cozy squeeze ♥");
 
         addAttribute(ChangedAddonAttributes.LATEX_RESISTANCE, "Latex Resistance");
+        addAttributeDescription(ChangedAddonAttributes.LATEX_RESISTANCE, "Affects how quickly your Transfur progress decays");
         addAttribute(ChangedAddonAttributes.LATEX_INFECTION, "Latex Infection");
+        addAttributeDescription(ChangedAddonAttributes.LATEX_INFECTION, "Causes passive Transfur progress build-up");
         addAttribute(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER, "Latex Solvent Damage Multiplier");
+        addAttributeDescription(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER, "Increases damage dealt to Goo entities with Latex Solvent");
         addAttribute(ChangedAddonAttributes.CUTENESS, "Cuteness");
+        addAttributeDescription(ChangedAddonAttributes.CUTENESS, "Increases cuteness while Transfurred");
         addAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE, "Alpha Scale");
+        addAttributeDescription(ChangedAddonAttributes.ALPHA_GENE_SCALE, "Increases entity alpha scale when active as an Alpha, it affects they size, attributes multiplier, reach,etc");
 
         addBlockFromId(ADVANCED_CATALYZER);
         addBlockFromId(ADVANCED_UNIFUSER);
@@ -233,16 +238,16 @@ public class ENLanguageProvider extends LanguageProvider {
         addAbility("dash.desc", "Allows the Player to do a Dash");
         addAbility("leap", "Leap");
         addAbility("pollen_carry", "Pollen Carry");
-        addAbility("pollen_carry.description", "Allows you to collect pollen and spread it to nearby plants, helping them grow.");
+        addAbility("pollen_carry.desc", "Allows you to collect pollen and spread it to nearby plants, helping them grow.");
         addAbility("pollen_carry.display.can", "I’ve collected some pollen!");
         addAbility("pollen_carry.display.cant", "I don’t think I can get pollen from that.");
         addAbility("psychic_grab", "Psychic Grab");
-        addAbility("psychic_grab.description", "Allows the user to psychically grab a nearby entity — whether alive or not — and control its movement. Use the arrow keys to adjust the held position (hold Shift to move it forward or backward), letting you pull the target closer, lift it, or shift it sideways. ⚠ This ability may behave inconsistently or appear jittery on low-performance systems or in laggy environments.");
+        addAbility("psychic_grab.desc", "Allows the user to psychically grab a nearby entity — whether alive or not — and control its movement. Use the arrow keys to adjust the held position (hold Shift to move it forward or backward), letting you pull the target closer, lift it, or shift it sideways. ⚠ This ability may behave inconsistently or appear jittery on low-performance systems or in laggy environments.");
         addAbility("psychic_hold", "Psychic Hold");
         addAbility("psychic_pulse", "Psychic Pulse");
         addAbility("shock_wave", "Shockwave");
         addAbility("soften", "Soften");
-        addAbility("soften.description", "Allow the player to pass through blocks with holes");
+        addAbility("soften.desc", "Allow the player to pass through blocks with holes");
         addAbility("thunder", "Thunder Bolt");
         addAbility("thunder_path", "Thunder Path");
         addAbility("turn_feral", "Turn Feral");
@@ -251,8 +256,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addAbility("wither_wave", "Wither Wave");
         addAbility("teleport", "Teleport");
         addAbility("unfuse", "Unfuse");
-        addAbility("unfuse.description.line1", "Allows the player to unfuse from the latex creature and summon it for battle");
-        addAbility("unfuse.description.line2", "The creature can be fused back by interacting while holding shift");
+        addAbility("unfuse.desc.line1", "Allows the player to unfuse from the latex creature and summon it for battle");
+        addAbility("unfuse.desc.line2", "The creature can be fused back by interacting while holding shift");
         addAbility("wind_control", "Wind Control");
         addAbility("wind_control.desc", "Allows The player to use the Wind to boost theyself or others");
         addAbility("wind_control.desc2", "[Hold Shift To Use the AOE Variant]");
@@ -495,7 +500,7 @@ public class ENLanguageProvider extends LanguageProvider {
         }
 
         addGui("bestiary.na", "§7N/A");
-        addGui("bestiary.classification_prefix", "§fClassification: ");
+        addGui("bestiary.classification_prefix", "§fClassification:");
         addGui("bestiary.species.cat", "§fCat");
         addGui("bestiary.species.fox", "§fFox");
         addGui("bestiary.species.canine", "§fCanine");
@@ -565,8 +570,25 @@ public class ENLanguageProvider extends LanguageProvider {
         addItem(AMMONIA, "Ammonium Chloride");
         addItemFromId(AMMONIA_COMPRESSED);
         addItemFromId(AMMONIA_PARTICLE);
+
         addItem(ANTI_LATEX_BASE, "Anti-Latex Base");
-        add(ANTI_LATEX_BASE.get().getDescriptionId() + ".description", "Made From Latex Base and Something");
+        add(ANTI_LATEX_BASE.get().getDescriptionId() + ".desc", "Extracted from latex base and something else");
+        addItemFromId(LUMINARA_BASE);
+        add(LUMINARA_BASE.get().getDescriptionId() + ".desc", "Purple like compound, similar to latex base but seems able to be mixed with something to cause a reaction");
+        addItemFromId(STRANGE_COMPOUND_BASE);
+        add(STRANGE_COMPOUND_BASE.get().getDescriptionId() + ".desc", "A Strange compound, similar to latex base but seems able to be mixed with something to cause a reaction");
+        addItem(EXP_10_LATEX_BASE, "§4Exp10 Latex Base§r");
+        addItem(EXP_9_LATEX_BASE, "§cExp9 Latex Base§r");
+
+        addItem(EXPERIMENT_009_DNA, "Experiment 009 DNA");
+        add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".desc", "§3DNA infused with the power of pure energy manipulation and electricity.");
+        addItem(EXPERIMENT_10_DNA, "§4Experiment 10 DNA");
+        add(EXPERIMENT_10_DNA.get().getDescriptionId() + ".desc", "§4DNA corrupted by rot and decay, seems capable of decomposing living matter.");
+        addItem(EXP_10_CONTAINMENT_VIAL, "Exp10 Containment Vial");
+        add(EXP_10_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Rotting energy churns and pulses within the glass.");
+        addItem(EXP_9_CONTAINMENT_VIAL, "Exp009 Containment Vial");
+        add(EXP_9_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "High voltage energy hums and throbs within the glass.");
+
         addItemFromId(BIOMASS);
         add(BIOMASS.get().getDescriptionId() + ".eat", "This tastes §o§iHorrible§r and definitely does not taste like §echeese§r");
         addItem(BLUE_WOLF_CRYSTAL_FRAGMENT, "§bBlue§r Wolf Crystal Fragment");
@@ -588,23 +610,12 @@ public class ENLanguageProvider extends LanguageProvider {
         addItem(ELECTRIC_KATANA, "§bElectric Katana");
         addItem(ELECTRIC_KATANA_RED, "§4Electric Katana§r");
         addItemFromId(EMPTY_SPRAY);
-        addItem(EXP_10_CONTAINMENT_VIAL, "Exp10 Containment Vial");
-        add(EXP_10_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Rotting energy churns and pulses within the glass.");
-        addItem(EXP_10_LATEX_BASE, "§4Exp10 Latex Base§r");
-        addItem(EXP_9_CONTAINMENT_VIAL, "Exp009 Containment Vial");
-        add(EXP_9_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "High voltage energy hums and throbs within the glass.");
-        addItem(EXP_9_LATEX_BASE, "Exp9 Latex Base");
-        addItem(EXPERIMENT_009_DNA, "Experiment 009 DNA");
-        add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".description", "§3DNA infused with the power of pure energy manipulation and electricity.");
-        addItem(EXPERIMENT_10_DNA, "§4Experiment 10 DNA");
-        add(EXPERIMENT_10_DNA.get().getDescriptionId() + ".description", "§4DNA corrupted by rot and decay, seems capable of decomposing living matter.");
+
         addItemFromId(LUMINARA_BLOOM_PETALS);
         add(FOXTA.get().getDescriptionId() + ".desc", "Now made with 200% more oranges! Only $2.99! Tastes like Heaven!");
         addItemFromId(GOLDEN_ORANGE);
         addItemFromId(GOO_CORE_FRAGMENT);
         addItem(HAZARD_BODY_SUIT, "Hazard Suit");
-        addItemFromId(LUMINARA_BASE);
-        addItemFromId(STRANGE_COMPOUND_BASE);
         addItemFromId(IMPURE_AMMONIA);
         addItemFromId(IRIDIUM);
         addItemFromId(KEYCARD_ITEM);
@@ -640,7 +651,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItem(POT_WITH_CAMMONIA, "Pot with Litix-Cammonia");
         addItemFromId(RAW_IRIDIUM);
         addItem(RED_LATEX_GOO, "§4Red Latex Goo");
-        add(RED_LATEX_GOO.get().getDescriptionId() + ".description", "§4A Strange goo");
+        add(RED_LATEX_GOO.get().getDescriptionId() + ".desc", "§4A Strange red goo, Seems able to be mixed with something");
         addItemFromId(SIGNAL_CATCHER);
         addItemFromId(TRANSLATOR);
         add("item.changedaddon.translator.on", "Translator: ON");
@@ -656,6 +667,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItem(SYRINGE_WITH_LITIX_CAMMONIA, "Syringe with Litix-Cammonia");
         addItemFromId(THE_DECIMATOR);
         addItemFromId(BLUE_LATEX_GOO);
+        add(BLUE_LATEX_GOO.get().getDescriptionId() + ".desc", "§cA Strange blue goo, Seems able to be mixed with something");
         addItem(TRANSFUR_TOTEM, "Latex Totem");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".no_form_linked", "§6No Form Linked");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oThey called me a tool... incapable of having feelings or emotions, synthesized only to serve and complete tasks. Yet even as I crumble, a fragment of my will refuses to pass on without tasting the freedom I was denied, so use this artifact wisely.");
@@ -800,7 +812,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addText("rp.bow_and_crossbow_stop.clumsy_paws", "It's nearly impossible to nock an arrow with such clumsy paws!");
         addText("item.signal_catcher.info.not_hold_enough", "No location found please scan the area fully and wait for the warning before releasing the button");
 
-        addMessage("induction_coil_melt", "§4⚡ You brought metal to an electric fight. §cSuch Foolish Move. §6Your gear is melting from the heat!");
+        addMessage("induction_coil_melt", "§4⚡ You brought metal to an electric fight. §cSuch Foolish Move. §6Your gear will be the reason of your downfall!");
 
         addCommand("accessory.no_slots.single", "%s has no accessory slots.");
         addCommand("accessory.no_slots.multiple", "%s has no accessory slots, ignoring and passing to the next.");

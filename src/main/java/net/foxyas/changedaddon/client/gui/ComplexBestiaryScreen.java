@@ -301,12 +301,14 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         int detW = getEffectiveDetW();
         int textWrapWidth = Math.max(100, detW - 16);
 
+        // 1. Lore & Classification
         if (entity instanceof IBestiaryEntityData data) {
             List<IBestiaryEntityData.BestiaryInfo> infos = data.getBestiaryInfo().stream()
                     .sorted(Comparator.comparingInt(IBestiaryEntityData.BestiaryInfo::order))
                     .toList();
             for (IBestiaryEntityData.BestiaryInfo info : infos) {
                 String titleStr = info.title().getString();
+                // Skip duplicate text attribute dump; our bar chart handles it!
                 if (titleStr.equalsIgnoreCase("Attributes") || titleStr.equalsIgnoreCase(Component.translatable("gui.changed_addon.bestiary.attributes").getString()))
                     continue;
 
@@ -324,7 +326,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             for (int i = 0; i < subtitles.size(); i++) {
                 Component sub = subtitles.get(i);
                 String subStr = sub.getString();
-                if (subStr.contains("Classification:")) {
+                if (subStr.contains("Classification:") || subStr.contains(Component.translatable("gui.changed_addon.bestiary.classification_prefix").getString())) {
                     if (classificationText.isEmpty() && i + 1 < subtitles.size()) {
                         classificationText = subtitles.get(i + 1).getString().replace("§f", "").trim();
                         i++;

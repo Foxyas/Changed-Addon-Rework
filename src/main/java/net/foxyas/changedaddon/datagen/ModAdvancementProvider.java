@@ -1,13 +1,21 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.advancements.critereon.DynamicTransfurTrigger;
 import net.foxyas.changedaddon.advancements.critereon.HoldingItemsTrigger;
+import net.foxyas.changedaddon.advancements.critereon.UntransfurTrigger;
 import net.foxyas.changedaddon.advancements.critereon.UsedItemAmountTrigger;
+import net.foxyas.changedaddon.advancements.critereon.api.DynamicTransfurPredicate;
 import net.foxyas.changedaddon.datagen.customData.AdvancementWriter;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.Changed;
+import net.ltxprogrammer.changed.advancements.critereon.TransfurPredicate;
+import net.ltxprogrammer.changed.advancements.critereon.TransfurTrigger;
 import net.ltxprogrammer.changed.init.ChangedItems;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
@@ -24,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -202,6 +211,116 @@ public class ModAdvancementProvider extends AdvancementProvider {
         advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_compressed_ammonia"), obtainCompressedAmmonia);
         advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_ammonia_particles"), obtainAmmoniaParticles);
         advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("hazy_purple"), hazyPurple);
+
+        // Item / Effect references
+        ItemLike potWithCAmmonia = ChangedAddonItems.POT_WITH_CAMMONIA.get(); // adjust supplier name if needed
+        ItemLike syringeWithLitix = ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(); // adjust supplier name if needed
+
+        // 1. untransfur_mob_effect_slow advancement
+        Advancement.Builder untransfurMobEffectSlow = Advancement.Builder.advancement()
+                .parent(ChangedAddonMod.resourceLoc("untransfur_item"))
+                .display(
+                        potWithCAmmonia,
+                        Component.translatable("advancements.untransfur_mob_effect_slow.title"),
+                        Component.translatable("advancements.untransfur_mob_effect_slow.descr"),
+                        null,
+                        FrameType.GOAL,
+                        true,  // show_toast
+                        true,  // announce_to_chat
+                        true   // hidden
+                )
+                .addCriterion(
+                        "untransfur_mob_effect_slow",
+                        new UntransfurTrigger.TriggerInstance(
+                                ContextAwarePredicate.ANY,
+                                List.of(ChangedAddonMobEffects.UNTRANSFUR.getId()),
+                                List.of(ChangedAddonItems.POT_WITH_CAMMONIA.getId())
+                        )
+                );
+
+        // 2. untransfur_syringe_fast advancement
+        Advancement.Builder untransfurSyringeFast = Advancement.Builder.advancement()
+                .parent(ChangedAddonMod.resourceLoc("untransfur_item"))
+                .display(
+                        syringeWithLitix,
+                        Component.translatable("advancements.untransfur_syringe_fast.title"),
+                        Component.translatable("advancements.untransfur_syringe_fast.descr"),
+                        null,
+                        FrameType.GOAL,
+                        true,  // show_toast
+                        true,  // announce_to_chat
+                        true   // hidden
+                )
+                .addCriterion(
+                        "untransfur_syringe_fast",
+                        new UntransfurTrigger.TriggerInstance(
+                                ContextAwarePredicate.ANY,
+                                List.of(ChangedAddonMod.resourceLoc("untransfur_effect_fast")), // pass effect RLs or empty
+                                List.of(ChangedAddonMod.resourceLoc("syringe_with_litix_cammonia")) // pass item RLs or empty
+                        )
+                );
+
+        // 2. untransfur_item advancement
+        Advancement.Builder hasUntransfurItem = Advancement.Builder.advancement()
+                .parent(ChangedAddonMod.resourceLoc("obtain_unifuser"))
+                .display(
+                        potWithCAmmonia,
+                        Component.translatable("advancements.has_untransfur_item.title"),
+                        Component.translatable("advancements.has_untransfur_item.descr"),
+                        null,
+                        FrameType.GOAL,
+                        true,  // show_toast
+                        true,  // announce_to_chat
+                        true   // hidden
+                )
+                .addCriterion(
+                        "has_untransfur_item",
+                        InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ChangedAddonTags.Items.UNTRANSFUR_ITEMS).build())
+                );
+
+        Advancement.Builder craftLitixCammonia = Advancement.Builder.advancement()
+                .parent(ChangedAddonMod.resourceLoc("obtain_unifuser"))
+                .display(
+                        ChangedAddonItems.LITIX_CAMMONIA.get(),
+                        Component.translatable("advancements.craft_litix_cammonia.title"),
+                        Component.translatable("advancements.craft_litix_cammonia.descr"),
+                        null,
+                        FrameType.GOAL,
+                        true,  // show_toast
+                        false, // announce_to_chat
+                        true   // hidden
+                )
+                .addCriterion(
+                        "craft_litix_cammonia",
+                        RecipeCraftedTrigger.TriggerInstance.craftedItem(
+                                ChangedAddonMod.resourceLoc("litix_cammonia") // Recipe ID
+                        )
+                );
+
+        Advancement.Builder organicTransfur = Advancement.Builder.advancement()
+                .parent(ResourceLocation.parse("minecraft:changed/transfur"))
+                .display(
+                        Items.BONE,
+                        Component.translatable("advancements.organic_transfur.title"),
+                        Component.translatable("advancements.organic_transfur.descr"),
+                        null,
+                        FrameType.GOAL,
+                        true,  // show_toast
+                        true, // announce_to_chat
+                        false   // hidden
+                )
+                .addCriterion(
+                        "organic_transfur",
+                        DynamicTransfurTrigger.TriggerInstance.transfurredInto(DynamicTransfurPredicate.builder().entityTypeTag(ChangedTags.EntityTypes.LATEX).inverted().build())
+                );
+
+        // Registering to DataGen Output
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("organic_transfur"), organicTransfur);
+
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("craft_litix_cammonia"), craftLitixCammonia);
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("has_untransfur_item"), hasUntransfurItem);
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("untransfur_mob_effect_slow"), untransfurMobEffectSlow);
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("untransfur_syringe_fast"), untransfurSyringeFast);
 
 
         return CompletableFuture.allOf(advancementWrite.completableFutureList.toArray(CompletableFuture[]::new));

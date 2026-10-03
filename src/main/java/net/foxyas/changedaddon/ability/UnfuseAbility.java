@@ -62,8 +62,8 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
     @Override
     public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
         List<Component> descriptions = new ArrayList<>(super.getAbilityDescription(entity));
-        descriptions.add(Component.translatable("ability.changed_addon.unfuse.description.line1"));
-        descriptions.add(Component.translatable("ability.changed_addon.unfuse.description.line2"));
+        descriptions.add(Component.translatable("ability.changed_addon.unfuse.desc.line1"));
+        descriptions.add(Component.translatable("ability.changed_addon.unfuse.desc.line2"));
         return descriptions;
     }
 

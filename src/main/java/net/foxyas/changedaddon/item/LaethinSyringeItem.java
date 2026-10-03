@@ -7,10 +7,7 @@ import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.item.SpecializedAnimations;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
@@ -75,26 +72,17 @@ public class LaethinSyringeItem extends AbstractSyringeItem implements Specializ
         }
 
         // Visual feedback
-        PlayerUtil.unTransfurPlayerAndSpawnParticles(player);
+        if (PlayerUtil.unTransfurPlayerAndSpawnParticles(player, true, true)) {
+            // Optional: Reset advancement
+            if (playerVars.resetTransfurAdvancements && player instanceof ServerPlayer sp) {
+                resetAdvancement(sp, "minecraft:changed/transfur");
+            }
 
-        // Optional: Reset advancement
-        if (playerVars.resetTransfurAdvancements && player instanceof ServerPlayer sp) {
-            resetAdvancement(sp, "minecraft:changed/transfur");
+            // Grant untransfur advancement if not already
+            if (player instanceof ServerPlayer serverPlayer) {
+                grantAdvancement(serverPlayer, pStack);
+            }
         }
-
-        // Apply blindness/confusion if in survival or adventure
-        if (!level.isClientSide && !player.isCreative()) {
-            applyMobEffect(player, MobEffects.BLINDNESS, 40);
-            applyMobEffect(player, MobEffects.CONFUSION, 60);
-        }
-
-        // Grant untransfur advancement if not already
-        if (player instanceof ServerPlayer serverPlayer) {
-            grantAdvancementIfNotDone(serverPlayer, "changed_addon:untransfur_advancement_2");
-        }
-
-        // Play sound
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), ChangedAddonSoundEvents.UNTRANSFUR.get(), SoundSource.NEUTRAL, 1, 1);
     }
 
     @Override
@@ -107,27 +95,5 @@ public class LaethinSyringeItem extends AbstractSyringeItem implements Specializ
 
     protected void applyMobEffect(Player entity, MobEffect effect, int duration) {
         entity.addEffect(new MobEffectInstance(effect, duration, 0, false, false));
-    }
-
-    private void resetAdvancement(ServerPlayer player, String id) {
-        Advancement adv = player.server.getAdvancements().getAdvancement(ResourceLocation.parse(id));
-        if (adv == null) return;
-
-        AdvancementProgress progress = player.getAdvancements().getOrStartProgress(adv);
-        for (String criteria : progress.getCompletedCriteria()) {
-            player.getAdvancements().revoke(adv, criteria);
-        }
-    }
-
-    protected void grantAdvancementIfNotDone(ServerPlayer player, String advancementId) {
-        Advancement advancement = player.server.getAdvancements().getAdvancement(ResourceLocation.parse(advancementId));
-        if (advancement == null) return;
-
-        AdvancementProgress progress = player.getAdvancements().getOrStartProgress(advancement);
-        if (!progress.isDone()) {
-            for (String criterion : progress.getRemainingCriteria()) {
-                player.getAdvancements().award(advancement, criterion);
-            }
-        }
     }
 }
