@@ -964,17 +964,16 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
         }
 
-        Exp9Phase oldPhase = this.getPhase();
         float ratio = this.computeHealthRatio();
         boolean hasPhase3HealthRatio = currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO || ratio <= PHASE_3_HEALTH_RATIO;
         boolean hasPhase2HealthRatio = currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO && !hasPhase3HealthRatio;
-        if (hasPhase2HealthRatio && !isPhase3()) {
+        if (hasPhase2HealthRatio && !this.isPhase2() && !this.isPhase3()) {
             this.setPhase(Exp9Phase.PHASE2);
 //            this.onPhaseChange(oldPhase, this.getPhase());
             level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
         }
 
-        if (hasPhase3HealthRatio && !this.isPhase3()) {
+        if (hasPhase3HealthRatio && this.isPhase2() && !this.isPhase3()) {
             this.setPhase(Exp9Phase.PHASE3);
 //                this.onPhaseChange(oldPhase, this.getPhase());
             level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
