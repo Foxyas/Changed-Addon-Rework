@@ -115,10 +115,10 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("times_used_untransfur_syringe_advancement_3", "ÁLLJ", "A LITIX-KAMMÓNIÁS FECSKENDŐT 120-SZOR HASZNÁLTAD! §4 FIGYELMEZTETTELEK, HOGY HAGYJA ABBA, MERT RÁKOT KAPHATSZ!!!");
         addAdvancement("transfur_totem_advancement_1", "Teljes ellenőrzés alatt", "\"Használj latex totemet a transzfurhoz vagy a visszatranszfurhoz.");
         addAdvancement("transfur_totem_advancement_2", "§5A §r§fragacsos §r§4átok §r§bmegváltása", "§b Ments meg magát a ragacsos és nyomorúságos élettől egy latex totem segítségével");
-        addAdvancement("unifuser_advancement", "Egy unifúzor?", "Barkácsolj vagy szerezz egy unifúzort");
-        addAdvancement("untransfur_advancement", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Transzfurálja vissza magát a litix-kammóniás edénnyel");
-        addAdvancement("untransfur_advancement_2", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Transzfurálja vissza magát a litix-kammóniás fecskendővel");
-        addAdvancement("untransfur_item_advancement", "Visszatranszfur?!", "Készíts egy visszatranszfur tárgyat");
+        addAdvancement("obtain_unifuser", "Egy unifúzor?", "Barkácsolj vagy szerezz egy unifúzort");
+        addAdvancement("untransfur_mob_effect_slow", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Visszatranszfurálsz a lassú, de hatékony visszatranszfurálási effektussal.");
+        addAdvancement("untransfur_syringe_fast", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Gyorsan visszatranszfurálsz, egy visszatranszfuráló vegyületet tartalmazó fecskendővel.");
+        addAdvancement("untransfur_item", "Visszatranszfur?!", "Készíts egy visszatranszfur tárgyat");
         addAdvancement("wolfy_transfur", "Tanúsított tróger", "Gratulálok, most már hivatalosan is Wolfy vagy. Remélem, megérte.");
         addAdvancement("main.rock_fish", "Kőhal", "Használj egy tűzállóság bájitalát, és ússz a lávában vízi formaként.");
         addAdvancement("cuddles_of_eternal_night", "Álmodom?", "Örök éjszaka ölelései... Jobban kellett volna tudnod, mint összebújni a plüsssel. Aludj jól... örökké.");
@@ -126,10 +126,15 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("grab.hug_tight", "Szoros ölelés", "Valakit nagy, meleg, szoros öleléssel fogadtál ♥");
 
         addAttribute(ChangedAddonAttributes.LATEX_RESISTANCE, "Latexfertőzés");
+        addAttributeDescription(ChangedAddonAttributes.LATEX_RESISTANCE, "Befolyásolja, hogy milyen gyorsan romlik az transzfurálásod előrehaladása");
         addAttribute(ChangedAddonAttributes.LATEX_INFECTION, "Latexellenállás");
+        addAttributeDescription(ChangedAddonAttributes.LATEX_INFECTION, "Passzív transzfur előrehaladásának felhalmozódását okozza");
         addAttribute(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER, "Latexoldás sebzésének szorzója");
+        addAttributeDescription(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER, "Növeli a latex entitásoknak a latexoldó által okozott sebzést.");
         addAttribute(ChangedAddonAttributes.CUTENESS, "Cukiság");
+        addAttributeDescription(ChangedAddonAttributes.CUTENESS, "Növeli a cukiságot transzfurált állapotban");
         addAttribute(ChangedAddonAttributes.ALPHA_GENE_SCALE, "Alfa mérete");
+        addAttributeDescription(ChangedAddonAttributes.ALPHA_GENE_SCALE, "Alfa státuszban növeli az entitás alfa-méretarányát; ez hatással van a méretre, a tulajdonságok szorzójára, a hatótávolságra, stb.");
 
         addBlock(ADVANCED_CATALYZER, "Fejlett katalizátor");
         addBlock(ADVANCED_UNIFUSER, "Fejlett unifúzor");
@@ -510,7 +515,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("transfur_sounds_gui.yip", "Csahol");
 
         addGui("bestiary.na", "§7N/A");
-        addGui("bestiary.classification_prefix", "§fOsztályozás: ");
+        addGui("bestiary.classification_prefix", "§fOsztályozás:");
         addGui("bestiary.species.cat", "§fMacska");
         addGui("bestiary.species.fox", "§fRóka");
         addGui("bestiary.species.canine", "§fKutya");
@@ -580,8 +585,25 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(AMMONIA, "Ammónium-klorid");
         addItem(AMMONIA_COMPRESSED, "Sűrített ammónia");
         addItem(AMMONIA_PARTICLE, "Ammónia részecske");
+        
         addItem(ANTI_LATEX_BASE, "Anti-latex alap");
         add(ANTI_LATEX_BASE.get().getDescriptionId() + ".desc", "Latex alapból és még valamiből készült");
+        addItem(LUMINARA_BASE, "Luminara alap");
+        add(LUMINARA_BASE.get().getDescriptionId() + ".desc", "Lila színű vegyület, hasonló a latex alaphoz, de úgy tűnik, hogy valamivel keverve reakciót válthat ki");
+        addItem(STRANGE_COMPOUND_BASE, "Furcsa vegyület alap");
+        add(STRANGE_COMPOUND_BASE.get().getDescriptionId() + ".desc", "Egy furcsa vegyület, hasonló a latex alaphoz, de úgy tűnik, hogy valamivel keverve reakciót válthat ki");
+        addItem(EXP_10_LATEX_BASE, "§410-es kísérlet latex alapja§r");
+        addItem(EXP_9_LATEX_BASE, "§c009-es kísérlet latex alapja§r");
+
+        addItem(EXPERIMENT_009_DNA, "009-es kísérlet DNS-e");
+        add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".desc", "§3A tiszta energia-manipuláció és az elektromosság erejével átitatott DNS.");
+        addItem(EXPERIMENT_10_DNA, "§410-es kísérlet DNS-e");
+        add(EXPERIMENT_10_DNA.get().getDescriptionId() + ".desc", "§4A rothadás és bomlás által károsított DNS képesnek tűnik az élő anyag lebontására.");
+        addItem(EXP_10_CONTAINMENT_VIAL, "10-es kísérlet behatároló fiolája");
+        add(EXP_10_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Rothadó energia kavarog és lüktet az az üvegben.");
+        addItem(EXP_9_CONTAINMENT_VIAL, "009-es kísérlet behatároló fiolája");
+        add(EXP_9_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Nagyfeszültségű energia zümmög és lüktet az üvegben.");
+        
         addItem(BIOMASS, "Biomassza");
         add(BIOMASS.get().getDescriptionId() + ".eat", "Ez §o§iszörnyű§r ízű, és egyáltalán nem §esajtos§r ízű.");
         addItem(BLUE_WOLF_CRYSTAL_FRAGMENT, "§bKék§r farkas kristályszilánk");
@@ -603,23 +625,12 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(ELECTRIC_KATANA, "§bElektromos katana");
         addItem(ELECTRIC_KATANA_RED, "§4Elektromos katana§r");
         addItem(EMPTY_SPRAY, "Üres szpré");
-        addItem(EXP_10_CONTAINMENT_VIAL, "10-es kísérlet behatároló fiolája");
-        add(EXP_10_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Rothadó energia kavarog és lüktet az üvegben.");
-        addItem(EXP_10_LATEX_BASE, "§410-es kísérlet latex alapja§r");
-        addItem(EXP_9_CONTAINMENT_VIAL, "009-es kísérlet behatároló fiolája");
-        add(EXP_9_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Nagyfeszültségű energia zümmög és lüktet az üvegben.");
-        addItem(EXP_9_LATEX_BASE, "009-es kísérlet latex alapja");
-        addItem(EXPERIMENT_009_DNA, "009-es kísérlet DNS-e");
-        add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".desc", "§3A tiszta energia-manipuláció és az elektromosság erejével átitatott DNS.");
-        addItem(EXPERIMENT_10_DNA, "§410-es kísérlet DNS-e");
-        add(EXPERIMENT_10_DNA.get().getDescriptionId() + ".desc", "§4A rothadás és bomlás által károsított DNS képesnek tűnik az élő anyag lebontására.");
+        
         addItem(LUMINARA_BLOOM_PETALS, "Luminara virágszirmok");
         add(FOXTA.get().getDescriptionId() + ".desc", "Most 200%-kal több narancsból készült! Csak 982 forint! Mennyei íze van!");
         addItem(GOLDEN_ORANGE, "Aranynarancs");
         addItem(GOO_CORE_FRAGMENT, "Ragacsmag-szilánk");
         addItem(HAZARD_BODY_SUIT, "Védőruha");
-        addItem(LUMINARA_BASE, "Luminara alap");
-        addItem(STRANGE_COMPOUND_BASE, "Furcsa vegyület alap");
         addItem(IMPURE_AMMONIA, "Szennyezett ammónia");
         addItem(IRIDIUM, "Irídium");
         addItem(KEYCARD_ITEM, "Kulcskártya");
@@ -655,7 +666,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(POT_WITH_CAMMONIA, "Litix-kammóniás edény");
         addItem(RAW_IRIDIUM, "Nyersirídium");
         addItem(RED_LATEX_GOO, "§4Vörös latex ragacs");
-        add(RED_LATEX_GOO.get().getDescriptionId() + ".desc", "§4Egy furcsa ragacs");
+        add(RED_LATEX_GOO.get().getDescriptionId() + ".desc", "§4Furcsa vörös ragacs, úgy tűnik, valamivel összekeverhető");
         addItem(SIGNAL_CATCHER, "Jelfogó");
         addItem(TRANSLATOR, "Fordító");
         add("item.changedaddon.translator.on", "Fordító: BE");
@@ -671,6 +682,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(SYRINGE_WITH_LITIX_CAMMONIA, "Litix-kammóniás fecskendő");
         addItem(THE_DECIMATOR, "A pusztító");
         addItem(BLUE_LATEX_GOO, "Kék latex ragacs");
+        add(BLUE_LATEX_GOO.get().getDescriptionId() + ".desc", "§cFurcsa kék ragacs, úgy tűnik, valamivel összekeverhető");
         addItem(TRANSFUR_TOTEM, "Latex totem");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".no_form_linked", "§6Nincs csatolva forma");
         add(TRANSFUR_TOTEM.get().getDescriptionId() + ".desc_1", "§oEszköznek neveztek... képtelen vagyok érzéseket vagy érzelmeket hordozni, csak a feladatok teljesítésére és szolgálatára szintetizáltam. Mégis, miközben morzsolok, akaratom egy darabka nem hajlandó továbbadni anélkül, hogy megízlelné a szabadságot, amit megtagadtak tőlem, ezért használd bölcsen ezt az ereklyét.");
@@ -815,7 +827,7 @@ public class HULanguageProvider extends LanguageProvider {
         addText("rp.bow_and_crossbow_stop.clumsy_paws", "Ilyen ügyetlen mancsokkal szinte lehetetlen nyilat húzni!");
         addText("item.signal_catcher.info.not_hold_enough", "Nem található hely. Kérjük, vizsgálja át teljesen a területet, és várja meg a figyelmeztetést, mielőtt elengedné a gombot.");
 
-        addMessage("induction_coil_melt", "§4⚡ Fémet vittél egy elektromos harcba. §cMicsoda ostoba lépés. §6Olvad a felszerelésed a hőségtől!");
+        addMessage("induction_coil_melt", "§4⚡ Fémet vittél egy elektromos harcba. §cMicsoda ostoba lépés. §6A felszerelésed lesz a veszted oka!");
 
         addCommand("accessory.no_slots.single", "A(z) %s-nek nincsenek kellék rekeszei.");
         addCommand("accessory.no_slots.multiple", "%s-nek nincsenek kellék rekeszei, figyelmen kívül hagyja és a következőre ugrik.");
