@@ -1,0 +1,32 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.crystal_dyer.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:black_dye"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.crystal_dyer.title"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "rewards": {
+    "experience": 80
+  },
+  "sends_telemetry_event": false
+}

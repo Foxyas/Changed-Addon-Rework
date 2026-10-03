@@ -1,0 +1,36 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "hug": {
+      "conditions": {
+        "name": "hug"
+      },
+      "trigger": "changed_addon:grab_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.grab.hug.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:pink_wool"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "red",
+      "translate": "advancements.grab.hug.title"
+    }
+  },
+  "requirements": [
+    [
+      "hug"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

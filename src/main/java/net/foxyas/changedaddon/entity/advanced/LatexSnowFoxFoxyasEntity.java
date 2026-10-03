@@ -19,12 +19,9 @@ import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.Util;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -186,20 +183,6 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
     @Override
     public @NotNull SoundEvent getDeathSound() {
         return SoundEvents.GENERIC_DEATH;
-    }
-
-    @Override
-    public void die(@NotNull DamageSource source) {
-        super.die(source);
-
-        if (source.getEntity() instanceof ServerPlayer player) {
-            Advancement advancement = player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:foxyas_advancement"));
-            assert advancement != null;
-            AdvancementProgress _ap = player.getAdvancements().getOrStartProgress(advancement);
-            if (!_ap.isDone()) {
-                for (String s : _ap.getRemainingCriteria()) player.getAdvancements().award(advancement, s);
-            }
-        }
     }
 
     @Override

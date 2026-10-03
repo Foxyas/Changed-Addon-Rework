@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SleepNextAPlushyTrigger extends SimpleCriterionTrigger<SleepNextAPlushyTrigger.Instance> {
-    private static final ResourceLocation ID = ChangedAddonMod.resourceLoc("sleep_next_plushy");
+    private static final ResourceLocation ID = ChangedAddonMod.resourceLoc("sleep_next_to_plushy");
 
     @Override
     public @NotNull ResourceLocation getId() {
@@ -32,7 +32,7 @@ public class SleepNextAPlushyTrigger extends SimpleCriterionTrigger<SleepNextAPl
                 ? TransfurPredicate.fromJson(json.get("transfur"))
                 : TransfurPredicate.ANY;
 
-        boolean booleanPredicate = json.has("need_wake_up") && json.get("need_wake_up").getAsBoolean();
+        boolean booleanPredicate = json.has("needWakeUp") && json.get("needWakeUp").getAsBoolean();
 
         return new Instance(playerPredicate, transfurPredicate, booleanPredicate, name);
     }
@@ -109,6 +109,8 @@ public class SleepNextAPlushyTrigger extends SimpleCriterionTrigger<SleepNextAPl
                 jsonObject.addProperty("name", name);
             if (transfurPredicate != null && transfurPredicate != TransfurPredicate.ANY)
                 jsonObject.add("transfur", transfurPredicate.serializeToJson());
+
+            jsonObject.addProperty("needWakeUp", needWakeUp);
 
             return jsonObject;
         }

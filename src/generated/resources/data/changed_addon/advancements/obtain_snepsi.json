@@ -1,0 +1,41 @@
+{
+  "parent": "changed_addon:obtain_foxta",
+  "criteria": {
+    "snepsi": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:snepsi"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.obtain_snepsi.descr"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "changed_addon:snepsi"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obtain_snepsi.title"
+    }
+  },
+  "requirements": [
+    [
+      "snepsi"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

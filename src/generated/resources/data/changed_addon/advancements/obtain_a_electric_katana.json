@@ -1,0 +1,39 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "katana": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:electric_katana"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.obtain_a_electric_katana.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:electric_katana",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obtain_a_electric_katana.title"
+    }
+  },
+  "requirements": [
+    [
+      "katana"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

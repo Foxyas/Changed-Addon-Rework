@@ -1,0 +1,42 @@
+{
+  "parent": "changed_addon:obtain_green_crystal_dagger",
+  "criteria": {
+    "dagger": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:crystal_dagger_black"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.obtain_dark_crystal_dagger.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:crystal_dagger_black",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obtain_dark_crystal_dagger.title"
+    }
+  },
+  "requirements": [
+    [
+      "dagger"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

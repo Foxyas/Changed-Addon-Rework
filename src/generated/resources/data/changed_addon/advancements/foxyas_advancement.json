@@ -1,0 +1,40 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "kill": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "changed_addon:latex_snow_fox_foxyas"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.foxyas_advancement.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:spawneggoffoxyas"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.foxyas_advancement.title"
+    }
+  },
+  "requirements": [
+    [
+      "kill"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

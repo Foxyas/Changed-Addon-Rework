@@ -1,0 +1,35 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "pat": {
+      "conditions": {
+        "name": "chance"
+      },
+      "trigger": "changed_addon:pat_entity_trigger"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.pat_advancement.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:friendly_goey_icon"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.pat_advancement.title"
+    }
+  },
+  "requirements": [
+    [
+      "pat"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  },
+  "sends_telemetry_event": false
+}

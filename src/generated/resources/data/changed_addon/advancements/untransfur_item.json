@@ -1,0 +1,36 @@
+{
+  "parent": "changed_addon:obtain_unifuser",
+  "criteria": {
+    "untransfur_item": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "changed_addon:untransfur_items"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.untransfur_item.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:pot_with_cammonia"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.untransfur_item.title"
+    }
+  },
+  "requirements": [
+    [
+      "untransfur_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "changed_addon:kill_experiment_009",
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.transfur_totem_advancement_1.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:transfur_totem"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.transfur_totem_advancement_1.title"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

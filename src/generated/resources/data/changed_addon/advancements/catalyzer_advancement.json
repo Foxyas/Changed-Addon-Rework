@@ -1,0 +1,38 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "catalyzer": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:catalyzer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.catalyzer_advancement.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "changed_addon:catalyzer"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.catalyzer_advancement.title"
+    }
+  },
+  "requirements": [
+    [
+      "catalyzer"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

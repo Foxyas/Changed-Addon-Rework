@@ -1,0 +1,36 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "sleep_next_to_plushy": {
+      "conditions": {
+        "name": "dark_latex_plushy",
+        "needWakeUp": true
+      },
+      "trigger": "changed_addon:sleep_next_to_plushy"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.cuddles_of_eternal_night.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:dark_latex_wolf_plushy"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.cuddles_of_eternal_night.title"
+    }
+  },
+  "requirements": [
+    [
+      "sleep_next_to_plushy"
+    ]
+  ],
+  "rewards": {
+    "experience": 2500
+  },
+  "sends_telemetry_event": false
+}

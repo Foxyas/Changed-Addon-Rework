@@ -1,0 +1,35 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "pat": {
+      "conditions": {
+        "name": "paticifier"
+      },
+      "trigger": "changed_addon:pat_entity_trigger"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.paticifier.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:friendly_goey_icon"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.paticifier.title"
+    }
+  },
+  "requirements": [
+    [
+      "pat"
+    ]
+  ],
+  "rewards": {
+    "experience": 10000
+  },
+  "sends_telemetry_event": false
+}

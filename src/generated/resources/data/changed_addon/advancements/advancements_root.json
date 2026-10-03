@@ -1,0 +1,30 @@
+{
+  "criteria": {
+    "tick": {
+      "conditions": {},
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "changed_addon:textures/screens/wall_white_with_silver.png",
+    "description": {
+      "translate": "advancements.advancements_root.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "changed_addon:changedbook"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.advancements_root.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

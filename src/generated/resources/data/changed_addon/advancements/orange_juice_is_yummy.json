@@ -1,0 +1,38 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "juice": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:orange_juice"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.orange_juice_is_yummy.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "changed_addon:orange_juice"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.orange_juice_is_yummy.title"
+    }
+  },
+  "requirements": [
+    [
+      "juice"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

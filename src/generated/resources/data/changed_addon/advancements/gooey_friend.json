@@ -1,0 +1,32 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.gooey_friend.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "changed_addon:friendly_goey_icon"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.gooey_friend.title"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "rewards": {
+    "experience": 5
+  },
+  "sends_telemetry_event": false
+}
