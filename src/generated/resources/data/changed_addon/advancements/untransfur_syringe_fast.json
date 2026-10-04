@@ -3,8 +3,9 @@
   "criteria": {
     "untransfur_syringe_fast": {
       "conditions": {
-        "item": "changed_addon:syringe_with_litix_cammonia",
-        "mobEffect": "changed_addon:untransfur_effect_fast"
+        "item": {
+          "tag": "changed_addon:untransfur_items/cause_fast_untransfur"
+        }
       },
       "trigger": "changed_addon:untransfur"
     }

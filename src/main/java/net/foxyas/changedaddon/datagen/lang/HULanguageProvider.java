@@ -113,8 +113,8 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("times_used_untransfur_syringe_advancement", "Zavart határozatlanság?", "Több mint 32 alkalommal használtad a litix-kamóniás fecskendőt, határozatlan vagy az emberségeddel kapcsolatban, szent ég!");
         addAdvancement("times_used_untransfur_syringe_advancement_2", "Hol vannak a mellékhatások?", "Több mint 64 alkalommal használtad a litix-kamóniás fecskendőt!!! §4HA NEM HAGYOD ABBA A DNS-ED VÁLTOZTATÁSÁT, RÁKOT KAPHATSZ!!!!!");
         addAdvancement("times_used_untransfur_syringe_advancement_3", "ÁLLJ", "A LITIX-KAMÓNIÁS FECSKENDŐT 120-SZOR HASZNÁLTAD! §4 FIGYELMEZTETTELEK, HOGY HAGYJA ABBA, MERT RÁKOT KAPHATSZ!!!");
-        addAdvancement("transfur_totem_advancement_1", "Teljes ellenőrzés alatt", "\"Használj latex totemet a transzfurhoz vagy a visszatranszfurhoz.");
-        addAdvancement("transfur_totem_advancement_2", "§5A §r§fragacsos §r§4átok §r§bmegváltása", "§b Ments meg magát a ragacsos és nyomorúságos élettől egy latex totem segítségével");
+        addAdvancement("transfur_totem_untransfur", "Teljes ellenőrzés alatt", "\"Használj latex totemet a transzfurhoz vagy a visszatranszfurhoz.");
+        addAdvancement("transfur_totem_benign_salvation", "§5A §r§fragacsos §r§4átok §r§bmegváltása", "§b Ments meg magát a ragacsos és nyomorúságos élettől egy latex totem segítségével");
         addAdvancement("unifuser_advancement", "Egy unifúzor?", "Barkácsolj vagy szerezz egy unifúzort");
         addAdvancement("untransfur_advancement", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Transzfurálja vissza magát a litix-kamóniás edénnyel");
         addAdvancement("untransfur_advancement_2", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Transzfurálja vissza magát a litix-kamóniás fecskendővel");

@@ -1,10 +1,10 @@
 {
-  "parent": "changed_addon:times_used_untransfur_syringe_advancement_2",
+  "parent": "changed_addon:untransfur_syringe_fast",
   "criteria": {
     "syringe_use": {
       "conditions": {
         "item": "changed_addon:syringe_with_litix_cammonia",
-        "min": 128
+        "min": 32
       },
       "trigger": "changed_addon:used_item_amount"
     }
@@ -12,7 +12,7 @@
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.times_used_untransfur_syringe_advancement_3.descr"
+      "translate": "advancements.used_untransfur_syringe_warning_32.descr"
     },
     "frame": "challenge",
     "hidden": true,
@@ -22,7 +22,7 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.times_used_untransfur_syringe_advancement_3.title"
+      "translate": "advancements.used_untransfur_syringe_warning_32.title"
     }
   },
   "requirements": [

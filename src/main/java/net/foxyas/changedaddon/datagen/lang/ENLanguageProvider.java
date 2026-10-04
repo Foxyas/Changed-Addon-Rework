@@ -102,7 +102,6 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("obtain_snepsi", "Snepsi?", "Obtain a Snepsi!, Cation this soda have high dose of Snep");
         addAdvancement("orange_juice_is_yummy", "Orange Juice Is Yummy", "You drank §lOrange juice§r, yummy");
         addAdvancement("organic_transfur", "Organic And Fluffy!!", "Transfur yourself into an organic form");
-        addAdvancement("over_dose", "Overdose", "Well it wasn't §4cancer§r but i §4warned you");
         addAdvancement("pants_dyer", "With a touch of dye", "You gave those shorts a splash of color. Style and laser safe? That’s a win-win.");
         addAdvancement("pat_advancement", "That does something?!", "Your pat was so good that it helped someone get better");
         addAdvancement("pats_on_the_beast", "Bad Idea?...or Totally worth it?.", "Congratulations!!!, you just buffed the monster!, they will probably have no mercy of your soul now!, Good Luck!");
@@ -111,11 +110,12 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("snepsi_addictive", "Snepsi Addictive!", "We take a big sippy,You drink 100 Snepsis!");
         addAdvancement("stealth_pats", "Hidden §cAffection§r", "Pet a Goo Creature while wearing a cloak to conceal and confuse them.");
         addAdvancement("swim_regret", "Regret!", "Swim in water with a form that has low swim speed for a minute");
-        addAdvancement("times_used_untransfur_syringe_advancement", "Confused indecision?", "You used a Litix-Cammonia Syringe more than 32 times, you are indecisive about your humanity, holy!");
-        addAdvancement("times_used_untransfur_syringe_advancement_2", "where are the side effects?", "You used a litixcammonia syringe more than 64 times!!! §4CAN GO GET ONE CANCER IF YOU NOT STOP CHANGE YOUR DNA!!!!!");
-        addAdvancement("times_used_untransfur_syringe_advancement_3", "STOP", "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!");
-        addAdvancement("transfur_totem_advancement_1", "In Total Control", "You use a latex totem to transfur or untransfur");
-        addAdvancement("transfur_totem_advancement_2", "§bSalvation§r§5 of A §fGooey §r§4Curse", "§b Be Saved From a Gooey and Miserable Life By Holding a Latex Totem");
+        addAdvancement("used_untransfur_syringe_warning_32", "Confused indecision?", "You used a Litix-Cammonia Syringe more than 32 times, you are indecisive about your humanity, holy!");
+        addAdvancement("used_untransfur_syringe_warning_64", "where are the side effects?", "You used a litixcammonia syringe more than 64 times!!! §4CAN GO GET ONE CANCER IF YOU NOT STOP CHANGE YOUR DNA!!!!!");
+        addAdvancement("used_untransfur_syringe_warning_128", "Oh, that will NOT be good...", "You used the Litix Cammonia syringe more than 128 TIMES! I HIGHLY recommend that you STOP before you get cancer or have an §4*Overdose*§r...");
+        addAdvancement("transfur_totem_untransfur", "In Total Control", "You use a latex totem to transfur or untransfur");
+        addAdvancement("transfur_totem_benign_salvation", "§bSalvation§r§5 of A §fGooey §r§4Curse", "§b Be Saved From a Gooey and Miserable Life By Holding a Latex Totem");
+        addAdvancement("over_dose", "Overdose", "Well it wasn't §4cancer§r but i §4warned you");
         addAdvancement("obtain_unifuser", "A Unifuser?", "You craft or get a Unifuser");
         addAdvancement("untransfur_mob_effect_slow", "I don't think it's that permanent!!", "You untransfur using the slow but effective untransfur effect");
         addAdvancement("untransfur_syringe_fast", "I don't think it's that permanent!!", "You untransfur by the fast way, using a Syringe with untransfur compound in it");
@@ -377,6 +377,10 @@ public class ENLanguageProvider extends LanguageProvider {
                 "%1$s was squeezed to death",
                 "%1$s was squeezed to death by %2$s using %3$s",
                 "%1$s was squeezed to death by %2$s");
+        addDeathMessage(ChangedAddonDamageSources.OVER_DOSE.damageType(),
+                "%1$s ignored all warnings and had a fatal overdose",
+                "%1$s pushed their body past the limit while fighting %2$s using %3$s",
+                "%1$s pushed their body past the limit while fighting %2$s");
 
         addEffect(ChangedAddonMobEffects.UNTRANSFUR, "§7Untransfur", "Displays untransfur progress via overlay. Progress speeds up when sleeping. When complete, the untransfur is applied.");
         add("effect.changed_addon." + ChangedAddonMobEffects.UNTRANSFUR.getId().getPath() + ".no_effect", "The effect doesn't seem to be working");

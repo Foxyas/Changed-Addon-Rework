@@ -1,0 +1,40 @@
+{
+  "parent": "changed_addon:transfur_totem_untransfur",
+  "criteria": {
+    "untransfur": {
+      "conditions": {
+        "extra_context": "totem_salvation",
+        "item": {
+          "items": [
+            "changed_addon:transfur_totem"
+          ]
+        }
+      },
+      "trigger": "changed_addon:untransfur"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.transfur_totem.benign_salvation.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:transfur_totem"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.transfur_totem_benign_salvation.title"
+    }
+  },
+  "requirements": [
+    [
+      "untransfur"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": true
+}

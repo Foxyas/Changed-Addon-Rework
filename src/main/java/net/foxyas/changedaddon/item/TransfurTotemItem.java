@@ -21,8 +21,6 @@ import net.ltxprogrammer.changed.item.VariantHoldingBase;
 import net.ltxprogrammer.changed.process.Pale;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.StackUtil;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
@@ -106,7 +104,7 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
         variantData.remove("transfurProgressionO");
         variantData.remove("transfurProgression");
         itemStackTag.put("TransfurVariantData", variantData);
-        activateVisuals(level, player, stack, null, 100, SoundEvents.BEACON_ACTIVATE);
+        activateVisuals(level, player, stack, 100, SoundEvents.BEACON_ACTIVATE);
     }
 
     private static void linkForm(Level level, Player player, ItemStack stack, TransfurVariantInstance<?> tf, ResourceLocation form) {
@@ -117,19 +115,20 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
         if (!entity.getAbilities().instabuild) entity.getCooldowns().addCooldown(itemstack.getItem(), ticks);
     }
 
-    private static void activateVisuals(Level level, Player entity, ItemStack itemstack, String advancement, int cooldown, SoundEvent soundEvent) {
-        activateVisuals(level, entity, itemstack, advancement, cooldown, soundEvent, 1f);
+    private static void activateVisuals(Level level, Player player, ItemStack itemstack, int cooldown, SoundEvent soundEvent) {
+        activateVisuals(level, player, itemstack, cooldown, soundEvent, 1f);
     }
 
-    private static void activateVisuals(Level level, Player entity, ItemStack itemstack, String advancement, int cooldown, SoundEvent soundEvent, float pitch) {
+    private static void activateVisuals(Level level, Player player, ItemStack itemstack, int cooldown, SoundEvent soundEvent, float pitch) {
         if (level.isClientSide())
             Minecraft.getInstance().gameRenderer.displayItemActivation(itemstack);
 
-        applyCooldownForTotem(entity, itemstack, cooldown);
-        if (soundEvent != null) visualActivate(level, entity, soundEvent, pitch);
+        applyCooldownForTotem(player, itemstack, cooldown);
+        if (soundEvent != null) visualActivate(level, player, soundEvent, pitch);
 
-        if (advancement != null)
-            grantAdvancement(entity, advancement);
+        if (player instanceof ServerPlayer serverPlayer) {
+            grantUntransfurAdvancement(itemstack, serverPlayer);
+        }
     }
 
     private static void visualActivate(Level level, Player player, SoundEvent sound) {
@@ -138,17 +137,6 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
 
     private static void visualActivate(Level level, Player player, SoundEvent sound, float pitch) {
         level.playSound(null, player.getX(), player.getY(), player.getZ(), sound, SoundSource.NEUTRAL, 1, pitch);
-    }
-
-    private static void grantAdvancement(Entity entity, String id) {
-        if (!(entity instanceof ServerPlayer player)) return;
-
-        Advancement adv = player.server.getAdvancements().getAdvancement(ResourceLocation.parse(id));
-        if (adv == null) return;
-
-        AdvancementProgress progress = player.getAdvancements().getOrStartProgress(adv);
-        if (!progress.isDone())
-            for (String criterion : progress.getRemainingCriteria()) player.getAdvancements().award(adv, criterion);
     }
 
     private static void addModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
@@ -263,7 +251,7 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
             if (!form.isEmpty()) {
                 tag.remove("form");
                 if (tag.contains("TransfurVariantData")) tag.remove("TransfurVariantData");
-                activateVisuals(level, player, stack, null, 50, SoundEvents.BEACON_DEACTIVATE);
+                activateVisuals(level, player, stack, 50, SoundEvents.BEACON_DEACTIVATE);
                 return InteractionResultHolder.consume(stack);
             }
 
@@ -281,7 +269,9 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
             PlayerUtil.unTransfurPlayerAndSpawnParticles(player);
             applyCooldownForTotem(player, stack, 100);
             visualActivate(level, player, ChangedAddonSoundEvents.UNTRANSFUR.get());
-            grantAdvancement(player, "changed_addon:transfur_totem_advancement_1");
+            if (player instanceof ServerPlayer serverPlayer) {
+                grantUntransfurAdvancement(stack, serverPlayer);
+            }
             return InteractionResultHolder.consume(stack);
         }
 
@@ -291,7 +281,7 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
             // 0.85f to avoid issues with the transfur animation and because is design choice
         } else PlayerUtil.transfurPlayer(player, form, 0.85f);
 
-        activateVisuals(level, player, stack, "changed_addon:transfur_totem_advancement_1", 100, null);
+        activateVisuals(level, player, stack, 100, null);
         return InteractionResultHolder.consume(stack);
     }
 
@@ -317,19 +307,19 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
 
             if (ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get()) {
                 setTransfurVariantForTotem(totem, transfurId);
-                activateVisuals(level, player, totem, null, 20, SoundEvents.BEACON_ACTIVATE);
+                activateVisuals(level, player, totem, 20, SoundEvents.BEACON_ACTIVATE);
                 return InteractionResult.SUCCESS;
             }
 
             if (transfurId.startsWith("changed:form")) {
                 setTransfurVariantForTotem(totem, transfurId);
-                activateVisuals(level, player, totem, null, 20, SoundEvents.BEACON_ACTIVATE);
+                activateVisuals(level, player, totem, 20, SoundEvents.BEACON_ACTIVATE);
                 return InteractionResult.SUCCESS;
             }
 
             if (transfurId.startsWith("changed_addon:form")) {
                 // Note: pitch 0 here matches the original behavior; may be intentional or a typo worth revisiting.
-                activateVisuals(level, player, totem, null, 50, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, 0f);
+                activateVisuals(level, player, totem, 50, SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, 0f);
                 if (!target.level.isClientSide()) {
                     target.displayClientMessage(Component.translatable("changed_addon.latex_totem.not_valid"), true);
                 }
@@ -339,7 +329,7 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
             String formId = changedEntity.getSelfVariant() != null ? changedEntity.getSelfVariant().getFormId().toString() : "";
 
             setTransfurVariantForTotem(totem, formId);
-            activateVisuals(level, player, totem, null, 20, SoundEvents.BEACON_ACTIVATE);
+            activateVisuals(level, player, totem, 20, SoundEvents.BEACON_ACTIVATE);
             return InteractionResult.SUCCESS;
         }
 
@@ -379,10 +369,6 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
                 || isNotBenign(ProcessTransfur.getPlayerTransfurVariant(player)))
             return;
 
-        if (isHoldingTotem) {
-
-        }
-
         PlayerUtil.unTransfurPlayerAndSpawnParticles(player);
 
         level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.TOTEM_USE, SoundSource.NEUTRAL, 1, 1);
@@ -392,7 +378,7 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
 
         if (entity instanceof ServerPlayer serverPlayer) {
             player.displayClientMessage(Component.literal("The totem you were carrying has been activated"), true);
-            ChangedAddonCriteriaTriggers.SIMPLE_ID_TRIGGER.trigger(serverPlayer, "untransfur.from:benign_latex");
+            grandBeningSalvationAchievement(itemstack, serverPlayer);
         }
     }
 
@@ -414,6 +400,14 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
             }
         }
         return update;
+    }
+
+    public static void grantUntransfurAdvancement(@NotNull ItemStack itemstack, ServerPlayer serverPlayer) {
+        ChangedAddonCriteriaTriggers.UNTRANSFUR.trigger(serverPlayer, null, itemstack, "totem_untransfur");
+    }
+
+    public static void grandBeningSalvationAchievement(@NotNull ItemStack itemstack, ServerPlayer serverPlayer) {
+        ChangedAddonCriteriaTriggers.UNTRANSFUR.trigger(serverPlayer, null, itemstack, "totem_salvation");
     }
 
     @Override

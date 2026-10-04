@@ -15,7 +15,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -92,11 +94,14 @@ public class SyringeWithLitixCammoniaItem extends AbstractSyringeItem {
 
         if (!(entity instanceof ServerPlayer player)) return;
 
+        if (player.getStats().getValue(Stats.ITEM_USED.get(this)) >= 132) {
+            player.hurt(ChangedAddonDamageSources.OVER_DOSE.source(level), 15f);
+        }
         if (ProcessTransfur.isPlayerTransfurred(player)) {
             if (player.getRandom().nextFloat() >= 0.35) {
                 handleUntransfurSuccess(player, pStack);
             } else {
-                player.hurt(ChangedAddonDamageSources.UNTRANSFUR_FAIL.source(level), 15);
+                player.hurt(ChangedAddonDamageSources.UNTRANSFUR_FAIL.source(level), 15f);
                 sendMessage(player, "changed_addon.untransfur.fail");
             }
             return;

@@ -8,7 +8,7 @@
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.transfur_totem_advancement_1.descr"
+      "translate": "advancements.transfur_totem_untransfur.descr"
     },
     "frame": "challenge",
     "hidden": true,
@@ -17,7 +17,7 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.transfur_totem_advancement_1.title"
+      "translate": "advancements.transfur_totem_untransfur.title"
     }
   },
   "requirements": [

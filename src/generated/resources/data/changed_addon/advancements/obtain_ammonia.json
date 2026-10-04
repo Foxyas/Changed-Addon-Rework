@@ -1,5 +1,5 @@
 {
-  "parent": "changed_addon:advancements_root",
+  "parent": "changed_addon:obtain_compressed_ammonia",
   "criteria": {
     "obtain_item": {
       "conditions": {
@@ -12,6 +12,21 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.obtain_ammonia.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "changed_addon:ammonia"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obtain_ammonia.title"
     }
   },
   "requirements": [
