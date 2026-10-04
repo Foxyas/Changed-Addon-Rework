@@ -13,9 +13,12 @@ import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
 
 import static net.foxyas.changedaddon.client.renderer.layers.PulsingColorFunction.fromColorFunction;
 
@@ -30,7 +33,11 @@ public class MaleLuminaraCrystalBeingRenderer extends AdvancedHumanoidRenderer<M
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new EmissivePulseLayer<>(this, TEXTURE_GLOW, (e) -> true));
         this.addLayer(CustomEyesLayer.builder(this, context.getModelSet()).withSclera(CustomEyesLayer::scleraColor).withLeftIris(CustomEyesLayer::irisColorLeft).withRightIris(CustomEyesLayer::irisColorRight).build());
-        this.addLayer(CustomEyesLayer.builder(this, context.getModelSet()).withSclera(CustomEyesLayer::scleraColor).withLeftIris(getFromDefault(CustomEyesLayer::glowingIrisColorLeft)).withRightIris(getFromDefault(CustomEyesLayer::glowingIrisColorRight)).build());
+        this.addLayer(CustomEyesLayer.builder(this, context.getModelSet()).withSclera(CustomEyesLayer::noRender)
+                .withLeftIris(getFromDefault(CustomEyesLayer.fixedColorGlowing(Color3.getColor("b473e9"))))
+                .withRightIris(getFromDefault(CustomEyesLayer.fixedColorGlowing(Color3.getColor("b473e9"))))
+                .build()
+        );
     }
 
     public PulsingColorFunction<MaleLuminaraCrystalBeing> getFromDefault(ColorFunction<MaleLuminaraCrystalBeing> function) {
