@@ -225,6 +225,21 @@ public abstract class TransfurVariantInstanceMixin<T extends ChangedEntity> impl
         }
     }
 
+    @Inject(method = "save", at = @At("RETURN"))
+    private void maySaveExtraData(CallbackInfoReturnable<CompoundTag> cir) {
+        CompoundTag tag = cir.getReturnValue();
+        if (this.getChangedEntity() instanceof IVariantExtraStats stats) stats.saveExtraData(tag);
+        tag.putBoolean("untransfurImmunity", getUntransfurImmunity(UntransfurReason.SURVIVAL));
+        if (getUntransfurImmunity(UntransfurReason.COMMAND)) tag.putBoolean("untransfurImmunityCommand", getUntransfurImmunity(UntransfurReason.COMMAND));
+    }
+
+    @Inject(method = "load", at = @At("RETURN"))
+    private void mayReadExtraData(CompoundTag tag, CallbackInfo cir) {
+        if (this.getChangedEntity() instanceof IVariantExtraStats IVariantExtraStats) IVariantExtraStats.readExtraData(tag);
+        if (tag.contains("untransfurImmunity")) setUntransfurImmunity(UntransfurReason.SURVIVAL, tag.getBoolean("untransfurImmunity"));
+        if (tag.contains("untransfurImmunityCommand")) setUntransfurImmunity(UntransfurReason.COMMAND, tag.getBoolean("untransfurImmunityCommand"));
+    }
+
     @Inject(method = "canWear", at = @At("HEAD"), cancellable = true)
     private void negateArmor(Player player, ItemStack itemStack, EquipmentSlot slot, CallbackInfoReturnable<Boolean> cir) {
         if (itemStack.getItem() instanceof DarkLatexCoatItem && slot.getType() == EquipmentSlot.Type.ARMOR) {
