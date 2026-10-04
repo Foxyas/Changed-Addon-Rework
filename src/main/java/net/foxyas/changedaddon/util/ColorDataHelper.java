@@ -2,9 +2,12 @@ package net.foxyas.changedaddon.util;
 
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.lang.reflect.Constructor;
 
+@OnlyIn(Dist.CLIENT)
 public class ColorDataHelper {
     private static final Constructor<CustomEyesLayer.ColorData> COLOR_DATA_CONSTRUCTOR;
 

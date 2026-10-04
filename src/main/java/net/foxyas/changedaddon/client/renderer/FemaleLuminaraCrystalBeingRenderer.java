@@ -26,6 +26,7 @@ public class FemaleLuminaraCrystalBeingRenderer extends AdvancedHumanoidRenderer
                 ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new EmissivePulseLayer<>(this, TEXTURE_GLOW, (e) -> true));
+        this.addLayer(CustomEyesLayer.builder(this, context.getModelSet()).withSclera(CustomEyesLayer::scleraColor).withLeftIris(CustomEyesLayer::irisColorLeft).withRightIris(CustomEyesLayer::irisColorRight).build());
         this.addLayer(CustomEyesLayer.builder(this, context.getModelSet()).withSclera(CustomEyesLayer::scleraColor).withLeftIris(getFromDefault(CustomEyesLayer::glowingIrisColorLeft)).withRightIris(getFromDefault(CustomEyesLayer::glowingIrisColorRight)).build());
     }
 
