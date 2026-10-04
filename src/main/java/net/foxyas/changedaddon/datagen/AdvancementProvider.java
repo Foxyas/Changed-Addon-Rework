@@ -897,7 +897,7 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("tf", new TransfurTrigger.TriggerInstance(ContextAwarePredicate.ANY, new TransfurPredicate(Set.of(ChangedAddonTransfurVariants.WOLFY.get()))))
+                .addCriterion("tf", DynamicTransfurTrigger.TriggerInstance.transfurredInto(DynamicTransfurPredicate.builder().form(ChangedAddonTransfurVariants.WOLFY.get()).build()))
                 .rewards(AdvancementRewards.Builder.experience(250)));
 
         advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("organic_transfur"), Advancement.Builder.advancement()
