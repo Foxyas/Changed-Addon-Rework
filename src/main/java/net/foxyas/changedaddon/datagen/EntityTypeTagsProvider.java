@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.extension.changed_synergy.ChangedSynergyTags;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -78,14 +79,14 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
                 EntityType.WOLF);
 
         tag(ChangedAddonTags.EntityTypes.PATABLE).add(
-                EntityType.OCELOT,
-                EntityType.PARROT,
-                EntityType.CAT,
-                EntityType.RABBIT,
-                EntityType.WOLF,
-                EntityType.FOX,
-                LATEX_SNOW_FOX_FOXYAS.get(),
-                PROTOTYPE.get())
+                        EntityType.OCELOT,
+                        EntityType.PARROT,
+                        EntityType.CAT,
+                        EntityType.RABBIT,
+                        EntityType.WOLF,
+                        EntityType.FOX,
+                        LATEX_SNOW_FOX_FOXYAS.get(),
+                        PROTOTYPE.get())
                 .addOptional(ResourceLocation.withDefaultNamespace("armadillo"));
 
         tag(ChangedAddonTags.EntityTypes.DRAGON_ENTITIES).add(
@@ -128,5 +129,11 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
 
         tag(ChangedTags.EntityTypes.CAN_WEAR_EXOSKELETON).add(canUseExoskeleton().toArray(new EntityType[0])).remove(ChangedAddonTags.EntityTypes.PROTOGENS);
         tag(ChangedAddonTags.EntityTypes.CARDBOARD_BOX_HIDER).add(LATEX_SNOW_LEOPARD_MALE.get(), LATEX_SNOW_LEOPARD_FEMALE.get(), LATEX_HYPNO_CAT.get());
+
+        tag(ChangedSynergyTags.SOCIAL_INTERACTION_EXCLUDED).add(EXPERIMENT_009.get(),
+                EXPERIMENT_10.get(),
+                EXPERIMENT_009_BOSS.get(),
+                EXPERIMENT_10_BOSS.get()
+        );
     }
 }

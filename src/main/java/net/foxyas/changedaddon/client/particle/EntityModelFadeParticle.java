@@ -43,13 +43,20 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static net.foxyas.changedaddon.client.particle.EntityModelFadeParticle.SnapshotStrategy.*;
+
 public class EntityModelFadeParticle extends Particle {
+
+    public static enum SnapshotStrategy {
+        BY_CLIENT_TICK,
+        BY_RENDER,
+    }
 
     private final Entity entity;
     private final int color;
@@ -81,6 +88,7 @@ public class EntityModelFadeParticle extends Particle {
         super.tick();
         this.alpha = 1.0f - ((float) this.age / (float) this.lifetime);
 
+        if (ChangedAddonClientConfiguration.ENTITY_MODEL_FADE_SNAPSHOT_STRATEGY.get() != BY_CLIENT_TICK) return;
         if (this.entity instanceof LivingEntity livingEntity && snapshots.size() < targetSnapshots) {
             ticksSinceLastSnapshot++;
             if (ticksSinceLastSnapshot >= snapshotInterval) {
@@ -185,7 +193,14 @@ public class EntityModelFadeParticle extends Particle {
 
     @Override
     public void render(@NotNull VertexConsumer consumer, @NotNull Camera camera, float partialTick) {
-        if (snapshots.isEmpty()) return;
+        if (snapshots.isEmpty()) {
+            if (ChangedAddonClientConfiguration.ENTITY_MODEL_FADE_SNAPSHOT_STRATEGY.get() == BY_RENDER) {
+                if (this.entity instanceof LivingEntity livingEntity && snapshots.size() < targetSnapshots) {
+                    captureSnapshot(livingEntity);
+                }
+            }
+            return;
+        }
         if (entity == Minecraft.getInstance().player
                 && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON
                 && entity.distanceToSqr(x, y, z) < 3) return;
@@ -220,7 +235,8 @@ public class EntityModelFadeParticle extends Particle {
 
     protected void renderTransfurSnapshot(ModelSnapshot snapshot, float partialTicks, ChangedEntity changedEntity, MultiBufferSource.BufferSource bufferSource, PoseStack poseStack, Color fadeColor) {
         EntityRenderer<? super ChangedEntity> rendererNormal = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(changedEntity);
-        if (!(rendererNormal instanceof AdvancedHumanoidRenderer<? super ChangedEntity, ?> advancedHumanoidRenderer)) return;
+        if (!(rendererNormal instanceof AdvancedHumanoidRenderer<? super ChangedEntity, ?> advancedHumanoidRenderer))
+            return;
 
         AdvancedHumanoidModel<? super ChangedEntity> model = advancedHumanoidRenderer.getModel();
         ResourceLocation texture = advancedHumanoidRenderer.getTextureLocation(changedEntity);
@@ -416,7 +432,8 @@ public class EntityModelFadeParticle extends Particle {
     /* ========================= PROVIDER ========================= */
 
     public static class Provider implements ParticleProvider<EntityModelFadeParticleOptions> {
-        public Provider() {}
+        public Provider() {
+        }
 
         @Override
         public @Nullable Particle createParticle(

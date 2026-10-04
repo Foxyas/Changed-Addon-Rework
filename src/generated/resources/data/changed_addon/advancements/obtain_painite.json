@@ -1,0 +1,38 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "painite": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:painite"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.obtain_painite.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:painite"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obtain_painite.title"
+    }
+  },
+  "requirements": [
+    [
+      "painite"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

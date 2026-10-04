@@ -1,0 +1,39 @@
+{
+  "parent": "changed_addon:obtain_snepsi",
+  "criteria": {
+    "snepsi": {
+      "conditions": {
+        "item": {
+          "items": [
+            "changed_addon:snepsi"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.drink_snepsi.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:snepsi"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.drink_snepsi.title"
+    }
+  },
+  "requirements": [
+    [
+      "snepsi"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  },
+  "sends_telemetry_event": false
+}

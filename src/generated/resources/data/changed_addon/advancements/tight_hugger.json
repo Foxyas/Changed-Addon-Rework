@@ -1,0 +1,36 @@
+{
+  "parent": "changed_addon:hugger",
+  "criteria": {
+    "hug": {
+      "conditions": {
+        "name": "hug_tight"
+      },
+      "trigger": "changed_addon:grab_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.grab.hug_tight.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:pink_wool"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "red",
+      "translate": "advancements.grab.hug_tight.title"
+    }
+  },
+  "requirements": [
+    [
+      "hug"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

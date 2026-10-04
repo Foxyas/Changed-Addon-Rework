@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:changed/transfur_dark",
+  "criteria": {
+    "tf": {
+      "conditions": {
+        "form": {
+          "flying": false,
+          "forms": [
+            "changed_addon:form_wolfy"
+          ],
+          "legless": false,
+          "swimming": false
+        }
+      },
+      "trigger": "changed:transfur"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wolfy_transfur.descr"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "changed:dark_latex_mask"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wolfy_transfur.title"
+    }
+  },
+  "requirements": [
+    [
+      "tf"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

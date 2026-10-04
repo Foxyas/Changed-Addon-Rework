@@ -1,0 +1,176 @@
+{
+  "parent": "changed_addon:crystal_collector",
+  "criteria": {
+    "bf_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:beifeng_crystal_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "bw_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:blue_wolf_crystal_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "dd_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:dark_dragon_crystal_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "dl_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:dark_latex_crystal_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "lh_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:luminar_crystal_shard_hearted"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "lu_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:luminar_crystal_shard"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "ow_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:orange_wolf_crystal_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "w_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:wolf_crystal_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "ww_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:white_wolf_crystal_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "yw_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:yellow_wolf_crystal_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.crystals_addicted.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:luminar_crystal_shard_hearted"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.crystals_addicted.title"
+    }
+  },
+  "requirements": [
+    [
+      "lh_crystal"
+    ],
+    [
+      "dl_crystal"
+    ],
+    [
+      "dd_crystal"
+    ],
+    [
+      "bf_crystal"
+    ],
+    [
+      "w_crystal"
+    ],
+    [
+      "ow_crystal"
+    ],
+    [
+      "ww_crystal"
+    ],
+    [
+      "yw_crystal"
+    ],
+    [
+      "bw_crystal"
+    ],
+    [
+      "lu_crystal"
+    ]
+  ],
+  "rewards": {
+    "experience": 2500
+  },
+  "sends_telemetry_event": false
+}

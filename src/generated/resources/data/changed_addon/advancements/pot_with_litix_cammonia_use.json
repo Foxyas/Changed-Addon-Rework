@@ -1,0 +1,36 @@
+{
+  "parent": "changed_addon:obtain_unifuser",
+  "criteria": {
+    "drink": {
+      "conditions": {
+        "item": {
+          "items": [
+            "changed_addon:pot_with_cammonia"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.pot_with_litix_cammonia_use.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "changed_addon:pot_with_cammonia"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.pot_with_litix_cammonia_use.title"
+    }
+  },
+  "requirements": [
+    [
+      "drink"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

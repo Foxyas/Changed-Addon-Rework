@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.configuration;
 
+import net.foxyas.changedaddon.client.particle.EntityModelFadeParticle;
 import net.foxyas.changedaddon.process.sounds.BossMusicHandler;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -26,6 +27,7 @@ public class ChangedAddonClientConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> SUIT_ANIM;
     public static final ForgeConfigSpec.ConfigValue<Boolean> USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES;
     public static final ForgeConfigSpec.ConfigValue<Integer> PAT_ANIMATION_TRIGGER_TIME;
+    public static final ForgeConfigSpec.ConfigValue<EntityModelFadeParticle.SnapshotStrategy> ENTITY_MODEL_FADE_SNAPSHOT_STRATEGY;
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -74,6 +76,10 @@ public class ChangedAddonClientConfiguration {
                 .comment("The time in ticks required to hold or interact before triggering the patting hand animation.")
                 .comment("set to -1 to always")
                 .defineInRange("patAnimationTriggerTime", 3, -1, 72000);
+
+        ENTITY_MODEL_FADE_SNAPSHOT_STRATEGY = BUILDER
+                .comment("Strategy used to capture entity model snapshots for fading particle effects.")
+                .defineEnum("Entity Model Fade Snapshot Strategy", EntityModelFadeParticle.SnapshotStrategy.BY_CLIENT_TICK);
 
         SPEC = BUILDER.build();
     }

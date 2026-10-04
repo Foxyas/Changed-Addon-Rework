@@ -1,0 +1,38 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "unifuser": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:unifuser"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.obtain_unifuser.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "changed_addon:unifuser"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obtain_unifuser.title"
+    }
+  },
+  "requirements": [
+    [
+      "unifuser"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

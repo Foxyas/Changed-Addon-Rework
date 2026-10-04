@@ -1,0 +1,41 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "foxta": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:foxta"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.obtain_foxta.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "changed_addon:foxta"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obtain_foxta.title"
+    }
+  },
+  "requirements": [
+    [
+      "foxta"
+    ]
+  ],
+  "rewards": {
+    "experience": 25
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,42 @@
+{
+  "parent": "changed_addon:obtain_a_electric_katana",
+  "criteria": {
+    "katana": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:electric_katana_red"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.obtain_red_electric_katana.descr"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:electric_katana_red",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obtain_red_electric_katana.title"
+    }
+  },
+  "requirements": [
+    [
+      "katana"
+    ]
+  ],
+  "rewards": {
+    "experience": 450
+  },
+  "sends_telemetry_event": false
+}
