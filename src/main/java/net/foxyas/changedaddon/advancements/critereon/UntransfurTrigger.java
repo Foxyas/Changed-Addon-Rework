@@ -1,18 +1,18 @@
 package net.foxyas.changedaddon.advancements.critereon;
 
-import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class UntransfurTrigger extends SimpleCriterionTrigger<UntransfurTrigger.TriggerInstance> {
 
@@ -24,114 +24,81 @@ public class UntransfurTrigger extends SimpleCriterionTrigger<UntransfurTrigger.
     }
 
     @Override
-    protected UntransfurTrigger.@NotNull TriggerInstance createInstance(@NotNull JsonObject json, @NotNull ContextAwarePredicate playerPredicate, @NotNull DeserializationContext pDeserializationContext) {
-        // Parse mobEffect array (or single element)
-        List<ResourceLocation> mobEffects = parseResourceLocationList(json, "mobEffect");
+    protected UntransfurTrigger.@NotNull TriggerInstance createInstance(@NotNull JsonObject json, @NotNull ContextAwarePredicate playerPredicate, @NotNull DeserializationContext deserializationContext) {
+        ItemPredicate itemPredicate = ItemPredicate.fromJson(json.get("item"));
+        MobEffectsPredicate mobEffectPredicate = MobEffectsPredicate.fromJson(json.get("mob_effect"));
 
-        // Parse item array (or single element)
-        List<ResourceLocation> items = parseResourceLocationList(json, "item");
+        JsonElement elem = json.get("extra_context");
+        Optional<String> extraContext = Optional.ofNullable((elem != null && elem.isJsonPrimitive() && elem.getAsJsonPrimitive().isString()) ? elem.getAsString() : null);
 
-        return new TriggerInstance(playerPredicate, mobEffects, items);
+        return new TriggerInstance(playerPredicate, itemPredicate, mobEffectPredicate, extraContext);
     }
 
-    /**
-     * Helper to accept both single string or array of strings for JSON fields.
-     */
-    private static List<ResourceLocation> parseResourceLocationList(JsonObject json, String fieldName) {
-        List<ResourceLocation> list = new ArrayList<>();
-        if (json.has(fieldName)) {
-            if (json.get(fieldName).isJsonArray()) {
-                json.getAsJsonArray(fieldName).forEach(element ->
-                        list.add(ResourceLocation.parse(element.getAsString()))
-                );
-            } else {
-                list.add(ResourceLocation.parse(json.get(fieldName).getAsString()));
-            }
-        }
-        return list;
+    public void trigger(ServerPlayer player, MobEffectInstance activeEffect, ItemStack stackUsed, String context) {
+        this.trigger(player, instance -> instance.matches(activeEffect, stackUsed, context));
     }
 
-    /**
-     * Call this method from your Untransfur code event/action.
-     */
     public void trigger(ServerPlayer player, MobEffect activeEffect, ItemStack stackUsed) {
-        this.trigger(player, instance -> instance.matches(activeEffect, stackUsed));
+        MobEffectInstance effectInstance = activeEffect != null ? player.getEffect(activeEffect) : null;
+        this.trigger(player, instance -> instance.matches(effectInstance, stackUsed, null));
     }
 
-    /**
-     * Call this method from your Untransfur code event/action.
-     */
     public void trigger(ServerPlayer player, MobEffect activeEffect) {
-        this.trigger(player, instance -> instance.matches(activeEffect, null));
+        MobEffectInstance effectInstance = activeEffect != null ? player.getEffect(activeEffect) : null;
+        this.trigger(player, instance -> instance.matches(effectInstance, ItemStack.EMPTY, null));
     }
 
-    /**
-     * Call this method from your Untransfur code event/action.
-     */
     public void trigger(ServerPlayer player, ItemStack itemStack) {
-        this.trigger(player, instance -> instance.matches(null, itemStack));
+        this.trigger(player, instance -> instance.matches(null, itemStack, null));
     }
 
     public static class TriggerInstance extends AbstractCriterionTriggerInstance {
-        private final List<ResourceLocation> mobEffects;
-        private final List<ResourceLocation> items;
+        private final ItemPredicate itemPredicate;
+        private final MobEffectsPredicate mobEffectPredicate;
+        private final Optional<String> extraContext;
 
-        public TriggerInstance(ContextAwarePredicate player, List<ResourceLocation> mobEffects, List<ResourceLocation> items) {
+        public TriggerInstance(ContextAwarePredicate player, ItemPredicate itemPredicate, MobEffectsPredicate mobEffectPredicate, Optional<String> extraContext) {
             super(UntransfurTrigger.ID, player);
-            this.mobEffects = mobEffects;
-            this.items = items;
+            this.itemPredicate = itemPredicate;
+            this.mobEffectPredicate = mobEffectPredicate;
+            this.extraContext = extraContext;
         }
 
-        public boolean matches(MobEffect activeEffect, ItemStack stackUsed) {
-            // Check mob effect condition (if specified)
-            boolean effectMatches;
-            if (!this.mobEffects.isEmpty() && activeEffect != null) {
-                ResourceLocation effectId = ForgeRegistries.MOB_EFFECTS.getKey(activeEffect);
-                effectMatches = effectId != null && !this.mobEffects.contains(effectId);
-            } else {
-                effectMatches = false;
+        public boolean matches(MobEffectInstance activeEffect, ItemStack stackUsed, String context) {
+            if (this.extraContext.isPresent() && (context == null || !this.extraContext.get().equalsIgnoreCase(context))) {
+                return false;
             }
 
-            // Check item condition (if specified)
-            boolean itemMatches;
-            if (!this.items.isEmpty() && stackUsed != null) {
-                if (stackUsed.isEmpty()) return false;
-                ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(stackUsed.getItem());
-                itemMatches = itemId != null && this.items.contains(itemId);
-            } else {
-                itemMatches = false;
+            if (this.itemPredicate != ItemPredicate.ANY && (stackUsed == null || !this.itemPredicate.matches(stackUsed))) {
+                return false;
             }
 
-            return itemMatches || effectMatches;
+            if (this.mobEffectPredicate != MobEffectsPredicate.ANY) {
+                if (activeEffect == null) {
+                    return false;
+                }
+                // MobEffectsPredicate tests against player effect maps (Map<MobEffect, MobEffectInstance>)
+                if (!this.mobEffectPredicate.matches(Map.of(activeEffect.getEffect(), activeEffect))) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         @Override
         public @NotNull JsonObject serializeToJson(@NotNull SerializationContext context) {
             JsonObject json = super.serializeToJson(context);
 
-            if (!this.mobEffects.isEmpty()) {
-                if (this.mobEffects.size() == 1) {
-                    json.addProperty("mobEffect", this.mobEffects.get(0).toString());
-                } else {
-                    JsonArray array = new JsonArray();
-                    for (ResourceLocation effect : this.mobEffects) {
-                        array.add(effect.toString());
-                    }
-                    json.add("mobEffect", array);
-                }
+            if (this.itemPredicate != ItemPredicate.ANY) {
+                json.add("item", this.itemPredicate.serializeToJson());
             }
 
-            if (!this.items.isEmpty()) {
-                if (this.items.size() == 1) {
-                    json.addProperty("item", this.items.get(0).toString());
-                } else {
-                    JsonArray array = new JsonArray();
-                    for (ResourceLocation item : this.items) {
-                        array.add(item.toString());
-                    }
-                    json.add("item", array);
-                }
+            if (this.mobEffectPredicate != MobEffectsPredicate.ANY) {
+                json.add("mob_effect", this.mobEffectPredicate.serializeToJson());
             }
+
+            this.extraContext.ifPresent(c -> json.addProperty("extra_context", c));
 
             return json;
         }

@@ -94,7 +94,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;checkForTemporary()Z"))
-    private boolean checkForTemporaryHook(TransfurVariantInstance<?> instance, Operation<Boolean> original) {
+    private boolean lostControl$checkForTemporaryHook(TransfurVariantInstance<?> instance, Operation<Boolean> original) {
         if (!ProcessTransfur.isPlayerTransfurred(this.host)) return original.call(instance);
 
         if (!hasControlOverBody && !host.isSpectator()) {
@@ -200,7 +200,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
     }
 
     @Inject(method = "unhookAll", at = @At("TAIL"))
-    private void injectUnHookALl(Player player, CallbackInfo ci) {
+    private void lostControl$injectUnHookAll(Player player, CallbackInfo ci) {
         if (entityInControl != null) {
             this.entityInControl.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
             this.entityInControl = null;
@@ -210,7 +210,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
 
 
     @Inject(method = "save", at = @At("RETURN"))
-    private void InjectData(CallbackInfoReturnable<CompoundTag> cir) {
+    private void lostControl$InjectData(CallbackInfoReturnable<CompoundTag> cir) {
         CompoundTag tag = cir.getReturnValue();
         tag.putBoolean("hasControlOverBody", hasControlOverBody);
         if (!this.hasControlOverBody && this.entityInControl != null) {
@@ -221,7 +221,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
     }
 
     @Inject(method = "load", at = @At("RETURN"))
-    private void readInjectedData(CompoundTag tag, CallbackInfo cir) {
+    private void lostControl$readInjectedData(CompoundTag tag, CallbackInfo cir) {
         if (tag.contains("hasControlOverBody")) hasControlOverBody = tag.getBoolean("hasControlOverBody");
         if (tag.contains("entityInControlData")) {
             CompoundTag entityInControlData = tag.getCompound("entityInControlData");

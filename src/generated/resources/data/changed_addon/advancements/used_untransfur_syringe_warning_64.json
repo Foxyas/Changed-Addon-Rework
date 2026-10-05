@@ -1,5 +1,5 @@
 {
-  "parent": "changed_addon:times_used_untransfur_syringe_advancement",
+  "parent": "changed_addon:used_untransfur_syringe_warning_32",
   "criteria": {
     "syringe_use": {
       "conditions": {
@@ -12,7 +12,7 @@
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.times_used_untransfur_syringe_advancement_2.descr"
+      "translate": "advancements.used_untransfur_syringe_warning_64.descr"
     },
     "frame": "challenge",
     "hidden": true,
@@ -22,7 +22,7 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.times_used_untransfur_syringe_advancement_2.title"
+      "translate": "advancements.used_untransfur_syringe_warning_64.title"
     }
   },
   "requirements": [

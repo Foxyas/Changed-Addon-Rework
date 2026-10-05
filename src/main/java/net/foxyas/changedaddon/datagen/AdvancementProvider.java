@@ -28,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -582,8 +583,8 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                 .parent(kill009)
                 .display(
                         ChangedAddonItems.TRANSFUR_TOTEM.get(),
-                        Component.translatable("advancements.transfur_totem_advancement_1.title"),
-                        Component.translatable("advancements.transfur_totem_advancement_1.descr"),
+                        Component.translatable("advancements.transfur_totem_untransfur.title"),
+                        Component.translatable("advancements.transfur_totem_untransfur.descr"),
                         null,
                         FrameType.CHALLENGE,
                         true,
@@ -592,7 +593,7 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                 )
                 .addCriterion("impossible", new ImpossibleTrigger.TriggerInstance())
                 .rewards(AdvancementRewards.Builder.experience(250))
-                .save(saver, ChangedAddonMod.resourceLoc("transfur_totem_advancement_1"), existingFileHelper);
+                .save(saver, ChangedAddonMod.resourceLoc("transfur_totem_untransfur"), existingFileHelper);
 
         Advancement untf = Advancement.Builder.advancement()
                 .parent(unifuser)
@@ -671,17 +672,17 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                 .parent(tfTotemUse)
                 .display(
                         ChangedAddonItems.TRANSFUR_TOTEM.get(),
-                        Component.translatable("advancements.transfur_totem_advancement_2.title"),
-                        Component.translatable("advancements.transfur_totem_advancement_2.descr"),
+                        Component.translatable("advancements.transfur_totem_benign_salvation.title"),
+                        Component.translatable("advancements.transfur_totem.benign_salvation.descr"),
                         null,
                         FrameType.CHALLENGE,
                         true,
                         false,
                         true
                 )
-                .addCriterion("id_trigger", new SimpleIDTrigger.SimpleIDTriggerInstance(ContextAwarePredicate.ANY, "untransfur.from:benign_latex"))
+                .addCriterion("untransfur", new UntransfurTrigger.TriggerInstance(ContextAwarePredicate.ANY, ItemPredicate.Builder.item().of(ChangedAddonItems.TRANSFUR_TOTEM.get()).build(), MobEffectsPredicate.ANY, Optional.of("totem_salvation")))
                 .rewards(AdvancementRewards.Builder.experience(250))
-                .save(saver, ChangedAddonMod.resourceLoc("transfur_totem_advancement_2"), existingFileHelper);
+                .save(saver, ChangedAddonMod.resourceLoc("transfur_totem_benign_salvation"), existingFileHelper);
 
         Advancement.Builder.recipeAdvancement()
                 .parent(crystalCollector)
@@ -740,9 +741,9 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                         "untransfur_mob_effect_slow",
                         new UntransfurTrigger.TriggerInstance(
                                 ContextAwarePredicate.ANY,
-                                List.of(ChangedAddonMobEffects.UNTRANSFUR.getId()),
-                                List.of(ChangedAddonItems.POT_WITH_CAMMONIA.getId())
-                        )
+                                ItemPredicate.ANY,
+                                MobEffectsPredicate.effects().and(ChangedAddonMobEffects.UNTRANSFUR.get()),
+                                Optional.empty())
                 ).save(saver, ChangedAddonMod.resourceLoc("untransfur_mob_effect_slow"), existingFileHelper);//=="untransfur_advancement"
 
         Advancement untfSyringe = Advancement.Builder.advancement()
@@ -761,9 +762,9 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                         "untransfur_syringe_fast",
                         new UntransfurTrigger.TriggerInstance(
                                 ContextAwarePredicate.ANY,
-                                List.of(ChangedAddonMod.resourceLoc("untransfur_effect_fast")), // pass effect RLs or empty
-                                List.of(ChangedAddonMod.resourceLoc("syringe_with_litix_cammonia")) // pass item RLs or empty
-                        )
+                                ItemPredicate.Builder.item().of(ChangedAddonTags.Items.CAUSE_FAST_UNTRANSFUR).build(),
+                                MobEffectsPredicate.ANY,
+                                Optional.empty())
                 )
                 .save(saver, ChangedAddonMod.resourceLoc("untransfur_syringe_fast"), existingFileHelper);//=="untransfur_advancement_2"
 
@@ -804,8 +805,8 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                 .parent(untfSyringe)
                 .display(
                         ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(),
-                        Component.translatable("advancements.times_used_untransfur_syringe_advancement.title"),
-                        Component.translatable("advancements.times_used_untransfur_syringe_advancement.descr"),
+                        Component.translatable("advancements.used_untransfur_syringe_warning_32.title"),
+                        Component.translatable("advancements.used_untransfur_syringe_warning_32.descr"),
                         null,
                         FrameType.CHALLENGE,
                         true,
@@ -813,14 +814,14 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                         true
                 )
                 .addCriterion("syringe_use", new UsedItemAmountTrigger.Instance(ContextAwarePredicate.ANY, ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(), 32, null))
-                .save(saver, ChangedAddonMod.resourceLoc("times_used_untransfur_syringe_advancement"), existingFileHelper);
+                .save(saver, ChangedAddonMod.resourceLoc("used_untransfur_syringe_warning_32"), existingFileHelper);
 
         Advancement syringeUsed64 = Advancement.Builder.advancement()
                 .parent(syringeUsed32)
                 .display(
                         ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(),
-                        Component.translatable("advancements.times_used_untransfur_syringe_advancement_2.title"),
-                        Component.translatable("advancements.times_used_untransfur_syringe_advancement_2.descr"),
+                        Component.translatable("advancements.used_untransfur_syringe_warning_64.title"),
+                        Component.translatable("advancements.used_untransfur_syringe_warning_64.descr"),
                         null,
                         FrameType.CHALLENGE,
                         true,
@@ -828,14 +829,14 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                         true
                 )
                 .addCriterion("syringe_use", new UsedItemAmountTrigger.Instance(ContextAwarePredicate.ANY, ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(), 64, null))
-                .save(saver, ChangedAddonMod.resourceLoc("times_used_untransfur_syringe_advancement_2"), existingFileHelper);
+                .save(saver, ChangedAddonMod.resourceLoc("used_untransfur_syringe_warning_64"), existingFileHelper);
 
         Advancement syringeUsed128 = Advancement.Builder.advancement()
                 .parent(syringeUsed64)
                 .display(
                         ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(),
-                        Component.translatable("advancements.times_used_untransfur_syringe_advancement_3.title"),
-                        Component.translatable("advancements.times_used_untransfur_syringe_advancement_3.descr"),
+                        Component.translatable("advancements.used_untransfur_syringe_warning_128.title"),
+                        Component.translatable("advancements.used_untransfur_syringe_warning_128.descr"),
                         null,
                         FrameType.CHALLENGE,
                         true,
@@ -843,7 +844,7 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                         true
                 )
                 .addCriterion("syringe_use", new UsedItemAmountTrigger.Instance(ContextAwarePredicate.ANY, ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(), 128, null))
-                .save(saver, ChangedAddonMod.resourceLoc("times_used_untransfur_syringe_advancement_3"), existingFileHelper);
+                .save(saver, ChangedAddonMod.resourceLoc("used_untransfur_syringe_warning_128"), existingFileHelper);
 
         Advancement.Builder.advancement()
                 .parent(syringeUsed128)
@@ -869,7 +870,7 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
     }
 
     protected CompletableFuture<?> writeCustomAdvancements(CachedOutput cache) {
-        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("rock_fish"),Advancement.Builder.recipeAdvancement()
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("rock_fish"), Advancement.Builder.recipeAdvancement()
                 .parent(ResourceLocation.parse("minecraft:changed/aquatic_swimming"))
                 .display(
                         Items.LAVA_BUCKET,
@@ -884,7 +885,7 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                 .addCriterion("lava_swimming", new LavaSwimmingTrigger.Instance(ContextAwarePredicate.ANY))
                 .rewards(AdvancementRewards.Builder.experience(550)));
 
-        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("wolfy_transfur"),Advancement.Builder.recipeAdvancement()
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("wolfy_transfur"), Advancement.Builder.recipeAdvancement()
                 .parent(ResourceLocation.parse("minecraft:changed/transfur_dark"))
                 .display(
                         ChangedItems.DARK_LATEX_MASK.get(),
@@ -896,7 +897,7 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("tf", new TransfurTrigger.TriggerInstance(ContextAwarePredicate.ANY, new TransfurPredicate(Set.of(ChangedAddonTransfurVariants.WOLFY.get()))))
+                .addCriterion("tf", DynamicTransfurTrigger.TriggerInstance.transfurredInto(DynamicTransfurPredicate.builder().form(ChangedAddonTransfurVariants.WOLFY.get()).build()))
                 .rewards(AdvancementRewards.Builder.experience(250)));
 
         advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("organic_transfur"), Advancement.Builder.advancement()
@@ -938,19 +939,68 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
         Advancement.Builder obtainCompressedAmmonia = Advancement.Builder.advancement();
         Advancement.Builder obtainAmmoniaParticles = Advancement.Builder.advancement();
 
+
+        ResourceLocation obtainImpureAmmoniaId = ChangedAddonMod.resourceLoc("obtain_impure_ammonia");
         obtainImpureAmmonia.parent(ADVANCEMENT_ROOT)
+                .display(
+                        ChangedAddonItems.IMPURE_AMMONIA.get(),
+                        Component.translatable("advancements.obtain_impure_ammonia.title"),
+                        Component.translatable("advancements.obtain_impure_ammonia.descr"),
+                        null, // background (null for non-root advancements)
+                        FrameType.GOAL,
+                        true, // show_toast
+                        true, // announce_to_chat
+                        true  // hidden
+                )
                 .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.IMPURE_AMMONIA.get()));
-        obtainAmmonia.parent(ADVANCEMENT_ROOT)
-                .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.AMMONIA.get()));
-        obtainCompressedAmmonia.parent(ADVANCEMENT_ROOT)
-                .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.AMMONIA_COMPRESSED.get()));
-        obtainAmmoniaParticles.parent(ADVANCEMENT_ROOT)
+
+        ResourceLocation obtainAmmoniaParticlesId = ChangedAddonMod.resourceLoc("obtain_ammonia_particles");
+        obtainAmmoniaParticles.parent(obtainImpureAmmoniaId) // Parent updated to obtain_impure_ammonia
+                .display(
+                        ChangedAddonItems.AMMONIA_PARTICLE.get(),
+                        Component.translatable("advancements.obtain_ammonia_particles.title"),
+                        Component.translatable("advancements.obtain_ammonia_particles.descr"),
+                        null,
+                        FrameType.GOAL,
+                        true, // show_toast
+                        true, // announce_to_chat
+                        true  // hidden
+                )
                 .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.AMMONIA_PARTICLE.get()));
 
-        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_impure_ammonia"), obtainImpureAmmonia);
-        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_ammonia"), obtainAmmonia);
-        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_compressed_ammonia"), obtainCompressedAmmonia);
-        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_ammonia_particles"), obtainAmmoniaParticles);
+
+        ResourceLocation obtainCompressedAmmoniaId = ChangedAddonMod.resourceLoc("obtain_compressed_ammonia");
+        obtainCompressedAmmonia.parent(obtainAmmoniaParticlesId)
+                .display(
+                        ChangedAddonItems.AMMONIA_COMPRESSED.get(),
+                        Component.translatable("advancements.obtain_compressed_ammonia.title"),
+                        Component.translatable("advancements.obtain_compressed_ammonia.descr"),
+                        null,
+                        FrameType.GOAL,
+                        true, // show_toast
+                        true, // announce_to_chat
+                        false // hidden
+                )
+                .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.AMMONIA_COMPRESSED.get()));
+
+        ResourceLocation obtainAmmoniaId = ChangedAddonMod.resourceLoc("obtain_ammonia");
+        obtainAmmonia.parent(obtainCompressedAmmoniaId)
+                .display(
+                        ChangedAddonItems.AMMONIA.get(),
+                        Component.translatable("advancements.obtain_ammonia.title"),
+                        Component.translatable("advancements.obtain_ammonia.descr"),
+                        null,
+                        FrameType.GOAL,
+                        true, // show_toast
+                        true, // announce_to_chat
+                        false // hidden
+                )
+                .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.AMMONIA.get()));
+
+        advancementWrite.write(cache, output, obtainImpureAmmoniaId, obtainImpureAmmonia);
+        advancementWrite.write(cache, output, obtainAmmoniaId, obtainAmmonia);
+        advancementWrite.write(cache, output, obtainCompressedAmmoniaId, obtainCompressedAmmonia);
+        advancementWrite.write(cache, output, obtainAmmoniaParticlesId, obtainAmmoniaParticles);
 
         return CompletableFuture.allOf(advancementWrite.completableFutureList.toArray(CompletableFuture[]::new));
     }

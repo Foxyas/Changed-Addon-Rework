@@ -23,6 +23,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
+import static net.foxyas.changedaddon.init.ChangedAddonTags.Items.*;
+import static net.foxyas.changedaddon.init.ChangedAddonTags.Items.SYRINGES;
 
 public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
 
@@ -179,12 +181,33 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 Items.ENCHANTED_GOLDEN_APPLE,
                 Items.POTION);
 
-        tag(ChangedAddonTags.Items.SYRINGES).add(
+        tag(SYRINGES).add(
                 ChangedItems.SYRINGE.get(),
                 SYRINGE.get());
-        tag(ChangedAddonTags.Items.UNTRANSFUR_ITEMS).add(
+
+        tag(UNTRANSFUR_ITEMS).add(
                 POT_WITH_CAMMONIA.get(),
-                SYRINGE_WITH_LITIX_CAMMONIA.get());
+                SYRINGE_WITH_LITIX_CAMMONIA.get(),
+                LAETHIN_SYRINGE.get()
+        );
+
+        tag(UNTRANSFUR_POTS).add(
+                POT_WITH_CAMMONIA.get()
+        );
+
+        tag(UNTRANSFUR_SYRINGES).add(
+                SYRINGE_WITH_LITIX_CAMMONIA.get(),
+                LAETHIN_SYRINGE.get()
+        );
+
+        tag(ChangedAddonTags.Items.CAUSE_FAST_UNTRANSFUR).addTag(
+                UNTRANSFUR_SYRINGES
+        );
+
+        tag(ChangedAddonTags.Items.CAUSE_SLOW_UNTRANSFUR).addTag(
+                UNTRANSFUR_POTS
+        );
+
         tag(ChangedAddonTags.Items.LATEX_SOLVENT_APPLICABLE).add(
                 CRYSTAL_DAGGER_BLACK.get(),
                 CRYSTAL_DAGGER_GREEN.get(),

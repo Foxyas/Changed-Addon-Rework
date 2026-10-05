@@ -3,8 +3,9 @@
   "criteria": {
     "untransfur_mob_effect_slow": {
       "conditions": {
-        "item": "changed_addon:pot_with_cammonia",
-        "mobEffect": "changed_addon:untransfur"
+        "mob_effect": {
+          "changed_addon:untransfur": {}
+        }
       },
       "trigger": "changed_addon:untransfur"
     }

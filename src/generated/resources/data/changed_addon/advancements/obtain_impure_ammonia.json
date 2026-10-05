@@ -14,6 +14,21 @@
       "trigger": "minecraft:inventory_changed"
     }
   },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.obtain_impure_ammonia.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:impure_ammonia"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obtain_impure_ammonia.title"
+    }
+  },
   "requirements": [
     [
       "obtain_item"

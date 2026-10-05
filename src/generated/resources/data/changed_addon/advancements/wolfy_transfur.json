@@ -3,16 +3,11 @@
   "criteria": {
     "tf": {
       "conditions": {
-        "form": {
-          "flying": false,
-          "forms": [
-            "changed_addon:form_wolfy"
-          ],
-          "legless": false,
-          "swimming": false
-        }
+        "forms": [
+          "changed_addon:form_wolfy"
+        ]
       },
-      "trigger": "changed:transfur"
+      "trigger": "changed_addon:dynamic_transfur"
     }
   },
   "display": {

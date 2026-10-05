@@ -48,7 +48,15 @@ public final class ChangedAddonTags {
         public static final TagKey<Item> PARTIAL_METAL = key("partial_metal");
 
         public static final TagKey<Item> SYRINGES = key("syringes");
+
         public static final TagKey<Item> UNTRANSFUR_ITEMS = key("untransfur_items");
+        public static final TagKey<Item> UNTRANSFUR_SYRINGES = key("untransfur_items/syringes");
+        public static final TagKey<Item> UNTRANSFUR_POTS = key("untransfur_items/pots");
+
+        public static final TagKey<Item> CAUSE_FAST_UNTRANSFUR = key("untransfur_items/cause_fast_untransfur");
+        public static final TagKey<Item> CAUSE_SLOW_UNTRANSFUR = key("untransfur_items/cause_slow_untransfur");
+
+
         public static final TagKey<Item> GOOEY = key("gooey");
         public static final TagKey<Item> NOT_FOOD = key("is_not_food");
         public static final TagKey<Item> LATEX_SOLVENT_APPLICABLE = key("latex_solvent_applicable");

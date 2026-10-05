@@ -24,6 +24,7 @@ public class ChangedAddonDamageSources {
     public static final DamageTypeHolder UNTRANSFUR_FAIL = holder("untransfur_fail");//TODO bypassArmor()
     public static final DamageTypeHolder CHOKE = holder("choke", new DamageType("choke", DamageScaling.NEVER, 0f));
     public static final DamageTypeHolder CONSTRICTION = holder("constriction", new DamageType("constriction", DamageScaling.NEVER, 0f));
+    public static final DamageTypeHolder OVER_DOSE = holder("over_dose", new DamageType("over_dose", DamageScaling.NEVER, 0f));
 
     private static DamageTypeHolder holder(String name) {
         return holder(name, null);
