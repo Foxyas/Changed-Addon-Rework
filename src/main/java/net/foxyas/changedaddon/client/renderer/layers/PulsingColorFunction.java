@@ -1,13 +1,12 @@
 package net.foxyas.changedaddon.client.renderer.layers;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.util.ColorDataHelper;
-import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer.ColorData;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer.ColorFunction;
 import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.client.renderer.RenderType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -39,7 +38,9 @@ public class PulsingColorFunction<T extends ChangedEntity> implements ColorFunct
         float blue = color.blue(); //- pulse;
         float alpha = defaultFunctionColor.alpha - pulse;
 
-        return ColorDataHelper.create(new Color3(red, green, blue), alpha, defaultFunctionColor.emissive);
+        ColorData colorData = ColorDataHelper.create(new Color3(red, green, blue), alpha, defaultFunctionColor.emissive);
+        if (colorData instanceof ColorDataHelper.IDynamicColorData iDynamicColorData) iDynamicColorData.setModifiedRenderType(RenderType::entityTranslucentEmissive);
+        return colorData;
     }
 
     @Override
