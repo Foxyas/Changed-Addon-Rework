@@ -251,8 +251,8 @@ public class ChangedAddonItems {
     public static final RegistryObject<SpawnEggItem> LATEX_CHEETAH_MALE_SPAWN_EGG = registerSpawnEgg("latex_cheetah_male_spawn_egg", ChangedAddonEntities.LATEX_CHEETAH_MALE, 0xd8b270, 0x634927);
     public static final RegistryObject<SpawnEggItem> LUMINARA_FLOWER_BEAST_SPAWN_EGG = registerSpawnEgg("luminara_flower_beast_spawn_egg", ChangedAddonEntities.LUMINARA_FLOWER_BEAST, 0xf5d4ef, 0x241942);
     public static final RegistryObject<SpawnEggItem> DARK_LATEX_YUFENG_QUEEN_SPAWN_EGG = registerSpawnEgg("dark_latex_yufeng_queen_spawn_egg", ChangedAddonEntities.DARK_LATEX_YUFENG_QUEEN, 0x393939, 0xFAFAFA);
-    public static final RegistryObject<SpawnEggItem> LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG = registerSpawnEgg("luminara_crystal_being_female_spawn_egg", ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_FEMALE, 0xf5d4ef, 0x241942);
-    public static final RegistryObject<SpawnEggItem> LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG = registerSpawnEgg("luminara_crystal_being_male_spawn_egg", ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_MALE, 0xf5d4ef, 0x241942);
+    public static final RegistryObject<SpawnEggItem> LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG = registerSpawnEgg("luminara_crystal_being_female_spawn_egg", ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_FEMALE, 0x06040a, 0xf7d6f1);
+    public static final RegistryObject<SpawnEggItem> LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG = registerSpawnEgg("luminara_crystal_being_male_spawn_egg", ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_MALE, 0x06040a, 0xf7d6f1);
     // MISC ITEMS
     public static final RegistryObject<Item> DARK_LATEX_COAT = REGISTRY.register("dark_latex_coat",
             () -> new DarkLatexCoatItem(ArmorItem.Type.CHESTPLATE, new Item.Properties()));

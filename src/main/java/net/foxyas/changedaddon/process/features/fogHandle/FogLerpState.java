@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.process.features.fogHandle;
 
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
+
 public class FogLerpState {
 
     public float[] targetColorRgb0 = null; // cor base (ex: fog do bioma)
@@ -46,6 +48,7 @@ public class FogLerpState {
     /* ===================== UTIL ===================== */
 
     public boolean isActive() {
+        if (!ChangedAddonClientConfiguration.SHOULD_EXPERIMENTS_DNA_HAVE_FOG.get()) return false;
         return value > 0.001f || color > 0.001f;
     }
 

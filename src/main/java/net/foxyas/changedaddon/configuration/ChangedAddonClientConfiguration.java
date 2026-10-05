@@ -28,6 +28,7 @@ public class ChangedAddonClientConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> USE_ADDITIVE_TRANSPARENCY_FOR_FADE_PARTICLES;
     public static final ForgeConfigSpec.ConfigValue<Integer> PAT_ANIMATION_TRIGGER_TIME;
     public static final ForgeConfigSpec.ConfigValue<EntityModelFadeParticle.SnapshotStrategy> ENTITY_MODEL_FADE_SNAPSHOT_STRATEGY;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> SHOULD_EXPERIMENTS_DNA_HAVE_FOG;
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -80,6 +81,9 @@ public class ChangedAddonClientConfiguration {
         ENTITY_MODEL_FADE_SNAPSHOT_STRATEGY = BUILDER
                 .comment("Strategy used to capture entity model snapshots for fading particle effects.")
                 .defineEnum("Entity Model Fade Snapshot Strategy", EntityModelFadeParticle.SnapshotStrategy.BY_CLIENT_TICK);
+
+        SHOULD_EXPERIMENTS_DNA_HAVE_FOG = BUILDER.comment("Make the fog of Experiments DNA visible or not")
+                .define("Experiments dna has fog", true);
 
         SPEC = BUILDER.build();
     }

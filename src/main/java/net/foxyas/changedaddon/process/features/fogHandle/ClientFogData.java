@@ -26,7 +26,7 @@ public class ClientFogData {
                         isHolding(mc.player, ChangedAddonItems.EXPERIMENT_10_DNA.get());
 
         FOG.setTarget(holding);
-        FOG.tick(0.15f, 0.005f);
+        FOG.tick(0.15f, 0.025f);
     }
 
     private static boolean isHolding(LivingEntity entity, Item item) {

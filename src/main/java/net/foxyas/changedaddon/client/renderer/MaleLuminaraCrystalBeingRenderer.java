@@ -24,8 +24,8 @@ import static net.foxyas.changedaddon.client.renderer.layers.PulsingColorFunctio
 
 public class MaleLuminaraCrystalBeingRenderer extends AdvancedHumanoidRenderer<MaleLuminaraCrystalBeing, MaleLuminaraCrystalBeingModel> {
 
-    public static final ResourceLocation TEXTURE_BASE = ChangedAddonMod.texLoc("entities/male_luminara_crystal_being/base");
-    public static final ResourceLocation TEXTURE_GLOW = ChangedAddonMod.texLoc("entities/male_luminara_crystal_being/glow");
+    public static final ResourceLocation TEXTURE_BASE = ChangedAddonMod.texLoc("entities/luminara_crystal_being_male/base");
+    public static final ResourceLocation TEXTURE_GLOW = ChangedAddonMod.texLoc("entities/luminara_crystal_being_male/glow");
 
     public MaleLuminaraCrystalBeingRenderer(EntityRendererProvider.Context context) {
         super(context, new MaleLuminaraCrystalBeingModel(context.bakeLayer(MaleLuminaraCrystalBeingModel.LAYER_LOCATION)),
