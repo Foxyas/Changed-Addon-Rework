@@ -101,7 +101,6 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("obtain_snepsi", "Snepsi?", "Szerezz egy Snepsit!, Figyel-macska, ez a szóda magas hópárduc-tartalommal rendelkezik");
         addAdvancement("orange_juice_is_yummy", "Narancslé finom", "§lNarancslevet§r ittál, finom volt");
         addAdvancement("organic_transfur", "Organikus és bolyhos!!", "Transzfurálja magát organikus formává");
-        addAdvancement("over_dose", "Túladagolás", "Nos, nem §4rák§r volt, de én §4figyelmeztettelek");
         addAdvancement("pants_dyer", "Egy kis festékkel", "Színt adtad a rövidnadrágnak. Stílusos és lézerbiztos? Ezzel mindenki nyer.");
         addAdvancement("pat_advancement", "Ez csinál valamit?!", "Annyira jól esett a simogatása, hogy segített valakinek jobban lenni");
         addAdvancement("pats_on_the_beast", "Rossz ötlet?...vagy egyáltalán megéri?", "Gratulálok!!!, most erősítetted meg a szörnyet!, valószínűleg most már nem lesznek kegyelmesek a lelkedhez!, Sok szerencsét!");
@@ -110,11 +109,12 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("snepsi_addictive", "Snepsifüggő!", "Nagy kortyot ittunk, te 100 Snepsit ittál!");
         addAdvancement("stealth_pats", "Rejtett §cszeretet§r", "Simogass meg egy latex lényt álcában, hogy magát elrejtse és őt összezavarja.");
         addAdvancement("swim_regret", "Megbánom!", "Ússz egy percig olyan formában, amely alacsony úszási sebességgel rendelkezik");
-        addAdvancement("times_used_untransfur_syringe_advancement", "Zavart határozatlanság?", "Több mint 32 alkalommal használtad a litix-kam,óniás fecskendőt, határozatlan vagy az emberségeddel kapcsolatban, szent ég!");
-        addAdvancement("times_used_untransfur_syringe_advancement_2", "Hol vannak a mellékhatások?", "Több mint 64 alkalommal használtad a litix-kam,óniás fecskendőt!!! §4HA NEM HAGYOD ABBA A DNS-ED VÁLTOZTATÁSÁT, RÁKOT KAPHATSZ!!!!!");
-        addAdvancement("times_used_untransfur_syringe_advancement_3", "ÁLLJ", "A LITIX-KAMMÓNIÁS FECSKENDŐT 120-SZOR HASZNÁLTAD! §4 FIGYELMEZTETTELEK, HOGY HAGYJA ABBA, MERT RÁKOT KAPHATSZ!!!");
-        addAdvancement("transfur_totem_advancement_1", "Teljes ellenőrzés alatt", "\"Használj latex totemet a transzfurhoz vagy a visszatranszfurhoz.");
-        addAdvancement("transfur_totem_advancement_2", "§5A §r§fragacsos §r§4átok §r§bmegváltása", "§b Ments meg magát a ragacsos és nyomorúságos élettől egy latex totem segítségével");
+        addAdvancement("used_untransfur_syringe_warning_32", "Zavart határozatlanság?", "Több mint 32 alkalommal használtad a litix-kam,óniás fecskendőt, határozatlan vagy az emberségeddel kapcsolatban, szent ég!");
+        addAdvancement("used_untransfur_syringe_warning_64", "Hol vannak a mellékhatások?", "Több mint 64 alkalommal használtad a litix-kam,óniás fecskendőt!!! §4HA NEM HAGYOD ABBA A DNS-ED VÁLTOZTATÁSÁT, RÁKOT KAPHATSZ!!!!!");
+        addAdvancement("used_untransfur_syringe_warning_128", "ÁLLJ", "A LITIX-KAMMÓNIÁS FECSKENDŐT 120-SZOR HASZNÁLTAD! §4 FIGYELMEZTETTELEK, HOGY HAGYJA ABBA, MERT RÁKOT KAPHATSZ!!!");
+        addAdvancement("transfur_totem_untransfur", "Teljes ellenőrzés alatt", "\"Használj latex totemet a transzfurhoz vagy a visszatranszfurhoz.");
+        addAdvancement("transfur_totem_benign_salvation", "§5A §r§fragacsos §r§4átok §r§bmegváltása", "§b Ments meg magát a ragacsos és nyomorúságos élettől egy latex totem segítségével");
+        addAdvancement("over_dose", "Túladagolás", "Nos, nem §4rák§r volt, de én §4figyelmeztettelek");
         addAdvancement("obtain_unifuser", "Egy unifúzor?", "Barkácsolj vagy szerezz egy unifúzort");
         addAdvancement("untransfur_mob_effect_slow", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Visszatranszfurálsz a lassú, de hatékony visszatranszfurálási effektussal.");
         addAdvancement("untransfur_syringe_fast", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Gyorsan visszatranszfurálsz, egy visszatranszfuráló vegyületet tartalmazó fecskendővel.");
@@ -377,6 +377,10 @@ public class HULanguageProvider extends LanguageProvider {
                 "%1$s játékost halálra szorították",
                 "%2$s halálra szorította %1$s játékost, %3$s segítségével",
                 "%2$s halálra szorította %1$s játékost");
+        addDeathMessage(ChangedAddonDamageSources.OVER_DOSE.damageType(),
+                "%1$s figyelmen kívül hagyta az összes figyelmeztetést, és halálos túladagolást szenvedett",
+                "%1$s a teste határait feszegette, miközben %2$s játékos %3$s nevű fegyvere ellen harcolt",
+                "%1$s a teste határait feszegette, miközben %2$s ellen harcolt");
 
         addEffect(ChangedAddonMobEffects.UNTRANSFUR, "§7Visszatranszfur", "Átfedésben jeleníti meg a visszatranszfur folyamatát. A haladás felgyorsul alvás közben. Amikor befejeződött, a visszatranszfur érvénybe lép.");
         add("effect.changed_addon." + ChangedAddonMobEffects.UNTRANSFUR.getId().getPath() + ".no_effect", "A hatás nem tűnik működőképesnek");
