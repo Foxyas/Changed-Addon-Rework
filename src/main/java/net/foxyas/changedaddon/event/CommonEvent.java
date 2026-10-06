@@ -23,7 +23,11 @@ import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.block.CannedSoup;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.SeatEntity;
+import net.ltxprogrammer.changed.entity.TransfurCause;
+import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -44,7 +48,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.VibrationParticleOption;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
@@ -57,6 +64,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -306,6 +314,54 @@ public class CommonEvent {
 
         Player player = event.getEntity();
         if (player.isSleeping() && ChangedAddonVariables.ofOrDefault(player).wantToCuddles()) event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onCannedSoupInteract(PlayerInteractEvent.RightClickBlock event) {
+        Player player = event.getEntity();
+        InteractionHand hand = event.getHand();
+        Level pLevel = event.getLevel();
+        ItemStack itemInHand = player.getItemInHand(hand);
+        BlockPos pos = event.getPos();
+        IntegerProperty cansProperty = CannedSoup.CANS;
+        BlockState state = pLevel.getBlockState(pos);
+        if (!(state.getBlock() instanceof CannedSoup)) return;
+        int cans = state.getValue(cansProperty);
+
+        if (itemInHand.isEmpty() && cans >= 1) {
+            if (pLevel.isClientSide) {
+                event.setCancellationResult(InteractionResult.SUCCESS);
+                event.setCanceled(true);
+                player.swing(hand, true);
+            }
+
+            if (cans > 1) {
+                pLevel.setBlockAndUpdate(pos, state.setValue(cansProperty, cans - 1));
+            } else {
+                pLevel.removeBlock(pos, false);
+            }
+
+            if (!player.getAbilities().instabuild) { // Don't give extra items to Creative players
+                Item item = state.getBlock().asItem();
+                ItemStack stack = new ItemStack(item);
+                if (player.isShiftKeyDown()) {
+                    boolean setHand = true;
+                    if (player.getInventory().hasAnyMatching(itemStack -> itemStack.is(item))) {
+                        setHand = !player.addItem(stack);
+                    }
+
+                    if (setHand) player.setItemInHand(hand, stack);
+                } else {
+                    player.setItemInHand(hand, stack);
+                }
+            }
+
+            pLevel.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+            event.setCancellationResult(InteractionResult.CONSUME);
+            event.setCanceled(true);
+            player.swing(hand, true);
+        }
     }
 
     @SubscribeEvent

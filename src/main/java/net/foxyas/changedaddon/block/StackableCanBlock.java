@@ -121,8 +121,8 @@ public abstract class StackableCanBlock extends HorizontalDirectionalBlock imple
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        ItemStack itemInHand = pPlayer.getItemInHand(pHand);
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player player, InteractionHand pHand, BlockHitResult pHit) {
+        ItemStack itemInHand = player.getItemInHand(pHand);
         int cans = pState.getValue(CANS);
 
         if (itemInHand.isEmpty() && cans >= 1) {
@@ -136,8 +136,18 @@ public abstract class StackableCanBlock extends HorizontalDirectionalBlock imple
                 pLevel.removeBlock(pPos, false);
             }
 
-            if (!pPlayer.getAbilities().instabuild) { // Don't give extra items to Creative players
-                pPlayer.setItemInHand(pHand, new ItemStack(this.asItem()));
+            if (!player.getAbilities().instabuild) { // Don't give extra items to Creative players
+                ItemStack stack = new ItemStack(this.asItem());
+                if (player.isShiftKeyDown()) {
+                    boolean setHand = true;
+                    if (player.getInventory().hasAnyMatching(itemStack -> itemStack.is(asItem()))) {
+                        setHand = !player.addItem(stack);
+                    }
+
+                    if (setHand) player.setItemInHand(pHand, stack);
+                } else {
+                    player.setItemInHand(pHand, stack);
+                }
             }
 
             pLevel.playSound(null, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -145,7 +155,7 @@ public abstract class StackableCanBlock extends HorizontalDirectionalBlock imple
             return InteractionResult.CONSUME;
         }
 
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        return super.use(pState, pLevel, pPos, player, pHand, pHit);
     }
 
     @Override

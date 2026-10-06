@@ -11,6 +11,7 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.client.model.generators.loaders.ItemLayerModelBuilder;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -21,6 +22,8 @@ import java.util.List;
 import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
 
 public class ItemModelProvider extends net.minecraftforge.client.model.generators.ItemModelProvider {
+
+    public static final String CUSTOMS_ITEM_EMISSIVE_TEMPLATE_SPAWN_EGG = "customs/item/emissive_template_spawn_egg";
 
     public ItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, ChangedAddonMod.MODID, existingFileHelper);
@@ -36,6 +39,7 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
     @Override
     protected void registerModels() {
+        generateEmissiveSpawnEgg();
         basicSpawnEgg(PROTOGEN_0SENIA0_SPAWN_EGG);
         basicSpawnEgg(LATEX_KAYLA_SHARK_SPAWN_EGG);
         basicSpawnEgg(LATEX_BORDER_COLLIE_SPAWN_EGG);
@@ -46,8 +50,8 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         basicSpawnEgg(WHITE_FOX_SPAWN_EGG);
         basicSpawnEgg(BIOSYNTH_SNOW_LEOPARD_MALE_SPAWN_EGG);
         basicSpawnEgg(BIOSYNTH_SNOW_LEOPARD_FEMALE_SPAWN_EGG);
-        basicSpawnEgg(LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG);
-        basicSpawnEgg(LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG);
+        emissiveSpawnEgg(LUMINARA_CRYSTAL_BEING_FEMALE_SPAWN_EGG);
+        emissiveSpawnEgg(LUMINARA_CRYSTAL_BEING_MALE_SPAWN_EGG);
 
         basicItem(ALPHA_SERUM_SYRINGE.get());
         basicItem(TRANSLATOR.get());
@@ -214,6 +218,46 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         return builder;
     }
 
+    public void generateEmissiveSpawnEgg() {
+        getBuilder(CUSTOMS_ITEM_EMISSIVE_TEMPLATE_SPAWN_EGG)
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", ResourceLocation.withDefaultNamespace("item/spawn_egg"))
+                .texture("layer1", ResourceLocation.withDefaultNamespace("item/spawn_egg_overlay"))
+                .customLoader(ItemLayerModelBuilder::begin).emissive(15, 15, 1);
+    }
+
+
+    public ItemModelBuilder generateEmissiveSpawnEgg(ResourceLocation item) {
+        return getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"))
+                .customLoader(ItemLayerModelBuilder::begin).emissive(15, 15, 1).end();
+    }
+
+    public ItemModelBuilder generateEmissiveSpawnEggRaw(ResourceLocation item) { // THIS ONE WORKS ASWELL
+        return getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", ResourceLocation.withDefaultNamespace("item/spawn_egg"))
+                .texture("layer1", ResourceLocation.withDefaultNamespace("item/spawn_egg_overlay"))
+                .customLoader(ItemLayerModelBuilder::begin).emissive(15, 15, 1).end();
+    }
+
+    public ItemModelBuilder generateEmissiveSpawnEggWithColors(ResourceLocation item) {
+        Item value = ForgeRegistries.ITEMS.getValue(item);
+        ItemLayerModelBuilder<ItemModelBuilder> emissive = getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", ResourceLocation.withDefaultNamespace("item/spawn_egg"))
+                .texture("layer1", ResourceLocation.withDefaultNamespace("item/spawn_egg_overlay"))
+                .customLoader(ItemLayerModelBuilder::begin).emissive(15, 15, 1);
+        if (value instanceof ForgeSpawnEggItem eggItem) {
+            int highlightColor = eggItem.getColor(1);
+
+            int argbColor = 0xFF000000 | highlightColor;
+
+            emissive.color(argbColor, 1);
+        }
+        return emissive.end();
+    }
+
     public ItemModelBuilder basicSpawnEgg(RegistryObject<? extends Item> item) {
         return basicSpawnEgg(item.getId());
     }
@@ -221,5 +265,15 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
     public ItemModelBuilder basicSpawnEgg(ResourceLocation item) {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"));
+    }
+
+    public ItemModelBuilder emissiveSpawnEgg(RegistryObject<? extends Item> item) {
+        return emissiveSpawnEgg(item.getId());
+    }
+
+    public ItemModelBuilder emissiveSpawnEgg(ResourceLocation item) {
+//        return getBuilder(item.toString())
+//                .parent(new ModelFile.UncheckedModelFile(modid + ":" + CUSTOMS_ITEM_EMISSIVE_TEMPLATE_SPAWN_EGG));
+        return generateEmissiveSpawnEgg(item);
     }
 }
