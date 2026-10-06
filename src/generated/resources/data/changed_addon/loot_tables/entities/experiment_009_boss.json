@@ -24,21 +24,6 @@
           "conditions": [
             {
               "condition": "minecraft:killed_by_player"
-            }
-          ],
-          "name": "changed_addon:transfur_totem"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:killed_by_player"
             },
             {
               "chance": 0.05,

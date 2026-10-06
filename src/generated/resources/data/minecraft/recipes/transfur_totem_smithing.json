@@ -1,6 +1,8 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": [],
+  "addition": {
+    "tag": "minecraft:air"
+  },
   "base": {
     "item": "minecraft:totem_of_undying"
   },

@@ -209,7 +209,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(STRANGE_COMPOUND_BASE.get()),
                         Ingredient.of(TOTEM_OF_UNDYING),
-                        Ingredient.EMPTY,
+                        Ingredient.of(ChangedAddonTags.Items.AIR),
                         RecipeCategory.TOOLS,
                         TRANSFUR_TOTEM.get()
                 )

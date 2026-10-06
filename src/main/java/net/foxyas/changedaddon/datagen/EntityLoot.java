@@ -76,11 +76,11 @@ public class EntityLoot extends EntityLootSubProvider {
                         .add(LootItem.lootTableItem(ChangedAddonItems.MEANINGLESS_STRAFE_MUSIC_DISC.get())
                                 .when(LootItemKilledByPlayerCondition.killedByPlayer())))
 
-                // Pool 2: Transfur Totem
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(ChangedAddonItems.TRANSFUR_TOTEM.get())
-                                .when(LootItemKilledByPlayerCondition.killedByPlayer())))
+//                // Pool 2: Transfur Totem
+//                .withPool(LootPool.lootPool()
+//                        .setRolls(ConstantValue.exactly(1.0F))
+//                        .add(LootItem.lootTableItem(ChangedAddonItems.TRANSFUR_TOTEM.get())
+//                                .when(LootItemKilledByPlayerCondition.killedByPlayer())))
 
                 // Pool 3: Experiment 009 DNA
                 .withPool(LootPool.lootPool()

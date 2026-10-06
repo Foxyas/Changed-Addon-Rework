@@ -15,6 +15,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -326,8 +327,20 @@ public class DashPunchGoal extends Goal {
     }
 
     protected void onParriedAttemptToHitTarget(LivingEntity target) {
-        if (mob.level() instanceof ServerLevel server) {
-            server.sendParticles(ParticleTypes.FLASH, mob.getX(), mob.getEyeY(), mob.getZ(), 5, 0.2, 0.2, 0.2, 0.25f);
+        if (mob.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.FLASH, mob.getX(), mob.getEyeY(), mob.getZ(), 5, 0.2, 0.2, 0.2, 0.25f);
+            ExperienceOrb experienceOrb = new ExperienceOrb(serverLevel, mob.getX(), mob.getY(), mob.getZ(), 3);
+
+            // 1. Calculate direction vector from mob to target
+            Vec3 targetPos = target.getBoundingBox().getCenter(); // Targets the center of the entity's hitbox
+            Vec3 mobPos = mob.getEyePosition();
+
+            Vec3 direction = targetPos.subtract(mobPos);
+
+            double speed = 0.8D;
+            Vec3 velocity = direction.normalize().scale(speed);
+            experienceOrb.setDeltaMovement(velocity);
+            serverLevel.addFreshEntity(experienceOrb);
         }
         mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 1.0F);
         mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);

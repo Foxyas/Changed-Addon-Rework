@@ -98,7 +98,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("obtain_green_crystal_dagger", "§aGreen§r Crystal Dagger!", "You get a §aGreen§r Crystal Dagger!");
         addAdvancement("obtain_painite", "Isn't redstone!?", "Obtain Painite");
         addAdvancement("obtain_red_crystal_dagger", "§4Red§r Crystal Dagger!", "You get a §4Red§r Crystal Dagger!");
-        addAdvancement("obtain_red_electric_katana", "§Memories is Broken§r", "truths go unspoken, you even forgot your name!!, Obtain §4Red§r Electric Katana!");
+        addAdvancement("obtain_red_electric_katana", "§MMemories is Broken§r", "truths go unspoken, you even forgotten your name!!, Obtain §4Red§r§d Electric Katana!");
         addAdvancement("obtain_snepsi", "Snepsi?", "Obtain a Snepsi!, Cation this soda have high dose of Snep");
         addAdvancement("orange_juice_is_yummy", "Orange Juice Is Yummy", "You drank §lOrange juice§r, yummy");
         addAdvancement("organic_transfur", "Organic And Fluffy!!", "Transfur yourself into an organic form");
