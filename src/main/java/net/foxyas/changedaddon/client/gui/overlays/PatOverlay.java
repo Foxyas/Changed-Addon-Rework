@@ -65,7 +65,7 @@ public class PatOverlay {
 
     private static Component getPatInfo(Entity lookedEntity) {
         String key = ChangedAddonKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
-        MutableComponent patMessage = Component.translatable("changed_addon.info.is_patable", key.isEmpty() ? "Key not set" : key, lookedEntity.getDisplayName().getString());
+        MutableComponent patMessage = Component.translatable("changed_addon.info.is_patable", key.isEmpty() ? "Key not set" : key, lookedEntity.getDisplayName());
         patMessage.withStyle(style ->
                 style.withColor(-1)
                         //.withBold(true)
