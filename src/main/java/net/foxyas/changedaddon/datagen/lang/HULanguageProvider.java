@@ -97,7 +97,7 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("obtain_green_crystal_dagger", "§aZöld§r kristálytőr!", "Szerezz egy §azöld§r kristálytőrt!");
         addAdvancement("obtain_painite", "Nem redstone!?", "Szerezz painitot");
         addAdvancement("obtain_red_crystal_dagger", "§4Vörös§r kristálytőr!", "Szerezz egy §4vörös§r kristálytőrt!");
-        addAdvancement("obtain_red_electric_katana", "§4Megszakadt emlékek§r", "Az igazságok kimondatlanok maradnak, még a saját nevét is elfelejtette!, Szerezz egy §4vörös§r elektromos katanát!");
+        addAdvancement("obtain_red_electric_katana", "§mMegszakadt emlékek§r", "Az igazságok kimondatlanok maradnak, még a saját nevét is elfelejtette!, Szerezz egy §4vörös§r§d elektromos katanát!");
         addAdvancement("obtain_snepsi", "Snepsi?", "Szerezz egy Snepsit!, Figyel-macska, ez a szóda magas hópárduc-tartalommal rendelkezik");
         addAdvancement("orange_juice_is_yummy", "Narancslé finom", "§lNarancslevet§r ittál, finom volt");
         addAdvancement("organic_transfur", "Organikus és bolyhos!!", "Transzfurálja magát organikus formává");
@@ -300,7 +300,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityDialogues("exp9.death.text1", "§b§l§oSzánalmas! Hogy merészeled így megmutatni a gyengeségedet! Te tényleg csak egy haszontalan roncs vagy!!§r");
         addEntityDialogues("exp9.death.text2", "§b§l§oEmiatt estél el? Milyen szánalmas...§r");
         addEntityDialogues("exp9.transfur.text.secret", "§b§l§oHé, ismerősnek tűnsz, talán ismerlek §cvalahonnan?§r");
-        addEntityDialogues("exp9.dead", "§o§n§l§3Heh... a körforgás megismétlődik. Újra és újra... Már %1$s alkalommal győztél le... mégis valami azt súgja, hogy egy napon rátalálok arra az édes szabadságra, amelyet olyannyira megérdemlek. De mi van, ha... tévedek? Vajon az újjáépítés és a mészárlás e körforgása a végtelenségig ismétlődik majd? Nos, nem lepne meg; ti, emberek, valójában nem vagytok mások, mint kegyetlen, erkölcstelen lények, akik anyagi javak után kutatva nyüzsögnek.");
+        addEntityDialogues("exp9.dead", "§l§3Heh... a körforgás megismétlődik. Újra és újra... Már %1$s alkalommal győztél le... mégis valami azt súgja, hogy egy napon rátalálok arra az édes szabadságra, amelyet olyannyira megérdemlek. De mi van, ha... tévedek? Vajon az újjáépítés és a mészárlás e körforgása a végtelenségig ismétlődik majd? Nos, nem lepne meg; ti, emberek, valójában nem vagytok mások, mint kegyetlen, erkölcstelen lények, akik anyagi javak után kutatva nyüzsögnek.");
         addEntityDialogues("exp9.pat.type_1", "§l§3...Így merészelsz gúnyolódni velem?! Széttéplek!");
         addEntityDialogues("exp9.pat.type_2", "§l§3Vedd le rólam a mocskos kezeidet!");
         addEntityDialogues("exp9.pat.type_3", "§l§3Simogass meg még egyszer, és addig zúzlak össze, amíg semmi sem marad belőled!");
