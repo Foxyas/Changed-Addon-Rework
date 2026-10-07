@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -218,8 +219,20 @@ public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbili
 
     protected void onParriedAttemptToHitTarget(LivingEntity target) {
         Level level = dasher.level();
-        if (level instanceof ServerLevel server) {
-            server.sendParticles(ParticleTypes.FLASH, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.FLASH, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
+            ExperienceOrb experienceOrb = new ExperienceOrb(serverLevel, dasher.getX(), dasher.getY(), dasher.getZ(), 3);
+
+            // 1. Calculate direction vector from dasher to target
+            Vec3 targetPos = target.getBoundingBox().getCenter(); // Targets the center of the entity's hitbox
+            Vec3 dasherPos = dasher.getEyePosition();
+
+            Vec3 direction = targetPos.subtract(dasherPos);
+
+            double speed = 0.8D;
+            Vec3 velocity = direction.normalize().scale(speed);
+            experienceOrb.setDeltaMovement(velocity);
+            serverLevel.addFreshEntity(experienceOrb);
         }
         level.playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 1.0F);
         level.playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);

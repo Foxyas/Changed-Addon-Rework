@@ -98,7 +98,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("obtain_green_crystal_dagger", "§aGreen§r Crystal Dagger!", "You get a §aGreen§r Crystal Dagger!");
         addAdvancement("obtain_painite", "Isn't redstone!?", "Obtain Painite");
         addAdvancement("obtain_red_crystal_dagger", "§4Red§r Crystal Dagger!", "You get a §4Red§r Crystal Dagger!");
-        addAdvancement("obtain_red_electric_katana", "§Memories is Broken§r", "truths go unspoken, you even forgot your name!!, Obtain §4Red§r Electric Katana!");
+        addAdvancement("obtain_red_electric_katana", "§MMemories is Broken§r", "truths go unspoken, you even forgotten your name!!, Obtain §4Red§r§d Electric Katana!");
         addAdvancement("obtain_snepsi", "Snepsi?", "Obtain a Snepsi!, Cation this soda have high dose of Snep");
         addAdvancement("orange_juice_is_yummy", "Orange Juice Is Yummy", "You drank §lOrange juice§r, yummy");
         addAdvancement("organic_transfur", "Organic And Fluffy!!", "Transfur yourself into an organic form");
@@ -301,7 +301,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityDialogues("exp9.death.text1", "§b§l§oPathetic!,How dare you show weakness like this! you really are just a useless peace of scrap!!§r");
         addEntityDialogues("exp9.death.text2", "§b§l§oYou Fall Because Of This? How Pathetic...§r");
         addEntityDialogues("exp9.transfur.text.secret", "§b§l§oHey You look familiar, maybe i know you from §csomewhere?§r");
-        addEntityDialogues("exp9.dead", "§o§n§l§3Heh... the cycle repeats. Over and over again... You’ve defeated me %1$s times... yet something tells me that one day I’ll find the sweet freedom I so richly deserve. But what if... I’m wrong? Will this cycle of re-synthesis and slaughter repeat indefinitely? Well, it wouldn't surprise me; you humans are truly nothing but cruel, amoral beings crawling about in search of material possessions.");
+        addEntityDialogues("exp9.dead", "§l§3Heh... the cycle repeats. Over and over again... You’ve defeated me %1$s times... yet something tells me that one day I’ll find the sweet freedom I so richly deserve. But what if... I’m wrong? Will this cycle of re-synthesis and slaughter repeat indefinitely? Well, it wouldn't surprise me; you humans are truly nothing but cruel, amoral beings crawling about in search of material possessions.");
         addEntityDialogues("exp9.pat.type_1", "§l§3...You dare mock me like this?! I'll tear you apart!");
         addEntityDialogues("exp9.pat.type_2", "§l§3Get your filthy hands off me!");
         addEntityDialogues("exp9.pat.type_3", "§l§3Pat me again, and I'll crush you until nothing's left!");

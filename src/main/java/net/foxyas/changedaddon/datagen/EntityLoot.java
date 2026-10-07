@@ -27,13 +27,15 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -42,7 +44,7 @@ import static net.minecraft.world.level.storage.loot.LootPool.lootPool;
 
 public class EntityLoot extends EntityLootSubProvider {
 
-    public final List<EntityType<?>> entityTypes = new ArrayList<>();
+    public final Set<EntityType<?>> entityTypes = new HashSet<>();
 
     public EntityLoot() {
         super(FeatureFlags.REGISTRY.allFlags());
@@ -54,6 +56,8 @@ public class EntityLoot extends EntityLootSubProvider {
 
         this.add(ChangedAddonEntities.LUMINARCTIC_LEOPARD_FEMALE.get(), createLuminarcticLeopardTable(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_FEMALE));
         this.add(ChangedAddonEntities.LUMINARCTIC_LEOPARD_MALE.get(), createLuminarcticLeopardTable(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_MALE));
+        this.add(ChangedAddonEntities.EXPERIMENT_009_BOSS.get(), createExperiment009BossLootTable());
+        this.add(ChangedAddonEntities.EXPERIMENT_10_BOSS.get(), createExperiment10BossLootTable());
     }
 
     @Override
@@ -61,6 +65,151 @@ public class EntityLoot extends EntityLootSubProvider {
         boolean containsInRegistry = EntitiesWithLoot.stream().map(Pair::getFirst).map(Supplier::get).toList().contains(pEntityType);
         if (!containsInRegistry) this.entityTypes.add(pEntityType);
         super.add(pEntityType, pLootTableLocation, pBuilder);
+    }
+
+    public static LootTable.Builder createExperiment009BossLootTable() {
+        SetVariantFunction.Builder setFormVariantFunction = new SetVariantFunction.Builder().withVariant(ChangedAddonTransfurVariants.EXPERIMENT_009.get());
+        return LootTable.lootTable()
+                // Pool 1: Disc
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(ChangedAddonItems.MEANINGLESS_STRAFE_MUSIC_DISC.get())
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())))
+
+//                // Pool 2: Transfur Totem
+//                .withPool(LootPool.lootPool()
+//                        .setRolls(ConstantValue.exactly(1.0F))
+//                        .add(LootItem.lootTableItem(ChangedAddonItems.TRANSFUR_TOTEM.get())
+//                                .when(LootItemKilledByPlayerCondition.killedByPlayer())))
+
+                // Pool 3: Experiment 009 DNA
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(ChangedAddonItems.EXPERIMENT_009_DNA.get())
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.25f))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
+                        )
+                        .add(LootItem.lootTableItem(ChangedAddonItems.BLUE_LATEX_GOO.get())
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(1f, 2f)))
+                        )
+                )
+
+                // Pool 4: Variable Drop Pool
+                .withPool(LootPool.lootPool()
+                        .setRolls(UniformGenerator.between(5f, 15f))
+                        .add(LootItem.lootTableItem(ChangedItems.WHITE_LATEX_GOO.get())
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 12.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
+                        )
+
+                        .add(LootItem.lootTableItem(ChangedItems.LATEX_BASE.get())
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 9.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+
+                        .add(LootItem.lootTableItem(ChangedAddonItems.LUMINARA_BASE.get())
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+
+                        .add(LootItem.lootTableItem(Items.DIAMOND)
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 10.0F))
+                                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                        .when(LootItemRandomChanceCondition.randomChance(0.75F))))
+
+                        .add(LootItem.lootTableItem(ChangedAddonItems.PAINITE.get())
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0f))
+                                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                        .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.05F))))
+
+                        .add(LootItem.lootTableItem(ChangedItems.LATEX_SYRINGE.get())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.02F, 0.05F))
+                                .apply(setFormVariantFunction)
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+
+                        .add(LootItem.lootTableItem(ChangedItems.LATEX_FLASK.get())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.02F, 0.05F))
+                                .apply(setFormVariantFunction)
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))));
+    }
+
+    public static LootTable.Builder createExperiment10BossLootTable() {
+        SetVariantFunction.Builder setFormVariantFunction = new SetVariantFunction.Builder().withVariant(ChangedAddonTransfurVariants.EXPERIMENT_10.get());
+        return LootTable.lootTable()
+                // Pool 1: Experiment 10 DNA
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(ChangedAddonItems.EXPERIMENT_10_DNA.get())
+                                .setWeight(1)
+                                .setQuality(1)
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.25f))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0f, 1.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
+
+                // Pool 2: Red Latex Goo
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(ChangedAddonItems.RED_LATEX_GOO.get())
+                                .setWeight(1)
+                                .setQuality(1)
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
+
+                // Pool 3: Variable Drop Pool
+                .withPool(LootPool.lootPool()
+                        .setRolls(UniformGenerator.between(5f, 15f))
+                        .add(LootItem.lootTableItem(ChangedItems.WHITE_LATEX_GOO.get())
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 12.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
+                        )
+
+                        .add(LootItem.lootTableItem(ChangedItems.LATEX_BASE.get())
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 9.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+
+                        .add(LootItem.lootTableItem(ChangedAddonItems.LUMINARA_BASE.get())
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+
+                        .add(LootItem.lootTableItem(Items.NETHERITE_SCRAP)
+                                .setWeight(1)
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.001F, 0.05F))
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F))))
+
+                        .add(LootItem.lootTableItem(Items.NETHERITE_INGOT)
+                                .setWeight(1)
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.0001F, 0.01F))
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+
+                        .add(LootItem.lootTableItem(ChangedAddonItems.PAINITE.get())
+                                .setWeight(1)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))
+                                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                        .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.05F))))
+
+                        .add(LootItem.lootTableItem(ChangedItems.LATEX_SYRINGE.get())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.02F, 0.025F))
+                                .apply(setFormVariantFunction)
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+
+                        .add(LootItem.lootTableItem(ChangedItems.LATEX_FLASK.get())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.02F, 0.05F))
+                                .apply(setFormVariantFunction)
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+                );
     }
 
     /**
@@ -124,9 +273,9 @@ public class EntityLoot extends EntityLootSubProvider {
 
     @Override
     protected @NotNull Stream<EntityType<?>> getKnownEntityTypes() {
-        List<EntityType<?>> list = entityTypes;
-        EntitiesWithLoot.forEach((supplierBuilderPair) -> list.add(supplierBuilderPair.getFirst().get()));
-        return list.stream();
+        Set<EntityType<?>> set = entityTypes;
+        EntitiesWithLoot.forEach((supplierBuilderPair) -> set.add(supplierBuilderPair.getFirst().get()));
+        return set.stream();
     }
 
     /**

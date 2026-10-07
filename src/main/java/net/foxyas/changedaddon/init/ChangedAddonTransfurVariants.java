@@ -314,10 +314,10 @@ public class ChangedAddonTransfurVariants {
                     .nightVision()
                     .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION));
 
-    public static final RegistryObject<TransfurVariant<FemaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_FEMALE = register("luminara_crystal_being/female",
+    public static final RegistryObject<TransfurVariant<FemaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_FEMALE = register("form_luminara_crystal_being/female",
             () -> TransfurVariant.Builder.of(ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_FEMALE));
 
-    public static final RegistryObject<TransfurVariant<MaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_MALE = register("luminara_crystal_being/male",
+    public static final RegistryObject<TransfurVariant<MaleLuminaraCrystalBeing>> LUMINARA_CRYSTAL_BEING_MALE = register("form_luminara_crystal_being/male",
             () -> TransfurVariant.Builder.of(ChangedAddonEntities.LUMINARA_CRYSTAL_BEING_MALE));
 
     // ============================================================ OCs ============================================================ //
@@ -768,5 +768,6 @@ public class ChangedAddonTransfurVariants {
         public static final GenderedPair<CrystalGasCatMaleEntity, CrystalGasCatFemaleEntity> HIMALAYAN_CRYSTAL_GAS_CAT = registerPair(HIMALAYAN_CRYSTAL_GAS_CAT_MALE, HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE);
         public static final GenderedPair<LatexKitsuneMaleEntity, LatexKitsuneFemaleEntity> KITSUNES = registerPair(LATEX_KITSUNE_MALE, LATEX_KITSUNE_FEMALE);
         public static final GenderedPair<BorealisMaleEntity, BorealisFemaleEntity> BOREALIS = registerPair(BOREALIS_MALE, BOREALIS_FEMALE);
+        public static final GenderedPair<MaleLuminaraCrystalBeing, FemaleLuminaraCrystalBeing> LUMINARA_CRYSTAL_BEINGS = registerPair(LUMINARA_CRYSTAL_BEING_MALE, LUMINARA_CRYSTAL_BEING_FEMALE);
     }
 }

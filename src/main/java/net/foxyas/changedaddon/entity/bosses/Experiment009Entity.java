@@ -153,8 +153,8 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     @Override
     public boolean startRiding(@NotNull Entity EntityIn, boolean force) {
-        if (EntityIn instanceof Boat || EntityIn instanceof Minecart) {
-            return false;
+        if (!force && (EntityIn instanceof Boat || EntityIn instanceof Minecart)) {
+            return super.startRiding(EntityIn, force) && this.getTarget() == null;
         }
 
         return super.startRiding(EntityIn, force);

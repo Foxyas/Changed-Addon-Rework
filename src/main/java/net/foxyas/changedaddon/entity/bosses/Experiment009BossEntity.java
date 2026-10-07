@@ -364,15 +364,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     @Override
-    public boolean startRiding(@NotNull Entity EntityIn, boolean force) {
-        if (EntityIn instanceof Boat || EntityIn instanceof Minecart) {
-            return false;
-        }
-
-        return super.startRiding(EntityIn, force);
-    }
-
-    @Override
     public double getMeleeAttackRangeSqr(LivingEntity target) {
         if (target.getEyeY() > this.getEyeY() + 1) {
             return super.getMeleeAttackRangeSqr(target) * 1.5D;
@@ -1395,7 +1386,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             if (living instanceof ServerPlayer serverPlayer) {
                 int value = serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(this.getType()));
                 if (value > 3) {
-                    this.speak(Component.translatable("entity_dialogues.changed_addon.exp9.dead", value), serverPlayer);
+                    this.speak(Component.translatable("entity_dialogues.changed_addon.exp9.dead", value).withStyle(ChatFormatting.DARK_AQUA), serverPlayer);
                 }
             }
         }
