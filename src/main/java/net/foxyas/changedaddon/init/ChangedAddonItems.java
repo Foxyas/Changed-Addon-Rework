@@ -7,7 +7,7 @@ import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
 import net.foxyas.changedaddon.item.armor.HazardBodySuit;
 import net.foxyas.changedaddon.item.clothes.DyeableShortsItem;
 import net.foxyas.changedaddon.item.clothes.TShirtClothingItem;
-import net.foxyas.changedaddon.procedure.DotValueOfViewProcedure;
+import net.foxyas.changedaddon.util.AngleUtils;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -275,7 +275,7 @@ public class ChangedAddonItems {
             ItemProperties.register(LAETHIN_SYRINGE.get(), ChangedAddonMod.resourceLoc("laethin_syringe_type"),
                     (itemStackToRender, clientWorld, entity, itemEntityId) -> LaethinItem.getLaethinTypeOfStack(itemStackToRender).getValue());
             ItemProperties.register(TRANSFUR_TOTEM.get(), ChangedAddonMod.resourceLoc("transfur_totem_glowtick"), (itemStackToRender, clientWorld, entity, itemEntityId) -> TransfurTotemItem.itemPropertyFunc(entity));
-            ItemProperties.register(SIGNAL_CATCHER.get(), ChangedAddonMod.resourceLoc("signal_catcher_dot_value"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) DotValueOfViewProcedure.execute(entity, itemStackToRender));
+            ItemProperties.register(SIGNAL_CATCHER.get(), ChangedAddonMod.resourceLoc("signal_catcher_dot_value"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) AngleUtils.getLookAlignmentToItem(entity, itemStackToRender));
             ItemProperties.register(SIGNAL_CATCHER.get(), ChangedAddonMod.resourceLoc("signal_catcher_cord_set"), (stack, level, entity, itemEntityId) -> {
                 CompoundTag tag = stack.getTag();
                 return tag != null && tag.contains("x") && tag.contains("y") && tag.contains("z") ? 1 : 0;
