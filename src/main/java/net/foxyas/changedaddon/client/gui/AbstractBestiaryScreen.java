@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.process.bestiary.BestiaryEntriesManager;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
@@ -17,6 +18,14 @@ public abstract class AbstractBestiaryScreen extends Screen implements MouseMove
 
     protected AbstractBestiaryScreen(Component pTitle) {
         super(pTitle);
+    }
+
+    protected void setUnlockedColor(GuiGraphics graphics) {
+        graphics.setColor(0.05f, 0.05f, 0.07f, 1.0f);
+    }
+
+    protected void resetColor(GuiGraphics graphics) {
+        graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
     protected String getVariantDisplayName(TransfurVariant<?> tf) {

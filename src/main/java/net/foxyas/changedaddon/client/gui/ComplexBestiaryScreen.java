@@ -690,13 +690,11 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         boolean itemUnlocked = isVariantUnlocked(tf, this.minecraft.player);
 
         try {
-            if (!itemUnlocked) {
-                graphics.setColor(0.1f, 0.1f, 0.12f, 1.0f);
-            }
+            if (!itemUnlocked) setUnlockedColor(graphics);
+
             GuiUtils.renderEntityInInventory(graphics, centerX, renderY, adjustedScale, pose, null, changedEntity);
-            if (!itemUnlocked) {
-                graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-            }
+
+            if (!itemUnlocked) resetColor(graphics);
         } catch (Exception e) {
             renderInitialsFallback(graphics, tf, centerX, centerY);
         } finally {
@@ -762,7 +760,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
                 String lockMsg = Component.translatable("gui.changed_addon.bestiary.locked").getString();
                 int lockW = this.font.width(lockMsg);
-                graphics.drawString(this.font, lockMsg, centerX - (lockW / 2), y + (8*2), 0xFF5555, false);
+                graphics.drawString(this.font, lockMsg, centerX - (lockW / 2), y + (8 * 12), 0xFF5555, false);
             }
 
             float oldYBodyRot = this.currentEntity.yBodyRot;
@@ -796,15 +794,11 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 graphics.pose().translate(0, 0, 50);
 
                 // Silhouette mode if locked
-                if (!this.isUnlocked) {
-                    graphics.setColor(0.1f, 0.1f, 0.12f, 1.0f);
-                }
+                if (!this.isUnlocked) setUnlockedColor(graphics);
 
                 InventoryScreen.renderEntityInInventory(graphics, modelCenterX, modelCenterY, (int) modelZoom, pose, null, this.currentEntity);
 
-                if (!this.isUnlocked) {
-                    graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-                }
+                if (!this.isUnlocked) resetColor(graphics);
 
                 graphics.pose().popPose();
             } catch (Exception e) {

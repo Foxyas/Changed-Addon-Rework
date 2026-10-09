@@ -588,15 +588,11 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
                 graphics.pose().translate(0, 0, 50);
 
                 // Silhouette mode if locked
-                if (!this.isUnlocked) {
-                    graphics.setColor(0.1f, 0.1f, 0.12f, 1.0f);
-                }
+                if (!this.isUnlocked) setUnlockedColor(graphics);
 
                 InventoryScreen.renderEntityInInventory(graphics, modelCenterX, modelCenterY, (int) modelZoom, pose, null, this.currentEntity);
 
-                if (!this.isUnlocked) {
-                    graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-                }
+                if (!this.isUnlocked) resetColor(graphics);
 
                 graphics.pose().popPose();
             } catch (Exception e) {
