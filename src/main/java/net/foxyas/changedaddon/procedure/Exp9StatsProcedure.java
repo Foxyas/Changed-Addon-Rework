@@ -7,7 +7,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -17,23 +16,16 @@ public class Exp9StatsProcedure {
     @SubscribeEvent
     public static void onEntityAttacked(LivingHurtEvent event) {
         LivingEntity entity = event.getEntity();
-        execute(event, event.getSource(), entity, event.getAmount());
-    }
-
-    public static void execute(DamageSource source, LivingEntity entity, double amount) {
-        execute(null, source, entity, amount);
-    }
-
-    private static void execute(Event event, DamageSource source, LivingEntity entity, double amount) {
         if (!hasKetExperiment009Form(entity)) return;
 
+        DamageSource source = event.getSource();
         boolean reduceDamage =
                 source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) ||
                         source.is(DamageTypeTags.IS_FIRE) ||
                         (source.is(DamageTypeTags.IS_FIRE) && entity.isOnFire());
 
-        if (reduceDamage && event instanceof LivingHurtEvent hurtEvent) {
-            hurtEvent.setAmount(Math.round(amount / 2f));
+        if (reduceDamage) {
+            event.setAmount(Math.round(event.getAmount() / 2f));
         }
     }
 

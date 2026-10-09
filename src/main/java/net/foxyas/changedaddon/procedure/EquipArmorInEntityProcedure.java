@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class EquipArmorInEntityProcedure {
+
     @SubscribeEvent
     public static void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
         if (event.getEntity().isShiftKeyDown() && event.getTarget() instanceof ChangedEntity changedEntity) {

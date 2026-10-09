@@ -17,14 +17,12 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.ai.ImmediateTransfurDecision;
 import net.ltxprogrammer.changed.entity.beast.AbstractAquaticEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
-import net.ltxprogrammer.changed.init.ChangedParticles;
-import net.ltxprogrammer.changed.init.ChangedRegistry;
-import net.ltxprogrammer.changed.init.ChangedTags;
+import net.ltxprogrammer.changed.init.*;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.process.TransfurEvents.UntransfurPlayerEvent;
 import net.ltxprogrammer.changed.util.Color3;
@@ -170,19 +168,20 @@ public class PlayerUtil {
     public static void transfurPlayerAndLoadData(Player player, TransfurVariant<?> latexVariant, TransfurContext transfurContext, CompoundTag data, float progress) {
         if (latexVariant == null || player == null) return;
 
-        TransfurVariantInstance<?> tf = ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, transfurContext, progress);
+        ProcessTransfur.transfur(player, ImmediateTransfurDecision.safe(latexVariant, transfurContext.cause(), e -> {
+            DelayedTask.schedule(0, () -> {
+                var tf = e.getTransfurVariantInstance();
+                if (tf == null) return;
 
-        if (tf != null && data != null && !data.isEmpty()) {
-            CompoundTag save = tf.save();
-            save.merge(data);
-            tf.load(save);
-            for (Map.Entry<AbstractAbility<?>, AbstractAbilityInstance> abstractAbilityAbstractAbilityInstanceEntry : tf.abilityInstances.entrySet()) {
-                IAbstractChangedEntity entity = IAbstractChangedEntity.forEither(tf.getHost());
-                if (entity == null) continue;
+                CompoundTag merged = tf.save();
+                merged.merge(data);
+                tf.load(merged);
 
-                abstractAbilityAbstractAbilityInstanceEntry.getKey().setDirty(entity);
-            }
-        }
+                for (Map.Entry<AbstractAbility<?>, AbstractAbilityInstance> entry : tf.abilityInstances.entrySet()) {
+                    entry.getKey().setDirty(e);
+                }
+            });
+        }));
     }
 
     public static boolean unTransfurPlayerAndSpawnParticles(Player player, boolean shouldApplyEffects, boolean playSound) {
