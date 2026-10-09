@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 public class TransfurVariantsDietEvent {
 
     @SubscribeEvent
-    public static void HaydenFoodStats(FormDietEvent event) {
+    public static void haydenFoodStats(FormDietEvent event) {
         if (event.getVariant() != null && event.getVariant().is(ChangedAddonTransfurVariants.HAYDEN_FENNEC_FOX)) {
             if (event.getItemStack().is(Items.COOKIE)) {
                 event.getEntity().addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 5, 1));

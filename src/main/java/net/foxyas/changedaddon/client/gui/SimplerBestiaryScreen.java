@@ -1,33 +1,33 @@
 package net.foxyas.changedaddon.client.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
+import net.foxyas.changedaddon.process.bestiary.BestiaryEntriesManager;
+import net.foxyas.changedaddon.process.bestiary.BestiaryEntry;
 import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
-import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.joml.Quaternionf;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 /**
  * Vanilla Minecraft styled BestiaryScreen with responsive container layout,
@@ -91,6 +91,10 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
         super(Component.translatable("gui.changed_addon.bestiary.title"));
     }
 
+    public List<TransfurVariant<?>> getAllVariants() {
+        return allVariants;
+    }
+
     @Override
     protected void init() {
         super.init();
@@ -111,6 +115,35 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
         if (allVariants.isEmpty()) {
             List<TransfurVariant<?>> variants = TransfurVariant.getPublicTransfurVariants()
                     .sorted(Comparator.comparing(var -> var.getFormId().toString()))
+                    // This may be good later
+//                    .filter(variant -> {
+//                        boolean isCodeUnlocked = false;
+//                        LocalPlayer player = getMinecraft().player;
+//                        ChangedEntity entity = ChangedEntities.getCachedEntity(player.level, variant.getEntityType());
+//                        if (entity instanceof IBestiaryEntityData data) {
+//                            if (data.isUnlocked(player)) {
+//                                EntityType<?> refType = data.getReferencedEntityType();
+//                                if (refType != null && refType != entity.getType()) {
+//                                    Entity cached = ChangedEntities.getCachedEntity(player.level, refType);
+//                                    if (cached instanceof ChangedEntity ce) {
+//                                        isCodeUnlocked = true;
+//                                    }
+//                                }
+//                                isCodeUnlocked = true;
+//                            }
+//                        }
+//                        boolean isBestiaryUnlocked = BestiaryEntriesManager.getAllHolders(player)
+//                                .stream()
+//                                .filter(reference -> BestiaryEntriesManager.isUnlocked(reference, player))
+//                                .anyMatch(reference -> reference
+//                                        .value()
+//                                        .variants()
+//                                        .stream()
+//                                        .anyMatch(transfurVariantHolder -> transfurVariantHolder.matches(variant))
+//                                );
+//
+//                        return isCodeUnlocked || isBestiaryUnlocked;
+//                    })
                     .toList();
             allVariants.addAll(variants);
         }
@@ -132,7 +165,7 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
 
         // Default selection
         if (this.selected == null && !filteredVariants.isEmpty()) {
-            selectTf(ChangedTransfurVariants.GAS_WOLF_MALE.get());
+            selectTf(filteredVariants.get(0));
         } else if (this.selected != null) {
             refreshSelectedEntity();
         }
@@ -153,15 +186,6 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
                 filteredVariants.add(tf);
             }
         }
-    }
-
-    private String getVariantDisplayName(TransfurVariant<?> tf) {
-        if (tf == null) return Component.translatable("gui.changed_addon.bestiary.unknown").getString();
-        EntityType<?> type = tf.getEntityType();
-        if (type != null) {
-            return Component.translatable(type.getDescriptionId()).getString();
-        }
-        return tf.getFormId().getPath();
     }
 
     @Override
@@ -190,6 +214,9 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
         Player player = this.minecraft.player;
         ChangedEntity entity = (ChangedEntity) ChangedEntities.getCachedEntity(level, this.selected.getEntityType());
 
+        // Check unlock using unified utility method
+        this.isUnlocked = isVariantUnlocked(this.selected, player);
+
         // Respect ReferencedEntityType from IBestiaryEntityData
         if (entity instanceof IBestiaryEntityData data) {
             EntityType<?> refType = data.getReferencedEntityType();
@@ -199,9 +226,6 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
                     entity = ce;
                 }
             }
-            this.isUnlocked = player == null || data.isUnlocked(player);
-        } else {
-            this.isUnlocked = true;
         }
 
         this.currentEntity = entity;
@@ -210,7 +234,7 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
     }
 
     /**
-     * Builds lore lines and attribute bars (bar chart).
+     * Builds lore lines and attribute bars (bar chart). Includes failsafe for locked entries.
      */
     private void buildDetailsAndBarChart(ChangedEntity entity) {
         loreLines.clear();
@@ -222,6 +246,46 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
         }
 
         int textWrapWidth = Math.max(100, this.detW - 16);
+
+        // Failsafe: if entry is locked, obfuscate details & attribute bars
+        if (!this.isUnlocked) {
+            loreLines.addAll(this.font.split(
+                    Component.literal("§k" + Component.translatable("gui.changed_addon.bestiary.locked_description").getString()), textWrapWidth));
+
+            // 2. Bar Chart Attributes
+            AttributeSupplier playerDefaults = DefaultAttributes.getSupplier(EntityType.PLAYER);
+            AttributeMap transformedMap = entity.getAttributes();
+
+            // Standard attributes to inspect
+            checkAndAddBar(transformedMap, playerDefaults, Attributes.MAX_HEALTH, Component.literal("???"), (float) Attributes.MAX_HEALTH.getDefaultValue(), 0xFFFF4444, 0xFF666666);
+            checkAndAddBar(transformedMap, playerDefaults, Attributes.ATTACK_DAMAGE, Component.literal("???"), (float) Attributes.ATTACK_DAMAGE.getDefaultValue(), 0xFF444444, 0xFF666666);
+            checkAndAddBar(transformedMap, playerDefaults, Attributes.MOVEMENT_SPEED, Component.literal("???"), (float) Attributes.MOVEMENT_SPEED.getDefaultValue(), 0xFF444444, 0xFF666666);
+
+            int totalContentHeight = 24 + (loreLines.size() * 10) + 16 + (attributeBars.size() * 20);
+            this.maxDetailsScroll = Math.max(0, totalContentHeight - (this.dialogH - 40));
+            return;
+        }
+
+        // --- Data-Driven Bestiary Entries Lore Integration ---
+        Player player = this.minecraft != null ? this.minecraft.player : null;
+        if (player != null && this.selected != null) {
+            for (Holder.Reference<BestiaryEntry> bestiaryHolderRaw : BestiaryEntriesManager.getHoldersForVariant(this.selected, player)) {
+                Optional<Holder.Reference<BestiaryEntry>> bestiaryHolder = Optional.ofNullable(bestiaryHolderRaw);
+                if (bestiaryHolder.isPresent()) {
+                    BestiaryEntry bestiaryEntry = bestiaryHolder.get().value();
+                    Component titleComp = bestiaryEntry.title();
+                    Component descComp = bestiaryEntry.description();
+
+                    if (titleComp != null && !titleComp.getString().isEmpty()) {
+                        loreLines.addAll(this.font.split(Component.literal("§e").append(titleComp), textWrapWidth));
+                    }
+                    if (descComp != null && !descComp.getString().isEmpty()) {
+                        loreLines.addAll(this.font.split(descComp, textWrapWidth));
+                    }
+                }
+            }
+        }
+
         String attrTitleKey = Component.translatable("gui.changed_addon.bestiary.attributes").getString();
         String classTitleKey = Component.translatable("gui.changed_addon.bestiary.classification").getString();
 
@@ -471,7 +535,7 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
     }
 
     /**
-     * Middle 3D Viewport with interactive mouse drag rotation & zooming.
+     * Middle 3D Viewport with interactive mouse drag rotation & zooming. Failsafe silhouette rendering when locked.
      */
     private void renderModelViewport(GuiGraphics graphics, int x, int y, int w, int h, int mouseX, int mouseY, float partialTick) {
         renderInsetBox(graphics, x, y, w, h);
@@ -484,9 +548,11 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
             graphics.fill(centerX - 24, centerY - 2, centerX + 24, centerY + 3, 0x44000000);
             graphics.fill(centerX - 18, centerY - 3, centerX + 18, centerY + 4, 0x33000000);
 
-            // Silhouette rendering / locked banner
+            // Locked banner
             if (!this.isUnlocked) {
-                graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.locked").getString(), centerX - 24, y + 8, 0xFF5555, false);
+                String lockMsg = Component.translatable("gui.changed_addon.bestiary.locked").getString();
+                int lockW = this.font.width(lockMsg);
+                graphics.drawString(this.font, lockMsg, centerX - (lockW / 2), y + 8, 0xFF5555, false);
             }
 
             // Save old rotations
@@ -520,7 +586,18 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
                 int modelCenterY = centerY + (int) modelOffsetY;
                 graphics.pose().pushPose();
                 graphics.pose().translate(0, 0, 50);
+
+                // Silhouette mode if locked
+                if (!this.isUnlocked) {
+                    graphics.setColor(0.1f, 0.1f, 0.12f, 1.0f);
+                }
+
                 InventoryScreen.renderEntityInInventory(graphics, modelCenterX, modelCenterY, (int) modelZoom, pose, null, this.currentEntity);
+
+                if (!this.isUnlocked) {
+                    graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+                }
+
                 graphics.pose().popPose();
             } catch (Exception e) {
                 graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.render_error").getString(), centerX - 28, centerY - 10, 0xFF5555, false);
@@ -545,7 +622,7 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
         float hintScale = 0.75f;
         PoseStack pose = graphics.pose();
         pose.pushPose();
-        pose.translate(x + (w - (int)(hintW * hintScale)) / 2.0, y + h - 9, 0.0);
+        pose.translate(x + (w - (int) (hintW * hintScale)) / 2.0, y + h - 9, 0.0);
         pose.scale(hintScale, hintScale, 1.0f);
         graphics.drawString(this.font, hint, 0, 0, 0x888888, false);
         pose.popPose();
@@ -573,11 +650,8 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
             graphics.drawString(this.font, "§e§l" + name, x + 6, curY, 0xFFFF55, false);
             curY += 12;
 
-            if (!classificationText.isEmpty()) {
-                String rawClass = classificationText.startsWith("Classification:")
-                        ? classificationText.substring("Classification:".length()).trim()
-                        : classificationText;
-                String classDisplay = Component.translatable("gui.changed_addon.bestiary.lore.classification", rawClass).getString();
+            if (this.isUnlocked && !classificationText.isEmpty()) {
+                Component classDisplay = Component.translatable("gui.changed_addon.bestiary.lore.classification", classificationText);
                 graphics.drawString(this.font, classDisplay, x + 6, curY, 0xAAAAAA, false);
                 curY += 11;
             }

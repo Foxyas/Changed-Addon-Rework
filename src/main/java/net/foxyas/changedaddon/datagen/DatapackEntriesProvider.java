@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.datagen.worldgen.ConfiguredFeatureProvider;
 import net.foxyas.changedaddon.datagen.worldgen.PlacedFeatureProvider;
 import net.foxyas.changedaddon.datagen.worldgen.StructureProvider;
 import net.foxyas.changedaddon.datagen.worldgen.template_pool.DazedMeteorPools;
+import net.foxyas.changedaddon.init.ChangedAddonBestiaryEntries;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurDiets;
 import net.foxyas.changedaddon.world.features.processors.OffSetSpawnProcessor;
@@ -48,7 +49,8 @@ public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.STRUCTURE, StructureProvider::bootstrap)
             .add(Registries.STRUCTURE_SET, StructureProvider::structureSet)
 
-            .add(ChangedAddonTransfurDiets.TRANSFUR_VARIANT_DIET_KEY, new TransfurVariantDietProvider(ChangedAddonMod.MODID)::bootstrap);
+            .add(ChangedAddonTransfurDiets.TRANSFUR_VARIANT_DIET_KEY, new TransfurVariantDietProvider(ChangedAddonMod.MODID)::bootstrap)
+            .add(ChangedAddonBestiaryEntries.BESTIARY_ENTRIES_KEY, new BestiaryEntriesProvider(ChangedAddonMod.MODID)::bootstrap);
 
     public DatapackEntriesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(ChangedAddonMod.MODID));

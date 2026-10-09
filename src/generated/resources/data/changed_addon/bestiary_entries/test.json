@@ -1,0 +1,10 @@
+{
+  "condition": {},
+  "description": {
+    "text": "TEST FILES DESCRIPTION"
+  },
+  "tittle": {
+    "text": "TEST FILES"
+  },
+  "variants": "changed:form_gas_wolf/male"
+}
