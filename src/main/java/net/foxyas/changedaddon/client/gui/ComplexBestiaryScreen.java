@@ -760,7 +760,9 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
                 String lockMsg = Component.translatable("gui.changed_addon.bestiary.locked").getString();
                 int lockW = this.font.width(lockMsg);
+                RenderSystem.disableDepthTest();
                 graphics.drawString(this.font, lockMsg, centerX - (lockW / 2), y + (8 * 12), 0xFF5555, false);
+                RenderSystem.enableDepthTest();
             }
 
             float oldYBodyRot = this.currentEntity.yBodyRot;
