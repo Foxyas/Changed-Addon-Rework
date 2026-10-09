@@ -550,9 +550,16 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
 
             // Locked banner
             if (!this.isUnlocked) {
+                graphics.drawString(this.font, Component.translatable("gui.changed_addon.bestiary.locked"), centerX - 24, y + 8, 0xFF5555, false);
+
                 String lockMsg = Component.translatable("gui.changed_addon.bestiary.locked").getString();
                 int lockW = this.font.width(lockMsg);
-                graphics.drawString(this.font, lockMsg, centerX - (lockW / 2), y + 8, 0xFF5555, false);
+                // Push pose stack and bring the rendering layer forward (Z-axis)
+                PoseStack pose = graphics.pose();
+                pose.pushPose();
+                pose.translate(0, 0, 200.0F); // Z = 200 guarantees it renders over the 3D entity (Z = 50)
+                graphics.drawString(this.font, lockMsg, centerX - (lockW / 2), y + (8 * 12), 0xFF5555, false);
+                pose.popPose();
             }
 
             // Save old rotations
@@ -618,7 +625,7 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
         float hintScale = 0.75f;
         PoseStack pose = graphics.pose();
         pose.pushPose();
-        pose.translate(x + (w - (int) (hintW * hintScale)) / 2.0, y + h - 9, 0.0);
+        pose.translate(x + (w - (int) (hintW * hintScale)) / 2.0, y + h - 9, 200.0);
         pose.scale(hintScale, hintScale, 1.0f);
         graphics.drawString(this.font, hint, 0, 0, 0x888888, false);
         pose.popPose();

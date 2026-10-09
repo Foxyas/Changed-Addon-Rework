@@ -760,9 +760,11 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
                 String lockMsg = Component.translatable("gui.changed_addon.bestiary.locked").getString();
                 int lockW = this.font.width(lockMsg);
-                RenderSystem.disableDepthTest();
+                PoseStack pose = graphics.pose();
+                pose.pushPose();
+                pose.translate(0, 0, 200.0F); // Z = 200 guarantees it renders over the 3D entity (Z = 50)
                 graphics.drawString(this.font, lockMsg, centerX - (lockW / 2), y + (8 * 12), 0xFF5555, false);
-                RenderSystem.enableDepthTest();
+                pose.popPose();
             }
 
             float oldYBodyRot = this.currentEntity.yBodyRot;
@@ -825,7 +827,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         float hintScale = 0.75f;
         PoseStack pose = graphics.pose();
         pose.pushPose();
-        pose.translate(x + (w - (int) (hintW * hintScale)) / 2.0, y + h - 9, 0.0);
+        pose.translate(x + (w - (int) (hintW * hintScale)) / 2.0, y + h - 9, 200.0);
         pose.scale(hintScale, hintScale, 1.0f);
         graphics.drawString(this.font, hint, 0, 0, 0x888888, false);
         pose.popPose();
