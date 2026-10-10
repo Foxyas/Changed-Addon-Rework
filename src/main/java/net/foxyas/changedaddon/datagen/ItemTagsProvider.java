@@ -14,9 +14,11 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -324,5 +326,8 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
 
         tag(ChangedAddonTags.Items.UNTRANSFUR_AGENTS).add(ANTI_LATEX_BASE.get());
         tag(ChangedAddonTags.Items.UNTRANSFUR_CATALYZERS).add(LUMINARA_BLOOM_PETALS.get(), LUMINARA_BLOOM.get(), LUMINARA_SAPLING.get());
+
+        Item[] array = REGISTRY.getEntries().stream().map(RegistryObject::get).filter(RecordItem.class::isInstance).toArray(Item[]::new);
+        tag(ItemTags.MUSIC_DISCS).add(array);
     }
 }
