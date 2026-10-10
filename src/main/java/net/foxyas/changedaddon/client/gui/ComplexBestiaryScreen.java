@@ -359,7 +359,17 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                         loreLines.addAll(this.font.split(Component.literal("§e").append(titleComp), textWrapWidth));
                     }
                     if (descComp != null && !descComp.getString().isEmpty()) {
-                        loreLines.addAll(this.font.split(descComp, textWrapWidth));
+                        String rawDesc = descComp.getString();
+
+                        if (rawDesc.startsWith("> ")) {
+                            String stripped = rawDesc.substring(2);
+                            // Create a dynamic quote component with the title's color theme & blockquote bar
+                            Component quoteComp = Component.literal("§e┃ ").append(Component.literal(stripped));
+
+                            loreLines.addAll(this.font.split(quoteComp, textWrapWidth - 8));
+                        } else {
+                            loreLines.addAll(this.font.split(descComp, textWrapWidth));
+                        }
                     }
                 }
             }
