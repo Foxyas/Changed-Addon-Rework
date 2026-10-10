@@ -1,15 +1,9 @@
 package net.foxyas.changedaddon.procedure;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
-import net.ltxprogrammer.changed.init.ChangedTags;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class AdvancementTriggersProcedure {
+public class AdvancementTriggersProcedure {//TODO delete?
 
 //    private static final ResourceLocation ADV = ChangedAddonMod.resourceLoc("organic_transfur");
 //

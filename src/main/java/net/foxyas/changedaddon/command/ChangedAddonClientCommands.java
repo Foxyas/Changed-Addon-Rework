@@ -30,7 +30,11 @@ public class ChangedAddonClientCommands {
                             });
                             return 1;
                         })
-                        .then(Commands.argument("type", StringArgumentType.word())
+                        .then(Commands.argument("type", StringArgumentType.word()).suggests(((context, builder) -> {
+                            builder.suggest("complex");
+                            builder.suggest("simpler");
+                            return builder.buildFuture();
+                        }))
                                 .executes(context -> {
                                     String type = StringArgumentType.getString(context, "type");
                                     Screen pGuiScreen = switch (type) {

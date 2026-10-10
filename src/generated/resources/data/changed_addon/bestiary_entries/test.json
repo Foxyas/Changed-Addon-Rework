@@ -1,0 +1,12 @@
+{
+  "condition": {},
+  "description": {
+    "italic": true,
+    "text": "TEST FILES DESCRIPTION"
+  },
+  "tittle": {
+    "color": "gold",
+    "text": "TEST FILES TITLE"
+  },
+  "variants": "changed:form_gas_wolf/male"
+}
