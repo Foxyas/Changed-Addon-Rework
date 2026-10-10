@@ -31,7 +31,7 @@ public class BestiaryEntriesProvider {
         );
         context.register(key("test2"), new BestiaryEntry(List.of(new TransfurVariantHolder(ChangedTransfurVariants.GAS_WOLF_MALE.get())),
                 Component.literal("TEST FILES TITLE2").withStyle(ChatFormatting.GOLD),
-                Component.literal("TEST FILES DESCRIPTION2").withStyle(style -> style.withItalic(true)),
+                Component.literal("> TEST FILES DESCRIPTION2").withStyle(style -> style.withItalic(true)),
                 new BestiaryCondition(Optional.empty()),
                 0)
         );

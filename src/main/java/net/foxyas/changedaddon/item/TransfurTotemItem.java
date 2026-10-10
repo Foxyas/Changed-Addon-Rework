@@ -277,9 +277,9 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
 
         if (tag.contains("TransfurVariantData")) {
             CompoundTag data = tag.getCompound("TransfurVariantData");
-            PlayerUtil.transfurPlayerAndLoadData(player, form, data, 0.85f);
+            PlayerUtil.transfurPlayerAndLoadData(player, form, data, 0.5f);
             // 0.85f to avoid issues with the transfur animation and because is design choice
-        } else PlayerUtil.transfurPlayer(player, form, 0.85f);
+        } else PlayerUtil.transfurPlayer(player, form, 0.5f);
 
         activateVisuals(level, player, stack, 100, null);
         return InteractionResultHolder.consume(stack);
