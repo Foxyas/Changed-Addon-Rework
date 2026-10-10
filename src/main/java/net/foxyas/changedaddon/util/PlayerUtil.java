@@ -180,6 +180,8 @@ public class PlayerUtil {
                 CompoundTag merged = tf.save();
                 merged.merge(data);
                 tf.load(merged);
+                tf.transfurProgressionO = progress;
+                tf.transfurProgression = progress;
 
                 for (Map.Entry<AbstractAbility<?>, AbstractAbilityInstance> entry : tf.abilityInstances.entrySet()) {
                     entry.getKey().setDirty(e);
