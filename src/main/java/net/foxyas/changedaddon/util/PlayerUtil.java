@@ -12,17 +12,17 @@ import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.*;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.TamableLatexEntity;
-import net.ltxprogrammer.changed.entity.TransfurCause;
-import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.ai.ImmediateTransfurDecision;
 import net.ltxprogrammer.changed.entity.beast.AbstractAquaticEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.extension.ChangedCompatibility;
 import net.ltxprogrammer.changed.init.*;
+import net.ltxprogrammer.changed.network.packet.SyncTransfurPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.process.TransfurEvents.UntransfurPlayerEvent;
 import net.ltxprogrammer.changed.util.Color3;
@@ -35,6 +35,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -51,11 +52,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -169,7 +173,7 @@ public class PlayerUtil {
         if (latexVariant == null || player == null) return;
 
         ProcessTransfur.transfur(player, ImmediateTransfurDecision.safe(latexVariant, transfurContext.cause(), e -> {
-            DelayedTask.schedule(0, () -> {
+            DelayedTask.quickSchedule(() -> {
                 var tf = e.getTransfurVariantInstance();
                 if (tf == null) return;
 
@@ -180,8 +184,74 @@ public class PlayerUtil {
                 for (Map.Entry<AbstractAbility<?>, AbstractAbilityInstance> entry : tf.abilityInstances.entrySet()) {
                     entry.getKey().setDirty(e);
                 }
-            });
+           });
         }));
+    }
+
+    @Nullable
+    public static TransfurVariantInstance<?> setPlayerTransfurVariantAndLoad(Player player, @Nullable TransfurVariant<?> ogVariant, @Nullable TransfurContext context, float progress, boolean temporaryFromSuit, Consumer<TransfurVariantInstance<?>> preProcess) {
+        PlayerDataExtension playerDataExtension = (PlayerDataExtension)player;
+        ProcessTransfur.EntityVariantAssigned event = new ProcessTransfur.EntityVariantAssigned(player, ogVariant, context);
+        Changed.postModEvent(event);
+        TransfurVariant<?> variant = event.variant;
+        if (ChangedCompatibility.isPlayerUsedByOtherMod(player)) {
+            variant = null;
+        }
+
+        TransfurVariantInstance<?> oldVariant = playerDataExtension.getTransfurVariant();
+        if (variant != null && oldVariant != null && variant == oldVariant.getParent()) {
+            return oldVariant;
+        } else if (variant == null && oldVariant == null) {
+            return null;
+        } else {
+            if (oldVariant != null && oldVariant.getChangedEntity() != null) {
+                oldVariant.getChangedEntity().discard();
+            }
+
+            TransfurVariantInstance<?> instance = TransfurVariantInstance.variantFor(variant, player);
+            if (instance != null) {
+                preProcess.accept(instance);
+                Changed.postModEvent(new net.ltxprogrammer.changed.process.TransfurEvents.PreProcessTransfurVariantInstanceEvent(player, variant, context, instance, progress, temporaryFromSuit));
+            }
+
+            playerDataExtension.setTransfurVariant(instance);
+            if (instance != null) {
+                instance.transfurProgressionO = progress;
+                instance.transfurProgression = progress;
+            }
+
+            if (oldVariant != null) {
+                oldVariant.unhookAll(player);
+                if (instance != null) {
+                    instance.willSurviveTransfur = oldVariant.willSurviveTransfur;
+                    instance.transfurProgressionO = oldVariant.transfurProgressionO;
+                    instance.transfurProgression = oldVariant.transfurProgression;
+                    instance.transfurContext = oldVariant.transfurContext;
+                }
+            }
+
+            if (instance != null) {
+                if (context != null) {
+                    instance.transfurContext = context;
+                }
+
+                instance.setTemporaryForSuit(temporaryFromSuit);
+            }
+
+            player.setHealth(Math.min(player.getHealth(), player.getMaxHealth()));
+            if (variant != null && !event.isRedundant() && !instance.isTemporaryFromSuit()) {
+                Changed.postModEvent(new ProcessTransfur.EntityVariantAssigned.ChangedVariant(player, variant, context));
+                ChangedFunctionTags.ON_TRANSFUR.execute(ServerLifecycleHooks.getCurrentServer(), player);
+            }
+
+            AccessoryEntities.INSTANCE.forceReloadAccessories(player);
+            if (player instanceof ServerPlayer) {
+                ServerPlayer serverPlayer = (ServerPlayer)player;
+                Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> serverPlayer), SyncTransfurPacket.Builder.of(player));
+            }
+
+            return instance;
+        }
     }
 
     public static boolean unTransfurPlayerAndSpawnParticles(Player player, boolean shouldApplyEffects, boolean playSound) {

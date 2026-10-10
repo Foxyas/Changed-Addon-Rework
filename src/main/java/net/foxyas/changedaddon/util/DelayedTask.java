@@ -42,6 +42,11 @@ public class DelayedTask {
         return new DelayedTask(delayTicks, task);
     }
 
+    @CanIgnoreReturnValue
+    public static DelayedTask quickSchedule(Runnable task) {
+        return new DelayedTask(0, task);
+    }
+
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
