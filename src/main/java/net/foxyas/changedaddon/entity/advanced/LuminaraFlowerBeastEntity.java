@@ -184,8 +184,22 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
         return false;
     }
 
-    public Vec3 getMouthPosition() {
+    public Vec3 getMouthPositionRoot() {
         return this.getEyePosition().subtract(0, 0.25, 0);
+    }
+
+    public Vec3 getMouthPositionRoot(float partialTicks) {
+        return this.getEyePosition(partialTicks).subtract(0, 0.25, 0);
+    }
+
+    public Vec3 getMouthPosition() {
+        Vec3 view = getLookAngle();
+        return getMouthPositionRoot().add(view.scale(0.25f));
+    }
+
+    public Vec3 getMouthPosition(float partialTicks) {
+        Vec3 view = getViewVector(partialTicks);
+        return getMouthPositionRoot().add(view.scale(0.25f));
     }
 
     @Override

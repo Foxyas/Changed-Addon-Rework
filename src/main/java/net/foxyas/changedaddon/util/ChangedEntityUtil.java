@@ -12,7 +12,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -20,11 +22,47 @@ import java.util.List;
 
 public class ChangedEntityUtil {
 
+    /**
+     * Dynamically calculates the real 3D mouth position using local offset scales
+     * (Forward, Up/Down, Left/Right relative to the entity's orientation).
+     *
+     * @param target          The target living entity.
+     * @param forwardOffset   How far forward from the eyes the mouth is.
+     * @param verticalOffset  The vertical offset from the eyes (negative is down, positive is up).
+     * @param sidewaysOffset  The lateral offset (positive for right, negative for left).
+     * @return A Vec3 representing the precise 3D mouth position in the world.
+     */
+    public static Vec3 getDynamicMouthPosition(LivingEntity target, double forwardOffset, double verticalOffset, double sidewaysOffset) {
+        Vec3 eyePos = target.getEyePosition();
+
+        // Get the entity's look direction (forward)
+        Vec3 lookVec = target.getViewVector(0).normalize();
+
+        // Approximate the world 'up' vector (or use entity's exact up vector if available)
+        Vec3 upVec = target.getUpVector(0).normalize();
+
+        // Calculate the side (right/left) vector using cross product between look and up
+        // (In Minecraft/Forge, cross product order ensures the correct lateral axis)
+        Vec3 sideVec = lookVec.cross(upVec).normalize();
+
+        // Start from the eye position
+        Vec3 mouthPos = eyePos;
+
+        // Apply vertical offset along the up vector
+        mouthPos = mouthPos.add(upVec.scale(verticalOffset));
+
+        // Apply forward offset along the look vector
+        mouthPos = mouthPos.add(lookVec.scale(forwardOffset));
+
+        // Apply sideways offset along the side vector (useful if an entity has an asymmetric mouth)
+        mouthPos = mouthPos.add(sideVec.scale(sidewaysOffset));
+
+        return mouthPos;
+    }
 
     public static void setFlying(ChangedEntity changedEntity, boolean value) {
         changedEntity.setChangedEntityFlag(0, value);
     }
-
 
     public static double getTorsoYOffset(ChangedEntity self) {
         float scale = self.getScale();
