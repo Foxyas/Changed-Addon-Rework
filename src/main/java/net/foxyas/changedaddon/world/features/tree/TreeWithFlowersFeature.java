@@ -53,12 +53,13 @@ public class TreeWithFlowersFeature extends Feature<TreeWithFlowersFeatureConfig
                 );
 
         boolean treePlaced = this.treeFeature.place(treeContext);
-        boolean flowerPlaced = this.flowerFeature.place(flowerContext);
 
         // 2. Se a árvore falhou em gerar (ex: sem espaço ou bloco inválido), nós cancelamos as flores também
-        if (!treePlaced || !flowerPlaced) {
+        if (!treePlaced) {
             return false;
         }
+
+        boolean flowerPlaced = this.flowerFeature.place(flowerContext);
 
         return true;
 
