@@ -97,7 +97,7 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("obtain_green_crystal_dagger", "§aZöld§r kristálytőr!", "Szerezz egy §azöld§r kristálytőrt!");
         addAdvancement("obtain_painite", "Nem redstone!?", "Szerezz painitot");
         addAdvancement("obtain_red_crystal_dagger", "§4Vörös§r kristálytőr!", "Szerezz egy §4vörös§r kristálytőrt!");
-        addAdvancement("obtain_red_electric_katana", "§mMegszakadt emlékek§r", "Az igazságok kimondatlanok maradnak, még a saját nevét is elfelejtette!, Szerezz egy §4vörös§r§d elektromos katanát!");
+        addAdvancement("obtain_red_electric_katana", "§mMegszakadt emlékek§r", "Az igazságok kimondatlanok maradnak, még a saját nevét is elfelejtette!, Szerezz egy §4vörös§5 elektromos katanát!");
         addAdvancement("obtain_snepsi", "Snepsi?", "Szerezz egy Snepsit!, Figyel-macska, ez a szóda magas hópárduc-tartalommal rendelkezik");
         addAdvancement("orange_juice_is_yummy", "Narancslé finom", "§lNarancslevet§r ittál, finom volt");
         addAdvancement("organic_transfur", "Organikus és bolyhos!!", "Transzfurálja magát organikus formává");
@@ -112,8 +112,8 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("used_untransfur_syringe_warning_32", "Zavart határozatlanság?", "Több mint 32 alkalommal használtad a litix-kam,óniás fecskendőt, határozatlan vagy az emberségeddel kapcsolatban, szent ég!");
         addAdvancement("used_untransfur_syringe_warning_64", "Hol vannak a mellékhatások?", "Több mint 64 alkalommal használtad a litix-kam,óniás fecskendőt!!! §4HA NEM HAGYOD ABBA A DNS-ED VÁLTOZTATÁSÁT, RÁKOT KAPHATSZ!!!!!");
         addAdvancement("used_untransfur_syringe_warning_128", "ÁLLJ", "A LITIX-KAMMÓNIÁS FECSKENDŐT 120-SZOR HASZNÁLTAD! §4 FIGYELMEZTETTELEK, HOGY HAGYJA ABBA, MERT RÁKOT KAPHATSZ!!!");
-        addAdvancement("transfur_totem_untransfur", "Teljes ellenőrzés alatt", "\"Használj latex totemet a transzfurhoz vagy a visszatranszfurhoz.");
-        addAdvancement("transfur_totem_benign_salvation", "§5A §r§fragacsos §r§4átok §r§bmegváltása", "§b Ments meg magát a ragacsos és nyomorúságos élettől egy latex totem segítségével");
+        addAdvancement("transfur_totem.untransfur", "Teljes ellenőrzés alatt", "\"Használj latex totemet a transzfurhoz vagy a visszatranszfurhoz.");
+        addAdvancement("transfur_totem.benign_salvation", "§5A §r§fragacsos §r§4átok §r§bmegváltása", "§b Ments meg magát a ragacsos és nyomorúságos élettől egy latex totem segítségével");
         addAdvancement("over_dose", "Túladagolás", "Nos, nem §4rák§r volt, de én §4figyelmeztettelek");
         addAdvancement("obtain_unifuser", "Egy unifúzor?", "Barkácsolj vagy szerezz egy unifúzort");
         addAdvancement("untransfur_mob_effect_slow", "Nem hiszem, hogy ez olyan maradandó lenne!!", "Visszatranszfurálsz a lassú, de hatékony visszatranszfurálási effektussal.");
@@ -304,6 +304,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityDialogues("exp9.pat.type_1", "§l§3...Így merészelsz gúnyolódni velem?! Széttéplek!");
         addEntityDialogues("exp9.pat.type_2", "§l§3Vedd le rólam a mocskos kezeidet!");
         addEntityDialogues("exp9.pat.type_3", "§l§3Simogass meg még egyszer, és addig zúzlak össze, amíg semmi sem marad belőled!");
+        addEntityDialogues("exp9.pat.damage_after_warn", "§l§3Figyelmeztettelek! Most megfizeted az árát!");
         addEntityDialogues("exp9.reaction.range_attacks.not_affect", "§l§o§3Már hozzászoktam az ilyen fegyverekhez. Legközelebb légy kreatívabb.");
         addEntityDialogues("exp9.reaction.range_attacks.attack_at_distance", "§l§o§3GYÁVA VAGY! Csak a távolságra számíthatsz? TÉNYLEG SZÁMORÚ!!!");
         addEntityDialogues("exp9.reaction.range_attacks.attack_when_vulnerable", "§l§o§3GYÁVA VAGY! Akkor támadsz, amikor a legsebezhetőbb állapotban vagyok, ahelyett, hogy nyíltan beszélnél velem.");
@@ -315,6 +316,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityDialogues("exp10.pat.type_1", "§l§4Nem fogod sokáig megbánni – meghalsz érte.");
         addEntityDialogues("exp10.pat.type_2", "§l§4Érj meg újra, és gyorsan csinálom... neked.");
         addEntityDialogues("exp10.pat.type_3", "§l§4Mersz velem játszani? Ez volt az utolsó hibád.");
+        addEntityDialogues("exp10.pat.damage_after_warn", "§l§4Figyelmeztettelek! Most megfizeted az árát!");
         addEntityDialogues("exp10.reaction.range_attacks", "§l§o§4Mit fog azzal a fúvócsővel csinálni, bántani? Nem hiszem, te gyenge teremtmény.");
         addEntityDialogues("exp10.reaction.fire_damage", "§4Komolyan azt hitted, hogy a tűz árthat nekem? Ebben §la formában§r§4 túl vagyok az ilyen hibákon.§r");
         addEntityDialogues("exp10.death.text1", "§4§l§oAnnyi potenciál, egyetlen lélegzetvétel alatt elpazarolva... szánalmas.§r");
@@ -597,7 +599,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(STRANGE_COMPOUND_BASE, "Furcsa vegyület alap");
         add(STRANGE_COMPOUND_BASE.get().getDescriptionId() + ".desc", "Egy furcsa vegyület, hasonló a latex alaphoz, de úgy tűnik, hogy valamivel keverve reakciót válthat ki");
         addItem(EXP_10_LATEX_BASE, "§410-es kísérlet latex alapja§r");
-        addItem(EXP_9_LATEX_BASE, "§c009-es kísérlet latex alapja§r");
+        addItem(EXP_9_LATEX_BASE, "§b9-es kísérlet latex alapja§r");
 
         addItem(EXPERIMENT_009_DNA, "009-es kísérlet DNS-e");
         add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".desc", "§3A tiszta energia-manipuláció és az elektromosság erejével átitatott DNS.");
