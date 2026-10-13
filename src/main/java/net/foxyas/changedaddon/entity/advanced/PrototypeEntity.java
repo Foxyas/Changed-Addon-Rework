@@ -9,12 +9,10 @@ import net.foxyas.changedaddon.entity.api.ItemHandlerHolder;
 import net.foxyas.changedaddon.entity.defaults.tamable.AbstractCanTameChangedEntityFavors;
 import net.foxyas.changedaddon.menu.PrototypeMenu;
 import net.foxyas.changedaddon.util.ColorUtil;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.EyeStyle;
-import net.ltxprogrammer.changed.entity.TransfurCause;
-import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -216,7 +214,7 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
             }
         } else inv.deserializeNBT(tag.getCompound("Inv"));
 
-        if (tag.contains("harvestDone")) {
+        if (tag.contains("harvestsTimes")) {
             harvestsTimes = tag.getInt("harvestsTimes");
         }
         if (tag.contains("DepositeType")) {//DataFix
@@ -434,6 +432,15 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
         }
 
         return false;
+    }
+
+    public void spawnEmotionParticle(Emote emote) {
+        if (!(this.level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+        serverLevel.sendParticles(ChangedParticles.emote(this, emote),
+                this.getX(), this.getY() + this.getDimensions(this.getPose()).height + 0.65, this.getZ(),
+                1, 0, 0, 0, 0);
     }
 
     // Getters and setters

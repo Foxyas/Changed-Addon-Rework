@@ -82,7 +82,7 @@ public class AlphaSleepGoal extends Goal {
                 holder.blockPosition().offset((int) scanRange, 1, (int) scanRange))) {
 
             BlockState state = level.getBlockState(pos);
-            if (state.is(BlockTags.BEDS) || state.is(BlockTags.WOOL) || state.getBlock() instanceof Pillow) {
+            if (state.is(BlockTags.BEDS) || state.is(BlockTags.WOOL) || state.is(BlockTags.WOOL_CARPETS) || state.getBlock() instanceof Pillow) {
                 count++;
                 if (fluffyBlocksRequired.test(count)) break;
             }

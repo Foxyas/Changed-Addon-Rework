@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.process.CuddleHandle;
 import net.foxyas.changedaddon.process.GrabberAttachment;
+import net.foxyas.changedaddon.process.UntransfurProgressInstance;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness;
 import net.foxyas.changedaddon.variant.LatexInfection;
 import net.foxyas.changedaddon.variant.TransfurVariantsInfo.TransfurPermissions;
@@ -112,7 +113,7 @@ public class ChangedAddonVariables {
         public int timeAfterVictoryOfFTK = 0;
         public int ticksFightingForConsciousness = 0;
 
-        public double untransfurProgress = 0.0;
+        public UntransfurProgressInstance untransfurProgressInstance = new UntransfurProgressInstance();
 
         public boolean showWarns = true;
         public boolean resetTransfurAdvancements = false;
@@ -140,7 +141,7 @@ public class ChangedAddonVariables {
 
         public void copyTo(PlayerVariables other, boolean wasDeath) {
             other.resetTransfurAdvancements = resetTransfurAdvancements;
-            other.untransfurProgress = untransfurProgress;
+            other.untransfurProgressInstance = untransfurProgressInstance;
             other.exp009BossTransfurPermission = exp009BossTransfurPermission;
             other.exp10BossTransfurPermission = exp10BossTransfurPermission;
             other.cuddleHandle = cuddleHandle;
@@ -164,7 +165,6 @@ public class ChangedAddonVariables {
                 nbt.putInt("actCooldown", actCooldown);
                 nbt.putInt("patCooldown", patCooldown);
             }
-            nbt.putDouble("UntransfurProgress", untransfurProgress);
             nbt.putBoolean("isTransfuredBySafeMethod", isTransfuredBySafeMethod);
             nbt.putInt("timeAfterVictoryOfFTK", timeAfterVictoryOfFTK);
             nbt.putInt("ticksFightingForConsciousness", ticksFightingForConsciousness);
@@ -190,7 +190,6 @@ public class ChangedAddonVariables {
             resetTransfurAdvancements = nbt.getBoolean("resetTransfurAdvancements");
             actCooldown = nbt.getInt("actCooldown");
             patCooldown = nbt.getInt("patCooldown");
-            untransfurProgress = nbt.getDouble("UntransfurProgress");
             exp009BossTransfurPermission = nbt.getBoolean("Exp009TransfurAllowed");
             exp10BossTransfurPermission = nbt.getBoolean("Exp10TransfurAllowed");
             isTransfuredBySafeMethod = nbt.getBoolean("isTransfuredBySafeMethod");
@@ -220,7 +219,6 @@ public class ChangedAddonVariables {
             resetTransfurAdvancements = other.resetTransfurAdvancements;
             actCooldown = other.actCooldown;
             patCooldown = other.patCooldown;
-            untransfurProgress = other.untransfurProgress;
             exp009BossTransfurPermission = other.exp009BossTransfurPermission;
             exp10BossTransfurPermission = other.exp10BossTransfurPermission;
             isTransfuredBySafeMethod = other.isTransfuredBySafeMethod;
@@ -239,8 +237,12 @@ public class ChangedAddonVariables {
             return latexInfection;
         }
 
-        public double getUntransfurProgress() {
-            return untransfurProgress;
+        public float getUntransfurProgress() {
+            return getUntransfurProgressInstance().getUntransfurProgress();
+        }
+
+        public UntransfurProgressInstance getUntransfurProgressInstance() {
+            return untransfurProgressInstance;
         }
 
         public int getPatCooldownTicks() {

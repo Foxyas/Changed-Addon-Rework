@@ -10,24 +10,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class ProgressTransfurEvents {
 
-    public static class TickPlayerTransfurProgressEvent extends Event {
-
-        private final Player player;
-
-        public TickPlayerTransfurProgressEvent(Player player) {
-            this.player = player;
-        }
-
-        public Player getPlayer() {
-            return player;
-        }
-
-        @Override
-        public boolean isCancelable() {
-            return true;
-        }
-    }
-
     public static class ProgressTransfurEvent extends Event {
 
         public final LivingEntity livingEntity;

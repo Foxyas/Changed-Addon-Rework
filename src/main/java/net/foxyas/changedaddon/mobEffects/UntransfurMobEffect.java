@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.process.UntransfurProgressInstance;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -25,6 +26,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
@@ -68,7 +71,7 @@ public class UntransfurMobEffect extends MobEffect {
 
         if (!(entity instanceof Player player)) return;
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.of(player);
-        if (vars == null || vars.untransfurProgress < 100) return;
+        if (vars == null || vars.getUntransfurProgress() < 1) return;
 
         if (!ProcessTransfur.isPlayerTransfurred(player)) {
             if (vars.showWarns) {
@@ -78,8 +81,8 @@ public class UntransfurMobEffect extends MobEffect {
             return;
         }
 
-        vars.untransfurProgress = 0;
-        vars.syncPlayerVariables(entity);
+        vars.getUntransfurProgressInstance().resetUntransfurProgress(player);
+        vars.syncPlayerVariables(player);
 
         player.removeEffect(ChangedAddonMobEffects.UNTRANSFUR.get());
 
@@ -138,12 +141,20 @@ public class UntransfurMobEffect extends MobEffect {
             if (!level.isDay() || !(entity instanceof Player player)
                     || !player.hasEffect(ChangedAddonMobEffects.UNTRANSFUR.get())) return;
 
-            new DelayedTask(5, () -> player.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(cap -> {
-                if (ProcessTransfur.isPlayerTransfurred(player) && player.isSleepingLongEnough()) {
-                    cap.untransfurProgress += 50;
-                    cap.syncPlayerVariables(player);
-                }
-            }));
+            ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(player);
+            boolean naturalWakeUp = event.wakeImmediately() && !event.updateLevel();
+            if (ProcessTransfur.isPlayerTransfurred(player) && player.isSleepingLongEnough() && naturalWakeUp) {
+                playerVariables.getUntransfurProgressInstance().progressTransfurProgress(player, 0.5f);
+                playerVariables.syncPlayerVariables(player);
+            }
+        }
+
+        @SubscribeEvent
+        public static void allowPlayersToSleepAtAnyMomentWhenWithUntransfurEffect(SleepingTimeCheckEvent event) {
+            Player sleeper = event.getEntity();
+            if (!sleeper.hasEffect(ChangedAddonMobEffects.UNTRANSFUR.get()) && !ProcessTransfur.isPlayerTransfurred(sleeper)) return;
+
+            event.setResult(Event.Result.ALLOW);
         }
     }
 }

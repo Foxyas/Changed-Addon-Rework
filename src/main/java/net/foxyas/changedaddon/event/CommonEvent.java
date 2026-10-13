@@ -10,9 +10,13 @@ import net.foxyas.changedaddon.entity.advanced.LatexSnowFoxFoxyasEntity;
 import net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicCamera;
+import net.foxyas.changedaddon.event.TransfurEvents.AbsorbedEntitySpecificEvent;
+import net.foxyas.changedaddon.event.TransfurEvents.AssimilatedEntitySpecificEvent;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.ChangedAddonVariables.PlayerVariables;
+import net.foxyas.changedaddon.process.CuddleHandle;
+import net.foxyas.changedaddon.process.UntransfurProgressInstance;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
@@ -24,6 +28,7 @@ import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.block.CannedSoup;
+import net.ltxprogrammer.changed.block.Pillow;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.SeatEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -45,11 +50,13 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.VibrationParticleOption;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -76,6 +83,7 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -243,9 +251,39 @@ public class CommonEvent {
         LivingEntity entity = event.getEntity();
         if (entity instanceof PathfinderMob mob) {
             if (hasValidAlphaSleepGoal(mob)) {
-                event.setResult(Event.Result.ALLOW);
+                event.setResult(Result.ALLOW);
             }
         }
+
+//        if (EntityUtil.maybeGetOverlaying(entity) instanceof IAlphaAbleEntity iAlphaAbleEntity) {
+//            if (iAlphaAbleEntity.isAlpha()) {
+//                BlockPos headPos = event.getSleepingLocation();
+//                Level level = entity.level();
+//
+//                // 1. Check if the block beneath the head is fluffy
+//                BlockPos headBelow = headPos.below();
+//                boolean isHeadFluffy = level.getBlockState(headBelow).is(BlockTags.WOOL) || level.getBlockState(headBelow).is(BlockTags.WOOL_CARPETS);
+//
+//                // 2. Since the event location is usually the head, find the feet position based on player direction
+//                // (Beds take 2 blocks: Head and Foot. Players face towards their feet/away from the pillow when lying down)
+//                Direction direction = entity.getDirection(); // Or entity.getDirection()
+//                BlockPos footPos = headPos.relative(direction.getOpposite());
+//                BlockPos footBelow = footPos.below();
+//
+//                boolean isFootFluffy = level.getBlockState(footBelow).is(BlockTags.WOOL) || level.getBlockState(footBelow).is(BlockTags.WOOL_CARPETS);
+//
+//                // Require both blocks (or at least the head/body area) to be on fluffy blocks
+//                if (isHeadFluffy || isFootFluffy) {
+//                    // Check clearance for both head and foot spaces so they don't suffocate
+//                    boolean hasSpace = level.isEmptyBlock(headPos) && level.isEmptyBlock(headPos.above()) &&
+//                            level.isEmptyBlock(footPos) && level.isEmptyBlock(footPos.above());
+//
+//                    if (hasSpace) {
+//                        event.setResult(Event.Result.ALLOW);
+//                    }
+//                }
+//            }
+//        }
     }
 
     @SubscribeEvent
@@ -253,7 +291,7 @@ public class CommonEvent {
         Player sleeper = event.getEntity();
         if (!ChangedAddonVariables.ofOrDefault(sleeper).wantToCuddles()) return;
 
-        event.setResult(Event.Result.ALLOW);
+        event.setResult(Result.ALLOW);
     }
 
     @SubscribeEvent
@@ -569,7 +607,7 @@ public class CommonEvent {
 
         maskTransfur(player, player.level);
 
-        tickUntransfur(player);
+        tickUntransfurInstance(player);
 
         triggerSwimRegret(player);
 
@@ -615,6 +653,22 @@ public class CommonEvent {
         IAbstractChangedEntity source = event.entity;
         if (source.getEntity() instanceof Player player) {
             player.awardStat(ChangedAddonStatRegistry.ENTITY_TRANSFURRED.get());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityAbsorbOtherSpecific(AbsorbedEntitySpecificEvent event) {
+        IAbstractChangedEntity source = event.entity;
+        if (source.getEntity() instanceof Player player) {
+            ChangedAddonVariables.ofOrDefault(player).getUntransfurProgressInstance().onPlayerAbsorbEntity(event.getTarget(), source);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityReplicateOtherSpecific(AssimilatedEntitySpecificEvent event) {
+        IAbstractChangedEntity source = event.entity;
+        if (source.getEntity() instanceof Player player) {
+            ChangedAddonVariables.ofOrDefault(player).getUntransfurProgressInstance().onPlayerAssimilateEntity(event.getTarget(), source);
         }
     }
 
@@ -699,7 +753,9 @@ public class CommonEvent {
 
     private static void tickCuddleHandle(Player player) {
         PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(player);
-        playerVariables.cuddleHandle.tick(player);
+        CuddleHandle cuddleHandle = playerVariables.cuddleHandle;
+        if (cuddleHandle == null) return; // Safety check for the cuddleHandle
+        cuddleHandle.tick(player);
     }
 
     private static void tickInfectionAndRes(TickPlayerTransfurProgressEvent event) {
@@ -760,29 +816,14 @@ public class CommonEvent {
         }
     }
 
-
-    private static void tickUntransfur(Player player) {
+    private static void tickUntransfurInstance(Player player) {
         PlayerVariables vars = ChangedAddonVariables.of(player);
         if (vars == null) return;
 
-        if (!player.hasEffect(ChangedAddonMobEffects.UNTRANSFUR.get())) {
-            if (vars.untransfurProgress > 0) {
-                vars.untransfurProgress -= .1f;
-                vars.syncPlayerVariables(player);
-            }
-            return;
-        }
+        UntransfurProgressInstance instance = vars.getUntransfurProgressInstance();
+        if (instance == null) return; // Safety check for the instance
 
-        if (!ProcessTransfur.isPlayerTransfurred(player)) return;
-
-        if (vars.untransfurProgress < 0) {
-            vars.untransfurProgress = 0;
-        } else {
-            vars.untransfurProgress += (ProcessTransfur.isPlayerNotLatex(player) ? 0.1 : 0.2);
-
-            if (player.isSleeping()) vars.untransfurProgress += .5f;
-        }
-        vars.syncPlayerVariables(player);
+        instance.tick(player);
     }
 
     private static void triggerSwimRegret(Player player) {

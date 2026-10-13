@@ -22,7 +22,7 @@ public record BestiaryEntry(
     public static final Codec<BestiaryEntry> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     listOrSingle(TransfurVariantHolder.CODEC).fieldOf("variants").forGetter(BestiaryEntry::variants),
-                    ExtraCodecs.COMPONENT.fieldOf("tittle").forGetter(BestiaryEntry::title), // matching your JSON key "tittle"
+                    ExtraCodecs.COMPONENT.fieldOf("title").forGetter(BestiaryEntry::title), // matching your JSON key "title"
                     ExtraCodecs.COMPONENT.fieldOf("description").forGetter(BestiaryEntry::description),
                     BestiaryCondition.CODEC.fieldOf("condition").forGetter(BestiaryEntry::condition),
                     Codec.INT.optionalFieldOf("order", 0).forGetter(BestiaryEntry::order)

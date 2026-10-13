@@ -123,11 +123,8 @@ public class FindAndHarvestCropsGoal extends Goal {
         if (pendingEffects) {
             pendingEffects = false;
 
+            entity.spawnEmotionParticle(Emote.IDEA);
             level.playSound(null, entity.blockPosition(), ChangedAddonSoundEvents.PROTOTYPE_IDEA.get(), SoundSource.MASTER, 1, 1);
-
-            ((ServerLevel) level).sendParticles(ChangedParticles.emote(entity, Emote.IDEA),
-                    entity.getX(), entity.getY() + entity.getDimensions(entity.getPose()).height + 0.65, entity.getZ(),
-                    1, 0, 0, 0, 0);
         }
     }
 
@@ -138,6 +135,7 @@ public class FindAndHarvestCropsGoal extends Goal {
         targetCropPos = null;
         harvestCooldown = 0;
         noPathTimeout = 100;
+        entity.spawnEmotionParticle(Emote.NERVOUS);
     }
 
     private boolean isBlockInvalid(BlockState state) {

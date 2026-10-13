@@ -445,8 +445,8 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
 
             event.shouldKeepConscious = true;
             if (player instanceof ServerPlayer serverPlayer) {
-                Component text = Component.translatable("changed_addon.latex_totem.tittle.text_1");
-                Component text2 = Component.translatable("changed_addon.latex_totem.tittle.text_2");
+                Component text = Component.translatable("changed_addon.latex_totem.title.text_1");
+                Component text2 = Component.translatable("changed_addon.latex_totem.title.text_2");
                 TitleUtils.sendTitleAndReset(serverPlayer, text, Component.empty(), 20, 30, 20);
                 serverPlayer.displayClientMessage(text, false);
                 serverPlayer.displayClientMessage(text2, false);
