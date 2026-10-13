@@ -583,17 +583,33 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                 .parent(kill009)
                 .display(
                         ChangedAddonItems.TRANSFUR_TOTEM.get(),
-                        Component.translatable("advancements.transfur_totem_untransfur.title"),
-                        Component.translatable("advancements.transfur_totem_untransfur.descr"),
+                        Component.translatable("advancements.transfur_totem.untransfur.title"),
+                        Component.translatable("advancements.transfur_totem.untransfur.descr"),
                         null,
                         FrameType.CHALLENGE,
                         true,
                         false,
                         true
                 )
-                .addCriterion("impossible", new ImpossibleTrigger.TriggerInstance())
+                .addCriterion("untransfur", new UntransfurTrigger.TriggerInstance(ContextAwarePredicate.ANY, ItemPredicate.Builder.item().of(ChangedAddonItems.TRANSFUR_TOTEM.get()).build(), MobEffectsPredicate.ANY, Optional.of("totem_untransfur")))
                 .rewards(AdvancementRewards.Builder.experience(250))
                 .save(saver, ChangedAddonMod.resourceLoc("transfur_totem_untransfur"), existingFileHelper);
+
+        Advancement.Builder.advancement()
+                .parent(tfTotemUse)
+                .display(
+                        ChangedAddonItems.TRANSFUR_TOTEM.get(),
+                        Component.translatable("advancements.transfur_totem.benign_salvation.title"),
+                        Component.translatable("advancements.transfur_totem.benign_salvation.descr"),
+                        null,
+                        FrameType.CHALLENGE,
+                        true,
+                        false,
+                        true
+                )
+                .addCriterion("untransfur", new UntransfurTrigger.TriggerInstance(ContextAwarePredicate.ANY, ItemPredicate.Builder.item().of(ChangedAddonItems.TRANSFUR_TOTEM.get()).build(), MobEffectsPredicate.ANY, Optional.of("totem_salvation")))
+                .rewards(AdvancementRewards.Builder.experience(250))
+                .save(saver, ChangedAddonMod.resourceLoc("transfur_totem_benign_salvation"), existingFileHelper);
 
         Advancement untf = Advancement.Builder.advancement()
                 .parent(unifuser)
@@ -667,22 +683,6 @@ public class AdvancementProvider extends ForgeAdvancementProvider {
                 )
                 .rewards(AdvancementRewards.Builder.experience(3500))
                 .save(saver, ChangedAddonMod.resourceLoc("foxta_addictive"), existingFileHelper);
-
-        Advancement.Builder.advancement()
-                .parent(tfTotemUse)
-                .display(
-                        ChangedAddonItems.TRANSFUR_TOTEM.get(),
-                        Component.translatable("advancements.transfur_totem_benign_salvation.title"),
-                        Component.translatable("advancements.transfur_totem.benign_salvation.descr"),
-                        null,
-                        FrameType.CHALLENGE,
-                        true,
-                        false,
-                        true
-                )
-                .addCriterion("untransfur", new UntransfurTrigger.TriggerInstance(ContextAwarePredicate.ANY, ItemPredicate.Builder.item().of(ChangedAddonItems.TRANSFUR_TOTEM.get()).build(), MobEffectsPredicate.ANY, Optional.of("totem_salvation")))
-                .rewards(AdvancementRewards.Builder.experience(250))
-                .save(saver, ChangedAddonMod.resourceLoc("transfur_totem_benign_salvation"), existingFileHelper);
 
         Advancement.Builder.recipeAdvancement()
                 .parent(crystalCollector)

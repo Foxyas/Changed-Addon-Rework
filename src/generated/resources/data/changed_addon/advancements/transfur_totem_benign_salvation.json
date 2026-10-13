@@ -25,7 +25,7 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.transfur_totem_benign_salvation.title"
+      "translate": "advancements.transfur_totem.benign_salvation.title"
     }
   },
   "requirements": [

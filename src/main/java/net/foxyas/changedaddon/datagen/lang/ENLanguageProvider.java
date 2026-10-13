@@ -98,7 +98,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("obtain_green_crystal_dagger", "§aGreen§r Crystal Dagger!", "You get a §aGreen§r Crystal Dagger!");
         addAdvancement("obtain_painite", "Isn't redstone!?", "Obtain Painite");
         addAdvancement("obtain_red_crystal_dagger", "§4Red§r Crystal Dagger!", "You get a §4Red§r Crystal Dagger!");
-        addAdvancement("obtain_red_electric_katana", "§MMemories is Broken§r", "truths go unspoken, you even forgotten your name!!, Obtain §4Red§r§d Electric Katana!");
+        addAdvancement("obtain_red_electric_katana", "§MMemories is Broken§r", "truths go unspoken, you even forgotten your name!!, Obtain §4Red§5 Electric Katana!");
         addAdvancement("obtain_snepsi", "Snepsi?", "Obtain a Snepsi!, Cation this soda have high dose of Snep");
         addAdvancement("orange_juice_is_yummy", "Orange Juice Is Yummy", "You drank §lOrange juice§r, yummy");
         addAdvancement("organic_transfur", "Organic And Fluffy!!", "Transfur yourself into an organic form");
@@ -113,8 +113,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("used_untransfur_syringe_warning_32", "Confused indecision?", "You used a Litix-Cammonia Syringe more than 32 times, you are indecisive about your humanity, holy!");
         addAdvancement("used_untransfur_syringe_warning_64", "where are the side effects?", "You used a litixcammonia syringe more than 64 times!!! §4CAN GO GET ONE CANCER IF YOU NOT STOP CHANGE YOUR DNA!!!!!");
         addAdvancement("used_untransfur_syringe_warning_128", "Oh, that will NOT be good...", "You used the Litix Cammonia syringe more than 128 TIMES! I HIGHLY recommend that you STOP before you get cancer or have an §4*Overdose*§r...");
-        addAdvancement("transfur_totem_untransfur", "In Total Control", "You use a latex totem to transfur or untransfur");
-        addAdvancement("transfur_totem_benign_salvation", "§bSalvation§r§5 of A §fGooey §r§4Curse", "§b Be Saved From a Gooey and Miserable Life By Holding a Latex Totem");
+        addAdvancement("transfur_totem.untransfur", "In Total Control", "You use a latex totem to transfur or untransfur");
+        addAdvancement("transfur_totem.benign_salvation", "§bSalvation§r§5 of A §fGooey §r§4Curse", "§b Be Saved From a Gooey and Miserable Life By Holding a Latex Totem");
         addAdvancement("over_dose", "Overdose", "Well it wasn't §4cancer§r but i §4warned you");
         addAdvancement("obtain_unifuser", "A Unifuser?", "You craft or get a Unifuser");
         addAdvancement("untransfur_mob_effect_slow", "I don't think it's that permanent!!", "You untransfur using the slow but effective untransfur effect");
@@ -584,7 +584,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(STRANGE_COMPOUND_BASE);
         add(STRANGE_COMPOUND_BASE.get().getDescriptionId() + ".desc", "A Strange compound, similar to latex base but seems able to be mixed with something to cause a reaction");
         addItem(EXP_10_LATEX_BASE, "§4Exp10 Latex Base§r");
-        addItem(EXP_9_LATEX_BASE, "§cExp9 Latex Base§r");
+        addItem(EXP_9_LATEX_BASE, "§bExp9 Latex Base§r");
 
         addItem(EXPERIMENT_009_DNA, "Experiment 009 DNA");
         add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".desc", "§3DNA infused with the power of pure energy manipulation and electricity.");

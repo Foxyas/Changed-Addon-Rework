@@ -1,8 +1,11 @@
 package net.foxyas.changedaddon.client.gui;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.event.TransfurEvents;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.packet.TransfurSoundsGuiButtonPacket;
+import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.TransfurSoundsDetails;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
@@ -14,6 +17,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -75,27 +79,18 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
      */
     private static ResourceLocation getIconBasedOnTheSoundType(TransfurSoundsDetails.TransfurSoundAction action) {
         String path = switch (action) {
-            case MEOW, PURREOW, PURR, HISS -> "emote/heart_gray"; // Exemplo de ícones reutilizados ou específicos
+            case MEOW, PURREOW, PURR, HISS -> "emote/heart_gray";
             case BARK, GROWL, HOWL, WHINE -> "emote/pause_gray";
             case YIP, CHATTER, FOX_SCREAM -> "emote/idea_gray";
             case DRAGON_ROAR, DRAGON_GROWL, ROAR -> "emote/deny_gray";
             default -> "emote/pause_gray";
         };
-        // Altere "changed_addon" para o namespace correto dos seus ícones radiais se necessário
         return ChangedAddonMod.textureLoc("textures/gui/radial/icons/" + path);
     }
 
     protected ResourceLocation getTextureForSection(int section, boolean selected) {
         String style = ProcessTransfur.isPlayerNotLatex(player) ? "organic" : "goo";
         return Changed.modResource("textures/gui/radial/" + style + (selected ? "_selected/" : "/") + section + ".png");
-    }
-
-    protected int getSectionU(int section) {
-        return (section % 4) * 80;
-    }
-
-    protected int getSectionV(int section) {
-        return (section / 4) * 80;
     }
 
     @Override
@@ -116,17 +111,14 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
     public void renderSectionBackground(GuiGraphics graphics, int section, double x, double y, float partialTicks, int mouseX, int mouseY, float red, float green, float blue) {
         boolean selected = this.getSectionAt(mouseX, mouseY).filter((index) -> index == section).isPresent();
 
-        // Check if this specific action is on cooldown
         boolean onCooldown = false;
         if (section >= 0 && section < actions.size()) {
             try {
                 var soundAction = TransfurSoundsDetails.TransfurSoundAction.valueOf(actions.get(section).command());
                 onCooldown = isActionOnCooldown(soundAction);
-            } catch (IllegalArgumentException ignored) {
-            }
+            } catch (IllegalArgumentException ignored) {}
         }
 
-        // Dim the color/alpha if on cooldown
         float alphaMultiplier = onCooldown ? 0.4F : 1.0F;
         graphics.setColor(red, green, blue, alphaMultiplier);
 
@@ -149,21 +141,19 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
                     }
                 })
                 .max()
-                .orElse(100); // Default fallback if actions list is empty
+                .orElse(100);
 
-        // Calculate cooldown progress percentage (0.0 to 1.0)
         float actCooldownPercent = 1f - Mth.clamp((float) ChangedAddonVariables.ofOrDefault(player).actCooldown / maxCooldown, 0, 1);
 
         int dynamicHeight = (int) (64 * actCooldownPercent);
-        int verticalOffset = 64 - dynamicHeight; // Shifts the render area to the bottom
+        int verticalOffset = 64 - dynamicHeight;
 
-        // Blit from bottom to top by modifying the source V offset and screen Y position
         graphics.blit(
                 getTextureForSection(section, true),
                 (int) x - 32 + this.leftPos,
-                (int) y - 32 + this.topPos + verticalOffset, // Offset down so it fills upward
+                (int) y - 32 + this.topPos + verticalOffset,
                 0.0F,
-                (float) verticalOffset,                      // Crop from the bottom of the source texture
+                (float) verticalOffset,
                 64,
                 dynamicHeight,
                 64,
@@ -173,7 +163,6 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-
     @Override
     public void renderSectionForeground(GuiGraphics graphics, int section, double x, double y, float partialTicks, int mouseX, int mouseY, float red, float green, float blue, float alpha) {
         if (section >= 0 && section < actions.size()) {
@@ -182,7 +171,6 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
             int centerX = (int) (x - 2 + this.leftPos);
             int centerY = (int) (y - 2 + this.topPos);
 
-            // Desenha o ícone dimensionado no centro do botão radial
             graphics.setColor(0.0F, 0.0F, 0.0F, 0.45F * alpha);
             blitScaledIcon(graphics, icon, centerX + 2, centerY + 2, 34, action.textureSize());
             graphics.setColor(red, green, blue, alpha);
@@ -205,15 +193,13 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
         if (section.isPresent()) {
             LocalPlayer localPlayer = (LocalPlayer) player;
             Objects.requireNonNull(localPlayer);
-            SingleRunnable single = new SingleRunnable(() -> {
-            });
+            SingleRunnable single = new SingleRunnable(() -> {});
             if (this.handleClicked(section.get(), single)) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
                 single.run();
                 return true;
             }
         }
-
         return false;
     }
 
@@ -221,15 +207,13 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
     public boolean handleClicked(int section, SingleRunnable close) {
         if (section >= 0 && section < actions.size()) {
             Action action = actions.get(section);
-
             try {
                 TransfurSoundsDetails.TransfurSoundAction soundAction = TransfurSoundsDetails.TransfurSoundAction.valueOf(action.command());
                 if (isActionOnCooldown(soundAction)) return false;
 
                 sendSoundPacket(soundAction);
                 return true;
-            } catch (IllegalArgumentException ignored) {
-            }
+            } catch (IllegalArgumentException ignored) {}
         }
         return false;
     }
@@ -241,7 +225,6 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
     }
 
     protected boolean isActionOnCooldown(TransfurSoundsDetails.TransfurSoundAction action) {
-        // You can check global action cooldown or specific logic if available
         return ChangedAddonVariables.ofOrDefault(player).isActInCooldown();
     }
 
@@ -251,9 +234,14 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
         renderLabels(graphics, mouseX, mouseY);
     }
 
+    @Override
     protected void renderLabels(@NotNull GuiGraphics graphics, int mouseX, int mouseY) {
         graphics.pose().pushPose();
         graphics.pose().translate(this.leftPos, this.topPos, 0);
+
+        // -------------------------------
+        // Title at top center
+        // -------------------------------
         graphics.drawCenteredString(
                 font,
                 Component.translatable("gui.changed_addon.transfur_sounds_gui.label_transfur_sounds"),
@@ -261,7 +249,101 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
                 -120,
                 0xFFFFFF
         );
+
         graphics.pose().popPose();
+
+        // -------------------------------
+        // Adaptive Subtitles Info Box
+        // -------------------------------
+        List<Component> subtitles = getPlayerSubtitle();
+        if (!subtitles.isEmpty()) {
+            int panelWidth = 130;
+            int lineHeight = font.lineHeight + 4;
+            int panelHeight = subtitles.size() * lineHeight + 12;
+
+            // 1. Calculate the ideal position (to the left of the radial menu)
+            int idealX = this.leftPos - panelWidth - 120; // 120px gap from radial center
+            int idealY = this.topPos - (panelHeight / 2) - 48; // Vertically centered with radial
+
+            int margin = 12; // Minimum distance allowed from any screen edge
+
+            // 2. Check if the ideal position overflows the left or top boundary of the screen
+            int finalX = idealX;
+            int finalY = idealY;
+
+            if (idealX < margin) {
+                // Screen is too narrow on the left!
+                // Fallback: If there's space above/below, keep it readable at the top margin or left margin
+                finalX = Math.max(margin, (this.width - panelWidth) / 2); // Center horizontally
+                finalY = margin; // Anchor near the top
+            } else {
+                // Keep inside screen bounds for Y axis as well
+                finalY = Mth.clamp(idealY, margin, Math.max(margin, this.height - panelHeight - margin));
+            }
+
+            // Semi-transparent background panel & outline
+            graphics.fill(finalX, finalY, finalX + panelWidth, finalY + panelHeight, 0x80000000);
+            graphics.renderOutline(finalX, finalY, panelWidth, panelHeight, 0x55FFFFFF);
+
+            int textY = finalY + 6;
+            for (Component subtitle : subtitles) {
+                graphics.drawString(font, subtitle, finalX + 8, textY, 0xFFFFFF, true);
+                textY += lineHeight;
+            }
+        }
+    }
+
+    public static MutableComponent joinWithSeparator(List<MutableComponent> components, String separator) {
+        MutableComponent result = components.get(0);
+        for (int i = 1; i < components.size(); i++) {
+            result = result
+                    .append(Component.literal(separator))
+                    .append(components.get(i));
+        }
+        return result;
+    }
+
+    protected List<Component> getPlayerSubtitle() {
+        if (!ProcessTransfur.isPlayerTransfurred(player)) {
+            return List.of(Component.literal("§7Not Transfurred"));
+        }
+
+        List<Component> subtitles = new ArrayList<>();
+        subtitles.add(Component.literal("§fYou are a"));
+
+        List<MutableComponent> species = new ArrayList<>();
+        if (PlayerUtil.isCatTransfur(player)) species.add(Component.literal("§fCat"));
+        if (PlayerUtil.isFoxTransfur(player)) species.add(Component.literal("§fFox"));
+        if (PlayerUtil.isWolfTransfur(player)) species.add(Component.literal("§fCanine"));
+        if (PlayerUtil.isDragonTransfur(player)) species.add(Component.literal("§fDragon"));
+        if (PlayerUtil.isAquaticTransfur(player)) species.add(Component.literal("§fFish"));
+        if (PlayerUtil.isSpiderTransfur(player)) species.add(Component.literal("§fSpider"));
+
+        if (species.isEmpty()) {
+            species.add(Component.literal("§7Unknown"));
+        }
+
+        subtitles.add(joinWithSeparator(species, "§7 / "));
+
+        if (isApexPredator()) {
+            subtitles.add(Component.literal("§6Apex Predator"));
+        }
+
+        return subtitles;
+    }
+
+    protected boolean isApexPredator() {
+        if (!ProcessTransfur.isPlayerTransfurred(player))
+            return false;
+
+        ResourceLocation id = ProcessTransfur.getPlayerTransfurVariant(player).getFormId();
+        if (id == null) return false;
+
+        String path = id.toString();
+        return path.contains("lion")
+                || path.contains("tiger")
+                || path.startsWith("changed_addon:form_experiment009")
+                || TransfurEvents.resolveChangedEntity(player).getType().is(ChangedAddonTags.EntityTypes.CAN_ROAR);
     }
 
     @Override
@@ -269,6 +351,5 @@ public class TransfurSoundsGuiScreen extends AbstractRadialScreen<AbstractContai
         return false;
     }
 
-    public record Action(String command, ResourceLocation texture, int textureSize) {
-    }
+    public record Action(String command, ResourceLocation texture, int textureSize) {}
 }
