@@ -1,14 +1,22 @@
 {
   "parent": "changed_addon:kill_experiment_009",
   "criteria": {
-    "impossible": {
-      "trigger": "minecraft:impossible"
+    "untransfur": {
+      "conditions": {
+        "extra_context": "totem_untransfur",
+        "item": {
+          "items": [
+            "changed_addon:transfur_totem"
+          ]
+        }
+      },
+      "trigger": "changed_addon:untransfur"
     }
   },
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.transfur_totem_untransfur.descr"
+      "translate": "advancements.transfur_totem.untransfur.descr"
     },
     "frame": "challenge",
     "hidden": true,
@@ -17,12 +25,12 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.transfur_totem_untransfur.title"
+      "translate": "advancements.transfur_totem.untransfur.title"
     }
   },
   "requirements": [
     [
-      "impossible"
+      "untransfur"
     ]
   ],
   "rewards": {

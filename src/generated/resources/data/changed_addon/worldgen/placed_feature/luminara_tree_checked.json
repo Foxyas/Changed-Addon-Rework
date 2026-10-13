@@ -6,7 +6,10 @@
       "predicate": {
         "type": "minecraft:would_survive",
         "state": {
-          "Name": "changed_addon:luminara_bloom"
+          "Name": "changed_addon:luminara_sapling",
+          "Properties": {
+            "stage": "0"
+          }
         }
       }
     }

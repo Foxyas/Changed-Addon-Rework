@@ -125,10 +125,6 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
 
         applyCooldownForTotem(player, itemstack, cooldown);
         if (soundEvent != null) visualActivate(level, player, soundEvent, pitch);
-
-        if (player instanceof ServerPlayer serverPlayer) {
-            grantUntransfurAdvancement(itemstack, serverPlayer);
-        }
     }
 
     private static void visualActivate(Level level, Player player, SoundEvent sound) {

@@ -532,7 +532,7 @@ public class PlayerUtil {
             species.add(Component.literal("§7Unknown"));
         }
 
-        subtitles.add(TransfurSoundsGuiScreen.joinWithSeparator(species, "§7 / "));
+        subtitles.add(GuiUtils.joinWithSeparator(species, "§7 / "));
 
         // ===============================
         // Special traits

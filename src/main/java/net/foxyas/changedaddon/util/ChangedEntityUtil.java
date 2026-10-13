@@ -186,7 +186,7 @@ public class ChangedEntityUtil {
         }
 
         // Joins the species (e.g., "Cat / Canine")
-        subtitles.add(TransfurSoundsGuiScreen.joinWithSeparator(species, "§7 / "));
+        subtitles.add(GuiUtils.joinWithSeparator(species, "§7 / "));
 
         // Special traits on a new line or added to the list
         if (isApexPredator(changedEntity)) {

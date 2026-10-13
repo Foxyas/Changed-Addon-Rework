@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
+import com.google.common.annotations.VisibleForTesting;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.CircleShootWitherProjectileGoal;
@@ -13,6 +14,7 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -59,21 +61,19 @@ import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Experiment10BossEntity extends Experiment10Entity implements IExp10Logic {
 
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment10BossEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> CLIENT_ANGER_LEVEL =
+            SynchedEntityData.defineId(Experiment10BossEntity.class, EntityDataSerializers.INT);
+
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 
-    public final TargetDataManager targetDataManager;
-
     public final BurstAbilityHandle<Experiment10BossEntity> burstAbilityHandle;
-
+    private final PatDynamicAngerManagement angerManagement;
 
     public Experiment10BossEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_10_BOSS.get(), world);
@@ -85,7 +85,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
-        this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
+        this.angerManagement = new PatDynamicAngerManagement(this::targetSelectorTest, new ArrayList<>());
         burstAbilityHandle = new BurstAbilityHandle.Builder<>(this)
                 .setEvasive()
                 .setDestructive()
@@ -130,6 +130,68 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
 
     public void onEvasiveBurst(Experiment10BossEntity exp10, BurstAbilityHandle<Experiment10BossEntity> burst) {
         burst.applyEvasiveKnockback(5, 1.25D);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(CLIENT_ANGER_LEVEL, 0);
+    }
+
+    public int getClientAngerLevel() {
+        return this.entityData.get(CLIENT_ANGER_LEVEL);
+    }
+
+    private void syncClientAngerLevel() {
+        this.entityData.set(CLIENT_ANGER_LEVEL, this.getActiveAnger());
+    }
+
+    public AngerLevel getAngerLevel() {
+        return AngerLevel.byAnger(this.getActiveAnger());
+    }
+
+    private int getActiveAnger() {
+        return this.angerManagement.getActiveAnger(this.getTarget());
+    }
+
+    private int getActiveAnger(boolean fromPats) {
+        return this.angerManagement.getAngerFrom(this.getTarget(), fromPats ? PatDynamicAngerManagement.AngerSource.PATS : PatDynamicAngerManagement.AngerSource.OTHER);
+    }
+
+    public DynamicAngerManagement getAngerManagement() {
+        return this.angerManagement;
+    }
+
+    public void clearAnger(LivingEntity pEntity) {
+        this.angerManagement.clearAnger(pEntity);
+    }
+
+    public void increaseAngerAt(@Nullable LivingEntity pEntity) {
+        this.increaseAngerAt(pEntity, 35);
+    }
+
+    public void increaseAngerAt(@Nullable LivingEntity pEntity, int pOffset) {
+        this.increaseAngerAt(pEntity, pOffset, false);
+    }
+
+    public void increaseAngerAt(@Nullable LivingEntity pEntity, boolean isFromPats) {
+        this.increaseAngerAt(pEntity, 35, isFromPats);
+    }
+
+    @VisibleForTesting
+    public void increaseAngerAt(@Nullable LivingEntity pEntity, int pOffset, boolean isFromPats) {
+        if (!this.isNoAi() && this.targetSelectorTest(pEntity)) {
+            boolean flag = !(this.getTarget() instanceof Player);
+            int i = this.angerManagement.increaseAnger(pEntity, pOffset, isFromPats ? PatDynamicAngerManagement.AngerSource.PATS : PatDynamicAngerManagement.AngerSource.OTHER);
+            if (pEntity instanceof Player && flag && AngerLevel.byAnger(i).isAngry()) {
+                this.setTarget(null);
+            }
+        }
+
+    }
+
+    public Optional<LivingEntity> getEntityAngryAt() {
+        return this.getAngerLevel().isAngry() ? this.angerManagement.getActiveEntity() : Optional.empty();
     }
 
     @Override
@@ -231,6 +293,10 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
             return false;
 
+        if (source.is(DamageTypeTags.BYPASSES_ARMOR)) {
+            amount *= 0.25f;
+        }
+
         switch (id) {
             case "fall", "cactus", "drown", "lightningBolt", "anvil", "dragonBreath", "wither", "witherSkull" -> {
                 return false;
@@ -277,6 +343,10 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
 
         float currentHealth = this.getHealth();
         float maxHealth = this.getMaxHealth();
+
+        if (pDamageSource.getEntity() instanceof LivingEntity livingEntity) {
+            increaseAngerAt(livingEntity);
+        }
 
         if (this.getUnderlyingPlayer() == null && currentHealth <= maxHealth * 0.75f && !isPhase2()) {
             this.setPhase2(true);
@@ -344,13 +414,13 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.targetDataManager.loadAndResolveTarget(tag);
+        this.angerManagement.load(tag);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        this.targetDataManager.saveTarget(tag);
+        this.angerManagement.save(tag);
     }
 
     @Override
@@ -451,26 +521,34 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         translatableComponentList.add(Component.translatable("entity_dialogues.changed_addon.exp10.pat.type_2"));
         translatableComponentList.add(Component.translatable("entity_dialogues.changed_addon.exp10.pat.type_3"));
 
-        player.level().addParticle(
+        ParticlesUtil.sendParticles(player.level(),
                 ChangedParticles.emote(this, Emote.ANGRY),
                 this.getX(),
                 this.getY() + (double) this.getDimensions(this.getPose()).height + 0.65,
                 this.getZ(),
                 0.0f,
                 0.0f,
-                0.0f
+                0.0f, 1, 0f
         );
 
-        Component translatableComponent = translatableComponentList.get(this.getRandom().nextInt(translatableComponentList.size()));
-        MutableComponent entityChat = Component.translatable("chat.type.text", this.getDisplayName(), translatableComponent);
+        int index = this.getRandom().nextInt(translatableComponentList.size());
+        Component translatableComponent = translatableComponentList.get(index);
 
-        this.playSound(SoundEvents.WITHER_AMBIENT, 0.05f, 2f);
+        increaseAngerAt(player, 30, true);
+
+        int activeAngerFromPats = getActiveAnger(true);
+        if (activeAngerFromPats >= 60) {
+            player.hurt(this.damageSources().mobAttack(this), (float) (this.getAttributeValue(Attributes.ATTACK_DAMAGE) * 2f));
+            translatableComponent = Component.translatable("entity_dialogues.changed_addon.exp10.pat.damage_after_warn");
+            increaseAngerAt(player, -activeAngerFromPats, true);
+        }
+        MutableComponent entityChat = Component.translatable("chat.type.text", this.getDisplayName(), translatableComponent);
         player.displayClientMessage(entityChat, false);
-        applyRampage();
+        applyRageBuff();
         return true;
     }
 
-    private void applyRampage() {
+    private void applyRageBuff() {
         MobEffectInstance thisEffect = this.getEffect(MobEffects.DAMAGE_BOOST);
         MobEffectInstance mobEffectInstance;
         if (thisEffect != null) {

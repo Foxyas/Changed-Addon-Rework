@@ -20,6 +20,6 @@ public class TreePlacements {
     public static void bootstrap(BootstapContext<PlacedFeature> pContext) {
         HolderGetter<ConfiguredFeature<?, ?>> holdergetter = pContext.lookup(Registries.CONFIGURED_FEATURE);
         Holder<ConfiguredFeature<?, ?>> luminaraTree = holdergetter.getOrThrow(ChangedAddonFeatures.Configured.LUMINARA_TREE);
-        PlacementUtils.register(pContext, LUMINARA_TREE_CHECKED, luminaraTree, PlacementUtils.filteredByBlockSurvival(ChangedAddonBlocks.LUMINARA_BLOOM.get()));
+        PlacementUtils.register(pContext, LUMINARA_TREE_CHECKED, luminaraTree, PlacementUtils.filteredByBlockSurvival(ChangedAddonBlocks.LUMINARA_SAPLING.get()));
     }
 }
