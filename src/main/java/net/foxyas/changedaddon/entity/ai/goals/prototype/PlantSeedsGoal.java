@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandler;
 
@@ -128,7 +129,7 @@ public class PlantSeedsGoal extends Goal {
     }
 
     private boolean isBlockInvalid(Level level, BlockState state, BlockPos above) {
-        return state.getBlock() != Blocks.FARMLAND || !level.getBlockState(above).isAir();
+        return !(state.getBlock() instanceof FarmBlock) || !level.getBlockState(above).isAir();
     }
 
     private ItemStack findSeeds(boolean extract) {

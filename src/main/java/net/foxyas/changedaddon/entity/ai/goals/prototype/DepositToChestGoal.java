@@ -12,7 +12,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+// TODO: test other kind of containers to see if the prototype will go crazy or if it will work normally
+//  also we need to add a blocks tag to set which containers blocks are valid
 public class DepositToChestGoal extends Goal {
 
     private final PrototypeEntity holder;
@@ -66,7 +68,7 @@ public class DepositToChestGoal extends Goal {
     public void tick() {
         Level level = holder.level;
         PathNavigation navigation = holder.getNavigation();
-        if (chestPos == null || !(level.getBlockEntity(chestPos) instanceof ChestBlockEntity)) {
+        if (chestPos == null || !(level.getBlockEntity(chestPos) instanceof BaseContainerBlockEntity)) {
             tryFindNearbyChest(level);
             if (chestPos == null) {
                 lock = true;
@@ -76,7 +78,7 @@ public class DepositToChestGoal extends Goal {
             navigation.moveTo(chestPos.getX(), chestPos.getY(), chestPos.getZ(), .25);
         }
 
-        if (!(level.getBlockEntity(chestPos) instanceof ChestBlockEntity)) {
+        if (!(level.getBlockEntity(chestPos) instanceof BaseContainerBlockEntity)) {
             chestPos = null;
             return;
         }
@@ -128,7 +130,7 @@ public class DepositToChestGoal extends Goal {
         boolean isFull, potentiallyBest;
 
         for (BlockPos pos : BlockPos.betweenClosed(center.offset(-range, -range, -range), center.offset(range, range, range))) {
-            if (!(level.getBlockEntity(pos) instanceof ChestBlockEntity chest)) continue;
+            if (!(level.getBlockEntity(pos) instanceof BaseContainerBlockEntity chest)) continue;
 
             dist = pos.distSqr(center);
             if (dist >= bestDist) continue;
@@ -173,7 +175,7 @@ public class DepositToChestGoal extends Goal {
     }
 
     private void depositToChest(ServerLevel level) {
-        if (!(level.getBlockEntity(chestPos) instanceof ChestBlockEntity chest)) {
+        if (!(level.getBlockEntity(chestPos) instanceof BaseContainerBlockEntity chest)) {
             chestPos = null;
             return;
         }
