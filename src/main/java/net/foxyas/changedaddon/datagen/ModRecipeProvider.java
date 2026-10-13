@@ -10,10 +10,13 @@ import net.foxyas.changedaddon.datagen.recipes.farmers_delight.CuttingRecipes;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.LaethinItem;
 import net.foxyas.changedaddon.util.ItemStackLoreUtil;
+import net.ltxprogrammer.changed.datagen.builders.InfuserRecipeBuilder;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -42,6 +45,8 @@ import java.util.function.Consumer;
 
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE;
 import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
+import static net.foxyas.changedaddon.init.ChangedAddonTransfurVariants.EXPERIMENT_009;
+import static net.foxyas.changedaddon.init.ChangedAddonTransfurVariants.EXPERIMENT_10;
 import static net.minecraft.world.item.Items.*;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
@@ -66,24 +71,25 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         String iridium = getHasName(IRIDIUM.get());
         CriterionTriggerInstance hasIridium = has(IRIDIUM.get());
 
+        InventoryChangeTrigger.TriggerInstance hasLatexBase = has(ChangedItems.LATEX_BASE.get());
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ANTI_LATEX_BASE.get(), 2)
                 .requires(AMMONIA_PARTICLE.get(), 2)
                 .requires(LUMINARA_BASE.get(), 1)
                 .requires(ChangedItems.LATEX_BASE.get())
-                .unlockedBy("has_latex_base", has(ChangedItems.LATEX_BASE.get()))
+                .unlockedBy("has_latex_base", hasLatexBase)
                 .save(recipeConsumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, LUMINARA_BASE.get(), 1)
                 .requires(LUMINARA_PETALS.get(), 2)
                 .requires(ChangedItems.LATEX_BASE.get())
-                .unlockedBy("has_latex_base", has(ChangedItems.LATEX_BASE.get()))
+                .unlockedBy("has_latex_base", hasLatexBase)
                 .save(recipeConsumer);
 
         ChangedAddonRecipeBuilder.unifuser(STRANGE_COMPOUND_BASE.get().getDefaultInstance())
                 .requires(BLUE_LATEX_GOO.get(), 1)
                 .requires(RED_LATEX_GOO.get(), 1)
                 .requires(ChangedItems.LATEX_BASE.get())
-                .unlockedBy("has_latex_base", has(ChangedItems.LATEX_BASE.get()))
+                .unlockedBy("has_latex_base", hasLatexBase)
                 .save(recipeConsumer);
 
         Ingredient flowersOrPlants = CompoundIngredient.of(
@@ -379,11 +385,43 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                         getHasName(ChangedItems.WHITE_LATEX_GOO.get()),
                         has(ChangedItems.WHITE_LATEX_GOO.get())
                 );
+        
+        // -----------------------------------------------------------------
+        // Experiment 009 Recipe (Ported from form_experiment009.json) // Todo: remove form_experiment009.json
+        // -----------------------------------------------------------------
+        InfuserRecipeBuilder.genderLess(EXPERIMENT_009.get()) // Replace with your variant reference if needed
+                .requires(Items.ENCHANTED_GOLDEN_APPLE)
+                .requires(Items.COPPER_BLOCK)
+                .requires(Items.DIAMOND_BLOCK)
+                .requires(Items.TOTEM_OF_UNDYING)
+                .requires(BLUE_LATEX_GOO.get())
+                .requires(ChangedItems.LATEX_BASE.get())
+                .requires(ChangedItems.WHITE_LATEX_GOO.get())
+                .requires(SWEET_BERRIES)
+                .requires(GOO_CORE_FRAGMENT.get())
+                .unlockedBy("has_latex_base", hasLatexBase)
+                .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "form_experiment_009"));
+
+        // -----------------------------------------------------------------
+        // Experiment 10 Recipe (Ported from form_experiment10.json) // Todo: remove form_experiment10.json
+        // -----------------------------------------------------------------
+        InfuserRecipeBuilder.genderLess(EXPERIMENT_10.get()) // Replace with your variant reference if needed
+                .requires(RED_LATEX_GOO.get())
+                .requires(Items.NETHERITE_INGOT)
+                .requires(Items.NETHER_STAR)
+                .requires(ChangedItems.LATEX_BASE.get())
+                .requires(ChangedItems.WHITE_LATEX_GOO.get())
+                .requires(Items.STRING)
+                .requires(GOO_CORE_FRAGMENT.get())
+                .requires(Items.RED_DYE)
+                .requires(Items.BLACK_DYE)
+                .unlockedBy("has_latex_base", hasLatexBase)
+                .save(recipeConsumer, ResourceLocation.fromNamespaceAndPath("changed_addon", "form_experiment_10"));
 
 //        ConditionalRecipe.Builder hasPatchouliMod = ConditionalRecipe.builder().addCondition(this.modLoaded(PatchouliAPI.MOD_ID));
 //        hasPatchouliMod.addRecipe(changedBookRecipe::save).build(recipeConsumer, changedBookRecipeID);
 
-        saveRecipeWithConditionAndSpecificID(recipeConsumer, changedBookRecipe, changedBookRecipeID, this.modLoaded(PatchouliAPI.MOD_ID));
+        saveRecipeWithConditionAndSpecificID(recipeConsumer, changedBookRecipe, changedBookRecipeID, this.modLoaded("patchouli"));
     }
 
     protected static InventoryChangeTrigger.TriggerInstance hasItems(ItemLike... pItemLike) {

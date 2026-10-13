@@ -1,0 +1,33 @@
+{
+  "type": "changed:infuser",
+  "form": "changed_addon:form_experiment009",
+  "ingredients": [
+    {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "item": "minecraft:copper_block"
+    },
+    {
+      "item": "minecraft:diamond_block"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    },
+    {
+      "item": "changed_addon:blue_latex_goo"
+    },
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    },
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "changed_addon:goo_core_fragment"
+    }
+  ]
+}
