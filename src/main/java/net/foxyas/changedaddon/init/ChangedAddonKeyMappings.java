@@ -55,7 +55,7 @@ public class ChangedAddonKeyMappings {
                 if (player != null && !player.isDeadOrDying() && !player.isSpectator() && minecraft.screen == null) {
 
                     if (ProcessTransfur.isPlayerTransfurred(player)) {
-                        minecraft.setScreen(new TransfurSoundsGuiScreen());
+                        minecraft.setScreen(new TransfurSoundsGuiScreen(ProcessTransfur.getPlayerTransfurVariant(player)));
                     } else {
                         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.of(player);
                         if (vars != null && vars.showWarns) {

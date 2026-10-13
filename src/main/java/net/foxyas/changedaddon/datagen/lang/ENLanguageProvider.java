@@ -305,6 +305,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityDialogues("exp9.pat.type_1", "§l§3...You dare mock me like this?! I'll tear you apart!");
         addEntityDialogues("exp9.pat.type_2", "§l§3Get your filthy hands off me!");
         addEntityDialogues("exp9.pat.type_3", "§l§3Pat me again, and I'll crush you until nothing's left!");
+        addEntityDialogues("exp9.pat.damage_after_warn", "§l§3I warned you! Now you pay the price!");
         addEntityDialogues("exp9.reaction.range_attacks.not_affect", "§l§o§3I'm already used for that kind of weapons. next time be more creative");
         addEntityDialogues("exp9.reaction.range_attacks.attack_at_distance", "§l§o§3YOU'RE COWARD! Is distance all you can rely on? REALLY PATHETIC!!!");
         addEntityDialogues("exp9.reaction.range_attacks.attack_when_vulnerable", "§l§o§3YOU'RE COWARD! Attacking me when i'm in the most vulnerable state instead of going upfront.");
@@ -316,6 +317,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityDialogues("exp10.pat.type_1", "§l§4You won't live to regret that — you'll die for it.");
         addEntityDialogues("exp10.pat.type_2", "§l§4Touch me again and I'll make it quick... for you.");
         addEntityDialogues("exp10.pat.type_3", "§l§4You dare toy with me? This was your last mistake.");
+        addEntityDialogues("exp10.pat.damage_after_warn", "§l§4I warned you! Now you pay the price!");
         addEntityDialogues("exp10.reaction.range_attacks", "§l§o§4What's that peashooter going to do, hurt me? I don't think so, weakling.");
         addEntityDialogues("exp10.reaction.fire_damage", "§4Did you truly believe fire could harm me? In §lthis form§r§4, I am beyond such flaws.§r");
         addEntityDialogues("exp10.death.text1", "§4§l§oSo much potential, wasted in a single breath... pathetic.§r");

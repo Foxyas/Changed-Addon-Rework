@@ -179,7 +179,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
     }
 
     /**
-     * Should be called whenever the  deals damage to any entity.
+     * Should be called whenever the boss take damage from any entity.
      *
      * @param source DamageSource.
      * @param amount Damage amount.
@@ -198,7 +198,7 @@ public class BurstAbilityHandle<T extends LivingEntity> {
     }
 
     /**
-     * Should be called whenever the  deals damage to any entity.
+     * Should be called whenever the boss deals damage to any entity.
      *
      * @param source DamageSource.
      * @param amount Damage amount.

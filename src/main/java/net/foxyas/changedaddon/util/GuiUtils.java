@@ -5,12 +5,15 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class GuiUtils {
     /**
@@ -51,5 +54,18 @@ public class GuiUtils {
         entityrenderdispatcher.setRenderShadow(true);
         pGuiGraphics.pose().popPose();
         Lighting.setupFor3DItems();
+    }
+
+
+    public static MutableComponent joinWithSeparator(List<MutableComponent> components, String separator) {
+        MutableComponent result = components.get(0);
+
+        for (int i = 1; i < components.size(); i++) {
+            result = result
+                    .append(Component.literal(separator))
+                    .append(components.get(i));
+        }
+
+        return result;
     }
 }

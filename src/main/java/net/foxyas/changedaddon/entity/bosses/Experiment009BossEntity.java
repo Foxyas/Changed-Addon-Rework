@@ -162,7 +162,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 425);
         builder = builder.add(Attributes.ARMOR, 12.5);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 10);
         builder = builder.add(Attributes.FOLLOW_RANGE, 256f);
         builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
         builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
@@ -957,7 +957,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             increaseAngerAt(livingEntity);
         }
 
-
         if (this.isPhase3() && !isBleeding()) {
             this.setBleeding(this.getRandom().nextFloat() >= 0.65f);
             if (this.isBleeding()) {
@@ -1616,9 +1615,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         increaseAngerAt(player, 30, true);
 
         if (getActiveAnger(true) >= 60) {
-            player.hurt(this.damageSources().mobAttack(this), 18f);
-            //TODO: Some Text saying "i warned you"
-            // translatableComponent = Component.translatable("entity_dialogues.changed_addon.exp9.pat.warn_damage")
+            player.hurt(this.damageSources().mobAttack(this), (float) (this.getAttributeValue(Attributes.ATTACK_DAMAGE) * 2f));
+            translatableComponent = Component.translatable("entity_dialogues.changed_addon.exp9.pat.damage_after_warn");
         }
         MutableComponent entityChat = Component.translatable("chat.type.text", this.getDisplayName(), translatableComponent);
         player.displayClientMessage(entityChat, false);
