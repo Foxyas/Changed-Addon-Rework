@@ -31,8 +31,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -324,5 +326,41 @@ public class TransfurEvents {
 
     public static ChangedAddonVariables.PlayerVariables getVarsIfPlayerOrDef(LivingEntity entity) {
         return entity.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonVariables.PlayerVariables());
+    }
+
+    public static class AbsorbedEntitySpecificEvent extends Event {
+        private final LivingEntity target;
+        public final @NotNull IAbstractChangedEntity entity;
+
+        public AbsorbedEntitySpecificEvent(LivingEntity target, @NotNull IAbstractChangedEntity entity) {
+            this.target = target;
+            this.entity = entity;
+        }
+
+        public boolean isCancelable() {
+            return true;
+        }
+
+        public LivingEntity getTarget() {
+            return target;
+        }
+    }
+
+    public static class AssimilatedEntitySpecificEvent extends Event {
+        private final LivingEntity target;
+        public final @NotNull IAbstractChangedEntity entity;
+
+        public AssimilatedEntitySpecificEvent(LivingEntity target, @NotNull IAbstractChangedEntity entity) {
+            this.target = target;
+            this.entity = entity;
+        }
+
+        public boolean isCancelable() {
+            return true;
+        }
+
+        public LivingEntity getTarget() {
+            return target;
+        }
     }
 }

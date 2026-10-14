@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.mixins.mods.changed;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.mixins.entity.LivingEntityAccessor;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
@@ -24,5 +26,23 @@ public abstract class LatexAssimilationDecisionMixin {
         LivingEntityAccessor access = (LivingEntityAccessor) target;
         access._dropEquipment();
         access._dropCustomDeathLoot(getDamageSource(target.level().registryAccess()), 0, transfurSource.isPlayer());
+    }
+
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;onAbsorbEntity(Lnet/ltxprogrammer/changed/ability/IAbstractChangedEntity;)V", remap = true),
+            method = "lambda$transfurByAbsorption$8", cancellable = true)
+    private void specificOnAssimilateEntity(LivingEntity target, IAbstractChangedEntity transfurSource, CallbackInfoReturnable<IAbstractChangedEntity> cir) {
+        TransfurEvents.AbsorbedEntitySpecificEvent absorbedEntitySpecificEvent = new TransfurEvents.AbsorbedEntitySpecificEvent(target, transfurSource);
+        if (ChangedAddonMod.postEvent(absorbedEntitySpecificEvent)) {
+            cir.cancel();
+        }
+    }
+
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;onAssimilateEntity(Lnet/ltxprogrammer/changed/ability/IAbstractChangedEntity;)V"),
+            method = "lambda$transfurByReplication$7", cancellable = true)
+    private void specificOnAbsorbEntity(LivingEntity target, IAbstractChangedEntity transfurSource, CallbackInfoReturnable<IAbstractChangedEntity> cir) {
+        TransfurEvents.AssimilatedEntitySpecificEvent assimilatedEntitySpecificEvent = new TransfurEvents.AssimilatedEntitySpecificEvent(target, transfurSource);
+        if (ChangedAddonMod.postEvent(assimilatedEntitySpecificEvent)) {
+            cir.cancel();
+        }
     }
 }

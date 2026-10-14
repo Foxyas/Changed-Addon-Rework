@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandler;
 
@@ -113,11 +114,8 @@ public class PlantSeedsGoal extends Goal {
         if (pendingEffects) {
             pendingEffects = false;
 
+            entity.spawnEmotionParticle(Emote.IDEA);
             level.playSound(null, entity.blockPosition(), ChangedAddonSoundEvents.PROTOTYPE_IDEA.get(), SoundSource.MASTER, 1, 1);
-
-            ((ServerLevel) level).sendParticles(ChangedParticles.emote(entity, Emote.IDEA),
-                    entity.getX(), entity.getY() + entity.getDimensions(entity.getPose()).height + 0.65, entity.getZ(),
-                    1, 0, 0, 0, 0);
         }
     }
 
@@ -131,7 +129,7 @@ public class PlantSeedsGoal extends Goal {
     }
 
     private boolean isBlockInvalid(Level level, BlockState state, BlockPos above) {
-        return state.getBlock() != Blocks.FARMLAND || !level.getBlockState(above).isAir();
+        return !(state.getBlock() instanceof FarmBlock) || !level.getBlockState(above).isAir();
     }
 
     private ItemStack findSeeds(boolean extract) {
