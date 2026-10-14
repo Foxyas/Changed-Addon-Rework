@@ -4,13 +4,13 @@ import net.foxyas.changedaddon.entity.advanced.PrototypeEntity;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.ltxprogrammer.changed.entity.Emote;
-import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -103,6 +103,8 @@ public class ApplyBonemealGoal extends Goal {
             return;
         }
 
+        entity.manageHandsForTask(stack -> stack.getItem() instanceof BoneMealItem);
+
         if (entity.blockPosition().closerThan(targetPos, 2.5)) {
             applyBoneMeal(targetPos);
             boneMealCooldown = 10;
@@ -153,7 +155,7 @@ public class ApplyBonemealGoal extends Goal {
         ItemStack boneMeal;
         for (int i = 0; i < handsInv.getSlots(); i++) {
             boneMeal = handsInv.getStackInSlot(i);
-            if (!boneMeal.isEmpty() && boneMeal.is(Items.BONE_MEAL)) {
+            if (!boneMeal.isEmpty() && (boneMeal.getItem() instanceof BoneMealItem || boneMeal.is(Items.BONE_MEAL))) {
                 if (extract) return handsInv.extractItem(i, 1, false);
                 return boneMeal;
             }

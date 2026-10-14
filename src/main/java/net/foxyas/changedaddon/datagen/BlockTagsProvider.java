@@ -99,6 +99,7 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
                 .addTag(BlockTags.COPPER_ORES)
                 .add(Blocks.LIGHTNING_ROD)
         ;
+        tag(ChangedAddonTags.Blocks.VALID_DEPOSIT_CONTAINER_FOR_PROTOTYPE).addTags(Tags.Blocks.CHESTS).addTags(Tags.Blocks.BARRELS);
 
         tag(Tags.Blocks.NEEDS_NETHERITE_TOOL).add(DEEPSLATE_PAINITE_ORE.get(), PAINITE_BLOCK.get());
 

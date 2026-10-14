@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.prototype;
 
 import net.foxyas.changedaddon.entity.advanced.PrototypeEntity;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,9 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.items.IItemHandler;
@@ -131,6 +134,8 @@ public class DepositToChestGoal extends Goal {
 
         for (BlockPos pos : BlockPos.betweenClosed(center.offset(-range, -range, -range), center.offset(range, range, range))) {
             if (!(level.getBlockEntity(pos) instanceof BaseContainerBlockEntity chest)) continue;
+            BlockState state = level.getBlockState(pos);
+            if (!state.is(ChangedAddonTags.Blocks.VALID_DEPOSIT_CONTAINER_FOR_PROTOTYPE) || state.is(Tags.Blocks.CHESTS_ENDER)) continue;
 
             dist = pos.distSqr(center);
             if (dist >= bestDist) continue;
@@ -182,8 +187,11 @@ public class DepositToChestGoal extends Goal {
 
         boolean anyInserted = false;
         ItemStack stack, remainder;
+
         IItemHandler handsInv = holder.getHandsAndInv();
         IItemHandler handler = chest.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().orElseThrow();
+
+        chest.startOpen(FakePlayerFactory.getMinecraft(level));
         for (int i = 0; i < handsInv.getSlots(); i++) {
             stack = handsInv.getStackInSlot(i);
             if (stack.isEmpty() || !holder.getDepositType().test(stack)) continue;
@@ -194,15 +202,16 @@ public class DepositToChestGoal extends Goal {
             anyInserted = true;
             handsInv.extractItem(i, stack.getCount() - remainder.getCount(), false);
         }
-
         if (!anyInserted) return;
 
         holder.lookAt(EntityAnchorArgument.Anchor.FEET, new Vec3(chestPos.getX(), chestPos.getY() - 1, chestPos.getZ()));
         holder.swing(holder.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         holder.setHarvestsTimes(0);
-        chest.startOpen(FakePlayerFactory.getMinecraft(level));
+
         chest.triggerEvent(1, 1);
         chest.setChanged();
+        chest.stopOpen(FakePlayerFactory.getMinecraft(level));
+
         level.playSound(null, chestPos, SoundEvents.CHEST_OPEN, SoundSource.BLOCKS, 0.25f, 1);
     }
 }

@@ -1,8 +1,10 @@
 package net.foxyas.changedaddon.client.renderer.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.model.advanced.LuminaraFlowerBeastModel;
 import net.foxyas.changedaddon.client.renderer.advanced.LuminaraFlowerBeastRenderer;
+import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTypes;
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -28,6 +30,15 @@ public class LuminaraBeastWingsConditionalLayer<T extends LuminaraFlowerBeastEnt
 
             parentModel.prepareMobModel(luminaraFlowerBeastEntity, limbSwing, limbSwingAmount, partialTicks);
             int overlay = LivingEntityRenderer.getOverlayCoords(luminaraFlowerBeastEntity, 0.0F);
+
+            if (luminaraFlowerBeastEntity.hasCosmicWings()) {
+                VertexConsumer wingRootBuffer = bufferSource.getBuffer(RenderType.entityTranslucent(LuminaraFlowerBeastRenderer.WING_ROOT_TEXTURE));
+                parentModel.renderToBuffer(poseStack, wingRootBuffer, packedLight, overlay, 1, 1, 1, 1.0F);
+
+                VertexConsumer wingGlowBuffer = bufferSource.getBuffer(ChangedAddonRenderTypes.dynamicGalaxy(LuminaraFlowerBeastRenderer.WING_GLOW_TEXTURE));
+                parentModel.renderToBuffer(poseStack, wingGlowBuffer, packedLight, overlay, 1, 1, 1, 1.0F);
+                return;
+            }
 
             if (luminaraFlowerBeastEntity.isFlying() || luminaraFlowerBeastEntity.isFallFlying()) {
                 boolean hasElytra = luminaraFlowerBeastEntity.getItemBySlot(EquipmentSlot.CHEST).is(Items.ELYTRA);

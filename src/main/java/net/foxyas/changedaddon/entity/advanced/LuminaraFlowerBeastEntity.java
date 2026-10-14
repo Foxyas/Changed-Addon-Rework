@@ -40,16 +40,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AreaEffectCloud;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -60,6 +58,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PlayMessages;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,28 +67,26 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
 
     public static final List<FoodDietEntry> LUMINARA_DIET = List.of(
             new FoodDietEntry(
-                    // Ingredient.of can accept a TagKey<Item> directly
                     Ingredient.of(ChangedAddonTags.Items.DRAGON_DIET),
-                    ConstantFloat.of(2.0f), // hungerBonus (replace with your FloatProvider)
-                    ConstantFloat.of(0.5f), // saturationBonus (replace with your FloatProvider)
-                    List.of(),              // mobEffect list (empty or add your effects)
-                    false                   // isSickType
+                    ConstantFloat.of(2.0f),
+                    ConstantFloat.of(0.5f),
+                    List.of(),
+                    false
             ),
             new FoodDietEntry(
-                    // You can combine multiple explicit items into an Ingredient using Stream or multiple arguments
                     Ingredient.of(Items.CHORUS_FRUIT, ChangedItems.ORANGE.get()),
-                    ConstantFloat.of(1.0f), // hungerBonus
-                    ConstantFloat.of(0.2f), // saturationBonus
-                    List.of(),              // mobEffect list
-                    false                   // isSickType
+                    ConstantFloat.of(1.0f),
+                    ConstantFloat.of(0.2f),
+                    List.of(),
+                    false
             )
     );
 
     private static final EntityDataAccessor<Boolean> AWAKENED = SynchedEntityData.defineId(LuminaraFlowerBeastEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HYPER_AWAKENED = SynchedEntityData.defineId(LuminaraFlowerBeastEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> COSMIC_WINGS = SynchedEntityData.defineId(LuminaraFlowerBeastEntity.class, EntityDataSerializers.BOOLEAN);
+
     public boolean spawnParticles = true;
-    private boolean attributesApplied;
-    private boolean attributesAppliedEntity;
 
     public LuminaraFlowerBeastEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.LUMINARA_FLOWER_BEAST.get(), world);
@@ -99,13 +96,6 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
         super(type, level);
     }
 
-    /**
-     * Main logic for the transformation effect:
-     * - Transform player into void form
-     * - Launch them upwards
-     * - Give potion effects and flight
-     * - Spawn explosion-like particles
-     */
     private static void triggerVoidTransformation(Player player, LuminaraFlowerBeastEntity luminaraFlowerBeast) {
         if (luminaraFlowerBeast.isHyperAwakened()) return;
 
@@ -114,44 +104,87 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
 
         if (tryExtractDragonBreath(player)) {
             luminaraFlowerBeast.setHyperAwakened(true);
-            player.level.playSound(null, player, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 5, 1);
-            luminaraFlowerBeast.attributesApplied = false;//reset attributesApplied so that HyperAwaken attributes get applied
+            player.level().playSound(null, player, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 5, 1);
         } else if (isAwakened) return;
 
-        // Cancel fall/void velocity and launch player upwards
         Vec3 vec = new Vec3(0, 8, 0);
         if (luminaraFlowerBeast.isHyperAwakened()) vec = vec.scale(1.5);
-        player.setDeltaMovement(vec); // strong vertical push
+        player.setDeltaMovement(vec);
+        player.hurtMarked = true;
 
-        player.hurtMarked = true; // force velocity update to client
         DelayedTask.schedule(20, () -> {
-            // Enable flight
             player.getAbilities().mayfly = true;
-            player.getAbilities().flying = true; // auto fly
+            player.getAbilities().flying = true;
             player.onUpdateAbilities();
         });
 
-        // Grant effects
         player.addEffect(new MobEffectInstance(MobEffects.SATURATION, 20 * 10, 1));
         player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 10, 2));
 
-        // Explosion-like particles
-        if (!(player.level instanceof ServerLevel serverLevel)) return;
+        if (!(player.level() instanceof ServerLevel serverLevel)) return;
 
         float radius = 1f;
         float angle = 22.5f;
-        float angleTheta, anglePhi;
-        double x, y, z;
-        Vec3 pos;
         for (float theta = 0; theta < 360; theta += angle) {
-            angleTheta = theta * Mth.DEG_TO_RAD;
-
+            float angleTheta = theta * Mth.DEG_TO_RAD;
             for (float phi = 0; phi <= 180; phi += angle) {
-                anglePhi = phi * Mth.DEG_TO_RAD;
-                x = player.getX() + Mth.sin(anglePhi) * Mth.cos(angleTheta) * radius;
-                y = player.getY() + Mth.cos(anglePhi) * radius;
-                z = player.getZ() + Mth.sin(anglePhi) * Mth.sin(angleTheta) * radius;
-                pos = new Vec3(x, y, z);
+                float anglePhi = phi * Mth.DEG_TO_RAD;
+                double x = player.getX() + Mth.sin(anglePhi) * Mth.cos(angleTheta) * radius;
+                double y = player.getY() + Mth.cos(anglePhi) * radius;
+                double z = player.getZ() + Mth.sin(anglePhi) * Mth.sin(angleTheta) * radius;
+                Vec3 pos = new Vec3(x, y, z);
+                ParticlesUtil.sendParticlesWithMotion(
+                        player.level(),
+                        ParticleTypes.REVERSE_PORTAL,
+                        pos,
+                        Vec3.ZERO,
+                        pos.subtract(player.position()),
+                        1, 1
+                );
+            }
+        }
+
+        serverLevel.playSound(null, player.blockPosition(),
+                SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 2.0F, 0.8F);
+    }
+
+    private static void triggerOutOfBoundsTransformation(Player player, LuminaraFlowerBeastEntity luminaraFlowerBeast) {
+        if (!(luminaraFlowerBeast.level().isNight())) return;
+        if (luminaraFlowerBeast.isHyperAwakened() || luminaraFlowerBeast.isAwakened()) return;
+
+        LivingEntity living = luminaraFlowerBeast.maybeGetUnderlying();
+        ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
+        if (!(stack.getItem() instanceof ElytraItem elytraItem) || !ElytraItem.isFlyEnabled(stack)) return;
+
+        luminaraFlowerBeast.setAwakened(true);
+        luminaraFlowerBeast.setHyperAwakened(true);
+        luminaraFlowerBeast.setCosmicWings(true);
+        player.level().playSound(null, player, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 5, 1);
+
+        Vec3 lookVec = player.getLookAngle();
+        Vec3 boostVec = lookVec.scale(1.2).add(0, 0.4, 0);
+        if (luminaraFlowerBeast.isHyperAwakened()) {
+            boostVec = boostVec.scale(1.5);
+        }
+
+        player.setDeltaMovement(player.getDeltaMovement().add(boostVec));
+        player.hurtMarked = true;
+
+        player.addEffect(new MobEffectInstance(MobEffects.SATURATION, 20 * 10, 1));
+        player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 10, 2));
+
+        if (!(player.level() instanceof ServerLevel serverLevel)) return;
+
+        float radius = 1f;
+        float angle = 22.5f;
+        for (float theta = 0; theta < 360; theta += angle) {
+            float angleTheta = theta * Mth.DEG_TO_RAD;
+            for (float phi = 0; phi <= 180; phi += angle) {
+                float anglePhi = phi * Mth.DEG_TO_RAD;
+                double x = player.getX() + Mth.sin(anglePhi) * Mth.cos(angleTheta) * radius;
+                double y = player.getY() + Mth.cos(anglePhi) * radius;
+                double z = player.getZ() + Mth.sin(anglePhi) * Mth.sin(angleTheta) * radius;
+                Vec3 pos = new Vec3(x, y, z);
                 ParticlesUtil.sendParticlesWithMotion(
                         player.level(),
                         ParticleTypes.REVERSE_PORTAL,
@@ -180,7 +213,6 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
             }
             return true;
         }
-
         return false;
     }
 
@@ -206,40 +238,51 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
 
-        safeSetBaseValue(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()), 1.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.MAX_HEALTH), 22.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.FOLLOW_RANGE), 40.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.MOVEMENT_SPEED), 1.0f);
-        safeSetBaseValue(attributes.getInstance(ForgeMod.SWIM_SPEED.get()), 1.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_DAMAGE), 2.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.ARMOR), 0.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.ARMOR_TOUGHNESS), 0.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE), 0.0f);
-        safeSetBaseValue(attributes.getInstance(ForgeMod.BLOCK_REACH.get()), 4.5F);
-        safeSetBaseValue(attributes.getInstance(ForgeMod.ENTITY_REACH.get()), 3.0F);
-        safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_KNOCKBACK), 0.0f);
+        if (!this.isAwakened()) {
+            safeSetBaseValue(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()), 1.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.MAX_HEALTH), 22.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.FOLLOW_RANGE), 40.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.MOVEMENT_SPEED), 1.0f);
+            safeSetBaseValue(attributes.getInstance(ForgeMod.SWIM_SPEED.get()), 1.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_DAMAGE), 2.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.ARMOR), 0.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.ARMOR_TOUGHNESS), 0.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE), 0.0f);
+            safeSetBaseValue(attributes.getInstance(ForgeMod.BLOCK_REACH.get()), 4.5F);
+            safeSetBaseValue(attributes.getInstance(ForgeMod.ENTITY_REACH.get()), 3.0F);
+            safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_KNOCKBACK), 0.0f);
+        } else if (this.isHyperAwakened()) {
+            safeSetBaseValue(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()), 7.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.MAX_HEALTH), 40.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.FOLLOW_RANGE), 126.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.MOVEMENT_SPEED), 1.25f);
+            safeSetBaseValue(attributes.getInstance(ForgeMod.SWIM_SPEED.get()), 1.25f);
+            safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_DAMAGE), 6.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.ARMOR), 10.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.ARMOR_TOUGHNESS), 6.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE), 0.0f);
+            safeSetBaseValue(attributes.getInstance(ForgeMod.BLOCK_REACH.get()), 6.0F);
+            safeSetBaseValue(attributes.getInstance(ForgeMod.ENTITY_REACH.get()), 4.0F);
+            safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_KNOCKBACK), 2.0f);
+        } else {
+            safeSetBaseValue(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()), 5.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.MAX_HEALTH), 40.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.FOLLOW_RANGE), 126.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.MOVEMENT_SPEED), 1.25f);
+            safeSetBaseValue(attributes.getInstance(ForgeMod.SWIM_SPEED.get()), 1.25f);
+            safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_DAMAGE), 4.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.ARMOR), 0.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.ARMOR_TOUGHNESS), 0.0f);
+            safeSetBaseValue(attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE), 0.0f);
+            safeSetBaseValue(attributes.getInstance(ForgeMod.BLOCK_REACH.get()), 4.5F);
+            safeSetBaseValue(attributes.getInstance(ForgeMod.ENTITY_REACH.get()), 3.0F);
+            safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_KNOCKBACK), 0.0f);
+        }
     }
 
-    public void setAttributesAwakened(AttributeMap attributes) {
-        safeSetBaseValue(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()), 5.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.MAX_HEALTH), 40.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.FOLLOW_RANGE), 126.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.MOVEMENT_SPEED), 1.25f);
-        safeSetBaseValue(attributes.getInstance(ForgeMod.SWIM_SPEED.get()), 1.25f);
-        safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_DAMAGE), 4.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.ARMOR), 0.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.ARMOR_TOUGHNESS), 0.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE), 0.0f);
-    }
-
-    public void setAttributesHyperAwakened(AttributeMap attributes) {
-        safeSetBaseValue(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()), 7.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_DAMAGE), 6.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.ARMOR), 10.0f);
-        safeSetBaseValue(attributes.getInstance(Attributes.ARMOR_TOUGHNESS), 6.0f);
-        safeSetBaseValue(attributes.getInstance(ForgeMod.BLOCK_REACH.get()), 6.0F);
-        safeSetBaseValue(attributes.getInstance(ForgeMod.ENTITY_REACH.get()), 4.0F);
-        safeSetBaseValue(attributes.getInstance(Attributes.ATTACK_KNOCKBACK), 2.0f);
+    public void refreshEntityAttributes() {
+        this.setAttributes(this.getAttributes());
+        IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
     }
 
     @Override
@@ -250,7 +293,6 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     @Override
     public boolean whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
         if (patter.level().isClientSide()) return false;
-
         patTarget.addEffect(getPatEffect(patter), patter);
         return true;
     }
@@ -258,7 +300,6 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     @Override
     public boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
         if (patter.level().isClientSide()) return false;
-
         patter.addEffect(getPatEffect(this), this);
         return true;
     }
@@ -283,6 +324,15 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
         super.defineSynchedData();
         this.entityData.define(AWAKENED, false);
         this.entityData.define(HYPER_AWAKENED, false);
+        this.entityData.define(COSMIC_WINGS, false);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> accessor) {
+        super.onSyncedDataUpdated(accessor);
+        if (AWAKENED.equals(accessor) || HYPER_AWAKENED.equals(accessor)) {
+            refreshEntityAttributes();
+        }
     }
 
     public boolean isAwakened() {
@@ -301,54 +351,35 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
         this.entityData.set(HYPER_AWAKENED, value);
     }
 
-    /**
-     * Apply awakened buffs (stronger, faster on land, but weaker in water).
-     */
-
-    public void applyAwakenedBuffs() {
-        setAttributesAwakened(getAttributes());
-        if (isHyperAwakened()) {
-            setAttributesHyperAwakened(getAttributes());
-        }
-        attributesApplied = true;
-        IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
+    public boolean hasCosmicWings() {
+        return this.entityData.get(COSMIC_WINGS);
     }
 
-    /**
-     * Remove awakened buffs, returning entity to neutral state.
-     */
-    public void removeAwakenedBuffs() {
-        setAttributes(getAttributes());
-        attributesApplied = false;
-        IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
+    public void setCosmicWings(boolean value) {
+        this.entityData.set(COSMIC_WINGS, value);
     }
 
     @Override
     public void variantTick(Level level) {
         super.variantTick(level);
-        Player player = this.getUnderlyingPlayer();
-        if (player != null) {
-            if (this.isAwakened()) {
-                if (isHyperAwakened()) {
-                    if (spawnParticles) {
-                        spawnHyperAwakenedParticles();
-                    }
+
+        // Sky Out-of-Bounds Evolution Check
+        if (!this.isAwakened() && this.isFallFlying()) {
+            if (this.getY() >= (double) this.level().getMaxBuildHeight()) {
+                Player player = this.getUnderlyingPlayer();
+                if (player != null) {
+                    triggerOutOfBoundsTransformation(player, this);
                 }
-                tryToPacifyNearbyEntities(128 * this.getScale());
             }
-            if (this.isAwakened() && !attributesApplied) {
-                applyAwakenedBuffs();
-            } else if (!this.isAwakened() && attributesApplied) {
-                removeAwakenedBuffs();
-            }
-        } else {
-            AttributeInstance attributeInstance = this.getAttribute(Attributes.FOLLOW_RANGE);
-            double range = 32;
-            if (attributeInstance != null) {
-                range = attributeInstance.getValue();
-            }
-            tryToPacifyNearbyEntities(range * this.getScale());
         }
+
+        if (this.isAwakened() && isHyperAwakened() && spawnParticles) {
+            spawnHyperAwakenedParticles();
+        }
+
+        AttributeInstance attributeInstance = this.getAttribute(Attributes.FOLLOW_RANGE);
+        double range = attributeInstance != null ? attributeInstance.getValue() : 32;
+        tryToPacifyNearbyEntities(range * this.getScale());
     }
 
     private void spawnHyperAwakenedParticles() {
@@ -356,15 +387,11 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
             ParticlesUtil.sendParticles(
                     this.level(),
                     ParticleTypes.PORTAL, this.position().add(0, this.getBbHeight() / 2, 0),
-                    0.25f,
-                    0.25f,
-                    0.25f,
-                    6,
-                    1
+                    0.25f, 0.25f, 0.25f,
+                    6, 1
             );
         }
 
-        // End rod - mais altos, tipo energia subindo
         if (this.random.nextInt(20) == 0) {
             ParticlesUtil.sendParticlesWithMotion(
                     this,
@@ -372,8 +399,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
                     getEyePosition(),
                     new Vec3(0.25, 0.25, 0.25),
                     new Vec3(0, 0.08 + this.random.nextDouble() * 0.05, 0),
-                    2,
-                    0.05f
+                    2, 0.05f
             );
         }
     }
@@ -382,41 +408,20 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     public void baseTick() {
         super.baseTick();
 
-        if (isHyperAwakened()) {
-            if (spawnParticles) {
-                spawnHyperAwakenedParticles();
-            }
+        if (isHyperAwakened() && spawnParticles) {
+            spawnHyperAwakenedParticles();
         }
 
         AttributeInstance attributeInstance = this.getAttribute(Attributes.FOLLOW_RANGE);
-        double range = 32;
-        if (attributeInstance != null) {
-            range = attributeInstance.getValue();
-        }
+        double range = attributeInstance != null ? attributeInstance.getValue() : 32;
         tryToPacifyNearbyEntities(range * this.getScale());
-
-        if (this.isAwakened() && !attributesAppliedEntity) {
-            this.setAttributesAwakened(this.getAttributes());
-            if (this.isHyperAwakened()) {
-                this.setAttributesHyperAwakened(this.getAttributes());
-            }
-            this.attributesAppliedEntity = true;
-        } else if (!this.isAwakened() && attributesAppliedEntity) {
-            this.setAttributes(this.getAttributes());
-            this.attributesAppliedEntity = false;
-        }
-
     }
 
     public void tryToPacifyNearbyEntities(double range) {
         List<LivingEntity> nearChangedBeasts = this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(range), (entity) -> FoxyasUtil.canEntitySeeOtherIgnoreGlass(entity, this, 90f));
         for (LivingEntity livingEntity : nearChangedBeasts) {
             if (livingEntity instanceof ChangedEntity changedEntity) {
-                if (changedEntity.getType().is(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE)) {
-                    continue;
-                }
-
-                if (changedEntity instanceof LuminaraFlowerBeastEntity) {
+                if (changedEntity.getType().is(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE) || changedEntity instanceof LuminaraFlowerBeastEntity) {
                     continue;
                 }
 
@@ -428,11 +433,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
             } else if (livingEntity instanceof Player player) {
                 TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
                 if (instance != null) {
-                    if (instance.getChangedEntity().getType().is(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE)) {
-                        continue;
-                    }
-
-                    if ((instance.getChangedEntity() instanceof LuminaraFlowerBeastEntity)) {
+                    if (instance.getChangedEntity().getType().is(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE) || (instance.getChangedEntity() instanceof LuminaraFlowerBeastEntity)) {
                         continue;
                     }
 
@@ -516,10 +517,6 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     @Mod.EventBusSubscriber
     public static class TransfurEvolveEventsHandle {
 
-        /**
-         * Cancel void damage if player is transformed and out of the world.
-         * Also cancels dragon breath damage.
-         */
         @SubscribeEvent
         public static void handleDamage(LivingAttackEvent event) {
             if (!(event.getEntity() instanceof Player player) || player.isSpectator()) return;
@@ -539,13 +536,11 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
                 }
             }
 
-            // Only cancel OUT_OF_WORLD damage
             if (!source.is(DamageTypes.FELL_OUT_OF_WORLD)) return;
-            boolean isOutOfWorld = player.getY() < (double) (player.level.getMinBuildHeight() - 64); // Same
+            boolean isOutOfWorld = player.getY() < (double) (player.level().getMinBuildHeight() - 64);
             if (!isOutOfWorld || event.getAmount() == Float.MAX_VALUE) return;
 
             triggerVoidTransformation(player, luminaraFlowerBeast);
-
             event.setCanceled(true);
         }
     }
