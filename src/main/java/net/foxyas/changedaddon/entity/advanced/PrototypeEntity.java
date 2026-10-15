@@ -9,6 +9,7 @@ import net.foxyas.changedaddon.entity.api.ItemHandlerHolder;
 import net.foxyas.changedaddon.entity.defaults.tamable.AbstractCanTameChangedEntityFavors;
 import net.foxyas.changedaddon.menu.PrototypeMenu;
 import net.foxyas.changedaddon.util.ColorUtil;
+import net.foxyas.changedaddon.util.InventoryUtils;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -135,6 +136,10 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
         return combinedInv;
     }
 
+    public IItemHandler getFullInv() {
+        return this.getItemHandler();
+    }
+
     public IItemHandler getHandsAndInv() {
         return handsInv;
     }
@@ -146,6 +151,74 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
      */
     public ItemStack addToInventory(ItemStack stack, boolean simulate) {///Do not set, for armor {@link Mob#equipItemIfPossible}
         return ItemHandlerHelper.insertItem(handsInv, stack, simulate);
+    }
+
+    /**
+     * Ensures that a desired item is held in at least one hand.
+     * If it's in the inventory, it swaps it into a hand.
+     * If the hands hold incorrect items, they are pushed back into the inventory.
+     *
+     * @param desiredValidator A predicate checking if an ItemStack is valid for the current task.
+     */
+    public boolean manageHandsForTask(Predicate<ItemStack> desiredValidator) {
+        IItemHandler handsInv = getHandsAndInv();
+        // handsInv slots 0 and 1 are typically MainHand and OffHand
+        // slots 2 to 10 are the 9 inventory slots
+
+        // 1. Check if either hand already holds the desired item
+        for (int i = 0; i < 2; i++) {
+            if (desiredValidator.test(handsInv.getStackInSlot(i))) {
+                return true; // Already holding it!
+            }
+        }
+
+        // 2. Look for the desired item inside the 9-slot inventory
+        int foundInvSlot = -1;
+        for (int i = 2; i < handsInv.getSlots(); i++) {
+            if (desiredValidator.test(handsInv.getStackInSlot(i))) {
+                foundInvSlot = i;
+                break;
+            }
+        }
+
+        if (foundInvSlot == -1) {
+            return false; // Don't have the item anywhere in inventory or hands
+        }
+
+        // 3. Find an optimal hand slot to place it into
+        // Prefer an empty hand slot first, otherwise overwrite the main hand (slot 0)
+        // and push whatever was in the main hand back into the inventory.
+        int targetHandSlot = -1;
+        for (int i = 0; i < 2; i++) {
+            if (handsInv.getStackInSlot(i).isEmpty()) {
+                targetHandSlot = i;
+                break;
+            }
+        }
+
+        if (targetHandSlot != -1) {
+            // Found an empty hand slot, just pull it over
+            ItemStack extracted = handsInv.extractItem(foundInvSlot, 64, false);
+            handsInv.insertItem(targetHandSlot, extracted, false);
+        } else {
+            // Both hands are full of other things. Swap slot 0 with the inventory item.
+            ItemStack oldHandItem = handsInv.extractItem(0, 64, false);
+            ItemStack newDesiredItem = handsInv.extractItem(foundInvSlot, 64, false);
+
+            handsInv.insertItem(0, newDesiredItem, false);
+            // Push the old hand item back into the inventory slot where the desired item came from
+            handsInv.insertItem(foundInvSlot, oldHandItem, false);
+        }
+
+        return true;
+    }
+
+    public boolean moveHandItemToInventory(InteractionHand hand) {
+        return InventoryUtils.transferSlot(hands, hand.ordinal(), inv);
+    }
+
+    public boolean moveInventoryItemToHand(int invSlot) {
+        return InventoryUtils.transferSlot(inv, invSlot, hands);
     }
 
     @Override
@@ -352,6 +425,11 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
         return equipmentslot.getType() != EquipmentSlot.Type.HAND && this.getItemBySlot(equipmentslot).isEmpty() && this.canPickUpLoot();
     }
 
+    @Override
+    public boolean wantsToPickUp(@NotNull ItemStack pStack) {
+        return super.wantsToPickUp(pStack) && hasSpaceInInvOrHands();
+    }
+
     public boolean canTakeItemNoArmor(@NotNull ItemStack stack) {
         return stack.is(Tags.Items.CROPS) || (stack.is(FORGE_FRUITS) || stack.is(Tags.Items.SEEDS) || stack.is(Tags.Items.SHEARS) || pickAbleItems().contains(stack.getItem()));
     }
@@ -363,7 +441,7 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
 
     @Override
     public boolean canHoldItem(@NotNull ItemStack pStack) {
-        return hasSpaceInInvOrHands() && canTakeItem(pStack);
+        return canTakeItem(pStack);
     }
 
     @Override

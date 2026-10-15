@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.init;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -25,6 +26,7 @@ public final class ChangedAddonTags {
         public static final TagKey<Block> CAN_SPAWN_LUMINARCTIC_LEOPARDS_ON_CRYSTAL_BREAK = key("can_spawn_luminarctic_leopards_on_crystal_break");
         public static final TagKey<Block> DORMANT_LATEX_BLOCKS = key("dormant_latex_blocks");
         public static final TagKey<Block> CONDUCTIVE = key("conductive");
+        public static final TagKey<Block> VALID_DEPOSIT_CONTAINER_FOR_PROTOTYPE = key("valid_deposit_container_for_prototype");
 
         private static TagKey<Block> key(String path) {
             return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), ChangedAddonMod.resourceLoc(path));

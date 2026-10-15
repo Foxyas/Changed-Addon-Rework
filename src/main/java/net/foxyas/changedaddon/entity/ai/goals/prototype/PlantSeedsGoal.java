@@ -12,6 +12,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.EnumSet;
@@ -94,6 +96,8 @@ public class PlantSeedsGoal extends Goal {
             return;
         }
 
+        entity.manageHandsForTask(this::isSeed);
+
         if (entity.blockPosition().closerThan(targetPos, 3)) {
             plantSeedAt();
             findPlantableFarmland(level, entity.blockPosition()); // reset target after planting
@@ -149,6 +153,7 @@ public class PlantSeedsGoal extends Goal {
     private boolean isSeed(ItemStack stack) {
         // Check if the item is a seed (BlockItem and the block is a CropBlock)
         if (stack.isEmpty()) return false;
+        if (!stack.is(Tags.Items.SEEDS)) return false;
         if (!(stack.getItem() instanceof BlockItem blockItem)) return false;
         Block block = blockItem.getBlock();
         return block instanceof CropBlock;
