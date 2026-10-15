@@ -3,24 +3,19 @@ package net.foxyas.changedaddon.client.renderer;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.MaleLuminaraCrystalBeingModel;
 import net.foxyas.changedaddon.client.renderer.layers.EmissivePulseLayer;
-import net.foxyas.changedaddon.client.renderer.layers.PulsingColorFunction;
-import net.foxyas.changedaddon.entity.simple.FemaleLuminaraCrystalBeing;
+import net.foxyas.changedaddon.client.renderer.layers.colorFunctions.PulsingColorFunction;
 import net.foxyas.changedaddon.entity.simple.MaleLuminaraCrystalBeing;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer.ColorFunction;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
-import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-
-import static net.foxyas.changedaddon.client.renderer.layers.PulsingColorFunction.fromColorFunction;
+import static net.foxyas.changedaddon.client.renderer.layers.colorFunctions.PulsingColorFunction.fromColorFunction;
 
 public class MaleLuminaraCrystalBeingRenderer extends AdvancedHumanoidRenderer<MaleLuminaraCrystalBeing, MaleLuminaraCrystalBeingModel> {
 

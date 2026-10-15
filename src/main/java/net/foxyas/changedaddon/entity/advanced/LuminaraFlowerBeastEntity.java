@@ -473,13 +473,15 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     }
 
     public void saveExtraData(CompoundTag tag) {
-        tag.putBoolean("Awakened", this.isAwakened());
-        tag.putBoolean("HyperAwakened", this.isHyperAwakened());
+        tag.putBoolean("awakened", this.isAwakened());
+        tag.putBoolean("hyperAwakened", this.isHyperAwakened());
+        tag.putBoolean("cosmicWings", this.hasCosmicWings());
     }
 
     public void readExtraData(CompoundTag tag) {
-        if (tag.contains("Awakened")) this.setAwakened(tag.getBoolean("Awakened"));
-        if (tag.contains("HyperAwakened")) this.setHyperAwakened(tag.getBoolean("HyperAwakened"));
+        if (tag.contains("awakened")) this.setAwakened(tag.getBoolean("awakened"));
+        if (tag.contains("hyperAwakened")) this.setHyperAwakened(tag.getBoolean("hyperAwakened"));
+        if (tag.contains("cosmicWings")) this.setCosmicWings(tag.getBoolean("cosmicWings"));
     }
 
     @Override

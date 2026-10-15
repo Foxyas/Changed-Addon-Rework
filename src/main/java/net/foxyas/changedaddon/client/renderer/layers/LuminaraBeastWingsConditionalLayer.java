@@ -35,17 +35,17 @@ public class LuminaraBeastWingsConditionalLayer<T extends LuminaraFlowerBeastEnt
                 VertexConsumer wingRootBuffer = bufferSource.getBuffer(RenderType.entityTranslucent(LuminaraFlowerBeastRenderer.WING_ROOT_TEXTURE));
                 parentModel.renderToBuffer(poseStack, wingRootBuffer, packedLight, overlay, 1, 1, 1, 1.0F);
 
-                VertexConsumer wingGlowBuffer = bufferSource.getBuffer(ChangedAddonRenderTypes.dynamicGalaxy(LuminaraFlowerBeastRenderer.WING_GLOW_TEXTURE));
-                parentModel.renderToBuffer(poseStack, wingGlowBuffer, packedLight, overlay, 1, 1, 1, 1.0F);
+//                VertexConsumer wingGlowBuffer = bufferSource.getBuffer(RenderType.energySwirl(LuminaraFlowerBeastRenderer.WING_GLOW_TEXTURE, 0, 0));
+//                parentModel.renderToBuffer(poseStack, wingGlowBuffer, packedLight, overlay, 1, 1, 1, 1.0F);
+
+                VertexConsumer wingGlowBufferCosmic = bufferSource.getBuffer(ChangedAddonRenderTypes.dynamicGalaxy(LuminaraFlowerBeastRenderer.WING_GLOW_TEXTURE));
+                parentModel.renderToBuffer(poseStack, wingGlowBufferCosmic, packedLight, overlay, 1, 1, 1, 1.0F);
                 return;
             }
 
             if (luminaraFlowerBeastEntity.isFlying() || luminaraFlowerBeastEntity.isFallFlying()) {
-                boolean hasElytra = luminaraFlowerBeastEntity.getItemBySlot(EquipmentSlot.CHEST).is(Items.ELYTRA);
-                if (!hasElytra) {
-                    parentModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(LuminaraFlowerBeastRenderer.WING_ROOT_TEXTURE)), packedLight, overlay, 1, 1, 1, 1.0F);
-                    parentModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.energySwirl(LuminaraFlowerBeastRenderer.WING_GLOW_TEXTURE, 0, 0)), packedLight, overlay, 1, 1, 1, 1.0F);
-                }
+                parentModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(LuminaraFlowerBeastRenderer.WING_ROOT_TEXTURE)), packedLight, overlay, 1, 1, 1, 1.0F);
+                parentModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.energySwirl(LuminaraFlowerBeastRenderer.WING_GLOW_TEXTURE, 0, 0)), packedLight, overlay, 1, 1, 1, 1.0F);
             } else {
                 parentModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(LuminaraFlowerBeastRenderer.WING_TEXTURE)), packedLight, overlay, 1, 1, 1, 1.0F);
             }
