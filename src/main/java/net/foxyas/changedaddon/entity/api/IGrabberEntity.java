@@ -56,6 +56,7 @@ public interface IGrabberEntity {
 
     interface IConditionalGrabber {
         boolean canCauseGrabDamage();
+        default void onGrabAbilityCreated(GrabEntityAbilityInstance instance) {}
     }
 
     EntityDataAccessor<Boolean> CAN_USE_GRAB = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.BOOLEAN);

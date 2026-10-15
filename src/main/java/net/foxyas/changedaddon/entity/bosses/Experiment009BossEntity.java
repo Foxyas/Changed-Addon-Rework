@@ -6,6 +6,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
 import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
 import net.foxyas.changedaddon.effect.particles.EntityLinkedThunderParticleOptions;
@@ -24,6 +25,7 @@ import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -1643,6 +1645,14 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     public boolean canCauseGrabDamage() {
         return true;
+    }
+
+    @Override
+    public void onGrabAbilityCreated(GrabEntityAbilityInstance instance) {
+        IExp9Logic.super.onGrabAbilityCreated(instance);
+        if (instance instanceof GrabEntityAbilityExtensor extensor) {
+            extensor.setTransfurDamageMode(false);
+        }
     }
 
     @Override

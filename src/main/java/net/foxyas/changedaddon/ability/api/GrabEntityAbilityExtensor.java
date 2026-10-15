@@ -33,7 +33,7 @@ public interface GrabEntityAbilityExtensor {
 
     boolean isTransfurDamageMode();
 
-    void setTransfurDamageMode(boolean normalDamageMode);
+    void setTransfurDamageMode(boolean transfurDamageMode);
 
     boolean isGrabbedUnableToBreath();
 

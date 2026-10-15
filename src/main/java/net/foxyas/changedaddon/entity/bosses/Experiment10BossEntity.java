@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.bosses;
 
 import com.google.common.annotations.VisibleForTesting;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.CircleShootWitherProjectileGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.ClawsComboAttackGoal;
@@ -15,6 +16,7 @@ import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -564,6 +566,14 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     @Override
     public boolean canCauseGrabDamage() {
         return true;
+    }
+
+    @Override
+    public void onGrabAbilityCreated(GrabEntityAbilityInstance instance) {
+        IExp10Logic.super.onGrabAbilityCreated(instance);
+        if (instance instanceof GrabEntityAbilityExtensor extensor) {
+            extensor.setTransfurDamageMode(false);
+        }
     }
 
     @Override
