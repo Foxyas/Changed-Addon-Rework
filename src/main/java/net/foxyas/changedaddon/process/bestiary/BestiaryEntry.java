@@ -16,7 +16,7 @@ public record BestiaryEntry(
         List<TransfurVariantHolder> variants,
         Component title,
         Component description,
-        BestiaryCondition condition,
+        List<BestiaryCondition> conditions,
         int order
 ) {
     public static final Codec<BestiaryEntry> CODEC = RecordCodecBuilder.create(instance ->
@@ -24,13 +24,13 @@ public record BestiaryEntry(
                     listOrSingle(TransfurVariantHolder.CODEC).fieldOf("variants").forGetter(BestiaryEntry::variants),
                     ExtraCodecs.COMPONENT.fieldOf("title").forGetter(BestiaryEntry::title), // matching your JSON key "title"
                     ExtraCodecs.COMPONENT.fieldOf("description").forGetter(BestiaryEntry::description),
-                    BestiaryCondition.CODEC.fieldOf("condition").forGetter(BestiaryEntry::condition),
+                    listOrSingle(BestiaryCondition.CODEC).fieldOf("condition").forGetter(BestiaryEntry::conditions),
                     Codec.INT.optionalFieldOf("order", 0).forGetter(BestiaryEntry::order)
             ).apply(instance, BestiaryEntry::new)
     );
 
 
     public boolean isUnlockedForPlayer(Player player) {
-        return this.condition.test(player);
+        return this.conditions.stream().allMatch(bestiaryCondition -> bestiaryCondition.test(player));
     }
 }

@@ -2,52 +2,75 @@ package net.foxyas.changedaddon.process.bestiary;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public record BestiaryCondition(Optional<ResourceLocation> achievementId) implements Predicate<Player> {
+import static net.foxyas.changedaddon.util.ExtraCodecs.listOrSingle;
+
+public record BestiaryCondition(
+        List<ResourceLocation> achievements,
+        boolean reverse
+) implements Predicate<Player> {
 
     public static final Codec<BestiaryCondition> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    ResourceLocation.CODEC.optionalFieldOf("achievement_id").forGetter(BestiaryCondition::achievementId)
+                    listOrSingle(ResourceLocation.CODEC)
+                            .optionalFieldOf("achievements", Collections.emptyList())
+                            .forGetter(BestiaryCondition::achievements),
+                    Codec.BOOL.optionalFieldOf("reverse", false)
+                            .forGetter(BestiaryCondition::reverse)
             ).apply(instance, BestiaryCondition::new)
     );
 
-    /**
-     * Checks if the given player meets the condition to unlock or view this bestiary entry.
-     * Works on both Logical Server and Logical Client.
-     */
     @Override
     public boolean test(Player player) {
-        if (achievementId.isEmpty()) {
-            return true; // Unconditional
-        }
+        boolean result = evaluateConditions(player);
+        return reverse != result;
+    }
 
-        ResourceLocation id = achievementId.get();
-
-        // 1. Server-side check
-        if (player instanceof ServerPlayer serverPlayer) {
-            var advancement = serverPlayer.getServer().getAdvancements().getAdvancement(id);
-            if (advancement == null) {
+    private boolean evaluateConditions(Player player) {
+        // 1. Validar se todas as conquistas (achievements) listadas foram obtidas
+        if (!achievements.isEmpty()) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                var advancementManager = serverPlayer.getServer().getAdvancements();
+                for (ResourceLocation id : achievements) {
+                    Advancement advancement = advancementManager.getAdvancement(id);
+                    if (advancement == null) {
+                        return false;
+                    }
+                    AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
+                    if (!progress.isDone()) {
+                        return false; // Precisa ter completado todas da lista
+                    }
+                }
+            } else if (player.level().isClientSide()) {
+                for (ResourceLocation id : achievements) {
+                    if (!checkClientAdvancement(id)) {
+                        return false;
+                    }
+                }
+            } else {
                 return false;
             }
-            return serverPlayer.getAdvancements().getOrStartProgress(advancement).isDone();
         }
 
-        // 2. Client-side check
-        if (player.level().isClientSide()) {
-            return checkClientAdvancement(id);
-        }
-
-        return false;
+        return true;
     }
 
     private static boolean checkClientAdvancement(ResourceLocation advancementId) {
@@ -55,10 +78,7 @@ public record BestiaryCondition(Optional<ResourceLocation> achievementId) implem
             var connection = Minecraft.getInstance().getConnection();
             if (connection != null) {
                 ClientAdvancements clientAdvancements = connection.getAdvancements();
-                // Check if the advancement exists and is completed in the client's local tracker
-                var progressMap = clientAdvancements.getAdvancements();
-                var advancement = progressMap.get(advancementId);
-                // Alternative direct lookup via client advancement listener
+                Advancement advancement = clientAdvancements.getAdvancements().get(advancementId);
                 return advancement != null;
             }
         }
