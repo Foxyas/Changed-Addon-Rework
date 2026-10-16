@@ -1,0 +1,6 @@
+{
+  "parent": "changed_addon:custom/remastered_electric_katana",
+  "textures": {
+    "texture": "changed_addon:item/remastered_electric_katana"
+  }
+}

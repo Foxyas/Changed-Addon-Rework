@@ -27,7 +27,7 @@ public class ChangedAddonModels {
         event.registerLayerDefinition(ModelAccessories.LAYER_LOCATION, ModelAccessories::createBodyLayer);
         event.registerLayerDefinition(ModelHazmatSuit.LAYER_LOCATION, ModelHazmatSuit::createBodyLayer);
         event.registerLayerDefinition(ModelHazardArmorCustomArms.LAYER_LOCATION, ModelHazardArmorCustomArms::createBodyLayer);
-        event.registerLayerDefinition(ModelNewHyperFlower.LAYER_LOCATION, ModelNewHyperFlower::createBodyLayer);
+        event.registerLayerDefinition(LunarRoseModel.LAYER_LOCATION, LunarRoseModel::createBodyLayer);
         event.registerLayerDefinition(DarkLatexCoatModel.LAYER_LOCATION, DarkLatexCoatModel::createBodyLayer);
 
         // --- CLOTHING MODELS ---
@@ -41,7 +41,6 @@ public class ChangedAddonModels {
         event.registerLayerDefinition(LuminarCrystalSpearModel.LAYER_LOCATION, LuminarCrystalSpearModel::createBodyLayer);
 
         // --- MONSTER/MOB ENTITIES MODELS---
-        event.registerLayerDefinition(ModelFoxyasModel.LAYER_LOCATION, ModelFoxyasModel::createBodyLayer);
 
         // --- CHANGED ENTITIES MODELS---
         event.registerLayerDefinition(FemaleLuminaraCrystalBeingModel.LAYER_LOCATION, FemaleLuminaraCrystalBeingModel::createBodyLayer);
@@ -59,7 +58,7 @@ public class ChangedAddonModels {
         event.registerLayerDefinition(Experiment009Model.LAYER_LOCATION, Experiment009Model::createBodyLayer);
         event.registerLayerDefinition(Experiment009BossModel.LAYER_LOCATION, Experiment009BossModel::createBodyLayer);
         event.registerLayerDefinition(Experiment10BossModel.LAYER_LOCATION, Experiment10BossModel::createBodyLayer);
-        event.registerLayerDefinition(ModelMirrorWhiteTiger.LAYER_LOCATION, ModelMirrorWhiteTiger::createBodyLayer);
+        event.registerLayerDefinition(MirrorWhiteTigerModel.LAYER_LOCATION, MirrorWhiteTigerModel::createBodyLayer);
         event.registerLayerDefinition(Experiment10Model.LAYER_LOCATION, Experiment10Model::createBodyLayer);
         event.registerLayerDefinition(MaleExp1Model.LAYER_LOCATION, MaleExp1Model::createBodyLayer);
         event.registerLayerDefinition(FemaleExp1Model.LAYER_LOCATION, FemaleExp1Model::createBodyLayer);

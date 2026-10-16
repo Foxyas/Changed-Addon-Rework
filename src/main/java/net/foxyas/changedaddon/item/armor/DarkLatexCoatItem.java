@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.foxyas.changedaddon.util.ArmorPartMapper;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -86,13 +87,19 @@ public class DarkLatexCoatItem extends ArmorItem {
 
             final Supplier<HumanoidModel<?>> MODEL = Suppliers.memoize(() -> {
                 DarkLatexCoatModel<?> coat = new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION));
-                return new HumanoidModel<>(new ModelPart(Collections.emptyList(), Map.of("head", coat.getPuroCoatHead(),  // Para a parte da cabeça
-                        "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-                        "body", coat.getPuroCoatBody(),
-                        "left_arm", coat.getPuroCoatLeftArm(),
-                        "right_arm", coat.getPuroCoatRightArm(),
-                        "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-                        "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+                ArmorPartMapper armorPartMapper = new ArmorPartMapper()
+                        .mapHead(coat.getPuroCoatHead())
+                        .mapBody(coat.getPuroCoatBody())
+                        .mapLeftArm(coat.getPuroCoatHead())
+                        .mapRightArm(coat.getPuroCoatHead());
+                return armorPartMapper.build();
+//                        new HumanoidModel<>(new ModelPart(Collections.emptyList(), Map.of("head", coat.getPuroCoatHead(),
+//                        "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+//                        "body", coat.getPuroCoatBody(),
+//                        "left_arm", coat.getPuroCoatLeftArm(),
+//                        "right_arm", coat.getPuroCoatRightArm(),
+//                        "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+//                        "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
             });
 
             @Override
@@ -109,6 +116,6 @@ public class DarkLatexCoatItem extends ArmorItem {
     @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return "changed_addon:textures/entities/darklatexcoat.png";
+        return "changed_addon:textures/entities/dark_latex_coat.png";
     }
 }

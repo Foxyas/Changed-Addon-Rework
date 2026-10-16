@@ -25,12 +25,13 @@ public class WolfyRenderer extends AdvancedHumanoidRenderer<WolfyEntity, WolfyMo
     @Override
     public @NotNull ResourceLocation getTextureLocation(WolfyEntity entity) {
 
-        if (entity.getHealth() / entity.getMaxHealth() <= 0.50 && entity.getHealth() / entity.getMaxHealth() > 0.30) {
-            return ResourceLocation.parse("changed_addon:textures/entities/noitems50hp.png");
+        float healthRatio = entity.computeHealthRatio();
+        if (healthRatio <= 0.50 && healthRatio > 0.30) {
+            return ResourceLocation.parse("changed_addon:textures/entities/wolfy/noitems50hp.png");
         }
-        if (entity.getHealth() / entity.getMaxHealth() <= 0.30) {
-            return ResourceLocation.parse("changed_addon:textures/entities/noitems1hp.png");
+        if (healthRatio <= 0.30) {
+            return ResourceLocation.parse("changed_addon:textures/entities/wolfy/noitems1hp.png");
         }
-        return ResourceLocation.parse("changed_addon:textures/entities/noitems.png");
+        return ResourceLocation.parse("changed_addon:textures/entities/wolfy/noitems.png");
     }
 }

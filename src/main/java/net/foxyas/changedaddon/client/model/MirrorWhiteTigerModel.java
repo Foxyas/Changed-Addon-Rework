@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class ModelMirrorWhiteTiger extends AdvancedHumanoidModel<MirrorWhiteTigerEntity> {
+public class MirrorWhiteTigerModel extends AdvancedHumanoidModel<MirrorWhiteTigerEntity> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = ChangedAddonMod.layerLocation("organic_snow_leopard_male", "main");
     private final ModelPart RightLeg;
@@ -30,9 +30,9 @@ public class ModelMirrorWhiteTiger extends AdvancedHumanoidModel<MirrorWhiteTige
     private final ModelPart RightArm;
     private final ModelPart LeftArm;
     private final ModelPart Tail;
-    private final HumanoidAnimator<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger> animator;
+    private final HumanoidAnimator<MirrorWhiteTigerEntity, MirrorWhiteTigerModel> animator;
 
-    public ModelMirrorWhiteTiger(ModelPart root) {
+    public MirrorWhiteTigerModel(ModelPart root) {
         super(root);
         this.RightLeg = root.getChild("RightLeg");
         this.LeftLeg = root.getChild("LeftLeg");
@@ -212,7 +212,7 @@ public class ModelMirrorWhiteTiger extends AdvancedHumanoidModel<MirrorWhiteTige
     }
 
     @Override
-    public HumanoidAnimator<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger> getAnimator(MirrorWhiteTigerEntity entity) {
+    public HumanoidAnimator<MirrorWhiteTigerEntity, MirrorWhiteTigerModel> getAnimator(MirrorWhiteTigerEntity entity) {
         return animator;
     }
 }

@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -90,6 +91,10 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
         luminaraPetals();
         luminaraLichen();
+
+        withExistingParent(ELECTRIC_KATANA.getId().toString(), ChangedAddonMod.resourceLoc("custom/remastered_electric_katana"))
+                .texture("texture","item/remastered_electric_katana")
+        ;
     }
 
     public void luminaraLichen() {

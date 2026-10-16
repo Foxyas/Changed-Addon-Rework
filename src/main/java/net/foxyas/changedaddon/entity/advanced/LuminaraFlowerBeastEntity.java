@@ -316,7 +316,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
         if (!patter.isShiftKeyDown()) {
             return new MobEffectInstance(ChangedAddonMobEffects.PACIFIED.get(), 600);
         }
-        return new MobEffectInstance(ChangedAddonMobEffects.UNTRANSFUR.get(), 600);
+        return new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 600, 1);
     }
 
     @Override

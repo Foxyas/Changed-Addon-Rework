@@ -13,7 +13,9 @@ import net.foxyas.changedaddon.menu.CustomMerchantOffers;
 import net.foxyas.changedaddon.menu.FoxyasInventoryMenu;
 import net.foxyas.changedaddon.util.CustomMerchantUtil;
 import net.ltxprogrammer.changed.data.AccessorySlots;
+import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -25,6 +27,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -80,6 +83,13 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
         xpReward = 10;
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+    @Override
+    protected void initializeBPI(BasicPlayerInfo info, RandomSource random) {
+        super.initializeBPI(info, random);
+        info.setSize(1f);
+        info.setEyeStyle(EyeStyle.TALL);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

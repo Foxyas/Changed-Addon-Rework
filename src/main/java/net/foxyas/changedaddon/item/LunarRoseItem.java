@@ -3,13 +3,13 @@ package net.foxyas.changedaddon.item;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.foxyas.changedaddon.client.model.ModelNewHyperFlower;
+import net.foxyas.changedaddon.client.model.LunarRoseModel;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.util.ArmorPartMapper;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,9 +31,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -144,15 +142,17 @@ public class LunarRoseItem extends ArmorItem {
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
 
-            final Supplier<HumanoidModel<?>> MODEL = Suppliers.memoize(() ->
-                    new HumanoidModel<>(new ModelPart(Collections.emptyList(), Map.of("head", new ModelNewHyperFlower<>(Minecraft.getInstance().getEntityModels().bakeLayer(ModelNewHyperFlower.LAYER_LOCATION)).HyperFlowerModel, "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-                            "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm",
-                            new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
-                            new ModelPart(Collections.emptyList(), Collections.emptyMap())))));
+            final Supplier<HumanoidModel<?>> armorModel = Suppliers.memoize(() -> {
+                        LunarRoseModel<Entity> lunarRoseModel = new LunarRoseModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(LunarRoseModel.LAYER_LOCATION));
+                        ArmorPartMapper armorPartMapper = new ArmorPartMapper().mapHead(lunarRoseModel.getHead());
+                        return armorPartMapper.build();
+                    }
+            );
 
             @Override
             public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                HumanoidModel<?> armorModel = MODEL.get();
+                HumanoidModel<?> armorModel = this.armorModel.get();
+                armorModel.swimAmount = defaultModel.swimAmount;
                 armorModel.crouching = living.isShiftKeyDown();
                 armorModel.riding = defaultModel.riding;
                 armorModel.young = living.isBaby();

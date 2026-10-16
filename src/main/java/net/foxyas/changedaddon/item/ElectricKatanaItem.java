@@ -63,11 +63,12 @@ public class ElectricKatanaItem extends AbstractKatanaItem {
 
     @Override
     public ResourceLocation getModelLocation(ItemStack itemStack, ItemDisplayContext type) {
-        return SpecializedItemRendering.isGUI(type) ? null : IN_HAND_MODEL.get();
+        return null;
+//        return SpecializedItemRendering.isGUI(type) ? null : IN_HAND_MODEL.get();
     }
 
     @Override
     public void loadSpecialModels(Consumer<ResourceLocation> consumer) {
-        consumer.accept(IN_HAND_MODEL.get());
+//        consumer.accept(IN_HAND_MODEL.get());
     }
 }

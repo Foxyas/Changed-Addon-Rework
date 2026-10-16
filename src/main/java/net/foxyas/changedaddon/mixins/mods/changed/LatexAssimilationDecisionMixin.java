@@ -28,7 +28,7 @@ public abstract class LatexAssimilationDecisionMixin {
         access._dropCustomDeathLoot(getDamageSource(target.level().registryAccess()), 0, transfurSource.isPlayer());
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;onAbsorbEntity(Lnet/ltxprogrammer/changed/ability/IAbstractChangedEntity;)V", remap = true),
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;onAbsorbEntity(Lnet/ltxprogrammer/changed/ability/IAbstractChangedEntity;)V"),
             method = "lambda$transfurByAbsorption$8", cancellable = true)
     private void specificOnAssimilateEntity(LivingEntity target, IAbstractChangedEntity transfurSource, CallbackInfoReturnable<IAbstractChangedEntity> cir) {
         TransfurEvents.AbsorbedEntitySpecificEvent absorbedEntitySpecificEvent = new TransfurEvents.AbsorbedEntitySpecificEvent(target, transfurSource);

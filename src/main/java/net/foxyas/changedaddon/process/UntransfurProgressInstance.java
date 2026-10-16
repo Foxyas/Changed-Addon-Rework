@@ -15,7 +15,7 @@ public class UntransfurProgressInstance {
 
     public static final Codec<UntransfurProgressInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.FLOAT.fieldOf("untransfurProgress").forGetter(UntransfurProgressInstance::getUntransfurProgress),
-            Codec.BOOL.fieldOf("shouldProgressDecay").forGetter(UntransfurProgressInstance::isShouldProgressDecay),
+            Codec.BOOL.fieldOf("shouldProgressDecay").forGetter(UntransfurProgressInstance::hasProgressDecay),
             Codec.BOOL.fieldOf("regressOnAssimilation").forGetter(UntransfurProgressInstance::isRegressOnAssimilation)
     ).apply(instance, UntransfurProgressInstance::new));
 
@@ -35,7 +35,7 @@ public class UntransfurProgressInstance {
         return untransfurProgress;
     }
 
-    public boolean isShouldProgressDecay() {
+    public boolean hasProgressDecay() {
         return shouldProgressDecay;
     }
 
@@ -116,7 +116,7 @@ public class UntransfurProgressInstance {
         float untransfurProgress = getUntransfurProgress();
 
         if (!hasEffect) {
-            if (untransfurProgress > 0) {
+            if (untransfurProgress > 0 && this.hasProgressDecay()) {
                 regressTransfurProgress(player, 0.001f);
                 vars.syncPlayerVariables(player);
             }

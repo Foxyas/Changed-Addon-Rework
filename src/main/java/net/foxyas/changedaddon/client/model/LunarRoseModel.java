@@ -14,21 +14,25 @@ import org.jetbrains.annotations.NotNull;
 // Made with Blockbench 4.8.3
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
-public class ModelNewHyperFlower<T extends Entity> extends EntityModel<T> {
+public class LunarRoseModel<T extends Entity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in
     // the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = ChangedAddonMod.layerLocation("model_new_hyper_flower", "main");
-    public final ModelPart HyperFlowerModel;
+    public final ModelPart head;
 
-    public ModelNewHyperFlower(ModelPart root) {
-        this.HyperFlowerModel = root.getChild("HyperFlowerModel");
+    public LunarRoseModel(ModelPart root) {
+        this.head = root.getChild("lunar_rose");
+    }
+
+    public ModelPart getHead() {
+        return head;
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-        PartDefinition HyperFlowerModel = partdefinition.addOrReplaceChild("HyperFlowerModel", CubeListBuilder.create(), PartPose.offset(0.0F, -1.0F, 0.0F));
-        PartDefinition Moon = HyperFlowerModel.addOrReplaceChild("Moon",
+        PartDefinition lunar_rose = partdefinition.addOrReplaceChild("lunar_rose", CubeListBuilder.create(), PartPose.offset(0.0F, -1.0F, 0.0F));
+        PartDefinition Moon = lunar_rose.addOrReplaceChild("Moon",
                 CubeListBuilder.create().texOffs(8, 17).addBox(1.75F, -34.75F, 1.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(4, 17).addBox(1.75F, -34.75F, -1.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(0, 17)
                         .addBox(1.75F, -35.75F, -0.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(20, 15).addBox(1.75F, -35.75F, 1.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(16, 15)
                         .addBox(1.74F, -32.75F, 0.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(8, 15).addBox(1.74F, -33.25F, -0.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(12, 15)
@@ -41,7 +45,7 @@ public class ModelNewHyperFlower<T extends Entity> extends EntityModel<T> {
                         .addBox(1.75F, -32.75F, 1.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(8, 19).addBox(1.75F, -33.75F, 1.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(12, 19)
                         .addBox(1.75F, -33.75F, -1.25F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
-        PartDefinition Rose = HyperFlowerModel.addOrReplaceChild("Rose", CubeListBuilder.create().texOffs(0, 15).addBox(4.75F, -33.0216F, -4.1481F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+        PartDefinition Rose = lunar_rose.addOrReplaceChild("Rose", CubeListBuilder.create().texOffs(0, 15).addBox(4.75F, -33.0216F, -4.1481F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(15.0F, 24.75F, 3.0F, 0.0F, 0.2182F, -0.4363F));
         PartDefinition Base_r1 = Rose.addOrReplaceChild("Base_r1", CubeListBuilder.create().texOffs(12, 4).addBox(-0.5F, -1.0F, -1.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(5.0F, -32.5216F, -3.6481F, -0.7854F, 0.0F, 0.0F));
@@ -117,7 +121,7 @@ public class ModelNewHyperFlower<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        HyperFlowerModel.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {

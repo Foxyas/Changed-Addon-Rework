@@ -31,6 +31,6 @@ public class AvaliZerGodMasterRenderer extends AdvancedHumanoidRenderer<AvaliZer
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull AvaliZerGodMasterEntity entity) {
-        return ResourceLocation.parse("changed_addon:textures/entities/avali_male/avali_zergodmaster.png");
+        return ResourceLocation.parse("changed_addon:textures/entities/avali/avali_zergodmaster.png");
     }
 }
