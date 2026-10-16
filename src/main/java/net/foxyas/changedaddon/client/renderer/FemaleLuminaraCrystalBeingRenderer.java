@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.renderer;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.FemaleLuminaraCrystalBeingModel;
 import net.foxyas.changedaddon.client.renderer.layers.EmissivePulseLayer;
-import net.foxyas.changedaddon.client.renderer.layers.PulsingColorFunction;
+import net.foxyas.changedaddon.client.renderer.layers.colorFunctions.PulsingColorFunction;
 import net.foxyas.changedaddon.entity.simple.FemaleLuminaraCrystalBeing;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-import static net.foxyas.changedaddon.client.renderer.layers.PulsingColorFunction.fromColorFunction;
+import static net.foxyas.changedaddon.client.renderer.layers.colorFunctions.PulsingColorFunction.fromColorFunction;
 
 public class FemaleLuminaraCrystalBeingRenderer extends AdvancedHumanoidRenderer<FemaleLuminaraCrystalBeing, FemaleLuminaraCrystalBeingModel> {
 

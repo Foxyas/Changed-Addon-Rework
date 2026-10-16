@@ -478,6 +478,7 @@ public final class ChangedAddonRenderTypes extends RenderType {
                         .setWriteMaskState(COLOR_WRITE)
                         .setCullState(NO_CULL)
                         .setTransparencyState(NO_TRANSPARENCY)
+                        .setWriteMaskState(COLOR_DEPTH_WRITE)
                         .createCompositeState(false)
         );
     });
@@ -497,6 +498,7 @@ public final class ChangedAddonRenderTypes extends RenderType {
                         .setWriteMaskState(COLOR_WRITE)
                         .setCullState(NO_CULL)
                         .setTransparencyState(NO_TRANSPARENCY)
+                        .setWriteMaskState(COLOR_DEPTH_WRITE)
                         .createCompositeState(false)
         );
     };
