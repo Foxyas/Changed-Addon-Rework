@@ -6,13 +6,16 @@ import net.foxyas.changedaddon.util.GasAreaUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
-import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.item.SpecializedAnimations;
 import net.ltxprogrammer.changed.util.Color3;
+import net.ltxprogrammer.changed.util.UniversalDist;
+import net.ltxprogrammer.changed.world.LatexCoverGetter;
 import net.ltxprogrammer.changed.world.LatexCoverState;
+import net.ltxprogrammer.changed.world.LevelExtension;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -30,10 +33,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.awt.*;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -94,7 +101,7 @@ public abstract class AbstractFlamethrowerItem extends Item implements Specializ
 
         hits = GasAreaUtil.dedupe(hits);
 
-        applyEffectToLatexCovers(level, hits);
+        applyEffectToLatexCovers(level, player, hits);
 
         List<GasAreaUtil.GasHitBlock> blockHits = GasAreaUtil.getGasConeHitsNormalBlocks(level,
                 player,
@@ -128,23 +135,107 @@ public abstract class AbstractFlamethrowerItem extends Item implements Specializ
             Vec3 relativePosition = FoxyasUtil.getRelativePosition(player, deltaX, 0, i * 0.5 + 1f, true);
             Vec3 maxRelativePosition = FoxyasUtil.getRelativePosition(player, deltaX, 0, range * 0.5, true);
             ParticlesUtil.sendParticlesWithMotionAndOffset(player, this.particle(), player.getEyePosition().add(relativePosition), new Vec3(0.15f, 0.15f, 0.15f), maxRelativePosition, new Vec3(0.25f, 0.25f, 0.25f), 2, 0.10f);
-
-
-            //            FoxyasUtils.getRelativePosition(player, 0, 0, i, true);
-//            Vec3 pos = eye.add(look.scale(i * 0.6));
-//            ParticlesUtil.sendParticlesWithMotion(
-//                    level,
-//                    this.particle(),
-//                    pos,
-//                    new Vec3(0.15f, 0.15f, 0.15f),
-//                    look.scale(i * 0.5d),
-//                    2,
-//                    0.10f
-//            );
         }
     }
 
-    protected void applyEffectToLatexCovers(ServerLevel level, List<GasAreaUtil.GasHit> hits) {
+    public void handleLatexRemovalForFlameThrowers(UseOnContext context) {
+        Level level = context.getLevel();
+        BlockPos originPos = context.getClickedPos();
+        LatexCoverState originState = LatexCoverState.getAt(level, originPos);
+
+        if (originState.isAir()) {
+            return;
+        }
+
+        // Ponto exato de clique convertido para coordenadas locais do bloco (0.0 a 1.0)
+        Vec3 hitVec = context.getClickLocation();
+        Vec3 localHit = hitVec.subtract(originPos.getX(), originPos.getY(), originPos.getZ());
+
+        // Posição pontual inflada para o check de colisão
+        VoxelShape clickPointShape = Shapes.create(new AABB(localHit, localHit).inflate(0.01D));
+
+        // Guarda quais direções (faces) foram interceptadas pelo ponto de clique
+        Set<Direction> facesToRemove = EnumSet.noneOf(Direction.class);
+
+        // Loop por todas as direções registradas no EnumMap FACES
+        SpreadingLatexType.FACES.forEach((direction, faceProperty) -> {
+            // Checa apenas se a propriedade atualmente existe/está ativa no bloco
+            if (originState.getValue(faceProperty)) {
+
+                // Cria um estado virtual isolado contendo APENAS a hitResult atual
+                LatexCoverState singleFaceState = originState;
+                for (BooleanProperty prop : SpreadingLatexType.FACES.values()) {
+                    singleFaceState = singleFaceState.setValue(prop, prop == faceProperty);
+                }
+
+                // Pega o VoxelShape apenas dessa hitResult isolada
+                VoxelShape singleFaceShape = singleFaceState.getShape(LatexCoverGetter.extendDefault(level), originPos);
+
+                // Se o ponto clicado colide/intercepta a forma dessa hitResult isolada
+                if (Shapes.joinIsNotEmpty(singleFaceShape, clickPointShape, BooleanOp.AND)) {
+                    facesToRemove.add(direction);
+                }
+            }
+        });
+
+        // Se nenhuma hitResult colidiu diretamente (ex: imprecisão no clique), usa a hitResult clicada oposta como fallback
+        if (facesToRemove.isEmpty()) {
+            Direction fallbackDir = context.getClickedFace().getOpposite();
+            BooleanProperty fallbackProp = SpreadingLatexType.FACES.get(fallbackDir);
+            if (originState.getValue(fallbackProp)) {
+                facesToRemove.add(fallbackDir);
+            }
+        }
+
+        // Aplica a remoção das propriedades identificadas
+        if (!facesToRemove.isEmpty()) {
+            LatexCoverState updatedState = originState;
+
+            // Desativa todas as faces detectadas no estado
+            for (Direction dir : facesToRemove) {
+                BooleanProperty property = SpreadingLatexType.FACES.get(dir);
+                updatedState = updatedState.setValue(property, false);
+            }
+
+            List<Direction> remainFaces = FoxyasUtil.getActiveFacesOfLatexCoverState(updatedState);
+
+            if (remainFaces.isEmpty()) {
+                LevelExtension levelExtension = UniversalDist.getLevelExtension(level);
+                levelExtension.destroyLatexCover(level, originPos, true, context.getPlayer());
+//                levelExtension.sendCoverUpdated(level, originPos, originState, ChangedLatexTypes.NONE.get().defaultCoverState(), 3);
+
+            } else {
+                // Aplica o estado atualizado no mundo
+                LatexCoverState.setAtAndUpdate(level, originPos, updatedState);
+            }
+
+
+            // Atualiza blocos vizinhos nas direções removidas, se necessário
+            for (Direction direction : Direction.values()) {
+                BlockPos neighborPos = originPos.relative(direction);
+                LatexCoverState neighborState = LatexCoverState.getAt(level, neighborPos);
+                if (!neighborState.isAir()) {
+                    LatexCoverState neighborUpdatedState = neighborState;
+                    for (Direction removedFace : facesToRemove) {
+                        BooleanProperty property = SpreadingLatexType.FACES.get(removedFace);
+                        if (neighborState.getValue(property)) {
+                            neighborUpdatedState = neighborUpdatedState.setValue(property, false);
+                        }
+                    }
+
+                    List<Direction> neighborRemainFaces = FoxyasUtil.getActiveFacesOfLatexCoverState(neighborUpdatedState);
+                    if (neighborRemainFaces.isEmpty()) {
+                        LevelExtension levelExtension = UniversalDist.getLevelExtension(level);
+                        levelExtension.destroyLatexCover(level, neighborPos, true, context.getPlayer());
+                    } else {
+                        LatexCoverState.setAtAndUpdate(level, neighborPos, neighborUpdatedState);
+                    }
+                }
+            }
+        }
+    }
+
+    protected void applyEffectToLatexCovers(ServerLevel level, Player player, List<GasAreaUtil.GasHit> hits) {
         for (GasAreaUtil.GasHit hit : hits) {
             BlockPos pos = hit.pos();
 
@@ -155,8 +246,7 @@ public abstract class AbstractFlamethrowerItem extends Item implements Specializ
             if (!(state.getType() instanceof SpreadingLatexType spreading))
                 continue;
 
-            Integer saturationValue = hit.state().getValue(SpreadingLatexType.SATURATION);
-            BooleanProperty faceProp = SpreadingLatexType.FACES.get(hit.face().getOpposite());
+            BooleanProperty faceProp = SpreadingLatexType.FACES.get(hit.hitResult().getDirection().getOpposite());
             if (faceProp == null)
                 continue;
 
@@ -166,31 +256,7 @@ public abstract class AbstractFlamethrowerItem extends Item implements Specializ
             if (!state.getValue(faceProp))
                 continue; // já limpo
 
-            LatexCoverState newState = state.setValue(faceProp, false).setValue(SpreadingLatexType.SATURATION, saturationValue);
-
-            if (newState != state) {
-                var sides = SpreadingLatexType.FACES.values().stream().map((newState::getValue));
-                if (sides.noneMatch(value -> value)) {
-                    newState = ChangedLatexTypes.NONE.get().defaultCoverState();
-                }
-
-                LatexCoverState.setAtAndUpdate(level, pos, newState);
-
-
-                // partículas no impacto
-                ParticleOptions particle = ChangedParticles.gas(
-                        Color3.fromInt(new Color(93, 93, 93).getRGB())
-                );
-
-                ParticlesUtil.sendParticles(
-                        level,
-                        particle,
-                        pos,
-                        0.25f, 0.25f, 0.25f,
-                        1,
-                        0f
-                );
-            }
+            handleLatexRemovalForFlameThrowers(new UseOnContext(player, player.getUsedItemHand(), hit.hitResult()));
         }
     }
 

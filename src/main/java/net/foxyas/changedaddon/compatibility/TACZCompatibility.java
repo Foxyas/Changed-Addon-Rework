@@ -77,7 +77,7 @@ public class TACZCompatibility {
                 // Envia a mensagem na barra de ação (acima do inventário) para não poluir o chat
                 ItemCooldowns cooldowns = shooter.getCooldowns();
                 if (!cooldowns.isOnCooldown(event.getGunItemStack().getItem())) {
-                    shooter.displayClientMessage(RPTransfurDenialMessages.getRandomGunDenial(), true);
+                    shooter.displayClientMessage(RPTransfurDenialMessages.getRandomGunDenial(shooter), true);
                     SoundEvent changeSound = ChangedSounds.EXOSKELETON_CHIME.get();
                     shooter.playSound(changeSound, 1.0F, 0.5F);
                     cooldowns.addCooldown(event.getGunItemStack().getItem(), 10);

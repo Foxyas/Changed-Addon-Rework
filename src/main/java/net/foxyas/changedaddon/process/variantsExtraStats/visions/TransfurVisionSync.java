@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.process.variantsExtraStats.visions;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.network.packet.SyncTransfurVisionsPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,5 +25,10 @@ public class TransfurVisionSync {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             TransfurVisionSync.syncTo(serverPlayer);
         }
+    }
+
+    @SubscribeEvent
+    public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
+
     }
 }

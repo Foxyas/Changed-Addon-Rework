@@ -1,12 +1,14 @@
 package net.foxyas.changedaddon.util;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+
 import java.util.List;
 import java.util.Random;
 
 public class RPTransfurDenialMessages {
-    private static final Random RANDOM = new Random();
-    
     private static final List<String> GUN_DENIAL_KEYS = List.of(
         "text.changed_addon.rp.guns_compatibility.paws_too_big",
         "text.changed_addon.rp.guns_compatibility.no_fingers_for_trigger",
@@ -21,11 +23,13 @@ public class RPTransfurDenialMessages {
         "text.changed_addon.rp.bow_and_crossbow_stop.clumsy_paws"
     );
 
-    public static Component getRandomGunDenial() {
-        return Component.translatable(GUN_DENIAL_KEYS.get(RANDOM.nextInt(GUN_DENIAL_KEYS.size())));
+    public static Component getRandomGunDenial(LivingEntity shooter) {
+        RandomSource random = shooter.getRandom();
+        return Component.translatable(GUN_DENIAL_KEYS.get(random.nextInt(GUN_DENIAL_KEYS.size())));
     }
 
-    public static Component getRandomBowDenial() {
-        return Component.translatable(BOW_DENIAL_KEYS.get(RANDOM.nextInt(BOW_DENIAL_KEYS.size())));
+    public static Component getRandomBowDenial(LivingEntity shooter) {
+        RandomSource random = shooter.getRandom();
+        return Component.translatable(BOW_DENIAL_KEYS.get(random.nextInt(BOW_DENIAL_KEYS.size())));
     }
 }

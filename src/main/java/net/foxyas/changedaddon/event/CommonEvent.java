@@ -223,7 +223,7 @@ public class CommonEvent {
                     event.setCanceled(true);
 
                     // Envia a mensagem aleatória (Action Bar)
-                    player.displayClientMessage(RPTransfurDenialMessages.getRandomBowDenial(), true);
+                    player.displayClientMessage(RPTransfurDenialMessages.getRandomBowDenial(player), true);
                 }
             }
         }
@@ -265,7 +265,7 @@ public class CommonEvent {
 //                boolean isHeadFluffy = level.getBlockState(headBelow).is(BlockTags.WOOL) || level.getBlockState(headBelow).is(BlockTags.WOOL_CARPETS);
 //
 //                // 2. Since the event location is usually the head, find the feet position based on player direction
-//                // (Beds take 2 blocks: Head and Foot. Players face towards their feet/away from the pillow when lying down)
+//                // (Beds take 2 blocks: Head and Foot. Players hitResult towards their feet/away from the pillow when lying down)
 //                Direction direction = entity.getDirection(); // Or entity.getDirection()
 //                BlockPos footPos = headPos.relative(direction.getOpposite());
 //                BlockPos footBelow = footPos.below();

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.util;
 
+import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.world.LatexCoverGetter;
 import net.ltxprogrammer.changed.world.LatexCoverState;
@@ -10,14 +11,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GasAreaUtil {
@@ -50,6 +52,41 @@ public class GasAreaUtil {
         }
 
         return points;
+    }
+
+    /**
+     * Checks the full shape and returns ALL faces intersected by the hit vector.
+     */
+    public static Set<Direction> getIntersectingFaces(Level level, BlockPos pos, LatexCoverState state, Vec3 hitVec, Direction fallback) {
+        Set<Direction> intersectingFaces = EnumSet.noneOf(Direction.class);
+        Vec3 localHit = hitVec.subtract(pos.getX(), pos.getY(), pos.getZ());
+        VoxelShape clickPointShape = Shapes.create(new AABB(localHit, localHit).inflate(0.01D));
+        LatexCoverGetter getter = LatexCoverGetter.extendDefault(level);
+
+        for (Map.Entry<Direction, BooleanProperty> entry : SpreadingLatexType.FACES.entrySet()) {
+            Direction direction = entry.getKey();
+            BooleanProperty faceProperty = entry.getValue();
+
+            if (state.hasProperty(faceProperty) && state.getValue(faceProperty)) {
+                LatexCoverState singleFaceState = state;
+                for (BooleanProperty prop : SpreadingLatexType.FACES.values()) {
+                    if (singleFaceState.hasProperty(prop)) {
+                        singleFaceState = singleFaceState.setValue(prop, prop == faceProperty);
+                    }
+                }
+                VoxelShape singleFaceShape = singleFaceState.getShape(getter, pos);
+                if (Shapes.joinIsNotEmpty(singleFaceShape, clickPointShape, BooleanOp.AND)) {
+                    intersectingFaces.add(direction);
+                }
+            }
+        }
+
+        // Fallback if precision fails to catch an exact bound
+        if (intersectingFaces.isEmpty() && fallback != null) {
+            intersectingFaces.add(fallback);
+        }
+
+        return intersectingFaces;
     }
 
     public static List<GasHit> getGasConeHits(
@@ -92,11 +129,11 @@ public class GasAreaUtil {
                     continue;
 
                 BlockPos pos = hit.getBlockPos();
-                Direction face = hit.getDirection();
                 LatexCoverState state = getter.getLatexCover(pos);
 
                 if (state.isPresent()) {
-                    hits.add(new GasHit(pos, face, state));
+                    Set<Direction> faces = getIntersectingFaces(level, pos, state, hit.getLocation(), hit.getDirection().getOpposite());
+                    hits.add(new GasHit(hit, state, faces));
                 }
             }
         }
@@ -143,11 +180,10 @@ public class GasAreaUtil {
                     continue;
 
                 BlockPos pos = hit.getBlockPos();
-                Direction face = hit.getDirection();
                 BlockState state = level.getBlockState(pos);
 
                 if (!state.isAir()) {
-                    hits.add(new GasHitBlock(pos, face, state));
+                    hits.add(new GasHitBlock(hit, state));
                 }
             }
         }
@@ -185,11 +221,13 @@ public class GasAreaUtil {
                     return;
 
                 if (shape.bounds().move(pos).contains(center)) {
-                    Direction face = Direction.getNearest(
+                    Direction fallbackFace = Direction.getNearest(
                             look.x, look.y, look.z
                     );
+                    Set<Direction> faces = getIntersectingFaces(level, pos, state, center, fallbackFace);
 
-                    hits.add(new GasHit(pos, face, state));
+                    BlockHitResult refinedHit = new BlockHitResult(center, fallbackFace, pos, true);
+                    hits.add(new GasHit(refinedHit, state, faces));
                 }
             });
         }
@@ -197,27 +235,46 @@ public class GasAreaUtil {
         return hits;
     }
 
-    public static void clearLatexFace(Level level, GasHit hit) {
+    public static void clearLatexFaces(Level level, GasHit gasHit) {
         if (level.isClientSide)
             return;
 
-        LatexCoverState oldState = LatexCoverState.getAt(level, hit.pos());
+        BlockPos pos = gasHit.pos();
+        LatexCoverState oldState = LatexCoverState.getAt(level, pos);
+        if (oldState.isAir()) return;
 
-        LatexCoverState newState = oldState.updateShape(
-                hit.face(),
-                ChangedLatexTypes.NONE.get().defaultCoverState(),
-                level,
-                hit.pos(),
-                hit.pos().relative(hit.face())
-        );
+        LatexCoverState newState = oldState;
+        for (Direction face : gasHit.faces()) {
+            newState = newState.updateShape(
+                    face,
+                    ChangedLatexTypes.NONE.get().defaultCoverState(),
+                    level,
+                    pos,
+                    pos.relative(face)
+            );
+        }
 
-        LatexCoverState.setAtAndUpdate(level, hit.pos(), newState);
+        LatexCoverState.setAtAndUpdate(level, pos, newState);
+    }
+
+    public static int getLatexStateFaceMask(LatexCoverState state) {
+        int mask = 0;
+        for (Map.Entry<Direction, BooleanProperty> entry : SpreadingLatexType.FACES.entrySet()) {
+            if (state.hasProperty(entry.getValue()) && state.getValue(entry.getValue())) {
+                mask |= (1 << entry.getKey().ordinal());
+            }
+        }
+        return mask;
     }
 
     public static List<GasHit> dedupe(List<GasHit> hits) {
         return hits.stream()
                 .collect(Collectors.toMap(
-                        h -> h.pos().asLong() ^ h.face().ordinal(),
+                        h -> {
+                            long posKey = h.pos().asLong();
+                            int faceMask = getLatexStateFaceMask(h.state());
+                            return posKey ^ ((long) faceMask << 32);
+                        },
                         h -> h,
                         (a, b) -> a
                 ))
@@ -226,9 +283,19 @@ public class GasAreaUtil {
                 .toList();
     }
 
-    public record GasHit(BlockPos pos, Direction face, LatexCoverState state) {
+    public record GasHit(BlockHitResult hitResult, LatexCoverState state, Set<Direction> faces) {
+        public BlockPos pos() {
+            return hitResult.getBlockPos();
+        }
     }
 
-    public record GasHitBlock(BlockPos pos, Direction face, BlockState state) {
+    public record GasHitBlock(BlockHitResult hitResult, BlockState state) {
+        public BlockPos pos() {
+            return hitResult.getBlockPos();
+        }
+
+        public Direction face() {
+            return hitResult.getDirection();
+        }
     }
 }

@@ -44,7 +44,7 @@ public class JEGSCompatibility {
             if (isRestricted) {
                 event.setCanceled(true);
                 // Envia a mensagem na barra de ação (acima do inventário) para não poluir o chat
-                shooter.displayClientMessage(RPTransfurDenialMessages.getRandomGunDenial(), true);
+                shooter.displayClientMessage(RPTransfurDenialMessages.getRandomGunDenial(shooter), true);
                 SoundEvent changeSound = ChangedSounds.EXOSKELETON_CHIME.get();
                 shooter.playSound(changeSound, 1.0F, 0.5F);
                 ItemCooldowns cooldowns = shooter.getCooldowns();

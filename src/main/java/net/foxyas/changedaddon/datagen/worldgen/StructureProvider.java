@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.datagen.worldgen.template_pool.DazedMeteorPools;
 import net.foxyas.changedaddon.worldgen.ChangedAddonStructures;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.world.level.biome.Biome;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 
@@ -57,6 +59,6 @@ public class StructureProvider {
                 List.of(
                         StructureSet.entry(structureGetter.getOrThrow(ChangedAddonStructures.DAZED_METEOR))
                 ),
-                new RandomSpreadStructurePlacement(41, 35, RandomSpreadType.LINEAR, 481422317)));
+                new RandomSpreadStructurePlacement(Vec3i.ZERO, StructurePlacement.FrequencyReductionMethod.DEFAULT, 0.25f, 481422317, Optional.empty(), 41, 35, RandomSpreadType.LINEAR)));
     }
 }
