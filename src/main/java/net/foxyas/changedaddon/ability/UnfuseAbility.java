@@ -133,21 +133,8 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
                     return;
                 }
 
-                if (changedEntityUnfused instanceof AbstractTamableLatexEntity abstractTamableLatexEntity) {
-                    abstractTamableLatexEntity.tame(host);
-                    coatLikeEntity.setIsUnfusedFromHost(true);
-                } else if (changedEntityUnfused instanceof AbstractExp2SnepChangedEntity abstractExp2SnepChangedEntity) {
-                    abstractExp2SnepChangedEntity.tame(host);
-                    abstractExp2SnepChangedEntity.setIsUnfusedFromHost(true);
-                } else if (changedEntityUnfused instanceof AbstractUnfuseableChangedEntity unfuseableChangedEntity) {
-                    unfuseableChangedEntity.tame(host);
-                    unfuseableChangedEntity.setIsUnfusedFromHost(true);
-                } else if (changedEntityUnfused instanceof TamableLatexEntityWithTameFunction tamableLatexEntityWithTameFunction) {
-                    tamableLatexEntityWithTameFunction.tameEntityForPlayer(host);
-                    coatLikeEntity.setIsUnfusedFromHost(true);
-                } else {
-                    coatLikeEntity.setIsUnfusedFromHost(true);
-                }
+                //TODO: migrate this to "TameableLatexEntity$tame" function that were implemented in 0.16.0
+                mayTameChangedEntity(changedEntityUnfused, coatLikeEntity, host);
 
                 changedEntityUnfused.setPos(host.position());
                 LivingEntity target = host.getLastHurtByMob();
@@ -176,6 +163,24 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
 //                }
 //                unfusedEntity = changedEntityUnfused;
                 entitySpawned = serverLevel.addFreshEntity(changedEntityUnfused);
+            }
+        }
+
+        private static void mayTameChangedEntity(ChangedEntity changedEntityUnfused, ICoatLikeEntity coatLikeEntity, Player host) {
+            if (changedEntityUnfused instanceof AbstractTamableLatexEntity abstractTamableLatexEntity) {
+                abstractTamableLatexEntity.tame(host);
+                coatLikeEntity.setUnfusedFromHost(true);
+            } else if (changedEntityUnfused instanceof AbstractExp2SnepChangedEntity abstractExp2SnepChangedEntity) {
+                abstractExp2SnepChangedEntity.tame(host);
+                abstractExp2SnepChangedEntity.setUnfusedFromHost(true);
+            } else if (changedEntityUnfused instanceof AbstractUnfuseableChangedEntity unfuseableChangedEntity) {
+                unfuseableChangedEntity.tame(host);
+                unfuseableChangedEntity.setUnfusedFromHost(true);
+            } else if (changedEntityUnfused instanceof TamableLatexEntityWithTameFunction tamableLatexEntityWithTameFunction) {
+                tamableLatexEntityWithTameFunction.tameEntityForPlayer(host);
+                coatLikeEntity.setUnfusedFromHost(true);
+            } else {
+                coatLikeEntity.setUnfusedFromHost(true);
             }
         }
 

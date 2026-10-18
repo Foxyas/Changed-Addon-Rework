@@ -36,7 +36,6 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Team;
 import net.minecraftforge.common.IExtensibleEnum;
 import org.apache.commons.lang3.NotImplementedException;
@@ -72,7 +71,7 @@ public abstract class AbstractUnfuseableChangedEntity extends ChangedEntity impl
     }
 
     @Override
-    public void setIsUnfusedFromHost(boolean value) {
+    public void setUnfusedFromHost(boolean value) {
         this.entityData.set(UNFUSED_FROM_HOST, value);
     }
 
@@ -123,7 +122,7 @@ public abstract class AbstractUnfuseableChangedEntity extends ChangedEntity impl
             this.setFollowOwner(tag.getBoolean("FollowOwner"));
 
         if (tag.contains("UnfusedFromHost"))
-            this.setIsUnfusedFromHost(tag.getBoolean("UnfusedFromHost"));
+            this.setUnfusedFromHost(tag.getBoolean("UnfusedFromHost"));
 
         if (uuid != null) {
             try {

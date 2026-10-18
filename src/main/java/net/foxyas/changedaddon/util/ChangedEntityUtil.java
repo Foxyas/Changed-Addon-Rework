@@ -1,6 +1,10 @@
 package net.foxyas.changedaddon.util;
 
 import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
+import net.foxyas.changedaddon.entity.defaults.AbstractUnfuseableChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.tamable.AbstractExp2SnepChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.tamable.AbstractTamableLatexEntity;
 import net.foxyas.changedaddon.entity.simple.AbstractSnowFoxEntity;
 import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
@@ -14,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -21,6 +26,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChangedEntityUtil {
+
+
+    public static void mayChangedEntity(ChangedEntity changedEntity, Player player) {
+        if (changedEntity instanceof AbstractTamableLatexEntity abstractTamableLatexEntity) {
+            abstractTamableLatexEntity.tame(player);
+        } else if (changedEntity instanceof AbstractExp2SnepChangedEntity abstractExp2SnepChangedEntity) {
+            abstractExp2SnepChangedEntity.tame(player);
+        } else if (changedEntity instanceof AbstractUnfuseableChangedEntity unfuseableChangedEntity) {
+            unfuseableChangedEntity.tame(player);
+        } else if (changedEntity instanceof TamableLatexEntityWithTameFunction tamableLatexEntityWithTameFunction) {
+            tamableLatexEntityWithTameFunction.tameEntityForPlayer(player);
+        }
+    }
 
     /**
      * Dynamically calculates the real 3D mouth position using local offset scales

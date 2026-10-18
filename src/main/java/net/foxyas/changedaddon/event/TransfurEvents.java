@@ -14,10 +14,8 @@ import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.ILatexAssimilatedEntity;
 import net.ltxprogrammer.changed.data.AccessorySlots;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.TamableLatexEntity;
-import net.ltxprogrammer.changed.entity.TransfurCause;
-import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.ai.EntityAssimilationBehavior;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -29,6 +27,7 @@ import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.Event;
@@ -115,6 +114,19 @@ public class TransfurEvents {
                 }
             });
         });
+    }
+
+    @SubscribeEvent
+    public static void stopLatexEntityAssimilationGoalsIfNotAssimilated(LatexAssimilationDecisionEvent event) {
+        LivingEntity source = event.getSourceEntity();
+
+        if (!(ProcessTransfur.getEntityAssimilationBehavior(source) instanceof EntityAssimilationBehavior.InjectEntityWithTransfurGoals<?>)) return;
+        if (!(source instanceof PathfinderMob pathfinderMob)) return;
+        if (!(pathfinderMob instanceof PathFinderMobDataExtension ext)) return;
+
+        if (!ext.isLatexAssimilated()) {
+            event.setCanceled(true);
+        }
     }
 
     public static void mayTameChangedEntity(Player player, ChangedEntity sourceChangedEntity, ChangedEntity newChangedEntity) {

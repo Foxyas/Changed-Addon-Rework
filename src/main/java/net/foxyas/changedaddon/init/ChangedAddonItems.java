@@ -62,7 +62,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<BlockItem> LUMINARA_LICHEN = block(ChangedAddonBlocks.LUMINARA_LICHEN);
     public static final RegistryObject<BlockItem> LUMINARA_SAPLING = block(ChangedAddonBlocks.LUMINARA_SAPLING);
     public static final RegistryObject<Item> BIOMASS = REGISTRY.register("biomass", BiomassItem::new);
-    public static final RegistryObject<Item> ANTI_LATEX_BASE = registerWithDesc("anti_latex_base");
+    public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", AntiLatexBaseItem::new);
     public static final RegistryObject<Item> LUMINARA_BASE = registerWithDesc("luminara_base", new Item.Properties().rarity(Rarity.RARE));
     public static final RegistryObject<Item> STRANGE_COMPOUND_BASE = registerWithDesc("strange_compound_base", new Item.Properties().rarity(Rarity.RARE));
     public static final RegistryObject<Item> IMPURE_AMMONIA = registerSimple("impure_ammonia");

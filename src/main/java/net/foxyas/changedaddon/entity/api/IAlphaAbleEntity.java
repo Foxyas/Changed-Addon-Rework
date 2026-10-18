@@ -117,6 +117,8 @@ public interface IAlphaAbleEntity {
         }
         mob.goalSelector.removeAllGoals(goal -> goal instanceof AlphaSleepGoal);
         mob.goalSelector.removeAllGoals(goal -> goal instanceof AlphaLeapDiveGoal);
+        mob.targetSelector.removeAllGoals(goal -> goal instanceof AlphaSleepGoal);
+        mob.targetSelector.removeAllGoals(goal -> goal instanceof AlphaLeapDiveGoal);
     }
 
     private static void applyGenericAlphaAttributesModifiers(LivingEntity entity, float normalized) {

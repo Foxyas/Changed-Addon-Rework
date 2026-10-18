@@ -23,7 +23,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IExtensibleEnum;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +53,7 @@ public abstract class AbstractCoatEntity extends AbstractTamableLatexEntity impl
     }
 
     @Override
-    public void setIsUnfusedFromHost(boolean value) {
+    public void setUnfusedFromHost(boolean value) {
         this.entityData.set(UNFUSED_FROM_HOST, value);
     }
 
@@ -78,7 +77,7 @@ public abstract class AbstractCoatEntity extends AbstractTamableLatexEntity impl
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("UnfusedFromHost"))
-            this.setIsUnfusedFromHost(tag.getBoolean("UnfusedFromHost"));
+            this.setUnfusedFromHost(tag.getBoolean("UnfusedFromHost"));
     }
 
     @Override

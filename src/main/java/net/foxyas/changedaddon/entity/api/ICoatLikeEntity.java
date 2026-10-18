@@ -20,7 +20,7 @@ public interface ICoatLikeEntity extends TamableLatexEntity {
 
     boolean isUnfusedFromHost();
 
-    void setIsUnfusedFromHost(boolean value);
+    void setUnfusedFromHost(boolean value);
 
     default boolean tryFuseBack(Player player, ChangedEntity changedEntity) {
         if (!isTame() || getOwner() != player) return false;
