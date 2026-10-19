@@ -62,6 +62,9 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
     private int activeTab = 0;
 
+    // Player Selection & State
+    private boolean isPlayerSelected = false;
+
     // Entity Selector & Filtering
     private final List<TransfurVariant<?>> allVariants = new ArrayList<>();
     private final List<TransfurVariant<?>> filteredVariants = new ArrayList<>();
@@ -77,7 +80,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
     // Selected Variant & Cached Entity
     protected TransfurVariant<?> selected;
-    private ChangedEntity currentEntity;
+    private LivingEntity currentEntity;
     private boolean isUnlocked = true;
 
     // Viewport (3D Model)
@@ -96,6 +99,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     private final List<AttributeBarItem> playerAttributeBars = new ArrayList<>();
     private final List<FormattedCharSequence> loreLines = new ArrayList<>();
     private String classificationText = "";
+    private List<Component> hoveredRadarTooltip;
 
     // Radar Chart Interactive State
     private float chartScaleFactor = 1.0f;
@@ -210,11 +214,26 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         updateFilteredVariants();
         updateSearchBoxVisibility();
 
-        if (this.selected == null && !filteredVariants.isEmpty()) {
-            selectTf(filteredVariants.get(0));
-        } else if (this.selected != null) {
+        if (this.selected == null && !this.isPlayerSelected) {
+            selectPlayer();
+        } else {
             refreshSelectedEntity();
         }
+    }
+
+    private boolean matchesPlayerSearch(String query) {
+        if (query.isEmpty()) return true;
+        String title = Component.translatable("gui.changed_addon.bestiary.player.title").getString().toLowerCase(Locale.ROOT);
+        return title.contains(query) || "player".contains(query) || "human".contains(query);
+    }
+
+    private boolean shouldShowPlayerInGrid() {
+        String query = searchBox != null ? searchBox.getValue().toLowerCase(Locale.ROOT).trim() : "";
+        return matchesPlayerSearch(query);
+    }
+
+    private int getTotalGridCount() {
+        return filteredVariants.size() + (shouldShowPlayerInGrid() ? 1 : 0);
     }
 
     private void updateSearchBoxBounds() {
@@ -268,20 +287,49 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
     }
 
+    private void selectPlayer() {
+        this.selected = null;
+        this.isPlayerSelected = true;
+        refreshSelectedEntity();
+    }
+
     protected void selectTf(TransfurVariant<?> tf) {
-        if (tf == null) return;
+        if (tf == null) {
+            // Fail-safe trigger if null variant is passed unexpectedly
+            selectPlayer();
+            return;
+        }
         this.selected = tf;
+        this.isPlayerSelected = false;
         refreshSelectedEntity();
     }
 
     private void refreshSelectedEntity() {
-        if (this.selected == null || this.minecraft == null || this.minecraft.level == null) {
+        if (this.minecraft == null || this.minecraft.level == null) {
+            return;
+        }
+
+        // If boolean flag is true OR selected variant is explicitly null, resolve as Player
+        if (this.isPlayerSelected || this.selected == null) {
+            this.isPlayerSelected = true;
+            this.selected = null;
+            this.currentEntity = this.minecraft.player;
+            this.isUnlocked = true;
+            this.detailsScrollOffset = 0;
+            this.chartScaleFactor = 1.0f;
+            buildDetailsAndBarChartForPlayer(this.minecraft.player);
             return;
         }
 
         Level level = this.minecraft.level;
         Player player = this.minecraft.player;
         ChangedEntity entity = (ChangedEntity) ChangedEntities.getCachedEntity(level, this.selected.getEntityType());
+
+        // Fail-safe if entity cache returns null
+        if (entity == null) {
+            selectPlayer();
+            return;
+        }
 
         // Check unlock using unified utility method
         this.isUnlocked = isVariantUnlocked(this.selected, player);
@@ -307,9 +355,38 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         this.displayMode = mode;
         updateSearchBoxBounds();
         updateSearchBoxVisibility();
-        if (this.currentEntity != null) {
-            buildDetailsAndBarChart(this.currentEntity);
+        if (this.currentEntity instanceof ChangedEntity changedEntity) {
+            buildDetailsAndBarChart(changedEntity);
+        } else if (this.isPlayerSelected && this.minecraft != null) {
+            buildDetailsAndBarChartForPlayer(this.minecraft.player);
         }
+    }
+
+    private void buildDetailsAndBarChartForPlayer(Player player) {
+        loreLines.clear();
+        attributeBars.clear();
+        playerAttributeBars.clear();
+        classificationText = "Human";
+
+        int detW = getEffectiveDetW();
+        int textWrapWidth = Math.max(100, detW - 16);
+
+        // Hardcoded Player Lore Entry
+        loreLines.addAll(this.font.split(Component.literal("§e§lHuman Survivor"), textWrapWidth));
+        loreLines.addAll(this.font.split(Component.literal("> The baseline standard human specimen prior to any latex assimilation or transfurmation effects."), textWrapWidth));
+
+        AttributeSupplier playerDefaults = DefaultAttributes.getSupplier(EntityType.PLAYER);
+        AttributeMap playerMap = player != null ? player.getAttributes() : new AttributeMap(playerDefaults);
+
+        checkAndAddBar(playerMap, playerDefaults, Attributes.MAX_HEALTH, Component.translatable(Attributes.MAX_HEALTH.getDescriptionId()), 60.0f, 0xFFFF4444, 0xFFFF7777);
+        checkAndAddBar(playerMap, playerDefaults, Attributes.ARMOR, Component.translatable(Attributes.ARMOR.getDescriptionId()), 20.0f, 0xFF55FFFF, 0xFFAAFFFF);
+        checkAndAddBar(playerMap, playerDefaults, Attributes.MOVEMENT_SPEED, Component.translatable(Attributes.MOVEMENT_SPEED.getDescriptionId()), 0.20f, 0xFF55FF55, 0xFFAAFFAA);
+        checkAndAddBar(playerMap, playerDefaults, Attributes.ATTACK_DAMAGE, Component.translatable(Attributes.ATTACK_DAMAGE.getDescriptionId()), 16.0f, 0xFFFFAA00, 0xFFFFDD55);
+        checkAndAddBar(playerMap, playerDefaults, Attributes.ARMOR_TOUGHNESS, Component.translatable(Attributes.ARMOR_TOUGHNESS.getDescriptionId()), 12.0f, 0xFF88AAFF, 0xFFBBDDFF);
+        checkAndAddBar(playerMap, playerDefaults, Attributes.KNOCKBACK_RESISTANCE, Component.translatable(Attributes.KNOCKBACK_RESISTANCE.getDescriptionId()), 1.0f, 0xFFCC66FF, 0xFFEE99FF);
+        checkAndAddBar(playerMap, playerDefaults, Attributes.FOLLOW_RANGE, Component.translatable(Attributes.FOLLOW_RANGE.getDescriptionId()), 48.0f, 0xFFBBAA88, 0xFFDDCCAA);
+
+        recalculateMaxScroll();
     }
 
     private void buildDetailsAndBarChart(ChangedEntity entity) {
@@ -585,7 +662,8 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         int gridY = y + 18;
         int gridH = h - 18;
 
-        int totalCount = filteredVariants.size();
+        boolean showPlayer = shouldShowPlayerInGrid();
+        int totalCount = getTotalGridCount();
         int cellSize = (w - 8) / GRID_COLS;
         int rows = (int) Math.ceil(totalCount / (double) GRID_COLS);
         int visibleRows = Math.max(1, (gridH - 4) / cellSize);
@@ -599,7 +677,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             scissored = true;
         }
 
-        TransfurVariant<?> hoveredTf = null;
+        Component hoveredTooltip = null;
 
         try {
             int firstIndex = gridRowScroll * GRID_COLS;
@@ -613,10 +691,15 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 int cellW = cellSize - 2;
                 int cellH = cellSize - 2;
 
-                TransfurVariant<?> tf = filteredVariants.get(i);
-                boolean isSelected = (this.selected == tf);
+                boolean isPlayerSlot = showPlayer && (i == 0);
+                TransfurVariant<?> tf = isPlayerSlot ? null : filteredVariants.get(showPlayer ? i - 1 : i);
+
+                boolean isSelected = isPlayerSlot ? this.isPlayerSelected : (!this.isPlayerSelected && this.selected == tf);
                 boolean isHovered = mouseX >= cellX && mouseX < cellX + cellW && mouseY >= cellY && mouseY < cellY + cellH;
-                if (isHovered) hoveredTf = tf;
+
+                if (isHovered) {
+                    hoveredTooltip = isPlayerSlot ? Component.translatable("gui.changed_addon.bestiary.player.title") : getVariantDisplayNameComponent(tf);
+                }
 
                 int btnBg = isSelected ? 0xFF384458 : (isHovered ? 0xFF282830 : 0xFF1A1A20);
                 int btnBorder = isSelected ? 0xFFFFAA00 : (isHovered ? 0xFF585868 : 0xFF2A2A32);
@@ -652,17 +735,55 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             graphics.fill(barX, thumbY, barX + 1, thumbY + thumbH, thumbBorder);
         }
 
-        if (hoveredTf != null) {
-            graphics.renderTooltip(this.font, getVariantDisplayNameComponent(hoveredTf), mouseX, mouseY);
+        if (hoveredTooltip != null) {
+            graphics.renderTooltip(this.font, hoveredTooltip, mouseX, mouseY);
         }
     }
 
     private void renderVariantIcon(GuiGraphics graphics, TransfurVariant<?> tf, int centerX, int centerY, float size) {
         if (this.minecraft == null || this.minecraft.level == null) {
-            renderInitialsFallback(graphics, tf, centerX, centerY);
+            if (tf != null) renderInitialsFallback(graphics, tf, centerX, centerY);
             return;
         }
 
+        // Render Player Icon
+        if (tf == null) {
+            Player player = this.minecraft.player;
+            if (player == null) return;
+
+            float oldYBodyRot = player.yBodyRot;
+            float oldYRot = player.getYRot();
+            float oldXRot = player.getXRot();
+            float oldYHeadRot = player.yHeadRot;
+            float oldYHeadRotO = player.yHeadRotO;
+
+            float targetYaw = 180.0f + ICON_YAW;
+
+            player.yBodyRot = targetYaw;
+            player.setYRot(targetYaw);
+            player.setXRot(ICON_PITCH);
+            player.yHeadRot = targetYaw;
+            player.yHeadRotO = targetYaw;
+
+            Quaternionf pose = new Quaternionf().rotateZ((float) Math.PI);
+
+            float adjustedScale = Math.max(4.0f, (size * 0.48f) * 0.95f);
+            float renderY = centerY + (size / 2.0f) + ICON_Y_OFFSET;
+
+            try {
+                GuiUtils.renderEntityInInventory(graphics, centerX, renderY, adjustedScale, pose, null, player);
+            } catch (Exception ignored) {
+            } finally {
+                player.yBodyRot = oldYBodyRot;
+                player.setYRot(oldYRot);
+                player.setXRot(oldXRot);
+                player.yHeadRot = oldYHeadRot;
+                player.yHeadRotO = oldYHeadRotO;
+            }
+            return;
+        }
+
+        // Render Variant Entity Icon
         Entity entity = ChangedEntities.getCachedEntity(this.minecraft.level, tf.getEntityType());
         if (!(entity instanceof ChangedEntity changedEntity)) {
             renderInitialsFallback(graphics, tf, centerX, centerY);
@@ -845,7 +966,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
     private void renderLoreTab(GuiGraphics graphics, int x, int y, int w, int h, int mouseX, int mouseY) {
         renderInsetBox(graphics, x, y, w, h);
-        if (this.selected == null) return;
+        if (!this.isPlayerSelected && this.selected == null) return;
 
         boolean scissored = false;
         if (w > 6 && h > 6) {
@@ -856,7 +977,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         try {
             int curY = y + 5 - detailsScrollOffset;
 
-            Component name = getVariantDisplayNameComponent(this.selected);
+            Component name = this.isPlayerSelected ? Component.translatable("gui.changed_addon.bestiary.player.title") : getVariantDisplayNameComponent(this.selected);
             graphics.drawString(this.font, Component.literal("§e§l").append(name), x + 6, curY, 0xFFFF55, false);
             curY += 12;
 
@@ -913,7 +1034,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
     private void renderAttributesGridTab(GuiGraphics graphics, int x, int y, int w, int h, int mouseX, int mouseY) {
         renderInsetBox(graphics, x, y, w, h);
-        if (this.selected == null) return;
+        if (!this.isPlayerSelected && this.selected == null) return;
 
         boolean scissored = false;
         if (w > 6 && h > 6) {
@@ -999,6 +1120,10 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         }
 
         renderDetailsScrollbar(graphics, x, y, w, h, mouseX, mouseY);
+        // Render deferred radar chart tooltip completely outside the scissor area
+        if (this.hoveredRadarTooltip != null && !this.hoveredRadarTooltip.isEmpty()) {
+            graphics.renderComponentTooltip(this.font, this.hoveredRadarTooltip, mouseX, mouseY);
+        }
     }
 
     private void renderRadialAttributeChart(GuiGraphics graphics, int cx, int cy, float radius, List<AttributeBarItem> entityBars, List<AttributeBarItem> playerBars, int mouseX, int mouseY) {
@@ -1138,7 +1263,9 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 if (playerBars != null && i < playerBars.size()) {
                     tooltip.add(Component.translatable("gui.changed_addon.bestiary.radar.player_val", playerBars.get(i).valueText));
                 }
-                graphics.renderComponentTooltip(this.font, tooltip, mouseX, mouseY);
+                this.hoveredRadarTooltip = tooltip;
+            } else {
+                this.hoveredRadarTooltip.clear();
             }
         }
     }
@@ -1170,8 +1297,10 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     // -------------------------------------------------------------
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (this.activeTab == 0 && displayMode != DisplayMode.MODEL_ONLY && !filteredVariants.isEmpty()) {
-            int currentIndex = selected != null ? filteredVariants.indexOf(selected) : -1;
+        int totalCount = getTotalGridCount();
+        if (this.activeTab == 0 && displayMode != DisplayMode.MODEL_ONLY && totalCount > 0) {
+            boolean showPlayer = shouldShowPlayerInGrid();
+            int currentIndex = this.isPlayerSelected ? 0 : (selected != null ? filteredVariants.indexOf(selected) + (showPlayer ? 1 : 0) : -1);
 
             if (keyCode == GLFW.GLFW_KEY_LEFT) {
                 navigateSelection(currentIndex - 1);
@@ -1191,9 +1320,18 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     }
 
     private void navigateSelection(int targetIndex) {
-        if (filteredVariants.isEmpty()) return;
-        int clampedIndex = clamp(targetIndex, 0, filteredVariants.size() - 1);
-        selectTf(filteredVariants.get(clampedIndex));
+        int totalCount = getTotalGridCount();
+        if (totalCount == 0) return;
+
+        int clampedIndex = clamp(targetIndex, 0, totalCount - 1);
+        boolean showPlayer = shouldShowPlayerInGrid();
+
+        if (showPlayer && clampedIndex == 0) {
+            selectPlayer();
+        } else {
+            int variantIndex = showPlayer ? clampedIndex - 1 : clampedIndex;
+            selectTf(filteredVariants.get(variantIndex));
+        }
 
         int targetRow = clampedIndex / GRID_COLS;
         int detW = getEffectiveDetW();
@@ -1286,11 +1424,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                     currentEntity.setPose(currentEntity.getPose() == Pose.STANDING ? Pose.CROUCHING : Pose.STANDING);
                     return true;
                 }
-                // Todo: Need some kind of zoom rework
-                /*else if (button == 2) {
-                    isDraggingModelOffset = true;
-                    return true;
-                }*/
             }
         }
 
@@ -1299,7 +1432,8 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             int gridY = contentY + 18;
             int gridH = (this.dialogH - 30) - 16 - 18;
 
-            int totalCount = filteredVariants.size();
+            boolean showPlayer = shouldShowPlayerInGrid();
+            int totalCount = getTotalGridCount();
             int cellSize = (detW - 8) / GRID_COLS;
             int rows = (int) Math.ceil(totalCount / (double) GRID_COLS);
             int visibleRows = Math.max(1, (gridH - 4) / cellSize);
@@ -1340,7 +1474,12 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 int cellH = cellSize - 2;
 
                 if (mouseX >= cellX && mouseX < cellX + cellW && mouseY >= cellY && mouseY < cellY + cellH) {
-                    selectTf(filteredVariants.get(i));
+                    if (showPlayer && i == 0) {
+                        selectPlayer();
+                    } else {
+                        int variantIndex = showPlayer ? i - 1 : i;
+                        selectTf(filteredVariants.get(variantIndex));
+                    }
                     return true;
                 }
             }
@@ -1407,7 +1546,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
         if (isDraggingListScroll && activeTab == 0 && displayMode != DisplayMode.MODEL_ONLY) {
             int gridH = (this.dialogH - 30) - 16 - 18;
-            int totalCount = filteredVariants.size();
+            int totalCount = getTotalGridCount();
             int cellSize = (detW - 8) / GRID_COLS;
             int rows = (int) Math.ceil(totalCount / (double) GRID_COLS);
             int visibleRows = Math.max(1, (gridH - 4) / cellSize);
@@ -1471,7 +1610,8 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             if (mouseX >= detX && mouseX <= detX + detW && mouseY >= detY && mouseY <= detY + detH) {
                 if (activeTab == 0) {
                     int gridH = detH - 16 - 18;
-                    int rows = (int) Math.ceil(filteredVariants.size() / (double) GRID_COLS);
+                    int totalCount = getTotalGridCount();
+                    int rows = (int) Math.ceil(totalCount / (double) GRID_COLS);
                     int cellSize = (detW - 8) / GRID_COLS;
                     int visibleRows = Math.max(1, (gridH - 4) / cellSize);
                     int maxScroll = Math.max(0, rows - visibleRows);
