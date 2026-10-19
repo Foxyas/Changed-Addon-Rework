@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.util;
 import com.google.common.base.Predicates;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
-import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
 import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
@@ -186,13 +185,13 @@ public class PlayerUtil {
                 for (Map.Entry<AbstractAbility<?>, AbstractAbilityInstance> entry : tf.abilityInstances.entrySet()) {
                     entry.getKey().setDirty(e);
                 }
-           });
+            });
         }));
     }
 
     @Nullable
     public static TransfurVariantInstance<?> setPlayerTransfurVariantAndLoad(Player player, @Nullable TransfurVariant<?> ogVariant, @Nullable TransfurContext context, float progress, boolean temporaryFromSuit, Consumer<TransfurVariantInstance<?>> preProcess) {
-        PlayerDataExtension playerDataExtension = (PlayerDataExtension)player;
+        PlayerDataExtension playerDataExtension = (PlayerDataExtension) player;
         ProcessTransfur.EntityVariantAssigned event = new ProcessTransfur.EntityVariantAssigned(player, ogVariant, context);
         Changed.postModEvent(event);
         TransfurVariant<?> variant = event.variant;
@@ -248,7 +247,7 @@ public class PlayerUtil {
 
             AccessoryEntities.INSTANCE.forceReloadAccessories(player);
             if (player instanceof ServerPlayer) {
-                ServerPlayer serverPlayer = (ServerPlayer)player;
+                ServerPlayer serverPlayer = (ServerPlayer) player;
                 Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> serverPlayer), SyncTransfurPacket.Builder.of(player));
             }
 
@@ -338,20 +337,42 @@ public class PlayerUtil {
         PlayerUtil.unTransfurPlayerAndPlaySound(player, !player.isCreative() && !player.isSpectator());
     }
 
-
     public static void spawnPlayerTransfurAsChangedEntity(Level world, Player player) {
+        spawnPlayerTransfurAsChangedEntity(world, player,
+                "HandItems", // we don't need to save hand items.
+                "ArmorItems" // we don't need to save armor items.
+        );
+    }
+
+    public static void spawnPlayerTransfurAsChangedEntity(Level world, Player player, String... dataKeysToRemove) {
         if (player.level.isClientSide() || !(world instanceof ServerLevel level)) return;
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (instance == null) return;
 
         ChangedEntity fakeEntity = instance.getChangedEntity();
+        CompoundTag tag = new CompoundTag();
+
+//        if (false) {
+//            //TODO: check if this is okay to use it.
+//            fakeEntity.saveWithoutId(tag);
+//            tag.remove("UUID");
+//        }
+
+        fakeEntity.addAdditionalSaveData(tag);
+
+        Arrays.stream(dataKeysToRemove).forEach(tag::remove);
+
         TransfurVariant<?> bossVersionOf = ChangedAddonTransfurVariants.getBossVersionOf(instance.getParent());
 
         ChangedEntity entityToSpawn = bossVersionOf.getEntityType().create(level);
         assert entityToSpawn != null;
         entityToSpawn.moveTo(player.getX(), player.getY(), player.getZ(), 0, 0);
-        entityToSpawn.setYBodyRot(0);
-        entityToSpawn.setYHeadRot(0);
+        entityToSpawn.yBodyRot = player.yBodyRot;
+        entityToSpawn.yBodyRotO = player.yBodyRotO;
+        entityToSpawn.yHeadRot = player.yHeadRot;
+        entityToSpawn.yHeadRotO = player.yHeadRotO;
+        entityToSpawn.setDeltaMovement(player.getDeltaMovement());
+        entityToSpawn.readAdditionalSaveData(tag);
 
         ForgeEventFactory.onFinalizeSpawn(entityToSpawn, level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
 

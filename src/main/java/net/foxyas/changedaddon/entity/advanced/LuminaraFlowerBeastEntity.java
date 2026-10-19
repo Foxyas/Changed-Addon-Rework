@@ -367,7 +367,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
         if (!this.isAwakened() && this.isFallFlying()) {
             if (this.getY() >= (double) this.level().getMaxBuildHeight()) {
                 Player player = this.getUnderlyingPlayer();
-                if (player != null) {
+                if (player != null && !level().isClientSide()) {
                     triggerOutOfBoundsTransformation(player, this);
                 }
             }
