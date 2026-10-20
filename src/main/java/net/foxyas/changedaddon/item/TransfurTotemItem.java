@@ -379,6 +379,19 @@ public class TransfurTotemItem extends Item implements VariantHoldingBase {
     }
 
     @Override
+    public boolean onDroppedByPlayer(ItemStack item, Player player) {
+        boolean onDroppedByPlayer = super.onDroppedByPlayer(item, player);
+        if (onDroppedByPlayer) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                removeModifier(serverPlayer, Attributes.ATTACK_DAMAGE, TOTEM_BUFF_ATTACK);
+                removeModifier(serverPlayer, Attributes.ARMOR, TOTEM_BUFF_DEFENSE);
+                removeModifier(serverPlayer, Attributes.ARMOR_TOUGHNESS, TOTEM_BUFF_ARMOR);
+            }
+        }
+        return onDroppedByPlayer;
+    }
+
+    @Override
     public boolean canBeHurtBy(DamageSource pSource) {
         if (pSource.is(DamageTypes.CACTUS) || pSource.is(DamageTypes.LIGHTNING_BOLT) || pSource.is(DamageTypeTags.IS_EXPLOSION)) {
             return false;

@@ -20,9 +20,11 @@ import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
 import net.ltxprogrammer.changed.entity.beast.DarkLatexEntity;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.core.BlockPos;
@@ -40,6 +42,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -170,6 +173,12 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     public boolean canGrabEntity(LivingEntity livingTarget, GrabEntityAbilityInstance grabEntityAbilityInstance) {
         boolean couldGrabEntity = GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions.super.canGrabEntity(livingTarget, grabEntityAbilityInstance);
         if (!couldGrabEntity && EntityUtil.maybeGetOverlaying(livingTarget) instanceof ChangedEntity changedEntity && changedEntity instanceof DarkLatexEntity) {
+            if (livingTarget instanceof Player player) {
+                TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+                if (variantInstance != null && variantInstance.isTransfurring()) {
+                    return false;
+                }
+            }
             if (changedEntity instanceof WolfyEntity) {
                 return false;
             }

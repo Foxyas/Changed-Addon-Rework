@@ -1,10 +1,14 @@
 package net.foxyas.changedaddon.entity.ai.goals.abilities;
 
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
+import net.foxyas.changedaddon.util.GrabAbilityUtil;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 
 public class MayCauseGrabDamageGoal extends Goal {
 
@@ -50,6 +54,14 @@ public class MayCauseGrabDamageGoal extends Goal {
             }
             LivingEntity grabbedEntity = grabAbilityInstance.grabbedEntity;
             grabAbilityInstance.useDown = this.grabber.getGrabStrategy(grabbedEntity).shouldSuit() && !grabAbilityInstance.suited;
+
+
+            if (grabbedEntity instanceof Player player) {
+                TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+                if (variantInstance != null && variantInstance.isTransfurring()) {
+                    GrabAbilityUtil.releaseEntity(grabbedEntity, grabAbilityInstance.entity.getEntity(), grabAbilityInstance, false);
+                }
+            }
         }
     }
 

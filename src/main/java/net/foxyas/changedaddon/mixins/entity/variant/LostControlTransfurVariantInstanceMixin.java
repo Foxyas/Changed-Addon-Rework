@@ -95,7 +95,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;checkForTemporary()Z"))
     private boolean lostControl$checkForTemporaryHook(TransfurVariantInstance<?> instance, Operation<Boolean> original) {
-        if (!ProcessTransfur.isPlayerTransfurred(this.host)) return original.call(instance);
+        if (!ProcessTransfur.isPlayerTransfurred(this.host) || !instance.willSurviveTransfur) return original.call(instance);
 
         if (!hasControlOverBody && !host.isSpectator()) {
             if (this.entityInControl != null) {

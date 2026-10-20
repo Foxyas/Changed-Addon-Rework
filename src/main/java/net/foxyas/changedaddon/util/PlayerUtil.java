@@ -23,6 +23,7 @@ import net.ltxprogrammer.changed.extension.ChangedCompatibility;
 import net.ltxprogrammer.changed.init.*;
 import net.ltxprogrammer.changed.network.packet.SyncTransfurPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.process.TransfurEvents.PreProcessTransfurVariantInstanceEvent;
 import net.ltxprogrammer.changed.process.TransfurEvents.UntransfurPlayerEvent;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.LatexCoverGetter;
@@ -212,7 +213,7 @@ public class PlayerUtil {
             TransfurVariantInstance<?> instance = TransfurVariantInstance.variantFor(variant, player);
             if (instance != null) {
                 preProcess.accept(instance);
-                Changed.postModEvent(new net.ltxprogrammer.changed.process.TransfurEvents.PreProcessTransfurVariantInstanceEvent(player, variant, context, instance, progress, temporaryFromSuit));
+                Changed.postModEvent(new PreProcessTransfurVariantInstanceEvent(player, variant, context, instance, progress, temporaryFromSuit));
             }
 
             playerDataExtension.setTransfurVariant(instance);
