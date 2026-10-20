@@ -107,4 +107,29 @@ public abstract class AbstractBestiaryScreen extends Screen implements MouseMove
 
         return false;
     }
+
+
+    public static class AttributeBarItem {
+        public final Component label;
+        public final String valueText;
+        public final float ratio;
+        public final int fillColor;
+        public final int highlightColor;
+
+        public AttributeBarItem(Component label, String valueText, float ratio, int fillColor, int highlightColor) {
+            this.label = label;
+            this.valueText = valueText;
+            this.ratio = ratio;
+            this.fillColor = fillColor;
+            this.highlightColor = highlightColor;
+        }
+    }
+
+    public static int clamp(int val, int min, int max) {
+        return Math.max(min, Math.min(max, val));
+    }
+
+    public static float clamp(float val, float min, float max) {
+        return Math.max(min, Math.min(max, val));
+    }
 }

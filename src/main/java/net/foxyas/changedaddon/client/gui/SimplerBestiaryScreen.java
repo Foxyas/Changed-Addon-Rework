@@ -960,33 +960,6 @@ public class SimplerBestiaryScreen extends AbstractBestiaryScreen {
         return false;
     }
 
-    // -------------------------------------------------------------
-    // Helper Data Class for Attribute Bar Item
-    // -------------------------------------------------------------
-    private static class AttributeBarItem {
-        final Component label;
-        final String valueText;
-        final float ratio;
-        final int fillColor;
-        final int highlightColor;
-
-        AttributeBarItem(Component label, String valueText, float ratio, int fillColor, int highlightColor) {
-            this.label = label;
-            this.valueText = valueText;
-            this.ratio = ratio;
-            this.fillColor = fillColor;
-            this.highlightColor = highlightColor;
-        }
-    }
-
-    private static int clamp(int val, int min, int max) {
-        return Math.max(min, Math.min(max, val));
-    }
-
-    private static float clamp(float val, float min, float max) {
-        return Math.max(min, Math.min(max, val));
-    }
-
     /**
      * Renders a string. If the string exceeds maxW, it applies a smooth left-right ping-pong scrolling effect.
      */
