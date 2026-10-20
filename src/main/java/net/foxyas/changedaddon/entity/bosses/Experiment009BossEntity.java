@@ -682,6 +682,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     public boolean hurt(DamageSource source, float amount) {
         boolean shouldTeleportAndNegateDamage = false;
         boolean shouldDodgeAndNegateDamage = false;
+        boolean shouldRandomTeleport = false; // Added flag for random projectile teleport
         DodgeAnimationParameters dodgeAnimationParameters = DodgeAnimationParameters.DEFAULT;
         if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.OUTSIDE_BORDER) || source.is(DamageTypes.GENERIC_KILL)) {
             return super.hurt(source, amount);
@@ -708,7 +709,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 source.getMsgId().equals("trident") || ChangedAddonModCompatEvents.isDamageTypeBullet(source);
 
         if (isProjectile && !source.getMsgId().equals("trident") && !isVulnerableToProjectiles()) {
-            shouldDodgeAndNegateDamage = true;
+            // Instead of dodging, set it to randomly teleport and negate damage
+            shouldRandomTeleport = true;
         }
 
         shouldTeleportAndNegateDamage = source.is(DamageTypes.IN_WALL);
@@ -724,7 +726,17 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             shouldTeleportAndNegateDamage = false;
         }
 
+        // Handle Projectile Random Teleportation Negation
+        if (shouldRandomTeleport) {
+            tryTeleportRandomly();
+            if (source.is(DamageTypes.THORNS) || source.is(DamageTypeTags.IS_FIRE)) amount = 0;
+            maybeSendDamageReactionToPlayer(source);
+            triggerOnDamageReactiveGoals(source, amount, false);
+            return false;
+        }
+
         if (shouldTeleportAndNegateDamage ^ shouldDodgeAndNegateDamage) {
+
             if (shouldTeleportAndNegateDamage) {
                 if (!tryTeleportToNearLivingEntity()) {
                     if (source.is(DamageTypes.THORNS) || source.is(DamageTypeTags.IS_FIRE)) amount = 0;
@@ -771,6 +783,21 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         return super.hurt(source, amount);
+    }
+
+    private boolean tryTeleportRandomly() {
+        if (this.level().isClientSide) return false;
+
+        double radius = 16.0D; // Adjust the random teleport radius as needed
+        double x = this.getX() + (this.random.nextDouble() - 0.5) * radius * 2.0;
+        double y = this.getY() + (this.random.nextDouble() - 0.5) * 4.0;
+        double z = this.getZ() + (this.random.nextDouble() - 0.5) * radius * 2.0;
+
+        // Optional: make sure it doesn't teleport inside solid blocks or out of bounds safely,
+        // or use standard entity teleport:
+        this.randomTeleport(x, y, z, true);
+        this.hasImpulse = true;
+        return true;
     }
 
     private boolean tryTeleportToNearLivingEntity() {
