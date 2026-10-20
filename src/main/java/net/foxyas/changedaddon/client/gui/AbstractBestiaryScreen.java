@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
@@ -60,6 +61,16 @@ public abstract class AbstractBestiaryScreen extends Screen implements MouseMove
             return Component.translatable(type.getDescriptionId());
         }
         return Component.literal(tf.getFormId().getPath());
+    }
+
+    protected Component getEntityDisplayNameComponent(LivingEntity livingEntity) {
+        if (livingEntity == null) return Component.translatable("gui.changed_addon.bestiary.unknown");
+
+        EntityType<?> type = livingEntity.getType();
+        if (type != null) {
+            return Component.translatable(type.getDescriptionId());
+        }
+        return Component.literal("???");
     }
 
     /**

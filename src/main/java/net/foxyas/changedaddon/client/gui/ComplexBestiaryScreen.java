@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.client.gui;
 
+import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
@@ -14,6 +15,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -64,6 +66,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
     // Player Selection & State
     private boolean isPlayerSelected = false;
+    private RemotePlayer fakePlayer = null; // Clean decoupled fake player instance
 
     // Entity Selector & Filtering
     private final List<TransfurVariant<?>> allVariants = new ArrayList<>();
@@ -165,39 +168,17 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         this.left = (this.width - this.dialogW) / 2;
         this.top = (this.height - this.dialogH) / 2;
 
+        // Initialize safe standalone fake client player for previewing defaults
+        if (this.minecraft != null && this.minecraft.level != null && this.minecraft.player != null) {
+            GameProfile profile = this.minecraft.player.getGameProfile();
+            this.fakePlayer = new RemotePlayer(this.minecraft.level, profile);
+            this.fakePlayer.noPhysics = true;
+        }
+
         // Populate variants once
         if (allVariants.isEmpty()) {
             List<TransfurVariant<?>> variants = TransfurVariant.getPublicTransfurVariants()
                     .sorted(Comparator.comparing(var -> var.getFormId().toString()))
-                    // This may be good later
-//                    .filter(variant -> {
-//                        boolean isCodeUnlocked = false;
-//                        LocalPlayer player = getMinecraft().player;
-//                        ChangedEntity entity = ChangedEntities.getCachedEntity(player.level, variant.getEntityType());
-//                        if (entity instanceof IBestiaryEntityData data) {
-//                            if (data.isUnlocked(player)) {
-//                                EntityType<?> refType = data.getReferencedEntityType();
-//                                if (refType != null && refType != entity.getType()) {
-//                                    Entity cached = ChangedEntities.getCachedEntity(player.level, refType);
-//                                    if (cached instanceof ChangedEntity ce) {
-//                                        isCodeUnlocked = true;
-//                                    }
-//                                }
-//                                isCodeUnlocked = true;
-//                            }
-//                        }
-//                        boolean isBestiaryUnlocked = BestiaryEntriesManager.getAllHolders(player)
-//                                .stream()
-//                                .filter(reference -> BestiaryEntriesManager.isUnlocked(reference, player))
-//                                .anyMatch(reference -> reference
-//                                        .value()
-//                                        .variants()
-//                                        .stream()
-//                                        .anyMatch(transfurVariantHolder -> transfurVariantHolder.matches(variant))
-//                                );
-//
-//                        return isCodeUnlocked || isBestiaryUnlocked;
-//                    })
                     .toList();
             allVariants.addAll(variants);
         }
@@ -223,7 +204,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
     private boolean matchesPlayerSearch(String query) {
         if (query.isEmpty()) return true;
-        String title = Component.translatable("gui.changed_addon.bestiary.player.title").getString().toLowerCase(Locale.ROOT);
+        String title = getEntityDisplayNameComponent(fakePlayer).getString().toLowerCase(Locale.ROOT);
         return title.contains(query) || "player".contains(query) || "human".contains(query);
     }
 
@@ -295,7 +276,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
     protected void selectTf(TransfurVariant<?> tf) {
         if (tf == null) {
-            // Fail-safe trigger if null variant is passed unexpectedly
             selectPlayer();
             return;
         }
@@ -309,15 +289,18 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             return;
         }
 
-        // If boolean flag is true OR selected variant is explicitly null, resolve as Player
+        // If boolean flag is true OR selected variant is explicitly null, resolve as Fake Player
         if (this.isPlayerSelected || this.selected == null) {
             this.isPlayerSelected = true;
             this.selected = null;
-            this.currentEntity = this.minecraft.player;
+            if (this.fakePlayer == null) {
+                this.fakePlayer = new RemotePlayer(this.minecraft.level, this.minecraft.player.getGameProfile());
+            }
+            this.currentEntity = this.fakePlayer;
             this.isUnlocked = true;
             this.detailsScrollOffset = 0;
             this.chartScaleFactor = 1.0f;
-            buildDetailsAndBarChartForPlayer(this.minecraft.player);
+            buildDetailsAndBarChartForPlayer(this.fakePlayer);
             return;
         }
 
@@ -357,8 +340,8 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         updateSearchBoxVisibility();
         if (this.currentEntity instanceof ChangedEntity changedEntity) {
             buildDetailsAndBarChart(changedEntity);
-        } else if (this.isPlayerSelected && this.minecraft != null) {
-            buildDetailsAndBarChartForPlayer(this.minecraft.player);
+        } else if (this.isPlayerSelected && this.fakePlayer != null) {
+            buildDetailsAndBarChartForPlayer(this.fakePlayer);
         }
     }
 
@@ -440,7 +423,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
 
                         if (rawDesc.startsWith("> ")) {
                             String stripped = rawDesc.substring(2);
-                            // Create a dynamic quote component with the title's color theme & blockquote bar
                             Component quoteComp = Component.literal("§e┃ ").append(Component.literal(stripped));
 
                             loreLines.addAll(this.font.split(quoteComp, textWrapWidth - 8));
@@ -459,7 +441,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                     .toList();
             for (IBestiaryEntityData.BestiaryInfo info : infos) {
                 String titleStr = info.title().getString();
-                // Skip duplicate text attribute dump; our bar chart handles it!
                 if (titleStr.equalsIgnoreCase("Attributes") || titleStr.equalsIgnoreCase(Component.translatable("gui.changed_addon.bestiary.attributes").getString()))
                     continue;
 
@@ -698,7 +679,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 boolean isHovered = mouseX >= cellX && mouseX < cellX + cellW && mouseY >= cellY && mouseY < cellY + cellH;
 
                 if (isHovered) {
-                    hoveredTooltip = isPlayerSlot ? Component.translatable("gui.changed_addon.bestiary.player.title") : getVariantDisplayNameComponent(tf);
+                    hoveredTooltip = isPlayerSlot ? getEntityDisplayNameComponent(fakePlayer) : getVariantDisplayNameComponent(tf);
                 }
 
                 int btnBg = isSelected ? 0xFF384458 : (isHovered ? 0xFF282830 : 0xFF1A1A20);
@@ -746,39 +727,40 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
             return;
         }
 
-        // Render Player Icon
+        // Render Fake/Dummy Player Icon
         if (tf == null) {
-            Player player = this.minecraft.player;
-            if (player == null) return;
+            Player renderPlayer = this.fakePlayer != null ? this.fakePlayer : this.minecraft.player;
+            if (renderPlayer == null) return;
 
-            float oldYBodyRot = player.yBodyRot;
-            float oldYRot = player.getYRot();
-            float oldXRot = player.getXRot();
-            float oldYHeadRot = player.yHeadRot;
-            float oldYHeadRotO = player.yHeadRotO;
+            float oldYBodyRot = renderPlayer.yBodyRot;
+            float oldYRot = renderPlayer.getYRot();
+            float oldXRot = renderPlayer.getXRot();
+            float oldYHeadRot = renderPlayer.yHeadRot;
+            float oldYHeadRotO = renderPlayer.yHeadRotO;
 
             float targetYaw = 180.0f + ICON_YAW;
 
-            player.yBodyRot = targetYaw;
-            player.setYRot(targetYaw);
-            player.setXRot(ICON_PITCH);
-            player.yHeadRot = targetYaw;
-            player.yHeadRotO = targetYaw;
+            renderPlayer.yBodyRot = targetYaw;
+            renderPlayer.setYRot(targetYaw);
+            renderPlayer.setXRot(ICON_PITCH);
+            renderPlayer.yHeadRot = targetYaw;
+            renderPlayer.yHeadRotO = targetYaw;
 
             Quaternionf pose = new Quaternionf().rotateZ((float) Math.PI);
 
             float adjustedScale = Math.max(4.0f, (size * 0.48f) * 0.95f);
-            float renderY = centerY + (size / 2.0f) + ICON_Y_OFFSET;
+            float crouchOffset = (renderPlayer.getPose() == Pose.CROUCHING) ? -3.0f : 0.0f;
+            float renderY = centerY + (size / 2.0f) + ICON_Y_OFFSET + crouchOffset;
 
             try {
-                GuiUtils.renderEntityInInventory(graphics, centerX, renderY, adjustedScale, pose, null, player);
+                GuiUtils.renderEntityInInventory(graphics, centerX, renderY, adjustedScale, pose, null, renderPlayer);
             } catch (Exception ignored) {
             } finally {
-                player.yBodyRot = oldYBodyRot;
-                player.setYRot(oldYRot);
-                player.setXRot(oldXRot);
-                player.yHeadRot = oldYHeadRot;
-                player.yHeadRotO = oldYHeadRotO;
+                renderPlayer.yBodyRot = oldYBodyRot;
+                renderPlayer.setYRot(oldYRot);
+                renderPlayer.setXRot(oldXRot);
+                renderPlayer.yHeadRot = oldYHeadRot;
+                renderPlayer.yHeadRotO = oldYHeadRotO;
             }
             return;
         }
@@ -928,6 +910,10 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                 graphics.pose().pushPose();
                 graphics.pose().translate(0, 0, 50);
 
+                if (currentEntity instanceof Player player && player.getPose() == Pose.CROUCHING) {
+                    modelCenterY -= 7;
+                }
+
                 // Silhouette mode if locked
                 if (!this.isUnlocked) setUnlockedColor(graphics);
 
@@ -977,7 +963,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         try {
             int curY = y + 5 - detailsScrollOffset;
 
-            Component name = this.isPlayerSelected ? Component.translatable("gui.changed_addon.bestiary.player.title") : getVariantDisplayNameComponent(this.selected);
+            Component name = this.isPlayerSelected ? getEntityDisplayNameComponent(fakePlayer) : getVariantDisplayNameComponent(this.selected);
             graphics.drawString(this.font, Component.literal("§e§l").append(name), x + 6, curY, 0xFFFF55, false);
             curY += 12;
 
@@ -1244,6 +1230,8 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
         RenderSystem.disableBlend();
 
         // 5. Outer Perimeter Dots & Hover Tooltips
+        this.hoveredRadarTooltip.clear(); // Clear out old tooltips at the start of each frame check
+
         for (int i = 0; i < size; i++) {
             AttributeBarItem entityBar = entityBars.get(i);
             float angle = i * step - (float) Math.PI / 2;
@@ -1264,8 +1252,6 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
                     tooltip.add(Component.translatable("gui.changed_addon.bestiary.radar.player_val", playerBars.get(i).valueText));
                 }
                 this.hoveredRadarTooltip = tooltip;
-            } else {
-                this.hoveredRadarTooltip.clear();
             }
         }
     }
