@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.process.bestiary;
 
 import net.foxyas.changedaddon.init.ChangedAddonBestiaryEntries;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.Registry;
@@ -82,6 +83,9 @@ public class BestiaryEntriesManager {
     public static boolean isVariantBestiaryUnlocked(TransfurVariant<?> variant, Player player) {
         if (variant == null || player == null) {
             return false;
+        }
+        if (player.isCreative() && player.level().isClientSide()) {
+            return Minecraft.getInstance().options.advancedItemTooltips;
         }
         return getHoldersForVariant(variant, player).stream().anyMatch(holder -> isUnlocked(holder, player));
     }
