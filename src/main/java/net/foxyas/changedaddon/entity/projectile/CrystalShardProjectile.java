@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.projectile;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;

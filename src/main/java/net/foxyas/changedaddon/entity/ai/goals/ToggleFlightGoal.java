@@ -1,13 +1,13 @@
 package net.foxyas.changedaddon.entity.ai.goals;
 
-import net.foxyas.changedaddon.entity.api.IFlyableChangedEntity;
+import net.foxyas.changedaddon.entity.api.IFlyingCapable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ToggleFlightGoal<T extends PathfinderMob & IFlyableChangedEntity> extends Goal {
+public class ToggleFlightGoal<T extends PathfinderMob & IFlyingCapable> extends Goal {
     private final T entity;
 
     public ToggleFlightGoal(T entity) {
@@ -47,7 +47,7 @@ public class ToggleFlightGoal<T extends PathfinderMob & IFlyableChangedEntity> e
 
     @Override
     public void start() {
-        boolean currentlyFlying = this.entity.isFlyingMode();
-        this.entity.setFlyingMode(!currentlyFlying);
+        boolean currentlyFlying = this.entity.isFlying();
+        this.entity.setFlying(!currentlyFlying);
     }
 }

@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard;
 
 import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalShardProjectile;
-import net.foxyas.changedaddon.entity.projectile.WitherParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;

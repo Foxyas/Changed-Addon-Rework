@@ -1,10 +1,9 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
-import net.foxyas.changedaddon.entity.ai.ChangedEntityFlyingMoveControl;
-import net.foxyas.changedaddon.entity.ai.goals.RandomLandingGoal;
-import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightGoal;
-import net.foxyas.changedaddon.entity.ai.goals.ToggleFlightModeForAttackingGoal;
+import net.foxyas.changedaddon.entity.ai.FlyingApproachMeleeAttackGoal;
+import net.foxyas.changedaddon.entity.ai.FlyingOrWalkingMoveControl;
+import net.foxyas.changedaddon.entity.ai.RandomStrollOrHoverGoal;
 import net.foxyas.changedaddon.entity.api.*;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
@@ -28,6 +27,7 @@ import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,30 +36,39 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
 public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements IVariantExtraStats,
-        GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions, IAlphaAbleEntity, IDynamicInventoryRender, IFlyableChangedEntity, IDynamicRideOffsetEntity {
+        GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions, IAlphaAbleEntity, IDynamicInventoryRender, IFlyingCapable, IDynamicRideOffsetEntity {
+
+    protected final FlyingPathNavigation flyingNavigation;
+    protected final GroundPathNavigation groundNavigation;
 
     protected final SimpleAbilityInstance summonPups;
 
-    protected MoveControl groundMoveControl;
-    protected ChangedEntityFlyingMoveControl flyingMoveControl;
-
     public DarkLatexYufengQueenEntity(EntityType<? extends DarkLatexYufengQueenEntity> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
-        this.groundMoveControl = this.moveControl;
-        this.flyingMoveControl = new ChangedEntityFlyingMoveControl(this, 20, true);
+        this.flyingNavigation = new FlyingPathNavigation(this, level);
+        this.flyingNavigation.setCanOpenDoors(true);
+        this.flyingNavigation.setCanFloat(true);
+        this.flyingNavigation.setCanPassDoors(true);
+        this.groundNavigation = new GroundPathNavigation(this, level);
+        this.groundNavigation.setCanOpenDoors(true);
+        this.navigation = groundNavigation;
+        this.moveControl = new FlyingOrWalkingMoveControl<>(this, 20, true);
+
         summonPups = registerAbility(ability -> this.wantToSummon(), new SimpleAbilityInstance(ChangedAddonAbilities.SUMMON_DL_PUP.get(), IAbstractChangedEntity.forEntity(this)));
     }
 
@@ -74,6 +83,18 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
         }
 
         return ChangedTransfurVariants.DARK_LATEX_YUFENG.get();
+    }
+
+    @Override
+    protected @Nullable Goal makeMeleeTransfurGoal() {
+        return new FlyingApproachMeleeAttackGoal<>(this, 0.4, false, 6, 4);
+    }
+
+    @Override
+    protected @Nullable Goal makeWanderGoal() {
+        return new RandomStrollOrHoverGoal<>(this, 0.3, 120, false,
+                /* walkingTicks */ UniformInt.of(120, 1200),
+                /* flyingTicks */ UniformInt.of(120, 1200));
     }
 
     @Override
@@ -125,12 +146,12 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
         }
 
         float flySpeedAttribute = (float) this.getAttributeValue(Attributes.FLYING_SPEED) * (this.isSprinting() ? 2 : 1);
-        return isFlyingMode() ? flySpeedAttribute : super.getFlyingSpeed() * 1.5f;
+        return isFlying() ? flySpeedAttribute : super.getFlyingSpeed() * 1.5f;
     }
 
     @Override
     protected boolean isFlapping() {
-        return isFlyingMode();
+        return isFlying();
     }
 
     @Override
@@ -144,16 +165,6 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
             }
         }
     }
-
-    //    @Override
-//    public void variantTick(Level level) {
-//        super.variantTick(level);
-//        GrabEntityAbilityInstance grab = getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-//
-//        if (grab != null) {
-//            if (grab instanceof GrabEntityAbilityExtensor extensor) extensor.setAllowGrabTransfurred(true);
-//        }
-//    }
 
     @Override
     public boolean canGrabEntity(LivingEntity livingTarget, GrabEntityAbilityInstance grabEntityAbilityInstance) {
@@ -224,8 +235,8 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     }
 
     @Override
-    public void setFlyingMode(boolean flying) {
-        this.setChangedEntityFlag(0, flying);
+    public void setFlying(boolean flying) {
+        this.setChangedEntityFlag(FLAG_IS_FLYING, flying);
         updateNavigationAndControl(isFlying());
     }
 
@@ -233,14 +244,14 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("isFlying")) {
-            setFlyingMode(tag.getBoolean("isFlying"));
+            setFlying(tag.getBoolean("isFlying"));
         }
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("isFlying", isFlyingMode());
+        tag.putBoolean("isFlying", isFlying());
     }
 
     @Override
@@ -262,60 +273,48 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     }
 
     @Override
-    public boolean isFlyingMode() {
-        return this.isFlying();
+    public boolean canSafelyLandHere() {
+        var collisionContext = CollisionContext.of(this);
+        var checkBounding = this.getBoundingBox().move(0.0, -1.5, 0.0);
+        boolean nearGround = BlockPos.betweenClosedStream(checkBounding).anyMatch(blockPos -> {
+            BlockState state = level().getBlockState(blockPos);
+
+            var relativeCheckBounding = checkBounding.move(blockPos.multiply(-1));
+            var shape = state.getCollisionShape(level(), blockPos, collisionContext);
+            return shape.toAabbs().stream().anyMatch(aabb -> aabb.intersects(relativeCheckBounding));
+        });
+
+        return nearGround;
     }
 
     @Override
-    protected @NotNull PathNavigation createNavigation(@NotNull Level pLevel) {
-        return super.createNavigation(pLevel);
-    }
-
-    protected @NotNull FlyingPathNavigation createFlyNavigation(@NotNull Level pLevel) {
-        FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(this, pLevel);
-        flyingPathNavigation.setCanOpenDoors(false);
-        flyingPathNavigation.setCanFloat(true);
-        flyingPathNavigation.setCanPassDoors(true);
-        return flyingPathNavigation;
+    public PathNavigation getNavigationForFlyingState(boolean flying) {
+        return flying ? flyingNavigation : groundNavigation;
     }
 
     @Override
-    public void updateNavigationAndControl(boolean flying) {
-        if (flying) {
-            this.moveControl = this.flyingMoveControl;
-            this.navigation = createFlyNavigation(level);
-            this.setNoGravity(true);
-        } else {
-            this.moveControl = this.groundMoveControl;
-            this.navigation = createNavigation(level);
-            this.setNoGravity(false);
+    public void updateNavigationAndControl(boolean state) {
+        var wantedNav = state ? flyingNavigation : groundNavigation;
+        if (!level().isClientSide() && navigation != wantedNav) {
+            navigation.stop();
+            navigation = wantedNav;
         }
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, new WaterAvoidingRandomFlyingGoal(this, 0.3) {
-            @Override
-            public boolean canUse() {
-                return isFlyingMode() && super.canUse();
-            }
-        });
-
-        this.goalSelector.addGoal(1, new ToggleFlightGoal<>(this));
-        this.goalSelector.addGoal(1, new ToggleFlightModeForAttackingGoal<>(this));
-        this.goalSelector.addGoal(1, new RandomLandingGoal<>(this));
     }
 
     @Override
     public boolean causeFallDamage(float fallDistance, float damageMultiplier, @NotNull DamageSource source) {
-        if (this.isFlyingMode()) return false;
+        if (this.isFlying()) return false;
         return super.causeFallDamage(fallDistance, damageMultiplier, source);
     }
 
     @Override
     protected void checkFallDamage(double y, boolean onGround, @NotNull BlockState state, @NotNull BlockPos pos) {
-        if (!this.isFlyingMode()) {
+        if (!this.isFlying()) {
             super.checkFallDamage(y, onGround, state, pos);
         }
     }

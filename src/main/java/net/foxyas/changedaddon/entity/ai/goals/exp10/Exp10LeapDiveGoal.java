@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp10;
 
-import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.LeapDiveGoal;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.minecraft.core.BlockPos;

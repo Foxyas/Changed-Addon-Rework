@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals;
 
-import net.foxyas.changedaddon.entity.api.IFlyableChangedEntity;
+import net.foxyas.changedaddon.entity.api.IFlyingCapable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -10,7 +10,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
-public class RandomLandingGoal<T extends PathfinderMob & IFlyableChangedEntity> extends Goal {
+public class RandomLandingGoal<T extends PathfinderMob & IFlyingCapable> extends Goal {
     private final T entity;
     private Vec3 targetLandPos;
 
@@ -22,7 +22,7 @@ public class RandomLandingGoal<T extends PathfinderMob & IFlyableChangedEntity> 
     @Override
     public boolean canUse() {
         // Só ativa se estiver voando e NÃO tiver alvo de ataque
-        if (!this.entity.isFlyingMode() || this.entity.getTarget() != null) {
+        if (!this.entity.isFlying() || this.entity.getTarget() != null) {
             return false;
         }
 
@@ -59,7 +59,7 @@ public class RandomLandingGoal<T extends PathfinderMob & IFlyableChangedEntity> 
 
     @Override
     public boolean canContinueToUse() {
-        return this.entity.isFlyingMode() 
+        return this.entity.isFlying()
                 && this.entity.getTarget() == null 
                 && !this.entity.onGround() 
                 && this.targetLandPos != null;
@@ -89,13 +89,13 @@ public class RandomLandingGoal<T extends PathfinderMob & IFlyableChangedEntity> 
             // Ao encostar no chão, desliga o modo voo e encerra a Goal
             double distance = this.entity.getY() - targetLandPos.y();
             if (this.entity.onGround() || distance <= 0.25f) {
-                this.entity.setFlyingMode(false);
+                this.entity.setFlying(false);
                 return;
             }
         }
 
         if (this.entity.onGround()) {
-            this.entity.setFlyingMode(false);
+            this.entity.setFlying(false);
         }
     }
 
