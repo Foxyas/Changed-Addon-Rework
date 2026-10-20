@@ -146,7 +146,7 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
         }
 
         float flySpeedAttribute = (float) this.getAttributeValue(Attributes.FLYING_SPEED) * (this.isSprinting() ? 2 : 1);
-        return isFlying() ? flySpeedAttribute : super.getFlyingSpeed() * 1.5f;
+        return isFlying() ? flySpeedAttribute * 4 : super.getFlyingSpeed() * 1.5f;
     }
 
     @Override

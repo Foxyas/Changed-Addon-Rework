@@ -99,7 +99,7 @@ public class ComplexBestiaryScreen extends AbstractBestiaryScreen {
     private final List<AttributeBarItem> playerAttributeBars = new ArrayList<>();
     private final List<FormattedCharSequence> loreLines = new ArrayList<>();
     private String classificationText = "";
-    private List<Component> hoveredRadarTooltip;
+    private List<Component> hoveredRadarTooltip = new ArrayList<>();
 
     // Radar Chart Interactive State
     private float chartScaleFactor = 1.0f;
