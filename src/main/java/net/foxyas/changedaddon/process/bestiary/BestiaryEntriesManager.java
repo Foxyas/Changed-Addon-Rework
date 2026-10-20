@@ -83,9 +83,7 @@ public class BestiaryEntriesManager {
         if (variant == null || player == null) {
             return false;
         }
-        return getHolderForVariant(variant, player)
-                .map(holder -> isUnlocked(holder, player))
-                .orElse(false);
+        return getHoldersForVariant(variant, player).stream().anyMatch(holder -> isUnlocked(holder, player));
     }
 
     /**

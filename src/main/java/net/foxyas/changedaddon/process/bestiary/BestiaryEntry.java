@@ -31,6 +31,10 @@ public record BestiaryEntry(
 
 
     public boolean isUnlockedForPlayer(Player player) {
+        return player.getAbilities().instabuild || conditionsMatchForPlayer(player);
+    }
+
+    public boolean conditionsMatchForPlayer(Player player) {
         return this.conditions.stream().allMatch(bestiaryCondition -> bestiaryCondition.test(player));
     }
 }
