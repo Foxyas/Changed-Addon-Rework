@@ -27,7 +27,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
-public class LightningComboAttackGoal extends CastingAttackGoal {
+public class LightningComboAttackGoal extends AbstractCastingAttackGoal {
 
     protected final PathfinderMob holder;
     protected final RandomSource random;

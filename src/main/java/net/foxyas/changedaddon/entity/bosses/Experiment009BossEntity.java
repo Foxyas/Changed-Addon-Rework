@@ -17,6 +17,7 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.IDynamicThunderBolt;
 import net.foxyas.changedaddon.entity.bosses.PatDynamicAngerManagement.AngerSource;
 import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
@@ -202,10 +203,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             case PHASE2 -> this.knockBackAndDoThunderBolt();
             case PHASE3 -> {
                 float v = this.random.nextFloat();
-                if (v <= 0.25f) {
+                if (v <= 0.10f) {
                     this.knockbackAndDoThunderStorm();
                 } else if (v <= 0.5f) {
                     this.knockBackAndDoThunderBolt();
+                } else {
+                    burst.applyEvasiveKnockback(5.0D, 1.25D); //Generic Handle.
                 }
             }
         }
@@ -425,63 +428,66 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     protected void initPhaseGoals() {
-        // Phase 1 Goals (Base Abilities)
+        // Phase 1 Goals
         phaseGoals.put(Exp9Phase.PHASE1, List.of(
                 Pair.of(15, new ThunderDashAttackGoal(this, UniformInt.of(200, 500))),
                 Pair.of(15, new ThunderDiveGoal(this, UniformInt.of(60, 100), 1.5f, 6f, 1f, 0.5f, 4)),
+                Pair.of(20, new TeleportRandomlyGoal(this, UniformInt.of(160, 300), 12.0D)), // Phase 1: Occasional repositioning
                 Pair.of(10, new AoEThunderStrikeGoal(
                         this,
-                        UniformInt.of(80, 120), //IntProvider -> cooldownProvider
-                        UniformInt.of(4, 8), //IntProvider -> damageProvider
+                        UniformInt.of(80, 120),
+                        UniformInt.of(4, 8),
                         1.5f,
                         UniformInt.of(120, 200)))
         ));
 
         // Phase 2 Goals
         phaseGoals.put(Exp9Phase.PHASE2, List.of(
-                Pair.of(10, (new ThunderDashAttackGoal(this, UniformInt.of(300, 700)))),
-                Pair.of(15, (new SummonLightningGoal(this, //PathfinderMob -> holder,
-                        UniformInt.of(120, 240), //IntProvider -> cooldown,
-                        UniformInt.of(2, 4), //IntProvider -> lightningCount,
-                        UniformInt.of(80, 160), //IntProvider -> castDuration,
-                        UniformInt.of(80, 100), //IntProvider -> lightningDelay,
-                        UniformFloat.of(5, 12)))),
-                Pair.of(15, (new StaticDischargeGoal(this,
+                Pair.of(10, new ThunderDashAttackGoal(this, UniformInt.of(300, 700))),
+                Pair.of(15, new SummonLightningGoal(this,
+                        UniformInt.of(120, 240),
+                        UniformInt.of(2, 4),
+                        UniformInt.of(80, 160),
+                        UniformInt.of(80, 100),
+                        UniformFloat.of(5, 12))),
+                Pair.of(15, new StaticDischargeGoal(this,
                         UniformInt.of(75, 125),
                         4,
                         UniformInt.of(40, 80),
                         8,
-                        UniformFloat.of(4, 8)))),
-                Pair.of(10, (new AoEThunderStrikeGoal(
+                        UniformFloat.of(4, 8))),
+                Pair.of(18, new TeleportRandomlyGoal(this, UniformInt.of(120, 240), 16.0D)), // Phase 2: Moderate frequency
+                Pair.of(10, new AoEThunderStrikeGoal(
                         this,
-                        UniformInt.of(80, 120), //IntProvider -> cooldownProvider
-                        UniformInt.of(4, 8), //IntProvider -> damageProvider
+                        UniformInt.of(80, 120),
+                        UniformInt.of(4, 8),
                         1.5f,
                         UniformInt.of(120, 200))))
-        ));
+        );
 
         // Phase 3 Goals
         phaseGoals.put(Exp9Phase.PHASE3, List.of(
-                Pair.of(10, (new ThunderDashAttackGoal(this, UniformInt.of(200, 400)))),
-                Pair.of(10, (new ThunderDiveGoal(this,
-                        UniformInt.of(60, 100), //IntProvider -> cooldownProvider
+                Pair.of(10, new ThunderDashAttackGoal(this, UniformInt.of(200, 400))),
+                Pair.of(10, new ThunderDiveGoal(this,
+                        UniformInt.of(60, 100),
                         1.5f,
                         6f,
                         1f,
                         0.5f,
-                        4))),
-                Pair.of(15, (new LightningComboAttackGoal(this,
+                        4)),
+                Pair.of(12, new TeleportRandomlyGoal(this, UniformInt.of(80, 160), 20.0D)), // Phase 3: High mobility & evasiveness
+                Pair.of(15, new LightningComboAttackGoal(this,
                         UniformInt.of(100, 140),
                         UniformInt.of(4, 8),
                         UniformInt.of(20, 40),
-                        UniformFloat.of(8, 12)))),
-                Pair.of(15, (new AoEThunderStrikeGoal(
+                        UniformFloat.of(8, 12))),
+                Pair.of(15, new AoEThunderStrikeGoal(
                         this,
-                        UniformInt.of(80, 120), //IntProvider -> cooldownProvider
-                        UniformInt.of(4, 8), //IntProvider -> damageProvider
+                        UniformInt.of(80, 120),
+                        UniformInt.of(4, 8),
                         1.5f,
                         UniformInt.of(120, 200))))
-        ));
+        );
     }
 
     @Override
@@ -1230,11 +1236,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
 
             LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
-            if (bolt == null) continue; // continue em vez de return, para não abortar os outros raios
+            if (!(bolt instanceof IDynamicThunderBolt dynamicThunderBolt)) continue; // continue em vez de return, para não abortar os outros raios
 
             bolt.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
             bolt.setVisualOnly(false);
             bolt.setDamage(2f);
+            dynamicThunderBolt.setMaySpawnFire(false);
             level.addFreshEntity(bolt);
         }
     }

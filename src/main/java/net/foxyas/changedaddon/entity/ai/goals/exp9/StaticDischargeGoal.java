@@ -25,7 +25,7 @@ import java.util.EnumSet;
 import static net.minecraft.tags.BlockTags.FIRE;
 
 @ParametersAreNonnullByDefault
-public class StaticDischargeGoal extends CastingAttackGoal {
+public class StaticDischargeGoal extends AbstractCastingAttackGoal {
 
     protected final PathfinderMob holder;
     protected final IntProvider cooldownProvider;

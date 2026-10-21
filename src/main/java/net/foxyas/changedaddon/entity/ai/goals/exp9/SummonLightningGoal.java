@@ -35,7 +35,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class SummonLightningGoal extends CastingAttackGoal implements IReactiveGoal {
+public class SummonLightningGoal extends AbstractCastingAttackGoal implements IReactiveGoal {
 
     public static final int FAIL_SAFE_TICKS = 200;
     protected final PathfinderMob holder;

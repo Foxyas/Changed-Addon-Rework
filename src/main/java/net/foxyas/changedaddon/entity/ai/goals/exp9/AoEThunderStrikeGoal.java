@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class AoEThunderStrikeGoal extends CastingAttackGoal implements IReactiveGoal.ICancelOnDamageGoal, IAbilityGoal {
+public class AoEThunderStrikeGoal extends AbstractCastingAttackGoal implements IReactiveGoal.ICancelOnDamageGoal, IAbilityGoal {
     public static final int FAIL_SAFE_TICKS = 600;
     protected final IntProvider cooldownProvider;
     protected final Experiment009Entity experiment009;

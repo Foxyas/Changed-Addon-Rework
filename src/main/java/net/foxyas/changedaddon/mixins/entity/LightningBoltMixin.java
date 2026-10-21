@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import org.checkerframework.common.aliasing.qual.Unique;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +21,9 @@ import java.util.function.Predicate;
 
 @Mixin(LightningBolt.class)
 public abstract class LightningBoltMixin extends Entity implements IDynamicThunderBolt {
+
+    @Unique
+    private boolean maySpawnFire = true;
 
     public LightningBoltMixin(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -55,11 +59,28 @@ public abstract class LightningBoltMixin extends Entity implements IDynamicThund
         return this.entityData.hasItem(COLOR_INT) ? new Color(this.entityData.get(COLOR_INT)) : DEFAULT_COLOR;
     }
 
+    @Override
+    public boolean maySpawnFire() {
+        return maySpawnFire;
+    }
+
+    @Override
+    public void setMaySpawnFire(boolean maySpawnFire) {
+        this.maySpawnFire = maySpawnFire;
+    }
+
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
     private void injectData(CallbackInfo ci) {
         this.entityData.define(SCALE, 1f);
         this.entityData.define(VISUAL_SCALE, new Vector3f(1f, 1f, 1f));
         this.entityData.define(COLOR_INT, DEFAULT_COLOR.getRGB());
+    }
+
+    @Inject(method = "spawnFire", at = @At("HEAD"), cancellable = true)
+    private void stopFirePlacement(int pExtraIgnitions, CallbackInfo ci) {
+        if (!maySpawnFire) {
+            ci.cancel();
+        }
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getEntities(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;", ordinal = 0))
