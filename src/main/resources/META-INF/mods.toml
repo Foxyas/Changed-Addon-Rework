@@ -55,3 +55,10 @@ description="this is a §bremastered§r version of my mod addon hope you like it
     versionRange="[2.1.4,)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.changed_addon]]
+    modId="voicechat"
+    mandatory=false
+    versionRange="[1.20.1-2.6.24,)"
+    ordering="NONE"
+    side="BOTH"
