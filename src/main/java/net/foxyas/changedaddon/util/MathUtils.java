@@ -7,6 +7,21 @@ import net.minecraft.world.phys.Vec3;
 public class MathUtils {
 
     /**
+     * Calculates the progress ratio between a min and max value.
+     * Formula: (value - min) / (max - min)
+     */
+    public static float calculateProgress(float value, float min, float max) {
+        if (Float.compare(max, min) == 0) {
+            return 0.0f; // Prevent division by zero
+        }
+
+        float progress = (value - min) / (max - min);
+
+        // Clamps between 0.0 and 1.0 to stay within bounds
+        return Math.max(0.0f, Math.min(1.0f, progress));
+    }
+
+    /**
      * Calculates the dot product between the entity's look direction
      * and the direction from the entity's position to a target position.
      *

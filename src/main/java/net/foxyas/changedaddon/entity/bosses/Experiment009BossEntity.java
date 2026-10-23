@@ -25,6 +25,7 @@ import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.FoxyasUtil;
+import net.foxyas.changedaddon.util.MathUtils;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.*;
@@ -131,6 +132,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     protected final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     protected boolean shouldBleed = false;
+    protected boolean shouldPhase = true;
 //    public final TargetDataManager targetDataManager;
 
     public final BurstAbilityHandle<Experiment009BossEntity> burstAbilityHandle;
@@ -940,38 +942,62 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
         }
 
-        float maxHealth = this.getMaxHealth();
-        float currentHealth = this.getHealth();
-        float healthRatio = currentHealth / maxHealth;
 
-        if (healthRatio <= PHASE_3_HEALTH_RATIO) {
-
-            float progress = healthRatio / PHASE_3_HEALTH_RATIO;
-            this.bossInfo.setProgress(progress);
-
-            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10) {
-                this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
+        switch (getPhase()) {
+            case PHASE1 -> {
+                if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.PROGRESS) {
+                    this.bossInfo.setOverlay(BossEvent.BossBarOverlay.PROGRESS);
+                }
+                this.bossInfo.setName(this.getDisplayName());
             }
-            this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.AQUA)));
-        } else if (healthRatio <= PHASE_2_HEALTH_RATIO) {
-
-            float progress = (healthRatio - PHASE_3_HEALTH_RATIO) / (PHASE_2_HEALTH_RATIO - PHASE_3_HEALTH_RATIO);
-            this.bossInfo.setProgress(progress);
-
-            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6) {
-                this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
+            case PHASE2 -> {
+                if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6) {
+                    this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
+                }
+                this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.DARK_AQUA)));
             }
-            this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.DARK_AQUA)));
-        } else {
-
-            float progress = (healthRatio - PHASE_2_HEALTH_RATIO) / (PHASE_1_HEALTH_RATIO);
-            this.bossInfo.setProgress(progress);
-
-            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.PROGRESS) {
-                this.bossInfo.setOverlay(BossEvent.BossBarOverlay.PROGRESS);
+            case PHASE3 -> {
+                if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10) {
+                    this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
+                }
+                this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.AQUA)));
             }
-            this.bossInfo.setName(this.getDisplayName());
         }
+        this.bossInfo.setDarkenScreen(true);
+        this.bossInfo.setProgress(this.computeHealthRatioForCurrentPhase());
+
+//        float maxHealth = this.getMaxHealth();
+//        float currentHealth = this.getHealth();
+//        float healthRatio = currentHealth / maxHealth;
+//
+//        if (healthRatio <= PHASE_3_HEALTH_RATIO) {
+//
+//            float progress = healthRatio / PHASE_3_HEALTH_RATIO;
+//            this.bossInfo.setProgress(progress);
+//
+//            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10) {
+//                this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
+//            }
+//            this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.AQUA)));
+//        } else if (healthRatio <= PHASE_2_HEALTH_RATIO) {
+//
+//            float progress = (healthRatio - PHASE_3_HEALTH_RATIO) / (PHASE_2_HEALTH_RATIO - PHASE_3_HEALTH_RATIO);
+//            this.bossInfo.setProgress(progress);
+//
+//            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6) {
+//                this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
+//            }
+//            this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.DARK_AQUA)));
+//        } else {
+//
+//            float progress = (healthRatio - PHASE_2_HEALTH_RATIO) / (PHASE_1_HEALTH_RATIO);
+//            this.bossInfo.setProgress(progress);
+//
+//            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.PROGRESS) {
+//                this.bossInfo.setOverlay(BossEvent.BossBarOverlay.PROGRESS);
+//            }
+//            this.bossInfo.setName(this.getDisplayName());
+//        }
 
         // Formula used: progress = (value - minValueOfPhase) / (maxValueOfPhase - minValueOfPhase)
         // PHASE_1_HEALTH_RATIO = maxValueOfPhase(1f) - minValueOfPhase(0.75f);
@@ -999,6 +1025,12 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
         }
 
+        if (shouldPhase) {
+            mayPhaseForNextPhase(currentHealth, maxHealth);
+        }
+    }
+
+    protected void mayPhaseForNextPhase(float currentHealth, float maxHealth) {
         float ratio = this.computeHealthRatio();
         boolean hasPhase3HealthRatio = currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO || ratio <= PHASE_3_HEALTH_RATIO;
         boolean hasPhase2HealthRatio = currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO && !hasPhase3HealthRatio;
@@ -1015,13 +1047,32 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
+    public float getPhaseRatio() {
+        if (this.isPhase3()) return PHASE_3_HEALTH_RATIO;
+        if (this.isPhase2()) return PHASE_2_HEALTH_RATIO;
+        return PHASE_1_HEALTH_RATIO;
+    }
+
     public float getMaxHealthForCurrentPhase() {
-        float ratio = this.isPhase3() ? PHASE_3_HEALTH_RATIO : this.isPhase2() ? PHASE_2_HEALTH_RATIO : PHASE_1_HEALTH_RATIO;
+        float ratio = getPhaseRatio();
         return this.getMaxHealth() * ratio;
     }
 
     public float computeHealthRatioForCurrentPhase() {
-        return this.getHealth() / getMaxHealthForCurrentPhase();
+        float currentHealth = this.getHealth();
+        float maxHealth = this.getMaxHealth();
+
+        return switch (getPhase()) {
+            case PHASE1 ->
+                    // Phase 1 spans from 75% max HP (min) to 100% max HP (max)
+                    MathUtils.calculateProgress(currentHealth, maxHealth * 0.75f, maxHealth);
+            case PHASE2 ->
+                    // Phase 2 spans from 40% max HP (min) to 75% max HP (max)
+                    MathUtils.calculateProgress(currentHealth, maxHealth * 0.40f, maxHealth * 0.75f);
+            default ->
+                    // Phase 3 spans from 0% HP (min) to 40% max HP (max)
+                    MathUtils.calculateProgress(currentHealth, 0.0f, maxHealth * 0.40f);
+        };
     }
 
     protected void onPhaseChange(Exp9Phase oldPhase, Exp9Phase newPhase) {
@@ -1236,7 +1287,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
 
             LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
-            if (!(bolt instanceof IDynamicThunderBolt dynamicThunderBolt)) continue; // continue em vez de return, para não abortar os outros raios
+            if (!(bolt instanceof IDynamicThunderBolt dynamicThunderBolt))
+                continue; // continue em vez de return, para não abortar os outros raios
 
             bolt.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
             bolt.setVisualOnly(false);
@@ -1377,6 +1429,14 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return shouldBleed;
     }
 
+    public void setDoPhasing(boolean doPhasing) {
+        this.shouldPhase = doPhasing;
+    }
+
+    public boolean doPhasing() {
+        return shouldPhase;
+    }
+
     @Override
     protected void onEffectAdded(@NotNull MobEffectInstance mobEffectInstance, @Nullable Entity entity) {
         super.onEffectAdded(mobEffectInstance, entity);
@@ -1392,6 +1452,17 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         this.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1, 1);
+
+        // Spawn thunderbolt particles upon death
+        if (this.level() instanceof ServerLevel serverLevel) {
+            // Option 1: Call your custom spawnThunderParticle method a few times or with an offset
+            for (int i = 0; i < 3; i++) {
+                spawnThunderParticle();
+            }
+
+            // Option 2: Alternatively, spawn a ring/spark burst of thunderbolt particles around the death location
+            spawnThunderBoltsSpark(20, 4.0D, 12, true, 2, 5.0f, 1.0f);
+        }
 
         if (damageSource.getEntity() != null) {
             float angleTheta, anglePhi, x, y, z;

@@ -142,7 +142,7 @@ public class SpeakerAudioTransmitter {
         if (channel == null) return null;
 
         Entity sender = level.getEntity(senderId);
-        channel.setDistance(sender != null ? (float) sender.distanceToSqr(Vec3.atCenterOf(speakerPos)) : SPEAKER_RADIUS);
+        channel.setDistance(sender != null ? (float) sender.getEyePosition().distanceTo(Vec3.atCenterOf(speakerPos)) * 8f : SPEAKER_RADIUS);
         channel.setCategory("speakers");
         if (EXCLUDE_SENDER) {
             channel.setFilter(p -> !p.getUuid().equals(senderId));
