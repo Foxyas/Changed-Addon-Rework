@@ -179,8 +179,8 @@ dependencies {
     compileOnly fg.deobf("com.tacz.guns:tacz-1.20.1-1.1.7-hotfix2:1.1.7")
 
     // First Person Mod.
-    implementation fg.deobf("dev.tr7zw:notenoughanimations-forge-1.11.1-mc1.20.1:1.10.0")
-    implementation fg.deobf("dev.tr7zw:firstperson-forge-2.4.9-mc1.20.1:2.4.9")
+    compileOnly fg.deobf("dev.tr7zw:notenoughanimations-forge-1.11.1-mc1.20.1:1.10.0")
+    compileOnly fg.deobf("dev.tr7zw:firstperson-forge-2.4.9-mc1.20.1:2.4.9")
     runtimeOnly fg.deobf("dev.tr7zw:TRender-1.0.10-1.20.1-forge-SNAPSHOT:1.0.5")
     runtimeOnly fg.deobf("dev.tr7zw:TRansition-1.0.11-1.20.1-forge-SNAPSHOT:1.0.3")
 

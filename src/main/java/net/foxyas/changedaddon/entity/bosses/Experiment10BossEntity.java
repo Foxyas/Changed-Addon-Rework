@@ -97,6 +97,10 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
                 .build();
     }
 
+    public void setDashing(boolean dashing) {
+        setLivingEntityFlag(LIVING_ENTITY_FLAG_SPIN_ATTACK, dashing);
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
         AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);

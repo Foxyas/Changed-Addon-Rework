@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.generic.attacks;
 
 import com.mojang.datafixers.util.Pair;
+import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.util.Color3;
@@ -159,6 +160,7 @@ public class DashPunchGoal extends Goal {
     }
 
     protected void handleDashing() {
+        if (mob instanceof Experiment10BossEntity e) e.setDashing(true);
         dashTicks++;
         if (target.distanceTo(mob) > 0) {
             mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
@@ -419,6 +421,7 @@ public class DashPunchGoal extends Goal {
     public void stop() {
         phase = Phase.IDLE;
         cooldown = 50; // Aumentado um pouco o tempo de recarga
+        if (mob instanceof Experiment10BossEntity e) e.setDashing(false);
     }
 
     @Override

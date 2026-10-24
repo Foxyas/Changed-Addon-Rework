@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -53,7 +54,7 @@ public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbili
 
     public ThunderDashAttackGoal(Experiment009BossEntity dasher, IntProvider cooldownProvider) {
         this.dasher = dasher;
-        this.cooldownProvider = cooldownProvider;
+        this.cooldownProvider = ConstantInt.of(20);//cooldownProvider;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
@@ -88,7 +89,11 @@ public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbili
 
     @Override
     public boolean canUse() {
-        if (this.onCooldown()) return false;
+        if (this.onCooldown()) {
+            cooldownTicks--;
+            return false;
+        }
+
         this.target = dasher.getTarget();
         if (target == null || target.isRemoved() && target.isDeadOrDying()) return false;
         if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
@@ -162,6 +167,7 @@ public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbili
     protected void handleDashing() {
         dashingTickCounter++;
         if (dashingTickCounter < MAX_DASH_TICKS) {
+            dasher.setDashing(true);
             dasher.getNavigation().stop();
 
             // Aplica o movimento
@@ -342,6 +348,7 @@ public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbili
         this.phase = Phase.IDLE;
         this.finishDashing = false;
         this.cooldownTicks = cooldownProvider.sample(dasher.getRandom());
+        dasher.setDashing(false);
     }
 
     protected void onStopDashing() {

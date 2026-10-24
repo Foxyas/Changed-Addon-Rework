@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.BlockPos;
@@ -172,6 +173,7 @@ public class ThunderDiveGoal extends Goal implements IAbilityGoal {
 
                 mob.setYBodyRot(mob.getYRot());
                 divingTicks++;
+                if (mob instanceof Experiment009BossEntity e) e.setDashing(true);
             }
         }
     }
@@ -222,6 +224,7 @@ public class ThunderDiveGoal extends Goal implements IAbilityGoal {
         serverLevel.levelEvent(2001, center, Block.getId(Blocks.LIGHTNING_ROD.defaultBlockState()));
 
         cooldown = cooldownProvider.sample(this.mob.getRandom());
+        if (mob instanceof Experiment009BossEntity e) e.setDashing(false);
     }
 
     /* ---------- Utils ---------- */
