@@ -1,11 +1,9 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.AbstractPlushyBlockEntity;
-import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -18,7 +16,10 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -102,26 +103,16 @@ public abstract class AbstractPlushyBlock extends HorizontalDirectionalBlock imp
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull BlockState blockstate, @NotNull Level world, @NotNull BlockPos pos, @NotNull Player entity, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
-        InteractionResult retValue = super.use(blockstate, world, pos, entity, hand, hit);
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        InteractionResult result = squeezePlushy(world, hit, blockEntity);
-        if (result != null) return result;
-        return retValue;
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+        InteractionResult retValue = super.use(state, world, pos, player, hand, hit);
+        InteractionResult result = squeezePlushy(state, world, pos, hit, world.getBlockEntity(pos));
+        return result != null ? result : retValue;
     }
 
-    protected @Nullable InteractionResult squeezePlushy(Level world, BlockHitResult hit, BlockEntity blockEntity) {
-        double hitX = hit.getLocation().x;
-        double hitY = hit.getLocation().y;
-        double hitZ = hit.getLocation().z;
-        if (blockEntity instanceof AbstractPlushyBlockEntity plushBlockEntity) {
-            if (!plushBlockEntity.isSqueezed()) {
-                if (!world.isClientSide()) {
-                    //plushBlockEntity.squeezedTicks = 4;
-                    world.playSound(null, hitX, hitY, hitZ, ChangedAddonSoundEvents.PLUSHY_SOUND.get(), SoundSource.BLOCKS, 1f, 1);
-                }
-                return InteractionResult.sidedSuccess(world.isClientSide());
-            }
+    protected @Nullable InteractionResult squeezePlushy(BlockState state, Level world, BlockPos pos, BlockHitResult hit, BlockEntity blockEntity) {
+        if (blockEntity instanceof AbstractPlushyBlockEntity abstractPlushyBlockEntity) {
+            abstractPlushyBlockEntity.squeeze(state, world, pos, hit);
+            return InteractionResult.sidedSuccess(world.isClientSide());
         }
         return null;
     }
@@ -134,17 +125,27 @@ public abstract class AbstractPlushyBlock extends HorizontalDirectionalBlock imp
     @Override
     public void onPlace(@NotNull BlockState blockstate, @NotNull Level world, @NotNull BlockPos pos, @NotNull BlockState oldState, boolean moving) {
         super.onPlace(blockstate, world, pos, oldState, moving);
-        world.scheduleTick(pos, this, 10);
     }
 
     @Override
     public void tick(@NotNull BlockState state, @NotNull ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull RandomSource p_60465_) {
         super.tick(state, serverLevel, pos, p_60465_);
-        BlockEntity blockEntity = serverLevel.getBlockEntity(pos);
-        if (blockEntity instanceof AbstractPlushyBlockEntity abstractPlushyBlockEntity && abstractPlushyBlockEntity.isSqueezed()) {
-            abstractPlushyBlockEntity.subSqueezedTicks(1);
-        }
-        serverLevel.scheduleTick(pos, this, 10);
+    }
+
+    @Override
+    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    // Ticks the controller on the client only
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+        if (!level.isClientSide) return null;
+        return (lvl, pos, st, be) -> {
+            if (be instanceof AbstractPlushyBlockEntity plushy) {
+                AbstractPlushyBlockEntity.commonTick(lvl,pos, st, plushy);
+            }
+        };
     }
 
     @Override

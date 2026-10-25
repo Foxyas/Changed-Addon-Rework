@@ -57,7 +57,11 @@ public class ChangedAddonBlockEntities {
     @SubscribeEvent
     public static void registerBlockEntitiesRender(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(CONTAINMENT_CONTAINER.get(), ContainmentContainerRenderer::new);
+
         event.registerBlockEntityRenderer(SNEP_PLUSHY.get(), SnepPlushyBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(WOLF_PLUSHY.get(), PlushyBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(DARK_LATEX_WOLF_PLUSHY.get(), PlushyBlockEntityRenderer::new);
+
         event.registerBlockEntityRenderer(CONTAINMENT_CONTAINER.get(), ContainmentContainerRenderer::new);
         event.registerBlockEntityRenderer(TIMED_KEYPAD_BLOCK_ENTITY.get(), TimedKeypadBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(INFORMANT_BLOCK.get(), InformantBlockEntityRenderer::new);

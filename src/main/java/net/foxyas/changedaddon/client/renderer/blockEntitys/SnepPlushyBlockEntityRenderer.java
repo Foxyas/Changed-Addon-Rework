@@ -12,7 +12,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -20,15 +19,18 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public class SnepPlushyBlockEntityRenderer implements BlockEntityRenderer<SnepPlushyBlockEntity> {
+public class SnepPlushyBlockEntityRenderer extends PlushyBlockEntityRenderer<SnepPlushyBlockEntity> {
 
     private final SnepPlushExtraModel snepPlushExtraModel;
 
     public SnepPlushyBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+        super(context);
         this.snepPlushExtraModel = new SnepPlushExtraModel(context.bakeLayer(SnepPlushExtraModel.LAYER_LOCATION));
     }
 
-    public void render(SnepPlushyBlockEntity blockEntity, float partialTick, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int light, int overlay) {
+    @Override
+    protected void renderModel(SnepPlushyBlockEntity blockEntity, float partialTick, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int light, int overlay) {
+        super.renderModel(blockEntity, partialTick, poseStack, bufferSource, light, overlay);
         BlockState state = blockEntity.getBlockState();
         if (!blockEntity.glowingEyes) return;
 
