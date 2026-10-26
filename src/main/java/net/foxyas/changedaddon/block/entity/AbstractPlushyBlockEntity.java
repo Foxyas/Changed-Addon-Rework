@@ -60,7 +60,7 @@ public abstract class AbstractPlushyBlockEntity extends BlockEntity {
      * Higher = faster animation, Lower = slower/squishier animation.
      */
     public float getSqueezeSpeed() {
-        return 0.2F; // Default speed
+        return 0.4F; // Default speed
     }
 
     @Override
