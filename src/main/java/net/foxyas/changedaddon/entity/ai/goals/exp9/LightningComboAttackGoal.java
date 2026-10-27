@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
+import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -24,10 +25,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 
-public class LightningComboAttackGoal extends AbstractCastingAttackGoal {
+public class LightningComboAttackGoal extends AbstractCastingAttackGoal implements IReactiveGoal {
 
     protected final PathfinderMob holder;
     protected final RandomSource random;
@@ -257,5 +259,32 @@ public class LightningComboAttackGoal extends AbstractCastingAttackGoal {
         if (holder instanceof Experiment009BossEntity exp9) {
             exp9.setCastingAttack(false);
         }
+    }
+
+    @Override
+    public void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount) {
+
+    }
+
+    @Override
+    public void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount, boolean willCauseDamage) {
+        if (willCauseDamage) {
+            castDuration = 0;
+        }
+    }
+
+    @Override
+    public void onHeal(LivingEntity livingEntity, float amount) {
+
+    }
+
+    @Override
+    public boolean isCanceled() {
+        return false;
+    }
+
+    @Override
+    public void setCanceledTo(boolean canceled) {
+        return;
     }
 }

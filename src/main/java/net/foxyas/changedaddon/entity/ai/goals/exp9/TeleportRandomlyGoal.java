@@ -70,7 +70,7 @@ public class TeleportRandomlyGoal extends Goal implements IAbilityGoal, IReactiv
         // Visual / Audio effect before teleport
         spawnTeleportParticles(currentX, currentY, currentZ);
 
-        if (this.boss.randomTeleport(targetX, targetY, targetZ, true)) {
+        if (this.boss.randomTeleport(targetX, targetY, targetZ, false)) {
             this.boss.level().playSound(
                     null,
                     currentX, currentY, currentZ,

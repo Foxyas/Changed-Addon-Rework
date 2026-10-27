@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
-import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.Util;
@@ -15,7 +14,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.IntProvider;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -35,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 
 public class AoEThunderStrikeGoal extends AbstractCastingAttackGoal implements IReactiveGoal.ICancelOnDamageGoal, IAbilityGoal {
@@ -150,6 +149,7 @@ public class AoEThunderStrikeGoal extends AbstractCastingAttackGoal implements I
         int count = hasTarget ? 12 : 7;
         double range = hasTarget ? 10.0 : 20.0;
 
+        HashSet<LivingEntity> affectedEntities = new HashSet<>();
         for (int i = 0; i < count; i++) {
             double offsetX = experiment009.getRandom().nextGaussian() * range;
             double offsetZ = experiment009.getRandom().nextGaussian() * range;
@@ -176,15 +176,21 @@ public class AoEThunderStrikeGoal extends AbstractCastingAttackGoal implements I
 
             if (foundSurface) {
                 // O raio spawna exatamente no bloco encontrado
-                spawnThunderBolt(mutablePos.immutable());
+                affectedEntities.addAll(spawnThunderBoltAndGetAffected(mutablePos.immutable()));
             }
+        }
+
+        if (affectedEntities.isEmpty()) {
+            this.duration -= 20;
+        } else {
+            affectedEntities.forEach(livingEntity -> this.duration += 2);
         }
     }
 
-    public void spawnThunderBolt(BlockPos pos) {
+    public LightningBolt spawnThunderBolt(BlockPos pos) {
         Level level = experiment009.level();
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
-        if (lightning == null) return;
+        if (lightning == null) return null;
         lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
         lightning.setCause((ServerPlayer) experiment009.getUnderlyingPlayer());
 
@@ -204,20 +210,34 @@ public class AoEThunderStrikeGoal extends AbstractCastingAttackGoal implements I
         level.addFreshEntity(lightning);
         lightning.tick();
         ParticlesUtil.sendParticles(level, ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
-        applyKnockBack(lightning);
+        applyKnockBackForHitEntities(lightning);
+        return lightning;
     }
 
-    protected void oldSpawn(LightningBolt lightning) {
-        DelayedTask delayedTask = DelayedTask.schedule(20, () -> {
-            experiment009.level().addFreshEntity(lightning);
-            applyKnockBack(lightning);
-            experiment009.swing(experiment009.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-            // recoil de knockback para trás
-//            if (target != null) {
-//                Vec3 dir = pathfinderMob.position().vectorTo(target.position()).normalize().scale(-0.5);
-//                pathfinderMob.push(dir.x, dir.y * 1.25f, dir.z);
-//            }
-        });
+    public List<LivingEntity> spawnThunderBoltAndGetAffected(BlockPos pos) {
+        Level level = experiment009.level();
+        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
+        if (lightning == null) return List.of();
+        lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
+        lightning.setCause((ServerPlayer) experiment009.getUnderlyingPlayer());
+
+        List<BlockPos> conductiveBlocks = findConductiveBlocks(experiment009.level(), lightning.getOnPos(), 16);
+        if (!conductiveBlocks.isEmpty()) {
+            BlockPos random = Util.getRandom(conductiveBlocks, experiment009.getRandom());
+            lightning.moveTo(random, 0, 0);
+        }
+
+        if (experiment009 instanceof Experiment009BossEntity boss) {
+            lightning.setDamage(damageProvider.sample(experiment009.getRandom()) * boss.getPhase().getDamageModifier(target));
+        } else lightning.setDamage(damageProvider.sample(experiment009.getRandom()));
+
+        lightning.setVisualOnly(Experiment009BossEntity.getMetalPercentage(target) <= 0.4f || Experiment009BossEntity.shouldAlwaysDamageEntity(target));
+
+
+        level.addFreshEntity(lightning);
+        lightning.tick();
+        ParticlesUtil.sendParticles(level, ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
+        return applyKnockBackForHitEntities(lightning);
     }
 
     protected boolean isConductive(BlockState state) {
@@ -254,15 +274,14 @@ public class AoEThunderStrikeGoal extends AbstractCastingAttackGoal implements I
         return result;
     }
 
-    public void applyKnockBack(LightningBolt lightning) {
-        var hitEntities = lightning.getHitEntities()
+    public List<LivingEntity> applyKnockBackForHitEntities(LightningBolt lightning) {
+        List<LivingEntity> entitiesAffected = new ArrayList<>();
+
+        List<LivingEntity> hitEntities = lightning.getHitEntities()
                 .filter(LivingEntity.class::isInstance)
                 .map(LivingEntity.class::cast)
                 .toList();
-
-        if (hitEntities.isEmpty()) {
-            this.duration -= 20;
-        } else {
+        {
             for (LivingEntity livingEntity : hitEntities) {
                 Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.25f).add(0, livingEntity.onGround() ? 0.25f : 0.05f, 0);
                 if (!livingEntity.isBlocking()) {
@@ -277,11 +296,12 @@ public class AoEThunderStrikeGoal extends AbstractCastingAttackGoal implements I
                     }
 
                     livingEntity.hasImpulse = true;
-                    this.duration += 5;
+                    entitiesAffected.add(livingEntity);
                 }
             }
         }
 
+        return entitiesAffected;
     }
 
     public AABB getBoundingBoxFromLightningBolt(LightningBolt bolt) {
