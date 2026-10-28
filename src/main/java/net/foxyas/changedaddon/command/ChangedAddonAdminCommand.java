@@ -16,8 +16,10 @@ import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.network.packet.ClientboundOpenFTKCScreenPacket;
 import net.foxyas.changedaddon.process.UntransfurReason;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness.MinigameType;
+import net.foxyas.changedaddon.qte.ProcessFTKC;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.command.CommandTransfur;
@@ -51,11 +53,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.server.command.EnumArgument;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static net.foxyas.changedaddon.qte.FightToKeepConsciousness.startFightToKeepConsciousness;
 
 public class ChangedAddonAdminCommand {
 
@@ -106,8 +111,8 @@ public class ChangedAddonAdminCommand {
                                     continue;
                                 }
 
-                                playerVariables.FTKCminigameType = minigameType;
-                                playerVariables.syncPlayerVariables(target);
+                                ProcessFTKC.setAndStartFTKCMinigameForPlayer(target, minigameType);
+
                                 resultInt++;
                             }
 

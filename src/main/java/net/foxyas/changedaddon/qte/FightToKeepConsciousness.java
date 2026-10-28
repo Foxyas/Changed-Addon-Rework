@@ -1,7 +1,9 @@
 package net.foxyas.changedaddon.qte;
 
+import com.mojang.serialization.DataResult;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
@@ -13,12 +15,14 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
@@ -37,7 +41,10 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.function.Supplier;
+
+import static net.minecraft.nbt.Tag.TAG_STRING;
 
 @Mod.EventBusSubscriber
 public class FightToKeepConsciousness {
@@ -241,7 +248,7 @@ public class FightToKeepConsciousness {
         }
     }
 
-    public enum MinigameType {
+    public enum MinigameType implements StringRepresentable {
         MOUSE_PULL(3.5f,
                 ChangedSounds.TRANSFUR_BY_LATEX.get(),
                 FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_PULL()),
@@ -310,6 +317,31 @@ public class FightToKeepConsciousness {
             this.successSound = successSound;
         }
 
+        public static final String MINIGAME_TYPE_KEY = "FTKCminigameType";
+
+        @Nullable
+        public static MinigameType getFromTag(CompoundTag tag) {
+            if (!tag.contains(MINIGAME_TYPE_KEY, TAG_STRING)) {
+                return null;
+            }
+
+            return fromSerial(tag.getString(MINIGAME_TYPE_KEY))
+                    .result()
+                    .orElse(null);
+        }
+
+        public void saveInTag(CompoundTag tag) {
+            tag.putString(MINIGAME_TYPE_KEY, this.getSerializedName());
+        }
+
+        public static DataResult<MinigameType> fromSerial(String serializedName) {
+            return Arrays.stream(values())
+                    .filter((value) -> value.getSerializedName().equals(serializedName))
+                    .findAny()
+                    .map(DataResult::success)
+                    .orElse(DataResult.error(() -> "Invalid Minigame Type: " + serializedName));
+        }
+
         public int getRemovalTicks() {
             return removalTicks;
         }
@@ -328,6 +360,11 @@ public class FightToKeepConsciousness {
 
         public static MinigameType getRandom(RandomSource random) {
             return values()[random.nextInt(values().length)];
+        }
+
+        @Override
+        public String getSerializedName() {
+            return name();
         }
     }
 }

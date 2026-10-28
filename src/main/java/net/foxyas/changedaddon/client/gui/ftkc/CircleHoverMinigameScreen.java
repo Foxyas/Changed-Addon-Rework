@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CircleHoverMinigameScreen extends CircleMinigameScreen {
 
-    private static final float fullnessPerTick = 1 / 40f;
+    public static final float fullnessPerTick = 1 / 40f;
 
     public CircleHoverMinigameScreen() {
         super(Component.empty());
