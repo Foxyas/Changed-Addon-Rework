@@ -149,6 +149,7 @@ public class ThunderDiveGoal extends Goal implements IAbilityGoal {
                     }
                     mob.setDeltaMovement(lateral.x, -Math.abs(diveSpeedY), lateral.z);
                     this.lateral = lateral;
+                    mob.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1.0F, 2.0F);
                 } else {
                     // manter um “hover” suave (sem subir indefinidamente)
                     Vec3 dm = mob.getDeltaMovement();
@@ -158,6 +159,9 @@ public class ThunderDiveGoal extends Goal implements IAbilityGoal {
             }
             case DIVE -> {
                 // reforça queda e correção lateral durante o mergulho
+                if (divingTicks == 0) {
+                    mob.playSound(SoundEvents.TRIDENT_RIPTIDE_3, 1.0F, 2.0F);
+                }
                 if (t != null) {
                     mob.setDeltaMovement(lateral.x, -Math.abs(diveSpeedY), lateral.z);
                     Vec3 position = mob.position().add(lateral.x, -Math.abs(diveSpeedY), lateral.z);

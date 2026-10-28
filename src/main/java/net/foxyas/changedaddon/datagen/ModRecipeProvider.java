@@ -285,7 +285,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ItemStack safeSyringeStack = new ItemStack(ChangedItems.LATEX_SYRINGE.get());
         CompoundTag tag = safeSyringeStack.getOrCreateTag();
         tag.putBoolean("safe", true);
-        ItemStackLoreUtil.addLore(safeSyringeStack, Component.literal("THIS IS SUPPOSED TO BE SAFE"));
+        ItemStackLoreUtil.addLore(safeSyringeStack, Component.literal("Purified Version. (Purifier)"));
 
         // EXP 10 Containment Vial
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EXP_10_CONTAINMENT_VIAL.get())
@@ -407,8 +407,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         // -----------------------------------------------------------------
         InfuserRecipeBuilder.genderLess(EXPERIMENT_10.get()) // Replace with your variant reference if needed
                 .requires(RED_LATEX_GOO.get())
-                .requires(Items.NETHERITE_INGOT)
-                .requires(Items.NETHER_STAR)
+                .requires(NETHERITE_UPGRADE_SMITHING_TEMPLATE)
+                .requires(NETHERRACK)
                 .requires(ChangedItems.LATEX_BASE.get())
                 .requires(ChangedItems.WHITE_LATEX_GOO.get())
                 .requires(Items.STRING)

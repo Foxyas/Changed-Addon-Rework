@@ -11,15 +11,23 @@ public interface IReactiveGoal {
         @Override
         default void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount) {
             this.setCanceledTo(true);
-        };
+        }
+
+        ;
     }
 
     void onHurt(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float pDamageAmount);
+
     void onDamage(LivingEntity livingEntity, @NotNull DamageSource pDamageSource, float amount, boolean willCauseDamage);
+
     void onHeal(LivingEntity livingEntity, float amount);
 
-    boolean isCanceled();
-    void setCanceledTo(boolean canceled);
+    default boolean isCanceled() {
+        return false;
+    }
+
+    default void setCanceledTo(boolean canceled) {
+    }
 
     default void setCanceled() {
         this.setCanceledTo(true);

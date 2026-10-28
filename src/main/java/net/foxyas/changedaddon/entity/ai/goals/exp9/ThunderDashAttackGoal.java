@@ -10,7 +10,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,6 +18,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -54,7 +54,7 @@ public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbili
 
     public ThunderDashAttackGoal(Experiment009BossEntity dasher, IntProvider cooldownProvider) {
         this.dasher = dasher;
-        this.cooldownProvider = ConstantInt.of(20);//cooldownProvider;
+        this.cooldownProvider = cooldownProvider;//ConstantInt.of(20);
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
@@ -172,8 +172,8 @@ public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbili
 
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
-            Vec3 lookAt = dasher.getEyePosition(1).add(dashDirection.scale(1.5f));
-            dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 180, 180);
+            Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection.scale(1.5f));
+            dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 360, 360);
             dasher.setYBodyRot(dasher.getYHeadRot());
 
             if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
@@ -336,6 +336,7 @@ public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbili
     protected void onStartDashing() {
         this.phase = Phase.DASHING;
         dasher.level().playSound(null, dasher, SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 2, 1);
+        dasher.setPos(dasher.position().add(0, 0.25f, 0));
     }
 
     @Override

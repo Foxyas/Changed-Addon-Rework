@@ -98,6 +98,11 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     }
 
     public void setDashing(boolean dashing) {
+        if (dashing) {
+            this.overridePose = Pose.SPIN_ATTACK;
+        } else {
+            this.overridePose = null;
+        }
         setLivingEntityFlag(LIVING_ENTITY_FLAG_SPIN_ATTACK, dashing);
     }
 
