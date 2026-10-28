@@ -46,7 +46,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.scores.Team;
 import net.minecraftforge.common.IExtensibleEnum;
 import org.apache.commons.lang3.NotImplementedException;
@@ -350,7 +350,7 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
     }
 
     @Override
-    public boolean whenPattedReactionSpecific(LivingEntity patterLiving, InteractionHand hand, Vec3 pattedLocation) {
+    public boolean onPattedByIn(LivingEntity patterLiving, InteractionHand hand, EntityHitResult pattedLocation) {
         if (!(patterLiving instanceof Player patter)) {
             return false;
         }
@@ -374,7 +374,7 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
     }
 
     @Override
-    public boolean whenPatEvent(LivingEntity self, InteractionHand hand, LivingEntity patTarget) {
+    public boolean onPatEntity(LivingEntity self, InteractionHand hand, LivingEntity patTarget) {
         if (self instanceof Player patter) {
             boolean isPlayerTransfur = ProcessTransfur.isPlayerTransfurred(patter);
             boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant(patter) != null
