@@ -108,10 +108,29 @@ public class DashPunchGoal extends Goal {
         switch (phase) {
             case CHARGING -> handleCharging();
             case DASHING -> {
+                // --- UNIFIED LOOK AND ROTATION LOCK ---
+                // Forces the mob to continuously face the target smoothly and instantly without stuttering or looking backwards.
+                if (target != null && mob.distanceTo(target) > 0) {
+                    mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+
+                    // Calculate exact angle to target to keep body/head completely aligned with the dash target
+                    double d0 = target.getX() - mob.getX();
+                    double d2 = target.getZ() - mob.getZ();
+                    float targetYRot = (float)(Mth_atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
+
+                    mob.setYRot(targetYRot);
+                    mob.yBodyRot = targetYRot;
+                    mob.yHeadRot = targetYRot;
+                }
                 handleDashing();
                 handleBlockBreaking();
             }
         }
+    }
+
+    // Helper math function to avoid importing net.minecraft.util.Mth if not present
+    private double Mth_atan2(double z, double x) {
+        return Math.atan2(z, x);
     }
 
     protected void handleCharging() {
@@ -162,10 +181,6 @@ public class DashPunchGoal extends Goal {
     protected void handleDashing() {
         if (mob instanceof Experiment10BossEntity e) e.setDashing(true);
         dashTicks++;
-        if (target.distanceTo(mob) > 0) {
-            mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
-            mob.setYBodyRot(mob.getYRot());
-        }
 
         Vec3 targetPos = target.position();
         Vec3 mobPos = mob.position();
