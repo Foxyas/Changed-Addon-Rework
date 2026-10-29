@@ -1701,7 +1701,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     @Override
-    public boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+    public boolean onPattedBy(LivingEntity patter, InteractionHand hand) {
         if (!(patter.level() instanceof ServerLevel)) return false;
         if (patter instanceof ServerPlayer serverPlayer) {
             ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.trigger(serverPlayer, this, "pats_on_the_beast");
@@ -1739,7 +1739,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         applyRageBuff();
 
 
-        return IExp9Logic.super.whenPattedReaction(patter, hand);
+        return IExp9Logic.super.onPattedBy(patter, hand);
     }
 
     private void applyRageBuff() {

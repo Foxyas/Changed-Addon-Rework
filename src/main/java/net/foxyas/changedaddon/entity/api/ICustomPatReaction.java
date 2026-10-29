@@ -3,26 +3,25 @@ package net.foxyas.changedaddon.entity.api;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
 
 public interface ICustomPatReaction {
-    default boolean whenPattedReactionSimple() {
+    default boolean onPat() {
         return true;
     }
 
-    default boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+    default boolean onPattedBy(LivingEntity patter, InteractionHand hand) {
         return true;
     }
 
-    default boolean whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
+    default boolean onPattedByIn(LivingEntity patter, InteractionHand hand, EntityHitResult pattedLocation) {
         return true;
     }
 
-    default boolean whenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
+    default boolean onPatEntity(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {
         return true;
     }
 
-    default boolean whenPatEventSpecific(LivingEntity patter, InteractionHand hand, LivingEntity patTarget, EntityHitResult patResult) {
+    default boolean onPatEntityIn(LivingEntity patter, InteractionHand hand, LivingEntity patTarget, EntityHitResult patResult) {
         return true;
     }
 }

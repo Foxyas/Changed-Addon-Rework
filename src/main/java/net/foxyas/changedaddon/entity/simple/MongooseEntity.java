@@ -18,7 +18,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.network.PlayMessages;
 
 public class MongooseEntity extends AbstractBasicChangedEntity implements ICustomPatReaction {
@@ -55,7 +55,7 @@ public class MongooseEntity extends AbstractBasicChangedEntity implements ICusto
     }
 
     @Override
-    public boolean whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
+    public boolean onPattedByIn(LivingEntity patter, InteractionHand hand, EntityHitResult pattedLocation) {
         ChangedAnimationEvents.broadcastEntityAnimation(this, ChangedAddonAnimationEvents.PAT_REACTION.get(), PatReactionAnimationParameters.INSTANCE);
         return true;
     }

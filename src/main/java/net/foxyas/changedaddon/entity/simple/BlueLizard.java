@@ -22,6 +22,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.PlayMessages;
@@ -104,8 +105,8 @@ public class BlueLizard extends AbstractBasicChangedEntity implements ExtraCondi
     }
 
     @Override
-    public boolean whenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
-        boolean value = ICustomPatReaction.super.whenPattedReactionSpecific(patter, hand, pattedLocation);
+    public boolean onPattedByIn(LivingEntity patter, InteractionHand hand, EntityHitResult pattedLocation) {
+        boolean value = ICustomPatReaction.super.onPattedByIn(patter, hand, pattedLocation);
         this.level.playSound(null, this, ChangedAddonSoundEvents.GECKO_BEEP.get(), SoundSource.AMBIENT, 1, 1);
         return value;
     }

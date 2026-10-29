@@ -15,6 +15,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -49,19 +50,23 @@ public class ProcessPatFeature {
         public final LevelAccessor world;
         public final InteractionHand hand;
         @Nullable
-        public final Vec3 pattedLocation;
+        public final EntityHitResult patHitLocation;
 
-        public GlobalPatReactionEvent(LevelAccessor world, LivingEntity patter, InteractionHand hand, LivingEntity target, @Nullable Vec3 pattedLocation) {
+        public GlobalPatReactionEvent(LevelAccessor world, LivingEntity patter, InteractionHand hand, LivingEntity target, @Nullable EntityHitResult patHitLocation) {
             this.patter = patter;
             this.target = target;
             this.world = world;
             this.hand = hand;
-            this.pattedLocation = pattedLocation;
+            this.patHitLocation = patHitLocation;
         }
 
         @Nullable
+        public EntityHitResult getPatHitResult() {
+            return patHitLocation;
+        }
+
         public Vec3 getPattedLocation() {
-            return pattedLocation;
+            return patHitLocation.getLocation();
         }
 
         public boolean isCancelable() {

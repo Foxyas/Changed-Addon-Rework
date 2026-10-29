@@ -159,7 +159,7 @@ public class ChangedAddonVariables {
             CompoundTag nbt = new CompoundTag();
             nbt.putBoolean("showWarns", showWarns);
             nbt.putFloat("consciousnessFightProgress", consciousnessFightProgress);
-            nbt.putByte("FTKCminigameType", FTKCminigameType != null ? (byte) FTKCminigameType.ordinal() : -1);
+            if (FTKCminigameType != null) FTKCminigameType.saveInTag(nbt);
             nbt.putBoolean("resetTransfurAdvancements", resetTransfurAdvancements);
             if (forSync) {
                 nbt.putInt("actCooldown", actCooldown);
@@ -182,9 +182,7 @@ public class ChangedAddonVariables {
             consciousnessFightProgress = nbt.getFloat("consciousnessFightProgress");
 
             if (nbt.contains("FTKCminigameType")) {
-                FTKCminigameType = nbt.getByte("FTKCminigameType") != (byte) -1
-                        ? FightToKeepConsciousness.MinigameType.values()[nbt.getByte("FTKCminigameType")]
-                        : null;
+                FTKCminigameType = FightToKeepConsciousness.MinigameType.getFromTag(nbt);
             } else FTKCminigameType = null;
 
             resetTransfurAdvancements = nbt.getBoolean("resetTransfurAdvancements");

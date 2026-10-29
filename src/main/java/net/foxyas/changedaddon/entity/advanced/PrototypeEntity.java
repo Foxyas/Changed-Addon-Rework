@@ -238,7 +238,7 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
     }
 
     @Override
-    public boolean whenPattedReaction(LivingEntity patter, InteractionHand hand) {
+    public boolean onPattedBy(LivingEntity patter, InteractionHand hand) {
         if (patter.level().isClientSide) return false;
         if (!(patter instanceof Player player)) {
             return false;
@@ -259,7 +259,7 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
         jumping = false;
         navigation.stop();
         setTarget(null);
-        return ICustomPatReaction.super.whenPattedReaction(patter, hand);
+        return ICustomPatReaction.super.onPattedBy(patter, hand);
     }
 
     @Override

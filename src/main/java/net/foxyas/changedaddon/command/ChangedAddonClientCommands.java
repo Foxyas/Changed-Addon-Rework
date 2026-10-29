@@ -80,16 +80,34 @@ public class ChangedAddonClientCommands {
         MOUSE_PULL(() -> new MousePullMinigameScreen() {
             @Override
             protected void increaseStruggle() {
+                struggleProgressO = struggleProgress;
+                struggleProgress += 0.25f;
+                if (struggleProgress < 1) return;
+
+                struggleProgressO = 0;
+                struggleProgress = 0;
+                randomizeCursorPos(width / 3f, height / 3f);
             }
         }),
         MOUSE_CIRCLE_PULL(() -> new MouseCirclePullMinigameScreen() {
             @Override
             protected void increaseStruggle() {
+                struggleProgressO = struggleProgress;
+                struggleProgress += 0.25f;
+                if (struggleProgress < 1) return;
+
+                struggleProgressO = 0;
+                struggleProgress = 0;
+                randomizeCursorPos(width / 3f, height / 3f);
+                randomizeCirclePos(width / 3f, height / 3f);
             }
         }),
         CIRCLE_HOVER(() -> new CircleHoverMinigameScreen() {
             @Override
             protected void increaseStruggle() {
+                struggleProgressO = struggleProgress;
+
+                if (struggleProgress < 1) struggleProgress += fullnessPerTick;
             }
         });
 
