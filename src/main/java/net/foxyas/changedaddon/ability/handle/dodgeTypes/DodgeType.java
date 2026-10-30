@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.ability.handle.dodgeTypes;
 
 import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
+import net.foxyas.changedaddon.ability.handle.DamageSourceInstance;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
@@ -15,10 +16,10 @@ public abstract class DodgeType {
         super();
     }
 
-    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
     }
 
-    public void applyDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public void applyDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
         if (this.willApplyIFrames(dodgeAbilityInstance, dodger, sourceProjectileEither, causeExhaustion) && dodger != null) {
             dodger.invulnerableTime = 20 * 3;
             dodger.hurtDuration = 20 * 3;
@@ -33,10 +34,10 @@ public abstract class DodgeType {
             }
         }
 
-        dodgeAbilityInstance.subDodgeStamina();
+        sourceProjectileEither.ifLeft(damageSourceInstance -> dodgeAbilityInstance.subDodgeStamina(damageSourceInstance.amount() * 0.15f)).ifRight(p -> dodgeAbilityInstance.subDodgeStamina());
     }
 
-    public float getFoodExhaustionCaused(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSource, Projectile> sourceProjectileEither) {
+    public float getFoodExhaustionCaused(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
         return 8f;
     }
 
@@ -46,11 +47,11 @@ public abstract class DodgeType {
     public void tickIdle(DodgeAbilityInstance dodgeAbilityInstance) {
     }
 
-    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
         return false;
     }
 
-    public float getDodgeUsage(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, @Nullable Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public float getDodgeStaminaUsage(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, @Nullable Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
         return getDodgeUsageWithoutContext(dodgeAbilityInstance);
     }
 
@@ -62,8 +63,8 @@ public abstract class DodgeType {
         return false;
     }
 
-    public boolean willDodge(DodgeAbilityInstance dodgeAbilityInstance, Either<DamageSource, Projectile> sourceProjectileEither) {
-        if (sourceProjectileEither.left().map(damageSource -> damageSource.is(ChangedAddonTags.DamageTypes.BYPASSES_DODGE)).orElse(false))
+    public boolean willDodge(DodgeAbilityInstance dodgeAbilityInstance, Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
+        if (sourceProjectileEither.left().map(damageSourceInstance -> damageSourceInstance.damageSource().is(ChangedAddonTags.DamageTypes.BYPASSES_DODGE)).orElse(false))
             return false;
 
         return dodgeAbilityInstance.canUse() && dodgeAbilityInstance.canKeepUsing() && dodgeAbilityInstance.isDodgeActive();

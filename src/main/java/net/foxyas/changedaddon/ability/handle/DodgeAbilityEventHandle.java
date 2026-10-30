@@ -114,10 +114,11 @@ public class DodgeAbilityEventHandle {
                         continue;
                     }
 
-                    if (dodgeAbilityInstance.willDodge(Either.left(damageSource))) {
+                    DamageSourceInstance damageSourceInstance = new DamageSourceInstance(damageSource, event.getAmount());
+                    if (dodgeAbilityInstance.willDodge(Either.left(damageSourceInstance))) {
                         event.setCanceled(true);
-                        dodgeAbilityInstance.applyDodgeEffects(Either.left(damageSource));
-                        dodgeAbilityInstance.applyDodgeMovement(Either.left(damageSource), true);
+                        dodgeAbilityInstance.applyDodgeEffects(Either.left(damageSourceInstance));
+                        dodgeAbilityInstance.applyDodgeMovement(Either.left(damageSourceInstance), true);
                         break;
                     }
                     return;
@@ -140,10 +141,11 @@ public class DodgeAbilityEventHandle {
                                     continue;
                                 }
 
-                                if (dodgeAbilityInstance.willDodge(Either.left(damageSource))) {
+                                DamageSourceInstance damageSourceInstance = new DamageSourceInstance(damageSource, event.getAmount());
+                                if (dodgeAbilityInstance.willDodge(Either.left(damageSourceInstance))) {
                                     event.setCanceled(true);
-                                    dodgeAbilityInstance.applyDodgeEffects(Either.left(damageSource));
-                                    dodgeAbilityInstance.applyDodgeMovement(Either.left(damageSource), true);
+                                    dodgeAbilityInstance.applyDodgeEffects(Either.left(damageSourceInstance));
+                                    dodgeAbilityInstance.applyDodgeMovement(Either.left(damageSourceInstance), true);
                                     break;
                                 }
                             }

@@ -440,6 +440,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     protected void initPhaseGoals() {
         // Phase 1 Goals
+//        phaseGoals.put(Exp9Phase.PHASE1, List.of(Pair.of(0,  new LastDashPunchGoal(this))));
+//        phaseGoals.put(Exp9Phase.PHASE2, List.of(Pair.of(0,  new LastDashPunchGoal(this))));
+//        phaseGoals.put(Exp9Phase.PHASE3, List.of(Pair.of(0,  new LastDashPunchGoal(this))));
         phaseGoals.put(Exp9Phase.PHASE1, List.of(
                 Pair.of(15, new ThunderDashAttackGoal(this, UniformInt.of(200, 500))),
                 Pair.of(15, new ThunderDiveGoal(this, UniformInt.of(60, 100), 1.5f, 6f, 1f, 0.5f, 4)),
@@ -1073,13 +1076,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         return switch (getPhase()) {
             case PHASE1 ->
-                    // Phase 1 spans from 75% max HP (min) to 100% max HP (max)
+                // Phase 1 spans from 75% max HP (min) to 100% max HP (max)
                     MathUtils.calculateProgress(currentHealth, maxHealth * 0.75f, maxHealth);
             case PHASE2 ->
-                    // Phase 2 spans from 40% max HP (min) to 75% max HP (max)
+                // Phase 2 spans from 40% max HP (min) to 75% max HP (max)
                     MathUtils.calculateProgress(currentHealth, maxHealth * 0.40f, maxHealth * 0.75f);
             default ->
-                    // Phase 3 spans from 0% HP (min) to 40% max HP (max)
+                // Phase 3 spans from 0% HP (min) to 40% max HP (max)
                     MathUtils.calculateProgress(currentHealth, 0.0f, maxHealth * 0.40f);
         };
     }
