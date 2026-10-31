@@ -23,7 +23,7 @@
     "6": {
       "type": "forge:partial_nbt",
       "item": "changed:latex_syringe",
-      "nbt": "{display:{Lore:['{\"text\":\"THIS IS SUPPOSED TO BE SAFE\"}']},safe:1b}"
+      "nbt": "{display:{Lore:['{\"text\":\"Purified Version. (Purifier)\"}']},safe:1b}"
     },
     "7": {
       "item": "changed_addon:biomass"

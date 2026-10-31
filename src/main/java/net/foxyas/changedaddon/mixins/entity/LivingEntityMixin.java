@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.entity.api.ExtraConditions;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IFallFlyAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
+import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.entity.SeatEntity;
@@ -16,6 +17,7 @@ import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -99,5 +101,10 @@ public abstract class LivingEntityMixin extends Entity implements IFallFlyAbleEn
             }
         }
         return original;
+    }
+
+    @ModifyReturnValue(at = @At("RETURN"), method = "createLivingAttributes")
+    private static AttributeSupplier.Builder addAttributes(AttributeSupplier.Builder original) {
+        return original.add(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get());
     }
 }
