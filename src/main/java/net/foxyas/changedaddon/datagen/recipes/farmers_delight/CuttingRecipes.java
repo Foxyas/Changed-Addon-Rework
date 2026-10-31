@@ -12,7 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
@@ -36,14 +35,9 @@ public class CuttingRecipes {
     public static Ingredient SHEARS = matchesTool(ToolActions.SHEARS_DIG, Tags.Items.SHEARS);
 
     public static void register(Consumer<FinishedRecipe> consumer) {
-        // Knife
         cuttingFlowers(consumer);
-
-        // Axe
         strippingWood(consumer);
         salvagingWoodenFurniture(consumer);
-
-        // Shears
         salvagingUsingShears(consumer);
     }
 
@@ -53,25 +47,14 @@ public class CuttingRecipes {
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
                         4)
                 .save(consumer);
+
         CuttingBoardRecipeBuilder.cuttingRecipe(
-                        Ingredient.of(ChangedAddonItems.LUMINARA_SAPLING.get()), KNIVES, ChangedAddonItems.LUMINARA_BLOOM.get(),
+                        Ingredient.of(ChangedAddonItems.LUMINARA_SAPLING.get()),
+                        KNIVES,
+                        ChangedAddonItems.LUMINARA_BLOOM.get(),
                         4
                 )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.5f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.5f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.5f,
-                        1
-                )
+                .addResultWithChance(ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(), 0.75f, 2)
                 .save(consumer);
     }
 
@@ -87,10 +70,8 @@ public class CuttingRecipes {
     private static void salvagingWoodenFurniture(Consumer<FinishedRecipe> consumer) {
         salvagePlankFromFurniture(consumer,
                 ResourceLocation.parse(ChangedAddonBlocks.LUMINARA_WOOD_TYPE.name()).getPath(),
-                // Planks
                 ChangedAddonBlocks.LUMINARA_PLANKS.get(),
 
-                // Wooded furniture items
                 ChangedAddonBlocks.LUMINARA_DOOR.get(),
                 ChangedAddonBlocks.LUMINARA_TRAPDOOR.get(),
                 ChangedAddonBlocks.LUMINARA_SIGN.get(),
@@ -108,27 +89,15 @@ public class CuttingRecipes {
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
                         3)
                 .save(consumer, salvagingRecipe("luminara_bloom"));
+
         CuttingBoardRecipeBuilder.cuttingRecipe(
                         Ingredient.of(ChangedAddonItems.LUMINARA_SAPLING.get()),
                         SHEARS,
                         ChangedAddonItems.LUMINARA_BLOOM.get(),
                         1
                 )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM.get(),
-                        0.85f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.85f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.65f,
-                        1
-                )
+                .addResultWithChance(ChangedAddonItems.LUMINARA_BLOOM.get(), 0.85f, 1)
+                .addResultWithChance(ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(), 0.75f, 2)
                 .save(consumer, salvagingRecipe("luminara_sapling"));
 
         CuttingBoardRecipeBuilder.cuttingRecipe(
@@ -138,58 +107,21 @@ public class CuttingRecipes {
                         4,
                         0.9f
                 )
-                .addResultWithChance(
-                        Items.STICK,
-                        0.75f,
-                        4
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_SAPLING.get(),
-                        0.9f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.25f,
-                        2
-                )
+                .addResultWithChance(Items.STICK, 0.75f, 4)
+                .addResultWithChance(ChangedAddonItems.LUMINARA_SAPLING.get(), 0.9f, 1)
                 .save(consumer, salvagingRecipe("luminara_leaves"));
     }
 
-    /**
-     * Generates an axe-cutting recipe for wooded furniture items, with a chance to recover one plank of the given type.
-     */
-    private static void salvagePlankFromFurniture(Consumer<FinishedRecipe> consumer, WoodType woodType, ItemLike plank, ItemLike... furniture) {
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(furniture), AXES, plank, 1, 0.75F)
-                .save(consumer, salvagingRecipe(woodType.name() + "_furniture"));
-    }
-
-    /**
-     * Generates an axe-cutting recipe for wooded furniture items, with a chance to recover one plank of the given type.
-     */
     private static void salvagePlankFromFurniture(Consumer<FinishedRecipe> consumer, String woodTypeId, ItemLike plank, ItemLike... furniture) {
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(furniture), AXES, plank, 1, 0.75F)
                 .save(consumer, salvagingRecipe(woodTypeId + "_furniture"));
     }
 
-    /**
-     * Generates an axe-stripping recipe for the pair of given logs, with custom sound and a Tree Bark result attached.
-     */
     private static void stripLogForBark(Consumer<FinishedRecipe> consumer, ItemLike log, ItemLike strippedLog) {
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(log), AXES_STRIP, strippedLog)
                 .addResult(ModItems.TREE_BARK.get())
                 .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.AXE_STRIP).toString())
                 .save(consumer);
-    }
-
-    /**
-     * Generates an axe-stripping recipe for the pair of given logs, with custom sound and a Tree Bark result attached.
-     */
-    private static void stripLogForBarkFD(Consumer<FinishedRecipe> consumer, ItemLike log, ItemLike strippedLog) {
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(log), AXES_STRIP, strippedLog)
-                .addResult(ModItems.TREE_BARK.get())
-                .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.AXE_STRIP).toString())
-                .saveToFD(consumer);
     }
 
     private static Ingredient matchesTool(ToolAction toolAction, TagKey<Item> fallbackTag) {
