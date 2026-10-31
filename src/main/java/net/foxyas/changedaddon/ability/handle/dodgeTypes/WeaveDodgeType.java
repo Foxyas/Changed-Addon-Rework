@@ -1,14 +1,11 @@
 package net.foxyas.changedaddon.ability.handle.dodgeTypes;
 
-import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
-import net.foxyas.changedaddon.ability.handle.DamageSourceInstance;
+import net.foxyas.changedaddon.ability.handle.DamageContext;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.ltxprogrammer.changed.util.EntityUtil;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.Projectile;
 import org.jetbrains.annotations.Nullable;
 
 public class WeaveDodgeType extends DodgeType {
@@ -30,14 +27,14 @@ public class WeaveDodgeType extends DodgeType {
     }
 
     @Override
-    public void applyDodgeEffects(DodgeAbilityInstance instance, @Nullable LivingEntity dodger, Either<DamageSourceInstance, Projectile> source, boolean causeExhaustion) {
+    public void applyDodgeEffects(DodgeAbilityInstance instance, @Nullable LivingEntity dodger, DamageContext source, boolean causeExhaustion) {
         super.applyDodgeEffects(instance, dodger, source, causeExhaustion);
         instance.applyDodgeParticles(source);
         instance.applyDodgeAnimations(source);
     }
 
     @Override
-    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, DamageContext sourceProjectileEither, boolean causeExhaustion) {
         return true;
     }
 

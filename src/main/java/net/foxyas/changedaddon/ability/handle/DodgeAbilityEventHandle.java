@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.ability.handle;
 
-import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.ability.DodgeAbility;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -39,8 +38,8 @@ public class DodgeAbilityEventHandle {
         Entity pTarget = entityHitResult.getEntity();
         if (!pTarget.level.isClientSide()) {
             Entity owner = projectile.getOwner();
-            Entity attacker;
-            attacker = Objects.requireNonNullElse(owner, projectile);
+            Entity attacker = Objects.requireNonNullElse(owner, projectile);
+            DamageContext damageContext = new DamageContext(null, projectile);
             if (pTarget instanceof ChangedEntity changedEntity && changedEntity.getUnderlyingPlayer() == null) {
                 List<AbstractAbility<?>> dodgeAbilities = ChangedRegistry.ABILITY.get().getValues().stream().filter((abstractAbility -> abstractAbility instanceof DodgeAbility)).toList();
                 if (dodgeAbilities.isEmpty()) return;
@@ -49,10 +48,10 @@ public class DodgeAbilityEventHandle {
                         continue;
                     }
                     if (dodgeAbilityInstance.projectilesImmuneTicks > 0) event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
-                    if (dodgeAbilityInstance.willDodge(Either.right(projectile))) {
+                    if (dodgeAbilityInstance.willDodge(damageContext)) {
                         event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
-                        dodgeAbilityInstance.applyDodgeEffects(Either.right(projectile));
-                        dodgeAbilityInstance.applyDodgeMovement(Either.right(projectile), true);
+                        dodgeAbilityInstance.applyDodgeEffects(damageContext);
+                        dodgeAbilityInstance.applyDodgeMovement(damageContext, true);
                         break;
                     }
                     return;
@@ -71,11 +70,11 @@ public class DodgeAbilityEventHandle {
                                 continue;
                             }
                             if (dodgeAbilityInstance.projectilesImmuneTicks > 0) event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
-                            if (dodgeAbilityInstance.willDodge(Either.right(projectile))) {
+                            if (dodgeAbilityInstance.willDodge(damageContext)) {
                                 event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
 
-                                dodgeAbilityInstance.applyDodgeEffects(Either.right(projectile));
-                                dodgeAbilityInstance.applyDodgeMovement(Either.right(projectile), true);
+                                dodgeAbilityInstance.applyDodgeEffects(damageContext);
+                                dodgeAbilityInstance.applyDodgeMovement(damageContext, true);
                                 break;
                             }
                         }
@@ -115,10 +114,11 @@ public class DodgeAbilityEventHandle {
                     }
 
                     DamageSourceInstance damageSourceInstance = new DamageSourceInstance(damageSource, event.getAmount());
-                    if (dodgeAbilityInstance.willDodge(Either.left(damageSourceInstance))) {
+                    DamageContext damageContext = new DamageContext(damageSourceInstance, null);
+                    if (dodgeAbilityInstance.willDodge(damageContext)) {
                         event.setCanceled(true);
-                        dodgeAbilityInstance.applyDodgeEffects(Either.left(damageSourceInstance));
-                        dodgeAbilityInstance.applyDodgeMovement(Either.left(damageSourceInstance), true);
+                        dodgeAbilityInstance.applyDodgeEffects(damageContext);
+                        dodgeAbilityInstance.applyDodgeMovement(damageContext, true);
                         break;
                     }
                     return;
@@ -142,10 +142,11 @@ public class DodgeAbilityEventHandle {
                                 }
 
                                 DamageSourceInstance damageSourceInstance = new DamageSourceInstance(damageSource, event.getAmount());
-                                if (dodgeAbilityInstance.willDodge(Either.left(damageSourceInstance))) {
+                                DamageContext damageContext = new DamageContext(damageSourceInstance, null);
+                                if (dodgeAbilityInstance.willDodge(damageContext)) {
                                     event.setCanceled(true);
-                                    dodgeAbilityInstance.applyDodgeEffects(Either.left(damageSourceInstance));
-                                    dodgeAbilityInstance.applyDodgeMovement(Either.left(damageSourceInstance), true);
+                                    dodgeAbilityInstance.applyDodgeEffects(damageContext);
+                                    dodgeAbilityInstance.applyDodgeMovement(damageContext, true);
                                     break;
                                 }
                             }

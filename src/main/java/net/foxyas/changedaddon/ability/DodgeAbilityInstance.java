@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
-import com.mojang.datafixers.util.Either;
-import net.foxyas.changedaddon.ability.handle.DamageSourceInstance;
+import net.foxyas.changedaddon.ability.handle.DamageContext;
 import net.foxyas.changedaddon.ability.handle.dodgeTypes.CounterDodgeType;
 import net.foxyas.changedaddon.ability.handle.dodgeTypes.DodgeType;
 import net.foxyas.changedaddon.ability.handle.dodgeTypes.WeaveDodgeType;
@@ -25,7 +24,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -316,13 +314,13 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         tag.putBoolean("needFullRecharge", needFullRecharge);
     }
 
-    public boolean willDodge(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
+    public boolean willDodge(DamageContext sourceProjectileEither) {
         return this.dodgeType.willDodge(this, sourceProjectileEither);
     }
 
     @Nullable
-    public Entity getEntityFromEither(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
-        return sourceProjectileEither.map(
+    public Entity getEntityFromEither(DamageContext damageContext) {
+        return damageContext.asEither().map(
                 damageSourceInstance -> {
                     DamageSource damageSource = damageSourceInstance.damageSource();
                     return damageSource.getDirectEntity() != null ? damageSource.getDirectEntity() : damageSource.getEntity();
@@ -331,7 +329,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         );
     }
 
-    public void applyDodgeEffects(Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public void applyDodgeEffects(DamageContext sourceProjectileEither, boolean causeExhaustion) {
         LivingEntity dodger = entity.getEntity();
         if (ultraInstinct) {
             applyDodgeAnimations(sourceProjectileEither);
@@ -344,20 +342,20 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         this.dodgeType.applyDodgeEffects(this, dodger, sourceProjectileEither, causeExhaustion);
     }
 
-    public void applyDodgeParticles(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
+    public void applyDodgeParticles(DamageContext sourceProjectileEither) {
         LivingEntity dodger = entity.getEntity();
-        if (sourceProjectileEither.left().isPresent() && sourceProjectileEither.left().get().damageSource().getDirectEntity() instanceof LivingEntity attackerLiving) {
+        if (sourceProjectileEither.getDamage().isPresent() && sourceProjectileEither.getDamage().get().damageSource().getDirectEntity() instanceof LivingEntity attackerLiving) {
             applyDodgeAwayParticlesTrails(dodger, attackerLiving);
-        } else if (sourceProjectileEither.right().isPresent() && sourceProjectileEither.right().get().getOwner() instanceof LivingEntity attackerLiving) {
+        } else if (sourceProjectileEither.getProjectile().isPresent() && sourceProjectileEither.getProjectile().get().getOwner() instanceof LivingEntity attackerLiving) {
             applyDodgeAwayParticlesTrails(dodger, attackerLiving);
         }
     }
 
-    public void applyDodgeEffects(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
+    public void applyDodgeEffects(DamageContext sourceProjectileEither) {
         this.applyDodgeEffects(sourceProjectileEither, true);
     }
 
-    public void applyDodgeMovement(Either<DamageSourceInstance, Projectile> damageSourceProjectileEither, boolean causeExhaustion) {
+    public void applyDodgeMovement(DamageContext damageSourceProjectileEither, boolean causeExhaustion) {
         LivingEntity dodger = entity.getEntity();
         Entity attacker = getEntityFromEither(damageSourceProjectileEither);
         if (attacker == null) {
@@ -376,11 +374,11 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         }
     }
 
-    public void applyDodgeMovement(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
+    public void applyDodgeMovement(DamageContext sourceProjectileEither) {
         this.applyDodgeMovement(sourceProjectileEither, true);
     }
 
-    public void applyDodgeAnimations(Either<DamageSourceInstance, Projectile> source) {
+    public void applyDodgeAnimations(DamageContext source) {
         LivingEntity dodger = entity.getEntity();
         ChangedSounds.broadcastSound(dodger, ChangedSounds.CARDBOARD_BOX_OPEN, 2.5f, 1);
         if (this.getDodgeType().willPlayDodgeAnimation(dodger)) {
