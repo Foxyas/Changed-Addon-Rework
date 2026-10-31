@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.ability.handle.dodgeTypes;
 
 import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
+import net.foxyas.changedaddon.ability.handle.DamageSourceInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -24,13 +25,16 @@ public class TeleportDodgeType extends DodgeType {
     }
 
     @Override
-    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
         super.applyDodgeMovement(dodgeAbilityInstance, dodger, sourceProjectileEither, causeExhaustion);
         Level level = dodger.level();
 
         // Map both DamageSource and Projectile to an Entity (or null if no direct entity)
         Entity sourceEntity = sourceProjectileEither.map(
-                damageSource -> damageSource.getDirectEntity() != null ? damageSource.getDirectEntity() : damageSource.getEntity(),
+                damageSourceInstance -> {
+                    DamageSource damageSource = damageSourceInstance.damageSource();
+                    return damageSource.getDirectEntity() != null ? damageSource.getDirectEntity() : damageSource.getEntity();
+                },
                 projectile -> projectile
         );
 

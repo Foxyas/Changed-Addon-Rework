@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import com.mojang.datafixers.util.Either;
+import net.foxyas.changedaddon.ability.handle.DamageSourceInstance;
 import net.foxyas.changedaddon.ability.handle.dodgeTypes.CounterDodgeType;
 import net.foxyas.changedaddon.ability.handle.dodgeTypes.DodgeType;
 import net.foxyas.changedaddon.ability.handle.dodgeTypes.WeaveDodgeType;
@@ -37,22 +38,23 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     public static final int INF_DODGE_TICKS = -1;
     public static final Color FADE_COLOR = new Color(96, 96, 96);
     public boolean ultraInstinct = false; //FUNNY VARIABLE :3
+    public boolean needFullRecharge = false;
     public DodgeType dodgeType = WeaveDodgeType.INSTANCE;
     public int projectilesImmuneTicks = 0;
     public int canDodgeTicks = 0;
     public int trailTicks = 0;
-    private float dodgeStamina = 0;
-    private float maxDodgeStamina = 4;
-    private boolean dodgeActive = false;
+    public float dodgeStamina = 0;
+    public float maxDodgeStamina = 4;
+    protected boolean dodgeActive = false;
 
     public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
         super(ability, entity);
     }
 
-    public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity, int maxDodge) {
+    public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity, float maxDodgeStamina) {
         this(ability, entity);
-        this.maxDodgeStamina = maxDodge;
-        this.dodgeStamina = maxDodge;
+        this.maxDodgeStamina = maxDodgeStamina;
+        this.dodgeStamina = maxDodgeStamina;
     }
 
     @Override
@@ -60,7 +62,10 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         if (ultraInstinct) {
             return true;
         }
-        if (!(entity.getEntity().isPickable()) || entity.getEntity().isInvulnerable()) return false;
+        if (!entity.getEntity().isPickable() || entity.getEntity().isInvulnerable()) return false;
+
+        if (needFullRecharge() && dodgeStamina < maxDodgeStamina) return false;
+
         return dodgeStamina > 0 && !(entity.getEntity().isSpectator());
     }
 
@@ -148,29 +153,37 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
             projectilesImmuneTicks--;
         }
 
-        boolean nonHurtFrame = entity.getEntity().hurtTime <= 10 && entity.getEntity().invulnerableTime <= 10;
-        if (nonHurtFrame && !isDodgeActive() && dodgeStamina < maxDodgeStamina) {
-            if (entity.getEntity().tickCount % 5 == 0) {
-                addDodgeStamina();
+        if (!ultraInstinct) {
+            float dodgeStamina = this.getDodgeStamina();
+            float maxDodgeStamina = this.getMaxDodgeStamina();
+            if (needFullRecharge() && dodgeStamina < maxDodgeStamina) this.setDodgeActivate(false);
+            boolean nonHurtFrame = entity.getEntity().hurtTime <= 10 && entity.getEntity().invulnerableTime <= 10;
+            if (!this.getController().isCoolingDown() && this.getController().getHoldTicks() <= 0) {
+                if (nonHurtFrame && !isDodgeActive() && dodgeStamina < maxDodgeStamina) {
+                    if (entity.getEntity().tickCount % 5 == 0) {
+                        addDodgeStamina();
 
-                if (entity.getEntity() instanceof Player player) {
-                    if (!(player.level().isClientSide())) {
-                        if (!ultraInstinct) {
-                            player.displayClientMessage(
-                                    Component.translatable("ability.changed_addon.dodge.dodge_amount",
-                                            getDodgeStaminaRatio()),
-                                    true
-                            );
-                        } else {
-                            player.displayClientMessage(Component.translatable("ability.changed_addon.dodge.ultra_instinct"),
-                                    true);
-                        }
+                        entity.displayClientMessage(Component.translatable("ability.changed_addon.dodge.dodge_amount", getDodgeStaminaRatio()), true);
                     }
                 }
             }
         }
 
+
+
         this.getDodgeType().tickIdle(this);
+    }
+
+    @Override
+    public AbstractAbility.UseType getUseType() {
+        if (isCounterDodgeType()) {
+            return AbstractAbility.UseType.INSTANT;
+        }
+        return AbstractAbility.UseType.HOLD;
+    }
+
+    public boolean isCounterDodgeType() {
+        return this.getDodgeType() instanceof CounterDodgeType;
     }
 
     public DodgeAbilityInstance withDodgeType(DodgeType dodgeType) {
@@ -197,7 +210,14 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     }
 
     public void addDodgeStamina() {
-        if (dodgeStamina < maxDodgeStamina) dodgeStamina++;
+        addDodgeStamina(0.05f);
+    }
+
+    public void addDodgeStamina(float amount) {
+        dodgeStamina = Math.min(dodgeStamina + amount, maxDodgeStamina);
+        if (dodgeStamina >= maxDodgeStamina) {
+            this.setNeedFullRecharge(false);
+        }
         this.ability.setDirty(entity);
     }
 
@@ -206,13 +226,17 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     }
 
     public void subDodgeStamina(float amount) {
-        if (dodgeStamina > 0) dodgeStamina -= amount;
-        if (dodgeStamina <= 0 && (this.getCanDodgeTicks() > 0 && this.getDodgeType() instanceof CounterDodgeType))
+        dodgeStamina = Math.max(dodgeStamina - amount, 0);
+
+        if (dodgeStamina <= 0 && (this.getCanDodgeTicks() > 0 && this.getDodgeType() instanceof CounterDodgeType)) {
             this.canDodgeTicks = 0;
+        }
+
         if (dodgeStamina <= 0) {
             this.setDodgeActivate(false);
             this.getController().resetHoldTicks();
-            this.getController().applyCoolDown();
+            this.getController().forceCooldown(this.ability.getCoolDown(entity));
+            this.setNeedFullRecharge(true);
         }
         this.ability.setDirty(entity);
     }
@@ -239,11 +263,11 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     }
 
     public float getDodgeStaminaUsage() {
-        return this.dodgeType.getDodgeUsage(this, this.entity.getEntity(), null, false);
+        return this.dodgeType.getDodgeStaminaUsage(this, this.entity.getEntity(), null, false);
     }
 
     public float getDodgeStaminaRatio() {
-        return dodgeStamina / maxDodgeStamina;
+        return getDodgeStamina() / getMaxDodgeStamina();
     }
 
     public void setUltraInstinct(boolean ultraInstinct) {
@@ -253,6 +277,14 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
             }
         }
         this.ultraInstinct = ultraInstinct;
+    }
+
+    public boolean needFullRecharge() {
+        return needFullRecharge;
+    }
+
+    public void setNeedFullRecharge(boolean needFullRecharge) {
+        this.needFullRecharge = needFullRecharge;
     }
 
     protected void addFadeParticle(ServerLevel level) {
@@ -270,6 +302,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         if (tag.contains("canDodgeTicks")) canDodgeTicks = tag.getInt("canDodgeTicks");
         if (tag.contains("dodgeActivate")) dodgeActive = tag.getBoolean("dodgeActivate");
         if (tag.contains("ultraInstinct")) ultraInstinct = tag.getBoolean("ultraInstinct");
+        if (tag.contains("needFullRecharge")) needFullRecharge = tag.getBoolean("needFullRecharge");
     }
 
     @Override
@@ -280,21 +313,25 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         tag.putInt("canDodgeTicks", getCanDodgeTicks());
         tag.putBoolean("dodgeActivate", dodgeActive);
         tag.putBoolean("ultraInstinct", ultraInstinct);
+        tag.putBoolean("needFullRecharge", needFullRecharge);
     }
 
-    public boolean willDodge(Either<DamageSource, Projectile> sourceProjectileEither) {
+    public boolean willDodge(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
         return this.dodgeType.willDodge(this, sourceProjectileEither);
     }
 
     @Nullable
-    public Entity getEntityFromEither(Either<DamageSource, Projectile> sourceProjectileEither) {
+    public Entity getEntityFromEither(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
         return sourceProjectileEither.map(
-                damageSource -> damageSource.getDirectEntity() != null ? damageSource.getDirectEntity() : damageSource.getEntity(),
+                damageSourceInstance -> {
+                    DamageSource damageSource = damageSourceInstance.damageSource();
+                    return damageSource.getDirectEntity() != null ? damageSource.getDirectEntity() : damageSource.getEntity();
+                },
                 projectile -> projectile
         );
     }
 
-    public void applyDodgeEffects(Either<DamageSource, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public void applyDodgeEffects(Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
         LivingEntity dodger = entity.getEntity();
         if (ultraInstinct) {
             applyDodgeAnimations(sourceProjectileEither);
@@ -307,20 +344,20 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         this.dodgeType.applyDodgeEffects(this, dodger, sourceProjectileEither, causeExhaustion);
     }
 
-    public void applyDodgeParticles(Either<DamageSource, Projectile> sourceProjectileEither) {
+    public void applyDodgeParticles(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
         LivingEntity dodger = entity.getEntity();
-        if (sourceProjectileEither.left().isPresent() && sourceProjectileEither.left().get().getDirectEntity() instanceof LivingEntity attackerLiving) {
+        if (sourceProjectileEither.left().isPresent() && sourceProjectileEither.left().get().damageSource().getDirectEntity() instanceof LivingEntity attackerLiving) {
             applyDodgeAwayParticlesTrails(dodger, attackerLiving);
         } else if (sourceProjectileEither.right().isPresent() && sourceProjectileEither.right().get().getOwner() instanceof LivingEntity attackerLiving) {
             applyDodgeAwayParticlesTrails(dodger, attackerLiving);
         }
     }
 
-    public void applyDodgeEffects(Either<DamageSource, Projectile> sourceProjectileEither) {
+    public void applyDodgeEffects(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
         this.applyDodgeEffects(sourceProjectileEither, true);
     }
 
-    public void applyDodgeMovement(Either<DamageSource, Projectile> damageSourceProjectileEither, boolean causeExhaustion) {
+    public void applyDodgeMovement(Either<DamageSourceInstance, Projectile> damageSourceProjectileEither, boolean causeExhaustion) {
         LivingEntity dodger = entity.getEntity();
         Entity attacker = getEntityFromEither(damageSourceProjectileEither);
         if (attacker == null) {
@@ -339,11 +376,11 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         }
     }
 
-    public void applyDodgeMovement(Either<DamageSource, Projectile> sourceProjectileEither) {
+    public void applyDodgeMovement(Either<DamageSourceInstance, Projectile> sourceProjectileEither) {
         this.applyDodgeMovement(sourceProjectileEither, true);
     }
 
-    public void applyDodgeAnimations(Either<DamageSource, Projectile> source) {
+    public void applyDodgeAnimations(Either<DamageSourceInstance, Projectile> source) {
         LivingEntity dodger = entity.getEntity();
         ChangedSounds.broadcastSound(dodger, ChangedSounds.CARDBOARD_BOX_OPEN, 2.5f, 1);
         if (this.getDodgeType().willPlayDodgeAnimation(dodger)) {

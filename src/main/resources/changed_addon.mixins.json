@@ -6,7 +6,6 @@
   "refmap": "changed_addon.refmap.json",
   "mixins": [
     "abilities.AbilityControllerAccessor",
-    "abilities.AbilityControllerMixin",
     "abilities.GrabEntityAbilityInstanceMixin",
     "abilities.GrabEntityAbilityMixin",
     "abilities.GrabEntityPacketMixin",

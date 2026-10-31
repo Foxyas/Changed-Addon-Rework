@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.generic.attacks;
 
 import com.mojang.datafixers.util.Pair;
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedEntities;
@@ -30,22 +31,23 @@ import java.util.EnumSet;
 
 public class LastDashPunchGoal extends Goal {
 
-    public static final int MAX_DASH_TICKS = 30;
+    public static final int MAX_DASH_TICKS = 120;
     public static final int MAX_CHARGE_TICKS = 40;
     protected final Mob mob;
     protected Phase phase = Phase.IDLE;
     protected int chargeTicks = 0;
     protected int dashTicks = 0;
+    protected int recoilTicks = 0;
     protected int cooldown = 0;
     protected LivingEntity target;
 
-    // --- NEW FIELDS FOR MULTI-DASH PARRY CHAIN ---
+    // --- MULTI-DASH PARRY CHAIN FIELDS ---
     protected int currentParries = 0;
     protected int requiredParries = 3;
     protected int successfulHitsLanded = 0;
     protected boolean normalModeShieldUsed = false;
 
-    public boolean canTriggerDashPunch = false;
+    public boolean canTriggerDashPunch = true;
 
     public LastDashPunchGoal(Mob mob) {
         this.mob = mob;
@@ -54,12 +56,12 @@ public class LastDashPunchGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        if (!canTriggerDashPunch) return false;
         if (cooldown > 0) {
             cooldown--;
             return false;
         }
-        
-        if (!canTriggerDashPunch) return false;
+
         target = mob.getTarget();
         if (target == null || !target.isAlive() || target.isRemoved()) return false;
 
@@ -82,6 +84,7 @@ public class LastDashPunchGoal extends Goal {
         phase = Phase.CHARGING;
         chargeTicks = 0;
         dashTicks = 0;
+        recoilTicks = 0;
         currentParries = 0;
         successfulHitsLanded = 0;
         normalModeShieldUsed = false;
@@ -122,17 +125,37 @@ public class LastDashPunchGoal extends Goal {
         switch (phase) {
             case CHARGING -> handleCharging();
             case DASHING -> {
+                // --- UNIFIED LOOK AND ROTATION LOCK ---
+                // Forces the mob to continuously face the target smoothly and instantly without stuttering or looking backwards.
+                if (target != null && mob.distanceTo(target) > 0) {
+                    mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+
+                    // Calculate exact angle to target to keep body/head completely aligned with the dash target
+                    double d0 = target.getX() - mob.getX();
+                    double d2 = target.getZ() - mob.getZ();
+                    float targetYRot = (float)(Mth_atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
+
+                    mob.setYRot(targetYRot);
+                    mob.yBodyRot = targetYRot;
+                    mob.yHeadRot = targetYRot;
+                }
                 handleDashing();
                 handleBlockBreaking();
             }
+            case RECOIL -> handleRecoil();
         }
+    }
+
+    // Helper math function to avoid importing net.minecraft.util.Mth if not present
+    private double Mth_atan2(double z, double x) {
+        return Math.atan2(z, x);
     }
 
     protected void handleCharging() {
         chargeTicks++;
         mob.getNavigation().stop();
         if (target.distanceTo(mob) > 0) {
-            mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            mob.getLookControl().setLookAt(target, 180f, 180f);
         }
 
         if (mob.level() instanceof ServerLevel server) {
@@ -165,11 +188,8 @@ public class LastDashPunchGoal extends Goal {
 
     protected void handleDashing() {
         if (mob instanceof Experiment10BossEntity e) e.setDashing(true);
+        if (mob instanceof Experiment009BossEntity e) e.setDashing(true);
         dashTicks++;
-        if (target.distanceTo(mob) > 0) {
-            mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
-            mob.setYBodyRot(mob.getYRot());
-        }
 
         Vec3 targetPos = target.position();
         Vec3 mobPos = mob.position();
@@ -191,6 +211,20 @@ public class LastDashPunchGoal extends Goal {
 
         if (isDasherReachingTarget()) {
             applyImpact(target);
+        }
+    }
+
+    protected void handleRecoil() {
+        recoilTicks--;
+        if (mob instanceof Experiment009BossEntity e) e.setDashing(false);
+        if (mob instanceof Experiment10BossEntity e) e.setDashing(false);
+
+        mob.getNavigation().stop();
+
+        if (recoilTicks <= 0) {
+            this.phase = Phase.CHARGING;
+            chargeTicks = 0;
+            dashTicks = 0;
         }
     }
 
@@ -270,7 +304,7 @@ public class LastDashPunchGoal extends Goal {
 
     protected void handleSuccessfulParry(LivingEntity target) {
         currentParries++;
-        
+
         if (mob.level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.FLASH, mob.getX(), mob.getEyeY(), mob.getZ(), 5, 0.2, 0.2, 0.2, 0.25f);
             ExperienceOrb experienceOrb = new ExperienceOrb(serverLevel, mob.getX(), mob.getY(), mob.getZ(), 3);
@@ -279,13 +313,13 @@ public class LastDashPunchGoal extends Goal {
             experienceOrb.setDeltaMovement(direction.scale(0.8D));
             serverLevel.addFreshEntity(experienceOrb);
         }
-        
+
         mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 1.0F);
         mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
 
         // Recoil boss back
         dashTicks = MAX_DASH_TICKS;
-        
+
         Vec3 targetPos = target.position();
         Vec3 mobPos = mob.position();
         Vec3 movement = mobPos.subtract(targetPos).normalize().scale(1.25f).multiply(1f, 0f, 1f).add(0f, 0.5f, 0f).scale(2.75f);
@@ -298,9 +332,8 @@ public class LastDashPunchGoal extends Goal {
             stop();
         } else {
             // Not enough parries yet! Reset state to CHARGING for the next rapid dash
-            this.phase = Phase.CHARGING;
-            chargeTicks = 0;
-            dashTicks = 0;
+            this.phase = Phase.RECOIL;
+            this.recoilTicks = 10;
             if (target instanceof Player player) {
                 player.displayClientMessage(Component.translatable("text.changed_addon.boss_attacks.dash_recharge_hint", (requiredParries - currentParries)), true);
             }
@@ -325,7 +358,7 @@ public class LastDashPunchGoal extends Goal {
         if (target instanceof Player player) {
             player.displayClientMessage(Component.translatable("text.changed_addon.boss_attacks.isParryable"), true);
         }
-        
+
         if (mob.level() instanceof ServerLevel server) {
             server.sendParticles(ParticleTypes.EXPLOSION, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
         }
@@ -338,10 +371,21 @@ public class LastDashPunchGoal extends Goal {
             return;
         }
 
-        // If hit lands, reset or continue depending on your flow. Let's bounce back and recharge for another try or stop.
+        mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.0F, 1.0F);
+        mob.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
+
         dashTicks = MAX_DASH_TICKS;
-        this.phase = Phase.IDLE;
-        stop();
+
+        Vec3 targetPos = target.position();
+        Vec3 mobPos = mob.position();
+        Vec3 movement = mobPos.subtract(targetPos).normalize().scale(1.25f).multiply(1f, 0f, 1f).add(0f, 0.5f, 0f).scale(2.75f);
+        mob.setDeltaMovement(movement);
+
+        this.phase = Phase.RECOIL;
+        this.recoilTicks = 10;
+        if (target instanceof Player player) {
+            player.displayClientMessage(Component.translatable("text.changed_addon.boss_attacks.dash_recharge_hint", (requiredParries - currentParries)), true);
+        }
     }
 
     public int getCurrentSwingDurationFor(LivingEntity self) {
@@ -377,23 +421,25 @@ public class LastDashPunchGoal extends Goal {
     @Override
     public void stop() {
         phase = Phase.IDLE;
-        cooldown = 60; 
+        cooldown = 60;
+        if (mob instanceof Experiment009BossEntity e) e.setDashing(false);
         if (mob instanceof Experiment10BossEntity e) e.setDashing(false);
     }
 
     @Override
     public boolean isInterruptable() {
-        return false;
+        return !canTriggerDashPunch;
     }
 
     @Override
     public boolean requiresUpdateEveryTick() {
-        return true;
+        return canTriggerDashPunch;
     }
 
     protected enum Phase {
         IDLE,
         CHARGING,
-        DASHING
+        DASHING,
+        RECOIL
     }
 }

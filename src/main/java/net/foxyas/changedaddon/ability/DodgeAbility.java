@@ -21,8 +21,8 @@ public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
         super((ab, ia) -> new DodgeAbilityInstance(ab, ia).withDodgeType(dodgeType));
     }
 
-    public DodgeAbility(int dodgeAmount, DodgeType dodgeType) {
-        super((ab, ia) -> new DodgeAbilityInstance(ab, ia, dodgeAmount).withDodgeType(dodgeType));
+    public DodgeAbility(float maxDodgeStamina, DodgeType dodgeType) {
+        super((ab, ia) -> new DodgeAbilityInstance(ab, ia, maxDodgeStamina).withDodgeType(dodgeType));
     }
 
     @Override
@@ -35,21 +35,22 @@ public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
     }
 
     @Override
-    public UseType getUseType(IAbstractChangedEntity entity) {
-        DodgeAbilityInstance instance = entity.getAbilityInstance(this);
-        if (instance != null && instance.getDodgeType() instanceof CounterDodgeType) {
-            return UseType.INSTANT;
-        }
-        return UseType.HOLD;
-    }
-
-    @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
         DodgeAbilityInstance instance = entity.getAbilityInstance(this);
         if (instance != null && instance.getDodgeType() instanceof CounterDodgeType) {
             return 90;
         }
         return super.getCoolDown(entity);
+    }
+
+    @Override
+    public boolean shouldApplyCoolDown(IAbstractChangedEntity entity) {
+        return isCounterDodgeType(entity);
+    }
+
+    public boolean isCounterDodgeType(IAbstractChangedEntity entity) {
+        DodgeAbilityInstance instance = entity.getAbilityInstance(this);
+        return instance != null && instance.getDodgeType() instanceof CounterDodgeType;
     }
 
     @Override

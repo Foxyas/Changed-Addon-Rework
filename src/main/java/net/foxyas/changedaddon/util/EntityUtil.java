@@ -2,14 +2,18 @@ package net.foxyas.changedaddon.util;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
+import net.foxyas.changedaddon.mixins.entity.MobAccessor;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -78,5 +82,50 @@ public class EntityUtil {
             attributeValue = Optional.empty();
         }
         return attributeValue;
+    }
+
+    public static void makeEntityForceLookAt(@NotNull Entity entity, Vec3 targetPos) {
+        if (entity instanceof Mob mob) {
+            mob.getLookControl().setLookAt(targetPos.x, targetPos.y, targetPos.z, 30.0F, 30.0F);
+        }
+
+        double d0 = targetPos.x - entity.getX();
+        double d1 = targetPos.y - entity.getEyeY();
+        double d2 = targetPos.z - entity.getZ();
+
+        // Calculate horizontal distance for pitch
+        double d3 = Math.sqrt(d0 * d0 + d2 * d2);
+
+        // Calculate standard yaw and pitch angles in degrees
+        float yRot = (float) (Math.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
+        float xRot = (float) (-(Math.atan2(d1, d3) * (180D / Math.PI)));
+
+        // Apply rotation to the entity and its controllers
+        entity.setYRot(yRot);
+        entity.setXRot(xRot);
+
+        if (entity instanceof Mob mob) {
+            mob.yBodyRot = yRot;
+            mob.yHeadRot = yRot;
+        }
+    }
+
+    public static void makeEntityForceFaceAt(@NotNull Entity entity, Vec3 targetPos) {
+        if (entity instanceof Mob mob) {
+            mob.getLookControl().setLookAt(targetPos.x, targetPos.y, targetPos.z, 30.0F, 30.0F);
+        }
+
+        double d0 = targetPos.x - entity.getX();
+        double d2 = targetPos.z - entity.getZ();
+
+        // Calculate standard yaw and pitch angles in degrees
+        float yRot = (float) (Math.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
+
+        // Apply rotation to the entity and its controllers
+        entity.setYRot(yRot);
+        if (entity instanceof Mob mob) {
+            mob.yBodyRot = yRot;
+            mob.yHeadRot = yRot;
+        }
     }
 }

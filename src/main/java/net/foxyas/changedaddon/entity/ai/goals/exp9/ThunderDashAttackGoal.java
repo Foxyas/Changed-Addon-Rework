@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.ai.goals.exp9;
 import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.IReactiveGoal;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
+import net.foxyas.changedaddon.util.EntityUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -173,8 +174,9 @@ public class ThunderDashAttackGoal extends Goal implements IReactiveGoal, IAbili
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
             Vec3 lookAt = dasher.getEyePosition(0).add(dashDirection.scale(1.5f));
-            dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 360, 360);
-            dasher.setYBodyRot(dasher.getYHeadRot());
+            EntityUtil.makeEntityForceFaceAt(dasher, lookAt);
+//            dasher.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 360, 360);
+//            dasher.setYBodyRot(dasher.getYHeadRot());
 
             if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
                 dashingTickCounter += 5;
