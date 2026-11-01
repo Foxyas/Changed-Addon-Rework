@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoa
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.process.ProcessGrabbyEntities;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -148,6 +149,7 @@ public interface IGrabberEntity {
     default void setCanUseGrab(boolean value) {
     }
 
+    @Deprecated
     default void mayTickGrabAbility() {
         GrabEntityAbilityInstance grabAbilityInstance = this.getGrabAbilityInstance();
         if (grabAbilityInstance != null) {
@@ -211,7 +213,7 @@ public interface IGrabberEntity {
     }
 
     default int getGrabMaxCooldown() {
-        int defaultValue = 120;
+        int defaultValue = this instanceof ChangedEntity changedEntity ? ProcessGrabbyEntities.getMaxGrabCooldownOf(changedEntity) : 120;
         return this instanceof IOverrideGrabberStats o ? o.getMaxGrabCooldown(defaultValue) : defaultValue;
     }
 

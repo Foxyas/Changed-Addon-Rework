@@ -7,24 +7,17 @@ import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoa
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
-import net.foxyas.changedaddon.entity.api.IGrabberEntity.IHasGrabberGoals;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
-import net.foxyas.changedaddon.world.gamerules.WorldDifficulty;
+import net.foxyas.changedaddon.process.ProcessGrabbyEntities;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
-import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.beast.boss.Behemoth;
-import net.ltxprogrammer.changed.entity.beast.boss.BehemothHand;
-import net.ltxprogrammer.changed.entity.beast.boss.BehemothHead;
 import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
-import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -72,7 +65,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         if (ChangedAddonServerConfiguration.CAN_GRABBY_ENTITIES_SPAWN.get()) {
             if (this.getSelfVariant() != null) {
                 ChangedEntity self = (ChangedEntity) (Object) this;
-                if (self instanceof IGrabberCondition iGrabberCondition && !iGrabberCondition.isAffectedByGrab()) {
+                if (!ProcessGrabbyEntities.canSpawnWithGrabAbility(self)) {
                     return;
                 }
 
@@ -121,7 +114,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Inject(at = @At("TAIL"), method = "registerGoals", remap = true)
     private void goalsHook(CallbackInfo ci) {
         ChangedEntity self = (ChangedEntity) (Object) this;
-        if (self instanceof IGrabberCondition iGrabberCondition && !iGrabberCondition.isAffectedByGrab()) {
+        if (!ProcessGrabbyEntities.isAffectedByGrabAbility(self)) {
             return;
         }
 
@@ -141,7 +134,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     public boolean canEntityGrab(EntityType<?> selfType, Level level) {
         // Todo: Remove This in 0.16.0
         ChangedEntity self = (ChangedEntity) (Object) this;
-        if (self instanceof IGrabberCondition iGrabberCondition && !iGrabberCondition.isAffectedByGrab()) {
+        if (!ProcessGrabbyEntities.isAffectedByGrabAbility(self)) {
             return false;
         }
         if (self.getEntityShape() == EntityShape.FERAL) {
@@ -202,23 +195,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Override
     public int getGrabMaxCooldown() {
         ChangedEntity self = (ChangedEntity) (Object) this;
-
-        if (self instanceof Behemoth behemoth) {
-            int appliedCooldown = 200;
-            if (behemoth instanceof BehemothHand hand && (IAlphaAbleEntity.isEntityAlpha(hand.head) || IAlphaAbleEntity.isEntityAlpha(hand))) {
-                return (int) (appliedCooldown * 1.5f);
-            }
-            if (behemoth instanceof BehemothHead head && IAlphaAbleEntity.isEntityAlpha(head)) {
-                return (int) (appliedCooldown * 1.5f);
-            }
-            return appliedCooldown;
-        }
-
-        if (IAlphaAbleEntity.isEntityAlpha(self)) {
-            return (int) (120 * 1.5);
-        }
-
-        return 120;
+        return ProcessGrabbyEntities.getMaxGrabCooldownOf(self);
     }
 
     @Override
@@ -247,21 +224,8 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 
     @Override
     public boolean isAbleToGrab() {
-        EntityType<?> type = this.getType();
-        if (type == ChangedEntities.BEHEMOTH_HEAD.get() || type == ChangedEntities.BEHEMOTH_HAND_LEFT.get() || type == ChangedEntities.BEHEMOTH_HAND_RIGHT.get()) {
-            WorldDifficulty worldDifficulty = ChangedAddonServerConfiguration.BEHEMOTH_CAN_USE_GRAB_IN_DIFFICULTY.get();
-            Difficulty levelDifficulty = level.getDifficulty();
-
-            if (worldDifficulty == WorldDifficulty.NONE) {
-                return this.canUseGrab() || isAlpha();
-            } else if (worldDifficulty == WorldDifficulty.HARDCORE) {
-                this.setCanUseGrab(level.getLevelData().isHardcore());
-            }
-
-            this.setCanUseGrab(levelDifficulty.getId() >= worldDifficulty.getAsLevel());
-        }
-
-        return this.canUseGrab() || isAlpha();
+        ChangedEntity self = (ChangedEntity) (Object) this;
+        return this.canUseGrab() || ProcessGrabbyEntities.isAbleToUseGrab(self);
     }
 
     @ModifyReturnValue(method = "getAbilityInstance", at = @At("RETURN"))
@@ -277,99 +241,4 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         self.getEntityData().define(CAN_USE_GRAB, false);
         self.getEntityData().define(GRAB_COOLDOWN, 0);
     }
-
-//
-//
-//    @WrapOperation(method = "tryFuseWithTarget",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
-//                    ordinal = 2
-//            )
-//    )
-//    private LivingEntity hook(LivingEntity livingEntity, TransfurVariant<?> fusionVariant, Operation<LivingEntity> original) {
-//        LivingEntity originalEntity = original.call(livingEntity, fusionVariant);
-//        if (originalEntity instanceof IAlphaAbleEntity iAlphaAbleEntity) {
-//            iAlphaAbleEntity.setAlpha(this.isAlpha());
-//            iAlphaAbleEntity.setAlphaScale(this.alphaAdditionalScale());
-//        } else if (originalEntity instanceof Player player) {
-//            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-//            if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof IAlphaAbleEntity iAlphaAbleEntity) {
-//                iAlphaAbleEntity.setAlpha(this.isAlpha());
-//                iAlphaAbleEntity.setAlphaScale(this.alphaAdditionalScale());
-//            }
-//        }
-//        return originalEntity;
-//    }
-//
-//    @WrapOperation(method = "tryFuseWithTarget",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
-//                    ordinal = 0
-//            )
-//    )
-//    private LivingEntity playerFuseWithOtherPlayer(LivingEntity player,
-//                                                   TransfurVariant<?> fusionVariant,
-//                                                   Operation<LivingEntity> original,
-//                                                   @Local(argsOnly = true) LivingEntity target,
-//                                                   @Local(argsOnly = true) IAbstractChangedEntity source,
-//                                                   @Local(argsOnly = true) float amount) {
-//        ChangedEntity self = (ChangedEntity) (Object) this;
-//        LivingEntity call = original.call(player, fusionVariant);
-//        var event = new TransfurVariantEvents.OnPlayerFuseWithOther(target, player, self, fusionVariant);
-//        ChangedAddonMod.postEvent(event);
-//        return call;
-//    }
-//
-//    @WrapOperation(method = "tryFuseWithTarget",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
-//                    ordinal = 1
-//            )
-//    )
-//    private LivingEntity playerFuseWithEntity(LivingEntity player,
-//                                              TransfurVariant<?> fusionVariant,
-//                                              Operation<LivingEntity> original,
-//                                              @Local(argsOnly = true) LivingEntity target,
-//                                              @Local(argsOnly = true) IAbstractChangedEntity source,
-//                                              @Local(argsOnly = true) float amount) {
-//        ChangedEntity self = (ChangedEntity) (Object) this;
-//        LivingEntity call = original.call(player, fusionVariant);
-//        var event = new TransfurVariantEvents.OnPlayerFuseWithOther(target, player, self, fusionVariant);
-//        ChangedAddonMod.postEvent(event);
-//        return call;
-//    }
-//
-//    @WrapOperation(method = "tryFuseWithTarget",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
-//                    ordinal = 2
-//            )
-//    )
-//    private LivingEntity entityFuseWithOther(LivingEntity target,
-//                                             TransfurVariant<?> fusionVariant,
-//                                             Operation<LivingEntity> original,
-//                                             @Local(argsOnly = true) IAbstractChangedEntity source,
-//                                             @Local(argsOnly = true) float amount) {
-//        ChangedEntity self = (ChangedEntity) (Object) this;
-//        TransfurVariantInstance<?> oldVariantInstance = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(target));
-//        LivingEntity call = original.call(target, fusionVariant);
-//        var event = new TransfurVariantEvents.OnEntityFuseWithOther(target, oldVariantInstance, self, fusionVariant);
-//        ChangedAddonMod.postEvent(event);
-//        return call;
-//    }
-
-    //    @Override
-//    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {
-//        super.onSyncedDataUpdated(pKey);
-//        ChangedEntity self = (ChangedEntity) (Object) this;
-//        if (pKey == IS_ALPHA || pKey == ALPHA_SCALE) {
-//            this.refreshDimensions();
-//            IAlphaAbleEntity.applyOrRemoveAlphaModifiers(self, entityData.get(IS_ALPHA), entityData.get(ALPHA_SCALE));
-//            IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
-//        }
-//    }
 }
