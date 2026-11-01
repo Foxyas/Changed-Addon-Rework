@@ -1,10 +1,11 @@
 package net.foxyas.changedaddon.entity.ai.goals.generic.attacks;
 
+import net.foxyas.changedaddon.entity.ai.goals.simple.IAlphaEntityGoal;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.phys.Vec3;
 
-public class AlphaLeapDiveGoal extends LeapDiveGoal {
+public class AlphaLeapDiveGoal extends LeapDiveGoal implements IAlphaEntityGoal {
 
     public AlphaLeapDiveGoal(PathfinderMob mob,
                              IntProvider cooldownProvider,

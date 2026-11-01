@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoalBuilder;
 import net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal;
+import net.foxyas.changedaddon.entity.ai.goals.simple.IAlphaEntityGoal;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -22,13 +23,11 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
-import java.util.Set;
 import java.util.UUID;
 
 public interface IAlphaAbleEntity {
@@ -44,6 +43,20 @@ public interface IAlphaAbleEntity {
 
         default boolean isConsiderateAlpha(boolean originalValue) {
             return originalValue;
+        }
+    }
+
+    interface IOverrideAlphaGoals {
+        default void makeAlphaGoals() {}
+
+        default void mayRemoveAlphaGoals() {
+            if (!(this instanceof PathfinderMob mob)) {
+                return;
+            }
+
+            // Custom goals / Generic behavior.
+            mob.goalSelector.removeAllGoals(goal -> goal instanceof IAlphaEntityGoal);
+            mob.targetSelector.removeAllGoals(goal -> goal instanceof IAlphaEntityGoal);
         }
     }
 
@@ -67,13 +80,11 @@ public interface IAlphaAbleEntity {
         if (entity.level().isClientSide) return;
         removeAlphaModifiers(entity);
 
-        if (entity instanceof PathfinderMob mob) {
-            Set<WrappedGoal> availableGoals = mob.goalSelector.getAvailableGoals();
-            boolean flag = availableGoals.stream().map(WrappedGoal::getGoal).anyMatch(goal -> goal instanceof AlphaSleepGoal);
-            if (flag && !isAlpha) {
-                if (mob instanceof IAlphaAbleEntity iAlphaAbleEntity) iAlphaAbleEntity.removeAlphaGoals();
-            } else if (!flag && isAlpha) {
-                if (mob instanceof IAlphaAbleEntity iAlphaAbleEntity) iAlphaAbleEntity.addAlphaGoals();
+        if (entity instanceof PathfinderMob mob && mob instanceof IAlphaAbleEntity iAlphaableEntity) {
+            if (!isAlpha) {
+                iAlphaableEntity.removeAlphaGoals();
+            } else {
+                iAlphaableEntity.addAlphaGoals();
             }
         }
 
@@ -96,6 +107,10 @@ public interface IAlphaAbleEntity {
         if (!(this instanceof PathfinderMob mob)) {
             return;
         }
+        if (mob instanceof IOverrideAlphaGoals iOverrideAlphaGoals) {
+            iOverrideAlphaGoals.makeAlphaGoals();
+            return;
+        }
         mob.goalSelector.addGoal(10, new AlphaSleepGoal(mob, 6, (inter) -> inter >= 6, 1.5f, UniformInt.of(400, 800)));
         mob.goalSelector.addGoal(10, new AlphaLeapDiveGoalBuilder(mob)
                 .withCooldown(UniformInt.of(40, 80)) //IntProvider -> cooldownProvider
@@ -114,10 +129,20 @@ public interface IAlphaAbleEntity {
         if (!(this instanceof PathfinderMob mob)) {
             return;
         }
+        if (mob instanceof IOverrideAlphaGoals iOverrideAlphaGoals) {
+            iOverrideAlphaGoals.mayRemoveAlphaGoals();
+            return;
+        }
+
         mob.goalSelector.removeAllGoals(goal -> goal instanceof AlphaSleepGoal);
         mob.goalSelector.removeAllGoals(goal -> goal instanceof AlphaLeapDiveGoal);
+
         mob.targetSelector.removeAllGoals(goal -> goal instanceof AlphaSleepGoal);
         mob.targetSelector.removeAllGoals(goal -> goal instanceof AlphaLeapDiveGoal);
+
+        // Custom goals
+        mob.goalSelector.removeAllGoals(goal -> goal instanceof IAlphaEntityGoal);
+        mob.targetSelector.removeAllGoals(goal -> goal instanceof IAlphaEntityGoal);
     }
 
     private static void applyGenericAlphaAttributesModifiers(LivingEntity entity, float normalized) {

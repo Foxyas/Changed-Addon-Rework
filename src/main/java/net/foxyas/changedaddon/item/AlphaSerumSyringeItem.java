@@ -6,10 +6,12 @@ import net.foxyas.changedaddon.util.MathFormulasUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,9 +31,21 @@ public class AlphaSerumSyringeItem extends AbstractSyringeItem {
     @Override
     public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
         IAbstractChangedEntity entity = IAbstractChangedEntity.forEitherSafe(target).orElse(null);
-        if (entity == null || !(entity.getChangedEntity() instanceof IAlphaAbleEntity alphaAble) || alphaAble.isAlpha()) return false;
+        if (entity == null || !(entity.getChangedEntity() instanceof IAlphaAbleEntity alphaAble) || alphaAble.isAlpha())
+            return false;
 
         stack.shrink(1);
+
+        ItemStack pStack = new ItemStack(ChangedItems.SYRINGE.get());
+        if (attacker instanceof Player player) {
+            Inventory inventory = player.getInventory();
+            if (!inventory.add(pStack)) {
+                player.drop(stack, false);
+            }
+        } else {
+            attacker.spawnAtLocation(stack, attacker.getEyeHeight() * 0.80f);
+        }
+
         alphaAble.setAlpha(true);
         alphaAble.setAlphaScale(alphaScale(target.getRandom()));
         return true;

@@ -578,14 +578,6 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     }
 
     @Override
-    public void onGrabAbilityCreated(GrabEntityAbilityInstance instance) {
-        IExp10Logic.super.onGrabAbilityCreated(instance);
-        if (instance instanceof GrabEntityAbilityExtensor extensor) {
-            extensor.setTransfurDamageMode(false);
-        }
-    }
-
-    @Override
     public void applyAlphaAttributesModifiers(LivingEntity entity, float normalized) {
         IAlphaAbleEntity.apply(entity, Attributes.MAX_HEALTH, IAlphaAbleEntity.MAX_HEALTH, "Alpha Max Health", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
 

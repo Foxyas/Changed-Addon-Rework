@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.function.IntPredicate;
 import java.util.stream.Stream;
 
-public class AlphaSleepGoal extends Goal {
+public class AlphaSleepGoal extends Goal implements IAlphaEntityGoal {
 
     protected static final int MAX_SLEEP_COOLDOWN = 20 * 60;
     private static final EnumSet<Goal.Flag> FLAGS = EnumSet.allOf(Goal.Flag.class);

@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoa
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
+import net.foxyas.changedaddon.entity.api.IGrabberEntity.IHasGrabberGoals;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
 import net.foxyas.changedaddon.world.gamerules.WorldDifficulty;
@@ -123,6 +124,12 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         if (self instanceof IGrabberCondition iGrabberCondition && !iGrabberCondition.isAffectedByGrab()) {
             return;
         }
+
+        if (self instanceof IHasGrabberGoals iHasGrabberGoals) {
+            iHasGrabberGoals.makeGrabberGoals();
+            return;
+        }
+
         this.goalSelector.addGoal(10, new MayDropGrabbedEntityGoal(this));
         this.goalSelector.addGoal(10, new MayCauseGrabDamageGoal(this));
 
@@ -169,32 +176,10 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         if (self.getDimensions(self.getPose()).makeBoundingBox(self.position()) != self.getBoundingBox()) {
             this.refreshDimensions();
         }
-//        Todo: Uncomment this if REALLY needed. check LivingEntityChangedEntityMixin$changedEntityOnSyncedDataUpdatedHook for details.
-//        if (self instanceof IAlphaAbleEntity iAlphaAbleEntity) {
-//            if (iAlphaAbleEntity.isAlpha() && !appliedAlphaAttributes) {
-//                refreshAttributes(self);
-//                appliedAlphaAttributes = true;
-//            } else if (!iAlphaAbleEntity.isAlpha() && appliedAlphaAttributes) {
-//                refreshAttributes(self);
-//                appliedAlphaAttributes = false;
-//            }
-//        }
     }
 
     @Inject(method = "variantTick", at = @At("HEAD"), remap = false)
     private void variantTickHook(CallbackInfo ci) {
-//        Todo: Uncomment this if REALLY needed. check LivingEntityChangedEntityMixin$changedEntityOnSyncedDataUpdatedHook for details.
-//        ChangedEntity self = (ChangedEntity) (Object) this;
-//
-//        if (self instanceof IAlphaAbleEntity iAlphaAbleEntity) {
-//            if (iAlphaAbleEntity.isAlpha() && !appliedAlphaAttributesForHost) {
-//                refreshAttributesForHost(self);
-//                appliedAlphaAttributesForHost = true;
-//            } else if (!iAlphaAbleEntity.isAlpha() && appliedAlphaAttributesForHost) {
-//                refreshAttributesForHost(self);
-//                appliedAlphaAttributesForHost = false;
-//            }
-//        }
     }
 
     @Override

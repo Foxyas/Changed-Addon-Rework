@@ -47,11 +47,14 @@ public class MayGrabTargetGoal extends Goal {
         return super.isInterruptable();
     }
 
+    public boolean canEntityGrabRightNow(LivingEntity living) {
+        return grabber.canEntityGrab(living.getType(), living.level);
+    }
+
     @Override
     public boolean canUse() {
         if (!(grabber instanceof LivingEntity living)) return false;
-        boolean canEntityGrab = grabber.canEntityGrab(living.getType(), living.level);
-        if (!canEntityGrab) return false;
+        if (!canEntityGrabRightNow(living)) return false;
 
         GrabEntityAbilityInstance grabAbilityInstance = grabber.getGrabAbilityInstance();
         LivingEntity target = grabber.asMob().getTarget();
