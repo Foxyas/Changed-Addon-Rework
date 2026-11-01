@@ -35,9 +35,12 @@ public class CuttingRecipes {
     public static Ingredient SHEARS = matchesTool(ToolActions.SHEARS_DIG, Tags.Items.SHEARS);
 
     public static void register(Consumer<FinishedRecipe> consumer) {
+        // Knife
         cuttingFlowers(consumer);
+        // Axe
         strippingWood(consumer);
         salvagingWoodenFurniture(consumer);
+        // Shears
         salvagingUsingShears(consumer);
     }
 
@@ -70,8 +73,10 @@ public class CuttingRecipes {
     private static void salvagingWoodenFurniture(Consumer<FinishedRecipe> consumer) {
         salvagePlankFromFurniture(consumer,
                 ResourceLocation.parse(ChangedAddonBlocks.LUMINARA_WOOD_TYPE.name()).getPath(),
+                // Planks
                 ChangedAddonBlocks.LUMINARA_PLANKS.get(),
 
+                // Wooded furniture Items
                 ChangedAddonBlocks.LUMINARA_DOOR.get(),
                 ChangedAddonBlocks.LUMINARA_TRAPDOOR.get(),
                 ChangedAddonBlocks.LUMINARA_SIGN.get(),
@@ -112,11 +117,17 @@ public class CuttingRecipes {
                 .save(consumer, salvagingRecipe("luminara_leaves"));
     }
 
+    /**
+     * Generates an axe-cutting recipe for wooded furniture items, with a chance to recover one plank of the given type.
+     */
     private static void salvagePlankFromFurniture(Consumer<FinishedRecipe> consumer, String woodTypeId, ItemLike plank, ItemLike... furniture) {
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(furniture), AXES, plank, 1, 0.75F)
                 .save(consumer, salvagingRecipe(woodTypeId + "_furniture"));
     }
 
+    /**
+     * Generates an axe-stripping recipe for the pair of given logs, with custom sound and a Tree Bark result attached.
+     */
     private static void stripLogForBark(Consumer<FinishedRecipe> consumer, ItemLike log, ItemLike strippedLog) {
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(log), AXES_STRIP, strippedLog)
                 .addResult(ModItems.TREE_BARK.get())
