@@ -446,7 +446,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         phaseGoals.put(Exp9Phase.PHASE1, List.of(
                 Pair.of(15, new ThunderDashAttackGoal(this, UniformInt.of(200, 500))),
                 Pair.of(15, new ThunderDiveGoal(this, UniformInt.of(60, 100), 1.5f, 6f, 1f, 0.5f, 4)),
-                Pair.of(20, new TeleportRandomlyGoal(this, UniformInt.of(160, 300), 12.0D)), // Phase 1: Occasional repositioning
+                Pair.of(5, new TeleportRandomlyGoal(this, UniformInt.of(160, 300), 12.0D)), // Phase 1: Occasional repositioning
                 Pair.of(10, new AoEThunderStrikeGoal(
                         this,
                         UniformInt.of(80, 120),
@@ -470,7 +470,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                         UniformInt.of(40, 80),
                         8,
                         UniformFloat.of(4, 8))),
-                Pair.of(18, new TeleportRandomlyGoal(this, UniformInt.of(120, 240), 16.0D)), // Phase 2: Moderate frequency
+                Pair.of(5, new TeleportRandomlyGoal(this, UniformInt.of(120, 240), 16.0D)), // Phase 2: Moderate frequency
                 Pair.of(10, new AoEThunderStrikeGoal(
                         this,
                         UniformInt.of(80, 120),
@@ -489,7 +489,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                         1f,
                         0.5f,
                         4)),
-                Pair.of(12, new TeleportRandomlyGoal(this, UniformInt.of(80, 160), 20.0D)), // Phase 3: High mobility & evasiveness
+                Pair.of(5, new TeleportRandomlyGoal(this, UniformInt.of(80, 160), 20.0D)), // Phase 3: High mobility & evasiveness
                 Pair.of(15, new LightningComboAttackGoal(this,
                         UniformInt.of(100, 140),
                         UniformInt.of(4, 8),

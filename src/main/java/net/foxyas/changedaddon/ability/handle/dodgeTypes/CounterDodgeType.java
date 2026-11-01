@@ -1,14 +1,11 @@
 package net.foxyas.changedaddon.ability.handle.dodgeTypes;
 
-import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
-import net.foxyas.changedaddon.ability.handle.DamageSourceInstance;
-import net.minecraft.world.damagesource.DamageSource;
+import net.foxyas.changedaddon.ability.handle.DamageContext;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import org.jetbrains.annotations.Nullable;
 
 public class CounterDodgeType extends DodgeType {
@@ -38,12 +35,12 @@ public class CounterDodgeType extends DodgeType {
     }
 
     @Override
-    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, DamageContext sourceProjectileEither, boolean causeExhaustion) {
         //dodgeAbilityInstance.dodgeAwayFromAttacker(dodger, attacker);
     }
 
     @Override
-    public void applyDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public void applyDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, DamageContext sourceProjectileEither, boolean causeExhaustion) {
         dodgeAbilityInstance.applyDodgeAnimations(sourceProjectileEither);
         dodgeAbilityInstance.subDodgeStamina();
         if (dodger != null) {
@@ -70,7 +67,7 @@ public class CounterDodgeType extends DodgeType {
     }
 
     @Override
-    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
+    public boolean willApplyIFrames(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, DamageContext sourceProjectileEither, boolean causeExhaustion) {
         return true;
     }
 }

@@ -1,8 +1,7 @@
 package net.foxyas.changedaddon.ability.handle.dodgeTypes;
 
-import com.mojang.datafixers.util.Either;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
-import net.foxyas.changedaddon.ability.handle.DamageSourceInstance;
+import net.foxyas.changedaddon.ability.handle.DamageContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -11,7 +10,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -25,12 +23,12 @@ public class TeleportDodgeType extends DodgeType {
     }
 
     @Override
-    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, Either<DamageSourceInstance, Projectile> sourceProjectileEither, boolean causeExhaustion) {
-        super.applyDodgeMovement(dodgeAbilityInstance, dodger, sourceProjectileEither, causeExhaustion);
+    public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, DamageContext damageContext, boolean causeExhaustion) {
+        super.applyDodgeMovement(dodgeAbilityInstance, dodger, damageContext, causeExhaustion);
         Level level = dodger.level();
 
         // Map both DamageSource and Projectile to an Entity (or null if no direct entity)
-        Entity sourceEntity = sourceProjectileEither.map(
+        Entity sourceEntity = damageContext.asEither().map(
                 damageSourceInstance -> {
                     DamageSource damageSource = damageSourceInstance.damageSource();
                     return damageSource.getDirectEntity() != null ? damageSource.getDirectEntity() : damageSource.getEntity();
