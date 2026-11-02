@@ -37,9 +37,11 @@ public class CuttingRecipes {
     public static void register(Consumer<FinishedRecipe> consumer) {
         // Knife
         cuttingFlowers(consumer);
+        
         // Axe
         strippingWood(consumer);
         salvagingWoodenFurniture(consumer);
+        
         // Shears
         salvagingUsingShears(consumer);
     }
@@ -115,6 +117,14 @@ public class CuttingRecipes {
                 .addResultWithChance(Items.STICK, 0.75f, 4)
                 .addResultWithChance(ChangedAddonItems.LUMINARA_SAPLING.get(), 0.9f, 1)
                 .save(consumer, salvagingRecipe("luminara_leaves"));
+    }
+
+    /**
+     * Generates an axe-cutting recipe for wooded furniture items, with a chance to recover one plank of the given type.
+     */
+    private static void salvagePlankFromFurniture(Consumer<FinishedRecipe> consumer, WoodType woodType, ItemLike plank, ItemLike... furniture) {
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(furniture), AXES, plank, 1, 0.75F)
+                .save(consumer, salvagingRecipe(woodType.name() + "_furniture"));
     }
 
     /**
