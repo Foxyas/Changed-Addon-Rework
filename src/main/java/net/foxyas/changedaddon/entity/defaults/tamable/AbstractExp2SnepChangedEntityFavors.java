@@ -431,6 +431,9 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
     }
 
     public boolean canDoFavor(LatexFavor favor) {
+        if (this.isUnfusedFromHost()) {
+            return favor != LatexFavor.SUIT_OWNER;
+        }
         return true;
     }
 

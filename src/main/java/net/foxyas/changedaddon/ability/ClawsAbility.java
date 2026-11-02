@@ -1,6 +1,9 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
+import net.foxyas.changedaddon.init.ChangedAddonAbilities;
+import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -8,24 +11,34 @@ import net.ltxprogrammer.changed.client.AbilityColors;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.EntityShape;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-public class ClawsAbility extends AbstractAbility<ClawsAbility.Data> {
+public class ClawsAbility extends AbstractAbility<ClawsAbility.Instance> {
 
     public ClawsAbility() {
-        super(Data::new);
+        super(Instance::new);
     }
 
-    public static class Data extends AbstractAbilityInstance {
+    public static class Instance extends AbstractAbilityInstance {
         public boolean isActive = false;
 
-        public Data(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
+        public Instance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
             super(ability, entity);
         }
 
@@ -134,7 +147,7 @@ public class ClawsAbility extends AbstractAbility<ClawsAbility.Data> {
     public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
         Collection<Component> description = new ArrayList<>(super.getAbilityDescription(entity));
         description.add(Component.translatable("ability.changed_addon.claws.desc"));
-        Data data = entity.getAbilityInstance(this);
+        Instance data = entity.getAbilityInstance(this);
         if (data != null) {
             description.add(Component.translatable("ability.changed_addon.claws.desc.info." + (data.isActive ? "enabled" : "disabled")));
         }
@@ -149,5 +162,28 @@ public class ClawsAbility extends AbstractAbility<ClawsAbility.Data> {
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
         return 2;
+    }
+
+    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
+    public static class EventHandler {
+
+        @SubscribeEvent
+        public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+            Player player = event.getEntity();
+            TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (transfurVariantInstance == null || !player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) { // Only works if the player use the hands instead of a tool
+                return;
+            }
+
+            BlockState state = event.getState();
+            if (!state.is(BlockTags.DIRT) && !state.is(BlockTags.MINEABLE_WITH_SHOVEL)) {
+                return;
+            }
+
+            Instance clawsAbilityInstance = transfurVariantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS.get());
+            if (clawsAbilityInstance != null && clawsAbilityInstance.isActive) {
+                event.setNewSpeed(event.getNewSpeed() * 1.25f);
+            }
+        }
     }
 }

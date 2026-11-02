@@ -180,7 +180,7 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
         ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
             AbstractAbilityInstance abilityInstance = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS.get());
             if (abilityInstance != null) {
-                ClawsAbility.Data clawAbility = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS.get());
+                ClawsAbility.Instance clawAbility = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS.get());
                 if (clawAbility.isActive && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
                     //System.out.println("Habilidade ativada!");
                     // ⚔ Área de efeito: Raio de 1.5 blocos ao redor do alvo
