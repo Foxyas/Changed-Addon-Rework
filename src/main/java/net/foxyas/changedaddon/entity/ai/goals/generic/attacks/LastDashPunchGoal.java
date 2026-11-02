@@ -164,8 +164,8 @@ public class LastDashPunchGoal extends Goal {
                 Color3 first = entityColor.getFirst();
                 Color3 second = entityColor.getSecond();
                 RandomSource randomSource = mob.getRandom();
-                server.sendParticles(ParticleTypes.ENTITY_EFFECT, mob.getX() + randomSource.nextGaussian() * 2, mob.getEyeY() + randomSource.nextGaussian() * 0.2, mob.getZ() + randomSource.nextGaussian() * 2, 0, first.red() / 255, first.green() / 255, first.blue() / 255, 0.0);
-                server.sendParticles(ParticleTypes.ENTITY_EFFECT, mob.getX() + randomSource.nextGaussian() * 2, mob.getEyeY() + randomSource.nextGaussian() * 0.2, mob.getZ() + randomSource.nextGaussian() * 2, 0, second.red() / 255, second.green() / 255, second.blue() / 255, 0.0);
+                server.sendParticles(ParticleTypes.ENTITY_EFFECT, mob.getX() + randomSource.nextGaussian() * 1, mob.getEyeY() + randomSource.nextGaussian() * 0.4, mob.getZ() + randomSource.nextGaussian() * 1, 0, first.red(), first.green(), first.blue(), 0.0);
+                server.sendParticles(ParticleTypes.ENTITY_EFFECT, mob.getX() + randomSource.nextGaussian() * 1, mob.getEyeY() + randomSource.nextGaussian() * 0.4, mob.getZ() + randomSource.nextGaussian() * 1, 0, second.red(), second.green(), second.blue(), 0.0);
             } else {
                 server.sendParticles(ParticleTypes.ENTITY_EFFECT, mob.getX(), mob.getEyeY(), mob.getZ(), 0, 0.2, 0.2, 0.2, 0.0);
             }
@@ -328,7 +328,7 @@ public class LastDashPunchGoal extends Goal {
         // CHECK IF MAX PARRIES REACHED
         if (currentParries >= requiredParries) {
             // Boss is completely parried successfully to the max! Punish the boss.
-            // Todo: make it kill the boss
+            onTargetParryEnoughTimes();
             stop();
         } else {
             // Not enough parries yet! Reset state to CHARGING for the next rapid dash
@@ -338,6 +338,12 @@ public class LastDashPunchGoal extends Goal {
                 player.displayClientMessage(Component.translatable("text.changed_addon.boss_attacks.dash_recharge_hint", (requiredParries - currentParries)), true);
             }
         }
+    }
+
+    protected void onTargetParryEnoughTimes() {
+    }
+
+    protected void onHitEnoughTimes() {
     }
 
     protected void onBlockedAttemptToHitTarget(LivingEntity target) {
@@ -366,7 +372,7 @@ public class LastDashPunchGoal extends Goal {
 
         // Check if boss has landed 5 hits total -> disable the canTrigger flag
         if (successfulHitsLanded >= 5) {
-            this.canTriggerDashPunch = false;
+            onHitEnoughTimes();
             stop();
             return;
         }
@@ -441,5 +447,13 @@ public class LastDashPunchGoal extends Goal {
         CHARGING,
         DASHING,
         RECOIL
+    }
+
+    public int getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
     }
 }

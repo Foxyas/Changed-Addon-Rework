@@ -6,7 +6,6 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
-import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
 import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
 import net.foxyas.changedaddon.effect.particles.EntityLinkedThunderParticleOptions;
@@ -15,6 +14,7 @@ import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.ExtinguishFireNearbyGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
+import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.LastDashPunchGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicThunderBolt;
@@ -27,7 +27,6 @@ import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.MathUtils;
 import net.foxyas.changedaddon.util.ParticlesUtil;
-import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -72,6 +71,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
@@ -128,6 +128,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     protected final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     protected boolean shouldBleed = false;
+    protected boolean doingLastPunchAttack = false;
     protected boolean shouldPhase = true;
 
     public final BurstAbilityHandle<Experiment009BossEntity> burstAbilityHandle;
@@ -475,27 +476,52 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         // Phase 3 Goals
         phaseGoals.put(Exp9Phase.PHASE3, List.of(
-                Pair.of(10, new ThunderDashAttackGoal(this, UniformInt.of(200, 400))),
-                Pair.of(10, new ThunderDiveGoal(this,
-                        UniformInt.of(60, 100),
-                        1.5f,
-                        6f,
-                        1f,
-                        0.5f,
-                        4)),
-                Pair.of(5, new TeleportRandomlyGoal(this, UniformInt.of(80, 160), 20.0D)), // Phase 3: High mobility & evasiveness
-                Pair.of(15, new LightningComboAttackGoal(this,
-                        UniformInt.of(100, 140),
-                        UniformInt.of(4, 8),
-                        UniformInt.of(20, 40),
-                        UniformFloat.of(8, 12))),
-                Pair.of(15, new AoEThunderStrikeGoal(
-                        this,
-                        UniformInt.of(80, 120),
-                        UniformInt.of(4, 8),
-                        1.5f,
-                        UniformInt.of(120, 200))))
+                        Pair.of(10, new ThunderDashAttackGoal(this, UniformInt.of(200, 400))),
+                        Pair.of(10, new ThunderDiveGoal(this,
+                                UniformInt.of(60, 100),
+                                1.5f,
+                                6f,
+                                1f,
+                                0.5f,
+                                4)),
+                        Pair.of(5, new TeleportRandomlyGoal(this, UniformInt.of(80, 160), 20.0D)), // Phase 3: High mobility & evasiveness
+                        Pair.of(15, new LightningComboAttackGoal(this,
+                                UniformInt.of(100, 140),
+                                UniformInt.of(4, 8),
+                                UniformInt.of(20, 40),
+                                UniformFloat.of(8, 12))),
+                        Pair.of(15, new AoEThunderStrikeGoal(
+                                this,
+                                UniformInt.of(80, 120),
+                                UniformInt.of(4, 8),
+                                1.5f,
+                                UniformInt.of(120, 200)))
+                )
         );
+    }
+
+    private LastDashPunchGoal makeLatexPunchGoal() {
+        return new LastDashPunchGoal(this) {
+            @Override
+            public boolean canUse() {
+                this.canTriggerDashPunch = Experiment009BossEntity.this.doingLastPunchAttack;
+                return super.canUse();
+            }
+
+            @Override
+            protected void onTargetParryEnoughTimes() {
+                super.onTargetParryEnoughTimes();
+                Experiment009BossEntity.this.doingLastPunchAttack = false;
+                Experiment009BossEntity.this.setBleeding(true);
+                this.mob.hurt(mob.damageSources().mobAttack(target), mob.getHealth() * 2);
+            }
+
+            @Override
+            protected void onHitEnoughTimes() {
+                super.onHitEnoughTimes();
+                Experiment009BossEntity.this.doingLastPunchAttack = false;
+            }
+        };
     }
 
     @Override
@@ -773,18 +799,46 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             return false;
         }
 
-        if (this.isPhase3() && (isBleeding() && this.computeHealthRatioForCurrentPhase() > 0.25f)) {
-            if (!this.isInvulnerableTo(source)) {
-                if (source.getDirectEntity() != null && source.getDirectEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
-                    double speed = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2.0f);
-                    dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
-                }
+        if (this.isPhase3() && (this.getHealth() <= amount || this.computeHealthRatioForCurrentPhase() <= 0.025f)) {
+            if (this.getHealth() <= 1f) {
+                if (!this.isInvulnerableTo(source)) {
+                    if (source.getDirectEntity() != null && source.getDirectEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
+                        double speed = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2.0f);
+                        dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
+                    }
+                    Set<WrappedGoal> availableGoals = this.goalSelector.getAvailableGoals();
 
-                DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
-                this.setDeltaMovement(this.getDeltaMovement().multiply(0, 1, 0));
-                this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
-                this.setHealth(this.getHealth() - 2f);
-                return false;
+                    if (!doingLastPunchAttack && availableGoals.stream().map(WrappedGoal::getGoal).noneMatch(goal -> goal instanceof LastDashPunchGoal)) {
+                        DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
+                        this.setDeltaMovement(this.getDeltaMovement().multiply(0, 1, 0));
+                        this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
+                        this.doingLastPunchAttack = true;
+                        this.setBleeding(false);
+                        this.goalSelector.removeAllGoals(goal -> goal instanceof IAbilityGoal && !(goal instanceof ThunderDiveGoal));
+                        this.goalSelector.addGoal(3, makeLatexPunchGoal());
+                        return false;
+                    }
+
+                    if (availableGoals.stream().map(WrappedGoal::getGoal).anyMatch(goal -> goal instanceof LastDashPunchGoal)
+                            && doingLastPunchAttack
+                            && !isBleeding()) {
+                        DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
+                        this.setDeltaMovement(this.getDeltaMovement().multiply(0, 1, 0));
+                        this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
+                        this.doingLastPunchAttack = true;
+
+                        for (WrappedGoal availableGoal : availableGoals) {
+                            if (availableGoal.getGoal() instanceof LastDashPunchGoal lastDashPunchGoal && !availableGoal.isRunning()) {
+                                lastDashPunchGoal.setCooldown(0);
+                                availableGoal.start();
+                            }
+                        }
+                        return false;
+                    }
+                }
+            } else {
+                amount = this.getHealth() - 1f;
+                this.setHealth(1f);
             }
         }
 
@@ -1024,7 +1078,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             increaseAngerAt(livingEntity);
         }
 
-        if (this.isPhase3() && !isBleeding()) {
+        if (this.isPhase3() && !isBleeding() && this.computeHealthRatioForCurrentPhase() >= 0.25f) {
             this.setBleeding(this.getRandom().nextFloat() >= 0.65f);
             if (this.isBleeding()) {
                 level.playSound(null, this.blockPosition().above(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1.25f, 0.55f);
@@ -1040,15 +1094,15 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         float ratio = this.computeHealthRatio();
         boolean hasPhase3HealthRatio = currentHealth <= maxHealth * PHASE_3_HEALTH_RATIO || ratio <= PHASE_3_HEALTH_RATIO;
         boolean hasPhase2HealthRatio = currentHealth <= maxHealth * PHASE_2_HEALTH_RATIO && !hasPhase3HealthRatio;
-        if (hasPhase2HealthRatio && !this.isPhase2() && !this.isPhase3()) {
-            this.setPhase(Exp9Phase.PHASE2);
-//            this.onPhaseChange(oldPhase, this.getPhase());
-            level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
-        }
 
-        if (hasPhase3HealthRatio && this.isPhase2() && !this.isPhase3()) {
+        // Check for Phase 3 first so it can catch up from Phase 1 or Phase 2
+        if (hasPhase3HealthRatio && !this.isPhase3()) {
             this.setPhase(Exp9Phase.PHASE3);
-//                this.onPhaseChange(oldPhase, this.getPhase());
+//      this.onPhaseChange(oldPhase, this.getPhase());
+            level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
+        } else if (hasPhase2HealthRatio && !this.isPhase2() && !this.isPhase3()) {
+            this.setPhase(Exp9Phase.PHASE2);
+//      this.onPhaseChange(oldPhase, this.getPhase());
             level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 5f, 0);
         }
     }
@@ -1369,6 +1423,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             setPhase3(tag.getBoolean("isPhase3"));
         if (tag.contains("isBleeding"))
             shouldBleed = tag.getBoolean("isBleeding");
+        if (tag.contains("doingLastPunchAttack"))
+            doingLastPunchAttack = tag.getBoolean("doingLastPunchAttack");
         if (tag.contains("castingAttack"))
             this.setCastingAttack(tag.getBoolean("castingAttack"));
         if (tag.contains("castingAttackTicks"))
@@ -1389,6 +1445,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         tag.putBoolean("isPhase3", isPhase3());
         tag.putBoolean("isBleeding", shouldBleed);
+        tag.putBoolean("doingLastPunchAttack", doingLastPunchAttack);
         tag.putBoolean("castingAttack", this.isCastingAttack());
         tag.putInt("castingAttackTicks", this.getCastingTicks());
         tag.putInt("maxCastingTicks", this.getMaxCastingTicks());
@@ -1822,7 +1879,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
             if (!(source instanceof Experiment009BossEntity boss)) return;
 
-            if (boss.isPhase3()) {
+            if (boss.isPhase3() && !boss.isDeadOrDying()) {
                 boss.heal(0.5f);
             }
 

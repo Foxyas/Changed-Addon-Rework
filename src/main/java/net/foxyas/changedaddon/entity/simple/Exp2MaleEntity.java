@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -187,7 +188,7 @@ public class Exp2MaleEntity extends AbstractExp2SnepChangedEntityFavors {
 
     @Override
     public boolean onPat() {
-        playSound(sounds.get(random.nextInt(sounds.size())), 2.5f, 1);
+        level.playSound(null, this, sounds.get(random.nextInt(sounds.size())), this.getSoundSource(), 2.5f, 1f);
         return true;
     }
 }
