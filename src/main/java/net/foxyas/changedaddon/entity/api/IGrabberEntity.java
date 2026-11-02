@@ -1,8 +1,12 @@
 package net.foxyas.changedaddon.entity.api;
 
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
+import net.foxyas.changedaddon.entity.ai.goals.abilities.MayCauseGrabDamageGoal;
+import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoal;
+import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.process.ProcessGrabbyEntities;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -18,6 +22,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -50,13 +55,33 @@ public interface IGrabberEntity {
         }
     }
 
+    interface IOverrideGrabberStats {
+        default int getMaxGrabCooldown(int defaultValue) {
+            return defaultValue;
+        }
+    }
+
     interface IGrabberCondition {
         boolean isAffectedByGrab();
     }
 
     interface IConditionalGrabber {
         boolean canCauseGrabDamage();
-        default void onGrabAbilityCreated(GrabEntityAbilityInstance instance) {}
+
+        default void onGrabAbilityCreated(GrabEntityAbilityInstance instance) {
+        }
+    }
+
+    interface IHasGrabberGoals {
+        default void makeGrabberGoals() {
+            if (!(this instanceof Mob mob)) return;
+            if (!(this instanceof IGrabberEntity grabber)) return;
+            mob.goalSelector.addGoal(10, new MayDropGrabbedEntityGoal(grabber));
+            mob.goalSelector.addGoal(10, new MayCauseGrabDamageGoal(grabber));
+
+            // Todo: May Remove This in 0.16.0
+            mob.goalSelector.addGoal(10, new MayGrabTargetGoal(grabber));
+        }
     }
 
     EntityDataAccessor<Boolean> CAN_USE_GRAB = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.BOOLEAN);
@@ -95,6 +120,10 @@ public interface IGrabberEntity {
             grabEntityAbilityExtensor.setSafeMode(isSafeByDefault);
         }
 
+        if (instance != null && this instanceof IConditionalGrabber conditionalGrabber) {
+            conditionalGrabber.onGrabAbilityCreated(instance);
+        }
+
         return instance;
     }
 
@@ -120,6 +149,7 @@ public interface IGrabberEntity {
     default void setCanUseGrab(boolean value) {
     }
 
+    @Deprecated
     default void mayTickGrabAbility() {
         GrabEntityAbilityInstance grabAbilityInstance = this.getGrabAbilityInstance();
         if (grabAbilityInstance != null) {
@@ -183,7 +213,8 @@ public interface IGrabberEntity {
     }
 
     default int getGrabMaxCooldown() {
-        return 120;
+        int defaultValue = this instanceof ChangedEntity changedEntity ? ProcessGrabbyEntities.getMaxGrabCooldownOf(changedEntity) : 120;
+        return this instanceof IOverrideGrabberStats o ? o.getMaxGrabCooldown(defaultValue) : defaultValue;
     }
 
     default boolean shouldRespectGrab(PathfinderMob entitiesTryingToTarget) {

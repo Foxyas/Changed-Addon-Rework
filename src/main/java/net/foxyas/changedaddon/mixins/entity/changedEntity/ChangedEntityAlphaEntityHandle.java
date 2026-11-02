@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.mixins.entity.changedEntity;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoalBuilder;
+import net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
@@ -9,13 +11,16 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.boss.BehemothHead;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,7 +44,7 @@ public abstract class ChangedEntityAlphaEntityHandle extends Monster implements 
 
     @Shadow
     public abstract LivingEntity maybeGetUnderlying();
-    
+
     @Inject(method = "tick", at = @At("HEAD"), remap = true)
     private void AlphaAbleEntities$tickHook(CallbackInfo ci) {
         ChangedEntity self = (ChangedEntity) (Object) this;
@@ -53,6 +58,29 @@ public abstract class ChangedEntityAlphaEntityHandle extends Monster implements 
                 }
             }
         }
+    }
+
+    @Override
+    public void addAlphaGoals() {
+        ChangedEntity self = (ChangedEntity) (Object) this;
+
+        if (self instanceof IOverrideAlphaGoals iOverrideAlphaGoals) {
+            iOverrideAlphaGoals.makeAlphaGoals();
+            return;
+        }
+
+        self.goalSelector.addGoal(10, new AlphaSleepGoal(self, 6, (inter) -> inter >= 6, 1.5f, UniformInt.of(400, 800)));
+        self.goalSelector.addGoal(10, new AlphaLeapDiveGoalBuilder(self)
+                .withCooldown(UniformInt.of(40, 80)) //IntProvider -> cooldownProvider
+                .withFollowAscendMultiplier(new Vec3(0.25f, 0.25f, 0.25f))
+                .withAscendInitialBoost(0.6)
+                .withAscendSpeed(0.8f)
+                .withAscendHoldY(2f)
+                .withDiveSpeedMultiplier(new Vec3(1f, 1f, 1f))
+                .withFailSafeTicks(60)
+                .withRingRadius(4)
+                .build()
+        );
     }
 
     @Inject(method = "mirrorLiving", at = @At("TAIL"), remap = false)

@@ -122,10 +122,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     public float PHASE_2_HEALTH_RATIO = 0.75f;
     public float PHASE_1_HEALTH_RATIO = 0.25f;
 
-//    private static EntityDataAccessor<Exp9Phase> PHASE() {
-//        return SynchedEntityData.defineId(Experiment009BossEntity.class, ChangedAddonEntityDataSerializers.EXP9_PHASES.get());
-//    }
-
     protected final Map<Exp9Phase, List<Pair<Integer, Goal>>> phaseGoals = new EnumMap<>(Exp9Phase.class);
     private final PatDynamicAngerManagement angerManagement;
     protected int maxCastingTicks = 200;
@@ -133,7 +129,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     protected final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     protected boolean shouldBleed = false;
     protected boolean shouldPhase = true;
-//    public final TargetDataManager targetDataManager;
 
     public final BurstAbilityHandle<Experiment009BossEntity> burstAbilityHandle;
 
@@ -148,7 +143,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         setNoAi(false);
         setPersistenceRequired();
         this.angerManagement = new PatDynamicAngerManagement(this::targetSelectorTest, new ArrayList<>());
-//        this.targetDataManager = new TargetDataManager(this, this::targetSelectorTest);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
         burstAbilityHandle = new BurstAbilityHandle.Builder<>(this)
@@ -1762,14 +1756,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     public boolean canCauseGrabDamage() {
         return true;
-    }
-
-    @Override
-    public void onGrabAbilityCreated(GrabEntityAbilityInstance instance) {
-        IExp9Logic.super.onGrabAbilityCreated(instance);
-        if (instance instanceof GrabEntityAbilityExtensor extensor) {
-            extensor.setTransfurDamageMode(false);
-        }
     }
 
     @Override
