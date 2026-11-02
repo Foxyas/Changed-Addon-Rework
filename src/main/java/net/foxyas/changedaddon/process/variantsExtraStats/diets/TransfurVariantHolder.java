@@ -18,6 +18,14 @@ public record TransfurVariantHolder(Either<TransfurVariant<?>, TagKey<TransfurVa
         this(Either.right(variantTag));
     }
 
+    public static TransfurVariantHolder of(TransfurVariant<?> variant) {
+        return new TransfurVariantHolder(variant);
+    }
+
+    public static TransfurVariantHolder of(TagKey<TransfurVariant<?>> tag) {
+        return new TransfurVariantHolder(tag);
+    }
+
     public static final Codec<TransfurVariantHolder> CODEC = Codec.STRING.comapFlatMap(
             str -> {
                 if (str.startsWith("#")) {

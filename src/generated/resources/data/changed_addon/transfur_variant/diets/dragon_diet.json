@@ -14,14 +14,14 @@
     ],
     "mobEffect": [
       {
-        "chance": 1.0,
+        "chance": 0.5,
         "effect": {
           "duration": 40,
           "id": "minecraft:regeneration"
         }
       }
     ],
-    "saturationBonus": 0.5
+    "saturationBonus": 4.0
   },
   "offDietEffects": [
     {

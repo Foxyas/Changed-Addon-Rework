@@ -1,0 +1,21 @@
+{
+  "foods": {
+    "hungerBonus": 4.0,
+    "ingredient": [
+      {
+        "item": "minecraft:cookie"
+      }
+    ],
+    "mobEffect": [
+      {
+        "chance": 1.0,
+        "effect": {
+          "duration": 40,
+          "id": "minecraft:regeneration"
+        }
+      }
+    ],
+    "saturationBonus": 8.0
+  },
+  "variants": "changed_addon:form_hayden_fennec_fox"
+}

@@ -169,7 +169,7 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 Items.ROTTEN_FLESH,
                 Items.SALMON,
                 Items.TROPICAL_FISH);
-        tag(ChangedAddonTags.Items.NOT_FOOD).add(
+        tag(ChangedAddonTags.Items.UNIVERSAL_FOODS).add(
                 SNEPSI.get(),
                 DIFFUSION_SYRINGE.get(),
                 FOXTA.get(),

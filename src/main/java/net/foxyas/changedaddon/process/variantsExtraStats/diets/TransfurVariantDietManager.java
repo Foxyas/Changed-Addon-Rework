@@ -97,6 +97,10 @@ public class TransfurVariantDietManager extends SimpleJsonResourceReloadListener
         return list;
     }
 
+    public static ResourceLocation getDietId(Level level, TransfurVariantDiet diet) {
+        return ChangedAddonTransfurDiets.registry(level).getKey(diet);
+    }
+
     public static Map<ResourceLocation, TransfurVariantDiet> getAllDietsForLevel(Level level) {
         return ChangedAddonTransfurDiets.registry(level)
                 .entrySet()

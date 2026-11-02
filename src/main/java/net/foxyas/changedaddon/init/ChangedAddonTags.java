@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.init;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -60,7 +59,7 @@ public final class ChangedAddonTags {
 
 
         public static final TagKey<Item> GOOEY = key("gooey");
-        public static final TagKey<Item> NOT_FOOD = key("is_not_food");
+        public static final TagKey<Item> UNIVERSAL_FOODS = key("universal_foods");
         public static final TagKey<Item> LATEX_SOLVENT_APPLICABLE = key("latex_solvent_applicable");
         public static final TagKey<Item> MEAT = key("meat");
         public static final TagKey<Item> BLOOD_TYPE_SYRINGE = key("blood_type_syringe");
