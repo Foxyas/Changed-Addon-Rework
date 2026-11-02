@@ -53,25 +53,14 @@ public class CuttingRecipes {
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
                         4)
                 .save(consumer);
+
         CuttingBoardRecipeBuilder.cuttingRecipe(
-                        Ingredient.of(ChangedAddonItems.LUMINARA_SAPLING.get()), KNIVES, ChangedAddonItems.LUMINARA_BLOOM.get(),
+                        Ingredient.of(ChangedAddonItems.LUMINARA_SAPLING.get()),
+                        KNIVES,
+                        ChangedAddonItems.LUMINARA_BLOOM.get(),
                         4
                 )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.5f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.5f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.5f,
-                        1
-                )
+                .addResultWithChance(ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(), 0.75f, 2)
                 .save(consumer);
     }
 
@@ -90,7 +79,7 @@ public class CuttingRecipes {
                 // Planks
                 ChangedAddonBlocks.LUMINARA_PLANKS.get(),
 
-                // Wooded furniture items
+                // Wooded furniture Items
                 ChangedAddonBlocks.LUMINARA_DOOR.get(),
                 ChangedAddonBlocks.LUMINARA_TRAPDOOR.get(),
                 ChangedAddonBlocks.LUMINARA_SIGN.get(),
@@ -108,27 +97,15 @@ public class CuttingRecipes {
                         ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
                         3)
                 .save(consumer, salvagingRecipe("luminara_bloom"));
+
         CuttingBoardRecipeBuilder.cuttingRecipe(
                         Ingredient.of(ChangedAddonItems.LUMINARA_SAPLING.get()),
                         SHEARS,
                         ChangedAddonItems.LUMINARA_BLOOM.get(),
                         1
                 )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM.get(),
-                        0.85f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.85f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.65f,
-                        1
-                )
+                .addResultWithChance(ChangedAddonItems.LUMINARA_BLOOM.get(), 0.85f, 1)
+                .addResultWithChance(ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(), 0.75f, 2)
                 .save(consumer, salvagingRecipe("luminara_sapling"));
 
         CuttingBoardRecipeBuilder.cuttingRecipe(
@@ -138,21 +115,8 @@ public class CuttingRecipes {
                         4,
                         0.9f
                 )
-                .addResultWithChance(
-                        Items.STICK,
-                        0.75f,
-                        4
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_SAPLING.get(),
-                        0.9f,
-                        1
-                )
-                .addResultWithChance(
-                        ChangedAddonItems.LUMINARA_BLOOM_PETALS.get(),
-                        0.25f,
-                        2
-                )
+                .addResultWithChance(Items.STICK, 0.75f, 4)
+                .addResultWithChance(ChangedAddonItems.LUMINARA_SAPLING.get(), 0.9f, 1)
                 .save(consumer, salvagingRecipe("luminara_leaves"));
     }
 
@@ -182,7 +146,7 @@ public class CuttingRecipes {
                 .save(consumer);
     }
 
-    /**
+     /**
      * Generates an axe-stripping recipe for the pair of given logs, with custom sound and a Tree Bark result attached.
      */
     private static void stripLogForBarkFD(Consumer<FinishedRecipe> consumer, ItemLike log, ItemLike strippedLog) {
