@@ -37,11 +37,11 @@ public class CuttingRecipes {
     public static void register(Consumer<FinishedRecipe> consumer) {
         // Knife
         cuttingFlowers(consumer);
-        
+
         // Axe
         strippingWood(consumer);
         salvagingWoodenFurniture(consumer);
-        
+
         // Shears
         salvagingUsingShears(consumer);
     }
@@ -143,6 +143,16 @@ public class CuttingRecipes {
                 .addResult(ModItems.TREE_BARK.get())
                 .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.AXE_STRIP).toString())
                 .save(consumer);
+    }
+
+     /**
+     * Generates an axe-stripping recipe for the pair of given logs, with custom sound and a Tree Bark result attached.
+     */
+    private static void stripLogForBarkFD(Consumer<FinishedRecipe> consumer, ItemLike log, ItemLike strippedLog) {
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(log), AXES_STRIP, strippedLog)
+                .addResult(ModItems.TREE_BARK.get())
+                .addSound(ForgeRegistries.SOUND_EVENTS.getKey(SoundEvents.AXE_STRIP).toString())
+                .saveToFD(consumer);
     }
 
     private static Ingredient matchesTool(ToolAction toolAction, TagKey<Item> fallbackTag) {
