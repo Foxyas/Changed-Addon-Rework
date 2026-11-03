@@ -25,29 +25,29 @@
   },
   "offDietEffects": [
     {
-      "chance": 0.85,
-      "effect": {
-        "ambient": true,
-        "duration": 40,
-        "id": "minecraft:nausea",
-        "visible": false
-      }
-    },
-    {
-      "chance": 0.75,
+      "chance": 0.99,
       "effect": {
         "ambient": true,
         "amplifier": 2,
-        "duration": 40,
+        "duration": 120,
         "id": "minecraft:hunger",
         "visible": false
       }
     },
     {
-      "chance": 0.25,
+      "chance": 0.85,
       "effect": {
         "ambient": true,
-        "duration": 40,
+        "duration": 120,
+        "id": "minecraft:nausea",
+        "visible": false
+      }
+    },
+    {
+      "chance": 0.45,
+      "effect": {
+        "ambient": true,
+        "duration": 120,
         "id": "minecraft:poison",
         "visible": false
       }

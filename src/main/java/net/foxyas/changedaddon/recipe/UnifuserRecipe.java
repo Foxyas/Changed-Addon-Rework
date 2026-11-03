@@ -63,11 +63,24 @@ public class UnifuserRecipe implements Recipe<UnifuserBlockEntity> {
         }
 
         // Verifica se a lista de ingredientes não está vazia
-        if (!recipeItems.isEmpty()) {
-            return StrictNBTIngredient.of(this.output).test(pContainer.getItem(3));
+//        if (!recipeItems.isEmpty()) {
+//            return StrictNBTIngredient.of(this.output).test(pContainer.getItem(3));
+//        }
+
+        for (int i = 0; i < recipeItems.size(); i++) {
+            if (i >= pContainer.getContainerSize()) {
+                return false;
+            }
+
+            Ingredient ingredient = recipeItems.get(i);
+            ItemStack slotItem = pContainer.getItem(i);
+
+            if (!ingredient.isEmpty() && !ingredient.test(slotItem)) {
+                return false;
+            }
         }
 
-        return false; // Retorna false se a lista de ingredientes estiver vazia
+        return true;
     }
 
     @Override

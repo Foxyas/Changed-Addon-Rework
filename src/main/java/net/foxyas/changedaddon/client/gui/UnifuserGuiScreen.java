@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -92,6 +93,7 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
                     assert this.minecraft != null;
                     assert this.minecraft.gameMode != null;
                     this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, UnifuserGuiMenu.POWER_BUTTON_ID);
+                    button.setTooltip(Tooltip.create(Component.translatable("gui.changed_addon.unifuser_gui.power_button", unifuser.getDisplayName(), unifuser.startRecipe)));
                 }
         ) {
             @Override
@@ -103,6 +105,7 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
                 this.renderTexture(pGuiGraphics, this.resourceLocation, this.getX(), this.getY(), machineStateU, this.yTexStart, this.yDiffTex, this.width, this.height, this.textureWidth, this.textureHeight);
             }
         };
+        this.powerButton.setTooltip(Tooltip.create(Component.translatable("gui.changed_addon.unifuser_gui.power_button", unifuser.getDisplayName(), unifuser.startRecipe)));
 
         this.addRenderableWidget(this.powerButton);
     }

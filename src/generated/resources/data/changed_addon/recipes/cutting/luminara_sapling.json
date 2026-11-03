@@ -11,15 +11,8 @@
       "item": "changed_addon:luminara_bloom"
     },
     {
-      "chance": 0.5,
-      "item": "changed_addon:luminara_bloom_petals"
-    },
-    {
-      "chance": 0.5,
-      "item": "changed_addon:luminara_bloom_petals"
-    },
-    {
-      "chance": 0.5,
+      "chance": 0.75,
+      "count": 2,
       "item": "changed_addon:luminara_bloom_petals"
     }
   ],

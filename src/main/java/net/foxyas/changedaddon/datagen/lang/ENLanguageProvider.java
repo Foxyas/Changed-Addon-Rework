@@ -492,6 +492,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addGui("catalyzer.nitrogen_usage", "ProgressSpeed is %1$s per tick and use %2$s of Nitrogen Power");
         addGui("recipe_progress", "ProgressSpeed is %s per tick");
         addGui("catalyzer_gui.label_full", "Full");
+        addGui("catalyzer_gui.power_button", "%1$s Power Switch\nClick to toggle on/off\nCurrent Mode: %2$s");
         addGui("catalyzer_gui.tooltip.place_first_ingredient", "Place the first ingredient");
         addGui("fight_to_keep_consciousness_minigame.button_fight", "           Fight            ");
         addGui("fight_to_keep_consciousness_minigame.button_give_up", "     give up      ");
@@ -517,6 +518,7 @@ public class ENLanguageProvider extends LanguageProvider {
 
         addGui("transfur_sounds_gui.label_transfur_sounds", "TransfurSounds");
         addGui("unifuser_gui.label_full", "Full");
+        addGui("unifuser_gui.power_button", "%1$s Power Switch\nClick to toggle on/off\nCurrent Mode: %2$s");
         addGui("unifuser_gui.tooltip.place_recipe_catalyst", "Place a Syringe with DNA");
         addGui("unifuser_gui.tooltip.place_first_ingredient", "Place the Powders or other ingredient");
         addGui("unifuser_gui.tooltip.place_second_ingredient", "Put the second ingredient");
@@ -817,6 +819,9 @@ public class ENLanguageProvider extends LanguageProvider {
         addText("rp.bow_and_crossbow_stop.crossbow_safety", "Your fingers are too thick to operate the crossbow's mechanism!");
         addText("rp.bow_and_crossbow_stop.clumsy_paws", "It's nearly impossible to nock an arrow with such clumsy paws!");
         addText("item.signal_catcher.info.not_hold_enough", "No location found please scan the area fully and wait for the warning before releasing the button");
+        addText("boss_attacks.shield_bypass_hard", "Your shield was bypassed by the sheer force!");
+        addText("boss_attacks.shield_broken_normal", "Your shield absorbed the blow.");
+        addText("boss_attacks.dash_recharge_hint", "Next dash incoming. Parries remaining: %s");
 
         addMessage("induction_coil_melt", "§4⚡ You brought metal to an electric fight. §cSuch Foolish Move. §6Your gear will be the reason of your downfall!");
 

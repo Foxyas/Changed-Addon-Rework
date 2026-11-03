@@ -90,7 +90,6 @@ public class LaethinSyringeItem extends AbstractSyringeItem implements Specializ
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         LaethinItem.Type laethinTypeOfStack = getLaethinTypeOfStack(pStack);
         pTooltipComponents.add(laethinTypeOfStack.getFormatedName());
-
     }
 
     protected void applyMobEffect(Player entity, MobEffect effect, int duration) {

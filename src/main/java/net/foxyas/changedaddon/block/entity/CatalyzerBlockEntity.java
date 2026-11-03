@@ -26,7 +26,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
@@ -113,7 +112,7 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
         }
 
         ItemStack input = handler.getStackInSlot(0).copy();
-        CatalyzerRecipe recipe = findRecipe(serverLevel, input);
+        CatalyzerRecipe recipe = findRecipe(serverLevel, catalyzer, input);
         catalyzer.recipeOn = recipe != null;
 
         if (recipe != null) {
@@ -182,7 +181,7 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
         update(serverLevel, pos, state, catalyzer);
     }
 
-    public static @Nullable CatalyzerRecipe findRecipe(ServerLevel level, ItemStack input) {
+    public static @Nullable CatalyzerRecipe findRecipe(ServerLevel level, CatalyzerBlockEntity catalyzer, ItemStack input) {
         RecipeManager recipeManager = level.getRecipeManager();
 
         // Obtém todas as receitas do tipo JeiCatalyzerRecipe
@@ -190,9 +189,10 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
 
         // Verifica cada receita para ver se ela corresponde ao input fornecido
         for (CatalyzerRecipe recipe : catalyzerRecipes) {
-            NonNullList<Ingredient> ingredients = recipe.getIngredients();
-            if (!ingredients.get(0).test(input))
-                continue;
+            if (!recipe.matches(catalyzer, level)) continue;
+//            NonNullList<Ingredient> ingredients = recipe.getIngredients();
+//            if (!ingredients.get(0).test(input))
+//                continue;
             return recipe;
         }
 

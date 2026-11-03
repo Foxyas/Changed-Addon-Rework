@@ -1,12 +1,12 @@
 {
   "parent": "block/cube",
   "textures": {
-    "down": "changed_addon:block/advanced_unifuser_buttom",
+    "down": "changed_addon:block/advanced_unifuser_bottom",
     "up": "changed_addon:block/advanced_unifuser_top_animated",
     "north": "changed_addon:block/advanced_unifuser_side_b",
     "east": "changed_addon:block/advanced_unifuser_side_a",
     "south": "changed_addon:block/advanced_unifuser_back",
     "west": "changed_addon:block/advanced_unifuser_side_a",
-    "particle": "changed_addon:block/advanced_unifuser_buttom"
+    "particle": "changed_addon:block/advanced_unifuser_bottom"
   }
 }

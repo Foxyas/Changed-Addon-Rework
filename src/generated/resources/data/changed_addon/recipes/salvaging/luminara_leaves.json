@@ -19,11 +19,6 @@
     {
       "chance": 0.9,
       "item": "changed_addon:luminara_sapling"
-    },
-    {
-      "chance": 0.25,
-      "count": 2,
-      "item": "changed_addon:luminara_bloom_petals"
     }
   ],
   "tool": [

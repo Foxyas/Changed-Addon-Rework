@@ -103,6 +103,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     public static final String ATTACK_DAMAGE_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb736";
     public static final String ARMOR_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb737";
     public static final String ARMOR_TOUGHNESS_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb738";
+    public static final String LAST_STAND_ARMOR_MODIFIER_UUID = "a060cc30-2d1d-4a72-85de-74bd92ffb737";
 
     private static final EntityDataAccessor<Integer> CLIENT_ANGER_LEVEL = SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> PHASE2 =
@@ -128,8 +129,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     protected final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     protected boolean shouldBleed = false;
-    protected boolean doingLastPunchAttack = false;
     protected boolean shouldPhase = true;
+
+//    protected boolean doingLastPunchAttack = false;
 
     public final BurstAbilityHandle<Experiment009BossEntity> burstAbilityHandle;
 
@@ -500,29 +502,65 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         );
     }
 
-    private LastDashPunchGoal makeLatexPunchGoal() {
-        return new LastDashPunchGoal(this) {
-            @Override
-            public boolean canUse() {
-                this.canTriggerDashPunch = Experiment009BossEntity.this.doingLastPunchAttack;
-                return super.canUse();
-            }
-
-            @Override
-            protected void onTargetParryEnoughTimes() {
-                super.onTargetParryEnoughTimes();
-                Experiment009BossEntity.this.doingLastPunchAttack = false;
-                Experiment009BossEntity.this.setBleeding(true);
-                this.mob.hurt(mob.damageSources().mobAttack(target), mob.getHealth() * 2);
-            }
-
-            @Override
-            protected void onHitEnoughTimes() {
-                super.onHitEnoughTimes();
-                Experiment009BossEntity.this.doingLastPunchAttack = false;
-            }
-        };
-    }
+//    private LastDashPunchGoal makeLatexPunchGoal() {
+//        return new LastDashPunchGoal(this) {
+//
+//            @Override
+//            public boolean isInterruptable() {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean canUse() {
+//                this.canTriggerDashPunch = Experiment009BossEntity.this.doingLastPunchAttack;
+//                return super.canUse();
+//            }
+//
+//            @Override
+//            protected void onTargetParryEnoughTimes() {
+//                super.onTargetParryEnoughTimes();
+//                applyModifierIfAbsent(mob, Attributes.ARMOR, LAST_STAND_ARMOR_MODIFIER_UUID, "Last Stand Armor Multiple Death", -2);
+//
+//                EntityLinkedThunderParticleOptions particleOptions = ChangedAddonParticleTypes.thunderBoltLinkedTo(
+//                        mob,
+//                        false, // useTargetPosAsBaseForDeltas = false means xSpeed/ySpeed/zSpeed acts directly as relative offset from target
+//                        new Vector3f(0, mob.getEyeHeight(), 0),
+//                        20,
+//                        false,
+//                        true, 10,
+//                        new Vector3f(0.3f, 0.3f, 0.3f),
+//                        new Vector3f(1.0f, 0, 0),
+//                        20,// particle lifetime in ticks
+//                        1f
+//                );
+//
+//                if (target.level() instanceof ServerLevel serverLevel) {
+//                    serverLevel.sendParticles(
+//                            particleOptions,
+//                            target.getX(), target.getEyeY(), target.getZ(), // Spawn location
+//                            0,                      // Count must be 0 for speed params to behave as raw deltas
+//                            mob.getX(), mob.getEyeY(), mob.getZ(), // Target end relative vector
+//                            1.0                     // Particle speed scale
+//                    );
+//                }
+//
+//
+//                if (this.mob.getRandom().nextFloat() <= 0.25f) {
+//                    this.mob.hurt(mob.damageSources().mobAttack(target), mob.getHealth() * 0.25f);
+//
+//                    // Random Chance to survive so the player will need to do the final blow manually.
+//                } else {
+//                    this.mob.hurt(mob.damageSources().mobAttack(target), mob.getHealth() * 2);
+//                }
+//            }
+//
+//            @Override
+//            protected void onHitEnoughTimes() {
+//                super.onHitEnoughTimes();
+//                Experiment009BossEntity.this.doingLastPunchAttack = false;
+//            }
+//        };
+//    }
 
     @Override
     protected void registerGoals() {
@@ -549,53 +587,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 }
             }
         }
-//        //New AI
-//        this.goalSelector.addGoal(15, new ThunderDashAttack(this));
-//        this.goalSelector.addGoal(15, new ThunderDiveGoal(this,
-//                UniformInt.of(60, 100), //IntProvider -> cooldownProvider
-//                1.5f,
-//                6f,
-//                1f,
-//                0.5f,
-//                4)
-//        );
-//        this.goalSelector.addGoal(5, new AoEThunderStrikeGoal(
-//                this,
-//                UniformInt.of(80, 120), //IntProvider -> cooldownProvider
-//                UniformInt.of(4, 8), //IntProvider -> damageProvider
-//                1.5f,
-//                200));
-//
-//
-//        //Basically perfect, damn... well done 0senia0
-//        this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
-//                UniformInt.of(120, 240), //IntProvider -> cooldown,
-//                UniformInt.of(2, 4), //IntProvider -> lightningCount,
-//                UniformInt.of(80, 160), //IntProvider -> castDuration,
-//                UniformInt.of(80, 100), //IntProvider -> lightningDelay,
-//                UniformFloat.of(5, 12))); //FloatProvider -> damage
-//
-//        this.goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
-//                UniformInt.of(75, 125), //IntProvider -> cooldown,
-//                4,
-//                UniformInt.of(40, 80), //IntProvider -> castDuration,
-//                8,
-//                UniformFloat.of(4, 8))); //FloatProvider -> damage
-//
-//
-//        this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
-//                UniformInt.of(150, 200), //IntProvider -> cooldown,
-//                UniformInt.of(3, 6), //IntProvider -> attackCount,
-//                UniformInt.of(20, 60), //IntProvider -> castDuration,
-//                UniformFloat.of(6, 8)) //FloatProvider -> damage)
-//        );
-
-        //this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
-        //        UniformInt.of(100, 150), //IntProvider -> cooldown
-        //        20,
-        //        UniformInt.of(60, 80), //IntProvider -> duration
-        //        UniformFloat.of(3, 5))); //FloatProvider -> damage
-//        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
     }
 
     public enum Exp9Phase implements StringRepresentable {
@@ -799,47 +790,50 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             return false;
         }
 
-        if (this.isPhase3() && (this.getHealth() <= amount || this.computeHealthRatioForCurrentPhase() <= 0.025f)) {
-            if (this.getHealth() <= 1f) {
-                if (!this.isInvulnerableTo(source)) {
-                    if (source.getDirectEntity() != null && source.getDirectEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
-                        double speed = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2.0f);
-                        dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
-                    }
-                    Set<WrappedGoal> availableGoals = this.goalSelector.getAvailableGoals();
+        if (this.isPhase3() && this.getHealth() <= amount && this.computeHealthRatioForCurrentPhase() > 0.10f) {
+            amount = this.getHealth() * 0.25f;
 
-                    if (!doingLastPunchAttack && availableGoals.stream().map(WrappedGoal::getGoal).noneMatch(goal -> goal instanceof LastDashPunchGoal)) {
-                        DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
-                        this.setDeltaMovement(this.getDeltaMovement().multiply(0, 1, 0));
-                        this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
-                        this.doingLastPunchAttack = true;
-                        this.setBleeding(false);
-                        this.goalSelector.removeAllGoals(goal -> goal instanceof IAbilityGoal && !(goal instanceof ThunderDiveGoal));
-                        this.goalSelector.addGoal(3, makeLatexPunchGoal());
-                        return false;
-                    }
-
-                    if (availableGoals.stream().map(WrappedGoal::getGoal).anyMatch(goal -> goal instanceof LastDashPunchGoal)
-                            && doingLastPunchAttack
-                            && !isBleeding()) {
-                        DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
-                        this.setDeltaMovement(this.getDeltaMovement().multiply(0, 1, 0));
-                        this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
-                        this.doingLastPunchAttack = true;
-
-                        for (WrappedGoal availableGoal : availableGoals) {
-                            if (availableGoal.getGoal() instanceof LastDashPunchGoal lastDashPunchGoal && !availableGoal.isRunning()) {
-                                lastDashPunchGoal.setCooldown(0);
-                                availableGoal.start();
-                            }
-                        }
-                        return false;
-                    }
-                }
-            } else {
-                amount = this.getHealth() - 1f;
-                this.setHealth(1f);
-            }
+//            if (this.getHealth() <= 1.05f) {
+//                if (!this.isInvulnerableTo(source)) {
+//                    if (source.getDirectEntity() != null && source.getDirectEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
+//                        double speed = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2.0f);
+//                        dodgeAnimationParameters = new DodgeAnimationParameters((float) speed, 1.1f);
+//                    }
+//                    Set<WrappedGoal> availableGoals = this.goalSelector.getAvailableGoals();
+//
+//                    if (!doingLastPunchAttack && availableGoals.stream().map(WrappedGoal::getGoal).noneMatch(goal -> goal instanceof LastDashPunchGoal)) {
+//                        DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
+//                        this.setDeltaMovement(this.getDeltaMovement().multiply(0, 1, 0));
+//                        this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
+//                        this.doingLastPunchAttack = true;
+//                        this.setBleeding(false);
+//                        this.goalSelector.addGoal(3, makeLatexPunchGoal());
+//                        return false;
+//                    }
+//
+//                    if (availableGoals.stream().map(WrappedGoal::getGoal).anyMatch(goal -> goal instanceof LastDashPunchGoal)
+//                            && doingLastPunchAttack
+//                            && Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).getModifier(UUID.fromString(LAST_STAND_ARMOR_MODIFIER_UUID)) == null) {
+//                        DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
+//                        this.setDeltaMovement(this.getDeltaMovement().multiply(0, 1, 0));
+//                        this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
+//                        this.doingLastPunchAttack = true;
+//
+//                        for (WrappedGoal availableGoal : availableGoals) {
+//                            if (availableGoal.getGoal() instanceof LastDashPunchGoal lastDashPunchGoal && !availableGoal.isRunning()) {
+//                                lastDashPunchGoal.setCooldown(0);
+//                                availableGoal.start();
+//                            } else {
+//                                availableGoal.stop();
+//                            }
+//                        }
+//                        return false;
+//                    }
+//                }
+//            } else {
+//                amount = 0.05f;
+//                this.setHealth(1f);
+//            }
         }
 
 
@@ -1189,7 +1183,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (!(this.level() instanceof ServerLevel serverLevel)) return;
 
         ThunderParticleOptions particleOptions = ChangedAddonParticleTypes
-                .thunderBolt(2.5f,
+                .thunderBolt(20,
                         true,
                         true,
                         10,
@@ -1199,7 +1193,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                         4.0f);
         serverLevel.sendParticles(
                 particleOptions,
-                getX(), getY() + 16, getZ(), // Spawn location
+                getX(), getY() + serverLevel.getMaxBuildHeight(), getZ(), // Spawn location
                 0,                      // Count must be 0 for speed params to behave as raw deltas
                 getX(), getY(), getZ(), // Target end relative vector
                 1.0                     // Particle speed scale
@@ -1423,8 +1417,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             setPhase3(tag.getBoolean("isPhase3"));
         if (tag.contains("isBleeding"))
             shouldBleed = tag.getBoolean("isBleeding");
-        if (tag.contains("doingLastPunchAttack"))
-            doingLastPunchAttack = tag.getBoolean("doingLastPunchAttack");
+//        if (tag.contains("doingLastPunchAttack"))
+//            doingLastPunchAttack = tag.getBoolean("doingLastPunchAttack");
         if (tag.contains("castingAttack"))
             this.setCastingAttack(tag.getBoolean("castingAttack"));
         if (tag.contains("castingAttackTicks"))
@@ -1445,7 +1439,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         tag.putBoolean("isPhase3", isPhase3());
         tag.putBoolean("isBleeding", shouldBleed);
-        tag.putBoolean("doingLastPunchAttack", doingLastPunchAttack);
+//        tag.putBoolean("doingLastPunchAttack", doingLastPunchAttack);
+
         tag.putBoolean("castingAttack", this.isCastingAttack());
         tag.putInt("castingAttackTicks", this.getCastingTicks());
         tag.putInt("maxCastingTicks", this.getMaxCastingTicks());

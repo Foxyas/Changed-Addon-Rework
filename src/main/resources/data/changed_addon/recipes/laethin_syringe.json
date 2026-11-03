@@ -13,7 +13,10 @@
   ],
   "output": {
     "item": "changed_addon:laethin_syringe",
-    "count": 1
+    "count": 1,
+    "preserveData": [
+      "owner"
+    ]
   },
   "progressSpeed": 0.25,
   "experience": 1

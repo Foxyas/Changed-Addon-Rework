@@ -54,11 +54,11 @@ public class CatalyzerRecipe implements Recipe<CatalyzerBlockEntity> {
             return false;
         }
 
-        if (!recipeItems.isEmpty()) {
-            return StrictNBTIngredient.of(this.output).test(pContainer.getItem(1));
-        }
+//        if (!recipeItems.isEmpty()) {
+//            return StrictNBTIngredient.of(this.output).test(pContainer.getItem(1));
+//        }
 
-        return false;
+        return recipeItems.get(0).test(pContainer.getItem(0));
     }
 
     public boolean isHidden() {

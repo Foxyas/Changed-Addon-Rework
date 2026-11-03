@@ -124,7 +124,7 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
         }
 
         // Encontrar receita válida
-        UnifuserRecipe recipe = findRecipe(serverLevel, input0, input1, input2);
+        UnifuserRecipe recipe = findRecipe(serverLevel, unifuser, input0, input1, input2);
         boolean hasRecipe = recipe != null;
         unifuser.recipeProgressOn = hasRecipe;
 
@@ -203,7 +203,7 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
         level.sendBlockUpdated(blockPos, blockState, blockState, 3);
     }
 
-    public static @Nullable UnifuserRecipe findRecipe(ServerLevel level, ItemStack input1, ItemStack input2, ItemStack input3) {
+    public static @Nullable UnifuserRecipe findRecipe(ServerLevel level, UnifuserBlockEntity unifuser, ItemStack input1, ItemStack input2, ItemStack input3) {
         RecipeManager recipeManager = level.getRecipeManager();
 
         // Obtém todas as receitas do tipo JeiCatalyzerRecipe
@@ -211,13 +211,14 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
 
         // Verifica cada receita para ver se ela corresponde ao input fornecido
         for (UnifuserRecipe recipe : unifuserRecipes) {
-            NonNullList<Ingredient> ingredients = recipe.getIngredients();
-            if (!ingredients.get(0).test(input1))
-                continue;
-            if (ingredients.size() >= 2 && !ingredients.get(1).test(input2))
-                continue;
-            if (ingredients.size() == 3 && !ingredients.get(2).test(input3))
-                continue;
+            if (!recipe.matches(unifuser, level)) continue;
+//            NonNullList<Ingredient> ingredients = recipe.getIngredients();
+//            if (!ingredients.get(0).test(input1))
+//                continue;
+//            if (ingredients.size() >= 2 && !ingredients.get(1).test(input2))
+//                continue;
+//            if (ingredients.size() == 3 && !ingredients.get(2).test(input3))
+//                continue;
             return recipe;
         }
 
