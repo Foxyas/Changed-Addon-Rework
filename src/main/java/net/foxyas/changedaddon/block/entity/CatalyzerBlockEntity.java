@@ -123,10 +123,10 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
             }
 
             if (catalyzer.recipeProgress >= 100) {
-                ItemStack output = recipe.getResultItem(level.registryAccess());
+                ItemStack output = recipe.assemble(catalyzer, level.registryAccess());
 
                 if (handler.insertItem(1, output.copy(), true).isEmpty()) {
-                    NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(catalyzer.asSimpleContainer());
+                    NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(catalyzer);
                     handler.extractItem(0, 1, false);
 
                     // Recolocar os itens remanescentes de volta nos slots corretos

@@ -4,13 +4,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.block.entity.UnifuserBlockEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -19,9 +19,11 @@ import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class UnifuserRecipe implements Recipe<SimpleContainer> {
+public class UnifuserRecipe implements Recipe<UnifuserBlockEntity> {
 
     private final ResourceLocation id;
     private final ItemStack output;
@@ -29,12 +31,20 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
     private final float progressSpeed;
     private final float experience;
 
-    public UnifuserRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, float progressSpeed, float experience) {
+    // Novos campos para gerenciar a cópia de dados
+    private final boolean copyAllNbt;
+    private final List<String> specificNbtKeys;
+
+    public UnifuserRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems,
+                          float progressSpeed, float experience,
+                          boolean copyAllNbt, List<String> specificNbtKeys) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
         this.progressSpeed = progressSpeed;
         this.experience = experience;
+        this.copyAllNbt = copyAllNbt;
+        this.specificNbtKeys = specificNbtKeys;
     }
 
     public boolean isHidden() {
@@ -47,7 +57,7 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public boolean matches(@NotNull SimpleContainer pContainer, Level pLevel) {
+    public boolean matches(@NotNull UnifuserBlockEntity pContainer, Level pLevel) {
         if (pLevel.isClientSide()) {
             return false;
         }
@@ -66,8 +76,28 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull SimpleContainer pContainer, @NotNull RegistryAccess registryAccess) {
-        return output;
+    public @NotNull ItemStack assemble(@NotNull UnifuserBlockEntity pContainer, @NotNull RegistryAccess registryAccess) {
+        ItemStack resultStack = this.getResultItem(registryAccess);
+
+        ItemStack mainSlotItem = pContainer.getItem(UnifuserBlockEntity.MAIN_SLOT);
+
+        if (!mainSlotItem.isEmpty() && mainSlotItem.hasTag()) {
+            CompoundTag sourceTag = mainSlotItem.getTag();
+            if (sourceTag != null) {
+                if (copyAllNbt) {
+                    resultStack.setTag(sourceTag.copy());
+                } else if (!specificNbtKeys.isEmpty()) {
+                    CompoundTag resultTag = resultStack.getOrCreateTag();
+                    for (String key : specificNbtKeys) {
+                        if (sourceTag.contains(key)) {
+                            resultTag.put(key, sourceTag.get(key).copy());
+                        }
+                    }
+                }
+            }
+        }
+
+        return resultStack;
     }
 
     @Override
@@ -90,6 +120,14 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
 
     public float getExperience() {
         return experience;
+    }
+
+    public boolean isCopyAllNbt() {
+        return copyAllNbt;
+    }
+
+    public List<String> getSpecificNbtKeys() {
+        return specificNbtKeys;
     }
 
     @Override
@@ -121,7 +159,26 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
 
         @Override
         public @NotNull UnifuserRecipe fromJson(@NotNull ResourceLocation pRecipeId, @NotNull JsonObject pSerializedRecipe) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
+            JsonObject outputObj = GsonHelper.getAsJsonObject(pSerializedRecipe, "output");
+            ItemStack output = ShapedRecipe.itemStackFromJson(outputObj);
+
+            boolean copyAllNbt = false;
+            List<String> specificNbtKeys = new ArrayList<>();
+
+            if (outputObj.has("preserveData")) {
+                JsonElement preserveDataElement = outputObj.get("preserveData");
+                if (preserveDataElement.isJsonPrimitive() && preserveDataElement.getAsJsonPrimitive().isBoolean()) {
+                    copyAllNbt = preserveDataElement.getAsBoolean();
+                } else if (preserveDataElement.isJsonArray()) {
+                    JsonArray jsonArray = preserveDataElement.getAsJsonArray();
+                    for (JsonElement element : jsonArray) {
+                        if (element.isJsonPrimitive()) {
+                            specificNbtKeys.add(element.getAsString());
+                        }
+                    }
+                }
+            }
+
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(ingredients.size(), Ingredient.EMPTY);
 
@@ -155,7 +212,7 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
             float progressSpeed = GsonHelper.getAsFloat(pSerializedRecipe, "progressSpeed", 1.0f);
             float experience = GsonHelper.getAsFloat(pSerializedRecipe, "experience", 0f);
 
-            return new UnifuserRecipe(pRecipeId, output, inputs, progressSpeed, experience);
+            return new UnifuserRecipe(pRecipeId, output, inputs, progressSpeed, experience, copyAllNbt, specificNbtKeys);
         }
 
         @Override
@@ -165,7 +222,16 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
             ItemStack output = buf.readItem();
             float progressSpeed = buf.readFloat();
             float experience = buf.readFloat();
-            return new UnifuserRecipe(id, output, inputs, progressSpeed, experience);
+
+            // Leitura dos dados de preservação enviados pela rede
+            boolean copyAllNbt = buf.readBoolean();
+            int keySize = buf.readInt();
+            List<String> specificNbtKeys = new ArrayList<>();
+            for (int i = 0; i < keySize; i++) {
+                specificNbtKeys.add(buf.readUtf());
+            }
+
+            return new UnifuserRecipe(id, output, inputs, progressSpeed, experience, copyAllNbt, specificNbtKeys);
         }
 
         @Override
@@ -177,12 +243,18 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
             buf.writeItemStack(recipe.output, false);
             buf.writeFloat(recipe.getProgressSpeed());
             buf.writeFloat(recipe.getExperience());
+
+            // Escrita dos dados de preservação na rede
+            buf.writeBoolean(recipe.isCopyAllNbt());
+            buf.writeInt(recipe.getSpecificNbtKeys().size());
+            for (String key : recipe.getSpecificNbtKeys()) {
+                buf.writeUtf(key);
+            }
         }
 
         public ResourceLocation getRegistryName() {
             return ID;
         }
-
 
         public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
             return this;

@@ -50,6 +50,7 @@ import java.util.stream.IntStream;
 
 public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer, RecipeHolder, IRecipeRewarder, StackedContentsCompatible {
 
+    public static final int MAIN_SLOT = 2;
     protected final LazyOptional<? extends IItemHandler>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     public boolean startRecipe = true;
     public double recipeProgress = 0;
@@ -138,12 +139,12 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
 
         // Concluir receita
         if (hasRecipe && unifuser.recipeProgress >= 100) {
-            ItemStack result = recipe.getResultItem(level.registryAccess());
+            ItemStack result = recipe.assemble(unifuser, level.registryAccess());
 
             boolean canOutput = handler.insertItem(3, result.copy(), true).isEmpty();
 
             if (canOutput) {
-                NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(unifuser.asSimpleContainer());
+                NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(unifuser);
 
                 // Consumir inputs
                 handler.extractItem(0, 1, false);

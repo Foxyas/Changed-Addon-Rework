@@ -1,160 +1,201 @@
 package net.foxyas.changedaddon.datagen.builders;
 
+import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
+import net.foxyas.changedaddon.recipe.UnifuserRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class UnifuserRecipeBuilder implements RecipeBuilder {
-    private final ItemStack result;
-    private final NonNullList<Ingredient> ingredients = NonNullList.create();
+    private final ItemStack output;
+    private final List<Ingredient> ingredients = Lists.newArrayList();
     private final Advancement.Builder advancement = Advancement.Builder.recipeAdvancement();
+
     private float progressSpeed = 1.0f;
+    private float experience = 0.0f;
 
-    private UnifuserRecipeBuilder(ItemStack result) {
-        this.result = result;
+    // Configurações de preserveData
+    private boolean copyAllNbt = false;
+    private final List<String> specificNbtKeys = Lists.newArrayList();
+
+    public UnifuserRecipeBuilder(ItemLike pResult, int pCount) {
+        this.output = new ItemStack(pResult, pCount);
     }
 
-    public static UnifuserRecipeBuilder unifuser(ItemStack result) {
-        return new UnifuserRecipeBuilder(result);
+    public static UnifuserRecipeBuilder unifuser(ItemLike pResult) {
+        return new UnifuserRecipeBuilder(pResult, 1);
     }
 
-    // Adiciona ingrediente normal
-    public UnifuserRecipeBuilder requires(Ingredient ingredient) {
-        this.ingredients.add(ingredient);
+    public static UnifuserRecipeBuilder unifuser(ItemLike pResult, int pCount) {
+        return new UnifuserRecipeBuilder(pResult, pCount);
+    }
+
+    public static UnifuserRecipeBuilder unifuser(ItemStack pOutput) {
+        UnifuserRecipeBuilder builder = new UnifuserRecipeBuilder(pOutput.getItem(), pOutput.getCount());
+        if (pOutput.hasTag()) {
+            builder.output.setTag(pOutput.getTag());
+        }
+        return builder;
+    }
+
+    public UnifuserRecipeBuilder requires(TagKey<Item> pTag) {
+        return this.requires(Ingredient.of(pTag));
+    }
+
+    public UnifuserRecipeBuilder requires(ItemLike pItem) {
+        return this.requires(Ingredient.of(pItem));
+    }
+
+    public UnifuserRecipeBuilder requires(Ingredient pIngredient) {
+        this.ingredients.add(pIngredient);
         return this;
     }
 
-    public UnifuserRecipeBuilder requires(ItemLike item) {
-        return this.requires(Ingredient.of(item));
-    }
-
-    // Define a velocidade do progresso (ProgressSpeed)
     public UnifuserRecipeBuilder progressSpeed(float speed) {
         this.progressSpeed = speed;
         return this;
     }
 
-    @Override
-    public @NotNull UnifuserRecipeBuilder unlockedBy(@NotNull String criterionName, @NotNull CriterionTriggerInstance criterionTrigger) {
-        this.advancement.addCriterion(criterionName, criterionTrigger);
+    public UnifuserRecipeBuilder experience(float exp) {
+        this.experience = exp;
+        return this;
+    }
+
+    // Métodos para o preserveData
+    public UnifuserRecipeBuilder preserveData(boolean copyAll) {
+        this.copyAllNbt = copyAll;
+        this.specificNbtKeys.clear();
+        return this;
+    }
+
+    public UnifuserRecipeBuilder preserveData(String... keys) {
+        this.copyAllNbt = false;
+        this.specificNbtKeys.clear();
+        this.specificNbtKeys.addAll(List.of(keys));
+        return this;
+    }
+
+    public @NotNull UnifuserRecipeBuilder unlockedBy(@NotNull String pCriterionName, net.minecraft.advancements.@NotNull CriterionTriggerInstance pCriterionTrigger) {
+        this.advancement.addCriterion(pCriterionName, pCriterionTrigger);
         return this;
     }
 
     @Override
-    public @NotNull UnifuserRecipeBuilder group(@Nullable String groupName) {
+    public @NotNull RecipeBuilder group(@Nullable String pGroupName) {
         return this;
     }
 
     @Override
     public @NotNull Item getResult() {
-        return this.result.getItem();
+        return output.getItem();
     }
 
-    // Método para salvar a receita sem ID customizado (usa o ID do item de output)
     @Override
-    public void save(@NotNull Consumer<FinishedRecipe> finishedRecipeConsumer) {
-        this.save(finishedRecipeConsumer, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
-    }
-
-    // Método principal de salvamento
-    @Override
-    public void save(@NotNull Consumer<FinishedRecipe> finishedRecipeConsumer, @NotNull ResourceLocation recipeId) {
-        this.ensureValid(recipeId);
-        this.advancement.parent(RecipeBuilder.ROOT_RECIPE_ADVANCEMENT)
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId))
-                .rewards(AdvancementRewards.Builder.recipe(recipeId))
+    public void save(@NotNull Consumer<FinishedRecipe> pFinishedRecipeConsumer, @NotNull ResourceLocation pRecipeId) {
+        this.ensureValid(pRecipeId);
+        this.advancement.parent(ROOT_RECIPE_ADVANCEMENT)
+                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId))
+                .rewards(AdvancementRewards.Builder.recipe(pRecipeId))
                 .requirements(RequirementsStrategy.OR);
 
-        ResourceLocation advancementId = recipeId.withPrefix("recipes/");
-
-        finishedRecipeConsumer.accept(new Result(recipeId, this.result, this.ingredients, this.progressSpeed, this.advancement, advancementId));
+        pFinishedRecipeConsumer.accept(new Result(
+                pRecipeId, output, ingredients, progressSpeed, experience,
+                copyAllNbt, specificNbtKeys, advancement, pRecipeId.withPrefix("recipes/unifuser/")
+        ));
     }
 
-    private void ensureValid(ResourceLocation id) {
+    private void ensureValid(ResourceLocation pId) {
         if (this.advancement.getCriteria().isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + id);
-        }
-        if (this.ingredients.isEmpty()) {
-            throw new IllegalStateException("No ingredients defined for recipe " + id);
+            throw new IllegalStateException("No way of obtaining recipe " + pId);
         }
     }
 
-    // Classe interna que gera o JSON de fato
     public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
-        private final ItemStack result;
-        private final NonNullList<Ingredient> ingredients;
+        private final ItemStack output;
+        private final List<Ingredient> ingredients;
         private final float progressSpeed;
+        private final float experience;
+        private final boolean copyAllNbt;
+        private final List<String> specificNbtKeys;
         private final Advancement.Builder advancement;
         private final ResourceLocation advancementId;
 
-        public Result(ResourceLocation id, ItemStack result, NonNullList<Ingredient> ingredients, float progressSpeed, Advancement.Builder advancement, ResourceLocation advancementId) {
+        public Result(ResourceLocation id, ItemStack output, List<Ingredient> ingredients,
+                      float progressSpeed, float experience,
+                      boolean copyAllNbt, List<String> specificNbtKeys,
+                      Advancement.Builder advancement, ResourceLocation advancementId) {
             this.id = id;
-            this.result = result;
+            this.output = output;
             this.ingredients = ingredients;
             this.progressSpeed = progressSpeed;
+            this.experience = experience;
+            this.copyAllNbt = copyAllNbt;
+            this.specificNbtKeys = specificNbtKeys;
             this.advancement = advancement;
             this.advancementId = advancementId;
         }
 
         @Override
-        public void serializeRecipeData(@NotNull JsonObject json) {
-            // Cria a array de ingredientes
-            JsonArray jsonArray = new JsonArray();
+        public void serializeRecipeData(@NotNull JsonObject pJson) {
+            pJson.addProperty("progressSpeed", this.progressSpeed);
+            pJson.addProperty("experience", this.experience);
+
+            JsonArray jsonarray = new JsonArray();
             for (Ingredient ingredient : this.ingredients) {
-                jsonArray.add(ingredient.toJson());
+                jsonarray.add(ingredient.toJson());
             }
-            json.add("ingredients", jsonArray);
+            pJson.add("ingredients", jsonarray);
 
-            json.add("output", itemStackToJson(result));
-
-            if (this.progressSpeed != 1.0f) {
-                json.addProperty("progressSpeed", this.progressSpeed);
+            JsonObject outputObject = new JsonObject();
+            outputObject.addProperty("item", BuiltInRegistries.ITEM.getKey(this.output.getItem()).toString());
+            if (this.output.getCount() > 1) {
+                outputObject.addProperty("count", this.output.getCount());
             }
+            if (this.output.hasTag()) {
+                outputObject.addProperty("nbt", this.output.getTag().toString());
+            }
+
+            // Serializa o preserveData dentro do objeto output
+            if (this.copyAllNbt) {
+                outputObject.addProperty("preserveData", true);
+            } else if (!this.specificNbtKeys.isEmpty()) {
+                JsonArray keysArray = new JsonArray();
+                for (String key : this.specificNbtKeys) {
+                    keysArray.add(key);
+                }
+                outputObject.add("preserveData", keysArray);
+            }
+
+            pJson.add("output", outputObject);
         }
 
-        public static JsonObject itemStackToJson(ItemStack result) {
-            JsonObject resultJson = new JsonObject();
-
-            String itemName = ForgeRegistries.ITEMS.getKey(result.getItem()).toString();
-            resultJson.addProperty("item", itemName);
-
-            resultJson.addProperty("count", result.getCount());
-
-            if (result.hasTag() && result.getTag() != null) {
-                resultJson.addProperty("nbt", result.getTag().toString());
-            }
-
-            return resultJson;
+        @Override
+        public @NotNull RecipeSerializer<?> getType() {
+            return UnifuserRecipe.Serializer.INSTANCE;
         }
 
         @Override
         public @NotNull ResourceLocation getId() {
             return this.id;
-        }
-
-        @Override
-        public @NotNull RecipeSerializer<?> getType() {
-            return ChangedAddonRecipeTypes.UNIFUSER_RECIPE.get();
         }
 
         @Override

@@ -4,12 +4,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.block.entity.CatalyzerBlockEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -18,8 +20,10 @@ import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CatalyzerRecipe implements Recipe<SimpleContainer> {
+public class CatalyzerRecipe implements Recipe<CatalyzerBlockEntity> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
@@ -27,27 +31,34 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
     private final float nitrogenUsage;
     private final float experience;
 
-    public CatalyzerRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, float progressSpeed, float nitrogenUsage, float experience) {
+    // Novos campos para gerenciar a cópia de dados
+    private final boolean copyAllNbt;
+    private final List<String> specificNbtKeys;
+
+    public CatalyzerRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems,
+                           float progressSpeed, float nitrogenUsage, float experience,
+                           boolean copyAllNbt, List<String> specificNbtKeys) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
         this.progressSpeed = progressSpeed;
         this.nitrogenUsage = nitrogenUsage;
         this.experience = experience;
+        this.copyAllNbt = copyAllNbt;
+        this.specificNbtKeys = specificNbtKeys;
     }
 
     @Override
-    public boolean matches(@NotNull SimpleContainer pContainer, Level pLevel) {
+    public boolean matches(@NotNull CatalyzerBlockEntity pContainer, Level pLevel) {
         if (pLevel.isClientSide()) {
             return false;
         }
 
-        // Verifica se a lista de ingredientes não está vazia
         if (!recipeItems.isEmpty()) {
             return StrictNBTIngredient.of(this.output).test(pContainer.getItem(1));
         }
 
-        return false; // Retorna false se a lista de ingredientes estiver vazia ou nenhum item atender às condições
+        return false;
     }
 
     public boolean isHidden() {
@@ -61,8 +72,32 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull SimpleContainer pContainer, @NotNull RegistryAccess registryAccess) {
-        return output;
+    public @NotNull ItemStack assemble(@NotNull CatalyzerBlockEntity pContainer, @NotNull RegistryAccess registryAccess) {
+        ItemStack resultStack = output.copy();
+
+        ItemStack mainSlotItem = pContainer.getItem(0);
+
+        if (!mainSlotItem.isEmpty() && mainSlotItem.hasTag()) {
+            CompoundTag sourceTag = mainSlotItem.getTag();
+            if (sourceTag != null) {
+                if (copyAllNbt) {
+                    resultStack.setTag(sourceTag.copy());
+                } else if (!specificNbtKeys.isEmpty()) {
+                    CompoundTag resultTag = resultStack.getOrCreateTag();
+                    for (String key : specificNbtKeys) {
+                        if (sourceTag.contains(key)) {
+                            Tag tag = sourceTag.get(key);
+                            if (tag == null) {
+                                continue;
+                            }
+                            resultTag.put(key, tag.copy());
+                        }
+                    }
+                }
+            }
+        }
+
+        return resultStack;
     }
 
     @Override
@@ -89,6 +124,14 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
 
     public float getExperience() {
         return experience;
+    }
+
+    public boolean isCopyAllNbt() {
+        return copyAllNbt;
+    }
+
+    public List<String> getSpecificNbtKeys() {
+        return specificNbtKeys;
     }
 
     @Override
@@ -120,7 +163,26 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
 
         @Override
         public @NotNull CatalyzerRecipe fromJson(@NotNull ResourceLocation pRecipeId, @NotNull JsonObject pSerializedRecipe) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
+            JsonObject outputObj = GsonHelper.getAsJsonObject(pSerializedRecipe, "output");
+            ItemStack output = ShapedRecipe.itemStackFromJson(outputObj);
+
+            boolean copyAllNbt = false;
+            List<String> specificNbtKeys = new ArrayList<>();
+
+            if (outputObj.has("preserveData")) {
+                JsonElement preserveDataElement = outputObj.get("preserveData");
+                if (preserveDataElement.isJsonPrimitive() && preserveDataElement.getAsJsonPrimitive().isBoolean()) {
+                    copyAllNbt = preserveDataElement.getAsBoolean();
+                } else if (preserveDataElement.isJsonArray()) {
+                    JsonArray jsonArray = preserveDataElement.getAsJsonArray();
+                    for (JsonElement element : jsonArray) {
+                        if (element.isJsonPrimitive()) {
+                            specificNbtKeys.add(element.getAsString());
+                        }
+                    }
+                }
+            }
+
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
             for (int i = 0; i < ingredients.size(); i++) {
@@ -139,19 +201,17 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
                     } else {
                         ingredient = StrictNBTIngredient.of(stack);
                     }
-
-                    ChangedAddonMod.LOGGER.info("Parsing nbt recipe with id {} of type {}", pRecipeId, Type.ID);
                 } else {
                     ingredient = Ingredient.fromJson(ingredientElement);
                 }
-
                 inputs.set(i, ingredient);
             }
+
             float progressSpeed = GsonHelper.getAsFloat(pSerializedRecipe, "progressSpeed", 1.0f);
             float nitrogenUsage = GsonHelper.getAsFloat(pSerializedRecipe, "nitrogenUsage", 0.0f);
             float experience = GsonHelper.getAsFloat(pSerializedRecipe, "experience", 0.0f);
 
-            return new CatalyzerRecipe(pRecipeId, output, inputs, progressSpeed, nitrogenUsage, experience);
+            return new CatalyzerRecipe(pRecipeId, output, inputs, progressSpeed, nitrogenUsage, experience, copyAllNbt, specificNbtKeys);
         }
 
         @Override
@@ -159,10 +219,19 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
             inputs.replaceAll(ignored -> Ingredient.fromNetwork(buf));
             ItemStack output = buf.readItem();
-            float ProgressSpeed = buf.readFloat();
+            float progressSpeed = buf.readFloat();
             float nitrogenUsage = buf.readFloat();
             float experience = buf.readFloat();
-            return new CatalyzerRecipe(id, output, inputs, ProgressSpeed, nitrogenUsage, experience);
+
+            // Sincronização via rede
+            boolean copyAllNbt = buf.readBoolean();
+            int keySize = buf.readInt();
+            List<String> specificNbtKeys = new ArrayList<>();
+            for (int i = 0; i < keySize; i++) {
+                specificNbtKeys.add(buf.readUtf());
+            }
+
+            return new CatalyzerRecipe(id, output, inputs, progressSpeed, nitrogenUsage, experience, copyAllNbt, specificNbtKeys);
         }
 
         @Override
@@ -175,6 +244,13 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
             buf.writeFloat(recipe.getProgressSpeed());
             buf.writeFloat(recipe.getNitrogenUsage());
             buf.writeFloat(recipe.getExperience());
+
+            // Envia dados de preservação pela rede
+            buf.writeBoolean(recipe.isCopyAllNbt());
+            buf.writeInt(recipe.getSpecificNbtKeys().size());
+            for (String key : recipe.getSpecificNbtKeys()) {
+                buf.writeUtf(key);
+            }
         }
 
         public ResourceLocation getRegistryName() {
