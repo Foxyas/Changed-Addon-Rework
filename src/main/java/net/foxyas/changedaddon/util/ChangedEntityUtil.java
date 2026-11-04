@@ -30,7 +30,7 @@ import java.util.List;
 public class ChangedEntityUtil {
 
 
-    @Deprecated(forRemoval = true) // Todo Remove this and swap for the ProcessTransfur.isGoo(Entity) check of the new update.
+//    @Deprecated(forRemoval = true) // Todo Remove this and swap for the ProcessTransfur.isGoo(Entity) check of the new update.
     public static boolean isGoo(Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
             return EntityUtil.maybeGetOverlaying(livingEntity).getType().is(ChangedTags.EntityTypes.LATEX);
