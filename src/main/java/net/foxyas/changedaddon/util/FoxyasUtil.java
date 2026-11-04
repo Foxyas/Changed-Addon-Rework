@@ -103,11 +103,11 @@ public class FoxyasUtil {
     }
 
 
-    public static Stream<BlockPos> getBlockPositionsInSphere(BlockPos center, int radius) {
+    public static Stream<BlockPos> getBlockPositionsInSphere(BlockPos center, float radius) {
         return BlockPos.betweenClosedStream(
-                center.offset(-radius, -radius, -radius),
-                center.offset(radius, radius, radius)
-        ).filter(pos -> pos.distSqr(center) <= radius * radius);
+                center.offset((int) -radius, (int) -radius, (int) -radius),
+                center.offset((int) radius, (int) radius, (int) radius)
+        ).map(BlockPos::immutable).filter(pos -> pos.distSqr(center) <= radius * radius);
     }
 
     public static Stream<BlockPos> betweenClosedStreamSphere(BlockPos pos1, BlockPos pos2, float troubleShoot) {
