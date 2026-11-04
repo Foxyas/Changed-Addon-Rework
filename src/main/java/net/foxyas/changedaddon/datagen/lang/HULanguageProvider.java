@@ -492,6 +492,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("catalyzer.nitrogen_usage", "A haladási sebesség tikkenként %1$s, és %2$s nitrogénerőt használ");
         addGui("recipe_progress", "A haladási sebesség %s tikkenként");
         addGui("catalyzer_gui.label_full", "Tele");
+        addGui("catalyzer_gui.power_button", "%1$s Főkapcsoló\nKattintson a be-/kikapcsoláshoz\nJelenlegi üzemmód: %2$s");
         addGui("catalyzer_gui.tooltip.place_first_ingredient", "Helyezze el az első hozzávalót");
         addGui("fight_to_keep_consciousness_minigame.button_fight", "           Küzdj            ");
         addGui("fight_to_keep_consciousness_minigame.button_give_up", "     felad      ");
@@ -532,6 +533,7 @@ public class HULanguageProvider extends LanguageProvider {
 
         addGui("transfur_sounds_gui.label_transfur_sounds", "Transzfur hangjai");
         addGui("unifuser_gui.label_full", "Tele");
+        addGui("unifuser_gui.power_button", "%1$s Főkapcsoló\nKattintson a be-/kikapcsoláshoz\nJelenlegi üzemmód: %2$s");
         addGui("unifuser_gui.tooltip.place_recipe_catalyst", "Helyezz ide egy DNS-sel töltött fecskendőt");
         addGui("unifuser_gui.tooltip.place_first_ingredient", "Helyezz ide a porokat vagy más hozzávalókat");
         addGui("unifuser_gui.tooltip.place_second_ingredient", "Tedd ide a második hozzávalót");
@@ -832,6 +834,9 @@ public class HULanguageProvider extends LanguageProvider {
         addText("rp.bow_and_crossbow_stop.crossbow_safety", "Túl vastagok az ujjaid ahhoz, hogy a számszeríj mechanizmusát kezeld!");
         addText("rp.bow_and_crossbow_stop.clumsy_paws", "Ilyen ügyetlen mancsokkal szinte lehetetlen nyilat húzni!");
         addText("item.signal_catcher.info.not_hold_enough", "Nem található hely. Kérjük, vizsgálja át teljesen a területet, és várja meg a figyelmeztetést, mielőtt elengedné a gombot.");
+        addText("boss_attacks.shield_bypass_hard", "A puszta erő áttört a pajzsodon!");
+        addText("boss_attacks.shield_broken_normal", "A pajzsod felfogta az ütést.");
+        addText("boss_attacks.dash_recharge_hint", "Következő előrelövelés érkezik. Hátralévő hárítások: %s");
 
         addMessage("induction_coil_melt", "§4⚡ Fémet vittél egy elektromos harcba. §cMicsoda ostoba lépés. §6A felszerelésed lesz a veszted oka!");
 
