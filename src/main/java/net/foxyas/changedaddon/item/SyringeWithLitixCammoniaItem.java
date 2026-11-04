@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedSounds;
@@ -124,7 +125,7 @@ public class SyringeWithLitixCammoniaItem extends AbstractSyringeItem {
             if (isOrganic && ChangedAddonVariables.ofOrDefault(player).showWarns) {
                 player.displayClientMessage(Component.literal("For some reason, this seems to have a slowed effect"), true);
             }
-        } else if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+        } else if (ChangedEntityUtil.isGoo(entity)) {
             applyUntransfurEffect(player, 400);
         }
 

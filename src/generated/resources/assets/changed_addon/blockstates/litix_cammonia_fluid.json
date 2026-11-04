@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "changed_addon:block/litix_cammonia_fluid"
+      "model": "changed_addon:block/litix_camonia_fluid"
     }
   }
 }

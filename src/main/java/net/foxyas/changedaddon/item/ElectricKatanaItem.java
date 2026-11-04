@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
 import net.ltxprogrammer.changed.util.Cacheable;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -54,9 +55,15 @@ public class ElectricKatanaItem extends AbstractKatanaItem {
                   }
 
                   public @NotNull Ingredient getRepairIngredient() {
-                      return CompoundIngredient.of(Ingredient.of(new ItemStack(ChangedAddonItems.ELECTRIC_KATANA.get())), Ingredient.of(ItemTags.create(ResourceLocation.parse("changed_addon:tsc_katana_repair"))));
+                      return CompoundIngredient.of(
+                              Ingredient.of(ChangedAddonTags.Items.KATANA_REPAIR),
+                              Ingredient.of(new ItemStack(ChangedAddonItems.ELECTRIC_KATANA.get()))
+                      );
                   }
-              }, 3, -2.3f, new Item.Properties()
+              },
+                3,
+                -2.3f,
+                new Item.Properties()
         );
     }
 

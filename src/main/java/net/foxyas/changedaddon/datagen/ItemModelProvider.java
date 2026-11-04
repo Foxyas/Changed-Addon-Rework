@@ -95,6 +95,10 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         withExistingParent(ELECTRIC_KATANA.getId().toString(), ChangedAddonMod.resourceLoc("custom/remastered_electric_katana"))
                 .texture("texture","item/remastered_electric_katana")
         ;
+
+        withExistingParent(ELECTRIC_KATANA_RED.getId().toString(), ChangedAddonMod.resourceLoc("custom/remastered_electric_katana"))
+                .texture("texture","item/remastered_electric_katana_red")
+        ;
     }
 
     public void luminaraLichen() {

@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -199,7 +200,7 @@ public class LatexSolventEnchantment extends Enchantment {
 
         private static boolean shouldAffectEntity(Entity entity) {
             return entity instanceof Player player && ProcessTransfur.isPlayerLatex(player)
-                    || (entity.getType().is(ChangedTags.EntityTypes.LATEX)
+                    || (ChangedEntityUtil.isGoo(entity)
                     && entity instanceof ChangedEntity);
         }
 

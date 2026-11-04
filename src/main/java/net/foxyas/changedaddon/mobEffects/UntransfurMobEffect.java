@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.process.UntransfurProgressInstance;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -51,7 +52,7 @@ public class UntransfurMobEffect extends MobEffect {
         Level level = entity.level;
 
         if (entity instanceof ChangedEntity changedEntity) {
-            if (changedEntity.getType().is(ChangedTags.EntityTypes.LATEX) && changedEntity.hasEffect(this)) {
+            if (ChangedEntityUtil.isGoo(changedEntity) && changedEntity.hasEffect(this)) {
                 float currentHealth = changedEntity.getHealth();
 
                 if (currentHealth <= 1.0F) {

@@ -150,6 +150,14 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         ;
 
         generateLuminaraPetalsBlockModels();
+
+
+        withExistingParent(ChangedAddonBlocks.LITIX_CAMMONIA_FLUID.getId().getPath(), "block/water")
+                .renderType("translucent")
+                .texture("particle", "changed_addon:block/litix_cammonia_fluid/litix_cammonia_fluid_still")
+                .texture("still", "changed_addon:block/litix_cammonia_fluid/litix_cammonia_fluid_still")
+                .texture("flowing", "changed_addon:block/litix_cammonia_fluid/litix_cammonia_fluid_flowing")
+        ;
     }
 
     protected void generateLuminaraPetalsBlockModels() {

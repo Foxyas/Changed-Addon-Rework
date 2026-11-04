@@ -264,7 +264,7 @@ public class PlayerUtil {
         Color3 color3 = fakeEntity.getTransfurColor(TransfurCause.DEFAULT);
         if (!(player.level instanceof ServerLevel serverLevel)) return false;
 
-        if (!variant.getParent().getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
+        if (!ChangedEntityUtil.isGoo(variant.getChangedEntity())) {
             serverLevel.sendParticles(ChangedParticles.gas(color3), player.getX(), player.getY() + 1, player.getZ(), 40, 0.2, 0.5, 0.2, 0);
         } else {
             serverLevel.sendParticles(ChangedParticles.drippingLatex(color3), player.getX(), player.getY() + 1, player.getZ(), 40, 0.2, 0.5, 0.2, 0);

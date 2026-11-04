@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.ISafeChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -22,9 +23,9 @@ public class TransfurVariantMixin {
 
     @ModifyReturnValue(method = "shouldScareVillager", at = @At("RETURN"))
     private static boolean shouldScareVillagersHook(boolean original, ChangedEntity entity, AbstractVillager villager) {
-        if (entity.getType().is(ChangedTags.EntityTypes.LATEX) && entity.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
+        if (ChangedEntityUtil.isGoo(entity) && entity.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
             return false;
-        } else if (entity.getType().is(ChangedTags.EntityTypes.LATEX) && ChangedEntityExtension.of(entity).isPacified()) {
+        } else if (ChangedEntityUtil.isGoo(entity) && ChangedEntityExtension.of(entity).isPacified()) {
             return false;
         } else if (entity instanceof ISafeChangedEntity safeChanged) {
             boolean flag = safeChanged.shouldScareVillagers(entity, villager);

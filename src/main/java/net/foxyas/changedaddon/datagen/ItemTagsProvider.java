@@ -234,6 +234,8 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
 
         tag(ChangedAddonTags.Items.TAME_ITEM);
 
+        tag(ChangedAddonTags.Items.KATANA_REPAIR);
+
         tag(ItemTags.SMALL_FLOWERS).add(LUMINARA_BLOOM.get());
 
 

@@ -9,10 +9,7 @@ import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
-import net.foxyas.changedaddon.util.ColorUtil;
-import net.foxyas.changedaddon.util.DelayedTask;
-import net.foxyas.changedaddon.util.FoxyasUtil;
-import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.foxyas.changedaddon.util.*;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -425,7 +422,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
                     continue;
                 }
 
-                if (changedEntity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+                if (ChangedEntityUtil.isGoo(changedEntity)) {
                     if (!changedEntity.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
                         changedEntity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.PACIFIED.get(), 60 * 20, 0, true, false, true));
                     }
@@ -437,7 +434,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
                         continue;
                     }
 
-                    if (instance.getParent().getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
+                    if (ChangedEntityUtil.isGoo(instance.getChangedEntity())) {
                         if (!player.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
                             player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.PACIFIED.get(), 60 * 20, 0, true, false, true));
                         }

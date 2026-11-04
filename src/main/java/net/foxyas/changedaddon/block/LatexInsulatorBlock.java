@@ -3,9 +3,9 @@ package net.foxyas.changedaddon.block;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
-import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.world.LatexCoverState;
 import net.minecraft.core.BlockPos;
@@ -48,7 +48,7 @@ public class LatexInsulatorBlock extends Block implements NonLatexCoverableBlock
 
     private static void execute(Entity entity) {
         entity.fallDistance = 0;
-        if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+        if (ChangedEntityUtil.isGoo(entity)) {
             if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
                 if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
                     _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 300, 0, false, false));

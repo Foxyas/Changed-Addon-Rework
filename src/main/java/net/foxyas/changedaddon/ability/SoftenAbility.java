@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -37,7 +38,7 @@ public class SoftenAbility extends AbstractAbility<SoftenAbilityInstance> {
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        return entity.getSelfVariant() != null && entity.getSelfVariant().getEntityType().is(ChangedTags.EntityTypes.LATEX);
+        return entity.getSelfVariant() != null && ChangedEntityUtil.isGoo(entity.getEntity());
     }
 
     @Override

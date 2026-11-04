@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.entity.api.*;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
@@ -394,7 +395,7 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
                     }
                 }
             } else if (patTarget instanceof ChangedEntity patChangedEntityTarget) {
-                boolean isTargetLatexTransfur = patChangedEntityTarget.getType().is(ChangedTags.EntityTypes.LATEX);
+                boolean isTargetLatexTransfur = ChangedEntityUtil.isGoo(patChangedEntityTarget);
 
                 boolean isTargetTransfurInExp2 = (patChangedEntityTarget.getSelfVariant() != null
                         && (patChangedEntityTarget.getSelfVariant().is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())

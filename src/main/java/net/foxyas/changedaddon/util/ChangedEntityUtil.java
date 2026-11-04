@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.util;
 
-import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
 import net.foxyas.changedaddon.entity.defaults.AbstractUnfuseableChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.tamable.AbstractExp2SnepChangedEntity;
@@ -12,10 +11,13 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractAquaticEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedTags;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +30,15 @@ import java.util.List;
 public class ChangedEntityUtil {
 
 
-    public static void mayChangedEntity(ChangedEntity changedEntity, Player player) {
+    @Deprecated(forRemoval = true) // Todo Remove this and swap for the ProcessTransfur.isGoo(Entity) check of the new update.
+    public static boolean isGoo(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity) {
+            return EntityUtil.maybeGetOverlaying(livingEntity).getType().is(ChangedTags.EntityTypes.LATEX);
+        }
+        return entity.getType().is(ChangedTags.EntityTypes.LATEX);
+    }
+
+    public static void mayTameChangedEntity(ChangedEntity changedEntity, Player player) {
         if (changedEntity instanceof AbstractTamableLatexEntity abstractTamableLatexEntity) {
             abstractTamableLatexEntity.tame(player);
         } else if (changedEntity instanceof AbstractExp2SnepChangedEntity abstractExp2SnepChangedEntity) {
