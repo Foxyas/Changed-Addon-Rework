@@ -106,8 +106,8 @@ public abstract class LitixCammoniaFluid extends ForgeFlowingFluid {
         @Override
         public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
             consumer.accept(new IClientFluidTypeExtensions() {
-                private static final ResourceLocation FLUID_STILL = ChangedAddonMod.resourceLoc("block/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId() + "/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId() + "_still");
-                private static final ResourceLocation FLUID_FLOWING = ChangedAddonMod.resourceLoc("block/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId() + "/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId() + "_flowing");
+                private static final ResourceLocation FLUID_STILL = ChangedAddonMod.resourceLoc("block/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId().getPath() + "/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId().getPath() + "_still");
+                private static final ResourceLocation FLUID_FLOWING = ChangedAddonMod.resourceLoc("block/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId().getPath() + "/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId().getPath() + "_flowing");
 
                 public ResourceLocation getStillTexture() {
                     return FLUID_STILL;
