@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.mobEffects;
 
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.effect.MobEffect;
@@ -29,7 +30,7 @@ public class LatexSolventMobEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
-        if (ProcessTransfur.getEntityVariant(entity).map(var -> var.getEntityType().is(ChangedTags.EntityTypes.LATEX)).orElse(false)) {
+        if (ChangedEntityUtil.isGoo(entity)) {
             entity.hurt(ChangedAddonDamageSources.LATEX_SOLVENT.source(entity.level()), amplifier + 2);
         }
     }

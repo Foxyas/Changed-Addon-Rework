@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.block;
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -59,7 +60,7 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
                     continue;
                 }
 
-                if (changedEntity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+                if (ChangedEntityUtil.isGoo(changedEntity)) {
                     if (!changedEntity.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
                         changedEntity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.PACIFIED.get(), 60 * 20, 0, true, false, true));
                     }
@@ -76,7 +77,7 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
                         continue;
                     }
 
-                    if (instance.getParent().getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
+                    if (ChangedEntityUtil.isGoo(instance.getChangedEntity())) {
                         if (!player.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
                             player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.PACIFIED.get(), 60 * 20, 0, true, false, true));
                         }

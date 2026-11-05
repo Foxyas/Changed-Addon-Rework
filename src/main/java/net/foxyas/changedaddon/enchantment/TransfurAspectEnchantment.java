@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.enchantment;
 
 import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -83,7 +84,7 @@ public class TransfurAspectEnchantment extends Enchantment {
                 if (variant == null) return;
 
                 // Only works if the variant is latex-based
-                boolean isLatex = changedEntity.getType().is(ChangedTags.EntityTypes.LATEX);
+                boolean isLatex = ChangedEntityUtil.isGoo(changedEntity);
                 if (!isLatex) return;
 
                 // Context requires the changed entity representation
@@ -116,7 +117,7 @@ public class TransfurAspectEnchantment extends Enchantment {
         if (variant == null) return;
 
         // Only works if the variant is latex-based
-        boolean isLatex = variant.getChangedEntity().getType().is(ChangedTags.EntityTypes.LATEX);
+        boolean isLatex = ChangedEntityUtil.isGoo(variant.getChangedEntity());
         if (!isLatex) return;
 
         // Context requires the changed entity representation

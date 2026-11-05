@@ -2,11 +2,11 @@ package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
 import net.ltxprogrammer.changed.util.Cacheable;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -53,19 +53,26 @@ public class ElectricKatanaRedItem extends AbstractKatanaItem {
                   }
 
                   public @NotNull Ingredient getRepairIngredient() {
-                      return CompoundIngredient.of(Ingredient.of(ItemTags.create(ResourceLocation.parse("changed_addon:tsc_katana_repair"))), Ingredient.of(new ItemStack(ChangedAddonItems.ELECTRIC_KATANA_RED.get())));
+                      return CompoundIngredient.of(
+                              Ingredient.of(ChangedAddonTags.Items.KATANA_REPAIR),
+                              Ingredient.of(new ItemStack(ChangedAddonItems.ELECTRIC_KATANA_RED.get()))
+                      );
                   }
-              }, 3, -2.2f, new Item.Properties()
+              },
+                3,
+                -2.2f,
+                new Item.Properties()
         );
     }
 
     @Override
     public ResourceLocation getModelLocation(ItemStack itemStack, ItemDisplayContext type) {
-        return SpecializedItemRendering.isGUI(type) ? null : IN_HAND_MODEL.get();
+        return null;
+//        return SpecializedItemRendering.isGUI(type) ? null : IN_HAND_MODEL.get();
     }
 
     @Override
     public void loadSpecialModels(Consumer<ResourceLocation> consumer) {
-        consumer.accept(IN_HAND_MODEL.get());
+//        consumer.accept(IN_HAND_MODEL.get());
     }
 }

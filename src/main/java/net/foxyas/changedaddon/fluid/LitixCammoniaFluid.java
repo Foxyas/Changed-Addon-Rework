@@ -5,9 +5,9 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonFluids;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
-import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.world.LatexCoverState;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -90,7 +90,7 @@ public abstract class LitixCammoniaFluid extends ForgeFlowingFluid {
         @Override
         public @Nullable BlockPathTypes getBlockPathType(FluidState state, BlockGetter level, BlockPos pos, @Nullable Mob mob, boolean canFluidLog) {
             if (mob instanceof ChangedEntity changedEntity) {
-                if (changedEntity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+                if (ChangedEntityUtil.isGoo(changedEntity)) {
                     return BlockPathTypes.DAMAGE_CAUTIOUS;
                 }
             }
@@ -106,8 +106,8 @@ public abstract class LitixCammoniaFluid extends ForgeFlowingFluid {
         @Override
         public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
             consumer.accept(new IClientFluidTypeExtensions() {
-                private static final ResourceLocation FLUID_STILL = ChangedAddonMod.resourceLoc("block/litix_cammonia_fluid/litix_cammonia_fluid_still");
-                private static final ResourceLocation FLUID_FLOWING = ChangedAddonMod.resourceLoc("block/litix_cammonia_fluid/litix_cammonia_fluid_flowing");
+                private static final ResourceLocation FLUID_STILL = ChangedAddonMod.resourceLoc("block/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId().getPath() + "/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId().getPath() + "_still");
+                private static final ResourceLocation FLUID_FLOWING = ChangedAddonMod.resourceLoc("block/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId().getPath() + "/" + ChangedAddonFluids.LITIX_CAMMONIA_FLUID.getId().getPath() + "_flowing");
 
                 public ResourceLocation getStillTexture() {
                     return FLUID_STILL;

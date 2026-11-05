@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/water",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "flowing": "changed_addon:block/litix_cammonia_fluid/litix_cammonia_fluid_flowing",
+    "particle": "changed_addon:block/litix_cammonia_fluid/litix_cammonia_fluid_still",
+    "still": "changed_addon:block/litix_cammonia_fluid/litix_cammonia_fluid_still"
+  }
+}

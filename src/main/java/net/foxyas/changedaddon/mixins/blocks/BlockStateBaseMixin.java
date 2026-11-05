@@ -1,15 +1,23 @@
 package net.foxyas.changedaddon.mixins.blocks;
 
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
+import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -82,5 +90,36 @@ public abstract class BlockStateBaseMixin {
             }
         });
 
+    }
+
+
+    @Inject(method = "getCollisionShape(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;", at = @At("HEAD"), cancellable = true)
+    private void getCollisionModShape(BlockGetter pLevel, BlockPos pPos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
+        if (context instanceof EntityCollisionContext entityContext) {
+            var state = pLevel.getBlockState(pPos);
+            Entity collidingEntity = entityContext.getEntity();
+
+            if (collidingEntity != null && state.is(BlockTags.create(ResourceLocation.parse("changed_addon:passable_blocks")))) {
+                // Verifica se a entidade é um jogador
+                if (collidingEntity instanceof Player player) {
+                    // Verifica uma condição específica do jogador (no caso, ProcessTransfur)
+                    if (ProcessTransfur.isPlayerLatex(player)) {
+                        TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+                        if ((transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()) == null) || (transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()) != null
+                                && transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).grabbedEntity == null)) {
+
+                            //Ability
+                            transfurVariantInstance.ifHasAbility(ChangedAddonAbilities.SOFTEN_ABILITY.get(), instance -> {
+                                if (instance.isActivate() && instance.isEntityInValidState()) {
+                                    // Se for um jogador Latex, permite que ele atravesse a barra de ferro (forma vazia)
+                                    cir.setReturnValue(Shapes.empty()); // Colisão desativada para jogadores Latex
+                                }
+                            });
+                            //SoftenAbilityInstance ability = ProcessTransfur.getPlayerTransfurVariant(player).getAbilityInstance(ChangedAddonAbilitys.SOFTEN_ABILITY.get());
+                        }
+                    }
+                }
+            }
+        }
     }
 }

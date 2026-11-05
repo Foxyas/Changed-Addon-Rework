@@ -80,6 +80,8 @@ public final class ChangedAddonTags {
         public static final TagKey<Item> SWEET_DIET = key("sweet_tooth_list");
         public static final TagKey<Item> WOLF_DIET = key("wolf_diet_list");
 
+        public static final TagKey<Item> KATANA_REPAIR = key("katana_repair");
+
         public static final TagKey<Item> UNIFUSER_RECIPE_CATALYST = key("unifuser_recipe_catalyst");
 
         public static final TagKey<Item> LUMINARA_LOGS = key("luminara_logs");

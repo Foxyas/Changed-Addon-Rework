@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.block;
 import net.foxyas.changedaddon.init.ChangedAddonFluids;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
@@ -87,7 +88,7 @@ public class LitixCammoniaFluidBlock extends LiquidBlock {
             if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
                 _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
         }
-        if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+        if (ChangedEntityUtil.isGoo(entity)) {
             if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
                 _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 200, 0, false, false));
         }

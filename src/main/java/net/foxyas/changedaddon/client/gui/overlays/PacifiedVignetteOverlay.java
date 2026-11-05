@@ -5,13 +5,16 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.LuminaraBloomFlowerBlock;
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +25,8 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.List;
 
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
@@ -97,6 +101,8 @@ public class PacifiedVignetteOverlay {
                 return;
             }
 
+            if (minecraft.isPaused()) return;
+
             // Verify base player conditions first
             boolean hasValidConditions = ProcessTransfur.isPlayerTransfurred(player) && player.hasEffect(ChangedAddonMobEffects.PACIFIED.get());
 
@@ -118,44 +124,62 @@ public class PacifiedVignetteOverlay {
 
     private static double getLuminaraTargetDot(Player player) {
         Vec3 eyePos = player.getEyePosition(1.0F);
-        Vec3 lookVec = player.getViewVector(1.0F);
+        Vec3 lookVec = player.getViewVector(1.0F).normalize();
 
-        // Check block raycast first
-        HitResult hitResult = player.pick(FLOWER_DETECTION_DISTANCE, 0.0F, false);
+        double maxDistance = FLOWER_DETECTION_DISTANCE;
+        double maxDistanceSqr = maxDistance * maxDistance;
+        double bestDot = -1.0;
 
-        if (hitResult.getType() == HitResult.Type.BLOCK && hitResult instanceof BlockHitResult blockHit) {
-            BlockState targetState = player.level().getBlockState(blockHit.getBlockPos());
-            if (targetState.getBlock() instanceof LuminaraBloomFlowerBlock) {
-                Vec3 targetCenter = Vec3.atCenterOf(blockHit.getBlockPos());
-                Vec3 toTarget = targetCenter.subtract(eyePos).normalize();
-                return lookVec.dot(toTarget);
+        // Minimum dot product threshold to consider something "in front" of the player
+        // (e.g., 0.0 means 90 degrees to each side, 0.5 is 60 degrees, 0.707 is 45 degrees)
+        double minDotThreshold = Math.cos(Math.toRadians(90 / 2.0));
+
+        BlockPos playerPos = player.blockPosition();
+
+        // 1. Check blocks in an area (Sphere around the player)
+        int radius = (int) Math.ceil(maxDistance);
+        for (BlockPos pos : FoxyasUtil.getBlockPositionsInSphere(playerPos, radius).toList()) {
+            double distSqr = eyePos.distanceToSqr(Vec3.atCenterOf(pos));
+            if (distSqr <= maxDistanceSqr) {
+                BlockState state = player.level().getBlockState(pos);
+                if (state.getBlock() instanceof LuminaraBloomFlowerBlock) {
+                    Vec3 targetCenter = Vec3.atCenterOf(pos);
+                    Vec3 toTarget = targetCenter.subtract(eyePos).normalize();
+                    double dot = lookVec.dot(toTarget);
+
+                    if (dot >= minDotThreshold && dot > bestDot) {
+                        bestDot = dot;
+                    }
+                }
             }
         }
 
-        // Check entity raycast along the same look vector
-        double maxDistanceSqr = FLOWER_DETECTION_DISTANCE * FLOWER_DETECTION_DISTANCE;
-        Vec3 endPos = eyePos.add(lookVec.x * FLOWER_DETECTION_DISTANCE, lookVec.y * FLOWER_DETECTION_DISTANCE, lookVec.z * FLOWER_DETECTION_DISTANCE);
-
-        AABB searchBox = player.getBoundingBox().expandTowards(lookVec.scale(FLOWER_DETECTION_DISTANCE)).inflate(1.0D);
-        EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(
-                player.level(),
-                player,
-                eyePos,
-                endPos,
-                searchBox,
-                entity -> !entity.isSpectator() && entity.isPickable()
+        // 2. Check entities in an area (BoundingBox search around the player)
+        AABB searchBox = player.getBoundingBox().inflate(maxDistance);
+        List<Entity> entities = player.level().getEntities(player, searchBox, entity ->
+                !entity.isSpectator() && entity.isPickable() && entity instanceof LuminaraFlowerBeastEntity
         );
 
-        if (entityHit != null && entityHit.getLocation().distanceToSqr(eyePos) <= maxDistanceSqr) {
-            Entity targetEntity = entityHit.getEntity();
-            if (targetEntity instanceof LuminaraFlowerBeastEntity) {
-                Vec3 targetPos = targetEntity.getPosition(Minecraft.getInstance().getPartialTick()).add(0, targetEntity.getBbHeight() / 2.0, 0);
+        for (Entity entity : entities) {
+            if (!(entity instanceof LivingEntity living)) {
+                continue;
+            }
+            Vec3 targetPos = living.getPosition(Minecraft.getInstance().getPartialTick()).add(0, living.getBbHeight() / 2.0, 0);
+            double distSqr = eyePos.distanceToSqr(targetPos);
+
+            if (distSqr <= maxDistanceSqr) {
                 Vec3 toTarget = targetPos.subtract(eyePos).normalize();
-                return lookVec.dot(toTarget);
+                double dot = lookVec.dot(toTarget);
+
+                if (dot >= minDotThreshold && dot > bestDot) {
+//                    if (FoxyasUtil.canEntitySeeOther(player, living, 90f)) {
+                        bestDot = dot;
+//                    }
+                }
             }
         }
 
-        return -1.0;
+        return bestDot;
     }
 
     public static void renderPacifiedVignetteOverlay(ForgeGui forgeGui, GuiGraphics graphics, float partialTick, int width, int height) {

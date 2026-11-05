@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.block.LatexCoverBlock;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.GasAreaUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
@@ -306,7 +307,7 @@ public abstract class AbstractFlamethrowerItem extends Item implements Specializ
             List<ChangedEntity> entities = level.getEntitiesOfClass(
                     ChangedEntity.class,
                     area,
-                    e -> e.getType().is(ChangedTags.EntityTypes.LATEX)
+                    ChangedEntityUtil::isGoo
             );
 
             for (ChangedEntity entity : entities) {

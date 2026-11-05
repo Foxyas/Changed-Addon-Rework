@@ -9,15 +9,10 @@ import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
-import net.foxyas.changedaddon.util.ColorUtil;
-import net.foxyas.changedaddon.util.DelayedTask;
-import net.foxyas.changedaddon.util.FoxyasUtil;
-import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.foxyas.changedaddon.util.*;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.PowderSnowWalkable;
-import net.ltxprogrammer.changed.entity.TransfurCause;
+import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedItems;
@@ -34,6 +29,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -94,6 +90,15 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
 
     public LuminaraFlowerBeastEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
+    }
+
+    @Override
+    protected void initializeBPI(BasicPlayerInfo info, RandomSource random) {
+        super.initializeBPI(info, random);
+        info.setEyeStyle(EyeStyle.TALL);
+        Color3 eyeColor = Color3.getColor("b473e9");
+        info.setLeftIrisColor(eyeColor);
+        info.setRightIrisColor(eyeColor);
     }
 
     private static void triggerVoidTransformation(Player player, LuminaraFlowerBeastEntity luminaraFlowerBeast) {
@@ -425,7 +430,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
                     continue;
                 }
 
-                if (changedEntity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+                if (ChangedEntityUtil.isGoo(changedEntity)) {
                     if (!changedEntity.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
                         changedEntity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.PACIFIED.get(), 60 * 20, 0, true, false, true));
                     }
@@ -437,7 +442,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
                         continue;
                     }
 
-                    if (instance.getParent().getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
+                    if (ChangedEntityUtil.isGoo(instance.getChangedEntity())) {
                         if (!player.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
                             player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.PACIFIED.get(), 60 * 20, 0, true, false, true));
                         }
