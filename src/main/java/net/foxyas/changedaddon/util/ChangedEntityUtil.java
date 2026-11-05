@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.util;
 
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractUnfuseableChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.tamable.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.tamable.AbstractTamableLatexEntity;
@@ -222,5 +223,13 @@ public class ChangedEntityUtil {
         }
 
         return subtitles;
+    }
+
+    public static boolean isAffectedByPacifiedEffect(ChangedEntity changedEntity) {
+        return !changedEntity.getType().is(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE);
+    }
+
+    public static boolean isAffectedByPacifiedNeutralityEffect(ChangedEntity changedEntity) {
+        return !changedEntity.getType().is(ChangedAddonTags.EntityTypes.PACIFY_HANDLE_IMMUNE);
     }
 }

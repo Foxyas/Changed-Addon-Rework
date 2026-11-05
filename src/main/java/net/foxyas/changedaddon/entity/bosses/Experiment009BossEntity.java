@@ -1537,7 +1537,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                             0,
                             ParticleTypes.ELECTRIC_SPARK,
                             Vec3.ZERO,
-                            this.getPosition(0).subtract(x, y, z),
+                            this.getPosition(0).subtract(x, y, z).scale(-1),
                             5, 0.025f
                     );
                 }
