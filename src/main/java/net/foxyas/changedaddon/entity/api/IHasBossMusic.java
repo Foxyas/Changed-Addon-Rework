@@ -25,5 +25,7 @@ public interface IHasBossMusic {
         return 1;
     }
 
-    LivingEntity getSelf();
+    default LivingEntity getSelf() {
+        return this instanceof LivingEntity livingEntity ? livingEntity : null;
+    }
 }

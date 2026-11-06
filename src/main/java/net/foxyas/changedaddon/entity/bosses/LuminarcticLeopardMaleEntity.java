@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.entity.bosses;
 
-import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -10,10 +9,8 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
@@ -21,8 +18,6 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class LuminarcticLeopardMaleEntity extends AbstractLuminarcticLeopard {
 
@@ -36,7 +31,6 @@ public class LuminarcticLeopardMaleEntity extends AbstractLuminarcticLeopard {
         setPersistenceRequired();
     }
 
-
     public static AttributeSupplier.Builder createAttributes() {
         AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 6);
@@ -49,39 +43,12 @@ public class LuminarcticLeopardMaleEntity extends AbstractLuminarcticLeopard {
     }
 
     @Override
-    protected void setAttributes(AttributeMap attributes) {
-        super.setAttributes(attributes);
-        //Attack stats
-        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((6));
-        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(6.0f);
-        attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(
-                AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_KNOCKBACK) + 1.5f
-        );
-
-        //Armor Stats
-        attributes.getInstance(Attributes.ARMOR).setBaseValue(8);
-        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(2);
-        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
-
-        //Health Stats
-        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((60));
-        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(128.0F);
-        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.25f);
-        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.05f);
-    }
-
-    @Override
     public TransfurMode getTransfurMode() {
         if (this.getTarget() != null && (this.getTarget().getHealth() / this.getTarget().getMaxHealth() * 100) <= 15) {
             return TransfurMode.ABSORPTION;
         }
 
         return TransfurMode.NONE;
-    }
-
-    @Override
-    protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        return this.isAggro();
     }
 
     @Override
@@ -118,5 +85,4 @@ public class LuminarcticLeopardMaleEntity extends AbstractLuminarcticLeopard {
     public Gender getGender() {
         return Gender.MALE;
     }
-
 }

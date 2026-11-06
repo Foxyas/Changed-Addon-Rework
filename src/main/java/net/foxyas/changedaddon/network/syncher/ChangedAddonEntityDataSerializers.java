@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.entity.ai.LatexAttackType;
 import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.ai.LatexTargetType;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraftforge.registries.DeferredRegister;
@@ -24,6 +25,7 @@ public class ChangedAddonEntityDataSerializers {
     public static final EntityDataSerializer<LatexFavor> LATEX_FAVOR = EntityDataSerializer.simpleEnum(LatexFavor.class);
     public static final EntityDataSerializer<AvaliEntity.StyleType> AVALI_STYLE_TYPE = EntityDataSerializer.simpleEnum(AvaliEntity.StyleType.class);
     public static final RegistryObject<EntityDataSerializer<Experiment009BossEntity.Exp9Phase>> EXP9_PHASES = SERIALIZERS.register("exp9_phase", () -> EntityDataSerializer.simpleEnum(Experiment009BossEntity.Exp9Phase.class));
+    public static final RegistryObject<EntityDataSerializer<AbstractLuminarcticLeopard.GlowState>> LUMINARCTIC_LEOPARDS_GLOW_STATE = SERIALIZERS.register("luminarctic_leopard_glow_state", () -> EntityDataSerializer.simpleEnum(AbstractLuminarcticLeopard.GlowState.class));
 
     static {
         EntityDataSerializers.registerSerializer(LATEX_TARGET_TYPE);

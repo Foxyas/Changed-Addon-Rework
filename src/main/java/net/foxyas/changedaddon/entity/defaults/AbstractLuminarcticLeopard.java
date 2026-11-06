@@ -1,147 +1,110 @@
 package net.foxyas.changedaddon.entity.defaults;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.block.LuminarCrystalSmall;
-import net.foxyas.changedaddon.enchantment.LatexSolventEnchantment;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
-import net.foxyas.changedaddon.entity.customHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
-import net.foxyas.changedaddon.init.ChangedAddonTags;
-import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
-import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Random;
 
-public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard implements ICrawlAndSwimAbleEntity, IHasBossMusic, IDynamicRideOffsetEntity {
+public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard implements ICrawlAndSwimAbleEntity, IDynamicRideOffsetEntity, IHasBossMusic {
 
-    public static final int GLOW_NONE = 0;
-    public static final int GLOW_PULSE = 1;
-    public static final int GLOW_ALWAYS = 2;
-    private static final EntityDataAccessor<Integer> GLOW_STAGE =
-            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> ACTIVATED_ABILITY =
-            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_BOSS =
             SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.BOOLEAN);
-    public final ServerBossEvent bossBar = new ServerBossEvent(
-            this.getDisplayName(), // Nome exibido na boss bar
-            BossEvent.BossBarColor.WHITE, // Cor da barra
-            BossEvent.BossBarOverlay.NOTCHED_6 // Estilo da barra
-    );
-    public final BossAbilitiesHandle bossAbilitiesHandle = new BossAbilitiesHandle(this);
-    //public final int DodgeAnimMaxTicks = 20;
-    public float AbilitiesTicksCooldown = 20;
-    public int SuperAbilitiesTicksCooldown = 0;
-    public int PassivesTicksCooldown = 0;
-    public int DashingTicks = 0;
-    private boolean Aggro = false;
-    private boolean wasBoss = false;
+    private static final EntityDataAccessor<GlowState> GLOW_STAGE =
+            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, ChangedAddonEntityDataSerializers.LUMINARCTIC_LEOPARDS_GLOW_STATE.get());
 
-    //public int DEVATTACKTESTTICK = 0;
-    public AbstractLuminarcticLeopard(EntityType<? extends AbstractSnowLeopard> p_19870_, Level p_19871_) {
-        super(p_19870_, p_19871_);
+    public enum GlowState {
+        NONE,
+        PULSE,
+        ALWAYS
+    }
+
+    public AbstractLuminarcticLeopard(EntityType<? extends AbstractSnowLeopard> type, Level level) {
+        super(type, level);
         this.setAttributes(this.getAttributes());
     }
+
+    // ------------------------------------------------------------------
+    // Spawning
+    // ------------------------------------------------------------------
 
     public static <T extends AbstractLuminarcticLeopard> boolean canSpawnNear(EntityType<T> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         if (world.getDifficulty() == Difficulty.PEACEFUL) {
             return false;
         }
 
-        // Verifica se a luz do bloco é menor ou igual a 6
+        // Block light must be 6 or lower
         if (world.getBrightness(LightLayer.BLOCK, pos) > 6) {
             return false;
         }
 
-        // Certifica-se de que o bloco abaixo não é ar e é sólido
+        // The block below must be solid
         BlockState blockBelow = world.getBlockState(pos.below());
         if (!blockBelow.isSolidRender(world, pos.below()) || !blockBelow.isFaceSturdy(world, pos.below(), Direction.UP)) {
             return false;
         }
 
-        // Define uma área de checagem ao redor do spawn (raio de 6 blocos)
+        // Check area around the spawn (6 block radius)
         AABB checkArea = new AABB(pos).inflate(6);
 
-        // Verifica se há um Luminar Crystal Small (hearted) por perto
+        // Needs a hearted Luminar Crystal Small nearby
         boolean nearLuminarCrystal = world.getBlockStatesIfLoaded(checkArea)
-                .anyMatch((state) -> state.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get()) &&
-                        state.getValue(LuminarCrystalSmall.HEARTED));
+                .anyMatch(state -> state.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get())
+                        && state.getValue(LuminarCrystalSmall.HEARTED));
 
         if (!nearLuminarCrystal) {
             return false;
         }
 
-        // **Novo: Checagem para limitar a quantidade de entidades**
-        int maxEntitiesNear = 3; // Defina quantas entidades podem existir perto do cristal
+        // Limit how many of these can exist near the crystal
+        int maxEntitiesNear = 3;
         int currentEntities = world.getEntities(entityType, checkArea, entity -> true).size();
 
-        return currentEntities < maxEntitiesNear; // Já tem muitas entidades perto, impedir novo spawn
-        // Condições atendidas, pode spawnar
+        return currentEntities < maxEntitiesNear;
     }
 
-    public static LootTable.@NotNull Builder getLoot() {
-        return LootTable.lootTable();
-    }
+    // ------------------------------------------------------------------
+    // Synched data
+    // ------------------------------------------------------------------
 
     @Override
-    protected void setAttributes(AttributeMap attributes) {
-        super.setAttributes(attributes);
-        attributes.getInstance(ChangedAttributes.AIR_CAPACITY.get()).setBaseValue(15);
-        attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.35F);
-        attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(GLOW_STAGE, GlowState.NONE);
+        this.entityData.define(IS_BOSS, false);
     }
 
     public boolean isBoss() {
@@ -152,86 +115,144 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         this.entityData.set(IS_BOSS, boss);
     }
 
-    public boolean isAggro() {
-        return Aggro;
+    public GlowState getGlowStage() {
+        return this.entityData.get(GLOW_STAGE);
     }
 
-    public void setAggro(boolean aggro) {
-        Aggro = aggro;
+    public void setGlowStage(GlowState stage) {
+        this.entityData.set(GLOW_STAGE, stage);
+    }
+
+    public boolean hasGlowingMarks() {
+        return this.getGlowStage() != GlowState.NONE;
+    }
+
+    // ------------------------------------------------------------------
+    // Attributes
+    // ------------------------------------------------------------------
+
+    /**
+     * Single source of truth for stats. Boss stats are layered on top of the
+     * base ones here, so any re-run of this method (constructor, variant refresh,
+     * boss toggle) always ends up with the right values.
+     */
+    @Override
+    protected void setAttributes(AttributeMap attributes) {
+        super.setAttributes(attributes);
+        attributes.getInstance(ChangedAttributes.AIR_CAPACITY.get()).setBaseValue(15);
+        attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.35F);
+        attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5);
+
+        // Attack
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue(6);
+        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(6.0);
+        attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(
+                net.foxyas.changedaddon.entity.customHandle.AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_KNOCKBACK) + 1.5
+        );
+
+        // Defense
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(8);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(2);
+        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+
+        // Health / movement
+        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue(60);
+        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(128.0);
+        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.25);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.05);
+
+        if (this.isBoss()) {
+            applyBossAttributes(attributes);
+        }
+    }
+
+    private static void applyBossAttributes(AttributeMap attributes) {
+        setBase(attributes.getInstance(Attributes.MAX_HEALTH), 500);
+        setBase(attributes.getInstance(Attributes.ATTACK_DAMAGE), 17.5);
+        setBase(attributes.getInstance(Attributes.ARMOR), 10);
+        setBase(attributes.getInstance(Attributes.ARMOR_TOUGHNESS), 2.5);
+    }
+
+    private static void setBase(AttributeInstance instance, double value) {
+        if (instance != null) {
+            instance.setBaseValue(value);
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Boss state: event driven, no tick involved
+    // ------------------------------------------------------------------
+
+    /**
+     * Runs whenever IS_BOSS changes: on the server when setBoss() / NBT load
+     * sets it, and on the client when the tracker packet arrives.
+     */
+    @Override
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
+        if (key == IS_BOSS) {
+            this.refreshBossState();
+        }
+    }
+
+    private void refreshBossState() {
+        this.setAttributes(this.getAttributes());
+
+        if (!this.level.isClientSide) {
+            if (this.isBoss()) {
+                this.setHealth(this.getMaxHealth());
+            } else if (this.getHealth() > this.getMaxHealth()) {
+                this.setHealth(this.getMaxHealth());
+            }
+        }
+
+        if (this.isBoss()) {
+            this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+        }
+
+        IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying())
+                .map(IAbstractChangedEntity::getTransfurVariantInstance)
+                .ifPresent(TransfurVariantInstance::refreshAttributes);
+    }
+
+    // ------------------------------------------------------------------
+    // Persistence
+    // ------------------------------------------------------------------
+
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("isBoss", this.isBoss());
+        tag.putString("glowStage", this.getGlowStage().name());
     }
 
     @Override
-    public int getExperienceReward() {
-        if (this.isBoss()) {
-            return super.getExperienceReward() * 50;
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
+        // Boss flag first so the attribute pass runs before super restores
+        // the saved Health value (that way loading never heals the boss).
+        this.setBoss(tag.getBoolean("isBoss"));
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("glowStage")) {
+            try {
+                this.setGlowStage(GlowState.valueOf(tag.getString("glowStage")));
+            } catch (IllegalArgumentException ignored) {
+                this.setGlowStage(GlowState.NONE);
+            }
         }
+    }
 
-        return super.getExperienceReward();
+    // ------------------------------------------------------------------
+    // Interface contracts
+    // ------------------------------------------------------------------
+
+    @Override
+    public void updateStepSizeBasedInSwimState(boolean updateSwimmingMovement) {
+        this.setMaxUpStep(updateSwimmingMovement ? 1f : 0.7f);
     }
 
     @Override
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        return this.isAggro() && !(livingEntity instanceof AbstractLuminarcticLeopard);
-    }
-
-    @Override
-    public boolean startRiding(@NotNull Entity pEntity, boolean pForce) {
-        if (pEntity instanceof Boat || pEntity instanceof Minecart) {
-            if (this.isBoss()) {
-                super.startRiding(pEntity, pForce);
-                return false;
-            }
-        }
-        return super.startRiding(pEntity, pForce);
-    }
-
-    @Override
-    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
-        return SoundEvents.GENERIC_HURT;
-    }
-
-    @Override
-    protected @NotNull SoundEvent getDeathSound() {
-        return SoundEvents.GENERIC_DEATH;
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(GLOW_STAGE, 0);
-        this.entityData.define(ACTIVATED_ABILITY, false);
-        this.entityData.define(IS_BOSS, false);
-    }
-
-    public int getGlowStage() {
-        return this.entityData.get(GLOW_STAGE);
-    }
-
-    public void setGlowStage(int stage) {
-        this.entityData.set(GLOW_STAGE, stage);
-    }
-
-    public boolean isActivatedAbility() {
-        return this.entityData.get(ACTIVATED_ABILITY);
-    }
-
-    public void setActivatedAbility(boolean value) {
-        this.entityData.set(ACTIVATED_ABILITY, value);
-    }
-
-    @Override
-    public void setTarget(@Nullable LivingEntity entity) {
-        super.setTarget(entity);
-    }
-
-    @Override
-    public boolean canBeAffected(@NotNull MobEffectInstance mobEffectInstance) {
-        return super.canBeAffected(mobEffectInstance);
-    }
-
-    @Override
-    public void variantTick(Level level) {
-        super.variantTick(level);
+        return false; // They are neutral by default.
     }
 
     @Override
@@ -244,318 +265,12 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         return this;
     }
 
-    @Override
-    public void updateStepSizeBasedInSwimState(boolean updateSwimmingMovement) {
-        this.setMaxUpStep(updateSwimmingMovement ? 1f : 0.7f);
-    }
-
-    @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {
-        super.onSyncedDataUpdated(pKey);
-        if (pKey == IS_BOSS) {
-            if (this.isBoss()) {
-                handleBoss();
-            } else {
-                handleNonBoss();
-            }
-        }
-    }
-
-    @Override
-    public void baseTick() {
-        super.baseTick();
-        if (this.getUnderlyingPlayer() == null) {
-            if (!this.isNoAi()) {
-                if (this.isBoss()) {
-                    if (this.AbilitiesTicksCooldown <= 0) {
-                        this.bossAbilitiesHandle.tick();
-                        if (this.getUnderlyingPlayer() == null) {
-                            this.setGlowStage(GLOW_NONE);
-                        }
-                    } else {
-                        this.AbilitiesTicksCooldown--;
-                        if (this.getUnderlyingPlayer() == null) {
-                            this.setGlowStage(GLOW_PULSE);
-                        }
-                    }
-
-                    this.setActivatedAbility(this.getTarget() != null);
-                    if (this.SuperAbilitiesTicksCooldown > 0) {
-                        this.SuperAbilitiesTicksCooldown--; //Super Abilities CoolDown
-                    }
-
-                    if (this.isAlive()) {
-                        if (this.PassivesTicksCooldown <= 10) {
-                            this.bossAbilitiesHandle.Passives(); //Passives
-                        } else {
-                            this.PassivesTicksCooldown -= 2;
-                        }
-
-                        if (this.isDashing()) {
-                            DashingTicks--;
-                            if (this.getTarget() == null) {
-                                this.DashingTicks = 0;
-                            }
-                            for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
-                                double angleTheta = Math.toRadians(theta);
-                                for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
-                                    double anglePhi = Math.toRadians(phi);
-                                    double x = this.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
-                                    double y = this.getY() + Math.cos(anglePhi) * 4.0;
-                                    double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
-                                    Vec3 pos = new Vec3(x, y, z);
-                                    ParticlesUtil.sendParticles(
-                                            this.level(),
-                                            ParticleTypes.GLOW,
-                                            pos,
-                                            0.3f, 0.2f, 0.3f,
-                                            4, 0
-                                    );
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (!this.level.isClientSide && this.isBoss()) {
-                this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
-            }
-        }
-    }
-
-    @Override
-    public void startSeenByPlayer(@NotNull ServerPlayer player) {
-        super.startSeenByPlayer(player);
-        if (this.isBoss()) {
-            this.bossBar.addPlayer(player);
-        }
-    }
-
-    @Override
-    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
-        super.stopSeenByPlayer(player);
-        if (this.isBoss()) {
-            this.bossBar.removePlayer(player);
-        }
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        setBoss(tag.getBoolean("isBoss"));
-        this.wasBoss = tag.getBoolean("wasBoss");
-//        this.wasBoss = tag.getBoolean("wasBoss");
-        super.readAdditionalSaveData(tag);
-        if (tag.contains("ActivatedAbility")) {
-            this.setActivatedAbility(tag.getBoolean("ActivatedAbility"));
-        }
-        if (tag.contains("AbilitiesTicksCooldown")) {
-            this.AbilitiesTicksCooldown = tag.getFloat("AbilitiesTicksCooldown");
-        }
-        if (tag.contains("PassivesTicksCooldown")) {
-            this.PassivesTicksCooldown = tag.getInt("PassivesTicksCooldown");
-        }
-        if (tag.contains("SuperAbilitiesTicksCooldown")) {
-            this.SuperAbilitiesTicksCooldown = tag.getInt("SuperAbilitiesTicksCooldown");
-        }
-        if (tag.contains("DashingTicks")) {
-            this.DashingTicks = tag.getInt("DashingTicks");
-        }
-        if (tag.contains("GlowStage")) {
-            this.setGlowStage(tag.getInt("GlowStage"));
-        }
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean("ActivatedAbility", isActivatedAbility());
-        tag.putFloat("AbilitiesTicksCooldown", AbilitiesTicksCooldown);
-        tag.putInt("SuperAbilitiesTicksCooldown", SuperAbilitiesTicksCooldown);
-        tag.putInt("PassivesTicksCooldown", PassivesTicksCooldown);
-        tag.putInt("DashingTicks", DashingTicks);
-        tag.putInt("GlowStage", this.getGlowStage());
-        tag.putBoolean("isBoss", this.isBoss());
-        tag.putBoolean("wasBoss", this.wasBoss);
-    }
-
-
-    public void handleBoss() {
-        wasBoss = true;
-        Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(500f);
-        Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(17.5f);
-        Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(10f);
-        Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2.5f);
-        this.setHealth(getMaxHealth());
-        //this.setAbsorptionAmount(75f);
-        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-        IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
-    }
-
-    public void handleNonBoss() {
-        wasBoss = false;
-        this.setAttributes(this.getAttributes());
-        if (this.getHealth() > this.getMaxHealth()) {
-            this.setHealth(this.getMaxHealth());
-        }
-        IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
-    }
-
-    public boolean isDashing() {
-        return this.DashingTicks > 0;
-    }
-
-    private void playDodge(Entity entity) {
-        if (entity != null) {
-            this.lookAt(EntityAnchorArgument.Anchor.FEET, entity.getEyePosition());
-        }
-        this.getNavigation().stop();
-        DodgeAbilityInstance.executeRandomDodgeAnimation(this);
-    }
-
-    @Override
-    public boolean canBeHitByProjectile() {
-        return super.canBeHitByProjectile();
-    }
-
-    @Override
-    public boolean hurt(@NotNull DamageSource source, float amount) {
-        this.AbilitiesTicksCooldown -= (0.05f * amount);
-
-        if (source.getDirectEntity() instanceof ThrowableItemProjectile throwableItemProjectile) {
-            if (this.isBoss()) {
-                Entity attacker = throwableItemProjectile.getOwner() != null ? throwableItemProjectile.getOwner() : source.getEntity();
-                playDodge(attacker);
-            }
-        }
-        if (source.is(DamageTypeTags.IS_PROJECTILE) && source.getDirectEntity() instanceof AbstractArrow abstractArrow && abstractArrow.getPierceLevel() <= 0 && this.isBoss()) {
-            Entity attacker = source.getDirectEntity() != null ? source.getDirectEntity() : source.getEntity();
-            playDodge(attacker);
-            return false;
-        } else if (source.is(DamageTypeTags.IS_PROJECTILE) && !this.isBoss()) {
-            return super.hurt(source, amount);
-        } else if (source.is(DamageTypeTags.IS_PROJECTILE) &&
-                source.getDirectEntity() instanceof AbstractArrow abstractArrow &&
-                abstractArrow.getPierceLevel() > 0 && this.isBoss()) {
-            return super.hurt(source, amount);
-        }
-
-        if (this.isBoss() && (source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_EXPLOSION))) {
-            if (source.is(DamageTypeTags.IS_FIRE)) {
-                return super.hurt(source, amount * 0.75f);
-            }
-            return super.hurt(source, amount * 0.25f);
-        }
-
-        Entity attacker = source.getDirectEntity() != null ? source.getDirectEntity() : source.getEntity();
-
-        if (attacker == null && this.isBoss()) {
-            if (source.is(ChangedAddonDamageSources.LATEX_SOLVENT.key())) {
-                return super.hurt(source, amount * 1.25f);
-            } else if (source.getMsgId().contains("latex_solvent")) {
-                return super.hurt(source, amount * 1.25f);
-            }
-            return super.hurt(source, amount * 0.25f);
-        }
-
-        if (attacker instanceof LivingEntity livingEntity && this.isBoss()) {
-            if (LatexSolventEnchantment.getLatexSolventLevelOfEntity(livingEntity) >= 1
-                    || source.typeHolder().is(ChangedAddonTags.DamageTypes.IS_LATEX_SOLVENT)
-                    || source.getMsgId().contains("latex_solvent") // Fail safe
-            ) {
-                return super.hurt(source, amount * 1.25f);
-            }
-
-            double livingEntityAttackSpeed = livingEntity.getAttribute(Attributes.ATTACK_SPEED) != null ? livingEntity.getAttributeValue(Attributes.ATTACK_SPEED) : Attributes.ATTACK_SPEED.getDefaultValue();
-            boolean targetHasFastAttackSpeed = livingEntityAttackSpeed >= 4.4D; // Haste 1 makes the player able to attack with they hand.
-
-            float reducedAmount = amount / 6f;
-            if (reducedAmount > 2f || targetHasFastAttackSpeed) {
-                if (reducedAmount < 4f) {
-                    playDodge(attacker);
-                }
-                return super.hurt(source, Math.max(1, reducedAmount));
-            } else {
-                playDodge(attacker);
-                return false;
-            }
-        }
-
-        return super.hurt(source, amount);
-    }
+    // ------------------------------------------------------------------
+    // Functions
+    // ------------------------------------------------------------------
 
     public void playRoarSound() {
         this.playSound(ChangedSounds.TIGER_SHARK_ROAR.get(), 1, 0);
     }
 
-    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
-    public static class EntityEvents {
-
-        @SubscribeEvent
-        public static void onLuminarcticSpawn(MobSpawnEvent.FinalizeSpawn spawnEvent) {
-            CompoundTag spawnTag = spawnEvent.getSpawnTag();
-            Mob entity = spawnEvent.getEntity();
-            if (!(entity instanceof AbstractLuminarcticLeopard abstractLuminarcticLeopard)) return;
-            boolean attributesApplied = abstractLuminarcticLeopard.wasBoss;
-            if (spawnTag != null) {
-                attributesApplied |= (spawnTag.contains("wasBoss") && spawnTag.getBoolean("wasBoss"));
-            }
-
-            if (spawnTag != null && spawnTag.contains("isBoss") && spawnTag.getBoolean("isBoss")) {
-                if (!attributesApplied) {
-                    abstractLuminarcticLeopard.handleBoss();
-                }
-            } else if (abstractLuminarcticLeopard.isBoss()) {
-                if (!attributesApplied) {
-                    abstractLuminarcticLeopard.handleBoss();
-                }
-            }
-        }
-
-        @SubscribeEvent
-        public static void whenAttack(LivingHurtEvent event) {
-            LivingEntity target = event.getEntity();
-            Entity source = event.getSource().getEntity();
-
-            if (event.getSource().is(DamageTypes.THORNS)) {
-                return;
-            }
-
-            int pTicksFrozen = target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f);
-            if (source instanceof AbstractLuminarcticLeopard lumi && lumi.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-                ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.getEyePosition(), 0.3f, 0.5f, 0.3f, 4, 0.05f);
-                target.setTicksFrozen(Math.min(target.getTicksRequiredToFreeze(), pTicksFrozen));
-                target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
-            } else if (source instanceof Player player) {
-                TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-                if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
-                        && instance != null
-                        && instance.getParent().is(ChangedAddonTags.TransfurVariants.CAUSE_FREEZING)) {
-                    ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.getEyePosition(), 0.3f, 0.5f, 0.3f, 4, 0.05f);
-                    target.setTicksFrozen(Math.min(target.getTicksRequiredToFreeze(), pTicksFrozen));
-                    target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
-                }
-            }
-        }
-
-//        @SubscribeEvent
-//        public static void onEntityDrop(LivingDropsEvent event) {
-//            LivingEntity entity = event.getEntity();
-//            Level level = entity.level;
-//
-//            // Verifica se é um mob específico, por exemplo, um Luminarctic Leopard
-//            if (entity instanceof AbstractLuminarcticLeopard leopard) {
-//                // Verifica se tem a NBT isBoss = 1b
-//                if (leopard.isBoss()) {
-//                    // Cria o item que será dropado
-//                    ItemStack item = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get());
-//
-//                    // Cria o drop
-//                    ItemEntity drop = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), item);
-//
-//                    // Adiciona à lista de drops
-//                    event.getDrops().add(drop);
-//                }
-//            }
-//        }
-    }
 }
