@@ -15,6 +15,7 @@ import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.foxyas.changedaddon.util.TagKeyUtil;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
@@ -130,7 +131,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
 
     @Override
     public boolean isNeutralTo(@NotNull LivingEntity target) {
-        if (hasEffect(ChangedAddonMobEffects.PACIFIED.get())) return true;
+        if (ChangedEntityUtil.isAffectedByPacifiedNeutralityEffect((ChangedEntity) (Object) this) && hasEffect(ChangedAddonMobEffects.PACIFIED.get())) return true;
         if (this.isPacified()) return true;
 
         Optional<IAbstractChangedEntity> grabberSafe = GrabEntityAbility.getGrabberSafe(target);

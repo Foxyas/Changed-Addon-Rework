@@ -52,7 +52,7 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
                 (entity) -> FoxyasUtil.canEntitySeePosIgnoreGlass(entity, Vec3.atCenterOf(pPos), 90));
         for (LivingEntity livingEntity : nearChangedBeasts) {
             if (livingEntity instanceof ChangedEntity changedEntity) {
-                if (changedEntity.getType().is(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE)) {
+                if (!ChangedEntityUtil.isAffectedByPacifiedEffect(changedEntity)) {
                     continue;
                 }
 
@@ -68,16 +68,17 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
             } else if (livingEntity instanceof Player player) {
                 TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
                 if (instance != null) {
-                    if (instance.getChangedEntity().getType().is(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE)) {
+                    ChangedEntity changedEntity = instance.getChangedEntity();
+                    if (!ChangedEntityUtil.isAffectedByPacifiedEffect(changedEntity)) {
                         continue;
                     }
 
 
-                    if ((instance.getChangedEntity() instanceof LuminaraFlowerBeastEntity)) {
+                    if ((changedEntity instanceof LuminaraFlowerBeastEntity)) {
                         continue;
                     }
 
-                    if (ChangedEntityUtil.isGoo(instance.getChangedEntity())) {
+                    if (ChangedEntityUtil.isGoo(changedEntity)) {
                         if (!player.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
                             player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.PACIFIED.get(), 60 * 20, 0, true, false, true));
                         }

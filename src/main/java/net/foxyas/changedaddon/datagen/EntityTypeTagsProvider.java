@@ -103,7 +103,12 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
                 .add(EXPERIMENT_10_BOSS.get())
                 .add(EXPERIMENT_009_BOSS.get());
 
-        tag(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE);
+        tag(ChangedAddonTags.EntityTypes.PACIFY_IMMUNE)
+                .add(EXPERIMENT_009.get())
+                .add(EXPERIMENT_009_BOSS.get())
+                .add(EXPERIMENT_10.get())
+                .add(EXPERIMENT_10_BOSS.get())
+        ;
 
         tag(EntityTypeTags.IMPACT_PROJECTILES).add(
                 PARTICLE_PROJECTILE.get(), WITHER_PARTICLE_PROJECTILE.get());

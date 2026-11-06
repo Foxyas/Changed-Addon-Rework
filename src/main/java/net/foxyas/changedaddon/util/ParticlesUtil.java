@@ -187,30 +187,6 @@ public class ParticlesUtil {
         }
     }
 
-    public static void sendParticlesWithMotion(Level level, ParticleOptions particleOptions, Vec3 position, Vec3 offset, Vec3 motion, int count, float speed) {
-        // Enviar as partículas
-        double XV = motion.x(), YV = motion.y(), ZV = motion.z();
-        RandomSource random = level.getRandom();
-
-        if (level instanceof ServerLevel serverLevel) {
-            for (int i = 0; i < count; ++i) {
-                double x = random.nextGaussian() * offset.x;
-                double y = random.nextGaussian() * offset.y;
-                double z = random.nextGaussian() * offset.z;
-
-                serverLevel.sendParticles(particleOptions,
-                        position.x() + x,
-                        position.y() + y,
-                        position.z() + z,
-                        0,
-                        XV,
-                        YV,
-                        ZV,
-                        speed);
-            }
-        }
-    }
-
     public static void sendParticlesWithMotion(LivingEntity livingEntity, ParticleOptions particleOptions, Vec3 position, Vec3 offset, Vec3 motion, int count, float speed) {
         // Enviar as partículas
         double XV = motion.x(), YV = motion.y(), ZV = motion.z();
@@ -317,6 +293,31 @@ public class ParticlesUtil {
         }
     }
 
+
+    public static void sendParticlesWithMotion(Level level, ParticleOptions particleOptions, Vec3 position, Vec3 offset, Vec3 motion, int count, float speed) {
+        // Enviar as partículas
+        double XV = motion.x(), YV = motion.y(), ZV = motion.z();
+        RandomSource random = level.getRandom();
+
+        if (level instanceof ServerLevel serverLevel) {
+            for (int i = 0; i < count; ++i) {
+                double x = random.nextGaussian() * offset.x;
+                double y = random.nextGaussian() * offset.y;
+                double z = random.nextGaussian() * offset.z;
+
+                serverLevel.sendParticles(particleOptions,
+                        position.x() + x,
+                        position.y() + y,
+                        position.z() + z,
+                        0,
+                        XV,
+                        YV,
+                        ZV,
+                        speed);
+            }
+        }
+    }
+
     public static void sendParticlesWithMotion(LivingEntity livingEntity, ParticleOptions particleOptions, Vec3 offset, Vec3 motion, int count, float speed) {
         // Enviar as partículas
         double XV = motion.x(), YV = motion.y(), ZV = motion.z();
@@ -367,7 +368,7 @@ public class ParticlesUtil {
         }
     }
 
-    public static void sendParticlesinClient(Level level, ParticleOptions particleOptions, double x, double y, double z, double XV, double YV, double ZV, int count) {
+    public static void sendParticlesInClient(Level level, ParticleOptions particleOptions, double x, double y, double z, double XV, double YV, double ZV, int count) {
         // Enviar as partículas
         if (level instanceof ClientLevel clientLevel) {
             for (int i = 0; i < count; i++) {

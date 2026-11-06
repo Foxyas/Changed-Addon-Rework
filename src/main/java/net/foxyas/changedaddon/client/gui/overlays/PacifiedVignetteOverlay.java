@@ -4,8 +4,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.LuminaraBloomFlowerBlock;
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
+import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.foxyas.changedaddon.util.FoxyasUtil;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -104,7 +107,9 @@ public class PacifiedVignetteOverlay {
             if (minecraft.isPaused()) return;
 
             // Verify base player conditions first
-            boolean hasValidConditions = ProcessTransfur.isPlayerTransfurred(player) && player.hasEffect(ChangedAddonMobEffects.PACIFIED.get());
+
+            boolean hasValidConditions = ProcessTransfur.getPlayerTransfurVariantSafe(player).map(variant -> variant.getHost().hasEffect(ChangedAddonMobEffects.PACIFIED.get()) && ChangedEntityUtil.isAffectedByPacifiedEffect(variant.getChangedEntity())).orElse(false);
+//                    ProcessTransfur.isPlayerTransfurred(player) && player.hasEffect(ChangedAddonMobEffects.PACIFIED.get());
 
             double targetDot = -1.0;
             if (hasValidConditions) {

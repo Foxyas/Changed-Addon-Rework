@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.mobEffects;
 
 import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -23,7 +24,7 @@ public class PacifiedMobEffect extends MobEffect {
     public void addAttributeModifiers(@NotNull LivingEntity pLivingEntity, @NotNull AttributeMap pAttributeMap, int pAmplifier) {
         super.addAttributeModifiers(pLivingEntity, pAttributeMap, pAmplifier);
         if (pLivingEntity instanceof ChangedEntity changedEntity) {
-            if (changedEntity.getType().is(ChangedAddonTags.EntityTypes.PACIFY_HANDLE_IMMUNE)) return;
+            if (ChangedEntityUtil.isAffectedByPacifiedNeutralityEffect(changedEntity)) return;
             changedEntity.setTarget(null);
         }
     }
