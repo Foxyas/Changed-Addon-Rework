@@ -50,23 +50,4 @@ public class ThunderBoltAbility extends AbstractAbility<ThunderBoltAbilityInstan
     public boolean shouldApplyCoolDown(IAbstractChangedEntity entity) {
         return false;
     }
-
-    @Override
-    public void tickCharge(IAbstractChangedEntity entity, float ticks) {
-        super.tickCharge(entity, ticks);
-        ThunderBoltAbilityInstance abilityInstance = entity.getAbilityInstance(this);
-        if (abilityInstance != null) {
-            abilityInstance.charge = ticks;
-            LivingEntity livingEntity = entity.getEntity();
-            int chargeTime = getChargeTime(entity);
-            if (chargeTime != 0) {
-                Level level = livingEntity.level();
-                level.playSound(null, livingEntity, SoundEvents.BEACON_AMBIENT, SoundSource.PLAYERS, 1, ticks / chargeTime);
-                if (ticks == chargeTime) {
-                    level.playSound(null, livingEntity, SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.PLAYERS, 1, ticks / chargeTime);
-                }
-            }
-            entity.displayClientMessage(Component.literal("TICKS:" + ticks + " AND CHARGE:" + abilityInstance.charge), true);
-        }
-    }
 }

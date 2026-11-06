@@ -24,11 +24,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -120,17 +116,22 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
     protected void chargeAbility(IAbstractChangedEntity entity, int ticks) {
         LivingEntity livingEntity = entity.getEntity();
         Level level = livingEntity.level();
+
         int chargeTime = ability.getChargeTime(entity);
-        if (chargeTime != 0) {
-            if (ticks <= chargeTime) {
-                if (ticks == chargeTime) {
-                    level.playSound(null, livingEntity, SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.PLAYERS, 1, (float) ticks / chargeTime);
-                } else {
-                    level.playSound(null, livingEntity, SoundEvents.BEACON_AMBIENT, SoundSource.PLAYERS, 1, (float) ticks / chargeTime);
-                }
-            }
-            charge = Mth.clamp((float) ticks / chargeTime, 0.25f, 2f);
+        if (chargeTime == 0) return;
+
+        int chargeSoundDelay = (int) (chargeTime * 0.25f);
+
+        if (ticks % chargeSoundDelay == 0 // Classic Delay Check
+                && ticks <= chargeTime) {
+            level.playSound(null, livingEntity, SoundEvents.BEACON_AMBIENT, SoundSource.PLAYERS, 1, (float) ticks / chargeTime);
         }
+
+        if (ticks == chargeTime) {
+            level.playSound(null, livingEntity, SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.PLAYERS, 1, (float) ticks / chargeTime);
+        }
+
+        charge = Mth.clamp((float) ticks / chargeTime, 0.25f, 2f);
     }
 
     public float getReachOfThunder() {
@@ -139,7 +140,7 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
         TransfurVariant<?> variant = changedEntity.getSelfVariant();
         float size = 3.5f;
         if (variant == ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS.get()) {
-            size = 50;
+            size = 50f;
         } else if (variant == ChangedAddonTransfurVariants.EXPERIMENT_009.get()) {
             size = 25f;
         }
