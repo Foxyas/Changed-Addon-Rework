@@ -1,67 +1,35 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.util.FoxyasUtil;
+import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
+import net.ltxprogrammer.changed.init.ChangedAnimationEvents;
+import net.ltxprogrammer.changed.init.ChangedEffects;
 import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class WitherWaveAbility extends SimpleAbility {
 
-    public static boolean Spectator(Entity entity) {
-        if (entity instanceof Player player1) {
-            return player1.isSpectator();
-        }
-        return true;
-    }
-
-    public static void execute(LevelAccessor world, Entity entity) {
-        if (entity == null)
-            return;
-        Player player = (Player) entity;
-        final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
-        float Zone = 16;
-        if (player.isInWaterOrRain()) {
-            Zone = 24;
-        }
-
-        List<Entity> collect = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(Zone, Zone, Zone), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
-                .toList();
-        for (Entity entityiterator : collect) {
-            if (player != entityiterator && entityiterator instanceof LivingEntity livingEntity) {
-                if (livingEntity instanceof Player player1) {
-                    if (player1.isSpectator() || player1.isCreative()) {
-                        return;
-                    }
-                }
-                if (!livingEntity.level.isClientSide()) {
-                    MobEffectInstance Effect = new MobEffectInstance(MobEffects.WITHER, 60, 1, false, false, true);
-                    Effect.setCurativeItems(List.of(new ItemStack(Items.MILK_BUCKET, 1)));
-                    livingEntity.addEffect(Effect);
-                    ChangedSounds.broadcastSound(livingEntity, SoundEvents.COMPOSTER_READY.getLocation(), 5, 0);
-                    ChangedSounds.broadcastSound(player, SoundEvents.WITHER_SHOOT.getLocation(), 5, 1);
-                    player.causeFoodExhaustion(4f);
-                }
-            }
-        }
+    public WitherWaveAbility() {
+        super();
     }
 
     @Override
@@ -75,23 +43,16 @@ public class WitherWaveAbility extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        Player player = (Player) entity.getEntity();
-        TransfurVariantInstance<?> Instace = ProcessTransfur.getPlayerTransfurVariant(player);
-        TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-        return player.getFoodData().getFoodLevel() >= 10
-                && (Variant == ChangedAddonTransfurVariants.EXPERIMENT_10.get() || Variant == ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())
-                && !Spectator(entity.getEntity());
+        return entity.getFoodLevel() >= 10 && !entity.getEntity().isSpectator();
     }
 
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
-        TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
         return 100;
     }
 
     @Override
     public int getChargeTime(IAbstractChangedEntity entity) {
-        TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
         return 30;
     }
 
@@ -102,11 +63,105 @@ public class WitherWaveAbility extends SimpleAbility {
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
-        execute(entity.getLevel(), entity.getEntity());
+        runAbility(entity);
     }
 
     @Override
     public void tick(IAbstractChangedEntity entity) {
         super.tick(entity);
     }
+
+    public void runAbility(IAbstractChangedEntity iAbstractChangedEntity) {
+        LivingEntity user = iAbstractChangedEntity.getEntity();
+
+        Level level = user.level();
+        if (level.isClientSide()) return;
+
+        MobEffectInstance pEffectInstance = new MobEffectInstance(MobEffects.WITHER, 60, 0, true, false, true);
+
+        // Using Set instead of List: contains() is O(1)
+        Set<BlockPos> connectedFluids = FoxyasUtil.getConnectedFluids(level, user.blockPosition(), 128)
+                .stream().map(BlockPos::immutable).collect(Collectors.toSet());
+
+        float maxRadius = 16.0f;
+        List<LivingEntity> nearbyEntities = level.getEntitiesOfClass(LivingEntity.class, user.getBoundingBox().inflate(maxRadius), EntitySelector.NO_CREATIVE_OR_SPECTATOR.and((entity) -> {
+            if (entity.is(user)) return false;
+            if (!(entity instanceof LivingEntity livingEntity)) return false;
+            return livingEntity.canBeAffected(pEffectInstance);
+        }));
+
+        // Sphere center: middle of the user's body
+        Vec3 center = user.position().add(0, user.getBbHeight() / 2.0, 0);
+        float step = 1.0f;
+
+        level.playSound(null, user, SoundEvents.WITHER_SHOOT, user.getSoundSource(), 1, 0.25f);
+
+        for (float currentRadius = 1.0f; currentRadius <= maxRadius; currentRadius += step) {
+
+            // 1. Spherical particle shell at the current radius
+            spawnSphereShell(level, center, currentRadius);
+
+            // 2. Entities caught by the current shell
+            for (LivingEntity nearbyEntity : nearbyEntities) {
+                // Use the center of the entity's body for 3D checks
+                Vec3 entityCenter = nearbyEntity.position().add(0, nearbyEntity.getBbHeight() / 2.0, 0);
+
+                // Is it inside the current wave "slice"? (inside current sphere, but outside the previous one)
+                if (!isInsideSphere(center, entityCenter, currentRadius)) continue;
+                if (isInsideSphere(center, entityCenter, currentRadius - step)) continue;
+
+                boolean inConnectedFluid = connectedFluids.contains(nearbyEntity.blockPosition());
+
+                // Outside connected fluids: only needs to be inside the sphere (already ensured above).
+                // Inside connected fluids: also affected (water conducts the shock).
+                if (!inConnectedFluid && !isInsideSphere(center, entityCenter, currentRadius)) continue;
+
+                if (nearbyEntity.addEffect(pEffectInstance, user)) {
+                    level.playSound(null, nearbyEntity, SoundEvents.WITHER_SHOOT, user.getSoundSource(), 1, 2f);
+                }
+            }
+        }
+    }
+
+    /**
+     * Simple check: is the point inside the sphere defined by `center` and `radius`?
+     */
+    private static boolean isInsideSphere(Vec3 center, Vec3 point, float radius) {
+        return center.distanceToSqr(point) <= radius * radius;
+    }
+
+    /**
+     * Spawns a spherical shell of particles using Fibonacci lattice distribution (uniform points).
+     */
+    private static void spawnSphereShell(Level level, Vec3 center, float radius) {
+        int latSteps = 6;
+//                Math.max(6, (int) (radius * 1.5f)); // more rings for bigger spheres
+
+        for (int i = 0; i <= latSteps; i++) {
+            float phi = Mth.PI * i / latSteps;             // 0 -> PI (includes both poles)
+            float sinPhi = Mth.sin(phi);
+            float cosPhi = Mth.cos(phi);
+
+            // fewer points on rings near the poles, so they don't pile up
+            int lonSteps = Math.max(1, (int) (latSteps * 2 * sinPhi));
+
+            for (int j = 0; j < lonSteps; j++) {
+                float theta = Mth.TWO_PI * j / lonSteps;
+
+                Vec3 dir = new Vec3(sinPhi * Mth.cos(theta), cosPhi, sinPhi * Mth.sin(theta)); // unit vector
+                Vec3 pos = center.add(dir.scale(radius));
+
+                ParticlesUtil.sendParticlesWithMotion(
+                        level,
+                        ParticleTypes.SMOKE,
+                        pos,
+                        Vec3.ZERO,
+                        dir.scale(0.05), // outward; use dir.scale(-0.05) for inward
+                        1,
+                        0.75f
+                );
+            }
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.foxyas.changedaddon.util.PlaySoundUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
@@ -15,11 +16,12 @@ import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
@@ -69,7 +71,7 @@ public class ShockWaveAbility extends SimpleAbility {
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
-        runAbility(entity.getEntity());
+        runAbility(entity);
     }
 
     @Override
@@ -77,7 +79,9 @@ public class ShockWaveAbility extends SimpleAbility {
         super.tick(entity);
     }
 
-    public void runAbility(LivingEntity user) {
+    public void runAbility(IAbstractChangedEntity iAbstractChangedEntity) {
+        LivingEntity user = iAbstractChangedEntity.getEntity();
+
         Level level = user.level();
         if (level.isClientSide()) return;
 
@@ -97,6 +101,9 @@ public class ShockWaveAbility extends SimpleAbility {
         // Sphere center: middle of the user's body
         Vec3 center = user.position().add(0, user.getBbHeight() / 2.0, 0);
         float step = 1.0f;
+
+        level.playSound(null, user, SoundEvents.LIGHTNING_BOLT_THUNDER, user.getSoundSource(), 1, 1);
+        ParticlesUtil.sendParticles(level, ParticleTypes.FLASH, center, Vec3.ZERO, 0, 1);
 
         for (float currentRadius = 1.0f; currentRadius <= maxRadius; currentRadius += step) {
 
@@ -120,7 +127,7 @@ public class ShockWaveAbility extends SimpleAbility {
 
                 if (nearbyEntity.addEffect(pEffectInstance, user)) {
                     ChangedAnimationEvents.broadcastEntityAnimation(nearbyEntity, ChangedAnimationEvents.SHOCK_STUN.get(), StunAnimationParameters.INSTANCE);
-                    level.playSound(null, nearbyEntity, ChangedSounds.TSC_WEAPON_SHOCK.get(), SoundSource.HOSTILE, 1, 1);
+                    level.playSound(null, nearbyEntity, ChangedSounds.TSC_WEAPON_SHOCK.get(), user.getSoundSource(), 1, 1);
                 }
             }
         }

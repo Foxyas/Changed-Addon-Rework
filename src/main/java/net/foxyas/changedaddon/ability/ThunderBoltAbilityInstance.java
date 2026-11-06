@@ -12,6 +12,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -20,18 +21,25 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
 
@@ -52,12 +60,7 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public boolean canUse() {
-        Player player = (Player) entity.getEntity();
-        TransfurVariant<?> variant = entity.getChangedEntity().getSelfVariant();
-        return player.getFoodData().getFoodLevel() >= 10
-                && (variant == ChangedAddonTransfurVariants.EXPERIMENT_009.get() || variant == ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS.get())
-                && !Spectator(entity.getEntity()
-        );
+        return entity.getFoodLevel() >= 10 && !entity.getEntity().isSpectator();
     }
 
     public float getCharge() {
@@ -128,8 +131,6 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
             }
             charge = Mth.clamp((float) ticks / chargeTime, 0.25f, 2f);
         }
-
-//        entity.displayClientMessage(Component.literal("TICKS:" + ticks + " AND CHARGE:" + charge), true);
     }
 
     public float getReachOfThunder() {
@@ -199,9 +200,49 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
                 Color3 transfurColor = changedEntity.getTransfurColor(TransfurCause.DEFAULT);
                 lightingBolt.setThunderColor(transfurColor);
             }
+
             if (serverLevel.addFreshEntity(lightning)) {
-                lightning.tick();
-                for (Entity hitEntity : lightning.getHitEntities().toList()) {
+                // 1. Determine the target center block position where the lightning landed
+                BlockPos centerHitPos = BlockPos.containing(location);
+                BlockState centerState = serverLevel.getBlockState(centerHitPos);
+
+                if (centerState.isAir() || (centerState.canBeReplaced() && !centerState.is(BlockTags.SAND))) {
+                    centerHitPos = centerHitPos.below();
+                }
+
+                // 2. Area-of-effect Sand-to-Glass conversion loop (radius based on thunder size)
+                int radius = Math.max(1, (int) (size * 0.75f)); // Scales the glass-melting radius with the lightning size
+                boolean playedGlassSound = false;
+
+                for (BlockPos blockpos : BlockPos.betweenClosed(
+                        centerHitPos.offset(-radius, -1, -radius),
+                        centerHitPos.offset(radius, 1, radius))) {
+
+                    if (!isInsideSphere(centerHitPos, Vec3.atCenterOf(blockpos), radius)) continue;
+
+                    BlockState currentState = serverLevel.getBlockState(blockpos);
+
+                    // Check if the block is sand
+                    if (currentState.is(BlockTags.SAND)) {
+                        serverLevel.setBlock(blockpos, Blocks.GLASS.defaultBlockState(), 3);
+
+                        // Play sound once or twice across the area so it doesn't spam sounds too loudly
+                        if (!playedGlassSound || serverLevel.random.nextFloat() < 0.3f) {
+                            serverLevel.playSound(null, blockpos, SoundEvents.GLASS_BREAK, entity.getSoundSource(), 3.0f, 1.5f + serverLevel.random.nextFloat() * 0.5f);
+                            playedGlassSound = true;
+                        }
+                    }
+                }
+
+                // 3. Apply knockback to nearby entities within the strike zone
+                double aoeRadius = 3.0 + size;
+                List<LivingEntity> hitEntities = serverLevel.getEntitiesOfClass(
+                        LivingEntity.class,
+                        new AABB(location, location).inflate(aoeRadius),
+                        EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(e -> !e.is(entity))
+                );
+
+                for (Entity hitEntity : hitEntities) {
                     applyKnockBackToHitEntity(hitEntity, location, 5, Vec3.ZERO);
                 }
 
@@ -209,6 +250,7 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
                     player.causeFoodExhaustion(0.5f);
                 }
                 entity.swing(getSwingHand(entity), true);
+
                 this.getController().forceCooldown(ability.getCoolDown(iAbstractChangedEntity));
                 this.charge = 0;
                 this.ability.setDirty(iAbstractChangedEntity);
@@ -217,28 +259,22 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
     }
 
     protected void applyKnockBackToHitEntity(Entity hitEntity, Vec3 sourcePos, float force, Vec3 extraMotion) {
-        // 1. Calculate the horizontal direction from the strike source to the hit entity
         double xDiff = hitEntity.getX() - sourcePos.x;
         double zDiff = hitEntity.getZ() - sourcePos.z;
 
-        // Normalize the vector so the knockback force remains consistent regardless of distance
         double distance = Math.sqrt(xDiff * xDiff + zDiff * zDiff);
         if (distance > 0.001) {
             xDiff /= distance;
             zDiff /= distance;
 
-            // Scale force down to match vanilla standards (5.0 is a very strong knockback)
             float scaledForce = force * 0.2F;
 
             if (hitEntity instanceof LivingEntity livingEntity) {
-                // Under the hood, Minecraft's knockback() subtracts the direction vector.
-                // Passing (source - target) results in the target being pushed AWAY from the source.
                 double xDirection = sourcePos.x - livingEntity.getX();
                 double zDirection = sourcePos.z - livingEntity.getZ();
 
                 livingEntity.knockback(scaledForce, xDirection, zDirection);
 
-                // Apply any extra custom motion (like extra upward lift)
                 if (extraMotion != Vec3.ZERO) {
                     livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(extraMotion));
                 }
@@ -250,13 +286,18 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
                     );
                 }
             } else {
-                // Fallback for non-living entities (like items, armor stands, etc.)
                 Vec3 customMotion = new Vec3(xDiff * scaledForce, 0.2D, zDiff * scaledForce).add(extraMotion);
                 hitEntity.setDeltaMovement(hitEntity.getDeltaMovement().add(customMotion));
             }
 
-            // Mark the entity as dirty so the server syncs the new velocity to the clients
             hitEntity.hasImpulse = true;
         }
+    }
+
+    /**
+     * Simple check: is the point inside the sphere defined by `center` and `radius`?
+     */
+    private static boolean isInsideSphere(BlockPos center, Vec3 point, float radius) {
+        return center.distToCenterSqr(point) <= radius * radius;
     }
 }
