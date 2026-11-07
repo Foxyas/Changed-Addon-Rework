@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -82,7 +83,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         this.currentFireIndex = 0;
         this.isFullySpawned = false;
         this.spawnedProjectiles.clear();
-        this.projectileCount = countProvider.sample(this.holder.getRandom());
+        this.projectileCount = getCountProvider().sample(this.holder.getRandom());
 
         // Pick randomly among all 3 orbit types
         OrbitType[] types = OrbitType.values();
@@ -100,13 +101,15 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         for (int i = 0; i < projectileCount; i++) {
             Vec3 spawnPos = calculateProjectilePosition(i, 0);
 
-            LuminarCrystalShardProjectile projectile = new LuminarCrystalShardProjectile(ChangedAddonEntities.WITHER_PARTICLE_PROJECTILE.get(), level);
+            LuminarCrystalShardProjectile projectile = new LuminarCrystalShardProjectile(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD.get(), level);
             projectile.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
             projectile.setOwner(holder);
             projectile.setNoGravity(true);
-            projectile.setCritArrow(holder.getRandom().nextBoolean());
+            RandomSource random = holder.getRandom();
+            projectile.setCritArrow(random.nextBoolean());
             projectile.setKnockback(2);
             projectile.setBaseDamage(5f);
+            projectile.setPierceLevel((byte) (random.nextInt(3)));
 
             projectile.setDeltaMovement(Vec3.ZERO);
 
@@ -274,7 +277,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
     @Override
     public void stop() {
         super.stop();
-        this.cooldown = cooldownProvider.sample(this.holder.getRandom());
+        this.cooldown = getCooldownProvider().sample(this.holder.getRandom());
 
         for (int i = currentFireIndex; i < spawnedProjectiles.size(); i++) {
             LuminarCrystalShardProjectile projectile = spawnedProjectiles.get(i);
@@ -283,5 +286,13 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             }
         }
         spawnedProjectiles.clear();
+    }
+
+    public IntProvider getCooldownProvider() {
+        return cooldownProvider;
+    }
+
+    public IntProvider getCountProvider() {
+        return countProvider;
     }
 }

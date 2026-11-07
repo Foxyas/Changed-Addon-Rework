@@ -336,7 +336,7 @@ public abstract class CrystalShardProjectile extends Projectile {
             }
 
             if (entity instanceof LivingEntity livingentity) {
-                if (!level().isClientSide && getPierceLevel() <= 0) {
+                if (!level().isClientSide && getPierceLevel() <= 0 && this.increaseArrowCount(livingentity, pResult)) {
                     livingentity.setArrowCount(livingentity.getArrowCount() + 1);
                 }
 
@@ -372,6 +372,10 @@ public abstract class CrystalShardProjectile extends Projectile {
                 discard();
             }
         }
+    }
+
+    public boolean increaseArrowCount(LivingEntity livingentity, EntityHitResult pResult) {
+        return false;
     }
 
     protected void onHitBlock(BlockHitResult pResult) {

@@ -1,9 +1,11 @@
 package net.foxyas.changedaddon.entity.defaults;
 
 import net.foxyas.changedaddon.block.LuminarCrystalSmall;
+import net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard.CircleShootLuminarCrystalShardGoal;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
+import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
@@ -22,6 +24,11 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -55,9 +62,19 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         ALWAYS
     }
 
+    public final ServerBossEvent bossBar;
+
     public AbstractLuminarcticLeopard(EntityType<? extends AbstractSnowLeopard> type, Level level) {
         super(type, level);
         this.setAttributes(this.getAttributes());
+
+        bossBar = new ServerBossEvent(
+                this.getDisplayName(), // Nome exibido na boss bar
+                BossEvent.BossBarColor.WHITE, // Cor da barra
+                BossEvent.BossBarOverlay.NOTCHED_6 // Estilo da barra
+        );
+        bossBar.setPlayBossMusic(true);
+        bossBar.setVisible(false);
     }
 
     // ------------------------------------------------------------------
@@ -150,7 +167,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue(6);
         attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(6.0);
         attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(
-                net.foxyas.changedaddon.entity.customHandle.AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_KNOCKBACK) + 1.5
+                AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_KNOCKBACK) + 1.5
         );
 
         // Defense
@@ -183,6 +200,43 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     // ------------------------------------------------------------------
+    // AI Goals: Boss Ai
+    // ------------------------------------------------------------------
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(5, new CircleShootLuminarCrystalShardGoal(this,
+                UniformInt.of(120, 260),    // Default Non-Boss value
+                UniformInt.of(3, 8),    // Default Non-Boss value
+                16) {
+            @Override
+            public IntProvider getCooldownProvider() {
+                IntProvider cooldownProvider = super.getCooldownProvider();
+                if (AbstractLuminarcticLeopard.this.isBoss()) {
+                    int minValue = cooldownProvider.getMinValue() - 60;
+                    int maxValue = cooldownProvider.getMaxValue() - 120;
+
+                    return UniformInt.of(minValue, maxValue);
+                }
+                return cooldownProvider;
+            }
+
+            @Override
+            public IntProvider getCountProvider() {
+                IntProvider countProvider = super.getCountProvider();
+                if (AbstractLuminarcticLeopard.this.isBoss()) {
+                    int minValue = countProvider.getMinValue() + 1;
+                    int maxValue = countProvider.getMaxValue() + 4;
+
+                    return UniformInt.of(minValue, maxValue);
+                }
+                return countProvider;
+            }
+        });
+    }
+
+    // ------------------------------------------------------------------
     // Boss state: event driven, no tick involved
     // ------------------------------------------------------------------
 
@@ -200,6 +254,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
     private void refreshBossState() {
         this.setAttributes(this.getAttributes());
+
+        this.bossBar.setVisible(this.isBoss());
 
         if (!this.level.isClientSide) {
             if (this.isBoss()) {
@@ -222,10 +278,34 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     public boolean hurt(@NotNull DamageSource source, float amount) {
         if (source.is(ChangedAddonDamageSources.LATEX_SOLVENT.key())) return super.hurt(source, amount);
         if (source.getEntity() instanceof LivingEntity attacker) {
-            if (attacker.getAttributeValue(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get()) > 0) return super.hurt(source, amount);
+            if (attacker.getAttributeValue(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get()) > 0)
+                return super.hurt(source, amount);
         }
 
         return super.hurt(source, isBoss() ? Math.max(amount * 0.05f, 1) : amount * 0.9f);
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (this.isBoss()) {
+            this.bossBar.setVisible(true);
+            this.bossBar.setProgress(computeHealthRatio());
+        }
+    }
+
+    @Override
+    public void startSeenByPlayer(@NotNull ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        if (this.isBoss()) {
+            this.bossBar.addPlayer(player);
+        }
+    }
+
+    @Override
+    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        this.bossBar.removePlayer(player);
     }
 
     // ------------------------------------------------------------------
