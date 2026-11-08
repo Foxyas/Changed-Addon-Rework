@@ -235,7 +235,7 @@ public abstract class CrystalShardProjectile extends Projectile {
             setXRot((float)(Mth.atan2(d6, d4) * (double)(180F / (float)Math.PI)));
             setXRot(lerpRotation(xRotO, getXRot()));
             setYRot(lerpRotation(yRotO, getYRot()));
-            float f = 0.99F;
+            float f = getAirInertia();
             if (isInWater()) {
                 for(int j = 0; j < 4; ++j) {
                     level().addParticle(ParticleTypes.BUBBLE, d7 - d5 * 0.25D, d2 - d6 * 0.25D, d3 - d1 * 0.25D, d5, d6, d1);
@@ -247,7 +247,7 @@ public abstract class CrystalShardProjectile extends Projectile {
             setDeltaMovement(vec3.scale(f));
             if (!isNoGravity() && !flag) {
                 Vec3 vec34 = getDeltaMovement();
-                setDeltaMovement(vec34.x, vec34.y - (double)0.05F, vec34.z);
+                setDeltaMovement(vec34.x, vec34.y - getGravity(), vec34.z);
             }
 
             setPos(d7, d2, d3);
@@ -389,8 +389,12 @@ public abstract class CrystalShardProjectile extends Projectile {
         inGround = true;
         setCrit(false);
         setPierceLevel((byte)0);
-        setSoundEvent(SoundEvents.ARROW_HIT);
+        setSoundEvent(getDefaultHitGroundSoundEvent());
         resetPiercedEntities();
+
+        if (shouldBreakOnImpact(pResult)) {
+            this.breakOnImpact(pResult);
+        }
     }
 
     /**
@@ -405,6 +409,13 @@ public abstract class CrystalShardProjectile extends Projectile {
     }
 
     protected void doPostHurtEffects(LivingEntity pTarget) {
+    }
+
+    public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
+        return false;
+    }
+
+    public void breakOnImpact(BlockHitResult hitResult) {
     }
 
     /**
@@ -531,6 +542,14 @@ public abstract class CrystalShardProjectile extends Projectile {
 
     protected float getWaterInertia() {
         return 0.6F;
+    }
+
+    protected float getAirInertia() {
+        return 0.99F;
+    }
+
+    protected float getGravity() {
+        return 0.05F;
     }
 
     /**

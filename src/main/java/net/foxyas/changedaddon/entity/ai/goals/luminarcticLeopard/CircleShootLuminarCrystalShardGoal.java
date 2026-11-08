@@ -2,8 +2,14 @@ package net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard;
 
 import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalShardProjectile;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.util.EntityUtil;
+import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -11,11 +17,18 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -101,17 +114,14 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         for (int i = 0; i < projectileCount; i++) {
             Vec3 spawnPos = calculateProjectilePosition(i, 0);
 
-            LuminarCrystalShardProjectile projectile = new LuminarCrystalShardProjectile(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD.get(), level);
-            projectile.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
-            projectile.setOwner(holder);
-            projectile.setNoGravity(true);
-            RandomSource random = holder.getRandom();
-            projectile.setCritArrow(random.nextBoolean());
-            projectile.setKnockback(2);
-            projectile.setBaseDamage(5f);
-            projectile.setPierceLevel((byte) (random.nextInt(3)));
+            LuminarCrystalShardProjectile projectile = createProjectile(level, spawnPos);
+
 
             projectile.setDeltaMovement(Vec3.ZERO);
+            LivingEntity target = holder.getTarget();
+            if (target != null) {
+                EntityUtil.makeEntityForceFaceAt(projectile, target.getEyePosition(0));
+            }
 
             level.addFreshEntity(projectile);
             spawnedProjectiles.add(projectile);
@@ -121,10 +131,66 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         isFullySpawned = true;
     }
 
+    protected @NotNull LuminarCrystalShardProjectile createProjectile(ServerLevel level, Vec3 spawnPos) {
+        RandomSource random = holder.getRandom();
+
+        LuminarCrystalShardProjectile projectile = new LuminarCrystalShardProjectile(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD.get(), level) {
+            @Override
+            protected boolean canHitEntity(@NotNull Entity entity) {
+                if (entity.is(holder)) {
+                    return false;
+                }
+                return super.canHitEntity(entity);
+            }
+
+            @Override
+            protected SoundEvent getDefaultHitGroundSoundEvent() {
+                return SoundEvents.AMETHYST_BLOCK_BREAK;
+            }
+
+            @Override
+            protected float getGravity() {
+                return super.getGravity() / Math.max(0.01f, (float) this.getDeltaMovement().length());
+            }
+
+            @Override
+            public void shoot(double pX, double pY, double pZ, float pVelocity, float pInaccuracy) {
+                super.shoot(pX, pY, pZ, pVelocity, pInaccuracy);
+                this.setNoGravity(false);
+            }
+
+            @Override
+            public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
+                return true;
+            }
+
+            @Override
+            public void breakOnImpact(BlockHitResult hitResult) {
+                super.breakOnImpact(hitResult);
+                ParticlesUtil.sendParticles(this.level, new BlockParticleOption(ParticleTypes.BLOCK, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()), this.position(), 0.05f, 0.05f, 0.05f, 8, 0.5f);
+            }
+        };
+
+        projectile.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
+        projectile.setOwner(holder);
+        projectile.setNoGravity(true);
+        projectile.setCritArrow(random.nextBoolean());
+        projectile.setKnockback(2);
+        projectile.setBaseDamage(5f);
+        projectile.setPierceLevel((byte) (random.nextInt(3)));
+
+        return projectile;
+    }
+
     @Override
     public void tick() {
         super.tick();
         tick++;
+        PathNavigation navigation = holder.getNavigation();
+        Path path = navigation.getPath();
+        if (path != null && navigation.isInProgress()) {
+            holder.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1, true, false, false));
+        }
 
         LivingEntity target = holder.getTarget();
         if (target != null) {
@@ -156,15 +222,30 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
     }
 
     /**
-     * Updates un-launched projectile locations in orbit while charging.
+     * Updates un-launched projectile locations in orbit while charging, using smooth motion.
      */
     private void updateHoverPositions() {
         for (int i = currentFireIndex; i < spawnedProjectiles.size(); i++) {
             LuminarCrystalShardProjectile projectile = spawnedProjectiles.get(i);
             if (projectile != null && projectile.isAlive()) {
                 Vec3 targetPos = calculateProjectilePosition(i, tick);
-                projectile.setPos(targetPos.x, targetPos.y, targetPos.z);
-                projectile.setDeltaMovement(Vec3.ZERO);
+
+                // Calcula a velocidade necessária para deslizar suavemente até a posição alvo (lerp/atração)
+                Vec3 currentPos = projectile.position();
+                Vec3 movement = targetPos.subtract(currentPos);
+
+                // Fator de suavização (quanto maior, mais rápido ele alcança o ponto, 0.4f é um bom meio termo fluido)
+                if (movement.lengthSqr() > 0.0001D) {
+                    projectile.setDeltaMovement(movement.scale(0.4D));
+                } else {
+                    projectile.setDeltaMovement(Vec3.ZERO);
+                    projectile.setPos(targetPos.x, targetPos.y, targetPos.z);
+                }
+
+                LivingEntity target = holder.getTarget();
+                if (target != null) {
+                    EntityUtil.makeEntityForceFaceAt(projectile, target.getEyePosition(0));
+                }
             }
         }
     }
@@ -173,7 +254,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
      * Calculates the exact position for each projectile depending on the active OrbitType.
      */
     private Vec3 calculateProjectilePosition(int index, int currentTick) {
-        Vec3 headPos = holder.getEyePosition();
+        Vec3 headPos = holder.getEyePosition(0);
 
         if (this.currentOrbitType == OrbitType.HORIZONTAL_AROUND) {
             // Full 360-degree circle horizontally around the mob

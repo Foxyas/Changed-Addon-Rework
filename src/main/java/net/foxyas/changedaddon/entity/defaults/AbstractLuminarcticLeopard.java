@@ -33,10 +33,14 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.GoalSelector;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -64,9 +68,13 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
     public final ServerBossEvent bossBar;
 
+    public final GoalSelector abilitySelector;
+
     public AbstractLuminarcticLeopard(EntityType<? extends AbstractSnowLeopard> type, Level level) {
         super(type, level);
         this.setAttributes(this.getAttributes());
+        this.abilitySelector = new GoalSelector(level.getProfilerSupplier());
+        registerAbilities();
 
         bossBar = new ServerBossEvent(
                 this.getDisplayName(), // Nome exibido na boss bar
@@ -206,7 +214,38 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(5, new CircleShootLuminarCrystalShardGoal(this,
+    }
+
+    @Override
+    protected void updateControlFlags() {
+        super.updateControlFlags();
+        boolean flag = !(this.getControllingPassenger() instanceof Mob);
+        boolean flag1 = !(this.getVehicle() instanceof Boat);
+        this.abilitySelector.setControlFlag(Goal.Flag.MOVE, flag);
+        this.abilitySelector.setControlFlag(Goal.Flag.JUMP, flag && flag1);
+        this.abilitySelector.setControlFlag(Goal.Flag.LOOK, flag);
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        updateBossBar();
+
+        if (level.getServer() == null) return;
+        int i = level.getServer().getTickCount() + this.getId();
+        if (i % 2 != 0 && this.tickCount > 1) {
+            level.getProfiler().push("abilitySelector");
+            this.abilitySelector.tickRunningGoals(false);
+            level.getProfiler().pop();
+        } else {
+            level.getProfiler().push("abilitySelector");
+            this.abilitySelector.tick();
+            level.getProfiler().pop();
+        }
+    }
+
+    protected void registerAbilities() {
+        this.abilitySelector.addGoal(5, new CircleShootLuminarCrystalShardGoal(this,
                 UniformInt.of(120, 260),    // Default Non-Boss value
                 UniformInt.of(3, 8),    // Default Non-Boss value
                 16) {
@@ -285,9 +324,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         return super.hurt(source, isBoss() ? Math.max(amount * 0.05f, 1) : amount * 0.9f);
     }
 
-    @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void updateBossBar() {
         if (this.isBoss()) {
             this.bossBar.setVisible(true);
             this.bossBar.setProgress(computeHealthRatio());

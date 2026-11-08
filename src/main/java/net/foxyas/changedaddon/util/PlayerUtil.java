@@ -678,8 +678,8 @@ public class PlayerUtil {
         return projectileMotion.normalize().dot(directionToPlayer) > 0;
     }
 
-    public static boolean isMovingTowardsEntity(Vec3 objectPos, Vec3 motion, Entity player) {
-        Vec3 toPlayer = player.position().subtract(objectPos);
+    public static boolean isMovingTowardsEntity(Vec3 objectPos, Vec3 motion, Entity entity) {
+        Vec3 toPlayer = entity.position().subtract(objectPos);
 
         return motion.dot(toPlayer) > 0;
     }
