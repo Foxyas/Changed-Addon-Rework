@@ -2,21 +2,19 @@ package net.foxyas.changedaddon.entity.bosses;
 
 import com.google.common.annotations.VisibleForTesting;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.CircleShootWitherProjectileGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.ClawsComboAttackGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.WitherWave;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.DashPunchGoal;
-import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.LeapSmashGoal;
+import net.foxyas.changedaddon.entity.ai.goals.exp10.Exp10LeapSmashGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.customHandle.BurstAbilityHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
-import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -280,7 +278,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
                 UniformInt.of(20, 40), //IntProvider -> castDuration,
                 UniformFloat.of(6, 8))); //FloatProvider -> damage)
         this.goalSelector.addGoal(6, new WitherWave(this, UniformInt.of(60, 120)));
-        this.goalSelector.addGoal(10, new LeapSmashGoal(this));
+        this.goalSelector.addGoal(10, new Exp10LeapSmashGoal(this));
         this.goalSelector.addGoal(15, new DashPunchGoal(this));
         //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
 //        this.goalSelector.addGoal(10, new ThrowWitherProjectileGoal(this, UniformInt.of(60, 120), UniformInt.of(1, 8), 36));

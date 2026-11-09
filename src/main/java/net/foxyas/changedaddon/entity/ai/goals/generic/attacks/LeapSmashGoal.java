@@ -29,7 +29,7 @@ public class LeapSmashGoal extends Goal {
 
     public LeapSmashGoal(Mob mob) {
         this.mob = mob;
-        this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.JUMP, Flag.MOVE));
     }
 
     @Override
@@ -100,17 +100,13 @@ public class LeapSmashGoal extends Goal {
         int radius = 4;
 
         for (BlockPos pos : FoxyasUtil.betweenClosedStreamSphere(new AABB(center.below()).inflate(radius, 0, radius)).map(BlockPos::immutable).toList()) {
-//            double dx = (center.getX() - pos.getX()) / (double) radius;
-//            double dy = (center.getY() - pos.getY());
-//            double dz = (center.getZ() - pos.getZ()) / (double) radius;
-//            double distanceSq = dx * dx + dy * dy + dz * dz;
-//            if (distanceSq <= radius * radius)
+            if (!isInsideSphere(center.below(), Vec3.atBottomCenterOf(pos), radius)) continue;
 
             BlockState blockState = mob.level.getBlockState(pos);
             mob.level.levelEvent(2001, pos, Block.getId(blockState));
             // Server-side Break Effect
             if (mob.level() instanceof ServerLevel serverLevel) {
-                int breakerId = mob.getId();
+                int breakerId = mob.getId() + pos.hashCode();
                 int stage = 5;
                 serverLevel.destroyBlockProgress(breakerId, pos, stage);
             }
@@ -150,5 +146,12 @@ public class LeapSmashGoal extends Goal {
         leapTicks = 0;
         wasInAir = false;
         cooldown = 40;
+    }
+
+    /**
+     * Simple check: is the point inside the sphere defined by `center` and `radius`?
+     */
+    private static boolean isInsideSphere(BlockPos center, Vec3 point, float radius) {
+        return center.distToCenterSqr(point) <= radius * radius;
     }
 }

@@ -161,13 +161,6 @@ public class ThunderBoltAbilityInstance extends AbstractAbilityInstance {
     }
 
 
-    public boolean Spectator(Entity entity) {
-        if (entity instanceof Player player) {
-            return player.isSpectator();
-        }
-        return true;
-    }
-
     private boolean isHandEmpty(Entity entity, InteractionHand hand) {
         return entity instanceof LivingEntity livingEntity && livingEntity.getItemInHand(hand).isEmpty();
     }

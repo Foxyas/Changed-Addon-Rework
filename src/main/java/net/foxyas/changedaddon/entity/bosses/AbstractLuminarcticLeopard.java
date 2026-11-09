@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.bosses;
 import net.foxyas.changedaddon.block.LuminarCrystalSmall;
 import net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard.CircleShootLuminarCrystalShardGoal;
 import net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard.CrystalPathAttackGoal;
+import net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard.CrystalLeapSmashGoal;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
@@ -12,7 +13,6 @@ import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
-import net.foxyas.changedaddon.util.EntityUtil;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.EyeStyle;
@@ -54,7 +54,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Random;
-import java.util.UUID;
 
 public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard implements ICrawlAndSwimAbleEntity, IDynamicRideOffsetEntity, IHasBossMusic {
 
@@ -217,6 +216,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(5, new CrystalLeapSmashGoal(this));
     }
 
     protected void registerAbilities() {
@@ -380,7 +380,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         super.addAdditionalSaveData(tag);
         tag.putBoolean("isBoss", this.isBoss());
         tag.putString("glowStage", this.getGlowStage().name());
-        
+
         LivingEntity target = this.getTarget();
         if (target != null) {
             tag.putUUID("persistentTargetUUID", target.getUUID());
