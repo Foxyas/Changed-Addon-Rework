@@ -165,6 +165,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         getVariantBuilder(LUMINARA_SAPLING.get()).forAllStates(state -> model);
 
         largeLuminarCrystalAnimatedWithItem();
+        luminarCrystalSmall();
         luminaraPetalsBlock(LUMINARA_PETALS);
         luminaraLichen(LUMINARA_LICHEN);
     }
@@ -492,6 +493,19 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         itemModels().getBuilder(ChangedAddonItems.LUMINAR_CRYSTAL_LARGE.getId().toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", withSuffix(loc, "_top"));
+    }
+
+    private void luminarCrystalSmall() {
+        ResourceLocation loc = blockLoc(LUMINAR_CRYSTAL_SMALL.getId());
+
+        ModelFile hearted = models().getExistingFile(loc);
+        ModelFile normal = models().getExistingFile(withSuffix(loc, "_2"));
+
+        getVariantBuilder(LUMINAR_CRYSTAL_SMALL.get()).forAllStatesExcept(state ->
+                        new ConfiguredModel[]{rotatedModel(
+                                state.getValue(LuminarCrystalSmall.HEARTED) ? hearted : normal,
+                                state.getValue(LuminarCrystalSmall.FACING))},
+                LuminarCrystalSmall.CAN_SURVIVE_ANYWHERE, LuminarCrystalSmall.ALIVE, BlockStateProperties.WATERLOGGED);
     }
 
     private ConfiguredModel rotatedModel(ModelFile file, Direction direction) {

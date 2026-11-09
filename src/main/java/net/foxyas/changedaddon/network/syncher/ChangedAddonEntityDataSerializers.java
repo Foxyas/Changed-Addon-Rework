@@ -7,7 +7,7 @@ import net.foxyas.changedaddon.entity.ai.LatexAttackType;
 import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.ai.LatexTargetType;
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.bosses.AbstractLuminarcticLeopard;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraftforge.registries.DeferredRegister;

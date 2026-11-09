@@ -1,6 +1,8 @@
 {
   "values": [
     "changed_addon:particle_projectile",
-    "changed_addon:wither_particle_projectile"
+    "changed_addon:wither_particle_projectile",
+    "changed_addon:luminar_crystal_spear",
+    "changed_addon:luminar_crystal_shard"
   ]
 }

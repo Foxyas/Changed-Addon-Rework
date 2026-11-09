@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.LuminarCrystalHeartedBlockEntity;
 import net.foxyas.changedaddon.block.interfaces.IBrushableBlock;
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.bosses.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.*;
 import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -52,6 +52,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty CAN_SURVIVE_ANYWHERE = BooleanProperty.create("can_survive_anywhere");
+    public static final BooleanProperty ALIVE = BooleanProperty.create("alive");
     protected static final VoxelShape NORTH_AABB = Block.box(2, 2, 2, 14, 14, 16.0);
     protected static final VoxelShape SOUTH_AABB = Block.box(2, 2, 0, 14, 14, 14.0); // Corrigido
     protected static final VoxelShape EAST_AABB = Block.box(0, 2, 2, 14, 14, 14); // Corrigido
@@ -61,7 +62,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
     public LuminarCrystalSmall() {
         super(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD,
-                Properties.of() //FIXME : ChangedMaterials.LATEX_CRYSTAL
+                Properties.of()
                         .sound(SoundType.AMETHYST_CLUSTER)
                         .noOcclusion()
                         .dynamicShape()
@@ -70,7 +71,13 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
                         .hasPostProcess((blockState, blockGetter, blockPos) -> true)
                         .emissiveRendering((blockState, blockGetter, blockPos) -> true)
                         .noOcclusion());
-        this.registerDefaultState(this.stateDefinition.any().setValue(HEARTED, false).setValue(FACING, Direction.UP).setValue(WATERLOGGED, false).setValue(CAN_SURVIVE_ANYWHERE, false));
+        this.registerDefaultState(this.getStateDefinition().any()
+                .setValue(HEARTED, false)
+                .setValue(FACING, Direction.UP)
+                .setValue(WATERLOGGED, false)
+                .setValue(CAN_SURVIVE_ANYWHERE, false)
+                .setValue(ALIVE, true)
+        );
 
     }
 
@@ -110,7 +117,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
     @Override
     public boolean canBeReplaced(@NotNull BlockState thisState, @NotNull Fluid fluid) {
-        if (fluid instanceof LavaFluid || (fluid instanceof WaterFluid)) {
+        if (fluid instanceof LavaFluid || fluid instanceof WaterFluid) {
             return !thisState.getValue(HEARTED);
         }
         return super.canBeReplaced(thisState, fluid);
@@ -118,7 +125,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(HEARTED, FACING, WATERLOGGED, CAN_SURVIVE_ANYWHERE);
+        builder.add(HEARTED, FACING, WATERLOGGED, CAN_SURVIVE_ANYWHERE, ALIVE);
     }
 
     @Override
@@ -262,6 +269,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
         }
 
         if (!(level instanceof ServerLevel serverLevel)) return;
+        if (!oldState.getValue(ALIVE)) return;
 
         // Procura a entidade viva mais próxima (excluindo leopardos)
         LivingEntity closestEntity = level.getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(8),
@@ -280,6 +288,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
             if (closestEntity != null) {
                 for (AbstractLuminarcticLeopard leopard : nearbyLeopards) {
                     if (!leopard.canAttack(closestEntity) || !leopard.hasLineOfSight(closestEntity)) continue;
+                    if (leopard.getTarget() == closestEntity) continue;
 
                     LuminarCrystalBlock.moveOrTarget(closestEntity, leopard);
                     leopard.playRoarSound();
@@ -369,7 +378,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
             // Base Chance: 5% (0.05f). Each Loot level increases it by 2% (0.02f).
             // Ex: Fortune 3 = 0.05 + (3 * 0.02) = 0.11 (11%)
-            float crystalChance = 0.05f + (lootLevel * 0.02f);
+            float crystalChance = 0.05f + lootLevel * 0.02f;
 
             if (randomSource.nextFloat() <= crystalChance) {
 
@@ -378,7 +387,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
                 // Base Chance: 0.01% (0.0001f). Each point of luck adds 0.05% (0.0005f).
                 // We use Mth.clamp to ensure the chance is never less than 0.0f or greater than 1.0f.
-                float heartedChance = Mth.clamp(0.0001f + (playerLuck * 0.0005f), 0f, 1f);
+                float heartedChance = Mth.clamp(0.0001f + playerLuck * 0.0005f, 0f, 1f);
 
                 if (randomSource.nextFloat() <= heartedChance) {
                     Block.popResource(level, pos, ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get().getDefaultInstance());

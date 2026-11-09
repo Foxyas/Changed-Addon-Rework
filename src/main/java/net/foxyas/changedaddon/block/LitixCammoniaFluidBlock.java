@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.init.ChangedAddonFluids;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ChangedEntityUtil;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
@@ -30,7 +31,7 @@ public class LitixCammoniaFluidBlock extends LiquidBlock {
 
     public LitixCammoniaFluidBlock() {
         super(() -> (FlowingFluid) ChangedAddonFluids.LITIX_CAMMONIA_FLUID.get(),
-                BlockBehaviour.Properties.copy(Blocks.WATER).mapColor(MapColor.SNOW).strength(100f) //Fixme: (Material.WATER, MaterialColor.SNOW)
+                BlockBehaviour.Properties.copy(Blocks.WATER).mapColor(MapColor.SNOW).strength(100f)
         );
     }
 
@@ -60,37 +61,24 @@ public class LitixCammoniaFluidBlock extends LiquidBlock {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         pos.set(origin);
 
-//        BlockState bs;
-//        for(Direction dir : Direction.values()){
-//            pos.set(origin).move(dir);
-//            bs = level.getBlockState(pos);
-//            if (bs.hasProperty(AbstractLatexBlock.COVERED) && bs.getValue(AbstractLatexBlock.COVERED) != LatexType.NEUTRAL)
-//                level.setBlockAndUpdate(pos, bs.setValue(AbstractLatexBlock.COVERED, LatexType.NEUTRAL));
-//        }
-        // Fixme: rework that to use the new system
-
         level.scheduleTick(pos, this, 10);
     }
 
     @Override
     public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
-        if (entity instanceof Player player && ProcessTransfur.isPlayerTransfurred(player)) {
-            if (!ProcessTransfur.isPlayerNotLatex(player)) {
-                if (!player.level().isClientSide())
-                    player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
-            } else {
-                if ((entity.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonVariables.PlayerVariables())).showWarns) {
-                    if (entity instanceof Player _player && !_player.level().isClientSide())
-                        _player.displayClientMessage(Component.translatable("changed_addon.untransfur.Immune.fluid"), true);
-                }
-            }
-        } else {
-            if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-                _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
+        Level level = entity.level();
+        if (level.isClientSide()) return;
+
+        if (!(entity instanceof LivingEntity livingEntity)) {
+            return;
         }
-        if (ChangedEntityUtil.isGoo(entity)) {
-            if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-                _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 200, 0, false, false));
+
+        if (livingEntity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 200, 0, true, false))) {
+            if (!(livingEntity instanceof Player player) || !ChangedAddonVariables.ofOrDefault(player).showWarns) {
+                return;
+            }
+
+            player.displayClientMessage(Component.translatable("changed_addon.untransfur.Immune.fluid"), true);
         }
     }
 }

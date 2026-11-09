@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.interfaces.IBrushableBlock;
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.bosses.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.util.ParticlesUtil;

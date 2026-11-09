@@ -18,9 +18,9 @@ public abstract class DodgeType {
     }
 
     public void applyDodgeMovement(DodgeAbilityInstance dodgeAbilityInstance, LivingEntity dodger, DamageContext sourceProjectileEither, boolean causeExhaustion) {
-        Vec3 backWards = FoxyasUtil.getRelativePosition(dodger, 0, 0, -1, true).normalize();
+        Vec3 backwardsMotion = FoxyasUtil.getRelativePosition(dodger, 0, 0, -1, true).normalize();
 
-        Vec3 multiply = backWards.multiply(0.85f, 0.25f, 0.85f);
+        Vec3 multiply = backwardsMotion.multiply(0.85f, 0.25f, 0.85f);
         if (dodger instanceof ServerPlayer serverPlayer) {
             serverPlayer.setDeltaMovement(dodger.getDeltaMovement().add(multiply));
             serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer.getId(), serverPlayer.getDeltaMovement()));
@@ -33,8 +33,16 @@ public abstract class DodgeType {
 
     public void applyDodgeEffects(DodgeAbilityInstance dodgeAbilityInstance, @Nullable LivingEntity dodger, DamageContext sourceProjectileEither, boolean causeExhaustion) {
         if (this.willApplyIFrames(dodgeAbilityInstance, dodger, sourceProjectileEither, causeExhaustion) && dodger != null) {
-            dodger.invulnerableTime = 20 * 3;
-            dodger.hurtDuration = 20 * 3;
+            sourceProjectileEither
+                    .ifDamageSource(damageSourceInstance -> {
+                        dodger.invulnerableTime = 20 * 2;
+                        dodger.hurtDuration = 20 * 2;
+                    })
+                    .ifProjectile(p -> {
+                        dodger.invulnerableTime = 5;
+                        dodger.hurtDuration = 5;
+                    });
+
             dodger.hurtTime = dodger.hurtDuration;
             dodger.hurtMarked = false;
         }
@@ -76,6 +84,9 @@ public abstract class DodgeType {
     }
 
     public boolean willDodge(DodgeAbilityInstance dodgeAbilityInstance, DamageContext sourceProjectileEither) {
+        LivingEntity dodger = dodgeAbilityInstance.entity.getEntity();
+        if (dodger.invulnerableTime > 1 || dodger.hurtTime > 1) return false;
+
         if (sourceProjectileEither.getDamage().map(damageSourceInstance -> damageSourceInstance.damageSource().is(ChangedAddonTags.DamageTypes.BYPASSES_DODGE)).orElse(false))
             return false;
 

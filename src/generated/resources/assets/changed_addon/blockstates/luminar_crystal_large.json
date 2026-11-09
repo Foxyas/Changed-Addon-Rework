@@ -1,209 +1,417 @@
 {
   "variants": {
-    "can_survive_anywhere=false,facing=down,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=down,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 180
     },
-    "can_survive_anywhere=false,facing=down,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=down,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 180
     },
-    "can_survive_anywhere=false,facing=down,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=down,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 180
     },
-    "can_survive_anywhere=false,facing=down,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=down,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 180
     },
-    "can_survive_anywhere=false,facing=east,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=east,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 90,
       "y": 90
     },
-    "can_survive_anywhere=false,facing=east,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=east,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 90,
       "y": 90
     },
-    "can_survive_anywhere=false,facing=east,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=east,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 90
     },
-    "can_survive_anywhere=false,facing=east,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=east,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 90
     },
-    "can_survive_anywhere=false,facing=north,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=north,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 90
     },
-    "can_survive_anywhere=false,facing=north,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=north,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 90
     },
-    "can_survive_anywhere=false,facing=north,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=north,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90
     },
-    "can_survive_anywhere=false,facing=north,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=north,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90
     },
-    "can_survive_anywhere=false,facing=south,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=south,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 90,
       "y": 180
     },
-    "can_survive_anywhere=false,facing=south,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=south,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 90,
       "y": 180
     },
-    "can_survive_anywhere=false,facing=south,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=south,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 180
     },
-    "can_survive_anywhere=false,facing=south,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=south,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 180
     },
-    "can_survive_anywhere=false,facing=up,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=up,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom"
     },
-    "can_survive_anywhere=false,facing=up,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=up,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted"
     },
-    "can_survive_anywhere=false,facing=up,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=up,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top"
     },
-    "can_survive_anywhere=false,facing=up,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=up,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top"
     },
-    "can_survive_anywhere=false,facing=west,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=west,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 90,
       "y": 270
     },
-    "can_survive_anywhere=false,facing=west,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=west,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 90,
       "y": 270
     },
-    "can_survive_anywhere=false,facing=west,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=false,facing=west,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 270
     },
-    "can_survive_anywhere=false,facing=west,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=false,facing=west,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 270
     },
-    "can_survive_anywhere=true,facing=down,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=down,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 180
     },
-    "can_survive_anywhere=true,facing=down,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=down,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 180
     },
-    "can_survive_anywhere=true,facing=down,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=down,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 180
     },
-    "can_survive_anywhere=true,facing=down,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=down,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 180
     },
-    "can_survive_anywhere=true,facing=east,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=east,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 90,
       "y": 90
     },
-    "can_survive_anywhere=true,facing=east,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=east,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 90,
       "y": 90
     },
-    "can_survive_anywhere=true,facing=east,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=east,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 90
     },
-    "can_survive_anywhere=true,facing=east,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=east,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 90
     },
-    "can_survive_anywhere=true,facing=north,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=north,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 90
     },
-    "can_survive_anywhere=true,facing=north,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=north,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 90
     },
-    "can_survive_anywhere=true,facing=north,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=north,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90
     },
-    "can_survive_anywhere=true,facing=north,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=north,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90
     },
-    "can_survive_anywhere=true,facing=south,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=south,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 90,
       "y": 180
     },
-    "can_survive_anywhere=true,facing=south,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=south,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 90,
       "y": 180
     },
-    "can_survive_anywhere=true,facing=south,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=south,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 180
     },
-    "can_survive_anywhere=true,facing=south,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=south,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 180
     },
-    "can_survive_anywhere=true,facing=up,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=up,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom"
     },
-    "can_survive_anywhere=true,facing=up,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=up,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted"
     },
-    "can_survive_anywhere=true,facing=up,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=up,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top"
     },
-    "can_survive_anywhere=true,facing=up,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=up,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top"
     },
-    "can_survive_anywhere=true,facing=west,half=bottom,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=west,half=bottom,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_bottom",
       "x": 90,
       "y": 270
     },
-    "can_survive_anywhere=true,facing=west,half=bottom,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=west,half=bottom,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
       "x": 90,
       "y": 270
     },
-    "can_survive_anywhere=true,facing=west,half=top,hearted=false": {
+    "alive=false,can_survive_anywhere=true,facing=west,half=top,hearted=false": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 270
     },
-    "can_survive_anywhere=true,facing=west,half=top,hearted=true": {
+    "alive=false,can_survive_anywhere=true,facing=west,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 270
+    },
+    "alive=true,can_survive_anywhere=false,facing=down,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 180
+    },
+    "alive=true,can_survive_anywhere=false,facing=down,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 180
+    },
+    "alive=true,can_survive_anywhere=false,facing=down,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 180
+    },
+    "alive=true,can_survive_anywhere=false,facing=down,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 180
+    },
+    "alive=true,can_survive_anywhere=false,facing=east,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 90,
+      "y": 90
+    },
+    "alive=true,can_survive_anywhere=false,facing=east,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 90,
+      "y": 90
+    },
+    "alive=true,can_survive_anywhere=false,facing=east,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 90
+    },
+    "alive=true,can_survive_anywhere=false,facing=east,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 90
+    },
+    "alive=true,can_survive_anywhere=false,facing=north,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 90
+    },
+    "alive=true,can_survive_anywhere=false,facing=north,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 90
+    },
+    "alive=true,can_survive_anywhere=false,facing=north,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90
+    },
+    "alive=true,can_survive_anywhere=false,facing=north,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90
+    },
+    "alive=true,can_survive_anywhere=false,facing=south,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 90,
+      "y": 180
+    },
+    "alive=true,can_survive_anywhere=false,facing=south,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 90,
+      "y": 180
+    },
+    "alive=true,can_survive_anywhere=false,facing=south,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 180
+    },
+    "alive=true,can_survive_anywhere=false,facing=south,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 180
+    },
+    "alive=true,can_survive_anywhere=false,facing=up,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom"
+    },
+    "alive=true,can_survive_anywhere=false,facing=up,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted"
+    },
+    "alive=true,can_survive_anywhere=false,facing=up,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top"
+    },
+    "alive=true,can_survive_anywhere=false,facing=up,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top"
+    },
+    "alive=true,can_survive_anywhere=false,facing=west,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 90,
+      "y": 270
+    },
+    "alive=true,can_survive_anywhere=false,facing=west,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 90,
+      "y": 270
+    },
+    "alive=true,can_survive_anywhere=false,facing=west,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 270
+    },
+    "alive=true,can_survive_anywhere=false,facing=west,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 270
+    },
+    "alive=true,can_survive_anywhere=true,facing=down,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 180
+    },
+    "alive=true,can_survive_anywhere=true,facing=down,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 180
+    },
+    "alive=true,can_survive_anywhere=true,facing=down,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 180
+    },
+    "alive=true,can_survive_anywhere=true,facing=down,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 180
+    },
+    "alive=true,can_survive_anywhere=true,facing=east,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 90,
+      "y": 90
+    },
+    "alive=true,can_survive_anywhere=true,facing=east,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 90,
+      "y": 90
+    },
+    "alive=true,can_survive_anywhere=true,facing=east,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 90
+    },
+    "alive=true,can_survive_anywhere=true,facing=east,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 90
+    },
+    "alive=true,can_survive_anywhere=true,facing=north,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 90
+    },
+    "alive=true,can_survive_anywhere=true,facing=north,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 90
+    },
+    "alive=true,can_survive_anywhere=true,facing=north,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90
+    },
+    "alive=true,can_survive_anywhere=true,facing=north,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90
+    },
+    "alive=true,can_survive_anywhere=true,facing=south,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 90,
+      "y": 180
+    },
+    "alive=true,can_survive_anywhere=true,facing=south,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 90,
+      "y": 180
+    },
+    "alive=true,can_survive_anywhere=true,facing=south,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 180
+    },
+    "alive=true,can_survive_anywhere=true,facing=south,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 180
+    },
+    "alive=true,can_survive_anywhere=true,facing=up,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom"
+    },
+    "alive=true,can_survive_anywhere=true,facing=up,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted"
+    },
+    "alive=true,can_survive_anywhere=true,facing=up,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top"
+    },
+    "alive=true,can_survive_anywhere=true,facing=up,half=top,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_top"
+    },
+    "alive=true,can_survive_anywhere=true,facing=west,half=bottom,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom",
+      "x": 90,
+      "y": 270
+    },
+    "alive=true,can_survive_anywhere=true,facing=west,half=bottom,hearted=true": {
+      "model": "changed_addon:block/luminar_crystal_large_bottom_hearted",
+      "x": 90,
+      "y": 270
+    },
+    "alive=true,can_survive_anywhere=true,facing=west,half=top,hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_large_top",
+      "x": 90,
+      "y": 270
+    },
+    "alive=true,can_survive_anywhere=true,facing=west,half=top,hearted=true": {
       "model": "changed_addon:block/luminar_crystal_large_top",
       "x": 90,
       "y": 270

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.LuminarCrystalHeartedBlockEntity;
 import net.foxyas.changedaddon.block.interfaces.IBrushableBlock;
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.bosses.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.*;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
@@ -63,6 +63,7 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty CAN_SURVIVE_ANYWHERE = LuminarCrystalSmall.CAN_SURVIVE_ANYWHERE;
+    public static final BooleanProperty ALIVE = LuminarCrystalSmall.ALIVE;
 
     public LuminarCrystalLarge(Properties properties) {
         super(properties.sound(SoundType.AMETHYST_CLUSTER)
@@ -73,7 +74,14 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
                 .hasPostProcess((blockState, blockGetter, blockPos) -> true)
                 .emissiveRendering((blockState, blockGetter, blockPos) -> true)
                 .noOcclusion());
-        registerDefaultState(getStateDefinition().any().setValue(HEARTED, false).setValue(HALF, Half.BOTTOM).setValue(FACING, Direction.UP).setValue(WATERLOGGED, false).setValue(CAN_SURVIVE_ANYWHERE, false));
+        registerDefaultState(this.getStateDefinition().any()
+                .setValue(HEARTED, false)
+                .setValue(HALF, Half.BOTTOM)
+                .setValue(FACING, Direction.UP)
+                .setValue(WATERLOGGED, false)
+                .setValue(CAN_SURVIVE_ANYWHERE, false)
+                .setValue(ALIVE, true)
+        );
     }
 
     @Override
@@ -273,6 +281,7 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
         }
 
         if (!(level instanceof ServerLevel serverLevel)) return;
+        if (!oldState.getValue(ALIVE)) return;
 
         // Procura a entidade viva mais próxima (excluindo leopardos)
         LivingEntity closestEntity = level.getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(8),
@@ -371,7 +380,7 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        super.createBlockStateDefinition(pBuilder.add(HEARTED, HALF, FACING, WATERLOGGED, CAN_SURVIVE_ANYWHERE));
+        super.createBlockStateDefinition(pBuilder.add(HEARTED, HALF, FACING, WATERLOGGED, CAN_SURVIVE_ANYWHERE, ALIVE));
     }
 
     @Override
