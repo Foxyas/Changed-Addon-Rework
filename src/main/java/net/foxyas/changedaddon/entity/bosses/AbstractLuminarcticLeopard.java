@@ -12,6 +12,8 @@ import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
+import net.foxyas.changedaddon.util.EntityUtil;
+import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
@@ -52,6 +54,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Random;
+import java.util.UUID;
 
 public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard implements ICrawlAndSwimAbleEntity, IDynamicRideOffsetEntity, IHasBossMusic {
 
@@ -221,13 +224,21 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                 UniformInt.of(120, 260),    // Default Non-Boss value
                 UniformInt.of(8, 16),     // Default Non-Boss value
                 6,
-                UniformFloat.of(4, 8),
-                1000
+                UniformFloat.of(4, 8)
         ));
         this.abilitySelector.addGoal(5, new CircleShootLuminarCrystalShardGoal(this,
                 UniformInt.of(120, 260),    // Default Non-Boss value
                 UniformInt.of(3, 8),    // Default Non-Boss value
                 16) {
+
+            @Override
+            public FireMode getFireMode() {
+                if (!AbstractLuminarcticLeopard.this.isBoss()) {
+                    return FireMode.ALL_AT_ONCE;
+                }
+                return super.getFireMode();
+            }
+
             @Override
             public IntProvider getCooldownProvider() {
                 IntProvider cooldownProvider = super.getCooldownProvider();
@@ -369,6 +380,11 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         super.addAdditionalSaveData(tag);
         tag.putBoolean("isBoss", this.isBoss());
         tag.putString("glowStage", this.getGlowStage().name());
+        
+        LivingEntity target = this.getTarget();
+        if (target != null) {
+            tag.putUUID("persistentTargetUUID", target.getUUID());
+        }
     }
 
     @Override
@@ -383,6 +399,15 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             } catch (IllegalArgumentException ignored) {
                 this.setGlowStage(GlowState.NONE);
             }
+        }
+
+        if (tag.contains("persistentTargetUUID")) {
+            try {
+                Entity entityByUUID = PlayerUtil.GlobalEntityUtil.getEntityByUUID(this.level(), tag.getUUID("persistentTargetUUID"));
+                if (entityByUUID instanceof LivingEntity livingEntity) {
+                    this.setTarget(livingEntity);
+                }
+            } catch (Exception ignored) {}
         }
     }
 

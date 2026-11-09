@@ -83,11 +83,11 @@ public abstract class DodgeType {
         return false;
     }
 
-    public boolean willDodge(DodgeAbilityInstance dodgeAbilityInstance, DamageContext sourceProjectileEither) {
+    public boolean willDodge(DodgeAbilityInstance dodgeAbilityInstance, DamageContext damageContext) {
         LivingEntity dodger = dodgeAbilityInstance.entity.getEntity();
-        if (dodger.invulnerableTime > 1 || dodger.hurtTime > 1) return false;
+        if (damageContext.isDamageSource() && (dodger.invulnerableTime > 1 || dodger.hurtTime > 1)) return false;
 
-        if (sourceProjectileEither.getDamage().map(damageSourceInstance -> damageSourceInstance.damageSource().is(ChangedAddonTags.DamageTypes.BYPASSES_DODGE)).orElse(false))
+        if (damageContext.getDamage().map(damageSourceInstance -> damageSourceInstance.damageSource().is(ChangedAddonTags.DamageTypes.BYPASSES_DODGE)).orElse(false))
             return false;
 
         return dodgeAbilityInstance.canUse() && dodgeAbilityInstance.canKeepUsing() && dodgeAbilityInstance.isDodgeActive();

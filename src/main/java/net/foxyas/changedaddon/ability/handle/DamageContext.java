@@ -44,4 +44,11 @@ public record DamageContext(@Nullable DamageSourceInstance damageSourceInstance,
     public Either<DamageSourceInstance, Projectile> asEither() {
         return damageSourceInstance != null ? Either.left(damageSourceInstance) : Either.right(projectile);
     }
+
+    public boolean isProjectile() {
+        return this.getProjectile().isPresent();
+    }
+    public boolean isDamageSource() {
+        return this.getDamage().isPresent();
+    }
 }

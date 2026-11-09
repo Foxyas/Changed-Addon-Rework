@@ -42,6 +42,11 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         VERTICAL_CENTER    // Vertical half-circle arc centered directly at the mob's X/Z
     }
 
+    public enum FireMode {
+        SEQUENTIAL,   // One projectile every FIRING_INTERVAL ticks
+        ALL_AT_ONCE   // Every projectile is launched on the same tick
+    }
+
     public final Mob holder;
     public final float distance;
     protected final IntProvider cooldownProvider;
@@ -53,8 +58,10 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
 
     // Configuration
     private static final double CIRCLE_RADIUS = 2.5;
-    private static final int CHARGE_DURATION = 20; // Ticks before firing starts (~1 sec)
-    private static final int FIRING_INTERVAL = 4;  // Ticks between firing each projectile
+    private static final int CHARGE_DURATION = 40; // Ticks before firing starts (~2 sec)
+    private static final int FIRING_INTERVAL = 8;  // Ticks between firing each projectile (SEQUENTIAL only)
+    private static final double HOVER_FOLLOW = 0.6D; // 0..1, how much of the gap to the orbit slot is closed each tick
+    private static final double ORBIT_SPIN_SPEED = 0.025D; // Radians per tick for the horizontal ring
 
     private final List<LuminarCrystalShardProjectile> spawnedProjectiles = new ArrayList<>();
     private boolean isFullySpawned = false;
@@ -63,16 +70,27 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
     // Orbit mode randomly assigned per usage
     private OrbitType currentOrbitType = OrbitType.HORIZONTAL_AROUND;
 
+    private final FireMode fireMode;
+
     public CircleShootLuminarCrystalShardGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider) {
-        this(holder, cooldownProvider, countProvider, 25f);
+        this(holder, cooldownProvider, countProvider, 25f, FireMode.SEQUENTIAL);
+    }
+
+    public CircleShootLuminarCrystalShardGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider, FireMode fireMode) {
+        this(holder, cooldownProvider, countProvider, 25f, fireMode);
     }
 
     public CircleShootLuminarCrystalShardGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider, float distance) {
+        this(holder, cooldownProvider, countProvider, distance, FireMode.SEQUENTIAL);
+    }
+
+    public CircleShootLuminarCrystalShardGoal(Mob holder, IntProvider cooldownProvider, IntProvider countProvider, float distance, FireMode fireMode) {
         super();
         this.holder = holder;
         this.cooldownProvider = cooldownProvider;
         this.countProvider = countProvider;
         this.distance = distance;
+        this.fireMode = fireMode;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
@@ -183,13 +201,23 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
     }
 
     @Override
+    public boolean requiresUpdateEveryTick() {
+        // Orbiting projectiles must be repositioned every game tick to stay glued to the holder
+        return true;
+    }
+
+    @Override
     public void tick() {
         super.tick();
         tick++;
+
+        // Slow the holder down while it is trying to walk (only refresh when the effect is about to run out)
         PathNavigation navigation = holder.getNavigation();
-        Path path = navigation.getPath();
-        if (path != null && navigation.isInProgress()) {
-            holder.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1, true, false, false));
+        if (navigation.getPath() != null && navigation.isInProgress()) {
+            MobEffectInstance slow = holder.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+            if (slow == null || slow.getDuration() < 10) {
+                holder.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1, true, false, false));
+            }
         }
 
         LivingEntity target = holder.getTarget();
@@ -197,20 +225,55 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             holder.getLookControl().setLookAt(target, 180f, 180f);
         }
 
+        // Every projectile that has not been launched yet keeps following the holder,
+        // during the charge AND while the rest of the volley is still waiting its turn
+        updateHoverPositions();
+
         if (tick < getChargeDuration()) {
-            updateHoverPositions();
             return;
         }
 
-        if ((tick - getChargeDuration()) % getFiringIntervale() == 0 && currentFireIndex < spawnedProjectiles.size()) {
-            LuminarCrystalShardProjectile projectile = spawnedProjectiles.get(currentFireIndex);
-
-            if (projectile != null && projectile.isAlive()) {
-                fireProjectileAtTarget(projectile, target);
-            }
-
-            currentFireIndex++;
+        switch (getFireMode()) {
+            case ALL_AT_ONCE -> fireAllAtOnce(target);
+            case SEQUENTIAL -> fireNextInSequence(target);
         }
+    }
+
+    private void fireNextInSequence(LivingEntity target) {
+        if ((tick - getChargeDuration()) % getFiringIntervale() != 0 || currentFireIndex >= spawnedProjectiles.size()) {
+            return;
+        }
+
+        LuminarCrystalShardProjectile projectile = spawnedProjectiles.get(currentFireIndex);
+        if (projectile != null && projectile.isAlive() && holder.level() instanceof ServerLevel level) {
+            fireProjectileAtTarget(level, projectile, target);
+            holder.swing(InteractionHand.MAIN_HAND);
+            playFireSound(level, projectile.getX(), projectile.getY(), projectile.getZ());
+        }
+
+        currentFireIndex++;
+    }
+
+    private void fireAllAtOnce(LivingEntity target) {
+        if (currentFireIndex >= spawnedProjectiles.size() || !(holder.level() instanceof ServerLevel level)) {
+            return;
+        }
+
+        for (int i = currentFireIndex; i < spawnedProjectiles.size(); i++) {
+            LuminarCrystalShardProjectile projectile = spawnedProjectiles.get(i);
+            if (projectile != null && projectile.isAlive()) {
+                fireProjectileAtTarget(level, projectile, target);
+            }
+        }
+        currentFireIndex = spawnedProjectiles.size();
+
+        // One swing and one sound for the whole volley
+        holder.swing(InteractionHand.MAIN_HAND);
+        playFireSound(level, holder.getX(), holder.getEyeY(), holder.getZ());
+    }
+
+    public FireMode getFireMode() {
+        return fireMode;
     }
 
     protected int getChargeDuration() {
@@ -222,30 +285,31 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
     }
 
     /**
-     * Updates un-launched projectile locations in orbit while charging, using smooth motion.
+     * Moves every un-launched projectile toward its orbit slot.
+     * <p>
+     * The position is set directly (instead of pushing the projectile with velocity) so it can't lag
+     * behind or drift away from the holder, and the impulse flag forces the tracker to send the new
+     * position to clients every tick; projectiles are only synced every few ticks otherwise, which
+     * made them slide along their last velocity on the client.
      */
     private void updateHoverPositions() {
+        LivingEntity target = holder.getTarget();
+
         for (int i = currentFireIndex; i < spawnedProjectiles.size(); i++) {
             LuminarCrystalShardProjectile projectile = spawnedProjectiles.get(i);
-            if (projectile != null && projectile.isAlive()) {
-                Vec3 targetPos = calculateProjectilePosition(i, tick);
+            if (projectile == null || !projectile.isAlive()) {
+                continue;
+            }
 
-                // Calcula a velocidade necessária para deslizar suavemente até a posição alvo (lerp/atração)
-                Vec3 currentPos = projectile.position();
-                Vec3 movement = targetPos.subtract(currentPos);
+            Vec3 slot = calculateProjectilePosition(i, tick);
+            Vec3 next = projectile.position().lerp(slot, HOVER_FOLLOW);
 
-                // Fator de suavização (quanto maior, mais rápido ele alcança o ponto, 0.4f é um bom meio termo fluido)
-                if (movement.lengthSqr() > 0.0001D) {
-                    projectile.setDeltaMovement(movement.scale(0.4D));
-                } else {
-                    projectile.setDeltaMovement(Vec3.ZERO);
-                    projectile.setPos(targetPos.x, targetPos.y, targetPos.z);
-                }
+            projectile.setPos(next.x, next.y, next.z);
+            projectile.setDeltaMovement(Vec3.ZERO);
+            projectile.hasImpulse = true;
 
-                LivingEntity target = holder.getTarget();
-                if (target != null) {
-                    EntityUtil.makeEntityForceFaceAt(projectile, target.getEyePosition(0));
-                }
+            if (target != null) {
+                EntityUtil.makeEntityForceFaceAt(projectile, target.getEyePosition(0));
             }
         }
     }
@@ -259,7 +323,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         if (this.currentOrbitType == OrbitType.HORIZONTAL_AROUND) {
             // Full 360-degree circle horizontally around the mob
             double angleStep = (2 * Math.PI) / projectileCount;
-            double angle = (index * angleStep) + (currentTick * 0.05);
+            double angle = (index * angleStep) + (currentTick * ORBIT_SPIN_SPEED);
 
             double xOffset = CIRCLE_RADIUS * Math.cos(angle);
             double zOffset = CIRCLE_RADIUS * Math.sin(angle);
@@ -270,7 +334,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             double baseAngle = index * angleStep;
 
             // Slight floating wave oscillation during charge tick
-            double angle = baseAngle + (Math.sin(currentTick * 0.1 + index) * 0.05);
+            double angle = baseAngle + (Math.sin(currentTick * 0.05 + index) * 0.05);
 
             float yRot = holder.getYRot();
             float radYaw = yRot * Mth.DEG_TO_RAD;
@@ -297,41 +361,39 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         }
     }
 
-    private void fireProjectileAtTarget(LuminarCrystalShardProjectile projectile, LivingEntity target) {
-        if (holder.level() instanceof ServerLevel level) {
-            holder.swing(InteractionHand.MAIN_HAND);
+    private void fireProjectileAtTarget(ServerLevel level, LuminarCrystalShardProjectile projectile, LivingEntity target) {
+        Vec3 startPos = projectile.position();
+        Vec3 shootDir;
 
-            Vec3 startPos = projectile.position();
-            Vec3 shootDir;
-
-            if (target != null && !target.isDeadOrDying()) {
-                shootDir = target.getEyePosition().subtract(startPos).normalize();
-            } else {
-                shootDir = holder.getLookAngle();
-            }
-
-            // Expanded bounding box check: prevents self-hits regardless of origin angle
-            AABB inflatedBox = holder.getBoundingBox().inflate(0.5D);
-            Vec3 safeFirePos = startPos;
-
-            // Step along the shooting path; if it crosses or starts inside the owner's hitbox,
-            // push the launch origin out past the far edge of the mob
-            if (inflatedBox.contains(startPos) || intersectsBoundingBox(startPos, shootDir, inflatedBox)) {
-                double safeDistance = holder.getBbWidth() + 1.2D;
-                safeFirePos = holder.getEyePosition().add(shootDir.scale(safeDistance));
-            }
-
-            projectile.setPos(safeFirePos.x, safeFirePos.y, safeFirePos.z);
-
-            // Keeps noGravity true so the projectiles fly straight without dipping quickly
-            projectile.setNoGravity(true);
-
-            float inaccuracy = level.getDifficulty() == Difficulty.HARD ? 0.0f : Mth.nextFloat(holder.getRandom(), 0.5f, 1.0f);
-            projectile.shoot(shootDir.x, shootDir.y, shootDir.z, 2.0f, inaccuracy);
-
-            level.playSound(null, projectile.getX(), projectile.getY(), projectile.getZ(),
-                    SoundEvents.BLAZE_SHOOT, SoundSource.HOSTILE, 1.0f, 1.0f);
+        if (target != null && !target.isDeadOrDying()) {
+            shootDir = target.getEyePosition().subtract(startPos).normalize();
+        } else {
+            shootDir = holder.getLookAngle();
         }
+
+        // Expanded bounding box check: prevents self-hits regardless of origin angle
+        AABB inflatedBox = holder.getBoundingBox().inflate(0.5D);
+        Vec3 safeFirePos = startPos;
+
+        // If the shot starts inside, or crosses, the owner's hitbox,
+        // push the launch origin out past the far edge of the mob
+        if (inflatedBox.contains(startPos) || intersectsBoundingBox(startPos, shootDir, inflatedBox)) {
+            double safeDistance = holder.getBbWidth() + 1.2D;
+            safeFirePos = holder.getEyePosition().add(shootDir.scale(safeDistance));
+        }
+
+        projectile.setPos(safeFirePos.x, safeFirePos.y, safeFirePos.z);
+
+        // Keeps noGravity true so the projectiles fly straight without dipping quickly
+        projectile.setNoGravity(true);
+
+        float inaccuracy = level.getDifficulty() == Difficulty.HARD ? 0.0f : Mth.nextFloat(holder.getRandom(), 0.5f, 1.0f);
+        projectile.shoot(shootDir.x, shootDir.y, shootDir.z, 2.0f, inaccuracy);
+        projectile.hasImpulse = true; // make sure clients get the launch velocity right away
+    }
+
+    private void playFireSound(ServerLevel level, double x, double y, double z) {
+        level.playSound(null, x, y, z, SoundEvents.BLAZE_SHOOT, SoundSource.HOSTILE, 1.0f, 1.0f);
     }
 
     /**
