@@ -21,9 +21,9 @@ import static net.foxyas.changedaddon.block.LuminarCrystalSmall.CAN_SURVIVE_ANYW
 import static net.foxyas.changedaddon.block.LuminarCrystalSmall.FACING;
 
 /**
- * Crystal path attack.
+ * Crystal path attack (3 blocks wide).
  * <p>
- * The holder channels for a moment and raises a straight line of crystals toward its target.
+ * The holder channels for a moment and raises a 3-block-wide line of crystals toward its target.
  * Each crystal hurts any living entity (except the holder) standing on its spot at the moment
  * it is placed. The crystals are permanent: they are a consequence of the mob existing.
  */
@@ -47,6 +47,7 @@ public class CrystalPathAttackGoal extends Goal {
     private int stepsDone = 0;
     private Vec3 startPos = Vec3.ZERO;
     private Vec3 direction = Vec3.ZERO;
+    private Vec3 perpendicular = Vec3.ZERO; // Perpendicular vector for width spread
 
     /**
      * @param cooldownProvider ticks to wait after the attack ends before it can be used again
@@ -101,6 +102,8 @@ public class CrystalPathAttackGoal extends Goal {
         this.nextStepTime = holder.level().getGameTime();
         this.startPos = holder.position();
         this.direction = computeDirection();
+        // Compute horizontal perpendicular vector (-z, 0, x) rotated 90 degrees
+        this.perpendicular = new Vec3(-direction.z, 0, direction.x).normalize();
     }
 
     @Override
@@ -125,7 +128,7 @@ public class CrystalPathAttackGoal extends Goal {
 
         long now = level.getGameTime();
         if (now >= nextStepTime) {
-            raiseCrystal(level, stepsDone);
+            raiseCrystalRow(level, stepsDone);
             stepsDone++;
             nextStepTime = now + STEP_INTERVAL;
         }
@@ -146,11 +149,20 @@ public class CrystalPathAttackGoal extends Goal {
         return dir.lengthSqr() < 1.0E-4 ? new Vec3(0, 0, 1) : dir.normalize();
     }
 
-    private void raiseCrystal(ServerLevel level, int index) {
-        Vec3 point = startPos.add(direction.scale((index + 1) * SPACING));
+    private void raiseCrystalRow(ServerLevel level, int index) {
+        // Base center point for this step
+        Vec3 centerPoint = startPos.add(direction.scale((index + 1) * SPACING));
+
+        // Place 3 crystals: Left (-1 block offset), Center (0), Right (+1 block offset)
+        raiseSingleCrystal(level, centerPoint.subtract(perpendicular.scale(1.0)));
+        raiseSingleCrystal(level, centerPoint);
+        raiseSingleCrystal(level, centerPoint.add(perpendicular.scale(1.0)));
+    }
+
+    private void raiseSingleCrystal(ServerLevel level, Vec3 point) {
         BlockPos ground = findPlacement(level, BlockPos.containing(point.x, startPos.y, point.z));
         if (ground == null) {
-            return; // nowhere to put a crystal on this step, the path just skips it
+            return; // nowhere to put a crystal on this specific offset, skip it
         }
 
         BlockState crystal = ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()
