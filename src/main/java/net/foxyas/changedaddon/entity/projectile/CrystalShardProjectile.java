@@ -34,6 +34,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public abstract class CrystalShardProjectile extends Projectile {
 
@@ -62,6 +63,24 @@ public abstract class CrystalShardProjectile extends Projectile {
 
     public void setSoundEvent(SoundEvent pSoundEvent) {
         soundEvent = pSoundEvent;
+    }
+
+    @Override
+    public @NotNull EntityDimensions getDimensions(@NotNull Pose pPose) {
+        EntityDimensions dim = super.getDimensions(pPose);
+        if (dim.fixed) dim = EntityDimensions.scalable(dim.width, dim.height);
+        return dim.scale(getScale());
+    }
+
+    @Override
+    public void onSyncedDataUpdated(@NotNull List<SynchedEntityData.DataValue<?>> pDataValues) {
+        super.onSyncedDataUpdated(pDataValues);
+        for (SynchedEntityData.DataValue<?> data : pDataValues) {
+            if (data.id() == SCALE.getId()) {
+                refreshDimensions();
+                return;
+            }
+        }
     }
 
     /**
@@ -558,6 +577,7 @@ public abstract class CrystalShardProjectile extends Projectile {
 
     public void setScale(float scale) {
         this.entityData.set(SCALE, scale);
+        refreshDimensions();
     }
 
     public float getScale() {
