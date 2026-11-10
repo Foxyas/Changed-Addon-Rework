@@ -16,6 +16,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageEffects;
 import net.minecraft.world.damagesource.DamageScaling;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.level.biome.Biome;
@@ -65,6 +66,7 @@ public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
         context.register(ChangedAddonDamageSources.LATEX_SOLVENT.key(), new DamageType("latex_solvent", DamageScaling.NEVER, 0.1f));
         context.register(ChangedAddonDamageSources.CONSCIENCE_LOSE.key(), new DamageType("conscience_lose", DamageScaling.NEVER, 0));
         context.register(ChangedAddonDamageSources.UNTRANSFUR_FAIL.key(), new DamageType("untransfur_fail", DamageScaling.NEVER, 0));
+        context.register(ChangedAddonDamageSources.CRYSTAL_SHARD.key(), new DamageType(ChangedAddonDamageSources.CRYSTAL_SHARD.key().location().getPath(), 0, DamageEffects.FREEZING));
     }
 
     private static void biome(BootstapContext<Biome> context) {

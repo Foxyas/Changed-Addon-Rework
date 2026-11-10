@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.projectile;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,7 +18,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -338,9 +338,9 @@ public abstract class CrystalShardProjectile extends Projectile {
         Entity entity1 = getOwner();
         DamageSource damagesource;
         if (entity1 == null) {
-            damagesource = new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.FREEZE), this, this);
+            damagesource = new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ChangedAddonDamageSources.CRYSTAL_SHARD.key()), this, this);
         } else {
-            damagesource = new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.FREEZE), this, entity1);
+            damagesource = new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ChangedAddonDamageSources.CRYSTAL_SHARD.key()), this, entity1);
             if (entity1 instanceof LivingEntity) {
                 ((LivingEntity) entity1).setLastHurtMob(entity);
             }
@@ -356,6 +356,8 @@ public abstract class CrystalShardProjectile extends Projectile {
             if (flag) {
                 return;
             }
+
+            entity.setTicksFrozen(Math.min(entity.getTicksRequiredToFreeze(), entity.getTicksFrozen() + 30));
 
             if (entity instanceof LivingEntity livingentity) {
                 if (!level().isClientSide && getPierceLevel() <= 0 && this.increaseArrowCount(livingentity, pResult)) {
