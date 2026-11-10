@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.projectile.CrystalShardProjectile;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalShardProjectile;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -17,8 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-import static net.minecraft.client.renderer.entity.TippableArrowRenderer.NORMAL_ARROW_LOCATION;
-
 public class LuminarCrystalShardRenderer extends EntityRenderer<LuminarCrystalShardProjectile> {
 
     public static final ResourceLocation LUMINAR_CRYSTAL_SHARK_LOCATION = ChangedAddonMod.resourceLoc("textures/entities/projectiles/luminar_crystal_projectile.png");
@@ -27,21 +24,32 @@ public class LuminarCrystalShardRenderer extends EntityRenderer<LuminarCrystalSh
         super(pContext);
     }
 
+    @Override
     public void render(LuminarCrystalShardProjectile pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         pPoseStack.pushPose();
         pPoseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.yRotO, pEntity.getYRot()) - 90.0F));
         pPoseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.xRotO, pEntity.getXRot())));
 
         pPoseStack.mulPose(Axis.XP.rotationDegrees(45.0F));
+
+
         pPoseStack.scale(0.05625F, 0.05625F, 0.05625F);
         pPoseStack.translate(-4.0F, 0.0F, 0.0F);
+
         VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(pEntity)));
+
+        this.scale(pEntity, pPoseStack, pPartialTicks);
         renderModel(pPoseStack, pPackedLight, vertexconsumer);
 //        VertexConsumer glowingvertexConsumer = pBuffer.getBuffer(RenderType.eyes(this.getTextureLocation(pEntity)));
 //        renderModel(pPoseStack, pPackedLight, glowingvertexConsumer);
 
         pPoseStack.popPose();
         super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+    }
+
+
+    protected void scale(LuminarCrystalShardProjectile pEntity, PoseStack pPoseStack, float pPartialTicks) {
+        pPoseStack.scale(pEntity.getScale(), pEntity.getScale(), pEntity.getScale());
     }
 
     private void renderModel(PoseStack pPoseStack, int pPackedLight, VertexConsumer vertexconsumer) {

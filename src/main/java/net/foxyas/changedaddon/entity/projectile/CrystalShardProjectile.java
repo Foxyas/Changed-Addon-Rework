@@ -38,9 +38,11 @@ import javax.annotation.Nullable;
 public abstract class CrystalShardProjectile extends Projectile {
 
     private static final double ARROW_BASE_DAMAGE = 2.0D;
+    private static final int FLAG_CRIT = 1;
+
     private static final EntityDataAccessor<Byte> ID_FLAGS = SynchedEntityData.defineId(CrystalShardProjectile.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> PIERCE_LEVEL = SynchedEntityData.defineId(CrystalShardProjectile.class, EntityDataSerializers.BYTE);
-    private static final int FLAG_CRIT = 1;
+    private static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(CrystalShardProjectile.class, EntityDataSerializers.FLOAT);
 
     private BlockState lastState;
     protected boolean inGround;
@@ -76,8 +78,9 @@ public abstract class CrystalShardProjectile extends Projectile {
     }
 
     protected void defineSynchedData() {
-        entityData.define(ID_FLAGS, (byte)0);
-        entityData.define(PIERCE_LEVEL, (byte)0);
+        entityData.define(ID_FLAGS, (byte) 0);
+        entityData.define(PIERCE_LEVEL, (byte) 0);
+        entityData.define(SCALE, 1f);
     }
 
     /**
@@ -113,8 +116,8 @@ public abstract class CrystalShardProjectile extends Projectile {
         Vec3 vec3 = getDeltaMovement();
         if (xRotO == 0.0F && yRotO == 0.0F) {
             double d0 = vec3.horizontalDistance();
-            setYRot((float)(Mth.atan2(vec3.x, vec3.z) * (double)(180F / (float)Math.PI)));
-            setXRot((float)(Mth.atan2(vec3.y, d0) * (double)(180F / (float)Math.PI)));
+            setYRot((float) (Mth.atan2(vec3.x, vec3.z) * (double) (180F / (float) Math.PI)));
+            setXRot((float) (Mth.atan2(vec3.y, d0) * (double) (180F / (float) Math.PI)));
             yRotO = getYRot();
             xRotO = getXRot();
         }
@@ -126,7 +129,7 @@ public abstract class CrystalShardProjectile extends Projectile {
             if (!voxelshape.isEmpty()) {
                 Vec3 vec31 = position();
 
-                for(AABB aabb : voxelshape.toAabbs()) {
+                for (AABB aabb : voxelshape.toAabbs()) {
                     if (aabb.move(blockpos).contains(vec31)) {
                         inGround = true;
                         break;
@@ -156,16 +159,16 @@ public abstract class CrystalShardProjectile extends Projectile {
                 vec33 = hitresult.getLocation();
             }
 
-            while(!isRemoved()) {
+            while (!isRemoved()) {
                 EntityHitResult entityhitresult = findHitEntity(vec32, vec33);
                 if (entityhitresult != null) {
                     hitresult = entityhitresult;
                 }
 
                 if (hitresult != null && hitresult.getType() == HitResult.Type.ENTITY) {
-                    Entity entity = ((EntityHitResult)hitresult).getEntity();
+                    Entity entity = ((EntityHitResult) hitresult).getEntity();
                     Entity entity1 = getOwner();
-                    if (entity instanceof Player && entity1 instanceof Player && !((Player)entity1).canHarmPlayer((Player)entity)) {
+                    if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity)) {
                         hitresult = null;
                         entityhitresult = null;
                     }
@@ -217,8 +220,8 @@ public abstract class CrystalShardProjectile extends Projectile {
             double d6 = vec3.y;
             double d1 = vec3.z;
             if (isCrit()) {
-                for(int i = 0; i < 4; ++i) {
-                    level().addParticle(ParticleTypes.CRIT, getX() + d5 * (double)i / 4.0D, getY() + d6 * (double)i / 4.0D, getZ() + d1 * (double)i / 4.0D, -d5, -d6 + 0.2D, -d1);
+                for (int i = 0; i < 4; ++i) {
+                    level().addParticle(ParticleTypes.CRIT, getX() + d5 * (double) i / 4.0D, getY() + d6 * (double) i / 4.0D, getZ() + d1 * (double) i / 4.0D, -d5, -d6 + 0.2D, -d1);
                 }
             }
 
@@ -227,17 +230,17 @@ public abstract class CrystalShardProjectile extends Projectile {
             double d3 = getZ() + d1;
             double d4 = vec3.horizontalDistance();
             if (flag) {
-                setYRot((float)(Mth.atan2(-d5, -d1) * (double)(180F / (float)Math.PI)));
+                setYRot((float) (Mth.atan2(-d5, -d1) * (double) (180F / (float) Math.PI)));
             } else {
-                setYRot((float)(Mth.atan2(d5, d1) * (double)(180F / (float)Math.PI)));
+                setYRot((float) (Mth.atan2(d5, d1) * (double) (180F / (float) Math.PI)));
             }
 
-            setXRot((float)(Mth.atan2(d6, d4) * (double)(180F / (float)Math.PI)));
+            setXRot((float) (Mth.atan2(d6, d4) * (double) (180F / (float) Math.PI)));
             setXRot(lerpRotation(xRotO, getXRot()));
             setYRot(lerpRotation(yRotO, getYRot()));
             float f = getAirInertia();
             if (isInWater()) {
-                for(int j = 0; j < 4; ++j) {
+                for (int j = 0; j < 4; ++j) {
                     level().addParticle(ParticleTypes.BUBBLE, d7 - d5 * 0.25D, d2 - d6 * 0.25D, d3 - d1 * 0.25D, d5, d6, d1);
                 }
 
@@ -293,8 +296,8 @@ public abstract class CrystalShardProjectile extends Projectile {
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         Entity entity = pResult.getEntity();
-        float f = (float)getDeltaMovement().length();
-        int i = Mth.ceil(Mth.clamp((double)f * baseDamage, 0.0D, Integer.MAX_VALUE));
+        float f = (float) getDeltaMovement().length();
+        int i = Mth.ceil(Mth.clamp((double) f * baseDamage, 0.0D, Integer.MAX_VALUE));
         if (getPierceLevel() > 0) {
             if (piercingIgnoreEntityIds == null) {
                 piercingIgnoreEntityIds = new IntOpenHashSet(5);
@@ -310,7 +313,7 @@ public abstract class CrystalShardProjectile extends Projectile {
 
         if (isCrit()) {
             long j = random.nextInt(i / 2 + 2);
-            i = (int)Math.min(j + (long)i, 2147483647L);
+            i = (int) Math.min(j + (long) i, 2147483647L);
         }
 
         Entity entity1 = getOwner();
@@ -320,7 +323,7 @@ public abstract class CrystalShardProjectile extends Projectile {
         } else {
             damagesource = new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.FREEZE), this, entity1);
             if (entity1 instanceof LivingEntity) {
-                ((LivingEntity)entity1).setLastHurtMob(entity);
+                ((LivingEntity) entity1).setLastHurtMob(entity);
             }
         }
 
@@ -330,7 +333,7 @@ public abstract class CrystalShardProjectile extends Projectile {
             entity.setSecondsOnFire(5);
         }
 
-        if (entity.hurt(damagesource, (float)i)) {
+        if (entity.hurt(damagesource, (float) i)) {
             if (flag) {
                 return;
             }
@@ -342,7 +345,7 @@ public abstract class CrystalShardProjectile extends Projectile {
 
                 if (knockback > 0) {
                     double d0 = Math.max(0.0D, 1.0D - livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-                    Vec3 vec3 = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double)knockback * 0.6D * d0);
+                    Vec3 vec3 = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double) knockback * 0.6D * d0);
                     if (vec3.lengthSqr() > 0.0D) {
                         livingentity.push(vec3.x, 0.1D, vec3.z);
                     }
@@ -350,12 +353,12 @@ public abstract class CrystalShardProjectile extends Projectile {
 
                 if (!level().isClientSide && entity1 instanceof LivingEntity) {
                     EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity)entity1, livingentity);
+                    EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity);
                 }
 
                 doPostHurtEffects(livingentity);
                 if (livingentity != entity1 && livingentity instanceof Player && entity1 instanceof ServerPlayer && !isSilent()) {
-                    ((ServerPlayer)entity1).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
+                    ((ServerPlayer) entity1).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
                 }
             }
 
@@ -388,7 +391,7 @@ public abstract class CrystalShardProjectile extends Projectile {
         playSound(getHitGroundSoundEvent(), 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
         inGround = true;
         setCrit(false);
-        setPierceLevel((byte)0);
+        setPierceLevel((byte) 0);
         setSoundEvent(getDefaultHitGroundSoundEvent());
         resetPiercedEntities();
 
@@ -418,6 +421,14 @@ public abstract class CrystalShardProjectile extends Projectile {
     public void breakOnImpact(BlockHitResult hitResult) {
     }
 
+    public boolean inGround() {
+        return inGround;
+    }
+
+    public int getInGroundTime() {
+        return inGroundTime;
+    }
+
     /**
      * Gets the EntityHitResult representing the entity hit
      */
@@ -432,17 +443,18 @@ public abstract class CrystalShardProjectile extends Projectile {
 
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        pCompound.putShort("life", (short)life);
+        pCompound.putShort("life", (short) life);
         if (lastState != null) {
             pCompound.put("inBlockState", NbtUtils.writeBlockState(lastState));
         }
 
         pCompound.putBoolean("inGround", inGround);
-        pCompound.putByte("pickup", (byte)pickup.ordinal());
+        pCompound.putByte("pickup", (byte) pickup.ordinal());
         pCompound.putDouble("damage", baseDamage);
         pCompound.putBoolean("crit", isCrit());
         pCompound.putByte("PierceLevel", getPierceLevel());
         pCompound.putString("SoundEvent", BuiltInRegistries.SOUND_EVENT.getKey(soundEvent).toString());
+        pCompound.putFloat("scale", this.getScale());
     }
 
     /**
@@ -464,6 +476,10 @@ public abstract class CrystalShardProjectile extends Projectile {
         setPierceLevel(pCompound.getByte("PierceLevel"));
         if (pCompound.contains("SoundEvent", 8)) {
             soundEvent = BuiltInRegistries.SOUND_EVENT.getOptional(ResourceLocation.parse(pCompound.getString("SoundEvent"))).orElse(this.getDefaultHitGroundSoundEvent());
+        }
+
+        if (pCompound.contains("scale")) {
+            setScale(pCompound.getFloat("scale"));
         }
     }
 
@@ -515,9 +531,9 @@ public abstract class CrystalShardProjectile extends Projectile {
     private void setFlag(int pId, boolean pValue) {
         byte b0 = entityData.get(ID_FLAGS);
         if (pValue) {
-            entityData.set(ID_FLAGS, (byte)(b0 | pId));
+            entityData.set(ID_FLAGS, (byte) (b0 | pId));
         } else {
-            entityData.set(ID_FLAGS, (byte)(b0 & ~pId));
+            entityData.set(ID_FLAGS, (byte) (b0 & ~pId));
         }
     }
 
@@ -538,6 +554,14 @@ public abstract class CrystalShardProjectile extends Projectile {
 
     public byte getPierceLevel() {
         return entityData.get(PIERCE_LEVEL);
+    }
+
+    public void setScale(float scale) {
+        this.entityData.set(SCALE, scale);
+    }
+
+    public float getScale() {
+        return this.entityData.get(SCALE);
     }
 
     protected float getWaterInertia() {

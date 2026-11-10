@@ -1,18 +1,30 @@
 package net.foxyas.changedaddon.entity.projectile;
 
+import net.foxyas.changedaddon.block.LuminarCrystalSmall;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
+
+    protected boolean shouldSpawnCrystalsNearby = false;
 
     public LuminarCrystalShardProjectile(EntityType<? extends Projectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -23,19 +35,102 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+
+        if (shouldSpawnCrystalsNearby && !onGround() || inGround()) {
+            createCrystalCircleRing();
+        }
+    }
+
+    @Override
     protected void onHitBlock(BlockHitResult pResult) {
         super.onHitBlock(pResult);
-        ParticlesUtil.sendParticles(this.level, new BlockParticleOption(ParticleTypes.BLOCK, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()), this.position(), 0.05f, 0.05f, 0.05f, 8, 0.5f);
+        onHitSomething();
     }
 
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
+        onHitSomething();
+    }
+
+    protected void onHitSomething() {
         ParticlesUtil.sendParticles(this.level, new BlockParticleOption(ParticleTypes.BLOCK, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()), this.position(), 0.05f, 0.05f, 0.05f, 8, 0.5f);
     }
 
-    @Override
-    public boolean increaseArrowCount(LivingEntity livingentity, EntityHitResult pResult) {
-        return false;
+    public boolean isShouldSpawnCrystalsNearby() {
+        return shouldSpawnCrystalsNearby;
     }
+
+    public void setShouldSpawnCrystalsNearby(boolean shouldSpawnCrystalsNearby) {
+        this.shouldSpawnCrystalsNearby = shouldSpawnCrystalsNearby;
+    }
+
+    protected void createCrystalCircleRing() {
+        double scale = getScale();
+        double radius = 1.5D * scale;
+        int points = 8; // Número de cristais à volta do círculo
+
+        Vec3 center = this.position();
+
+        // Gera os pontos do círculo no plano perpendicular (Right e Up locais)
+        for (int i = 0; i < points; i++) {
+            double angle = (2.0 * Math.PI / points) * i;
+            double cos = Math.cos(angle);
+            double sin = Math.sin(angle);
+
+            // deltaX = Sway (direita/esquerda), deltaY = Heave (cima/baixo), deltaZ = Surge (frente/trás)
+            // Multiplicamos o cosseno e o seno pelo raio nos eixos X (Right) e Y (Up)
+            double deltaX = cos * radius;
+            double deltaY = sin * radius;
+            double deltaZ = 0.0; // Mantém no plano transversal imediato do projétil
+
+            // Obtém a posição absoluta no mundo usando o utilitário
+            Vec3 pointPos = FoxyasUtil.getRelativePosition(this, deltaX, deltaY, deltaZ, false);
+            BlockPos targetPos = BlockPos.containing(pointPos);
+
+            // Tenta encontrar um estado sobrevivível apontando para o centro do projétil
+            BlockState survivableState = getSurvivableState(this.level(), targetPos, center);
+            if (survivableState != null && this.level().isEmptyBlock(targetPos)) {
+                this.level().setBlock(targetPos, survivableState, 3);
+            }
+        }
+    }
+
+    /**
+     * Builds the crystal state for {@code pos} that points as close as possible toward
+     * {@code facePos} while passing the block's normal survival check (CAN_SURVIVE_ANYWHERE stays
+     * off). It never points away from {@code facePos}.
+     *
+     * @return the state, or null if no valid facing exists here.
+     */
+    @Nullable
+    public static BlockState getSurvivableState(LevelReader level, BlockPos pos, Vec3 facePos) {
+        Vec3 toFacePos = facePos.subtract(Vec3.atCenterOf(pos));
+
+        Direction[] facings = Direction.values();
+        Arrays.sort(facings, Comparator.comparingDouble((Direction d) -> -facingDot(d, toFacePos)));
+
+        for (Direction facing : facings) {
+
+            if (facingDot(facing, toFacePos) < 0) {
+                break;
+            }
+
+            BlockState state = ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()
+                    .setValue(LuminarCrystalSmall.FACING, facing)
+                    .setValue(LuminarCrystalSmall.CAN_SURVIVE_ANYWHERE, true);
+
+            if (state.canSurvive(level, pos)) {
+                return state;
+            }
+        }
+        return null;
+    }
+
+    private static double facingDot(Direction facing, Vec3 vec) {
+        return facing.getStepX() * vec.x + facing.getStepY() * vec.y + facing.getStepZ() * vec.z;
+    }
+
 }
