@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -25,6 +26,7 @@ import java.util.Comparator;
 public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
 
     protected boolean shouldSpawnCrystalsNearby = false;
+    protected boolean breakOnImpact = false;
 
     public LuminarCrystalShardProjectile(EntityType<? extends Projectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -53,6 +55,31 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         onHitSomething();
+    }
+
+    @Override
+    public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
+        return breakOnImpact;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        pCompound.putBoolean("breakOnImpact", isBreakOnImpact());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        if (pCompound.contains("breakOnImpact")) setBreakOnImpact(pCompound.getBoolean("breakOnImpact"));
+    }
+
+    public void setBreakOnImpact(boolean breakOnImpact) {
+        this.breakOnImpact = breakOnImpact;
+    }
+
+    public boolean isBreakOnImpact() {
+        return breakOnImpact;
     }
 
     protected void onHitSomething() {

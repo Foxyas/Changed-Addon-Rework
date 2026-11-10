@@ -131,11 +131,11 @@ public class HyperGigaCrystalAttackGoal extends Goal implements IAbilityGoal {
         projectile.setCritArrow(true);
         projectile.setKnockback(4); // Knockback brutal
         projectile.setShouldSpawnCrystalsNearby(true);
+        projectile.setBreakOnImpact(true);
 
         // Dano altíssimo característico de um Hyper Giga Ataque
         projectile.setBaseDamage(16.0f);
         projectile.setPierceLevel((byte) 5); // Perfura múltiplos alvos pelo caminho
-        projectile.setScale(6);
 
         return projectile;
     }
@@ -177,7 +177,7 @@ public class HyperGigaCrystalAttackGoal extends Goal implements IAbilityGoal {
                 EntityUtil.makeEntityForceFaceAt(hyperCrystal, target.position());
             }
 
-            hyperCrystal.setScale(Math.max(1, 16 * ((float) tick / CHARGE_DURATION)));
+            hyperCrystal.setScale(Math.max(1, 8 * ((float) tick / CHARGE_DURATION)));
 
             if (holder.level() instanceof ServerLevel serverLevel && tick % 4 == 0) {
                 serverLevel.sendParticles(ParticleTypes.END_ROD, x, y, z, 2, 0.1, 0.1, 0.1, 0.02);
