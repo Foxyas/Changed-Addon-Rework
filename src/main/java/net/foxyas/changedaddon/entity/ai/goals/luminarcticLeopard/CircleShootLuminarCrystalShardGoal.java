@@ -178,6 +178,12 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             }
 
             @Override
+            public void shootFromRotation(@NotNull Entity pShooter, float pX, float pY, float pZ, float pVelocity, float pInaccuracy) {
+                super.shootFromRotation(pShooter, pX, pY, pZ, pVelocity, pInaccuracy);
+                this.setNoGravity(false);
+            }
+
+            @Override
             public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
                 return true;
             }

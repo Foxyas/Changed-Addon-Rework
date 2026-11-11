@@ -103,7 +103,13 @@ public class HyperGigaCrystalAttackGoal extends Goal implements IAbilityGoal {
             @Override
             public void shoot(double pX, double pY, double pZ, float pVelocity, float pInaccuracy) {
                 super.shoot(pX, pY, pZ, pVelocity, pInaccuracy);
-                this.setNoGravity(true);
+                this.setNoGravity(false);
+            }
+
+            @Override
+            public void shootFromRotation(@NotNull Entity pShooter, float pX, float pY, float pZ, float pVelocity, float pInaccuracy) {
+                super.shootFromRotation(pShooter, pX, pY, pZ, pVelocity, pInaccuracy);
+                this.setNoGravity(false);
             }
 
             @Override
