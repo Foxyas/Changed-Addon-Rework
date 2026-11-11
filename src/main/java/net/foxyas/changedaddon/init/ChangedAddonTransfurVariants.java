@@ -200,7 +200,8 @@ public class ChangedAddonTransfurVariants {
                     .abilities(List.of(entityType -> ChangedAddonAbilities.CLAWS.get(), entityType -> ChangedAbilities.GRAB_ENTITY_ABILITY.get(), entityType -> ChangedAddonAbilities.DODGE.get(), entityType -> ChangedAddonAbilities.LEAP.get(), entityType -> ChangedAbilities.HYPNOSIS.get(), entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()))
                     .scares(List.of(Creeper.class))
                     .nightVision()
-                    .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION));
+                    .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION)
+                    .addAbility(ChangedAddonAbilities.CRYSTAL_SHARD_BARRAGE));
 
     public static final RegistryObject<TransfurVariant<LuminarcticLeopardFemaleEntity>> LUMINARCTIC_LEOPARD_FEMALE = register("form_luminarctic_leopard/female",
             () -> TransfurVariant.Builder.of(ChangedAddonEntities.LUMINARCTIC_LEOPARD_FEMALE)
@@ -209,7 +210,8 @@ public class ChangedAddonTransfurVariants {
                     .abilities(List.of(entityType -> ChangedAddonAbilities.CLAWS.get(), entityType -> ChangedAbilities.GRAB_ENTITY_ABILITY.get(), entityType -> ChangedAddonAbilities.DODGE.get(), entityType -> ChangedAddonAbilities.LEAP.get(), entityType -> ChangedAbilities.HYPNOSIS.get(), entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()))
                     .scares(List.of(Creeper.class))
                     .nightVision()
-                    .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION));
+                    .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION)
+                    .addAbility(ChangedAddonAbilities.CRYSTAL_SHARD_BARRAGE));
 
     public static final RegistryObject<TransfurVariant<LatexSquidTigerSharkEntity>> LATEX_SQUID_TIGER_SHARK = register("form_latex_squid_tiger_shark",
             TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_SQUID_TIGER_SHARK)
