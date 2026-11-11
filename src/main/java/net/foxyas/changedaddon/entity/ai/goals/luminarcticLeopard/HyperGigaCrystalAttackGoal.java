@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalShardProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.util.EntityUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -162,20 +161,30 @@ public class HyperGigaCrystalAttackGoal extends Goal implements IAbilityGoal {
         // Atualiza a posição de órbita do Hyper Crystal rodando ao redor da cabeça do mob enquanto carrega
         if (hyperCrystal != null && hyperCrystal.isAlive() && tick < CHARGE_DURATION) {
             Vec3 headPos = holder.getEyePosition(0);
-            double angle = tick * 0.15D; // Velocidade de rotação da órbita aumentando
+            // Ângulo atual da órbita baseado no tick
+            double angle = tick * 0.15D;
+
+            // Posição atual e próxima (derivada / direção tangente ao círculo)
+            double nextAngle = (tick + 1) * 0.15D;
             double x = headPos.x + (Math.cos(angle) * ORBIT_RADIUS);
             double z = headPos.z + (Math.sin(angle) * ORBIT_RADIUS);
             double y = headPos.y + 1.0D + (Math.sin(tick * 0.2D) * 0.2D); // Flutuação vertical leve
 
+            double nextX = headPos.x + (Math.cos(nextAngle) * ORBIT_RADIUS);
+            double nextZ = headPos.z + (Math.sin(nextAngle) * ORBIT_RADIUS);
+
+
+            // Vetor direção do movimento orbital
+            Vec3 orbitalMotion = new Vec3(nextX - x, 0, nextZ - z).normalize().scale(0.5f); // Uma velocidade legível para o motor atualizar a rotação
+
             hyperCrystal.setPos(x, y, z);
-            hyperCrystal.setDeltaMovement(Vec3.ZERO);
+            hyperCrystal.setDeltaMovement(orbitalMotion);
             hyperCrystal.hasImpulse = true;
 
-            if (target != null) {
-                EntityUtil.makeEntityForceFaceAt(hyperCrystal, target.position());
-            }
+//            EntityUtil.makeEntityForceFaceAt(hyperCrystal, hyperCrystalMotion);
 
             hyperCrystal.setScale(Math.max(1, 8 * ((float) tick / CHARGE_DURATION)));
+            hyperCrystal.setHealth(LuminarCrystalShardProjectile.MAX_DEFAULT_HEALTH * Math.max(1, 8 * ((float) tick / CHARGE_DURATION)));
 
             if (holder.level() instanceof ServerLevel serverLevel && tick % 4 == 0) {
                 serverLevel.sendParticles(ParticleTypes.END_ROD, x, y, z, 2, 0.1, 0.1, 0.1, 0.02);
