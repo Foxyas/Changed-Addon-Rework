@@ -269,10 +269,14 @@ public class ENLanguageProvider extends LanguageProvider {
         addAbility("sonar.desc", "Unleash a resonant pulse that reveals living beings through walls and obstacles.");
         addAbility("fireball", "Luminara Fireball");
         addAbility("fireball.desc", "Unleash a blazing fireball fueled by your current power state — the greater your strength, the more devastating the flames.");
-
         addAbility("wither_grenade", "Wither Grenade");
         addAbility("toggle_climb", "Toggle Climb");
         addAbility("passive_regeneration", "Passive Regeneration");
+        addAbility("summon_dl_pup", "Summon Pup");
+        addAbility("summon_dl_pup.desc", "Summon a Dark Latex Wolf Pup near by to assist you");
+        addAbility("crystal_shard_barrage", "Crystal Shard Barrage");
+        addAbility("crystal_shard_barrage.desc", "Summon a barrage made of your crystals");
+
         addAbility("grab_entity.extender.how_to_release", "Hold [%s] to release the entity");
         addAbility("grab_entity.extender.how_to_hug", "Hold [%s] to hug the entity");
         addAbility("grab_entity.extender.how_to_hug.tightly", "Hold [%s] to snuggle the entity");
@@ -280,8 +284,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAbility("grab_entity.extender.hugged", "%s gave you a warm hug");
         addAbility("grab_entity.extender.hugger.tight", "You squeezed %s tight");
         addAbility("grab_entity.extender.hugged.tight", "%s squeezes you tight");
-        addAbility("summon_dl_pup", "Summon Pup");
-        addAbility("summon_dl_pup.desc", "Summon a Dark Latex Wolf Pup near by to assist you");
+
 
         add(modid + ".compact_disc.title.experiment_009", "§n§4Demoleculated §r§n§b Experiment");
         add(modid + ".compact_disc.content.experiment_009", "Experiment 009 Had to be Demoleculated!! he's powerful very powerful never let him fall into the wrong hands he apparently can't infect but he shows he doesn't want to §n§4 He Wants to Kill Everyone who gets in his way§r");

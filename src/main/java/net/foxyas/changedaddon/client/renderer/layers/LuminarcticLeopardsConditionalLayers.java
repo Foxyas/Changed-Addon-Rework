@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.bosses.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.bosses.AbstractLuminarcticLeopard.GlowState;
 import net.ltxprogrammer.changed.ability.HypnosisAbility;
+import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.EmissiveBodyLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
@@ -12,6 +13,7 @@ import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -28,7 +30,9 @@ public class LuminarcticLeopardsConditionalLayers {
     // Shared checks
     // ------------------------------------------------------------------
 
-    /** True if the player currently has the Hypnosis ability selected. */
+    /**
+     * True if the player currently has the Hypnosis ability selected.
+     */
     private static boolean isUsingHypnosis(Player player) {
         var variant = ProcessTransfur.getPlayerTransfurVariant(player);
         if (variant == null) return false;
@@ -36,7 +40,9 @@ public class LuminarcticLeopardsConditionalLayers {
         return ability != null && ability.ability instanceof HypnosisAbility;
     }
 
-    /** True if the player has Hypnosis selected and is actively holding it. */
+    /**
+     * True if the player has Hypnosis selected and is actively holding it.
+     */
     private static boolean isHypnosisActive(Player player) {
         var variant = ProcessTransfur.getPlayerTransfurVariant(player);
         if (variant == null) return false;
@@ -88,7 +94,8 @@ public class LuminarcticLeopardsConditionalLayers {
                     renderTinted(poseStack, bufferSource, packedLight, 1f - pulse);
                 }
                 case ALWAYS -> renderTinted(poseStack, bufferSource, packedLight, 1f);
-                case NONE -> super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
+                case NONE ->
+                        super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
             }
         }
 
@@ -109,6 +116,24 @@ public class LuminarcticLeopardsConditionalLayers {
             }
 
             if (shouldRender) {
+                if (entity instanceof AbstractLuminarcticLeopard abstractLuminarcticLeopard) {
+                    if (abstractLuminarcticLeopard.getGlowStage() == GlowState.PULSE) {
+                        float ageInTicks = abstractLuminarcticLeopard.tickCount + partialTick;
+                        float pulse = 1f - (float) Math.sin(ageInTicks * 0.1f) / 2f - 1f / 2f;
+
+                        stack.pushPose();
+                        stack.scale(1.0002F, 1.0002F, 1.0002F);
+                        M armedModel = this.getParentModel();
+                        ModelPart armPart = armedModel.getArm(arm);
+                        armPart.loadPose(armPose);
+                        FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stack, bufferSource.getBuffer(this.renderType()), packedLight, pulse, pulse, pulse, 1f);
+
+                        stack.popPose();
+                        return;
+                    }
+                }
+
+
                 super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose, partialTick);
             }
         }
@@ -147,7 +172,9 @@ public class LuminarcticLeopardsConditionalLayers {
             this.customGlowEyesLayer = customGlowEyesLayer;
         }
 
-        /** Builds the layer with the normal and glowing eye variants used by both leopards. */
+        /**
+         * Builds the layer with the normal and glowing eye variants used by both leopards.
+         */
         public static <M extends AdvancedHumanoidModel<T>, T extends ChangedEntity> LuminarcticCustomEyesLayer<M, T> create(RenderLayerParent<T, M> parent, EntityModelSet modelSet) {
             return new LuminarcticCustomEyesLayer<>(parent,
                     new CustomEyesLayer<>(parent, modelSet,

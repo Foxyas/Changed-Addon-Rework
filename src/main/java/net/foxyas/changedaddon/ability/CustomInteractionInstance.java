@@ -46,7 +46,7 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
         if (changedEntity instanceof LatexSnepFeralEntity latexSnepFeralEntity) {
             latexSnepFeralEntity.WantLoaf = !latexSnepFeralEntity.WantLoaf;
         } else if (changedEntity instanceof AbstractLuminarcticLeopard lumi) {
-            if (entity.isCrouching()) {
+            if (!entity.isCrouching()) {
                 switch (lumi.getGlowStage()) {
                     case NONE, PULSE ->
                             lumi.setGlowStage(GlowState.ALWAYS);
