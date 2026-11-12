@@ -367,22 +367,26 @@ public class ENLanguageProvider extends LanguageProvider {
         add("changed_addon.warn.cant_carry", "You try to lift %1$s, but it's far too heavy.");
         add("changed_addon.when_not.transfur", "You aren't a latex creature");
 
-        addDeathMessage("assimilation", "%1$s was assimilated", null, "%1$s was assimilated by %2$s");
-        addDeathMessage("conscience_lose", "%1$s lost their consciousness", null, "%1$s lost their consciousness by %2$s");
-        addDeathMessage("latex_solvent", "%1$s was dissolved", null, "%1$s was dissolved by %2$s");
-        addDeathMessage("untransfur_fail", "%1$s dies when the untransfurmation attempt fails", null, "%1$s dies for a fail untransfurmation attempt while fighting %2$s");
-        addDeathMessage(ChangedAddonDamageSources.CHOKE.damageType(),
+//        addDeathMessage("assimilation", "%1$s was assimilated", null, "%1$s was assimilated by %2$s");
+        addDeathMessage(ChangedAddonDamageSources.CONSCIENCE_LOSE.key().location().getPath(), "%1$s lost their consciousness", null, "%1$s lost their consciousness by %2$s");
+        addDeathMessage(ChangedAddonDamageSources.LATEX_SOLVENT.key().location().getPath(), "%1$s was dissolved", null, "%1$s was dissolved by %2$s");
+        addDeathMessage(ChangedAddonDamageSources.UNTRANSFUR_FAIL.key().location().getPath(), "%1$s dies when the untransfurmation attempt fails", null, "%1$s dies for a fail untransfurmation attempt while fighting %2$s");
+        addDeathMessage(ChangedAddonDamageSources.CHOKE.key().location().getPath(),
                 "%1$s was choked to death",
                 "%1$s was choked to death by %2$s using %3$s",
                 "%1$s was choked to death by %2$s");
-        addDeathMessage(ChangedAddonDamageSources.CONSTRICTION.damageType(),
+        addDeathMessage(ChangedAddonDamageSources.CONSTRICTION.key().location().getPath(),
                 "%1$s was squeezed to death",
                 "%1$s was squeezed to death by %2$s using %3$s",
                 "%1$s was squeezed to death by %2$s");
-        addDeathMessage(ChangedAddonDamageSources.OVER_DOSE.damageType(),
+        addDeathMessage(ChangedAddonDamageSources.OVER_DOSE.key().location().getPath(),
                 "%1$s ignored all warnings and had a fatal overdose",
                 "%1$s pushed their body past the limit while fighting %2$s using %3$s",
                 "%1$s pushed their body past the limit while fighting %2$s");
+        addDeathMessage(ChangedAddonDamageSources.CRYSTAL_SHARD.key().location().getPath(),
+                "%1$s was impaled by a crystal shard",
+                "%1$s was impaled by a crystal shard while fighting %2$s using %3$s",
+                "%1$s was impaled by a crystal shard while fighting %2$s");
 
         addEffect(ChangedAddonMobEffects.UNTRANSFUR, "§7Untransfur", "Displays untransfur progress via overlay. Progress speeds up when sleeping. When complete, the untransfur is applied.");
         add("effect.changed_addon." + ChangedAddonMobEffects.UNTRANSFUR.getId().getPath() + ".no_effect", "The effect doesn't seem to be working");

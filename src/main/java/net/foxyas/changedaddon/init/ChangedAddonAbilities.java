@@ -58,6 +58,7 @@ public class ChangedAddonAbilities {
     public static final RegistryObject<LuminaraFireballAbility> LUMINARA_FIREBALL = REGISTRY.register("luminara_fireball", LuminaraFireballAbility::new);
     public static final RegistryObject<PollenCarryAbility> POLLEN_CARRY = REGISTRY.register("pollen_carry", PollenCarryAbility::new);
     public static final RegistryObject<SummonDLPupAbility> SUMMON_DL_PUP = REGISTRY.register("summon_dl_pup", SummonDLPupAbility::new);
+    public static final RegistryObject<CrystalShardBarrageAbility> CRYSTAL_SHARD_BARRAGE = REGISTRY.register("crystal_shard_barrage", CrystalShardBarrageAbility::new);
 
     public static void addUniversalAbilities(TransfurVariant.UniversalAbilitiesEvent event) {
         event.addAbility(event.isOfTag(ChangedTags.EntityTypes.LATEX).and(event.isNotOfTag(ChangedTags.EntityTypes.PARTIAL_LATEX)), SOFTEN_ABILITY);

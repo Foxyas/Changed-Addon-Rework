@@ -10,6 +10,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -18,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -25,6 +33,8 @@ import java.util.Comparator;
 
 public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
 
+    public static final float MAX_DEFAULT_HEALTH = 1f;
+    private static final EntityDataAccessor<Float> HEALTH = SynchedEntityData.defineId(LuminarCrystalShardProjectile.class, EntityDataSerializers.FLOAT);
     protected boolean shouldSpawnCrystalsNearby = false;
     protected boolean breakOnImpact = false;
 
@@ -34,6 +44,12 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
 
     public LuminarCrystalShardProjectile(Level level) {
         super(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD.get(), level);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(HEALTH, 1f);
     }
 
     @Override
@@ -66,12 +82,69 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putBoolean("breakOnImpact", isBreakOnImpact());
+        pCompound.putFloat("Health", this.getHealth());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         if (pCompound.contains("breakOnImpact")) setBreakOnImpact(pCompound.getBoolean("breakOnImpact"));
+        if (pCompound.contains("Health")) setHealth(pCompound.getFloat("Health"));
+    }
+
+    @Override
+    public boolean isAttackable() {
+        return true;
+    }
+
+    @Override
+    public boolean isPickable() {
+        return true;
+    }
+
+    @Override
+    public boolean hurt(@NotNull DamageSource pSource, float pAmount) {
+        if (this.isInvulnerableTo(pSource)) {
+            return false;
+        }
+
+        if (pAmount > 0) {
+            this.setHealth(this.getHealth() - pAmount);
+            this.markHurt();
+
+            if (pAmount > this.getHealth()) {
+                onHitSomething();
+                this.discard();
+            }
+        } else {
+            this.markHurt();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource pSource) {
+        if (isProjectileTheSame(this, pSource.getDirectEntity())) {
+            return true;
+        }
+
+        return super.isInvulnerableTo(pSource);
+    }
+
+    @Override
+    protected boolean canHitEntity(@NotNull Entity entity) {
+        if (isProjectileTheSame(this, entity)) {
+           return false;
+        }
+
+        return super.canHitEntity(entity);
+    }
+
+    private static boolean isProjectileTheSame(LuminarCrystalShardProjectile shard, Entity projectile) {
+        if (projectile instanceof LuminarCrystalShardProjectile luminarCrystalShardProjectile) {
+            return luminarCrystalShardProjectile.getOwner() == shard.getOwner();
+        }
+        return false;
     }
 
     public void setBreakOnImpact(boolean breakOnImpact) {
@@ -84,6 +157,7 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
 
     protected void onHitSomething() {
         ParticlesUtil.sendParticles(this.level, new BlockParticleOption(ParticleTypes.BLOCK, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()), this.position(), 0.05f, 0.05f, 0.05f, 8, 0.5f);
+        this.level.playSound(null, this, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1, 1);
     }
 
     public boolean isShouldSpawnCrystalsNearby() {
@@ -92,6 +166,14 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
 
     public void setShouldSpawnCrystalsNearby(boolean shouldSpawnCrystalsNearby) {
         this.shouldSpawnCrystalsNearby = shouldSpawnCrystalsNearby;
+    }
+
+    public float getHealth() {
+        return this.entityData.get(HEALTH);
+    }
+
+    public void setHealth(float health) {
+        this.entityData.set(HEALTH, health);
     }
 
     protected void createCrystalCircleRing() {

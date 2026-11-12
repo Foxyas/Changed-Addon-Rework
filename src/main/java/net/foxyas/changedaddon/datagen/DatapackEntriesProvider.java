@@ -63,10 +63,14 @@ public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
             context.register(damageTypeHolder.key(), damageType);
         }));
 
-        context.register(ChangedAddonDamageSources.LATEX_SOLVENT.key(), new DamageType("latex_solvent", DamageScaling.NEVER, 0.1f));
-        context.register(ChangedAddonDamageSources.CONSCIENCE_LOSE.key(), new DamageType("conscience_lose", DamageScaling.NEVER, 0));
-        context.register(ChangedAddonDamageSources.UNTRANSFUR_FAIL.key(), new DamageType("untransfur_fail", DamageScaling.NEVER, 0));
-        context.register(ChangedAddonDamageSources.CRYSTAL_SHARD.key(), new DamageType(ChangedAddonDamageSources.CRYSTAL_SHARD.key().location().getPath(), 0, DamageEffects.FREEZING));
+        ResourceKey<DamageType> latexSolventKey = ChangedAddonDamageSources.LATEX_SOLVENT.key();
+        context.register(latexSolventKey, new DamageType(latexSolventKey.location().getPath(), DamageScaling.NEVER, 0.1f));
+        ResourceKey<DamageType> conscienceLoseKey = ChangedAddonDamageSources.CONSCIENCE_LOSE.key();
+        context.register(conscienceLoseKey, new DamageType(conscienceLoseKey.location().getPath(), DamageScaling.NEVER, 0));
+        ResourceKey<DamageType> untransfurFailKey = ChangedAddonDamageSources.UNTRANSFUR_FAIL.key();
+        context.register(untransfurFailKey, new DamageType(untransfurFailKey.location().getPath(), DamageScaling.NEVER, 0));
+        ResourceKey<DamageType> crystalShardKey = ChangedAddonDamageSources.CRYSTAL_SHARD.key();
+        context.register(crystalShardKey, new DamageType(crystalShardKey.location().getPath(), 0, DamageEffects.FREEZING));
     }
 
     private static void biome(BootstapContext<Biome> context) {
