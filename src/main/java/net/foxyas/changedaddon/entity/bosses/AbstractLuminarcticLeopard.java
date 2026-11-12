@@ -222,7 +222,12 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     protected void registerAbilities() {
-        this.abilitySelector.addGoal(3, new HyperGigaCrystalAttackGoal(this, UniformInt.of(260, 640), 16));
+        this.abilitySelector.addGoal(3, new HyperGigaCrystalAttackGoal(this, UniformInt.of(260, 640), 16) {
+            @Override
+            public boolean canUse() {
+                return AbstractLuminarcticLeopard.this.isBoss() && super.canUse();
+            }
+        });
         this.abilitySelector.addGoal(4, new CrystalPathAttackGoal(this,
                 UniformInt.of(120, 260),    // Default Non-Boss value
                 UniformInt.of(8, 16),     // Default Non-Boss value
