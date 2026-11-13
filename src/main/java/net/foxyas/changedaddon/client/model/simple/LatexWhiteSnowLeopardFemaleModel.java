@@ -2,8 +2,6 @@ package net.foxyas.changedaddon.client.model.simple;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.foxyas.changedaddon.client.model.animations.JiggleInitAnimator;
-import net.foxyas.changedaddon.client.model.animations.PlantoidsJiggleInitAnimator;
 import net.foxyas.changedaddon.entity.simple.LatexWhiteSnowLeopardFemale;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.client.animations.Limb;
