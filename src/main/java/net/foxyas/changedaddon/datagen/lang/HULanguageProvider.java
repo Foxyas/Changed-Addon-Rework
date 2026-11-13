@@ -268,10 +268,14 @@ public class HULanguageProvider extends LanguageProvider {
         addAbility("sonar.desc", "Engedj szabadjára egy rezonáns impulzust, amely élőlényeket tár fel falakon és akadályokon keresztül.");
         addAbility("fireball", "Luminara tűzgolyó");
         addAbility("fireball.desc", "Engedj szabadjára egy lángoló tűzgolyót, amelyet az aktuális energiaszinted táplál – minél nagyobb az erőd, annál pusztítóbbak a lángok.");
-
         addAbility("wither_grenade", "Sorvadás gránátja");
         addAbility("toggle_climb", "Mászás kapcsolása");
         addAbility("passive_regeneration", "Passzív regeneráció");
+        addAbility("summon_dl_pup", "Idézz farkaskölyköt");
+        addAbility("summon_dl_pup.desc", "Idézz meg egy sötét latex farkaskölyköt a közelben, hogy segítsen téged");
+        addAbility("crystal_shard_barrage", "Kristályszilánk-sortűz");
+        addAbility("crystal_shard_barrage.desc", "Idézz meg egy kristályaidból álló sortűzet");
+        
         addAbility("grab_entity.extender.how_to_release", "Nyomja meg a(z) [%s] gombot az entitás elengedéséhez");
         addAbility("grab_entity.extender.how_to_hug", "Tartsa nyomva a(z) [%s] gombot az entitás öleléséhez");
         addAbility("grab_entity.extender.how_to_hug.tightly", "Tartsa nyomva a(z) [%s] gombot az entitás szoros öleléséhez");
@@ -279,9 +283,8 @@ public class HULanguageProvider extends LanguageProvider {
         addAbility("grab_entity.extender.hugged", "%s adott neked egy meleg ölelést");
         addAbility("grab_entity.extender.hugger.tight", "Szorosan magadhoz ölelted %s entitást");
         addAbility("grab_entity.extender.hugged.tight", "%s szorosan magához ölel téged");
-        addAbility("summon_dl_pup", "Idézz Farkaskölyköt");
-        addAbility("summon_dl_pup.desc", "Idézz meg egy sötét latex farkaskölyköt a közelben, hogy segítsen téged");
 
+        
         add(modid + ".compact_disc.title.experiment_009", "§n§4Demolekularizált §r§n§b kísérlet");
         add(modid + ".compact_disc.content.experiment_009", "A 009-es kísérletet demolekularizálni kellett!! Nagyon erős, sose hagyja, hogy rossz kezekbe kerüljön. Látszólag nem tud megfertőzni, de megmutatja, hogy nem akarja. §n§4 Mindenkit meg akar ölni, aki az útjába kerül.§r");
 
