@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard.CrystalPathAtt
 import net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard.CrystalLeapSmashGoal;
 import net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard.HyperGigaCrystalAttackGoal;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
+import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
 import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
@@ -56,7 +57,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.Random;
 
-public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard implements ICrawlAndSwimAbleEntity, IDynamicRideOffsetEntity, IHasBossMusic {
+public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard implements ICrawlAndSwimAbleEntity, IDynamicRideOffsetEntity, IDynamicPawColor, IHasBossMusic {
 
     private static final EntityDataAccessor<Boolean> IS_BOSS =
             SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.BOOLEAN);
@@ -221,7 +222,12 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     protected void registerAbilities() {
-        this.abilitySelector.addGoal(3, new HyperGigaCrystalAttackGoal(this, UniformInt.of(260, 640), 16));
+        this.abilitySelector.addGoal(3, new HyperGigaCrystalAttackGoal(this, UniformInt.of(260, 640), 16) {
+            @Override
+            public boolean canUse() {
+                return AbstractLuminarcticLeopard.this.isBoss() && super.canUse();
+            }
+        });
         this.abilitySelector.addGoal(4, new CrystalPathAttackGoal(this,
                 UniformInt.of(120, 260),    // Default Non-Boss value
                 UniformInt.of(8, 16),     // Default Non-Boss value
@@ -416,6 +422,12 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     // ------------------------------------------------------------------
     // Interface contracts
     // ------------------------------------------------------------------
+
+
+    @Override
+    public PawStyle getPawStyle() {
+        return PawStyle.FERAL;
+    }
 
     @Override
     public void updateStepSizeBasedInSwimState(boolean updateSwimmingMovement) {

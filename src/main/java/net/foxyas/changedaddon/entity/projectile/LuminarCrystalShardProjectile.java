@@ -155,7 +155,7 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
         return breakOnImpact;
     }
 
-    protected void onHitSomething() {
+    public void onHitSomething() {
         ParticlesUtil.sendParticles(this.level, new BlockParticleOption(ParticleTypes.BLOCK, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()), this.position(), 0.05f, 0.05f, 0.05f, 8, 0.5f);
         this.level.playSound(null, this, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1, 1);
     }

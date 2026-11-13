@@ -9,6 +9,8 @@
   "ability.changed_addon.claws.desc.info.enabled": "Your claws are currently extended.",
   "ability.changed_addon.claws.desc.info.toggle.off": "Retracted your claws.",
   "ability.changed_addon.claws.desc.info.toggle.on": "Extended your claws.",
+  "ability.changed_addon.crystal_shard_barrage": "Crystal Shard Barrage",
+  "ability.changed_addon.crystal_shard_barrage.desc": "Summon a barrage made of your crystals",
   "ability.changed_addon.custom_interaction": "Variant Custom Interaction ",
   "ability.changed_addon.custom_interaction.have_interaction": "This Variant §aHave§r Custom Interactions",
   "ability.changed_addon.custom_interaction.have_interaction.avali": "This variant includes a custom size-changing interaction.",
