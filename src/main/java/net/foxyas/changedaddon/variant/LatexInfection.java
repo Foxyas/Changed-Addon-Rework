@@ -171,7 +171,8 @@ public class LatexInfection {
                     if (iAbstractChangedEntity.isPlayer()) {
                         TransfurVariantInstance<?> transfurVariantInstance = iAbstractChangedEntity.getTransfurVariantInstance();
                         if (transfurVariantInstance != null && iAbstractChangedEntity.getEntity() instanceof ServerPlayer serverPlayer) {
-                            transfurVariantInstance.willSurviveTransfur = true;
+                            ChangedAddonServerConfiguration.ON_INFECTION_LOGIC.get().applyLogic(transfurVariantInstance);
+//                            transfurVariantInstance.willSurviveTransfur = true;
                         }
                     }
                 }
