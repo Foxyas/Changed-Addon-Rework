@@ -21,10 +21,7 @@ import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.block.entity.CardboardBoxBlockEntity;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.SeatEntity;
-import net.ltxprogrammer.changed.entity.TransfurContext;
-import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -34,6 +31,7 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -46,10 +44,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -58,7 +58,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Mixin(value = ChangedEntity.class, remap = false)
@@ -113,6 +115,40 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
     @Shadow public abstract TransfurVariant<?> getSelfVariant();
 
     @Shadow public abstract @Nullable Player getUnderlyingPlayer();
+
+    @Shadow
+    private float tailDragAmountO;
+
+    @Shadow
+    private float tailDragAmount;
+
+    @Shadow
+    private Vec3 deltaMovementOO;
+
+    @Shadow
+    private Vec3 deltaMovementO;
+
+    @Shadow
+    @Final
+    private Map<SpringType.Direction, EnumMap<SpringType, SpringType.Simulator>> simulatedSprings;
+
+    @Shadow
+    protected abstract void tickBlink();
+
+    @Shadow
+    private float crouchAmountO;
+
+    @Shadow
+    public float flyAmountO;
+
+    @Shadow
+    private float crouchAmount;
+
+    @Shadow
+    public float flyAmount;
+
+    @Shadow
+    public abstract boolean isFlying();
 
     @Override
     protected boolean shouldDespawnInPeaceful() {
@@ -286,5 +322,39 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
     @ModifyReturnValue(at = @At("RETURN"), method = "createLatexAttributes")
     private static AttributeSupplier.Builder addAttributes(AttributeSupplier.Builder original) {
         return original.add(ChangedAddonAttributes.CUTENESS.get()).add(ChangedAddonAttributes.ALPHA_GENE_SCALE.get());
+    }
+
+    @Override
+    public void baseVariantTick(@NotNull Level level) {
+        this.crouchAmountO = this.crouchAmount;
+        this.flyAmountO = this.flyAmount;
+        if (this.isCrouching()) {
+            this.crouchAmount += 0.2F;
+            if (this.crouchAmount > 3.0F) {
+                this.crouchAmount = 3.0F;
+            }
+        } else {
+            this.crouchAmount = 0.0F;
+        }
+
+        if (this.isFlying()) {
+            this.flyAmount = Math.min(1.0F, this.flyAmount + 0.15F);
+        } else {
+            this.flyAmount = Math.max(0.0F, this.flyAmount - 0.15F);
+        }
+
+        if (this.level().isClientSide) {
+            this.tailDragAmountO = this.tailDragAmount;
+            this.tailDragAmount *= 0.75F;
+            this.tailDragAmount -= (float)(Math.toRadians(Mth.wrapDegrees(this.yBodyRot - this.yBodyRotO)) * (double)0.35F);
+            this.tailDragAmount = Mth.clamp(this.tailDragAmount, -1.1F, 1.1F);
+            this.deltaMovementOO = this.deltaMovementO;
+            this.deltaMovementO = this.getDeltaMovement();
+            this.simulatedSprings.forEach((direction, map) -> {
+                float deltaVelocity = direction.apply(this);
+                map.forEach((springType, simulator) -> simulator.tick(deltaVelocity));
+            });
+            this.tickBlink();
+        }
     }
 }

@@ -15,6 +15,7 @@ import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.init.ChangedGameRules;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
@@ -32,8 +33,29 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class LatexInfection {
+
+    public enum OnInfectLogic {
+        SURVIVE(variant -> variant.willSurviveTransfur = true),
+        KILL(variant -> variant.willSurviveTransfur = false),
+        DEFAULT(variant -> {});
+
+        private final Consumer<TransfurVariantInstance<?>> logic;
+
+        OnInfectLogic(Consumer<TransfurVariantInstance<?>> logic) {
+            this.logic = logic;
+        }
+
+        public Consumer<TransfurVariantInstance<?>> getLogic() {
+            return logic;
+        }
+
+        public void applyLogic(TransfurVariantInstance<?> variantInstance) {
+            this.logic.accept(variantInstance);
+        }
+    }
 
     public static final @NotNull Codec<TransfurVariant<?>> TRANSFUR_VARIANT = ChangedRegistry.TRANSFUR_VARIANT.get().getCodec();
     public static final Codec<LatexInfection> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -150,11 +172,6 @@ public class LatexInfection {
                         TransfurVariantInstance<?> transfurVariantInstance = iAbstractChangedEntity.getTransfurVariantInstance();
                         if (transfurVariantInstance != null && iAbstractChangedEntity.getEntity() instanceof ServerPlayer serverPlayer) {
                             transfurVariantInstance.willSurviveTransfur = true;
-//                            SyncTransfurPacket.Builder builderTf = new SyncTransfurPacket.Builder();
-//                            builderTf.addPlayer(serverPlayer, true);
-//                            if (builderTf.worthSending()) {
-//                                serverPlayer.connection.send(Changed.PACKET_HANDLER.toVanillaPacket(builderTf.build(), NetworkDirection.PLAY_TO_CLIENT));
-//                            }
                         }
                     }
                 }
