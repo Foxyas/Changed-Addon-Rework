@@ -268,10 +268,14 @@ public class HULanguageProvider extends LanguageProvider {
         addAbility("sonar.desc", "Engedj szabadjára egy rezonáns impulzust, amely élőlényeket tár fel falakon és akadályokon keresztül.");
         addAbility("fireball", "Luminara tűzgolyó");
         addAbility("fireball.desc", "Engedj szabadjára egy lángoló tűzgolyót, amelyet az aktuális energiaszinted táplál – minél nagyobb az erőd, annál pusztítóbbak a lángok.");
-
         addAbility("wither_grenade", "Sorvadás gránátja");
         addAbility("toggle_climb", "Mászás kapcsolása");
         addAbility("passive_regeneration", "Passzív regeneráció");
+        addAbility("summon_dl_pup", "Idézz farkaskölyköt");
+        addAbility("summon_dl_pup.desc", "Idézz meg egy sötét latex farkaskölyköt a közelben, hogy segítsen téged");
+        addAbility("crystal_shard_barrage", "Kristályszilánk-sortűz");
+        addAbility("crystal_shard_barrage.desc", "Idézz meg egy kristályaidból álló sortűzet");
+        
         addAbility("grab_entity.extender.how_to_release", "Nyomja meg a(z) [%s] gombot az entitás elengedéséhez");
         addAbility("grab_entity.extender.how_to_hug", "Tartsa nyomva a(z) [%s] gombot az entitás öleléséhez");
         addAbility("grab_entity.extender.how_to_hug.tightly", "Tartsa nyomva a(z) [%s] gombot az entitás szoros öleléséhez");
@@ -279,9 +283,8 @@ public class HULanguageProvider extends LanguageProvider {
         addAbility("grab_entity.extender.hugged", "%s adott neked egy meleg ölelést");
         addAbility("grab_entity.extender.hugger.tight", "Szorosan magadhoz ölelted %s entitást");
         addAbility("grab_entity.extender.hugged.tight", "%s szorosan magához ölel téged");
-        addAbility("summon_dl_pup", "Idézz Farkaskölyköt");
-        addAbility("summon_dl_pup.desc", "Idézz meg egy sötét latex farkaskölyköt a közelben, hogy segítsen téged");
 
+        
         add(modid + ".compact_disc.title.experiment_009", "§n§4Demolekularizált §r§n§b kísérlet");
         add(modid + ".compact_disc.content.experiment_009", "A 009-es kísérletet demolekularizálni kellett!! Nagyon erős, sose hagyja, hogy rossz kezekbe kerüljön. Látszólag nem tud megfertőzni, de megmutatja, hogy nem akarja. §n§4 Mindenkit meg akar ölni, aki az útjába kerül.§r");
 
@@ -367,22 +370,26 @@ public class HULanguageProvider extends LanguageProvider {
         add("changed_addon.when_not.transfur", "Nem vagy latex lény");
 
         addDeathMessage("OverDose", "%1$s §4túladagolást§r kapott", null, "%1$s §4túladagolást§r kapott, miközben vele harcolt: %2$s");
-        addDeathMessage("assimilation", "%1$s be lett olvasztva", null, "%2$s beolvasztotta %1$s játékost");
-        addDeathMessage("conscience_lose", "%1$s elvesztette eszméletét", null, "%2$s által %1$s elvesztette eszméletét");
-        addDeathMessage("latex_solvent", "%1$s feloldódott", null, "%2$s feloldotta %1$s játékost");
-        addDeathMessage("untransfur_fail", "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett", null, "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett, miközben vele harcolt: %2$s");
-        addDeathMessage(ChangedAddonDamageSources.CHOKE.damageType(),
+//        addDeathMessage("assimilation", "%1$s be lett olvasztva", null, "%2$s beolvasztotta %1$s játékost");
+        addDeathMessage(ChangedAddonDamageSources.CONSCIENCE_LOSE.key().location().getPath(), "%1$s elvesztette eszméletét", null, "%2$s által %1$s elvesztette eszméletét");
+        addDeathMessage(ChangedAddonDamageSources.LATEX_SOLVENT.key().location().getPath(), "%1$s feloldódott", null, "%2$s feloldotta %1$s játékost");
+        addDeathMessage(ChangedAddonDamageSources.UNTRANSFUR_FAIL.key().location().getPath(), "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett", null, "%1$s meghalt, amikor a visszatranszfurálási kísérlet sikertelen lett, miközben vele harcolt: %2$s");
+        addDeathMessage(ChangedAddonDamageSources.CHOKE.key().location().getPath(),
                 "%1$s játékost halálra fojtották",
                 "%2$s fojtotta halálra %1$s játékost, %3$s segítségével",
                 "%2$s fojtotta halálra %1$s játékost");
-        addDeathMessage(ChangedAddonDamageSources.CONSTRICTION.damageType(),
+        addDeathMessage(ChangedAddonDamageSources.CONSTRICTION.key().location().getPath(),
                 "%1$s játékost halálra szorították",
                 "%2$s halálra szorította %1$s játékost, %3$s segítségével",
                 "%2$s halálra szorította %1$s játékost");
-        addDeathMessage(ChangedAddonDamageSources.OVER_DOSE.damageType(),
+        addDeathMessage(ChangedAddonDamageSources.OVER_DOSE.key().location().getPath(),
                 "%1$s figyelmen kívül hagyta az összes figyelmeztetést, és halálos túladagolást szenvedett",
                 "%1$s a teste határait feszegette, miközben %2$s játékos %3$s nevű fegyvere ellen harcolt",
                 "%1$s a teste határait feszegette, miközben %2$s ellen harcolt");
+        addDeathMessage(ChangedAddonDamageSources.CRYSTAL_SHARD.key().location().getPath(),
+                "%1$s játékost felnyársalta egy kristályszilánk",
+                "%1$s játékost felnyársalta egy kristályszilánk, miközben %2$s játékos %3$s nevű fegyvere ellen harcolt",
+                "%1$s játékost felnyársalta egy kristályszilánk, miközben %2$s ellen harcolt");
 
         addEffect(ChangedAddonMobEffects.UNTRANSFUR, "§7Visszatranszfur", "Átfedésben jeleníti meg a visszatranszfur folyamatát. A haladás felgyorsul alvás közben. Amikor befejeződött, a visszatranszfur érvénybe lép.");
         add("effect.changed_addon." + ChangedAddonMobEffects.UNTRANSFUR.getId().getPath() + ".no_effect", "A hatás nem tűnik működőképesnek");
