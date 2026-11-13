@@ -2,6 +2,8 @@ package net.foxyas.changedaddon.client.model.simple;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.foxyas.changedaddon.client.model.animations.JiggleInitAnimator;
+import net.foxyas.changedaddon.client.model.animations.PlantoidsJiggleInitAnimator;
 import net.foxyas.changedaddon.entity.simple.LatexWhiteSnowLeopardFemale;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.client.animations.Limb;
@@ -55,7 +57,9 @@ public class LatexWhiteSnowLeopardFemaleModel extends AdvancedHumanoidModel<Late
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailTertiary.getChild("TailQuaternary")),
-                        LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
+                        LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")))
+                .addAnimator(new PlantoidsJiggleInitAnimator<>(this.getTorso().getChild("Plantoids")))
+        ;
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -133,10 +137,15 @@ public class LatexWhiteSnowLeopardFemaleModel extends AdvancedHumanoidModel<Late
 
         PartDefinition Plantoids = Torso.addOrReplaceChild("Plantoids", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, -2.0F));
 
-        PartDefinition RightPlantoid_r1 = Plantoids.addOrReplaceChild("RightPlantoid_r1", CubeListBuilder.create().texOffs(56, 0).addBox(-4.25F, -1.7F, -0.8F, 4.0F, 4.0F, 2.0F, new CubeDeformation(-0.03F))
-                .texOffs(30, 64).addBox(0.25F, -1.7F, -0.8F, 4.0F, 4.0F, 2.0F, new CubeDeformation(-0.03F)), PartPose.offsetAndRotation(0.0F, 2.0F, 0.0F, -0.2793F, 0.0F, 0.0F));
-
         PartDefinition Center_r1 = Plantoids.addOrReplaceChild("Center_r1", CubeListBuilder.create().texOffs(0, 2).addBox(-0.5F, -1.3F, -0.1F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.2F)), PartPose.offsetAndRotation(0.0F, 2.0F, 0.0F, -0.192F, 0.0F, 0.0F));
+
+        PartDefinition LeftPlantoid = Plantoids.addOrReplaceChild("LeftPlantoid", CubeListBuilder.create(), PartPose.offset(2.25F, 2.3435F, 1.1096F));
+
+        PartDefinition LeftPlantoid_r1 = LeftPlantoid.addOrReplaceChild("LeftPlantoid_r1", CubeListBuilder.create().texOffs(30, 64).addBox(-2.0F, -2.0F, -1.0F, 4.0F, 4.0F, 2.0F, new CubeDeformation(-0.03F)), PartPose.offsetAndRotation(0.0F, 0.0F, -1.0F, -0.2793F, 0.0F, 0.0F));
+
+        PartDefinition RightPlantoid = Plantoids.addOrReplaceChild("RightPlantoid", CubeListBuilder.create(), PartPose.offset(-2.25F, 2.3435F, 1.1096F));
+
+        PartDefinition RightPlantoid_r1 = RightPlantoid.addOrReplaceChild("RightPlantoid_r1", CubeListBuilder.create().texOffs(56, 0).addBox(-2.0F, -2.0F, -1.0F, 4.0F, 4.0F, 2.0F, new CubeDeformation(-0.03F)), PartPose.offsetAndRotation(0.0F, 0.0F, -1.0F, -0.2793F, 0.0F, 0.0F));
 
         PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(43, 41).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, CubeDeformation.NONE), PartPose.offset(-5.0F, 2.0F, 0.0F));
 

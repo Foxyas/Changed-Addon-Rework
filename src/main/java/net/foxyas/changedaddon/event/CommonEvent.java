@@ -875,6 +875,9 @@ public class CommonEvent {
         Level level = player.level;
         if (player instanceof ServerPlayer sPlayer) {
             Advancement adv = sPlayer.server.getAdvancements().getAdvancement(ChangedAddonMod.resourceLoc("gooey_friend"));
+            if (adv == null) {
+                return; // STRAIGHT NULL CHECK HERE CUZ PEOPLE ARE AMAZING.
+            }
             AdvancementProgress ap = sPlayer.getAdvancements().getOrStartProgress(Objects.requireNonNull(adv));
 
             if (!ap.isDone()) {

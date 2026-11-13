@@ -138,7 +138,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             projectile.setDeltaMovement(Vec3.ZERO);
             LivingEntity target = holder.getTarget();
             if (target != null) {
-                EntityUtil.makeEntityForceFaceAt(projectile, target.getEyePosition(0));
+                EntityUtil.forceProjectileLookAtVec3(projectile, target.getEyePosition(0));
             }
 
             level.addFreshEntity(projectile);
@@ -315,7 +315,7 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             projectile.hasImpulse = true;
 
             if (target != null) {
-                EntityUtil.makeEntityForceFaceAt(projectile, target.getEyePosition(0));
+                EntityUtil.forceProjectileLookAtVec3(projectile, target.getEyePosition(0));
             }
         }
     }

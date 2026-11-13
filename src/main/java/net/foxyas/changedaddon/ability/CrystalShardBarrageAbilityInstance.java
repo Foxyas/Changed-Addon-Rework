@@ -101,7 +101,7 @@ public class CrystalShardBarrageAbilityInstance extends AbstractAbilityInstance 
         for (int i = 0; i < projectileCount; i++) {
             LuminarCrystalShardProjectile shard = createProjectile(level, owner, calculateSlot(owner, i, 0));
             shard.setDeltaMovement(Vec3.ZERO);
-            EntityUtil.makeEntityForceFaceAt(shard, aim);
+            EntityUtil.forceProjectileLookAtVec3(shard, aim);
             level.addFreshEntity(shard);
             shards.add(shard);
         }
@@ -128,6 +128,10 @@ public class CrystalShardBarrageAbilityInstance extends AbstractAbilityInstance 
         if (fireIndex >= shards.size()) {
             applyCooldown();
             return;
+        }
+
+        if (entity.isCrouching()) {
+            this.fireMode = FireMode.ALL_AT_ONCE;
         }
 
         switch (fireMode) {
@@ -262,7 +266,7 @@ public class CrystalShardBarrageAbilityInstance extends AbstractAbilityInstance 
             shard.setPos(next.x, next.y, next.z);
             shard.setDeltaMovement(Vec3.ZERO);
             shard.hasImpulse = true;
-            EntityUtil.makeEntityForceFaceAt(shard, aim);
+            EntityUtil.forceProjectileLookAtVec3(shard, aim);
         }
     }
 
@@ -323,6 +327,7 @@ public class CrystalShardBarrageAbilityInstance extends AbstractAbilityInstance 
                 super.shoot(pX, pY, pZ, pVelocity, pInaccuracy);
                 this.setNoGravity(false);
                 this.setHealth(1);
+                this.setRotFollowMotion(true);
             }
 
             @Override
@@ -330,6 +335,7 @@ public class CrystalShardBarrageAbilityInstance extends AbstractAbilityInstance 
                 super.shootFromRotation(pShooter, pX, pY, pZ, pVelocity, pInaccuracy);
                 this.setNoGravity(false);
                 this.setHealth(1);
+                this.setRotFollowMotion(true);
             }
 
             @Override
@@ -353,6 +359,9 @@ public class CrystalShardBarrageAbilityInstance extends AbstractAbilityInstance 
         projectile.setBaseDamage(5f);
         projectile.setPierceLevel((byte) random.nextInt(3));
         projectile.setHealth(16);
+        projectile.setRotFollowMotion(false);
+        EntityUtil.forceProjectileLookAtVec3(projectile, getAimPoint(owner));
+
 
         return projectile;
     }

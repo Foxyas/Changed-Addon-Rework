@@ -2,8 +2,8 @@ package net.foxyas.changedaddon.util;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
-import net.foxyas.changedaddon.mixins.entity.MobAccessor;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -127,5 +127,26 @@ public class EntityUtil {
             mob.yBodyRot = yRot;
             mob.yHeadRot = yRot;
         }
+    }
+
+    public static void forceProjectileLookAtVec3(Entity entity, Vec3 targetPos) {
+        Vec3 direction = targetPos.subtract(entity.position());
+
+        // Too close to the target: keep the current rotation instead of snapping
+        if (direction.lengthSqr() < 1.0E-4D) {
+            return;
+        }
+
+        direction = direction.normalize();
+        double horizontal = Math.sqrt(direction.x * direction.x + direction.z * direction.z);
+
+        // Same formulas CrystalShardProjectile.tick() and Projectile.shoot() use
+        float yRot = (float) (Mth.atan2(direction.x, direction.z) * (180D / Math.PI));
+        float xRot = (float) (Mth.atan2(direction.y, horizontal) * (180D / Math.PI));
+
+        entity.setYRot(yRot);
+        entity.setXRot(xRot);
+        entity.yRotO = yRot;
+        entity.xRotO = xRot;
     }
 }
