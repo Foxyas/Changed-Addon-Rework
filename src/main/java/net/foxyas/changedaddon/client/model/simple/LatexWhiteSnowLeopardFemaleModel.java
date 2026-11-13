@@ -58,7 +58,6 @@ public class LatexWhiteSnowLeopardFemaleModel extends AdvancedHumanoidModel<Late
                         Torso, LeftArm, RightArm,
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailTertiary.getChild("TailQuaternary")),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")))
-                .addAnimator(new PlantoidsJiggleInitAnimator<>(this.getTorso().getChild("Plantoids")))
         ;
     }
 
