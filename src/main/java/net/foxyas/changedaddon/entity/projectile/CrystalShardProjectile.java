@@ -21,7 +21,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -40,8 +39,10 @@ import java.util.List;
 
 public abstract class CrystalShardProjectile extends Projectile {
 
-    private static final double ARROW_BASE_DAMAGE = 2.0D;
-    private static final int FLAG_CRIT = 1;
+    protected static final double ARROW_BASE_DAMAGE = 2.0D;
+    protected static final int FLAG_CRIT = 1;
+    protected static final int FLAG_NO_PHYSICS = 2;
+    protected static final int FLAG_SHATTERS_ON_IMPACT = 4;
 
     private static final EntityDataAccessor<Byte> ID_FLAGS = SynchedEntityData.defineId(CrystalShardProjectile.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> PIERCE_LEVEL = SynchedEntityData.defineId(CrystalShardProjectile.class, EntityDataSerializers.BYTE);
@@ -50,7 +51,6 @@ public abstract class CrystalShardProjectile extends Projectile {
     private BlockState lastState;
     protected boolean inGround;
     protected int inGroundTime;
-    public AbstractArrow.Pickup pickup = AbstractArrow.Pickup.DISALLOWED;
     private int life;
     private double baseDamage = ARROW_BASE_DAMAGE;
     private int knockback;
@@ -376,10 +376,6 @@ public abstract class CrystalShardProjectile extends Projectile {
             entity.setTicksFrozen(Math.min(entity.getTicksRequiredToFreeze(), entity.getTicksFrozen() + 30));
 
             if (entity instanceof LivingEntity livingentity) {
-                if (!level().isClientSide && getPierceLevel() <= 0 && this.increaseArrowCount(livingentity, pResult)) {
-                    livingentity.setArrowCount(livingentity.getArrowCount() + 1);
-                }
-
                 if (knockback > 0) {
                     double d0 = Math.max(0.0D, 1.0D - livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                     Vec3 vec3 = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double) knockback * 0.6D * d0);
@@ -414,10 +410,6 @@ public abstract class CrystalShardProjectile extends Projectile {
         }
     }
 
-    public boolean increaseArrowCount(LivingEntity livingentity, EntityHitResult pResult) {
-        return false;
-    }
-
     protected void onHitBlock(BlockHitResult pResult) {
         lastState = level().getBlockState(pResult.getBlockPos());
         super.onHitBlock(pResult);
@@ -432,8 +424,8 @@ public abstract class CrystalShardProjectile extends Projectile {
         setSoundEvent(getDefaultHitGroundSoundEvent());
         resetPiercedEntities();
 
-        if (shouldBreakOnImpact(pResult)) {
-            this.breakOnImpact(pResult);
+        if (shattersOnImpact()) {
+            this.shatterOnImpact(pResult);
         }
     }
 
@@ -451,11 +443,7 @@ public abstract class CrystalShardProjectile extends Projectile {
     protected void doPostHurtEffects(LivingEntity pTarget) {
     }
 
-    public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
-        return false;
-    }
-
-    public void breakOnImpact(BlockHitResult hitResult) {
+    public void shatterOnImpact(BlockHitResult hitResult) {
     }
 
     public boolean inGround() {
@@ -486,9 +474,10 @@ public abstract class CrystalShardProjectile extends Projectile {
         }
 
         pCompound.putBoolean("inGround", inGround);
-        pCompound.putByte("pickup", (byte) pickup.ordinal());
         pCompound.putDouble("damage", baseDamage);
         pCompound.putBoolean("crit", isCrit());
+        pCompound.putBoolean("noPhysics", isNoPhysics());
+        pCompound.putBoolean("shattersOnImpact", shattersOnImpact());
         pCompound.putByte("PierceLevel", getPierceLevel());
         pCompound.putString("SoundEvent", BuiltInRegistries.SOUND_EVENT.getKey(soundEvent).toString());
         pCompound.putFloat("scale", this.getScale());
@@ -510,6 +499,9 @@ public abstract class CrystalShardProjectile extends Projectile {
         }
 
         setCrit(pCompound.getBoolean("crit"));
+        setNoPhysics(pCompound.getBoolean("noPhysics"));
+        setShattersOnImpact(pCompound.getBoolean("shattersOnImpact"));
+
         setPierceLevel(pCompound.getByte("PierceLevel"));
         if (pCompound.contains("SoundEvent", 8)) {
             soundEvent = BuiltInRegistries.SOUND_EVENT.getOptional(ResourceLocation.parse(pCompound.getString("SoundEvent"))).orElse(this.getDefaultHitGroundSoundEvent());
@@ -558,14 +550,27 @@ public abstract class CrystalShardProjectile extends Projectile {
      * Whether the arrow has a stream of critical hit particles flying behind it.
      */
     public void setCrit(boolean pCritArrow) {
-        setFlag(1, pCritArrow);
+        setFlag(FLAG_CRIT, pCritArrow);
     }
 
     public void setPierceLevel(byte pPierceLevel) {
         entityData.set(PIERCE_LEVEL, pPierceLevel);
     }
 
-    private void setFlag(int pId, boolean pValue) {
+    public boolean shattersOnImpact() {
+        return getFlag(FLAG_SHATTERS_ON_IMPACT);
+    }
+
+    public void setShattersOnImpact(boolean shattersOnImpact) {
+        setFlag(FLAG_SHATTERS_ON_IMPACT, shattersOnImpact);
+    }
+
+    protected boolean getFlag(int id) {
+        byte b0 = entityData.get(ID_FLAGS);
+        return (b0 & id) != 0;
+    }
+
+    protected void setFlag(int pId, boolean pValue) {
         byte b0 = entityData.get(ID_FLAGS);
         if (pValue) {
             entityData.set(ID_FLAGS, (byte) (b0 | pId));
@@ -578,15 +583,7 @@ public abstract class CrystalShardProjectile extends Projectile {
      * Whether the arrow has a stream of critical hit particles flying behind it.
      */
     public boolean isCrit() {
-        byte b0 = entityData.get(ID_FLAGS);
-        return (b0 & 1) != 0;
-    }
-
-    /**
-     * Whether the arrow has a stream of critical hit particles flying behind it.
-     */
-    public void setCritArrow(boolean pCritArrow) {
-        setFlag(FLAG_CRIT, pCritArrow);
+        return getFlag(FLAG_CRIT);
     }
 
     public byte getPierceLevel() {
@@ -619,7 +616,7 @@ public abstract class CrystalShardProjectile extends Projectile {
      */
     public void setNoPhysics(boolean pNoPhysics) {
         noPhysics = pNoPhysics;
-        setFlag(2, pNoPhysics);
+        setFlag(FLAG_NO_PHYSICS, pNoPhysics);
     }
 
     /**
@@ -629,7 +626,7 @@ public abstract class CrystalShardProjectile extends Projectile {
         if (!level().isClientSide) {
             return noPhysics;
         } else {
-            return (entityData.get(ID_FLAGS) & 2) != 0;
+            return getFlag(FLAG_NO_PHYSICS);
         }
     }
 }

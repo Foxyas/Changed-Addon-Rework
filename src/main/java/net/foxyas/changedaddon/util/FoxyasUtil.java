@@ -133,6 +133,9 @@ public class FoxyasUtil {
                 .map(BlockPos::immutable);
     }
 
+    /**
+     * @return MutablePos stream
+     */
     public static Stream<BlockPos> betweenClosedStreamSphere(BlockPos pos1, BlockPos pos2) {
         AABB boundingBox = new AABB(pos1, pos2);
         Vec3 center = boundingBox.getCenter();
@@ -152,8 +155,7 @@ public class FoxyasUtil {
                             + (zi * zi) / (zRadius * zRadius);
 
                     return distanceSq <= 1;
-                })
-                .map(BlockPos::immutable);
+                });
     }
 
     public static Stream<BlockPos> betweenClosedStreamSphere(AABB boundingBox, float troubleShoot) {
@@ -168,6 +170,9 @@ public class FoxyasUtil {
         );
     }
 
+    /**
+     * @return MutablePos stream
+     */
     public static Stream<BlockPos> betweenClosedStreamSphere(AABB boundingBox) {
         return betweenClosedStreamSphere(
                 new BlockPos(Mth.floor(boundingBox.minX),

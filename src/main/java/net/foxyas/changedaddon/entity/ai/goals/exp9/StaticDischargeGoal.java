@@ -21,6 +21,7 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumSet;
+import java.util.Iterator;
 
 import static net.minecraft.tags.BlockTags.FIRE;
 
@@ -118,9 +119,13 @@ public class StaticDischargeGoal extends AbstractCastingAttackGoal {
             AABB aabb = AABB.ofSize(holder.position(), aoe * 2, aoe * 2, aoe * 2);
             RandomSource random = holder.getRandom();
             BlockPos bossPos = holder.blockPosition();
-            for (BlockPos blockPos : FoxyasUtil.betweenClosedStreamSphere(bossPos.offset(-16, -16, -16), bossPos.offset(16, 16, 16)).map(BlockPos::immutable).filter(pos -> level.getBlockState(pos).is(FIRE)).toList()) {
-                level.removeBlock(blockPos, false);
-                level.levelEvent(1009, blockPos, 0);
+
+            Iterator<BlockPos> it = FoxyasUtil.betweenClosedStreamSphere(bossPos.offset(-16, -16, -16), bossPos.offset(16, 16, 16)).filter(pos -> level.getBlockState(pos).is(FIRE)).iterator();
+            BlockPos pos;
+            while (it.hasNext()) {
+                pos = it.next();
+                level.removeBlock(pos, false);
+                level.levelEvent(1009, pos, 0);
             }
 
             level.getEntities(holder, aabb, entity -> entity.distanceToSqr(holder) <= aoeSqr).forEach(entity -> {

@@ -2,17 +2,12 @@ package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.ability.CrystalShardBarrageAbility.OrbitType;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalShardProjectile;
-import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.EntityUtil;
-import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -20,7 +15,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
@@ -313,11 +307,6 @@ public class CrystalShardBarrageAbilityInstance extends AbstractAbilityInstance 
             }
 
             @Override
-            protected SoundEvent getDefaultHitGroundSoundEvent() {
-                return SoundEvents.AMETHYST_BLOCK_BREAK;
-            }
-
-            @Override
             protected float getGravity() {
                 return super.getGravity() / Math.max(0.01f, (float) this.getDeltaMovement().length());
             }
@@ -325,7 +314,6 @@ public class CrystalShardBarrageAbilityInstance extends AbstractAbilityInstance 
             @Override
             public void shoot(double pX, double pY, double pZ, float pVelocity, float pInaccuracy) {
                 super.shoot(pX, pY, pZ, pVelocity, pInaccuracy);
-                this.setNoGravity(false);
                 this.setHealth(1);
                 this.setRotFollowMotion(true);
             }
@@ -333,28 +321,16 @@ public class CrystalShardBarrageAbilityInstance extends AbstractAbilityInstance 
             @Override
             public void shootFromRotation(@NotNull Entity pShooter, float pX, float pY, float pZ, float pVelocity, float pInaccuracy) {
                 super.shootFromRotation(pShooter, pX, pY, pZ, pVelocity, pInaccuracy);
-                this.setNoGravity(false);
                 this.setHealth(1);
                 this.setRotFollowMotion(true);
             }
-
-            @Override
-            public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
-                return true;
-            }
-
-            @Override
-            public void breakOnImpact(BlockHitResult hitResult) {
-                super.breakOnImpact(hitResult);
-                ParticlesUtil.sendParticles(this.level, new BlockParticleOption(ParticleTypes.BLOCK, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()), this.position(), 0.05f, 0.05f, 0.05f, 8, 0.5f);
-            }
         };
 
+        projectile.setShattersOnImpact(true);
         projectile.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
         projectile.setOwner(owner);
         projectile.setNoGravity(true);
-        projectile.pickup = AbstractArrow.Pickup.DISALLOWED;
-        projectile.setCritArrow(random.nextBoolean());
+        projectile.setCrit(random.nextBoolean());
         projectile.setKnockback(2);
         projectile.setBaseDamage(5f);
         projectile.setPierceLevel((byte) random.nextInt(3));

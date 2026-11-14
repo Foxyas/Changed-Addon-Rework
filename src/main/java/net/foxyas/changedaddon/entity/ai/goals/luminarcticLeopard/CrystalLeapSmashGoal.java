@@ -1,18 +1,12 @@
 
 package net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard;
 
-import net.foxyas.changedaddon.util.FoxyasUtil;
-import net.foxyas.changedaddon.util.ParticlesUtil;
-
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalShardProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-
+import net.foxyas.changedaddon.util.FoxyasUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -23,12 +17,11 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 
 public class CrystalLeapSmashGoal extends Goal {
@@ -112,28 +105,28 @@ public class CrystalLeapSmashGoal extends Goal {
             stop();
         }
 
-        if (!mob.onGround()) {
-            wasInAir = true;
-            mob.getNavigation().stop();
+        if (mob.onGround()) return;
 
-            if (leapTicks >= 40) {
-                Vec3 motion = mob.getDeltaMovement();
-                double verticalBoost = -0.5f;
+        wasInAir = true;
+        mob.getNavigation().stop();
 
-                mob.getLookControl().setLookAt(
-                        motion.x,
-                        verticalBoost,
-                        motion.z,
-                        180,
-                        180
-                );
+        if (leapTicks >= 40) {
+            Vec3 motion = mob.getDeltaMovement();
+            double verticalBoost = -0.5f;
 
-                mob.setDeltaMovement(
-                        motion.x,
-                        verticalBoost,
-                        motion.z
-                );
-            }
+            mob.getLookControl().setLookAt(
+                    motion.x,
+                    verticalBoost,
+                    motion.z,
+                    180,
+                    180
+            );
+
+            mob.setDeltaMovement(
+                    motion.x,
+                    verticalBoost,
+                    motion.z
+            );
         }
     }
 
@@ -142,15 +135,11 @@ public class CrystalLeapSmashGoal extends Goal {
         int radius = 4;
 
         // Block destruction effects
-        for (BlockPos pos : FoxyasUtil.betweenClosedStreamSphere(
-                new AABB(center.below()).inflate(radius, 0, radius)
-        ).map(BlockPos::immutable).toList()) {
-
-            if (!isInsideSphere(
-                    center.below(),
-                    Vec3.atBottomCenterOf(pos),
-                    radius
-            )) continue;
+        Iterator<BlockPos> it = FoxyasUtil.betweenClosedStreamSphere(new AABB(center.below()).inflate(radius, 0, radius)).iterator();
+        BlockPos pos;
+        while (it.hasNext()) {
+            pos = it.next();
+            if (!isInsideSphere(center.below(), Vec3.atBottomCenterOf(pos), radius)) continue;
 
             BlockState blockState = mob.level().getBlockState(pos);
 
@@ -284,10 +273,7 @@ public class CrystalLeapSmashGoal extends Goal {
         RandomSource random = mob.getRandom();
 
         LuminarCrystalShardProjectile projectile =
-                new LuminarCrystalShardProjectile(
-                        ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD.get(),
-                        level
-                ) {
+                new LuminarCrystalShardProjectile(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD.get(), level) {
 
                     @Override
                     protected boolean canHitEntity(@NotNull Entity entity) {
@@ -299,11 +285,6 @@ public class CrystalLeapSmashGoal extends Goal {
                     }
 
                     @Override
-                    protected SoundEvent getDefaultHitGroundSoundEvent() {
-                        return SoundEvents.AMETHYST_BLOCK_BREAK;
-                    }
-
-                    @Override
                     protected float getGravity() {
                         return super.getGravity() /
                                 Math.max(
@@ -311,61 +292,12 @@ public class CrystalLeapSmashGoal extends Goal {
                                         (float) this.getDeltaMovement().length()
                                 );
                     }
-
-                    @Override
-                    public void shoot(
-                            double pX,
-                            double pY,
-                            double pZ,
-                            float pVelocity,
-                            float pInaccuracy
-                    ) {
-                        super.shoot(
-                                pX,
-                                pY,
-                                pZ,
-                                pVelocity,
-                                pInaccuracy
-                        );
-
-                        this.setNoGravity(false);
-                    }
-
-                    @Override
-                    public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
-                        return true;
-                    }
-
-                    @Override
-                    public void breakOnImpact(BlockHitResult hitResult) {
-                        super.breakOnImpact(hitResult);
-
-                        ParticlesUtil.sendParticles(
-                                this.level,
-                                new BlockParticleOption(
-                                        ParticleTypes.BLOCK,
-                                        ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL
-                                                .get()
-                                                .defaultBlockState()
-                                ),
-                                this.position(),
-                                0.05f,
-                                0.05f,
-                                0.05f,
-                                8,
-                                0.5f
-                        );
-                    }
                 };
 
-        projectile.setPos(
-                spawnPos.x,
-                spawnPos.y,
-                spawnPos.z
-        );
-
+        projectile.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
+        projectile.setShattersOnImpact(true);
         projectile.setOwner(mob);
-        projectile.setCritArrow(random.nextBoolean());
+        projectile.setCrit(random.nextBoolean());
         projectile.setKnockback(2);
         projectile.setBaseDamage(5f);
         projectile.setPierceLevel((byte) random.nextInt(3));

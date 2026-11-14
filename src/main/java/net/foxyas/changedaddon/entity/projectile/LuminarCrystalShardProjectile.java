@@ -13,11 +13,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -38,7 +38,6 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
     public static final float MAX_DEFAULT_HEALTH = 1f;
     private static final EntityDataAccessor<Float> HEALTH = SynchedEntityData.defineId(LuminarCrystalShardProjectile.class, EntityDataSerializers.FLOAT);
     protected boolean shouldSpawnCrystalsNearby = false;
-    protected boolean breakOnImpact = false;
 
     public LuminarCrystalShardProjectile(EntityType<? extends Projectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -64,6 +63,12 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
     }
 
     @Override
+    public void shatterOnImpact(BlockHitResult hitResult) {
+        super.shatterOnImpact(hitResult);
+        ParticlesUtil.sendParticles(this.level, new BlockParticleOption(ParticleTypes.BLOCK, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()), this.position(), 0.05f, 0.05f, 0.05f, 8, 0.5f);
+    }
+
+    @Override
     protected void onHitBlock(BlockHitResult pResult) {
         super.onHitBlock(pResult);
         onHitSomething();
@@ -76,21 +81,19 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
     }
 
     @Override
-    public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
-        return breakOnImpact;
+    protected SoundEvent getDefaultHitGroundSoundEvent() {
+        return SoundEvents.AMETHYST_BLOCK_BREAK;
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        pCompound.putBoolean("breakOnImpact", isBreakOnImpact());
         pCompound.putFloat("Health", this.getHealth());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        if (pCompound.contains("breakOnImpact")) setBreakOnImpact(pCompound.getBoolean("breakOnImpact"));
         if (pCompound.contains("Health")) setHealth(pCompound.getFloat("Health"));
     }
 
@@ -152,20 +155,12 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
         return false;
     }
 
-    public void setBreakOnImpact(boolean breakOnImpact) {
-        this.breakOnImpact = breakOnImpact;
-    }
-
-    public boolean isBreakOnImpact() {
-        return breakOnImpact;
-    }
-
     public void onHitSomething() {
         ParticlesUtil.sendParticles(this.level, new BlockParticleOption(ParticleTypes.BLOCK, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()), this.position(), 0.05f, 0.05f, 0.05f, 8, 0.5f);
         this.level.playSound(null, this, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1, 1);
     }
 
-    public boolean isShouldSpawnCrystalsNearby() {
+    public boolean shouldSpawnCrystalsNearby() {
         return shouldSpawnCrystalsNearby;
     }
 
@@ -246,5 +241,4 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
     private static double facingDot(Direction facing, Vec3 vec) {
         return facing.getStepX() * vec.x + facing.getStepY() * vec.y + facing.getStepZ() * vec.z;
     }
-
 }

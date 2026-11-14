@@ -79,7 +79,6 @@ public class ExtinguishFireNearbyGoal extends Goal {
 
         // 1. Apaga o fogo ao redor (Otimizado usando um raio menor e mais preciso)
         FoxyasUtil.betweenClosedStreamSphere(mobPos.offset(-8, -4, -8), mobPos.offset(8, 4, 8))
-                .map(BlockPos::immutable)
                 .filter(pos -> level.getBlockState(pos).is(FIRE))
                 .forEach(pos -> {
                     level.removeBlock(pos, false);

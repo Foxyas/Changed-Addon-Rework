@@ -10,7 +10,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -86,8 +85,6 @@ public class HyperGigaCrystalAttackGoal extends Goal implements IAbilityGoal {
     }
 
     protected @NotNull LuminarCrystalShardProjectile createHyperCrystal(ServerLevel level, Vec3 spawnPos) {
-        RandomSource random = holder.getRandom();
-
         LuminarCrystalShardProjectile projectile = new LuminarCrystalShardProjectile(ChangedAddonEntities.LUMINAR_CRYSTAL_SHARD.get(), level) {
             @Override
             protected boolean canHitEntity(@NotNull Entity entity) {
@@ -101,25 +98,8 @@ public class HyperGigaCrystalAttackGoal extends Goal implements IAbilityGoal {
             }
 
             @Override
-            public void shoot(double pX, double pY, double pZ, float pVelocity, float pInaccuracy) {
-                super.shoot(pX, pY, pZ, pVelocity, pInaccuracy);
-                this.setNoGravity(false);
-            }
-
-            @Override
-            public void shootFromRotation(@NotNull Entity pShooter, float pX, float pY, float pZ, float pVelocity, float pInaccuracy) {
-                super.shootFromRotation(pShooter, pX, pY, pZ, pVelocity, pInaccuracy);
-                this.setNoGravity(false);
-            }
-
-            @Override
-            public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
-                return true;
-            }
-
-            @Override
-            public void breakOnImpact(BlockHitResult hitResult) {
-                super.breakOnImpact(hitResult);
+            public void shatterOnImpact(BlockHitResult hitResult) {
+                super.shatterOnImpact(hitResult);
                 // Explosão de partículas massiva ao impactar
                 if (this.level() instanceof ServerLevel serverLevel) {
                     serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 2, 0, 0, 0, 1);
@@ -128,13 +108,13 @@ public class HyperGigaCrystalAttackGoal extends Goal implements IAbilityGoal {
             }
         };
 
+        projectile.setShattersOnImpact(true);
         projectile.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
         projectile.setOwner(holder);
         projectile.setNoGravity(true);
-        projectile.setCritArrow(true);
+        projectile.setCrit(true);
         projectile.setKnockback(4); // Knockback brutal
         projectile.setShouldSpawnCrystalsNearby(true);
-        projectile.setBreakOnImpact(true);
 
         // Dano altíssimo característico de um Hyper Giga Ataque
         projectile.setBaseDamage(16.0f);
@@ -221,6 +201,7 @@ public class HyperGigaCrystalAttackGoal extends Goal implements IAbilityGoal {
 
         // Lança o Hyper Crystal em alta velocidade direto no alvo
         float inaccuracy = level.getDifficulty() == Difficulty.HARD ? 0.0f : 0.2f;
+        hyperCrystal.setNoGravity(false);
         hyperCrystal.shoot(shootDir.x, shootDir.y, shootDir.z, 3.0f, inaccuracy);
         hyperCrystal.hasImpulse = true;
 

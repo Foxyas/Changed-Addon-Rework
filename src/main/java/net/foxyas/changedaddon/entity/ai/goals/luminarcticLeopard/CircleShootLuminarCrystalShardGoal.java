@@ -2,14 +2,9 @@ package net.foxyas.changedaddon.entity.ai.goals.luminarcticLeopard;
 
 import net.foxyas.changedaddon.entity.ai.goals.IAbilityGoal;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalShardProjectile;
-import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.EntityUtil;
-import net.foxyas.changedaddon.util.ParticlesUtil;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -24,9 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -162,43 +155,16 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
             }
 
             @Override
-            protected SoundEvent getDefaultHitGroundSoundEvent() {
-                return SoundEvents.AMETHYST_BLOCK_BREAK;
-            }
-
-            @Override
             protected float getGravity() {
                 return super.getGravity() / Math.max(0.01f, (float) this.getDeltaMovement().length());
             }
-
-            @Override
-            public void shoot(double pX, double pY, double pZ, float pVelocity, float pInaccuracy) {
-                super.shoot(pX, pY, pZ, pVelocity, pInaccuracy);
-                this.setNoGravity(false);
-            }
-
-            @Override
-            public void shootFromRotation(@NotNull Entity pShooter, float pX, float pY, float pZ, float pVelocity, float pInaccuracy) {
-                super.shootFromRotation(pShooter, pX, pY, pZ, pVelocity, pInaccuracy);
-                this.setNoGravity(false);
-            }
-
-            @Override
-            public boolean shouldBreakOnImpact(BlockHitResult hitResult) {
-                return true;
-            }
-
-            @Override
-            public void breakOnImpact(BlockHitResult hitResult) {
-                super.breakOnImpact(hitResult);
-                ParticlesUtil.sendParticles(this.level, new BlockParticleOption(ParticleTypes.BLOCK, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState()), this.position(), 0.05f, 0.05f, 0.05f, 8, 0.5f);
-            }
         };
 
+        projectile.setShattersOnImpact(true);
         projectile.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
         projectile.setOwner(holder);
         projectile.setNoGravity(true);
-        projectile.setCritArrow(random.nextBoolean());
+        projectile.setCrit(random.nextBoolean());
         projectile.setKnockback(2);
         projectile.setBaseDamage(5f);
         projectile.setPierceLevel((byte) (random.nextInt(3)));
@@ -391,7 +357,6 @@ public class CircleShootLuminarCrystalShardGoal extends Goal implements IAbility
         projectile.setPos(safeFirePos.x, safeFirePos.y, safeFirePos.z);
 
         // Keeps noGravity true so the projectiles fly straight without dipping quickly
-        projectile.setNoGravity(true);
 
         float inaccuracy = level.getDifficulty() == Difficulty.HARD ? 0.0f : Mth.nextFloat(holder.getRandom(), 0.5f, 1.0f);
         projectile.shoot(shootDir.x, shootDir.y, shootDir.z, 2.0f, inaccuracy);

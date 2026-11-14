@@ -17,6 +17,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 
 public class Exp10LeapSmashGoal extends Goal {
@@ -99,7 +100,10 @@ public class Exp10LeapSmashGoal extends Goal {
         BlockPos center = mob.blockPosition();
         int radius = 4;
 
-        for (BlockPos pos : FoxyasUtil.betweenClosedStreamSphere(new AABB(center.below()).inflate(radius, 0, radius)).map(BlockPos::immutable).toList()) {
+        Iterator<BlockPos> it = FoxyasUtil.betweenClosedStreamSphere(new AABB(center.below()).inflate(radius, 0, radius)).iterator();
+        BlockPos pos;
+        while (it.hasNext()) {
+            pos = it.next();
             if (!isInsideSphere(center.below(), Vec3.atBottomCenterOf(pos), radius)) continue;
 
             BlockState blockState = mob.level.getBlockState(pos);
