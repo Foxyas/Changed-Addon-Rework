@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.client.renderer.layers.player;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.variant.LatexInfection;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -36,7 +37,7 @@ public class ClientCacheHandler {
             LatexInfection latexInfection = playerVariables.latexInfection;
 
             // Se o jogador não tiver infecção ativa, remove do cache se existir
-            if (!latexInfection.isActive()) {
+            if (!latexInfection.isActive() || latexInfection.isDefault()) {
                 ENTITY_CACHE.remove(player);
                 continue;
             }
@@ -63,7 +64,11 @@ public class ClientCacheHandler {
                 if (entity != null) {
                     // Sincroniza e avança o tick da variante/entidade no Client Tick
                     TransfurVariantInstance.syncEntityAndPlayer(entity, player);
-                    entity.variantTick(mc.level);
+                    try {
+                        entity.variantTick(mc.level);
+                    } catch (Exception e) {
+                        ChangedEntityExtension.of(entity).baseVariantTick(mc.level);
+                    }
                 }
             } catch (Exception e) {
                 ENTITY_CACHE.remove(player);

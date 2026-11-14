@@ -31,6 +31,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.entity.ProjectileImpactEvent.ImpactResult;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -56,6 +58,7 @@ public abstract class CrystalShardProjectile extends Projectile {
     @Nullable
     private IntOpenHashSet piercingIgnoreEntityIds;
     private final IntOpenHashSet ignoredEntities = new IntOpenHashSet();
+    protected boolean rotFollowMotion;
 
     public CrystalShardProjectile(EntityType<? extends Projectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -133,12 +136,14 @@ public abstract class CrystalShardProjectile extends Projectile {
         super.tick();
         boolean flag = isNoPhysics();
         Vec3 vec3 = getDeltaMovement();
-        if (xRotO == 0.0F && yRotO == 0.0F) {
-            double d0 = vec3.horizontalDistance();
-            setYRot((float) (Mth.atan2(vec3.x, vec3.z) * (double) (180F / (float) Math.PI)));
-            setXRot((float) (Mth.atan2(vec3.y, d0) * (double) (180F / (float) Math.PI)));
-            yRotO = getYRot();
-            xRotO = getXRot();
+        if (rotFollowMotion) {
+            if (xRotO == 0.0F && yRotO == 0.0F) {
+                double d0 = vec3.horizontalDistance();
+                setYRot((float) (Mth.atan2(vec3.x, vec3.z) * (double) (180F / (float) Math.PI)));
+                setXRot((float) (Mth.atan2(vec3.y, d0) * (double) (180F / (float) Math.PI)));
+                yRotO = getYRot();
+                xRotO = getXRot();
+            }
         }
 
         BlockPos blockpos = blockPosition();
@@ -194,12 +199,12 @@ public abstract class CrystalShardProjectile extends Projectile {
                 }
 
                 if (hitresult != null && hitresult.getType() != HitResult.Type.MISS && !flag) {
-                    var result = net.minecraftforge.event.ForgeEventFactory.onProjectileImpactResultNullable(this, hitresult);
+                    var result = ForgeEventFactory.onProjectileImpactResultNullable(this, hitresult);
                     if (result == null) {
                         if (hitresult.getType() != HitResult.Type.ENTITY)
                             break;
 
-                        result = net.minecraftforge.event.entity.ProjectileImpactEvent.ImpactResult.SKIP_ENTITY;
+                        result = ImpactResult.SKIP_ENTITY;
                     }
                     switch (result) {
                         case SKIP_ENTITY:
@@ -248,15 +253,18 @@ public abstract class CrystalShardProjectile extends Projectile {
             double d2 = getY() + d6;
             double d3 = getZ() + d1;
             double d4 = vec3.horizontalDistance();
-            if (flag) {
-                setYRot((float) (Mth.atan2(-d5, -d1) * (double) (180F / (float) Math.PI)));
-            } else {
-                setYRot((float) (Mth.atan2(d5, d1) * (double) (180F / (float) Math.PI)));
+            if (rotFollowMotion) {
+                if (flag) {
+                    setYRot((float) (Mth.atan2(-d5, -d1) * (double) (180F / (float) Math.PI)));
+                } else {
+                    setYRot((float) (Mth.atan2(d5, d1) * (double) (180F / (float) Math.PI)));
+                }
+
+                setXRot((float) (Mth.atan2(d6, d4) * (double) (180F / (float) Math.PI)));
+                setXRot(lerpRotation(xRotO, getXRot()));
+                setYRot(lerpRotation(yRotO, getYRot()));
             }
 
-            setXRot((float) (Mth.atan2(d6, d4) * (double) (180F / (float) Math.PI)));
-            setXRot(lerpRotation(xRotO, getXRot()));
-            setYRot(lerpRotation(yRotO, getYRot()));
             float f = getAirInertia();
             if (isInWater()) {
                 for (int j = 0; j < 4; ++j) {
@@ -275,6 +283,14 @@ public abstract class CrystalShardProjectile extends Projectile {
             setPos(d7, d2, d3);
             checkInsideBlocks();
         }
+    }
+
+    public void setRotFollowMotion(boolean rotFollowMotion) {
+        this.rotFollowMotion = rotFollowMotion;
+    }
+
+    public boolean doRotFollowMotion() {
+        return rotFollowMotion;
     }
 
     private boolean shouldFall() {

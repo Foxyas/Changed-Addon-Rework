@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.configuration;
 
 import net.foxyas.changedaddon.process.GrabPersistenceMode;
+import net.foxyas.changedaddon.variant.LatexInfection;
+import net.foxyas.changedaddon.variant.LatexInfection.OnInfectLogic;
 import net.foxyas.changedaddon.world.gamerules.ChangedEntitySpawnDressedType;
 import net.foxyas.changedaddon.world.gamerules.WorldDifficulty;
 import net.ltxprogrammer.changed.data.RegistryElementPredicate;
@@ -17,6 +19,7 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Double> AGE_NEED;
     public static final ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_INFECT;
     public static final ForgeConfigSpec.ConfigValue<Double> INFECTION_CHANCE;
+    public static final ForgeConfigSpec.ConfigValue<OnInfectLogic> ON_INFECTION_LOGIC;
     public static final ForgeConfigSpec.ConfigValue<Boolean> DL_COAT_AFFECT_ALL;
     public static final ForgeConfigSpec.ConfigValue<ChangedEntitySpawnDressedType> CHANGED_SPAWN_DRESS_MODE;
     @Deprecated
@@ -61,6 +64,7 @@ public class ChangedAddonServerConfiguration {
         BUILDER.push("Latex Infection");
         ALWAYS_INFECT = BUILDER.comment("Always Add Latex Infection").define("Always Cause Infect", false);
         INFECTION_CHANCE = BUILDER.comment("Chance for a player get the Latex Infection after a transfur attack").define("Infection Chance", 1.0);
+        ON_INFECTION_LOGIC = BUILDER.comment("Logic ran when the Latex Infection fully infect a player").defineEnum("On Infection Logic", OnInfectLogic.SURVIVE);
         BUILDER.pop();
         BUILDER.push("Beasts Behavior");
         DL_COAT_AFFECT_ALL = BUILDER.comment("When active, the Dark Latex Coat will affect all beasts").define("DL Coat Confuse All Creatures", true);

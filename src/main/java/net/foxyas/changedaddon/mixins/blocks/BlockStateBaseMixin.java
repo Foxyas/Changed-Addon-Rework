@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -53,7 +54,9 @@ public abstract class BlockStateBaseMixin {
         if (!above) return;
 
         Entity contextEntity = collisionContext.getEntity();
-        if (!(contextEntity instanceof LivingEntity livingEntity) || livingEntity.isRemoved()) return;
+        if (!(contextEntity instanceof LivingEntity livingEntity)) return;
+        livingEntity = EntityUtil.maybeGetUnderlying(livingEntity);
+        if (livingEntity.isRemoved() || !livingEntity.isAddedToWorld()) return;
 
         Optional<IAbstractChangedEntity> iAbstractChangedEntity = IAbstractChangedEntity.forEitherSafe(livingEntity);
 

@@ -15,7 +15,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -125,6 +127,9 @@ public class LuminarCrystalShardProjectile extends CrystalShardProjectile {
     @Override
     public boolean isInvulnerableTo(DamageSource pSource) {
         if (isProjectileTheSame(this, pSource.getDirectEntity())) {
+            return true;
+        }
+        if (pSource.is(DamageTypeTags.IS_FIRE)) {
             return true;
         }
 
