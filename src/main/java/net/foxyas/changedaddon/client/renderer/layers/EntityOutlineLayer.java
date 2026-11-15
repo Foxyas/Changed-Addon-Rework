@@ -25,7 +25,7 @@ public class EntityOutlineLayer<M extends AdvancedHumanoidModel<T>, T extends Ch
     @Override
     public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, @NotNull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         poseStack.pushPose();
-        poseStack.scale(1.01f, 1f, 1.01f);
+        poseStack.scale(1.02f, 1.02f, 1.02f);
         poseStack.translate(0, 0, 0); // Small tweak in the outline value
 
         float r = 1f, g = 1f, b = 1f, a = 1f;

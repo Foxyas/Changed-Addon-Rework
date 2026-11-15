@@ -34,9 +34,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+// Turn this off before posting it.
 public final class ModelPosDebugger {
     private ModelPosDebugger() {}
 
+    /*
     // ---- toggles (changed by /modeldebug) ----
     public static boolean enabled = SharedConstants.IS_RUNNING_IN_IDE || !FMLLoader.isProduction();
     public static boolean markers = true;     // line boxes (ground truth)
@@ -44,7 +46,7 @@ public final class ModelPosDebugger {
     private static final int PARTICLE_INTERVAL = 2; // ticks
 
     /** A point to test: a model part + a local point in PIXELS (16 px = 1 block). */
-    private record Probe(String name, Function<HumanoidModel<?>, ModelPart> part,
+    /*private record Probe(String name, Function<HumanoidModel<?>, ModelPart> part,
                          float px, float py, float pz, float r, float g, float b) {}
 
     // Approximate armor stand geometry, adjust to taste.
@@ -132,4 +134,5 @@ public final class ModelPosDebugger {
             return 1;
         }
     }
+    */
 }
