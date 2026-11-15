@@ -1,12 +1,15 @@
 package net.foxyas.changedaddon.mixins.entity;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.ToggleClimbAbilityInstance;
 import net.foxyas.changedaddon.entity.api.ExtraConditions;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IFallFlyAbleEntity;
+import net.foxyas.changedaddon.event.ModLivingEvent.LivingEntitySwingEvent;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -14,6 +17,7 @@ import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.entity.SeatEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,6 +27,7 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
@@ -30,6 +35,15 @@ public abstract class LivingEntityMixin extends Entity implements IFallFlyAbleEn
 
     public LivingEntityMixin(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+    }
+
+    @WrapMethod(method = "swing(Lnet/minecraft/world/InteractionHand;Z)V")
+    private void callSwingEvent(InteractionHand pHand, boolean pUpdateSelf, Operation<Void> original) {
+        LivingEntity self = (LivingEntity) (Object) this;
+        LivingEntitySwingEvent event = new LivingEntitySwingEvent(self, pHand);
+        if (!ChangedAddonMod.postEvent(event)) {
+            original.call(event.getHand(), pUpdateSelf);
+        }
     }
 
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setXRot(F)V"), method = "tick")
