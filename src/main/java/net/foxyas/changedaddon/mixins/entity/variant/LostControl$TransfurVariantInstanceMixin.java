@@ -6,13 +6,11 @@ import net.foxyas.changedaddon.entity.api.IDynamicCamera;
 import net.foxyas.changedaddon.mixins.entity.LivingEntityAccessor;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
-import net.ltxprogrammer.changed.client.LocalPlayerAccessor;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.PlayerDataExtension;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -31,7 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TransfurVariantInstance.class, remap = false)
-public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedEntity> implements TransfurVariantInstanceExtensor {
+public abstract class LostControl$TransfurVariantInstanceMixin<T extends ChangedEntity> implements TransfurVariantInstanceExtensor {
 
     @Unique
     protected boolean hasControlOverBody = true;
@@ -76,6 +74,7 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
     public void setControlOverBody(boolean controlOverBody) {
         this.hasControlOverBody = controlOverBody;
         maySendDataUpdate();
+        onControlOverBodyUpdate(controlOverBody);
     }
 
     @Override
@@ -114,10 +113,6 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                     this.setDead();
                     this.entityInControl = null;
                     return original.call(instance);
-                }
-
-                if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
-                    ((LocalPlayerAccessor) localPlayer).setHandsBusy(true);
                 }
 
                 Player player = this.getHost();
@@ -171,10 +166,6 @@ public abstract class LostControlTransfurVariantInstanceMixin<T extends ChangedE
                 iDynamicCamera.setResetCameraOnShift(true);
                 serverPlayer.setCamera(null);
             }
-        }
-
-        if (this.getHost().level().isClientSide() && this.getHost() instanceof LocalPlayer localPlayer) {
-            ((LocalPlayerAccessor) localPlayer).setHandsBusy(false);
         }
     }
 

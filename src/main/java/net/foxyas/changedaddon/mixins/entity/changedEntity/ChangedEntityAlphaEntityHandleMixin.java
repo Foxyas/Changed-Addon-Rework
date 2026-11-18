@@ -14,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
@@ -31,8 +30,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 // Alpha Mixin should only declare IAlphaAbleEntity
 @Mixin(value = ChangedEntity.class, remap = false)
-public abstract class ChangedEntityAlphaEntityHandle extends Monster implements IGrabberEntity, IAlphaAbleEntity {
-    protected ChangedEntityAlphaEntityHandle(EntityType<? extends Monster> pEntityType, Level pLevel) {
+public abstract class ChangedEntityAlphaEntityHandleMixin extends Monster implements IGrabberEntity, IAlphaAbleEntity {
+    protected ChangedEntityAlphaEntityHandleMixin(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 

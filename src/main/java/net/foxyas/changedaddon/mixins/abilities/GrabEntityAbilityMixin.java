@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.mixins.abilities;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.platform.InputConstants;
+import net.foxyas.changedaddon.process.GrabExtraDescriptionHandler;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
@@ -33,29 +33,9 @@ public abstract class GrabEntityAbilityMixin extends AbstractAbility<GrabEntityA
     private Collection<Component> getToggleSafeModeDescription(Collection<Component> baseDescription, @Local(argsOnly = true) IAbstractChangedEntity entity) {
         ArrayList<Component> description = new ArrayList<>(baseDescription);
 
-        // 1. Get the Key instances for mouse buttons
-        InputConstants.Key shift = InputConstants.Type.KEYSYM.getOrCreate(InputConstants.KEY_LSHIFT);
-        InputConstants.Key mouseRightClick = InputConstants.Type.MOUSE.getOrCreate(InputConstants.MOUSE_BUTTON_RIGHT);
-        InputConstants.Key middleMouseButton = InputConstants.Type.MOUSE.getOrCreate(InputConstants.MOUSE_BUTTON_MIDDLE);
-
-        // 2. Get their translated Component representations
-        Component shiftName = shift.getDisplayName();
-        Component rightClickName = mouseRightClick.getDisplayName();
-        Component middleButtonName = middleMouseButton.getDisplayName();
-
-        // 3. Pass the translated components into your translation key
-        description.add(Component.translatable(
-                "ability.changed.grab_entity.desc.toggle_grab_safe_mode",
-                rightClickName,
-                middleButtonName
-        ));
-
-        description.add(Component.translatable(
-                "ability.changed.grab_entity.desc.toggle_grab_transfur_damage_mode",
-                shiftName,
-                rightClickName,
-                middleButtonName
-        ));
+        if (entity.getLevel().isClientSide()) {
+            GrabExtraDescriptionHandler.addExtraDescriptions(description, entity, baseDescription);
+        }
 
         return description;
     }
