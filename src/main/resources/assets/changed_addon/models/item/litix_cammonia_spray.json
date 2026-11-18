@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:item/spraywithammonia"
+    "layer0": "changed_addon:item/spray_with_cammonia"
   }
 }

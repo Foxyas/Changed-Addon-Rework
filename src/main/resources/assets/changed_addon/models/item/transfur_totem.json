@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:item/latex-totem_golden"
+    "layer0": "changed_addon:item/latex_totem_golden"
   },
   "overrides": [
     {

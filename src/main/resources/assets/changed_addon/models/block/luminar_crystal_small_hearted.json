@@ -1,0 +1,8 @@
+{
+  "parent": "block/cross",
+  "render_type": "cutout",
+  "textures": {
+    "cross": "changed_addon:block/small_luminar_crystal_hearted_animated",
+    "particle": "changed_addon:block/small_luminar_crystal_hearted_animated"
+  }
+}

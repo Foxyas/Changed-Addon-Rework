@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:item/unifusershowrecipeitem"
+    "layer0": "changed_addon:item/unifuser_recipe_icon"
   }
 }

@@ -2,12 +2,12 @@
   "parent": "block/cube",
   "render_type": "translucent",
   "textures": {
-    "down": "changed_addon:block/latexinsulatoranimationtexture",
-    "up": "changed_addon:block/latexinsulatoranimationtexture",
-    "north": "changed_addon:block/latexinsulatoranimationtexture",
-    "east": "changed_addon:block/latexinsulatoranimationtexture",
-    "south": "changed_addon:block/latexinsulatoranimationtexture",
-    "west": "changed_addon:block/latexinsulatoranimationtexture",
-    "particle": "changed_addon:block/latexinsulatoranimationtexture"
+    "down": "changed_addon:block/latex_insulator",
+    "up": "changed_addon:block/latex_insulator",
+    "north": "changed_addon:block/latex_insulator",
+    "east": "changed_addon:block/latex_insulator",
+    "south": "changed_addon:block/latex_insulator",
+    "west": "changed_addon:block/latex_insulator",
+    "particle": "changed_addon:block/latex_insulator"
   }
 }

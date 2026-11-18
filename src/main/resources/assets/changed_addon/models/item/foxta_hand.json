@@ -1,7 +1,7 @@
 {
   "parent": "changed_addon:custom/snepsi",
   "textures": {
-    "0": "changed_addon:block/foxsi",
-    "particle": "changed_addon:item/foxtaparticle"
+    "0": "changed_addon:block/foxta",
+    "particle": "changed_addon:item/foxta_particle"
   }
 }

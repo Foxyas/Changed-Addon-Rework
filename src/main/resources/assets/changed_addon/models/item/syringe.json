@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:item/new_syringe_texture"
+    "layer0": "changed_addon:item/syringe_texture"
   }
 }

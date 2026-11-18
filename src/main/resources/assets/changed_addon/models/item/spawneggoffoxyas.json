@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:item/foxyasentityspawnegg"
+    "layer0": "changed_addon:item/foxyas_spawn_egg"
   }
 }

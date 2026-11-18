@@ -1,0 +1,9 @@
+{
+  "parent": "changed_addon:custom/signal_block",
+  "render_type": "cutout",
+  "textures": {
+    "all": "changed_addon:block/signal_block_3",
+    "particle": "changed_addon:block/signal_block_0",
+    "0": "changed_addon:block/signal_block_3"
+  }
+}

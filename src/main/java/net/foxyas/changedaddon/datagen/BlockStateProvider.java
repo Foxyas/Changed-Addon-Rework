@@ -498,8 +498,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
     private void luminarCrystalSmall() {
         ResourceLocation loc = blockLoc(LUMINAR_CRYSTAL_SMALL.getId());
 
-        ModelFile hearted = models().getExistingFile(loc);
-        ModelFile normal = models().getExistingFile(withSuffix(loc, "_2"));
+        ModelFile normal = models().getExistingFile(loc);
+        ModelFile hearted = models().getExistingFile(withSuffix(loc, "_hearted"));
 
         getVariantBuilder(LUMINAR_CRYSTAL_SMALL.get()).forAllStatesExcept(state ->
                         new ConfiguredModel[]{rotatedModel(
