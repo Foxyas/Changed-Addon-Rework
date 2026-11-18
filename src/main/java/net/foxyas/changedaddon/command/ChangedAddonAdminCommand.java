@@ -149,7 +149,7 @@ public class ChangedAddonAdminCommand {
                         int finalResultInt = resultInt;
                         context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.ftkMinigame.reset.success", finalResultInt), true);
                     } else {
-                        context.getSource().sendFailure(Component.translatable("commands.changed_addon.ftkMinigame.reset.success"));
+                        context.getSource().sendFailure(Component.translatable("commands.changed_addon.ftkMinigame.reset.success", 1));
                     }
 
                     return resultInt;
@@ -401,7 +401,7 @@ public class ChangedAddonAdminCommand {
                 .then(Commands.literal("untfImmunity")
                         .then(untfImmunity)
                 )
-                .then(Commands.literal("FtkMinigame")
+                .then(Commands.literal("ftkMinigame")
                         .then(Commands.literal("set")
                                 .then(setFightToKeepConscience)
                         )
@@ -457,9 +457,9 @@ public class ChangedAddonAdminCommand {
                 .requires(s -> s.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .redirect(mainCommand.getChild("alphaGene")));
 
-        dispatcher.register(Commands.literal("FtkMinigame")
+        dispatcher.register(Commands.literal("ftkMinigame")
                 .requires(s -> s.hasPermission(Commands.LEVEL_GAMEMASTERS))
-                .redirect(mainCommand.getChild("FtkMinigame"))
+                .redirect(mainCommand.getChild("ftkMinigame"))
         );
     }
 
