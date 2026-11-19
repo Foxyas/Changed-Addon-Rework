@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "changed_addon:white_wolf_crystal_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wolf_crystal_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:wolf_crystal_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_wolf_crystal_block",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "changed_addon:white_wolf_crystal_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

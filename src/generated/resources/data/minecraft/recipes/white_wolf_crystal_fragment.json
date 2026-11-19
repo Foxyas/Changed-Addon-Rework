@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "changed_addon:white_wolf_crystal_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "changed_addon:white_wolf_crystal_fragment"
+  }
+}

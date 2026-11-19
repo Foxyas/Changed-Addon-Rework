@@ -158,6 +158,8 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 ChangedItems.WHITE_LATEX_GOO.get(),
                 ChangedItems.DARK_LATEX_GOO.get());
 
+        tag(GOOEY_BLOCKS).add(Items.SLIME_BLOCK, ChangedBlocks.DARK_LATEX_BLOCK.get().asItem(), ChangedBlocks.WHITE_LATEX_BLOCK.get().asItem());
+
         tag(ChangedAddonTags.Items.MEAT).add(
                 Items.PUFFERFISH,
                 Items.MUTTON,

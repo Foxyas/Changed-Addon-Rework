@@ -32,10 +32,6 @@ public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
         return (ResourceKey<TransfurVariant<?>>) (Object) key.getKey();
     }
 
-    private static ResourceKey<TransfurVariant<?>> cast(ResourceKey<TransfurVariant<?>> key) {
-        return key;
-    }
-
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         tag(ChangedAddonTags.TransfurVariants.ABLE_TO_CARRY).add(cast(EXP6), cast(LUMINARA_FLOWER_BEAST));

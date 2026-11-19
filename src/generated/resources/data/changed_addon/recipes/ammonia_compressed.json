@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "changed_addon:biomass"
+    },
+    "P": {
+      "item": "changed_addon:ammonia_particle"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PBP",
+    "PPP"
+  ],
+  "result": {
+    "item": "changed_addon:ammonia_compressed"
+  },
+  "show_notification": true
+}

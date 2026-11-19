@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:yellow_wolf_crystal_fragment"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_yellow_wolf_crystal_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:yellow_wolf_crystal_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_yellow_wolf_crystal_block",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:yellow_wolf_crystal_fragment"
+    ]
+  },
+  "sends_telemetry_event": false
+}

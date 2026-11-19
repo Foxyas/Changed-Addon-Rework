@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "changed_addon:empty_spray"
+    },
+    {
+      "item": "changed:white_latex_bucket"
+    },
+    {
+      "item": "changed:latex_base"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:white_latex_spray"
+  }
+}

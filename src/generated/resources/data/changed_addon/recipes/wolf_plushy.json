@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "tag": "forge:dyes/pink"
+    },
+    "R": {
+      "tag": "forge:dyes/red"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
+    }
+  },
+  "pattern": [
+    "PRP",
+    "WWW",
+    "PWP"
+  ],
+  "result": {
+    "item": "changed_addon:wolf_plushy"
+  },
+  "show_notification": true
+}

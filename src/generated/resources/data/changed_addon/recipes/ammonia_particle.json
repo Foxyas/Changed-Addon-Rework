@@ -1,0 +1,15 @@
+{
+  "type": "changed_addon:catalyzer",
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "item": "changed_addon:impure_ammonia"
+    }
+  ],
+  "nitrogenUsage": 0.0,
+  "output": {
+    "count": 4,
+    "item": "changed_addon:ammonia_particle"
+  },
+  "progressSpeed": 2.5
+}

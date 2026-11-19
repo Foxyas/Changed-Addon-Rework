@@ -84,7 +84,6 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("drink_snepsi", "Várj, ez nem Pepsi!", "Igyon Snepsit először");
         addAdvancement("foxta_addictive", "Foxtafüggő!", "Nagy kortyot ittunk, te 100 Foxtát ittál!!!");
         addAdvancement("foxyas_advancement", "§4Rókaölő", "§4Te..§oszörnyeteg§r§4...Büszke vagy rá?");
-        addAdvancement("friendly_transfur", "Barátságos transzfur", "Legyen transzfurálva Foxyas által");
         addAdvancement("gooey_friend", "Ragacsos barát", "Állj egy barátságos latex lény mellett");
         addAdvancement("hazy_purple", "Homályos lila", "Tartsa a 10-es kísérlet és a 9-es kísérlet DNS-eit, hogy lila ködöt kapj");
         addAdvancement("kill_experiment_009", "Vége", "Megölte a 09-es kísérletet. Szép munka!");

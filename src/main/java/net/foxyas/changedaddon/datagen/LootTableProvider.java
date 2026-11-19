@@ -1,5 +1,8 @@
 package net.foxyas.changedaddon.datagen;
 
+import net.foxyas.changedaddon.datagen.loot.BlockLoot;
+import net.foxyas.changedaddon.datagen.loot.ChestLoot;
+import net.foxyas.changedaddon.datagen.loot.EntityLoot;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 

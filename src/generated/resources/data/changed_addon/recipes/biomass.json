@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "changed_addon:gooey"
+    },
+    "L": {
+      "item": "changed:latex_base"
+    },
+    "M": {
+      "tag": "changed_addon:meat"
+    }
+  },
+  "pattern": [
+    "GMG",
+    "MLM",
+    "GMG"
+  ],
+  "result": {
+    "count": 4,
+    "item": "changed_addon:biomass"
+  },
+  "show_notification": true
+}

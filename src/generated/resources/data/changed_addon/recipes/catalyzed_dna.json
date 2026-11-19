@@ -1,0 +1,14 @@
+{
+  "type": "changed_addon:catalyzer",
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "tag": "changed_addon:blood_type_syringe"
+    }
+  ],
+  "nitrogenUsage": 5.0,
+  "output": {
+    "item": "changed_addon:catalyzed_dna"
+  },
+  "progressSpeed": 2.5
+}

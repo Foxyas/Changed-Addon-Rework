@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_impure_ammonia": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:impure_ammonia"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "changed_addon:ammonia_particle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_impure_ammonia",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "changed_addon:ammonia_particle"
+    ]
+  },
+  "sends_telemetry_event": false
+}

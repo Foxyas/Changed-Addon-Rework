@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "minecraft:stone_buttons"
+    },
+    "G": {
+      "tag": "forge:glass_panes"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "L": {
+      "tag": "forge:storage_blocks/iron"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "S": {
+      "tag": "changed_addon:syringes"
+    }
+  },
+  "pattern": [
+    "BGB",
+    "ISI",
+    "RLR"
+  ],
+  "result": {
+    "item": "changed_addon:catalyzer"
+  },
+  "show_notification": true
+}

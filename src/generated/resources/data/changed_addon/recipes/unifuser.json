@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "forge:storage_blocks/redstone"
+    },
+    "G": {
+      "tag": "forge:glass_panes"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "L": {
+      "tag": "forge:storage_blocks/iron"
+    },
+    "P": {
+      "item": "minecraft:repeater"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "S": {
+      "tag": "changed_addon:syringes"
+    },
+    "T": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "pattern": [
+    "SGR",
+    "IBI",
+    "TLP"
+  ],
+  "result": {
+    "item": "changed_addon:unifuser"
+  },
+  "show_notification": true
+}

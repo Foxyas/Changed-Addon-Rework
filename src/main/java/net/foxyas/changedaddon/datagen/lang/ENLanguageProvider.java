@@ -85,7 +85,6 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("drink_snepsi", "Wait this isn't pepsi!", "Drink snepsi for the first time");
         addAdvancement("foxta_addictive", "Foxta Addictive!", "We take a big sippy, you drank 100 Foxtas!!!");
         addAdvancement("foxyas_advancement", "§4Fox Killer", "§4You..§oMonster§r§4...Are you proud of that?");
-        addAdvancement("friendly_transfur", "Friendly Transfur", "You got Transfurred by Foxyas");
         addAdvancement("gooey_friend", "Gooey Friend", "You are next to a Friendly Latex");
         addAdvancement("hazy_purple", "Hazy Purple", "Hold Exp10 and Exp9 Dna To Give you a Purple Fog");
         addAdvancement("kill_experiment_009", "Its Over", "You kill Experiment009 Good Job");

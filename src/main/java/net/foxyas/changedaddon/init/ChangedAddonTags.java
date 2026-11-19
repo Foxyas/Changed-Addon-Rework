@@ -59,6 +59,7 @@ public final class ChangedAddonTags {
 
 
         public static final TagKey<Item> GOOEY = key("gooey");
+        public static final TagKey<Item> GOOEY_BLOCKS = key("gooey_blocks");
         public static final TagKey<Item> UNIVERSAL_FOODS = key("universal_foods");
         public static final TagKey<Item> LATEX_SOLVENT_APPLICABLE = key("latex_solvent_applicable");
         public static final TagKey<Item> MEAT = key("meat");
