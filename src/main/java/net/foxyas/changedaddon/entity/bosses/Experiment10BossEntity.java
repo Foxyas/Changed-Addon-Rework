@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
 import com.google.common.annotations.VisibleForTesting;
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.CircleShootWitherProjectileGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.ClawsComboAttackGoal;
@@ -43,10 +42,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -54,9 +50,6 @@ import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
@@ -109,24 +102,12 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 300);
-        builder = builder.add(Attributes.ARMOR, 20);
+        builder = builder.add(Attributes.ARMOR, 10);
         builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
         builder = builder.add(Attributes.FOLLOW_RANGE, 256f);
         builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
         builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
         return builder;
-    }
-
-    private static GearTier getGearTier(LivingEntity entity) {
-
-        double armor = entity.getAttributeValue(Attributes.ARMOR);
-        double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-
-        double score = armor + (toughness * 2);
-
-        if (score >= 40) return GearTier.HIGH;
-        if (score >= 15) return GearTier.MID;
-        return GearTier.LOW;
     }
 
     public BurstAbilityHandle<Experiment10BossEntity> getBurstAbilityHandle() {
@@ -239,8 +220,8 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
 
-        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
-        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((325));
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue(3);
+        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue(325);
         attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.17);
         attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1);
@@ -445,9 +426,11 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     @Override
     public void baseTick() {
         super.baseTick();
-        updateDefense(this);
-        updateAttack(this);
-        updateSpeed(this);
+
+        updateDefense();
+        updateAttack();
+        updateSpeed();
+
         this.crawlingSystem((float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f);
         this.burstAbilityHandle.tick();
     }
@@ -474,43 +457,52 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         }
     }
 
-    public void updateDefense(Experiment10BossEntity entity) {
-        AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "ArmorChange", 20, AttributeModifier.Operation.ADDITION);
-        AttributeModifier AttibuteDefenseChange = new AttributeModifier(UUID.fromString("10-10-0-0-0"), "ArmorChange", 0.7, AttributeModifier.Operation.MULTIPLY_BASE);
-        if (entity.isPhase2()) {
-            if (!((entity.getAttribute(Attributes.ARMOR).hasModifier(AttibuteChange)))) {
-                entity.getAttribute(Attributes.ARMOR).addTransientModifier(AttibuteChange);
+    public void updateDefense() {
+        AttributeModifier attributeModifier = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "ArmorChange", 1, AttributeModifier.Operation.MULTIPLY_BASE);
+        AttributeModifier attributeModifier2 = new AttributeModifier(UUID.fromString("10-10-0-0-0"), "ArmorChange", 0.7, AttributeModifier.Operation.MULTIPLY_BASE);
+        AttributeInstance armorAttributeInstance = this.getAttribute(Attributes.ARMOR);
+        AttributeInstance armorThoughnessAttributeInstance = this.getAttribute(Attributes.ARMOR_TOUGHNESS);
+
+        if (this.isPhase2()) {
+            if (armorAttributeInstance != null && !armorAttributeInstance.hasModifier(attributeModifier)) {
+                armorAttributeInstance.addTransientModifier(attributeModifier);
             }
 
-            if (!((entity.getAttribute(Attributes.ARMOR_TOUGHNESS).hasModifier(AttibuteDefenseChange)))) {
-                entity.getAttribute(Attributes.ARMOR_TOUGHNESS).addTransientModifier(AttibuteDefenseChange);
+            if (armorThoughnessAttributeInstance != null && !armorThoughnessAttributeInstance.hasModifier(attributeModifier2)) {
+                armorThoughnessAttributeInstance.addTransientModifier(attributeModifier2);
             }
 
         } else {
-            entity.getAttribute(Attributes.ARMOR).removeModifier(AttibuteChange);
-            entity.getAttribute(Attributes.ARMOR_TOUGHNESS).removeModifier(AttibuteDefenseChange);
+            if (armorAttributeInstance != null) {
+                armorAttributeInstance.removeModifier(attributeModifier);
+            }
+            if (armorThoughnessAttributeInstance != null) {
+                armorThoughnessAttributeInstance.removeModifier(attributeModifier2);
+            }
         }
     }
 
-    public void updateAttack(Experiment10BossEntity entity) {
-        AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Attack", 0.6667, AttributeModifier.Operation.MULTIPLY_BASE);
-        if (entity.isPhase2()) {
-            if (!((entity.getAttribute(Attributes.ATTACK_DAMAGE).hasModifier(AttibuteChange)))) {
-                entity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(AttibuteChange);
-            }
+    public void updateAttack() {
+        AttributeModifier attributeModifier = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Attack", 0.65, AttributeModifier.Operation.MULTIPLY_BASE);
+        AttributeInstance attributeInstance = this.getAttribute(Attributes.ATTACK_DAMAGE);
+        if (attributeInstance == null) return;
+        if (this.isPhase2() && !attributeInstance.hasModifier(attributeModifier)) {
+            attributeInstance.addTransientModifier(attributeModifier);
         } else {
-            entity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(AttibuteChange);
+            attributeInstance.removeModifier(attributeModifier);
         }
     }
 
-    public void updateSpeed(Experiment10BossEntity entity) {
-        AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Speed", -0.4, AttributeModifier.Operation.MULTIPLY_BASE);
-        if (entity.getPose() == Pose.SWIMMING) {
-            if (!((entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(AttibuteChange)))) {
-                entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(AttibuteChange);
+    public void updateSpeed() {
+        AttributeModifier attributeModifier = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Speed", -0.4, AttributeModifier.Operation.MULTIPLY_BASE);
+        AttributeInstance attributeInstance = this.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (attributeInstance == null) return;
+        if (this.getPose() == Pose.SWIMMING) {
+            if (!attributeInstance.hasModifier(attributeModifier)) {
+                attributeInstance.addTransientModifier(attributeModifier);
             }
         } else {
-            entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(AttibuteChange);
+            attributeInstance.removeModifier(attributeModifier);
         }
     }
 
@@ -600,41 +592,4 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         IAlphaAbleEntity.apply(entity, ChangedAttributes.JUMP_STRENGTH.get(), IAlphaAbleEntity.JUMP_STRENGTH, "Alpha Jump Strength", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
     }
 
-    private enum GearTier {
-        LOW,
-        MID,
-        HIGH
-    }
-
-    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
-    public static class WhenAttackAEntity {
-
-        @SubscribeEvent
-        public static void onBossDamagePlayer(LivingHurtEvent event) {
-            if (!(event.getSource().getEntity() instanceof Experiment10BossEntity source)) return;
-            if (!(event.getEntity() instanceof Player target)) return;
-
-            GearTier tier = getGearTier(target);
-
-            switch (tier) {
-                case LOW, MID -> event.setAmount(event.getAmount());
-                case HIGH -> event.setAmount(event.getAmount() * 1.25F);
-            }
-
-            if (source.burstAbilityHandle != null) source.burstAbilityHandle.onDamageDealt(event.getSource(), event.getAmount());
-        }
-
-        @SubscribeEvent
-        public static void onPlayerDamageBoss(LivingHurtEvent event) {
-            if (!(event.getSource().getEntity() instanceof Player source)) return;
-            if (!(event.getEntity() instanceof Experiment10BossEntity)) return;
-
-            GearTier tier = getGearTier(source);
-
-            switch (tier) {
-                case LOW -> event.setAmount(event.getAmount() * 2F);
-                case MID, HIGH -> event.setAmount(event.getAmount());
-            }
-        }
-    }
 }

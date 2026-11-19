@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -71,6 +72,30 @@ public class Exp10LeapSmashGoal extends Goal {
 
         mob.level().broadcastEntityEvent(mob, (byte) 4); // Play jump animation
         mob.getJumpControl().jump();
+
+        // === AOE Similar to Wind burst ===
+        double burstRadius = 4.0D;
+        Vec3 jumpPos = mob.position();
+
+        // Push Entities
+        for (Entity entity : mob.level().getEntities(mob, mob.getBoundingBox().inflate(burstRadius))) {
+            if (entity instanceof LivingEntity && entity != mob) {
+                Vec3 entityDir = entity.position().subtract(jumpPos);
+                double distanceSq = entityDir.horizontalDistanceSqr();
+
+                if (distanceSq < burstRadius * burstRadius && distanceSq > 0.0001D) {
+                    entityDir = entityDir.normalize();
+
+                    double knockbackStrength = 1.2D;
+                    entity.setDeltaMovement(
+                            entity.getDeltaMovement().add(entityDir.x * knockbackStrength, 0.4D, entityDir.z * knockbackStrength)
+                    );
+
+                    entity.hasImpulse = true;
+                    entity.hurtMarked = true;
+                }
+            }
+        }
     }
 
     @Override
