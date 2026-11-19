@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
-import java.util.Optional;
 
 public class BestiaryEntriesProvider {
 

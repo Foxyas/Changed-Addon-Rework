@@ -2,11 +2,9 @@ package net.foxyas.changedaddon.variant;
 
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor.HugType;
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
-import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.FoodDietEntry;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;

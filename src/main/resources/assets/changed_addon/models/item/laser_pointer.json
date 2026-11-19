@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "changed_addon:item/lazer_pointer_overlay",
-		"layer1": "changed_addon:item/lazer_pointer"
+		"layer0": "changed_addon:item/laser_pointer_overlay",
+		"layer1": "changed_addon:item/laser_pointer"
 	},
 	"gui_light": "front",
 	"display": {

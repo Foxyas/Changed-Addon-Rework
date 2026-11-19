@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.process.bestiary;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDiet;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.ExtraCodecs;

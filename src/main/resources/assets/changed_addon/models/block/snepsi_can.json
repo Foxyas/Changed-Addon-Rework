@@ -1,8 +1,8 @@
 {
   "parent": "changed_addon:custom/snepsilow",
   "textures": {
-    "all": "changed_addon:block/snepsiparticle",
-    "particle": "changed_addon:block/snepsiparticle",
+    "all": "changed_addon:block/snepsi_particle",
+    "particle": "changed_addon:block/snepsi_particle",
     "0": "changed_addon:block/snepsilow"
   }
 }

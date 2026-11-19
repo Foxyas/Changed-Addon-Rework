@@ -1,7 +1,7 @@
 {
   "parent": "changed_addon:custom/crystal_dagger",
   "textures": {
-    "0": "changed_addon:block/blackaddager",
-    "particle": "changed_addon:item/blackaddager"
+    "0": "changed_addon:block/black_dagger",
+    "particle": "changed_addon:item/black_dagger"
   }
 }

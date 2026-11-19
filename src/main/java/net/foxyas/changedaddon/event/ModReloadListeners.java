@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.event;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVisionReloadListener;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,8 +11,6 @@ public class ModReloadListeners {
 
     @SubscribeEvent
     public static void onRegisterReloadListeners(AddReloadListenerEvent event) {
-        event.addListener(new TransfurVisionReloadListener());
-//        event.addListener(new TransfurVariantDietManager());
     }
 
     @SubscribeEvent

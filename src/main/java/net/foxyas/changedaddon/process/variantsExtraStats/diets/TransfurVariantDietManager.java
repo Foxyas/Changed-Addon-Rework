@@ -1,45 +1,18 @@
 package net.foxyas.changedaddon.process.variantsExtraStats.diets;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.mojang.serialization.JsonOps;
 import net.foxyas.changedaddon.init.ChangedAddonTransfurDiets;
 import net.foxyas.changedaddon.variant.IVariantExtraStats;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TransfurVariantDietManager extends SimpleJsonResourceReloadListener {
-    private static final Gson GSON = new Gson();
-
-    // Global list containing all registered diets loaded via JSON
-    private static final Map<ResourceLocation, TransfurVariantDiet> ALL_DIETS = new HashMap<>();
-
-    public TransfurVariantDietManager() {
-        super(GSON, "transfur_variant/diets");
-        //I gonna keep the class extending the SimpleJsonResourceReloadListener because I feel that someone will need it for some reason
-    }
-
-    @Override
-    protected void apply(Map<ResourceLocation, JsonElement> object, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller profiler) {
-        ALL_DIETS.clear();
-
-        object.forEach((location, jsonElement) -> {
-            TransfurVariantDiet.CODEC.parse(JsonOps.INSTANCE, jsonElement)
-                    .resultOrPartial(err -> System.err.println("Failed to load diet " + location + ": " + err))
-                    .ifPresent((transfurVariantDiet -> ALL_DIETS.put(location, transfurVariantDiet)));
-        });
-    }
+public class TransfurVariantDietManager {
 
     /**
      * Returns ALL diets associated with a specific transfur variant.
@@ -52,7 +25,7 @@ public class TransfurVariantDietManager extends SimpleJsonResourceReloadListener
         Registry<TransfurVariantDiet> registry = ChangedAddonTransfurDiets.registry(level);
 
         // 1. Create a local copy initialized with the old/fallback diets
-        Map<ResourceLocation, TransfurVariantDiet> combinedDiets = new HashMap<>(ALL_DIETS);
+        Map<ResourceLocation, TransfurVariantDiet> combinedDiets = new HashMap<>();
 
         // 2. Add all registry entries. putAll replaces existing keys and adds new ones in one step
         registry.entrySet().forEach(entry ->
@@ -109,9 +82,5 @@ public class TransfurVariantDietManager extends SimpleJsonResourceReloadListener
                         entry -> entry.getKey().location(),
                         Map.Entry::getValue
                 ));
-    }
-
-    public static Map<ResourceLocation, TransfurVariantDiet> getAllDietsMap() {
-        return ALL_DIETS;
     }
 }

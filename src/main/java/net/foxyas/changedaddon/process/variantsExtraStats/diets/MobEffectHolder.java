@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.process.variantsExtraStats.diets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.init.ChangedAddonCodecs;
 import net.foxyas.changedaddon.util.ExtraCodecs;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.minecraft.util.RandomSource;

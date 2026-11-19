@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.mixins.client.renderer;
 
 import com.mojang.blaze3d.shaders.Uniform;
 import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVariantVision;
-import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVariantVisions;
+import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVariantVisionManager;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
@@ -97,8 +97,8 @@ public abstract class GameRendererMixin {
     private boolean changed_Addon_Rework$ShouldWork(Player player) {
         TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (variantInstance != null) {
-            this.changed_Addon_Rework$transfurVariantVision = TransfurVariantVisions.getTransfurVariantVision(player.level(), variantInstance.getFormId());
-            return TransfurVariantVisions.getTransfurVariantVision(player.level(), variantInstance.getFormId()) != null;
+            this.changed_Addon_Rework$transfurVariantVision = TransfurVariantVisionManager.getTransfurVariantVision(player.level(), variantInstance.getFormId());
+            return TransfurVariantVisionManager.getTransfurVariantVision(player.level(), variantInstance.getFormId()) != null;
         }
 
 

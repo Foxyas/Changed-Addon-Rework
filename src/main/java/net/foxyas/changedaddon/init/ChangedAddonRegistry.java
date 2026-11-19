@@ -5,6 +5,7 @@ import com.mojang.serialization.Lifecycle;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.process.bestiary.BestiaryEntry;
 import net.foxyas.changedaddon.process.variantsExtraStats.diets.TransfurVariantDiet;
+import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVariantVision;
 import net.minecraft.core.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
@@ -40,6 +41,7 @@ public abstract class ChangedAddonRegistry<T> implements Registry<T> {
     private static final HashMap<ResourceKey<Registry<?>>, Supplier<IForgeRegistry<?>>> REGISTRY_HOLDERS = new HashMap<>();
 
     public static final RegistryHolder<TransfurVariantDiet> TRANSFUR_VARIANT_DIETS = createDataDrivenHolder(ChangedAddonTransfurDiets.TRANSFUR_VARIANT_DIET_KEY);
+    public static final RegistryHolder<TransfurVariantVision> TRANSFUR_VARIANT_VISIONS = createDataDrivenHolder(ChangedAddonTransfurVariantVisions.TRANSFUR_VARIANT_VISION_KEY);
     public static final RegistryHolder<BestiaryEntry> BESTIARY_ENTRIES = createDataDrivenHolder(ChangedAddonBestiaryEntries.BESTIARY_ENTRIES_KEY);
 
     private static <T> @NotNull RegistryHolder<T> createDataDrivenHolder(ResourceKey<Registry<T>> key) {
