@@ -64,7 +64,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     public final GoalSelector passiveSelector;
 
-    public Experiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
+    public Experiment009Entity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_009.get(), world);
     }
 
@@ -75,7 +75,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         setNoAi(false);
         setPersistenceRequired();
         this.passiveSelector = new GoalSelector(world.getProfilerSupplier());
-        if (world != null && !world.isClientSide) {
+        if (!world.isClientSide) {
             this.registerPassives();
         }
     }
@@ -154,7 +154,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     @Override
     public boolean startRiding(@NotNull Entity EntityIn, boolean force) {
         if (!force && (EntityIn instanceof Boat || EntityIn instanceof Minecart)) {
-            return super.startRiding(EntityIn, force) && this.getTarget() == null;
+            return super.startRiding(EntityIn, false) && this.getTarget() == null;
         }
 
         return super.startRiding(EntityIn, force);

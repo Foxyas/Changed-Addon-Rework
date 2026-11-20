@@ -114,7 +114,7 @@ public class ExtinguishFireNearbyGoal extends Goal {
                 double motionZ = dirZ * windForce;
 
                 serverLevel.sendParticles(
-                        ParticleTypes.SWEEP_ATTACK,
+                        ParticleTypes.POOF,
                         mob.getX() + ox, mob.getY(0.5), mob.getZ() + oz,
                         0,                          // Quantidade = 0 (ativa o modo motion nos próximos 3 argumentos)
                         motionX,                    // Velocidade X (empurra para fora no eixo X)
@@ -129,14 +129,6 @@ public class ExtinguishFireNearbyGoal extends Goal {
     @Override
     public void tick() {
         this.executionTicks++;
-
-//        // Faz a entidade dar o giro de 360 graus completo dividindo o ângulo pelo tempo de execução
-        float progress = (float) this.executionTicks / (float) DURATION;
-//        float targetYaw = mob.getYRot() + (360.0F / DURATION);
-//
-//        mob.setYRot(targetYaw);
-//        mob.setYBodyRot(targetYaw);
-//        mob.setYHeadRot(targetYaw);
     }
 
     @Override

@@ -30,6 +30,20 @@ public class FadingBossMusicSound extends AbstractTickableSoundInstance {
         this.pitch = 1.0f;
     }
 
+    @Override
+    public @NotNull SoundSource getSource() {
+        BossMusicHandler.FollowType followType = ChangedAddonClientConfiguration.BOSS_MUSIC_LOCATION_TYPE.get();
+        switch (followType) {
+            case BOSS -> {
+                return SoundSource.RECORDS;
+            }
+            case PLAYER_CAMERA -> {
+                return SoundSource.AMBIENT;
+            }
+        }
+        return super.getSource();
+    }
+
     public void setVolume(float volume) {
         this.volume = volume;
     }
