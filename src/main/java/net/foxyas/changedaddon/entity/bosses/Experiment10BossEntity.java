@@ -68,6 +68,8 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     public final BurstAbilityHandle<Experiment10BossEntity> burstAbilityHandle;
     private final PatDynamicAngerManagement angerManagement;
 
+    protected int lastHurtTime = tickCount;
+
     public Experiment10BossEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_10_BOSS.get(), world);
     }
@@ -334,6 +336,8 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         float currentHealth = this.getHealth();
         float maxHealth = this.getMaxHealth();
 
+        if (getUnderlyingPlayer() == null) lastHurtTime = tickCount;
+
         if (pDamageSource.getEntity() instanceof LivingEntity livingEntity) {
             increaseAngerAt(livingEntity);
         }
@@ -426,6 +430,9 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     @Override
     public void baseTick() {
         super.baseTick();
+
+        if (getUnderlyingPlayer() == null
+                && lastHurt > 0 && tickCount - lastHurtTime > 200 && tickCount % 10 == 0) heal(lastHurt * 0.05f);
 
         updateDefense();
         updateAttack();

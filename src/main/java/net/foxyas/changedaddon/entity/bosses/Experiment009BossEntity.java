@@ -128,10 +128,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     protected boolean shouldBleed = false;
     protected boolean shouldPhase = true;
 
+    protected int lastHurtTime = tickCount;
+
     public final BurstAbilityHandle<Experiment009BossEntity> burstAbilityHandle;
 
     public Experiment009BossEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_009_BOSS.get(), world);
+        tick();
     }
 
     public Experiment009BossEntity(EntityType<Experiment009BossEntity> type, Level world) {
@@ -493,12 +496,15 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     protected void actuallyHurt(@NotNull DamageSource pDamageSource, float pDamageAmount) {
         super.actuallyHurt(pDamageSource, pDamageAmount);
+
         float currentHealth = this.getHealth();
         float maxHealth = this.getMaxHealth();
 
         if (this.getUnderlyingPlayer() != null) {
             return;
         }
+
+        lastHurtTime = tickCount;
 
         if (pDamageSource.getEntity() instanceof LivingEntity livingEntity) {
             increaseAngerAt(livingEntity);
@@ -660,6 +666,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     public void baseTick() {
         super.baseTick();
         if (getUnderlyingPlayer() != null) return;
+
+        if (lastHurt > 0 && tickCount - lastHurtTime > 200 && tickCount % 10 == 0) heal(lastHurt * 0.05f);
+
         this.burstAbilityHandle.tick();
         if (this.isCastingAttack()) {
             this.setCastingTicks(this.getCastingTicks() + 1);
