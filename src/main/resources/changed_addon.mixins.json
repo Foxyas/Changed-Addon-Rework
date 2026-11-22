@@ -119,6 +119,7 @@
     "client.renderer.PaintingRendererMixin",
     "client.renderer.PostChainMixin",
     "client.renderer.layer.LatexHeldEntityLayerMixin",
+    "client.renderer.test.LevelRendererMixin",
     "cmrs.MixinPoseStack",
     "effect.particle.EmoteParticleMixin",
     "entity.player.LocalPlayerMixin",

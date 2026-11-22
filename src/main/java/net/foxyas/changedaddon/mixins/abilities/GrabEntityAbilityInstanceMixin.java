@@ -153,7 +153,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         this.ableToEscape = ableToEscape;
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("isAbleToEscape", isAbleToEscape());
-        this.sendPayload(tag);
+        if (!this.entity.getLevel().isClientSide()) this.sendPayload(tag);
     }
 
     @Inject(method = "saveData", at = @At("TAIL"))
