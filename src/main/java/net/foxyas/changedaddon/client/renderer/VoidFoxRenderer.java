@@ -25,7 +25,7 @@ public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, Voi
         this.addLayer(new ParticlesTrailsLayer<>(this, 0.025f, ParticleTypes.ASH));
         this.addLayer(new ParticlesTrailsLayer<>(this, 0.0025f, ParticleTypes.END_ROD));
         this.addLayer(new ModelFlickerLayer<>(this));
-        this.addLayer(new EntityOutlineLayer<>(this));
+        this.addLayer(new EntityOutlineLayer<>(this, this::getOutlineTextureLocation));
     }
 
     @Override
@@ -37,5 +37,10 @@ public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, Voi
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull VoidFoxEntity entity) {
         return ResourceLocation.parse("changed_addon:textures/entities/void_fox/void_fox_new.png");
+    }
+
+
+    public @NotNull ResourceLocation getOutlineTextureLocation(@NotNull VoidFoxEntity entity) {
+        return ResourceLocation.parse("changed_addon:textures/entities/void_fox/void_fox_new_outline.png");
     }
 }

@@ -154,6 +154,31 @@ public final class ChangedAddonRenderTypes extends RenderType {
             GL11.glCullFace(GL11.GL_BACK);
         }
     };
+
+
+    private static final Function<ResourceLocation, RenderType> EMISSIVE_REVERSE_CULL = Util.memoize((p_173255_) -> {
+        RenderStateShard.TextureStateShard renderstateshard$texturestateshard = new RenderStateShard.TextureStateShard(p_173255_,
+                false,
+                false);
+
+        return create(ChangedAddonMod.resourceLocString("emissive_reverse_cull"),
+                DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                256,
+                true,    // affectsCrumbling
+                true,    // sortOnUpload (needed for translucency)
+                CompositeState.builder()
+                        .setShaderState(RENDERTYPE_EYES_SHADER)   // ignores lightmap
+                        .setTextureState(renderstateshard$texturestateshard)
+                        .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                        .setCullState(REVERSE_CULL_STATE)
+                        .setLightmapState(NO_LIGHTMAP)
+                        .setOverlayState(NO_OVERLAY)
+                        .setWriteMaskState(COLOR_DEPTH_WRITE)
+                        .createCompositeState(false));
+    });
+
+
     private static final Function<ResourceLocation, RenderType> GLOW_WITH_DEEP_TEST = Util.memoize((p_173255_) -> {
         RenderStateShard.TextureStateShard renderstateshard$texturestateshard = new RenderStateShard.TextureStateShard(p_173255_,
                 false,
@@ -606,6 +631,10 @@ public final class ChangedAddonRenderTypes extends RenderType {
         return GLOW_ENTITY_DECAL.apply(pLocation);
     }
 
+    public static RenderType emissiveReverseCull(ResourceLocation texture) {
+        return EMISSIVE_REVERSE_CULL.apply(texture);
+    }
+
     public static RenderType lightningNoCull() {
         return LIGHTNING_NO_CULL;
     }
@@ -617,6 +646,7 @@ public final class ChangedAddonRenderTypes extends RenderType {
     public static RenderType lightningNoShort() {
         return LIGHTNING_NO_SORT;
     }
+
 
     public static class ParticleRenderTypes {
         public static final ParticleRenderType OVERLAY = new ParticleRenderType() {

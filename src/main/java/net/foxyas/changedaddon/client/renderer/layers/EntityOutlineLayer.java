@@ -13,13 +13,25 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Function;
 
 public class EntityOutlineLayer<M extends AdvancedHumanoidModel<T>, T extends ChangedEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
 
-    public EntityOutlineLayer(RenderLayerParent<T, M> parent) {
+    private final Function<T, ResourceLocation> textureLocationFunction;
+
+    public EntityOutlineLayer(RenderLayerParent<T, M> parent, Function<T, ResourceLocation> textureLocationFunction) {
         super(parent);
+        this.textureLocationFunction = textureLocationFunction;
+    }
+
+    @Override
+    protected @NotNull ResourceLocation getTextureLocation(@NotNull T pEntity) {
+        return textureLocationFunction.apply(pEntity);
     }
 
     @Override
@@ -29,7 +41,7 @@ public class EntityOutlineLayer<M extends AdvancedHumanoidModel<T>, T extends Ch
         poseStack.translate(0, 0, 0); // Small tweak in the outline value
 
         float r = 1f, g = 1f, b = 1f, a = 1f;
-        VertexConsumer outlineBuffer = bufferSource.getBuffer(ChangedAddonRenderTypes.outlineWithDepth(this.getTextureLocation(entity)));
+        VertexConsumer outlineBuffer = bufferSource.getBuffer(ChangedAddonRenderTypes.emissiveReverseCull(this.getTextureLocation(entity)));
         this.getParentModel().renderToBuffer(
                 poseStack,
                 outlineBuffer,
