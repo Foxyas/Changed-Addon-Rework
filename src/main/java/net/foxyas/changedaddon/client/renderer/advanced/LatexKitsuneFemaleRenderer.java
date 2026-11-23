@@ -17,7 +17,7 @@ public class LatexKitsuneFemaleRenderer extends AdvancedHumanoidRenderer<LatexKi
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer::glowingIrisColorLeft, CustomEyesLayer::glowingIrisColorRight, CustomEyesLayer::noRender, CustomEyesLayer::noRender));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
-        this.addLayer(new EmissiveBodyLayer<>(this, ResourceLocation.parse("changed_addon:textures/entities/latex_kitsune_female/latex_kitsune_female_stripes.png")) {
+        this.addLayer(new EmissiveBodyLayer<>(this, ResourceLocation.parse("changed_addon:textures/entities/latex_kitsunes/latex_kitsune_female/latex_kitsune_female_stripes.png")) {
             @Override
             public @NotNull RenderType renderType() {
                 return RenderType.energySwirl(getEmissiveTexture(), 0, 0);
@@ -27,6 +27,6 @@ public class LatexKitsuneFemaleRenderer extends AdvancedHumanoidRenderer<LatexKi
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull LatexKitsuneFemaleEntity entity) {
-        return ResourceLocation.parse("changed_addon:textures/entities/latex_kitsune_female/latex_kitsune_female.png");
+        return ResourceLocation.parse("changed_addon:textures/entities/latex_kitsunes/latex_kitsune_female/latex_kitsune_female.png");
     }
 }
