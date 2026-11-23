@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
-import net.ltxprogrammer.changed.util.Cacheable;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -26,7 +25,9 @@ import java.util.Optional;
 
 public class TransfurVariantUtils {
 
-    private static final Cacheable<AttributeMap> BASE_ATTRIBUTES = Cacheable.of(() -> new AttributeMap(Player.createAttributes().build()));
+    private static AttributeMap getPlayerBaseAttributes() {
+        return new AttributeMap(Player.createAttributes().build());
+    }
 
     public static List<ResourceLocation> getTransfurVariantsFormIdFromStringList(List<? extends String> stringList, @Nullable Level level, boolean detectTags, boolean detectMods) {
         return getTransfurVariantsFromStringList(stringList, level, detectTags, detectMods).stream().map(TransfurVariant::getFormId).toList();
@@ -126,7 +127,7 @@ public class TransfurVariantUtils {
         if (entity == null) return 0;
 
         entity.setUnderlyingPlayer(player);
-        return (float) (entity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) * 0.1F / BASE_ATTRIBUTES.get().getBaseValue(Attributes.MOVEMENT_SPEED));
+        return (float) (entity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) * 0.1F / getPlayerBaseAttributes().getBaseValue(Attributes.MOVEMENT_SPEED));
     }
 
     public static float getSwimSpeedOfVariantBasedOnPlayer(TransfurVariant<?> variant, Player player) {
@@ -134,7 +135,7 @@ public class TransfurVariantUtils {
         if (entity == null) return 0;
 
         entity.setUnderlyingPlayer(player);
-        return (float) (entity.getAttributeBaseValue(ForgeMod.SWIM_SPEED.get()) / BASE_ATTRIBUTES.get().getBaseValue(ForgeMod.SWIM_SPEED.get()));
+        return (float) (entity.getAttributeBaseValue(ForgeMod.SWIM_SPEED.get()) / getPlayerBaseAttributes().getBaseValue(ForgeMod.SWIM_SPEED.get()));
     }
 
     public static float getExtraHpOfVariantBasedOnPlayer(TransfurVariant<?> variant, Player player) {
@@ -177,7 +178,7 @@ public class TransfurVariantUtils {
         return variant != null && variant.canClimb;
     }
 
-    public static float GetJumpStrength(TransfurVariant<?> variant, Player player) {
+    public static float getJumpStrength(TransfurVariant<?> variant, Player player) {
         ChangedEntity entity = entity(variant, player.level);
         if (entity == null) return 0;
 

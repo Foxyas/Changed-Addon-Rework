@@ -235,6 +235,7 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
             this.refreshDimensions();
             refreshAttributes(this);
             refreshAttributesForHost(this);
+            onAlphaStateUpdate();
         }
     }
 

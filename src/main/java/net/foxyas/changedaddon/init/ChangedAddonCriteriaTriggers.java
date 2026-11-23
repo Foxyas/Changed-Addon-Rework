@@ -17,4 +17,5 @@ public class ChangedAddonCriteriaTriggers {
     public static final HoldingItemsTrigger HOLDING_ITEMS = register(new HoldingItemsTrigger());
     public static final UntransfurTrigger UNTRANSFUR = register(new UntransfurTrigger());
     public static final DynamicTransfurTrigger DYNAMIC_TRANSFUR_TRIGGER = register(new DynamicTransfurTrigger());
+    public static final AlphaStateTrigger ALPHA_STATE_TRIGGER = register(new AlphaStateTrigger());
 }

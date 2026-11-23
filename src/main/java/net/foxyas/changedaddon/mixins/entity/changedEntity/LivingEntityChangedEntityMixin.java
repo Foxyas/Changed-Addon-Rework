@@ -17,7 +17,9 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,6 +29,10 @@ import static net.foxyas.changedaddon.entity.api.IAlphaAbleEntity.IS_ALPHA;
 
 @Mixin(value = LivingEntity.class)
 public abstract class LivingEntityChangedEntityMixin extends Entity {
+
+    @Shadow
+    @Final
+    public int invulnerableDuration;
 
     protected LivingEntityChangedEntityMixin(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -62,6 +68,9 @@ public abstract class LivingEntityChangedEntityMixin extends Entity {
 
         if (pKey == IS_ALPHA) {
             this.refreshDimensions();
+            if (changedEntity instanceof IAlphaAbleEntity iAlphaAbleEntity) {
+                iAlphaAbleEntity.onAlphaStateUpdate();
+            }
             IAlphaAbleEntity.applyOrRemoveAlphaModifiers(self, entityData.get(IS_ALPHA), (float) changedEntity.getAttributeValue(ChangedAddonAttributes.ALPHA_GENE_SCALE.get()));
             IAbstractChangedEntity.forEitherSafe(changedEntity.maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
         }

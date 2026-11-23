@@ -341,7 +341,7 @@ public class ClientEvent {
                     tooltip.add(index, Component.translatable("text.changed_addon.swim_speed", displaySwimSpeedPct));
 
                     index++;
-                    float jumpStrength = TransfurVariantUtils.GetJumpStrength(tf, player);
+                    float jumpStrength = TransfurVariantUtils.getJumpStrength(tf, player);
                     float jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
                     MutableComponent displayJumpStrengthPct = jumpStrengthPct == 0
                             ? Component.literal("§7None§r")

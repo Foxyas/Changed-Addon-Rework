@@ -133,6 +133,7 @@ public abstract class ChangedEntityAlphaEntityHandleMixin extends Monster implem
             this.refreshDimensions();
             refreshAttributes(self);
             refreshAttributesForHost(self);
+            onAlphaStateUpdate();
         }
     }
 

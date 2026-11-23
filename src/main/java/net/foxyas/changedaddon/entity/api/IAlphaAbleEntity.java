@@ -6,14 +6,17 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoal
 import net.foxyas.changedaddon.entity.ai.goals.simple.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.ai.goals.simple.IAlphaEntityGoal;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
+import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
@@ -47,7 +50,8 @@ public interface IAlphaAbleEntity {
     }
 
     interface IOverrideAlphaGoals {
-        default void makeAlphaGoals() {}
+        default void makeAlphaGoals() {
+        }
 
         default void mayRemoveAlphaGoals() {
             if (!(this instanceof PathfinderMob mob)) {
@@ -214,10 +218,27 @@ public interface IAlphaAbleEntity {
 
     boolean isAlpha();
 
+    // Don't forget to call onAlphaStateUpdate
     default void setAlpha(boolean alphaGene) {
     }
 
     default void setAlphaScale(float scale) {
+    }
+
+    default void onAlphaStateUpdate() {
+        if (!(this instanceof LivingEntity livingEntity)) {
+            return;
+        }
+
+        if (!(EntityUtil.maybeGetUnderlying(livingEntity) instanceof Player player)) {
+            return;
+        }
+
+        if (!(player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
+
+        ChangedAddonCriteriaTriggers.ALPHA_STATE_TRIGGER.trigger(serverPlayer, alphaAdditionalScale(), isAlpha());
     }
 
     default void refreshAttributes(ChangedEntity changedEntity) {

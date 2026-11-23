@@ -147,7 +147,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         float hp = TransfurVariantUtils.getExtraHpOfVariantBasedOnPlayer(tf, player);
         float swimSpeed = TransfurVariantUtils.getSwimSpeedOfVariantBasedOnPlayer(tf, player);
         float landSpeed = TransfurVariantUtils.getLandSpeedOfVariantBasedOnPlayer(tf, player);
-        float jumpStrength = TransfurVariantUtils.GetJumpStrength(tf, player);
+        float jumpStrength = TransfurVariantUtils.getJumpStrength(tf, player);
         boolean canFlyOrGlide = TransfurVariantUtils.canVariantGlide(instance);
         String miningStrength = TransfurVariantUtils.getMiningStrengthOfVariant(tf, player);
         float extraHp = hp / 2f;

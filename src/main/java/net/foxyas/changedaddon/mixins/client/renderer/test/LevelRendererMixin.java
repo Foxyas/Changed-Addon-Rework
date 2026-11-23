@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.mixins.client.renderer.test;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.client.renderer.depth_outline.DepthOutline;
 import net.foxyas.changedaddon.client.renderer.depth_outline.GlowHandles;
@@ -34,11 +36,11 @@ public abstract class LevelRendererMixin {
     @Inject(method = "close", at = @At("HEAD"))
     private void glowdepth$close(CallbackInfo ci) { DepthOutline.close(); }
 
-    @Redirect(method = "renderLevel",
+    @WrapOperation(method = "renderLevel",
             at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/client/renderer/LevelRenderer;renderEntity(Lnet/minecraft/world/entity/Entity;DDDFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;)V"))
     private void glowdepth$renderEntity(LevelRenderer self, Entity e, double x, double y, double z,
-                                        float pt, PoseStack ps, MultiBufferSource buf) {
+                                        float pt, PoseStack ps, MultiBufferSource buf, Operation<Void> original) {
         OutlineHandle h = GlowHandles.get(e);
         if (h != null && h.enabled() && shouldShowEntityOutlines()) {
             SilhouetteSource src = DepthOutline.source(minecraft);
@@ -48,7 +50,7 @@ public abstract class LevelRendererMixin {
                 buf = new SilhouetteSource.Tee(buf, src);
             }
         }
-        renderEntity(e, x, y, z, pt, ps, buf); // UMA chamada só
+        original.call(self, e, x, y, z, pt, ps, buf);
     }
 
     @Inject(method = "renderLevel", at = @At("TAIL"))
