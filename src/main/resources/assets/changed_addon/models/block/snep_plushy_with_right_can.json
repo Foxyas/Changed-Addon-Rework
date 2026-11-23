@@ -2,7 +2,7 @@
   "parent": "changed_addon:custom/snep_plushy_base",
   "render_type": "cutout",
   "textures": {
-    "soda_middle": "changed_addon:block/empty",
-    "soda_left": "changed_addon:block/empty"
+    "soda_middle": "changed_addon:block/snow_leopard_plushy/blank",
+    "soda_left": "changed_addon:block/snow_leopard_plushy/blank"
   }
 }
