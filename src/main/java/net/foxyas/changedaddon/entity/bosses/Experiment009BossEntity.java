@@ -96,6 +96,7 @@ import org.joml.Vector3f;
 
 import java.util.*;
 
+@SuppressWarnings("resource")
 public class Experiment009BossEntity extends Experiment009Entity implements IExp9Logic {
     public static final String KNOCKBACK_RESISTANCE_MODIFER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb739";
     public static final String ATTACK_DAMAGE_MODIFIER_UUID = "a06083b0-291d-4a72-85de-73bd93ffb736";
@@ -590,6 +591,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public boolean shouldShowGlow() {
+        if (isCastingAttack() && this.getPhase() == Exp9Phase.PHASE1) {
+            return true;
+        }
         return isPhase2() || isPhase3();
     }
 
@@ -609,7 +613,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         this.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1, 1);
 
-        if (this.level() instanceof ServerLevel serverLevel) {
+        if (this.level() instanceof ServerLevel) {
             for (int i = 0; i < 3; i++) {
                 spawnThunderParticle();
             }
@@ -832,17 +836,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return builder;
     }
 
-    public static GearTier getGearTier(LivingEntity entity) {
-        double armor = entity.getAttributeValue(Attributes.ARMOR);
-        double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-
-        double score = armor + (toughness * 2);
-
-        if (score >= 40) return GearTier.HIGH;
-        if (score >= 15) return GearTier.MID;
-        return GearTier.LOW;
-    }
-
     public BurstAbilityHandle<Experiment009BossEntity> getBurstAbilityHandle() {
         return burstAbilityHandle;
     }
@@ -852,7 +845,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             case PHASE1 -> 150f;
             case PHASE2 -> 100f;
             case PHASE3 -> 75f;
-            default -> 1f;
         };
     }
 
@@ -988,6 +980,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return maxCastingTicks;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
 
@@ -1629,12 +1622,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
 
         this.addEffect(mobEffectInstance);
-    }
-
-    public enum GearTier {
-        LOW,
-        MID,
-        HIGH
     }
 
     public static float getMetalPercentage(LivingEntity target) {

@@ -20,8 +20,8 @@ import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 
 public class Exp9EmissiveBodyLayer<M extends AdvancedHumanoidModel<T>, T extends Experiment009Entity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
-    private RenderType renderType;
-    private RenderType renderType2;
+    private final RenderType renderType;
+    private final RenderType renderType2;
 
     public Exp9EmissiveBodyLayer(RenderLayerParent<T, M> layerParent, ResourceLocation emissiveTexturePhase2, ResourceLocation emissiveTexturePhase3) {
         super(layerParent);
@@ -41,9 +41,7 @@ public class Exp9EmissiveBodyLayer<M extends AdvancedHumanoidModel<T>, T extends
             return;
         }
 
-        if (entity.isPhase2()) {
-            super.render(poseStack, multiBufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
-        }
+        super.render(poseStack, multiBufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
     }
 
     public @NotNull RenderType renderType() {
