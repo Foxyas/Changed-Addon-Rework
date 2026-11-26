@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
@@ -58,7 +57,7 @@ public class EntityOutlineLayer<M extends AdvancedHumanoidModel<T>, T extends Ch
         FirstPersonLayer.super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose, partialTick);
         stack.pushPose();
         stack.scale(1.01F, 1.01F, 1.01F);
-        VertexConsumer outlineBuffer = bufferSource.getBuffer(ChangedAddonRenderTypes.outlineWithDepth(this.getTextureLocation(entity)));
+        VertexConsumer outlineBuffer = bufferSource.getBuffer(ChangedAddonRenderTypes.emissiveReverseCull(this.getTextureLocation(entity)));
         AdvancedHumanoidModel<T> armedModel = this.getParentModel();
         ModelPart armPart = armedModel.getArm(arm);
         armPart.loadPose(armPose);
