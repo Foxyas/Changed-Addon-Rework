@@ -54,36 +54,36 @@ public class FormsDialogues {
         if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())) {
             int randomSelector = player.level().getRandom().nextInt(100);
             if (randomSelector <= 4) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.death.text1"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.death.transfured.text1"), false);
             } else {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.death.text2"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.death.transfured.text2"), false);
             }
         } else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS.get())) {
             int randomSelector = player.level().getRandom().nextInt(100);
             if (randomSelector <= 4) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.death.text1"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.death.transfured.text1"), false);
             } else {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.death.text2"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.death.transfured.text2"), false);
             }
         } else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP1_MALE.get())
                 || PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP1_FEMALE.get())) {
             int randomSelector = player.level().getRandom().nextInt(100);
             if (randomSelector <= 3) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.text1"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.transfured.text1"), false);
             } else if (randomSelector <= 6) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.text2"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.transfured.text2"), false);
             } else if (randomSelector <= 9) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.text3"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.transfured.text3"), false);
             } else if (randomSelector <= 12) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.text4", player.getDisplayName().getString()), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.transfured.text4", player.getDisplayName().getString()), false);
             }
         } else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP2_MALE.get())
                 || PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP2_FEMALE.get())) {
             int randomSelector = player.level().getRandom().nextInt(100);
             if (randomSelector <= 4) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp2.death.text1"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp2.death.transfured.text1"), false);
             } else if (randomSelector <= 7) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp2.death.text2"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp2.death.transfured.text2"), false);
             }
         }
     }
@@ -92,36 +92,36 @@ public class FormsDialogues {
         if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())) {
             int randomSelector = player.level().getRandom().nextInt(10);
             if (randomSelector <= 4) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.death.text1"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.death.transfured.text1"), false);
             } else {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.death.text2"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.death.transfured.text2"), false);
             }
         } else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS.get())) {
             int randomSelector = player.level().getRandom().nextInt(10);
             if (randomSelector <= 4) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.death.text1"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.death.transfured.text1"), false);
             } else {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.death.text2"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.death.transfured.text2"), false);
             }
         } else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP1_MALE.get())
                 || PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP1_FEMALE.get())) {
             int randomSelector = player.level().getRandom().nextInt(15);
             if (randomSelector <= 3) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.text1"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.transfured.text1"), false);
             } else if (randomSelector <= 6) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.text2"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.transfured.text2"), false);
             } else if (randomSelector <= 9) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.text3"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.transfured.text3"), false);
             } else if (randomSelector <= 12) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.text4", player.getDisplayName().getString()), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp1.death.transfured.text4", player.getDisplayName().getString()), false);
             }
         } else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP2_MALE.get())
                 || PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP2_FEMALE.get())) {
             int randomSelector = player.level().getRandom().nextInt(10);
             if (randomSelector <= 4) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp2.death.text1"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp2.death.transfured.text1"), false);
             } else if (randomSelector >= 7) {
-                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp2.death.text2"), false);
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp2.death.transfured.text2"), false);
             }
         }
     }

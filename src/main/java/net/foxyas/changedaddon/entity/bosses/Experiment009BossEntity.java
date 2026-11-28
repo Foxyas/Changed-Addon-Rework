@@ -657,8 +657,18 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
             if (living instanceof ServerPlayer serverPlayer) {
                 int value = serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(this.getType()));
-                if (value > 3) {
-                    this.speak(Component.translatable("entity_dialogues.changed_addon.exp9.dead", value).withStyle(ChatFormatting.DARK_AQUA), serverPlayer);
+                MutableComponent translatable;
+                
+                if (value > 20) {
+                    translatable = Component.translatable("entity_dialogues.changed_addon.exp9.death.normal.text.type2", value);
+                } else if (value > 3) {
+                    translatable = Component.translatable("entity_dialogues.changed_addon.exp9.death.normal.text.type1", value);
+                } else {
+                    translatable = null;
+                }
+
+                if (translatable != null) {
+                    this.speak(translatable.withStyle(ChatFormatting.DARK_AQUA), serverPlayer);
                 }
             }
         }

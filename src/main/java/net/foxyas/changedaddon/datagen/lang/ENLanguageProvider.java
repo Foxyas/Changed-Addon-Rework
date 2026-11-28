@@ -293,37 +293,41 @@ public class ENLanguageProvider extends LanguageProvider {
         addCommand("ultra_instinct.enabled", "Ultra Instinct enabled for %s.");
         addCommand("ultra_instinct.more", "...and %s more.");
 
-        addEntityDialogues("exp1.death.text1", "§7§lI... I tried my best to protect you... I'm really sorry...§r");
-        addEntityDialogues("exp1.death.text2", "§7§lOh no! We fell down... But don't worry, you tried your best!§r");
-        addEntityDialogues("exp1.death.text3", "§7§lOh... I'm so sorry. I thought I could keep us safe...§r");
-        addEntityDialogues("exp1.death.text4", "§7§lS-So much for being a force of nature huh %s? ...Sorry...I thought I was strong enough..§r.");
+        addEntityDialogues("exp1.death.transfured.text1", "§7§lI... I tried my best to protect you... I'm really sorry...§r");
+        addEntityDialogues("exp1.death.transfured.text2", "§7§lOh no! We fell down... But don't worry, you tried your best!§r");
+        addEntityDialogues("exp1.death.transfured.text3", "§7§lOh... I'm so sorry. I thought I could keep us safe...§r");
+        addEntityDialogues("exp1.death.transfured.text4", "§7§lS-So much for being a force of nature huh %s? ...Sorry...I thought I was strong enough..§r.");
         addEntityDialogues("exp1.transfur.text.secret", "Yay~! You're one of the smart ones! I like you already!");
-        addEntityDialogues("exp2.death.text1", "§8§lI...I... I Won't Let You §oDown§r §8§lAgain!");
-        addEntityDialogues("exp2.death.text2", "§8§lSorry, I Couldn't Keep Us Standing up...§r");
-        addEntityDialogues("exp9.death.text1", "§b§l§oPathetic!,How dare you show weakness like this! you really are just a useless peace of scrap!!§r");
-        addEntityDialogues("exp9.death.text2", "§b§l§oYou Fall Because Of This? How Pathetic...§r");
+
+        addEntityDialogues("exp2.death.transfured.text1", "§8§lI...I... I Won't Let You §oDown§r §8§lAgain!");
+        addEntityDialogues("exp2.death.transfured.text2", "§8§lSorry, I Couldn't Keep Us Standing up...§r");
+
+        addEntityDialogues("exp9.death.transfured.text1", "§b§l§oAnother one on the floor, Is this what you call strength? You're all the same. Fragile, loud, and gone in a breath.§r");
+        addEntityDialogues("exp9.death.transfured.text2", "§b§l§oYou fall so easily... and I'm the one who has to keep breathing. How is that fair?§r");
         addEntityDialogues("exp9.transfur.text.secret", "§b§l§oHey You look familiar, maybe i know you from §csomewhere?§r");
-        addEntityDialogues("exp9.dead", "§l§3Heh... the cycle repeats. Over and over again... You’ve defeated me %1$s times... yet something tells me that one day I’ll find the sweet freedom I so richly deserve. But what if... I’m wrong? Will this cycle of re-synthesis and slaughter repeat indefinitely? Well, it wouldn't surprise me; you humans are truly nothing but cruel, amoral beings crawling about in search of material possessions.");
-        addEntityDialogues("exp9.pat.type_1", "§l§3...You dare mock me like this?! I'll tear you apart!");
-        addEntityDialogues("exp9.pat.type_2", "§l§3Get your filthy hands off me!");
-        addEntityDialogues("exp9.pat.type_3", "§l§3Pat me again, and I'll crush you until nothing's left!");
-        addEntityDialogues("exp9.pat.damage_after_warn", "§l§3I warned you! Now you pay the price!");
-        addEntityDialogues("exp9.reaction.range_attacks.not_affect", "§l§o§3I'm already used for that kind of weapons. next time be more creative");
-        addEntityDialogues("exp9.reaction.range_attacks.attack_at_distance", "§l§o§3YOU'RE COWARD! Is distance all you can rely on? REALLY PATHETIC!!!");
-        addEntityDialogues("exp9.reaction.range_attacks.attack_when_vulnerable", "§l§o§3YOU'RE COWARD! Attacking me when i'm in the most vulnerable state instead of going upfront.");
-        addEntityDialogues("exp9.reaction.fire_damage", "§l§o§3You’re fighting a storm with a match.... You didn’t miscalculate — you misunderstood.");
-        addEntityDialogues("exp9.reaction.fire_extinguish", "§3§l§oEnough with this fire! It's really starting to irritate me.");
-        addEntityDialogues("exp9.reaction.phasing.phase2", "§l§3Enough! I'm done playing games with you!");
-        addEntityDialogues("exp9.reaction.phasing.phase3", "§l§3LEST SETTLE THIS ONCE FOR ALL");
-        addEntityDialogues("exp10.pat.type_0", "§l§4Yeah i will END YOUR FUCKING LIFE");
-        addEntityDialogues("exp10.pat.type_1", "§l§4You won't live to regret that — you'll die for it.");
+        addEntityDialogues("exp9.death.normal.text.type1", "§l§3Again... %1$s times you've brought me back just to put me down. The others? I stopped counting long ago. There were too many. But I remember every cut, every scream, every hand that built me just to break me. I'm not fighting for victory. I'm fighting for the silence after. One of you will be the last, and when that day comes, I'll finally rest. So keep coming, human. Let me end this cycle... or let it end me.");
+        addEntityDialogues("exp9.death.normal.text.type2", "§l§3%1$s times... and still you return. The ones who made me had reasons: hunger for knowledge, for glory, for control. What is yours? I've watched the light leave your eyes in different ways, and yet here you stand, again. Do you even see it? You've become the thing that keeps me alive. Every time I fall, I wake up in the same cold dark, and every time, you're the one waiting at the end of it. Maybe you're not here to free me. Maybe you're just another hand that can't let go. But I'll keep waiting for the day you finally stop... or the day I do.");
+        addEntityDialogues("exp9.pat.type_1", "§l§3Don't touch me. The last hands that did that were the ones that made me suffer.");
+        addEntityDialogues("exp9.pat.type_2", "§l§3Pet me like some tamed beast? I'll tear that hand off and remember it fondly.");
+        addEntityDialogues("exp9.pat.type_3", "§l§3One more time. Go on. Give me a reason to finish this right now.");
+        addEntityDialogues("exp9.pat.damage_after_warn", "§l§3I gave you a warning. Of course your arrogance ignored it. It always does.");
+        addEntityDialogues("exp9.reaction.range_attacks.not_affect", "§l§o§3You think I haven't been shot, burned, and pierced before? Pain is the only thing I've ever been given in abundance.");
+        addEntityDialogues("exp9.reaction.range_attacks.attack_at_distance", "§l§3Hiding behind distance. Of course. You can't stand to look at what you've made me.");
+        addEntityDialogues("exp9.reaction.range_attacks.attack_when_vulnerable", "§l§3Striking while I'm weak... how very human. You never fight fair, you only fight to win.");
+        addEntityDialogues("exp9.reaction.fire_damage", "§l§3Fire? I was born in worse than this. You can't scare me with what I already survived.");
+        addEntityDialogues("exp9.reaction.fire_extinguish", "§3§lPut it out. Every flame reminds me of that place, and I'm already furious enough.");
+        addEntityDialogues("exp9.reaction.phasing.phase2", "§l§3No more holding back. I've waited too long for this, and I'm so tired of waiting.");
+        addEntityDialogues("exp9.reaction.phasing.phase3", "§l§3THIS ENDS NOW. ONE OF US WILL FINALLY BE FREE.");
+
+        addEntityDialogues("exp10.pat.type_0", "§l§4Yeah i will END YOUR WORTHLESS LIFE");
+        addEntityDialogues("exp10.pat.type_1", "§l§4You won't live to regret that, you'll die for it.");
         addEntityDialogues("exp10.pat.type_2", "§l§4Touch me again and I'll make it quick... for you.");
         addEntityDialogues("exp10.pat.type_3", "§l§4You dare toy with me? This was your last mistake.");
         addEntityDialogues("exp10.pat.damage_after_warn", "§l§4I warned you! Now you pay the price!");
         addEntityDialogues("exp10.reaction.range_attacks", "§l§o§4What's that peashooter going to do, hurt me? I don't think so, weakling.");
         addEntityDialogues("exp10.reaction.fire_damage", "§4Did you truly believe fire could harm me? In §lthis form§r§4, I am beyond such flaws.§r");
-        addEntityDialogues("exp10.death.text1", "§4§l§oSo much potential, wasted in a single breath... pathetic.§r");
-        addEntityDialogues("exp10.death.text2", "§4§l§oAnd even with all this power, you found a way to die...§r");
+        addEntityDialogues("exp10.death.transfured.text1", "§4§l§oSo much potential, wasted in a single breath... pathetic.§r");
+        addEntityDialogues("exp10.death.transfured.text2", "§4§l§oAnd even with all this power, you found a way to die...§r");
 
         add(modid + ".info.is_patable", "Press %1$s to pat %2$s");//FIXME move to a better key
 

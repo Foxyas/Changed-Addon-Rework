@@ -112,6 +112,8 @@
     "client.renderer.CameraMixin",
     "client.renderer.DebugRendererMixin",
     "client.renderer.GameRendererMixin",
+    "client.renderer.GlowingSquidDogRenderer$TextureChangerMixin",
+    "client.renderer.GlowingSquidDogRendererMixin",
     "client.renderer.ItemInHandRendererAccessor",
     "client.renderer.LatexHumanoidArmorModelMixin",
     "client.renderer.LivingEntityRendererAccessor",

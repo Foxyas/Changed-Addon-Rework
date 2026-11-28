@@ -528,6 +528,48 @@ public final class ChangedAddonRenderTypes extends RenderType {
         );
     };
 
+    public static final Function<ResourceLocation, RenderType> DYNAMIC_GALAXY_MIX = Util.memoize(texture -> {
+        return RenderType.create(
+                ChangedAddonMod.resourceLocString("dynamic_galaxy"),
+                DefaultVertexFormat.NEW_ENTITY, // <--- OBRIGATÓRIO PARA ENTIDADES (Contém Lightmap e Overlay)
+                VertexFormat.Mode.QUADS, 256, false, false,
+                RenderType.CompositeState.builder()
+                        .setShaderState(new ShaderStateShard(() -> DYNAMIC_GALAXY_SHADER))
+                        .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
+                                .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
+                                .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false)
+                                .add(texture, false, false) // Sampler2: Sua textura de máscara (WING_GLOW_TEXTURE)
+                                .build())
+                        .setWriteMaskState(COLOR_WRITE)
+                        .setCullState(NO_CULL)
+                        .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                        .setWriteMaskState(COLOR_DEPTH_WRITE)
+                        .setDepthTestState(EQUAL_DEPTH_TEST)
+                        .createCompositeState(false)
+        );
+    });
+
+    public static final TriFunction<ResourceLocation, ResourceLocation, ResourceLocation, RenderType> DYNAMIC_GALAXY_WITH_CUSTOM_TEXTURE_MIX = (galaxyLayer1, galaxyLayer2, galaxyMask) -> {
+        return RenderType.create(
+                ChangedAddonMod.resourceLocString("dynamic_galaxy"),
+                DefaultVertexFormat.NEW_ENTITY, // <--- OBRIGATÓRIO PARA ENTIDADES (Contém Lightmap e Overlay)
+                VertexFormat.Mode.QUADS, 256, false, false,
+                CompositeState.builder()
+                        .setShaderState(new ShaderStateShard(() -> DYNAMIC_GALAXY_SHADER))
+                        .setTextureState(MultiTextureStateShard.builder()
+                                .add(galaxyLayer1, false, false)
+                                .add(galaxyLayer2, false, false)
+                                .add(galaxyMask, false, false) // Sampler2: Sua textura de máscara;
+                                .build())
+                        .setWriteMaskState(COLOR_WRITE)
+                        .setCullState(NO_CULL)
+                        .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                        .setWriteMaskState(COLOR_DEPTH_WRITE)
+                        .setDepthTestState(EQUAL_DEPTH_TEST)
+                        .createCompositeState(false)
+        );
+    };
+
     // unused, just needed to extend RenderType for protected constants
     private ChangedAddonRenderTypes(String p_173178_, VertexFormat p_173179_, VertexFormat.Mode p_173180_, int p_173181_, boolean p_173182_, boolean p_173183_, Runnable p_173184_, Runnable p_173185_) {
         super(p_173178_, p_173179_, p_173180_, p_173181_, p_173182_, p_173183_, p_173184_, p_173185_);
@@ -569,6 +611,16 @@ public final class ChangedAddonRenderTypes extends RenderType {
                                                       ResourceLocation galaxyLayer2,
                                                       ResourceLocation galaxyMask) {
         return DYNAMIC_GALAXY_WITH_CUSTOM_TEXTURE.apply(galaxyLayer1, galaxyLayer2, galaxyMask);
+    }
+
+    public static RenderType dynamicGalaxyMix(ResourceLocation resourceLocation) {
+        return DYNAMIC_GALAXY_MIX.apply(resourceLocation);
+    }
+
+    public static RenderType dynamicGalaxyWithTextureMix(ResourceLocation galaxyLayer1,
+                                                      ResourceLocation galaxyLayer2,
+                                                      ResourceLocation galaxyMask) {
+        return DYNAMIC_GALAXY_WITH_CUSTOM_TEXTURE_MIX.apply(galaxyLayer1, galaxyLayer2, galaxyMask);
     }
 
     public static RenderType glowWithNoTransluced(ResourceLocation location) {

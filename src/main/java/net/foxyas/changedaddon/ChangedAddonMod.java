@@ -103,6 +103,10 @@ public class ChangedAddonMod {
         return ResourceLocation.fromNamespaceAndPath(MODID, "textures/" + path + ".png");
     }
 
+    public static ResourceLocation entityTextureLoc(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, "textures/entities/" + path + ".png");
+    }
+
     public static ResourceLocation textureLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath(MODID, path + ".png");
     }
